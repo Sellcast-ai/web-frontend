@@ -17,6 +17,11 @@ const nunito = Nunito({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lumi.sellcast.ai"),
+  // Product images come from a CDN (s.500fd.com) that 403s any request
+  // carrying a cross-origin Referer (hotlink protection). Omitting the
+  // referer site-wide lets those <img> loads succeed (server-side fetches
+  // already work since they send no referer).
+  referrer: "no-referrer",
   title: {
     default: "Lumi — Turn any product into a scroll-stopping shoppable video",
     template: "%s · Lumi",
