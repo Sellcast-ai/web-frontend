@@ -72,7 +72,7 @@ export type VideoStyle =
   | "product_unboxing"
   | "product_offer_focused";
 
-export type VideoDuration = 5 | 10 | 15 | 20 | 25 | 30;
+export type VideoDuration = 10 | 15 | 20 | 25 | 30;
 
 export type VideoJobStatus =
   | "queued"
@@ -201,7 +201,7 @@ export interface Usage {
 
 /* ----------------------------------------------------------------- presets */
 
-export const VIDEO_DURATIONS: VideoDuration[] = [5, 10, 15, 20, 25, 30];
+export const VIDEO_DURATIONS: VideoDuration[] = [10, 15, 20, 25, 30];
 
 export const VIDEO_STYLES: Record<
   VideoMode,
