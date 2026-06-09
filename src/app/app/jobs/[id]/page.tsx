@@ -114,15 +114,31 @@ export default function JobDetailPage() {
         <WorkingView job={job} />
       )}
 
-      {/* script */}
-      {job.prompt && (
+      {/* full script — clean structured render from the beats, no internal
+          prompt directives ([MUST KEEP]/[MUST AVOID]) or repeated persona */}
+      {job.beats.length > 0 && (
         <details className="mt-8 rounded-card border border-border bg-card p-5">
           <summary className="cursor-pointer text-sm font-semibold text-ink">
-            Generated script & direction
+            Full script
           </summary>
-          <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-ink-soft">
-            {job.synthesized_prompt || job.prompt}
-          </p>
+          <div className="mt-4 space-y-4">
+            {job.beats.map((b) => (
+              <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
+                <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
+                  {beatLabel(b.beat_index, job.beats.length)}
+                  {b.duration ? ` · ${b.duration}s` : ""}
+                </p>
+                {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
+                {b.on_screen_text && (
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    Caption:{" "}
+                    <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
+                  </p>
+                )}
+                {b.scene && <p className="mt-1 text-xs text-muted-foreground">{b.scene}</p>}
+              </div>
+            ))}
+          </div>
         </details>
       )}
     </div>
@@ -307,6 +323,7 @@ function BeatCard({
         )}
         <span className="absolute left-2 top-2 rounded-full bg-ink/70 px-2 py-0.5 text-[11px] font-bold text-white">
           {label}
+          {beat.duration ? ` · ${beat.duration}s` : ""}
         </span>
         <span
           className={cn(
@@ -317,6 +334,24 @@ function BeatCard({
           {s.label}
         </span>
       </div>
+
+      {(beat.on_screen_text || beat.dialogue || beat.scene) && (
+        <div className="space-y-1.5 px-3 pt-2.5 text-left">
+          {beat.on_screen_text && (
+            <p className="inline-block rounded-md bg-ink/90 px-2 py-0.5 text-[11px] font-bold leading-snug text-white">
+              {beat.on_screen_text}
+            </p>
+          )}
+          {beat.dialogue && (
+            <p className="text-sm leading-snug text-ink">{beat.dialogue}</p>
+          )}
+          {beat.scene && (
+            <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+              {beat.scene}
+            </p>
+          )}
+        </div>
+      )}
 
       {reviewable && action && (
         <div className="flex gap-1.5 p-2">

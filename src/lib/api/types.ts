@@ -103,6 +103,11 @@ export interface VideoJobBeat {
   regeneration_count: number;
   final_video_url: string | null;
   dialogue_drift_score: number | null;
+  // Structured script content for this beat (from script_json).
+  duration: number | null;
+  dialogue: string | null;
+  on_screen_text: string | null;
+  scene: string | null;
 }
 
 export interface VideoJob {
