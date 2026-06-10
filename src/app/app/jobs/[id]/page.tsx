@@ -333,25 +333,15 @@ function BeatCard({
         >
           {s.label}
         </span>
-      </div>
-
-      {(beat.on_screen_text || beat.dialogue || beat.scene) && (
-        <div className="space-y-1.5 px-3 pt-2.5 text-left">
-          {beat.on_screen_text && (
-            <p className="inline-block rounded-md bg-ink/90 px-2 py-0.5 text-[11px] font-bold leading-snug text-white">
+        {/* caption preview — burned-in style, mirrors how it appears in the video */}
+        {beat.on_screen_text && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-3 pb-3 pt-10">
+            <p className="text-center text-sm font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
               {beat.on_screen_text}
             </p>
-          )}
-          {beat.dialogue && (
-            <p className="text-sm leading-snug text-ink">{beat.dialogue}</p>
-          )}
-          {beat.scene && (
-            <p className="line-clamp-2 text-xs leading-snug text-muted-foreground">
-              {beat.scene}
-            </p>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       {reviewable && action && (
         <div className="flex gap-1.5 p-2">
