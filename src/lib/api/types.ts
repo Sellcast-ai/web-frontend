@@ -198,10 +198,12 @@ export interface UserProfileUpdate {
 
 export interface Usage {
   plan: string;
+  /** All quantities are in credits (1 credit = 1 second of 720p video). */
   limit: number;
   used: number;
   remaining: number;
   resets_at: string;
+  unit?: string;
 }
 
 /* ----------------------------------------------------------------- presets */

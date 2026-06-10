@@ -52,12 +52,14 @@ function StudioInner() {
   const { data: product, isLoading } = useProduct(productId);
   const { data: usage } = useUsage();
   const create = useCreateJob();
-  const outOfQuota = !!usage && usage.remaining <= 0;
 
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
   const [duration, setDuration] = useState<VideoDuration>(15);
   const [reviewMode, setReviewMode] = useState(false);
+
+  // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
+  const outOfQuota = !!usage && usage.remaining < duration;
 
   // keep style valid for the selected mode
   useEffect(() => {
@@ -245,7 +247,8 @@ function StudioInner() {
 
             {usage && (
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                {usage.remaining} of {usage.limit} videos left this month
+                {usage.remaining} of {usage.limit} credits left this month · this
+                video uses {duration}
               </p>
             )}
             <Button
@@ -265,7 +268,8 @@ function StudioInner() {
             </Button>
             {outOfQuota ? (
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                You&apos;ve used all {usage?.limit} videos this month.{" "}
+                Not enough credits for a {duration}s video ({usage?.remaining} of{" "}
+                {usage?.limit} left).{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   See plans
                 </Link>

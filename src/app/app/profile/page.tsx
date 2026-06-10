@@ -105,9 +105,12 @@ export default function ProfilePage() {
                 This month
               </h2>
               <p className="text-sm text-muted-foreground">
-                {usage.used} of {usage.limit} videos used ·{" "}
+                {usage.used} of {usage.limit} credits used ·{" "}
                 <span className="capitalize">{usage.plan}</span> plan · resets{" "}
                 {usage.resets_at.slice(0, 10)}
+              </p>
+              <p className="text-xs text-muted-foreground/80">
+                1 credit = 1 second of video
               </p>
             </div>
             <span className="font-display text-2xl font-bold text-brand-700">
