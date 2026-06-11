@@ -6,7 +6,7 @@ import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
 export const metadata: Metadata = {
   title: "Models",
   description:
-    "Lumi renders with the frontier of video AI — Seedance 2.0 and Sora 2 today, with Veo, Kling, and Gemini on the way. The right model is chosen per shot.",
+    "Lumi renders with Seedance 2.0 today, with more frontier video models on the way. Each shot gets the settings that render it best.",
 };
 
 const MODELS = [
@@ -14,44 +14,23 @@ const MODELS = [
     name: "Seedance 2.0",
     tag: "Live",
     live: true,
-    desc: "Fast, lifelike motion for product and avatar shots — Lumi's default workhorse for most beats.",
+    desc: "Fast, lifelike motion for product and avatar shots — Lumi's render engine for every beat, with audio generated per shot.",
     bestFor: ["Product motion", "Avatar talking", "Speed"],
   },
   {
-    name: "Sora 2",
-    tag: "Live",
-    live: true,
-    desc: "Cinematic scenes and complex camera moves when a beat needs more production value.",
-    bestFor: ["Cinematic b-roll", "Camera moves", "Scenes"],
-  },
-  {
-    name: "Veo 3.1",
+    name: "More on the way",
     tag: "Soon",
     live: false,
-    desc: "High-fidelity realism for hero moments where photoreal detail matters most.",
-    bestFor: ["Photoreal", "Hero shots"],
-  },
-  {
-    name: "Kling V3",
-    tag: "Soon",
-    live: false,
-    desc: "Expressive characters and dynamic action for high-energy, motion-forward cuts.",
-    bestFor: ["Action", "Characters"],
-  },
-  {
-    name: "Gemini Omni",
-    tag: "Soon",
-    live: false,
-    desc: "Multimodal generation for tightly synced audio-visual beats.",
-    bestFor: ["A/V sync", "Multimodal"],
+    desc: "We're adding frontier video models as they prove out. Your scripts and approved beats are model-agnostic, so they carry over with no redo.",
+    bestFor: ["Roadmap", "No redo"],
   },
 ];
 
 const POINTS = [
   {
     icon: Layers,
-    title: "Best model per beat",
-    body: "Lumi routes each shot to the model that renders it best — you never pick a model by hand.",
+    title: "Tuned per beat",
+    body: "Lumi sets motion, length, and framing per shot so each beat renders its best — you never fiddle with model settings by hand.",
   },
   {
     icon: Wand2,
@@ -77,7 +56,7 @@ export default function ModelsPage() {
 
       {/* model grid */}
       <section className="container-page py-8">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-3xl gap-5 sm:grid-cols-2">
           {MODELS.map((m) => (
             <div
               key={m.name}

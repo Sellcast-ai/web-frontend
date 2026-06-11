@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     template: "%s · Lumi",
   },
   description:
-    "Lumi turns a product link into conversion-ready TikTok & Reels videos. Grounded in real viral patterns, scripted by AI, reviewed beat-by-beat, rendered with Seedance & Sora.",
+    "Lumi turns a product link into conversion-ready TikTok & Reels videos. Grounded in real viral patterns, scripted by AI, reviewed beat-by-beat, rendered with Seedance 2.0.",
   keywords: [
     "AI video",
     "shoppable video",
@@ -35,7 +35,6 @@ export const metadata: Metadata = {
     "UGC ads",
     "product video generator",
     "Seedance",
-    "Sora",
   ],
   openGraph: {
     title: "Lumi — Scroll-stopping shoppable videos, on autopilot",

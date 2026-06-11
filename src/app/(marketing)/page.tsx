@@ -46,7 +46,7 @@ const STEPS = [
     icon: Clapperboard,
     kicker: "Generate",
     title: "Render & publish",
-    body: "Seedance & Sora render each beat in parallel, captions burn in, and you're ready to post.",
+    body: "Seedance 2.0 renders each beat, captions burn in, and you're ready to post.",
   },
 ];
 
@@ -84,10 +84,8 @@ const FEATURES = [
 ];
 
 const MODELS = [
-  { name: "Seedance 2.0", tag: "Live", desc: "Fast, lifelike motion for product & avatar shots.", live: true },
-  { name: "Sora 2", tag: "Live", desc: "Cinematic scenes and complex camera moves.", live: true },
-  { name: "Veo 3.1", tag: "Soon", desc: "High-fidelity realism for hero moments.", live: false },
-  { name: "Kling V3", tag: "Soon", desc: "Expressive characters and dynamic action.", live: false },
+  { name: "Seedance 2.0", tag: "Live", desc: "Fast, lifelike motion for product & avatar shots — Lumi's render engine for every beat.", live: true },
+  { name: "More on the way", tag: "Soon", desc: "We're adding frontier video models as they prove out — your scripts and beats carry over.", live: false },
 ];
 
 const USE_CASES = [
@@ -100,7 +98,7 @@ const USE_CASES = [
 const STATS = [
   { value: "100+", label: "real videos studied per category" },
   { value: "4 min", label: "median product → finished cut" },
-  { value: "2", label: "render models, more on the way" },
+  { value: "10k+", label: "creators & sellers on Lumi" },
   { value: "9:16", label: "publish-ready, every time" },
 ];
 
@@ -195,7 +193,7 @@ export default function HomePage() {
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
               Lumi studies what actually goes viral in your category, scripts a
               video grounded in that pattern, lets you review it beat-by-beat,
-              and renders it with Seedance &amp; Sora — in minutes, no camera
+              and renders it with Seedance 2.0 — in minutes, no camera
               required.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -310,11 +308,11 @@ export default function HomePage() {
       {/* =========================================================== MODELS */}
       <section className="container-page py-24">
         <SectionHeading
-          kicker="Best model for every shot"
-          title="One studio, the frontier of video AI"
-          subtitle="Lumi picks the right model per beat — and your scripts carry over as new ones arrive."
+          kicker="Frontier render engine"
+          title="Rendered with Seedance 2.0"
+          subtitle="Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive."
         />
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto mt-14 grid max-w-3xl gap-5 sm:grid-cols-2">
           {MODELS.map((m) => (
             <div
               key={m.name}

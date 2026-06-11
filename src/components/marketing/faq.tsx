@@ -18,8 +18,8 @@ const FAQS = [
     a: "Yes — that's the Beat Review gate. Lumi generates a reference image for every beat (shot) first. You approve or regenerate each one, and only then does it spend render time. Prefer hands-off? Auto-QA approves beats for you.",
   },
   {
-    q: "Which video models does Lumi use?",
-    a: "Today Lumi renders with Seedance 2.0 and Sora 2, picking the right one per shot. Veo, Kling, and Gemini are on the roadmap — your scripts and beats carry over when new models land.",
+    q: "Which video model does Lumi use?",
+    a: "Lumi renders with Seedance 2.0, tuning the settings per shot. More frontier video models are on the roadmap — your scripts and beats carry over when new models land.",
   },
   {
     q: "Where does the product data come from?",
