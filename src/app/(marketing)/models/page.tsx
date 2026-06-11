@@ -51,7 +51,7 @@ export default function ModelsPage() {
         kicker="Models"
         title="One studio, the frontier of"
         highlight="video AI."
-        subtitle="Lumi picks the right model for every shot — and your scripts carry over as new ones arrive."
+        subtitle="Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive."
       />
 
       {/* model grid */}
