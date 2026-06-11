@@ -133,36 +133,30 @@ const TESTIMONIALS = [
 
 const PRICING = [
   {
-    name: "Starter",
-    price: "$0",
-    note: "to try it",
-    features: ["5 videos / mo", "Marketplace access", "Auto-QA render", "720p export"],
-    cta: "Start free",
-    href: "/signup",
+    name: "Creator",
+    price: "$29",
+    note: "/ mo",
+    features: ["≈ 3 videos / mo · 75 credits", "No watermark", "Beat-by-beat review", "Avatar + product modes"],
+    cta: "Start Creator",
+    href: "/signup?plan=creator",
     featured: false,
   },
   {
     name: "Pro",
-    price: "$39",
+    price: "$79",
     note: "/ mo",
-    features: [
-      "100 videos / mo",
-      "Beat-by-beat review",
-      "Avatar + product modes",
-      "1080p export",
-      "Seedance + Sora",
-    ],
+    features: ["≈ 10 videos / mo · 200 credits", "Everything in Creator", "Priority over free renders", "720p · 9:16 export"],
     cta: "Start Pro",
     href: "/signup?plan=pro",
     featured: true,
   },
   {
-    name: "Studio",
-    price: "Let's talk",
-    note: "for teams",
-    features: ["Unlimited seats", "Brand kits", "Priority render", "API access", "Dedicated support"],
-    cta: "Contact sales",
-    href: "/contact",
+    name: "Scale",
+    price: "$199",
+    note: "/ mo",
+    features: ["≈ 25 videos / mo · 500 credits", "Everything in Pro", "For always-on posting"],
+    cta: "Start Scale",
+    href: "/signup?plan=scale",
     featured: false,
   },
 ];
@@ -424,7 +418,7 @@ export default function HomePage() {
           <SectionHeading
             kicker="Pricing"
             title="Start free. Scale when it's working."
-            subtitle="No credit card to begin. Cancel anytime."
+            subtitle="Credit-based — 1 credit = 1 second of video. Your first video's free; no credit card to begin."
           />
           <div className="mx-auto mt-14 grid max-w-5xl gap-6 lg:grid-cols-3">
             {PRICING.map((p) => (
@@ -471,6 +465,16 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <p className="mt-8 text-center text-sm text-muted-foreground">
+            Your{" "}
+            <Link href="/signup" className="font-semibold text-brand-700">
+              first video is free
+            </Link>{" "}
+            — no card. Need the full ladder?{" "}
+            <Link href="/pricing" className="font-semibold text-brand-700">
+              See all plans →
+            </Link>
+          </p>
         </div>
       </section>
 

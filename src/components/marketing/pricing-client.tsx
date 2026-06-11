@@ -13,6 +13,10 @@ type Tier = {
   annual: number | null;
   priceLabel?: string;
   note: string;
+  /** Headline allowance, e.g. "≈ 10 videos / mo". */
+  allowance: string;
+  /** Precise credit line under the allowance. */
+  credits?: string;
   features: string[];
   cta: string;
   href: string;
@@ -21,49 +25,59 @@ type Tier = {
 
 const TIERS: Tier[] = [
   {
-    name: "Starter",
+    name: "Free",
     monthly: 0,
     annual: 0,
-    note: "to get going",
-    features: [
-      "5 videos / month",
-      "Marketplace access",
-      "Auto-QA rendering",
-      "720p · 9:16 export",
-    ],
+    note: "no card",
+    allowance: "Your first video free",
+    credits: "20 credits, one-time",
+    features: ["720p · 9:16 export", "Marketplace access", "Auto-QA rendering", "Lumi watermark"],
     cta: "Start free",
     href: "/signup",
   },
   {
-    name: "Pro",
-    monthly: 39,
-    annual: 31,
+    name: "Creator",
+    monthly: 29,
+    annual: 23,
     note: "per month",
-    features: [
-      "100 videos / month",
-      "Beat-by-beat review",
-      "Avatar + product modes",
-      "Seedance + Sora rendering",
-      "Auto dialogue QA",
-      "1080p export · priority queue",
-    ],
+    allowance: "≈ 3 videos / mo",
+    credits: "75 credits / mo",
+    features: ["No watermark", "Beat-by-beat review", "Avatar + product modes", "720p · 9:16 export"],
+    cta: "Start Creator",
+    href: "/signup?plan=creator",
+  },
+  {
+    name: "Pro",
+    monthly: 79,
+    annual: 63,
+    note: "per month",
+    allowance: "≈ 10 videos / mo",
+    credits: "200 credits / mo",
+    features: ["Everything in Creator", "More credits, same per-video cost", "Priority over free renders"],
     cta: "Start Pro",
     href: "/signup?plan=pro",
     featured: true,
   },
   {
-    name: "Studio",
+    name: "Scale",
+    monthly: 199,
+    annual: 159,
+    note: "per month",
+    allowance: "≈ 25 videos / mo",
+    credits: "500 credits / mo",
+    features: ["Everything in Pro", "For always-on posting", "Highest self-serve volume"],
+    cta: "Start Scale",
+    href: "/signup?plan=scale",
+  },
+  {
+    name: "Enterprise",
     monthly: null,
     annual: null,
     priceLabel: "Let's talk",
     note: "for teams & agencies",
-    features: [
-      "Unlimited seats",
-      "Brand kits & presets",
-      "Priority rendering",
-      "API access",
-      "SSO & dedicated support",
-    ],
+    allowance: "Custom credit volume",
+    credits: "committed, wholesale rate",
+    features: ["Seats & roles", "Brand kits", "API access", "SSO & dedicated support"],
     cta: "Contact sales",
     href: "/about",
   },
@@ -71,6 +85,8 @@ const TIERS: Tier[] = [
 
 const INCLUDED = [
   "Pattern-grounded scripts",
+  "Beat-by-beat review",
+  "Avatar + product modes",
   "Captions burned in",
   "9:16 for TikTok & Reels",
   "Marketplace of trending products",
@@ -78,20 +94,24 @@ const INCLUDED = [
 
 const FAQ = [
   {
-    q: "Is there really a free plan?",
-    a: "Yes — Starter is free forever, no credit card. You get 5 videos a month to see Lumi work before you upgrade.",
+    q: "What's a credit?",
+    a: "1 credit = 1 second of finished video. A 20-second video uses 20 credits; a 30-second one uses 30. You pick the length, and you're only charged for what you render.",
   },
   {
-    q: "What counts as a video?",
-    a: "One generated cut from one product. Regenerating individual beats during review doesn't burn an extra video.",
+    q: "Do regenerations cost credits?",
+    a: "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
+  },
+  {
+    q: "What if I run out of credits?",
+    a: "Upgrade anytime for a bigger monthly allowance — it applies immediately. Credits reset at the start of each billing cycle.",
   },
   {
     q: "Can I change plans anytime?",
     a: "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
   },
   {
-    q: "Which render models are included?",
-    a: "Pro and Studio render with Seedance 2.0 and Sora 2, with Veo and Kling rolling out. Lumi picks the best model per shot.",
+    q: "Which render model does Lumi use?",
+    a: "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot.",
   },
 ];
 
@@ -137,7 +157,7 @@ export function PricingClient() {
 
       {/* tiers */}
       <section className="container-page py-12">
-        <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {TIERS.map((t) => {
             const price = t.priceLabel ?? `$${annual ? t.annual : t.monthly}`;
             return (
@@ -170,7 +190,13 @@ export function PricingClient() {
                         : t.note}
                   </span>
                 </p>
-                <ul className="mt-6 space-y-3">
+                <div className="mt-4 rounded-lg bg-brand-100/60 px-3 py-2">
+                  <p className="text-sm font-bold text-brand-800">{t.allowance}</p>
+                  {t.credits && (
+                    <p className="text-xs text-muted-foreground">{t.credits}</p>
+                  )}
+                </div>
+                <ul className="mt-5 space-y-3">
                   {t.features.map((f) => (
                     <li
                       key={f}
@@ -195,6 +221,11 @@ export function PricingClient() {
             );
           })}
         </div>
+
+        <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-muted-foreground">
+          1 credit = 1 second of video. Video counts are approximate, based on
+          20-second clips — a 15s video uses fewer credits, a 30s video more.
+        </p>
 
         {/* included in every plan */}
         <div className="mx-auto mt-10 max-w-5xl rounded-card border border-border bg-muted/40 p-6">

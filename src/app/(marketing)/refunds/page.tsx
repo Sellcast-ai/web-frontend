@@ -27,8 +27,8 @@ export default function RefundsPage() {
 
           <h2>Free plan</h2>
           <p>
-            The Starter plan is free with no time limit. You can explore Lumi and
-            generate your first videos before paying anything.
+            The Free plan lets you generate your first video at no cost and with
+            no credit card, so you can see Lumi work before paying anything.
           </p>
 
           <h2>Subscriptions</h2>
