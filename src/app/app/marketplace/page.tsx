@@ -1,24 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Search, Loader2, PackageOpen } from "lucide-react";
+import Link from "next/link";
+import { Search, Loader2, PackageOpen, Link2, ArrowRight } from "lucide-react";
 import { useProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
+import { CATEGORIES } from "@/lib/categories";
 import { cn } from "@/lib/utils";
-
-const CATEGORIES = [
-  "Beauty & Personal Care",
-  "Health & Wellness",
-  "Women'S Fashion",
-  "Sports & Outdoors",
-  "Home Textiles",
-  "Household Essentials",
-  "Mobile & Electronics",
-  "Food & Beverage",
-  "Men'S Fashion",
-  "Toys & Hobbies",
-];
 
 export default function MarketplacePage() {
   const [input, setInput] = useState("");
@@ -57,11 +46,25 @@ export default function MarketplacePage() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Search products or paste a TikTok link"
+          placeholder="Search products — or paste any product link (Amazon, Shopee, TikTok Shop…)"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         {isFetching && <Loader2 className="h-4 w-4 animate-spin text-brand-400" />}
       </div>
+
+      {/* pasted a URL? that's a product to ingest, not a search */}
+      {/^https?:\/\/\S+$/.test(input.trim()) && (
+        <Link
+          href={`/app/products/new?url=${encodeURIComponent(input.trim())}`}
+          className="mt-3 flex items-center gap-3 rounded-2xl border border-brand-300 bg-accent px-4 py-3 text-sm font-semibold text-accent-foreground transition-colors hover:brightness-95"
+        >
+          <Link2 className="h-4 w-4 shrink-0" />
+          <span className="min-w-0 flex-1 truncate">
+            Make a video from this link — Lumi will read the product page
+          </span>
+          <ArrowRight className="h-4 w-4 shrink-0" />
+        </Link>
+      )}
 
       {/* category pills */}
       <div className="mt-4 -mx-1 flex gap-2 overflow-x-auto pb-2">

@@ -3,7 +3,15 @@
 
 import Link from "next/link";
 import { Heart, TrendingUp } from "lucide-react";
-import type { ProductSummary } from "@/lib/api/types";
+import type { ProductSummary, SourcePlatform } from "@/lib/api/types";
+
+const SOURCE_LABELS: Record<SourcePlatform, string> = {
+  amazon: "From Amazon",
+  shopee: "From Shopee",
+  tiktok_shop: "From TikTok Shop",
+  generic: "From your store",
+  manual: "Added by you",
+};
 import { useToggleLike } from "@/lib/api/hooks";
 import { compact, priceRange, commission, percent } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -66,15 +74,24 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             <span className="font-display text-base font-bold text-ink">
               {priceRange(product.price_min, product.price_max)}
             </span>
-            <span className="text-xs text-muted-foreground">
-              {commission(product.commission_rate)} comm.
-            </span>
+            {product.owner_user_id ? (
+              <span className="text-xs text-muted-foreground">
+                {SOURCE_LABELS[product.source_platform ?? "manual"] ?? "Added by you"}
+              </span>
+            ) : (
+              <span className="text-xs text-muted-foreground">
+                {commission(product.commission_rate)} comm.
+              </span>
+            )}
           </div>
-          <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-            <span>{compact(product.monthly_sales)} sold/mo</span>
-            <span>·</span>
-            <span>{compact(product.creator_count_active)} creators</span>
-          </div>
+          {/* marketplace rows carry sales analytics; user-created rows don't */}
+          {!product.owner_user_id && (
+            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
+              <span>{compact(product.monthly_sales)} sold/mo</span>
+              <span>·</span>
+              <span>{compact(product.creator_count_active)} creators</span>
+            </div>
+          )}
         </div>
       </div>
     </Link>

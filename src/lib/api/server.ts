@@ -98,7 +98,10 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   }
 
   const payload = await backendRes.text();
-  const out = new NextResponse(payload, {
+  // Null-body statuses (204/205/304) reject ANY body — even "" — with a
+  // TypeError, which surfaced as a 500 on every DELETE proxied through here.
+  const responseBody = [204, 205, 304].includes(backendRes.status) ? null : payload;
+  const out = new NextResponse(responseBody, {
     status: backendRes.status,
     headers: {
       "Content-Type": backendRes.headers.get("content-type") ?? "application/json",

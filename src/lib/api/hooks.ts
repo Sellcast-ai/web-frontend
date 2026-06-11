@@ -17,6 +17,7 @@ import type {
 export const qk = {
   me: ["me"] as const,
   products: (p: Record<string, unknown>) => ["products", p] as const,
+  myProducts: ["my-products"] as const,
   product: (id: string) => ["product", id] as const,
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
@@ -58,6 +59,10 @@ export function useProduct(id: string) {
     queryFn: () => api.getProduct(id),
     enabled: Boolean(id),
   });
+}
+
+export function useMyProducts() {
+  return useQuery({ queryKey: qk.myProducts, queryFn: api.listMyProducts });
 }
 
 export function useVideoJobs(params: { product_id?: string } = {}) {
@@ -108,6 +113,21 @@ function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
         data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
       );
     });
+}
+
+export function useParseProduct() {
+  return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
+}
+
+export function useCreateProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.createProduct,
+    onSuccess: (product) => {
+      qc.setQueryData(qk.product(product.id), product);
+      qc.invalidateQueries({ queryKey: qk.myProducts });
+    },
+  });
 }
 
 export function useCreateJob() {

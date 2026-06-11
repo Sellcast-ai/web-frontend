@@ -25,6 +25,49 @@ export interface ProductSummary {
   hero_image_urls: string[];
   detail_image_urls: string[];
   is_liked: boolean;
+  /** User-created ("My Products") rows; all null for marketplace rows. */
+  owner_user_id: string | null;
+  source_platform: SourcePlatform | null;
+  source_url: string | null;
+}
+
+export type SourcePlatform =
+  | "amazon"
+  | "shopee"
+  | "tiktok_shop"
+  | "generic"
+  | "manual";
+
+/** What /products/parse extracted — shown on the review card, nothing saved yet. */
+export interface ProductDraft {
+  source_platform: SourcePlatform;
+  source_url: string;
+  title: string;
+  description: string;
+  price_min: number | null;
+  price_max: number | null;
+  currency: string | null;
+  image_urls: string[];
+  suggested_category: string | null;
+  warnings: string[];
+}
+
+export interface UploadedImagePayload {
+  filename: string;
+  data_base64: string;
+}
+
+export interface ProductCreate {
+  title: string;
+  description?: string;
+  category_display?: string | null;
+  source_platform?: SourcePlatform;
+  source_url?: string | null;
+  price_min?: number | null;
+  price_max?: number | null;
+  currency?: string;
+  image_urls?: string[];
+  uploaded_images?: UploadedImagePayload[];
 }
 
 export interface SourceSnapshot {
@@ -94,7 +137,26 @@ export interface VideoJobCreate {
   style: VideoStyle;
   duration_seconds?: VideoDuration;
   review_mode?: boolean;
+  /** Gated server-side by SELLCAST_ENABLED_LANGUAGES (voice-QA'd languages only). */
+  language?: VideoLanguage;
 }
+
+export type VideoLanguage = "en" | "id" | "th" | "vi" | "es";
+
+/** Languages shown in Studio. `enabled` must mirror the backend's
+ * SELLCAST_ENABLED_LANGUAGES — flip an entry on only after its voiceover
+ * passes scripts/voice_qa_languages.py. */
+export const VIDEO_LANGUAGES: {
+  value: VideoLanguage;
+  label: string;
+  enabled: boolean;
+}[] = [
+  { value: "en", label: "English", enabled: true },
+  { value: "id", label: "Bahasa Indonesia", enabled: false },
+  { value: "th", label: "ไทย (Thai)", enabled: false },
+  { value: "vi", label: "Tiếng Việt", enabled: false },
+  { value: "es", label: "Español", enabled: false },
+];
 
 export interface VideoJobBeat {
   beat_index: number;

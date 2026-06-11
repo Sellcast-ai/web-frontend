@@ -1,6 +1,8 @@
 import type {
   ProductSummary,
   ProductDetail,
+  ProductDraft,
+  ProductCreate,
   VideoJob,
   VideoJobCreate,
   VideoJobEventCreate,
@@ -57,6 +59,11 @@ export const api = {
     return bff<ProductSummary[]>(`products?${qs.toString()}`);
   },
   getProduct: (id: string) => bff<ProductDetail>(`products/${id}`),
+  listMyProducts: () => bff<ProductSummary[]>(`products/mine`),
+  parseProductUrl: (url: string) =>
+    bff<ProductDraft>(`products/parse`, { method: "POST", json: { url } }),
+  createProduct: (payload: ProductCreate) =>
+    bff<ProductDetail>(`products`, { method: "POST", json: payload }),
   likeProduct: (id: string) =>
     bff<LikeStatus>(`products/${id}/like`, { method: "PUT" }),
   unlikeProduct: (id: string) =>

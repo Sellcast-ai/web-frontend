@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -17,11 +17,14 @@ import {
 import { useProduct, useCreateJob, useUsage } from "@/lib/api/hooks";
 import {
   VIDEO_DURATIONS,
+  VIDEO_LANGUAGES,
   VIDEO_STYLES,
+  type VideoLanguage,
   type VideoMode,
   type VideoStyle,
   type VideoDuration,
 } from "@/lib/api/types";
+import { defaultLanguageFor } from "@/lib/language";
 import { Button } from "@/components/ui/button";
 import { priceRange } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -56,15 +59,21 @@ function StudioInner() {
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
   const [duration, setDuration] = useState<VideoDuration>(15);
+  // Language defaults to the product's source market (shopee.co.id → id)
+  // until the user explicitly picks one — derived, so no effect needed.
+  const [languageOverride, setLanguageOverride] = useState<VideoLanguage | null>(null);
+  const language = languageOverride ?? defaultLanguageFor(product);
   const [reviewMode, setReviewMode] = useState(false);
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
 
-  // keep style valid for the selected mode
-  useEffect(() => {
-    setStyle(VIDEO_STYLES[mode][0].value);
-  }, [mode]);
+  // switching modes resets style to that mode's first option (in the click
+  // handler, not an effect — see react-hooks/set-state-in-effect)
+  function pickMode(next: VideoMode) {
+    setMode(next);
+    setStyle(VIDEO_STYLES[next][0].value);
+  }
 
   async function generate() {
     if (!productId) return;
@@ -74,6 +83,7 @@ function StudioInner() {
       style,
       duration_seconds: duration,
       review_mode: reviewMode,
+      language,
     });
     router.push(`/app/jobs/${job.id}`);
   }
@@ -103,7 +113,7 @@ function StudioInner() {
                 <button
                   key={m.value}
                   type="button"
-                  onClick={() => setMode(m.value)}
+                  onClick={() => pickMode(m.value)}
                   className={cn(
                     "rounded-2xl border-2 p-4 text-left transition-colors",
                     mode === m.value
@@ -179,8 +189,38 @@ function StudioInner() {
             </div>
           </Section>
 
+          {/* language — only voice-QA-validated languages are selectable */}
+          <Section title="4 · Language">
+            <div className="flex flex-wrap gap-2">
+              {VIDEO_LANGUAGES.map((lang) => (
+                <button
+                  key={lang.value}
+                  type="button"
+                  disabled={!lang.enabled}
+                  title={lang.enabled ? undefined : "Coming soon"}
+                  onClick={() => setLanguageOverride(lang.value)}
+                  className={cn(
+                    "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
+                    !lang.enabled
+                      ? "cursor-not-allowed border-border bg-card text-muted-foreground opacity-60"
+                      : language === lang.value
+                        ? "border-brand-400 bg-accent text-accent-foreground"
+                        : "border-border bg-card text-muted-foreground hover:text-ink",
+                  )}
+                >
+                  {lang.label}
+                  {!lang.enabled && (
+                    <span className="ml-1.5 text-[10px] font-bold uppercase tracking-wide">
+                      soon
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </Section>
+
           {/* review mode */}
-          <Section title="4 · Review">
+          <Section title="5 · Review">
             <button
               type="button"
               onClick={() => setReviewMode((v) => !v)}
@@ -241,6 +281,10 @@ function StudioInner() {
                 value={VIDEO_STYLES[mode].find((s) => s.value === style)?.label ?? ""}
               />
               <Row label="Length" value={`${duration}s`} />
+              <Row
+                label="Language"
+                value={VIDEO_LANGUAGES.find((l) => l.value === language)?.label ?? "English"}
+              />
               <Row label="Format" value="9:16" />
               <Row label="Review" value={reviewMode ? "Manual beats" : "Auto-QA"} />
             </dl>
