@@ -159,6 +159,18 @@ export function useBeatAction(jobId: string) {
   });
 }
 
+export function useRetryJob() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => api.retryVideoJob(id),
+    onSuccess: (job) => {
+      qc.setQueryData(qk.job(job.id), job);
+      qc.invalidateQueries({ queryKey: ["jobs"] });
+      qc.invalidateQueries({ queryKey: ["usage"] });
+    },
+  });
+}
+
 export function useDeleteJob() {
   const qc = useQueryClient();
   return useMutation({

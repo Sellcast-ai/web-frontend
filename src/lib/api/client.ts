@@ -84,6 +84,8 @@ export const api = {
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
   deleteVideoJob: (id: string) =>
     bff<void>(`video-jobs/${id}`, { method: "DELETE" }),
+  retryVideoJob: (id: string) =>
+    bff<VideoJob>(`video-jobs/${id}/retry`, { method: "POST" }),
   recordEvent: (id: string, payload: VideoJobEventCreate) =>
     bff<unknown>(`video-jobs/${id}/events`, { method: "POST", json: payload }),
   approveBeat: (id: string, beatIndex: number) =>

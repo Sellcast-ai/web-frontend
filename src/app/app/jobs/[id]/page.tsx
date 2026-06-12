@@ -13,7 +13,7 @@ import {
   Eye,
   Share2,
 } from "lucide-react";
-import { useVideoJob, useBeatAction } from "@/lib/api/hooks";
+import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
@@ -434,6 +434,7 @@ function CompletedView({ job }: { job: VideoJob }) {
 /* ----------------------------------------------------------------- failed */
 
 function FailedView({ job }: { job: VideoJob }) {
+  const retry = useRetryJob();
   return (
     <div className="mt-8 flex items-start gap-3 rounded-card border border-rose/30 bg-rose/5 p-5">
       <AlertTriangle className="mt-0.5 h-5 w-5 text-rose" />
@@ -442,9 +443,31 @@ function FailedView({ job }: { job: VideoJob }) {
         <p className="mt-1 text-sm text-muted-foreground">
           {job.error_message ?? "Something went wrong. Try creating it again."}
         </p>
-        <Button href="/app/marketplace" variant="outline" size="md" className="mt-4">
-          Start a new video
-        </Button>
+        <div className="mt-4 flex flex-wrap gap-3">
+          {/* resumes already-paid work (rendered shots, reference images) */}
+          <Button
+            size="md"
+            onClick={() => retry.mutate(job.id)}
+            disabled={retry.isPending}
+          >
+            {retry.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <RefreshCw className="h-4 w-4" />
+                Retry
+              </>
+            )}
+          </Button>
+          <Button href="/app/marketplace" variant="outline" size="md">
+            Start a new video
+          </Button>
+        </div>
+        {retry.isError && (
+          <p className="mt-2 text-sm text-rose">
+            {(retry.error as Error)?.message || "Couldn't retry. Try again."}
+          </p>
+        )}
       </div>
     </div>
   );
