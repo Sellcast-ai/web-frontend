@@ -413,7 +413,11 @@ function CompletedView({ job }: { job: VideoJob }) {
           posted to keep your stats tidy.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
-          <Button href={src ?? "#"} size="md" {...(src ? { target: "_blank" } : {})}>
+          <Button
+            href={job.download_url ?? src ?? "#"}
+            size="md"
+            {...(job.download_url || src ? { target: "_blank" } : {})}
+          >
             Download
           </Button>
           <Button variant="outline" size="md" onClick={markPosted}>

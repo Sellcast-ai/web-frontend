@@ -185,6 +185,8 @@ export interface VideoJob {
   aspect_ratio: string;
   prompt: string;
   video_url: string | null;
+  /** Same video presigned with attachment disposition — forces save-as. */
+  download_url: string | null;
   thumbnail_url: string | null;
   error_message: string | null;
   created_at: string;
