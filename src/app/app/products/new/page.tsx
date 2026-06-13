@@ -26,6 +26,15 @@ const PLATFORM_LABELS: Record<SourcePlatform, string> = {
   amazon: "Amazon",
   shopee: "Shopee",
   tiktok_shop: "TikTok Shop",
+  walmart: "Walmart",
+  lazada: "Lazada",
+  aliexpress: "AliExpress",
+  temu: "Temu",
+  alibaba: "Alibaba",
+  taobao: "Taobao",
+  mercadolibre: "Mercado Libre",
+  etsy: "Etsy",
+  ebay: "eBay",
   generic: "Web store",
   manual: "Manual",
 };
@@ -199,8 +208,9 @@ function NewProductInner() {
         <>
           <h1 className="font-display text-3xl font-bold text-ink">Add a product</h1>
           <p className="mt-1 text-muted-foreground">
-            Paste any product link — Amazon, Shopee, TikTok Shop, or your own store —
-            or start from photos. Lumi reads the page; you confirm before anything renders.
+            Paste any product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop,
+            Etsy, eBay, or your own store — or start from photos. Lumi reads the page;
+            you confirm before anything renders.
           </p>
 
           {/* URL omnibox */}

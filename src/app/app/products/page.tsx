@@ -49,7 +49,7 @@ export default function MyProductsPage() {
         <input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="Paste a product link — Amazon, Shopee, TikTok Shop, or your own store"
+          placeholder="Paste a product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, or any store"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         <Button size="sm" type="submit" disabled={!url.trim()}>

@@ -35,6 +35,15 @@ export type SourcePlatform =
   | "amazon"
   | "shopee"
   | "tiktok_shop"
+  | "walmart"
+  | "lazada"
+  | "aliexpress"
+  | "temu"
+  | "alibaba"
+  | "taobao"
+  | "mercadolibre"
+  | "etsy"
+  | "ebay"
   | "generic"
   | "manual";
 
