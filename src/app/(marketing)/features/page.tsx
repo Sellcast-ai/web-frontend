@@ -28,11 +28,11 @@ const FEATURES = [
     icon: Link2,
     kicker: "Source",
     title: "Link to Video",
-    body: "Paste any product URL or pick from the built-in marketplace of trending TikTok Shop products. Lumi reads the product, its angle, and its proof points, then handles framing, script, voice, and edit automatically.",
+    body: "Paste a product link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product, its angle, and its proof points, then handles framing, script, voice, and edit automatically. Your products stay private to you.",
     bullets: [
-      "Marketplace with live sales, commission & creator-momentum signals",
-      "Any product link works — no manual data entry",
-      "Hero imagery becomes the render's visual reference",
+      "Any link — Amazon, Shopee, TikTok Shop, or your own store",
+      "Or upload your own product photos",
+      "Or browse the marketplace of trending picks for ideas",
     ],
   },
   {
@@ -42,9 +42,9 @@ const FEATURES = [
     title: "Pattern-grounded scripts",
     body: "Before writing a word, Lumi studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — the hook, proof, and CTA shapes that actually convert. Your script is built on that, never a blank page.",
     bullets: [
-      "Learns structure from ~100 filtered organic winners",
+      "Learns structure from filtered organic winners in your category",
       "Hook / proof / offer beats, not copy-pasted execution",
-      "Audience language pulled from real comments",
+      "Audience language modeled from those top-performers",
     ],
   },
   {
@@ -68,7 +68,7 @@ const FEATURES = [
     bullets: [
       "AI Avatar or Product-Only",
       "8 styles tuned for commerce",
-      "5–30 second lengths, 9:16 native",
+      "10–30 second lengths, 9:16 native",
     ],
   },
   {

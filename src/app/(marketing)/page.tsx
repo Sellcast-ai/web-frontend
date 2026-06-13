@@ -12,8 +12,6 @@ import {
   ScanSearch,
   PencilRuler,
   Clapperboard,
-  Quote,
-  Star,
   Check,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -27,8 +25,8 @@ const STEPS = [
   {
     icon: Search,
     kicker: "Find",
-    title: "Pick a winning product",
-    body: "Browse trending TikTok Shop products with live sales & commission signals — or paste any product link.",
+    title: "Start from any product",
+    body: "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Or browse trending picks in the marketplace.",
   },
   {
     icon: ScanSearch,
@@ -54,7 +52,7 @@ const FEATURES = [
   {
     icon: Link2,
     title: "Link to Video",
-    body: "Drop a product URL or pick from the marketplace. Lumi handles framing, script, voice, and edit automatically.",
+    body: "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product and handles framing, script, voice, and edit automatically.",
   },
   {
     icon: Wand2,
@@ -96,37 +94,10 @@ const USE_CASES = [
 ];
 
 const STATS = [
-  { value: "100+", label: "real videos studied per category" },
-  { value: "4 min", label: "median product → finished cut" },
-  { value: "10k+", label: "creators & sellers on Lumi" },
-  { value: "9:16", label: "publish-ready, every time" },
-];
-
-const TESTIMONIALS = [
-  {
-    quote:
-      "We went from 3 videos a week to 30. The pattern grounding is the part nobody else does — the hooks actually land.",
-    name: "Maya R.",
-    role: "DTC founder",
-  },
-  {
-    quote:
-      "Beat review sold me. I approve the shots I want, regen the ones I don't, and I never waste render credits.",
-    name: "Devon K.",
-    role: "TikTok Shop affiliate",
-  },
-  {
-    quote:
-      "My agency runs five brands through Lumi. Same quality bar, a fraction of the edit time.",
-    name: "Priya N.",
-    role: "Creative agency lead",
-  },
-  {
-    quote:
-      "It feels native, not 'AI-made'. That's the whole game on TikTok and Lumi nails the feel.",
-    name: "Theo M.",
-    role: "Performance marketer",
-  },
+  { value: "5 ways", label: "to start: Amazon, Shopee, TikTok Shop, your store, or photos" },
+  { value: "9:16", label: "publish-ready for TikTok & Reels, every time" },
+  { value: "1 credit", label: "= 1 second of video — only pay for what you render" },
+  { value: "$0", label: "render spend until you approve the beats" },
 ];
 
 const PRICING = [
@@ -183,7 +154,7 @@ export default function HomePage() {
           <div className="animate-rise">
             <Badge variant="outline" className="mb-6">
               <Sparkles className="h-3.5 w-3.5 text-brand-500" />
-              Built for TikTok Shop &amp; Reels
+              Built for TikTok &amp; Reels
             </Badge>
             <h1 className="font-display text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
               Turn any product into a{" "}
@@ -191,10 +162,11 @@ export default function HomePage() {
               video.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Lumi studies what actually goes viral in your category, scripts a
-              video grounded in that pattern, lets you review it beat-by-beat,
-              and renders it with Seedance 2.0 — in minutes, no camera
-              required.
+              Paste any product link — Amazon, Shopee, TikTok Shop, or your own
+              store — or upload photos. Lumi studies what&apos;s already winning
+              in that category, scripts a video grounded in the pattern, lets you
+              review it beat-by-beat, and renders it with Seedance 2.0. In
+              minutes, no camera.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href="/signup" size="lg">
@@ -205,18 +177,15 @@ export default function HomePage() {
                 See how it works
               </Button>
             </div>
-            <div className="mt-8 flex items-center gap-4 text-sm text-muted-foreground">
-              <div className="flex -space-x-2">
-                {["bg-brand-300", "bg-rose", "bg-gold", "bg-brand-600"].map((c) => (
-                  <span
-                    key={c}
-                    className={`h-8 w-8 rounded-full border-2 border-background ${c}`}
-                  />
-                ))}
-              </div>
-              <span>
-                <strong className="text-ink">10,000+</strong> creators &amp;
-                sellers shipping with Lumi
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-success" /> First video free
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-success" /> No credit card
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-success" /> Publish-ready 9:16
               </span>
             </div>
           </div>
@@ -376,36 +345,6 @@ export default function HomePage() {
                 {s.label}
               </p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ===================================================== TESTIMONIALS */}
-      <section className="container-page py-24">
-        <SectionHeading
-          kicker="Wall of love"
-          title="Creators don't go back to filming"
-        />
-        <div className="mt-14 columns-1 gap-5 sm:columns-2 lg:columns-2 [&>*]:mb-5">
-          {TESTIMONIALS.map((t) => (
-            <figure
-              key={t.name}
-              className="break-inside-avoid rounded-card border border-border bg-card p-7 shadow-soft"
-            >
-              <Quote className="h-7 w-7 text-brand-300" />
-              <div className="mt-3 flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-gold text-gold" />
-                ))}
-              </div>
-              <blockquote className="mt-3 text-[15px] leading-relaxed text-ink">
-                “{t.quote}”
-              </blockquote>
-              <figcaption className="mt-4 text-sm">
-                <span className="font-semibold text-ink">{t.name}</span>
-                <span className="text-muted-foreground"> · {t.role}</span>
-              </figcaption>
-            </figure>
           ))}
         </div>
       </section>

@@ -89,7 +89,7 @@ const INCLUDED = [
   "Avatar + product modes",
   "Captions burned in",
   "9:16 for TikTok & Reels",
-  "Marketplace of trending products",
+  "Paste any product link or browse the marketplace",
 ];
 
 const FAQ = [

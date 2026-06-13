@@ -23,11 +23,11 @@ const FAQS = [
   },
   {
     q: "Where does the product data come from?",
-    a: "Browse the built-in marketplace of trending TikTok Shop products with live sales, commission, and creator-momentum signals — or paste any product link and Lumi builds from there.",
+    a: "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload your own product photos — and Lumi reads the title, description, and imagery to build from. Your products stay private to you. Prefer ideas? Browse the built-in marketplace of trending picks.",
   },
   {
     q: "How long does one video take?",
-    a: "Most videos go from product to finished cut in a few minutes. The pattern research for a category is cached, so the second and third videos in that category are even faster.",
+    a: "Lumi scripts, storyboards, and renders without you filming or editing — you kick it off and come back to a finished, publish-ready cut. The pattern research for a category is cached, so later videos in that category start even faster.",
   },
 ];
 
