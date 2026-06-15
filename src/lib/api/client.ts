@@ -3,6 +3,8 @@ import type {
   ProductDetail,
   ProductDraft,
   ProductCreate,
+  Avatar,
+  AvatarCreate,
   VideoJob,
   VideoJobCreate,
   VideoJobEventCreate,
@@ -68,6 +70,13 @@ export const api = {
     bff<LikeStatus>(`products/${id}/like`, { method: "PUT" }),
   unlikeProduct: (id: string) =>
     bff<LikeStatus>(`products/${id}/like`, { method: "DELETE" }),
+
+  /* --- avatars --- */
+  listAvatars: () => bff<Avatar[]>(`avatars`),
+  createAvatar: (payload: AvatarCreate) =>
+    bff<Avatar>(`avatars`, { method: "POST", json: payload }),
+  deleteAvatar: (id: string) =>
+    bff<void>(`avatars/${id}`, { method: "DELETE" }),
 
   /* --- video jobs --- */
   listVideoJobs: (

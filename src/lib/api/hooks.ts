@@ -65,6 +65,26 @@ export function useMyProducts() {
   return useQuery({ queryKey: qk.myProducts, queryFn: api.listMyProducts });
 }
 
+export function useAvatars() {
+  return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
+}
+
+export function useCreateAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: api.createAvatar,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+  });
+}
+
+export function useDeleteAvatar() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => api.deleteAvatar(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+  });
+}
+
 export function useVideoJobs(params: { product_id?: string } = {}) {
   return useQuery({
     queryKey: qk.jobs(params),

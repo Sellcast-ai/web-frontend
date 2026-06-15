@@ -14,7 +14,7 @@ import {
   Wand2,
   Store,
 } from "lucide-react";
-import { useProduct, useCreateJob, useUsage } from "@/lib/api/hooks";
+import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks";
 import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
@@ -59,6 +59,8 @@ function StudioInner() {
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
   const [duration, setDuration] = useState<VideoDuration>(15);
+  const [avatarId, setAvatarId] = useState<string | null>(null);
+  const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
   const [languageOverride, setLanguageOverride] = useState<VideoLanguage | null>(null);
@@ -84,6 +86,7 @@ function StudioInner() {
       duration_seconds: duration,
       review_mode: reviewMode,
       language,
+      avatar_id: mode === "ai_avatar" ? avatarId : null,
     });
     router.push(`/app/jobs/${job.id}`);
   }
@@ -167,6 +170,35 @@ function StudioInner() {
               ))}
             </div>
           </Section>
+
+          {/* avatar — who's on screen (avatar mode only) */}
+          {mode === "ai_avatar" && (
+            <Section title="Presenter">
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                <AvatarChoice
+                  selected={avatarId === null}
+                  onClick={() => setAvatarId(null)}
+                  label="Auto"
+                  sublabel="AI picks a creator"
+                />
+                {(avatars ?? []).map((a) => (
+                  <AvatarChoice
+                    key={a.id}
+                    selected={avatarId === a.id}
+                    onClick={() => setAvatarId(a.id)}
+                    label={a.name}
+                    imageUrl={a.image_url}
+                  />
+                ))}
+              </div>
+              <Link
+                href="/app/avatars"
+                className="mt-3 inline-block text-xs font-semibold text-brand-700"
+              >
+                Manage avatars →
+              </Link>
+            </Section>
+          )}
 
           {/* duration */}
           <Section title="3 · Duration">
@@ -327,6 +359,43 @@ function StudioInner() {
         </aside>
       </div>
     </div>
+  );
+}
+
+function AvatarChoice({
+  selected,
+  onClick,
+  label,
+  sublabel,
+  imageUrl,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  label: string;
+  sublabel?: string;
+  imageUrl?: string | null;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "overflow-hidden rounded-2xl border-2 text-left transition-colors",
+        selected ? "border-brand-400" : "border-border hover:border-border-strong",
+      )}
+    >
+      <div className="flex aspect-square items-center justify-center bg-muted">
+        {imageUrl ? (
+          <img src={imageUrl} alt={label} className="h-full w-full object-cover" />
+        ) : (
+          <Sparkles className="h-6 w-6 text-brand-500" />
+        )}
+      </div>
+      <div className="px-2 py-1.5">
+        <p className="truncate text-xs font-semibold text-ink">{label}</p>
+        {sublabel && <p className="truncate text-[11px] text-muted-foreground">{sublabel}</p>}
+      </div>
+    </button>
   );
 }
 

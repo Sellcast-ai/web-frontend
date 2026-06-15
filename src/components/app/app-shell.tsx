@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { Store, Package, Clapperboard, User, Sparkles, LogOut, Loader2 } from "lucide-react";
+import { Store, Package, UserSquare2, Clapperboard, User, Sparkles, LogOut, Loader2 } from "lucide-react";
 import { Logo } from "@/components/marketing/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { href: "/app/marketplace", label: "Marketplace", Icon: Store },
   { href: "/app/products", label: "My Products", Icon: Package },
+  { href: "/app/avatars", label: "Avatars", Icon: UserSquare2 },
   { href: "/app/videos", label: "My Videos", Icon: Clapperboard },
   { href: "/app/profile", label: "Profile", Icon: User },
 ];

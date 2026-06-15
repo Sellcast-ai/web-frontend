@@ -148,6 +148,28 @@ export interface VideoJobCreate {
   review_mode?: boolean;
   /** Gated server-side by SELLCAST_ENABLED_LANGUAGES (voice-QA'd languages only). */
   language?: VideoLanguage;
+  /** Chosen on-screen identity for ai_avatar mode; null → AI-invented. */
+  avatar_id?: string | null;
+}
+
+/* ----------------------------------------------------------------- avatars */
+
+export type AvatarKind = "uploaded" | "digital_character";
+
+export interface Avatar {
+  id: string;
+  kind: AvatarKind;
+  name: string;
+  image_url: string | null;
+  /** True for the shared digital-character library (no delete). */
+  is_shared: boolean;
+}
+
+export interface AvatarCreate {
+  name: string;
+  filename: string;
+  data_base64: string;
+  consent: boolean;
 }
 
 export type VideoLanguage = "en" | "id" | "th" | "vi" | "es";
