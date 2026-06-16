@@ -19,9 +19,11 @@ import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
   VIDEO_MODELS,
+  VIDEO_RESOLUTIONS,
   VIDEO_STYLES,
   type VideoLanguage,
   type VideoModelKey,
+  type VideoResolution,
   type VideoMode,
   type VideoStyle,
   type VideoDuration,
@@ -62,6 +64,7 @@ function StudioInner() {
   const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
   const [duration, setDuration] = useState<VideoDuration>(15);
   const [videoModel, setVideoModel] = useState<VideoModelKey>(VIDEO_MODELS[0].value);
+  const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [avatarId, setAvatarId] = useState<string | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
@@ -90,6 +93,7 @@ function StudioInner() {
       review_mode: reviewMode,
       language,
       video_model: videoModel,
+      resolution,
       avatar_id: mode === "ai_avatar" ? avatarId : null,
     });
     router.push(`/app/jobs/${job.id}`);
@@ -250,6 +254,31 @@ function StudioInner() {
             </div>
           </Section>
 
+          {/* resolution — render quality */}
+          <Section title="Resolution">
+            <div className="grid grid-cols-3 gap-3">
+              {VIDEO_RESOLUTIONS.map((r) => (
+                <button
+                  key={r.value}
+                  type="button"
+                  disabled={!r.enabled}
+                  onClick={() => setResolution(r.value)}
+                  className={cn(
+                    "rounded-2xl border p-3.5 text-left transition-colors",
+                    !r.enabled
+                      ? "cursor-not-allowed border-border bg-card opacity-60"
+                      : resolution === r.value
+                        ? "border-brand-400 bg-accent"
+                        : "border-border bg-card hover:border-border-strong",
+                  )}
+                >
+                  <p className="text-sm font-semibold text-ink">{r.label}</p>
+                  <p className="text-xs text-muted-foreground">{r.blurb}</p>
+                </button>
+              ))}
+            </div>
+          </Section>
+
           {/* language — only voice-QA-validated languages are selectable */}
           <Section title="4 · Language">
             <div className="flex flex-wrap gap-2">
@@ -345,6 +374,10 @@ function StudioInner() {
               <Row
                 label="Model"
                 value={VIDEO_MODELS.find((m) => m.value === videoModel)?.label ?? ""}
+              />
+              <Row
+                label="Resolution"
+                value={VIDEO_RESOLUTIONS.find((r) => r.value === resolution)?.label ?? ""}
               />
               <Row
                 label="Language"

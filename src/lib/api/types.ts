@@ -153,22 +153,39 @@ export interface VideoJobCreate {
   /** Video model (Studio picker). Applied server-side only when the active
    * provider is BytePlus/Volcano; omit to use the server default. */
   video_model?: VideoModelKey;
+  /** Render resolution (Studio picker). 1080p needs a 1080p-capable model
+   * (Seedance 2.0); on fast/mini the server clamps it to 720p. */
+  resolution?: VideoResolution;
 }
 
-export type VideoModelKey = "seedance-2.0-fast" | "seedance-2.0-mini";
+export type VideoModelKey = "seedance-2.0";
 
 /** Models shown in the Studio picker. `value`/`enabled` must mirror the
- * backend's settings.selectable_video_models (SELLCAST_VIDEO_MODELS). 2.0 Fast
- * is live now; 2.0 Mini's API opens ~2026-06-22 but is left enabled (renders
- * only run once the provider is flipped to byteplus, which is post-22nd). */
+ * backend's settings.selectable_video_models (SELLCAST_VIDEO_MODELS). Seedance
+ * 2.0 (standard) only — avatars use the preset library; up to 1080p. */
 export const VIDEO_MODELS: {
   value: VideoModelKey;
   label: string;
   blurb: string;
   enabled: boolean;
 }[] = [
-  { value: "seedance-2.0-fast", label: "Seedance 2.0 Fast", blurb: "Faster · great quality", enabled: true },
-  { value: "seedance-2.0-mini", label: "Seedance 2.0 Mini", blurb: "Best value · 720p", enabled: true },
+  { value: "seedance-2.0", label: "Seedance 2.0", blurb: "Newest · up to 1080p", enabled: true },
+];
+
+export type VideoResolution = "480p" | "720p" | "1080p";
+
+/** Resolutions shown in the Studio picker — mirror settings.selectable_video_
+ * resolutions. 1080p only renders on Seedance 2.0 (standard); the server clamps
+ * it to 720p on fast/mini and charges the 1080p credit multiplier. */
+export const VIDEO_RESOLUTIONS: {
+  value: VideoResolution;
+  label: string;
+  blurb: string;
+  enabled: boolean;
+}[] = [
+  { value: "480p", label: "480p", blurb: "Draft · cheapest", enabled: true },
+  { value: "720p", label: "720p", blurb: "HD · standard", enabled: true },
+  { value: "1080p", label: "1080p", blurb: "Full HD · needs Seedance 2.0", enabled: true },
 ];
 
 /* ----------------------------------------------------------------- avatars */
