@@ -18,8 +18,10 @@ import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks"
 import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
+  VIDEO_MODELS,
   VIDEO_STYLES,
   type VideoLanguage,
+  type VideoModelKey,
   type VideoMode,
   type VideoStyle,
   type VideoDuration,
@@ -59,6 +61,7 @@ function StudioInner() {
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
   const [duration, setDuration] = useState<VideoDuration>(15);
+  const [videoModel, setVideoModel] = useState<VideoModelKey>(VIDEO_MODELS[0].value);
   const [avatarId, setAvatarId] = useState<string | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
@@ -86,6 +89,7 @@ function StudioInner() {
       duration_seconds: duration,
       review_mode: reviewMode,
       language,
+      video_model: videoModel,
       avatar_id: mode === "ai_avatar" ? avatarId : null,
     });
     router.push(`/app/jobs/${job.id}`);
@@ -221,6 +225,31 @@ function StudioInner() {
             </div>
           </Section>
 
+          {/* model — which Seedance model renders the video */}
+          <Section title="Model">
+            <div className="grid grid-cols-2 gap-3">
+              {VIDEO_MODELS.map((m) => (
+                <button
+                  key={m.value}
+                  type="button"
+                  disabled={!m.enabled}
+                  onClick={() => setVideoModel(m.value)}
+                  className={cn(
+                    "rounded-2xl border p-3.5 text-left transition-colors",
+                    !m.enabled
+                      ? "cursor-not-allowed border-border bg-card opacity-60"
+                      : videoModel === m.value
+                        ? "border-brand-400 bg-accent"
+                        : "border-border bg-card hover:border-border-strong",
+                  )}
+                >
+                  <p className="text-sm font-semibold text-ink">{m.label}</p>
+                  <p className="text-xs text-muted-foreground">{m.blurb}</p>
+                </button>
+              ))}
+            </div>
+          </Section>
+
           {/* language — only voice-QA-validated languages are selectable */}
           <Section title="4 · Language">
             <div className="flex flex-wrap gap-2">
@@ -313,6 +342,10 @@ function StudioInner() {
                 value={VIDEO_STYLES[mode].find((s) => s.value === style)?.label ?? ""}
               />
               <Row label="Length" value={`${duration}s`} />
+              <Row
+                label="Model"
+                value={VIDEO_MODELS.find((m) => m.value === videoModel)?.label ?? ""}
+              />
               <Row
                 label="Language"
                 value={VIDEO_LANGUAGES.find((l) => l.value === language)?.label ?? "English"}

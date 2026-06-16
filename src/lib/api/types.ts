@@ -150,7 +150,26 @@ export interface VideoJobCreate {
   language?: VideoLanguage;
   /** Chosen on-screen identity for ai_avatar mode; null → AI-invented. */
   avatar_id?: string | null;
+  /** Video model (Studio picker). Applied server-side only when the active
+   * provider is BytePlus/Volcano; omit to use the server default. */
+  video_model?: VideoModelKey;
 }
+
+export type VideoModelKey = "seedance-2.0-fast" | "seedance-2.0-mini";
+
+/** Models shown in the Studio picker. `value`/`enabled` must mirror the
+ * backend's settings.selectable_video_models (SELLCAST_VIDEO_MODELS). 2.0 Fast
+ * is live now; 2.0 Mini's API opens ~2026-06-22 but is left enabled (renders
+ * only run once the provider is flipped to byteplus, which is post-22nd). */
+export const VIDEO_MODELS: {
+  value: VideoModelKey;
+  label: string;
+  blurb: string;
+  enabled: boolean;
+}[] = [
+  { value: "seedance-2.0-fast", label: "Seedance 2.0 Fast", blurb: "Faster · great quality", enabled: true },
+  { value: "seedance-2.0-mini", label: "Seedance 2.0 Mini", blurb: "Best value · 720p", enabled: true },
+];
 
 /* ----------------------------------------------------------------- avatars */
 
