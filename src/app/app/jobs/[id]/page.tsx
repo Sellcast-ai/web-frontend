@@ -409,7 +409,7 @@ function CompletedView({ job }: { job: VideoJob }) {
           Your video is ready 🎉
         </h2>
         <p className="mt-2 text-muted-foreground">
-          A publish-ready 9:16 cut, captions burned in. Download it or mark it
+          A publish-ready 9:16 cut with spoken audio. Download it or mark it
           posted to keep your stats tidy.
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
