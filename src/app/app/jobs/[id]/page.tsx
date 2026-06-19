@@ -25,9 +25,26 @@ import { cn } from "@/lib/utils";
 
 const STEPS = ["Script", "Beats", "Review", "Render", "Ready"] as const;
 
+/** True once every beat has cleared the review gate. `every` on an empty
+ *  array is vacuously true, so guard on length. */
+function allBeatsApproved(job: VideoJob): boolean {
+  return (
+    job.beats.length > 0 &&
+    job.beats.every(
+      (b) =>
+        b.review_status === "user_approved" ||
+        b.review_status === "auto_approved",
+    )
+  );
+}
+
 function stepIndex(job: VideoJob): number {
   switch (job.status) {
     case "queued":
+      // Re-queued after the review gate (all beats approved) → the worker is
+      // resuming at render, so advance to "Render" instead of jumping back to
+      // "Beats". The initial queue (no beats yet) still sits at "Script".
+      if (allBeatsApproved(job)) return 3;
       return job.beats.length ? 1 : 0;
     case "submitted":
       return 1;
@@ -221,9 +238,6 @@ function WorkingView({ job }: { job: VideoJob }) {
 
 function ReviewView({ job }: { job: VideoJob }) {
   const action = useBeatAction(job.id);
-  const allApproved = job.beats.every(
-    (b) => b.review_status === "user_approved" || b.review_status === "auto_approved",
-  );
 
   return (
     <div className="mt-8">
@@ -239,12 +253,6 @@ function ReviewView({ job }: { job: VideoJob }) {
       </div>
 
       <BeatGrid beats={job.beats} jobId={job.id} action={action} reviewable />
-
-      {allApproved && (
-        <p className="mt-4 text-center text-sm text-success">
-          All beats approved — rendering will continue shortly.
-        </p>
-      )}
     </div>
   );
 }
