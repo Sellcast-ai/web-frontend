@@ -107,12 +107,17 @@ function UploadCard() {
 
   async function submit() {
     if (!photo || !consent || name.trim().length < 1) return;
-    await create.mutateAsync({
-      name: name.trim(),
-      filename: photo.filename,
-      data_base64: photo.base64,
-      consent,
-    });
+    // failure is surfaced as a toast by useCreateAvatar; keep the form filled
+    try {
+      await create.mutateAsync({
+        name: name.trim(),
+        filename: photo.filename,
+        data_base64: photo.base64,
+        consent,
+      });
+    } catch {
+      return;
+    }
     setPhoto(null);
     setName("");
     setConsent(false);
@@ -184,11 +189,7 @@ function UploadCard() {
               </button>
             )}
           </div>
-          {(error || create.isError) && (
-            <p className="text-sm text-rose">
-              {error || (create.error as Error)?.message || "Couldn't save the avatar."}
-            </p>
-          )}
+          {error && <p className="text-sm text-rose">{error}</p>}
         </div>
       </div>
 

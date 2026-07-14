@@ -24,6 +24,11 @@ export const qk = {
   job: (id: string) => ["job", id] as const,
 };
 
+/** Backend error message when it's human-readable, else the fallback. */
+function errMsg(err: unknown, fallback: string): string {
+  return (err instanceof Error && err.message) || fallback;
+}
+
 const ACTIVE: VideoJobStatus[] = [
   "queued",
   "submitted",
@@ -75,6 +80,7 @@ export function useCreateAvatar() {
   return useMutation({
     mutationFn: api.createAvatar,
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+    onError: (err) => toast.error(errMsg(err, "Couldn't save the avatar.")),
   });
 }
 
@@ -83,6 +89,7 @@ export function useDeleteAvatar() {
   return useMutation({
     mutationFn: (id: string) => api.deleteAvatar(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+    onError: (err) => toast.error(errMsg(err, "Couldn't delete the avatar.")),
   });
 }
 
@@ -168,6 +175,8 @@ export function useCreateProduct() {
       qc.setQueryData(qk.product(product.id), product);
       qc.invalidateQueries({ queryKey: qk.myProducts });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't save the product. Please try again.")),
   });
 }
 
@@ -180,6 +189,8 @@ export function useCreateJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't start the video. Please try again.")),
   });
 }
 
@@ -197,6 +208,15 @@ export function useBeatAction(jobId: string) {
         ? api.approveBeat(jobId, beatIndex)
         : api.regenerateBeat(jobId, beatIndex),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
+    onError: (err, { action }) =>
+      toast.error(
+        errMsg(
+          err,
+          action === "approve"
+            ? "Couldn't approve the shot. Please try again."
+            : "Couldn't regenerate the shot. Please try again.",
+        ),
+      ),
   });
 }
 
@@ -209,6 +229,8 @@ export function useRetryJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't retry the job. Please try again.")),
   });
 }
 

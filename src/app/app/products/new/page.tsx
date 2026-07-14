@@ -178,6 +178,7 @@ function NewProductInner() {
   async function submit() {
     if (!draft) return;
     const imageUrls = draft.parsedImages.filter((i) => i.selected).map((i) => i.url);
+    // failure is surfaced as a toast by useCreateProduct
     const product = await create.mutateAsync({
       title: draft.title.trim(),
       description: draft.description.trim(),
@@ -192,8 +193,8 @@ function NewProductInner() {
         filename: u.filename,
         data_base64: u.base64,
       })),
-    });
-    router.push(`/app/studio?product=${product.id}`);
+    }).catch(() => null);
+    if (product) router.push(`/app/studio?product=${product.id}`);
   }
 
   const selectedCount = draft
@@ -443,11 +444,6 @@ function NewProductInner() {
               </p>
             )}
           </div>
-          {create.isError && (
-            <p className="mt-3 text-sm text-rose">
-              {(create.error as Error)?.message || "Couldn't save the product. Try again."}
-            </p>
-          )}
         </>
       )}
 

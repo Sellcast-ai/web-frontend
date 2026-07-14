@@ -7,6 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react";
 import { api, ApiError } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
+import { toast } from "@/lib/toast";
 import { Button } from "@/components/ui/button";
 
 function normalizePhone(raw: string) {
@@ -251,8 +252,12 @@ function GoogleButton() {
             await api.googleLogin(resp.credential);
             await qc.invalidateQueries({ queryKey: qk.me });
             router.replace("/app/marketplace");
-          } catch {
-            /* surfaced by phone path; keep silent */
+          } catch (err) {
+            toast.error(
+              err instanceof ApiError
+                ? err.message
+                : "Google sign-in didn't complete. Please try again.",
+            );
           }
         },
       });

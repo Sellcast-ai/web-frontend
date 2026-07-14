@@ -85,18 +85,21 @@ function StudioInner() {
 
   async function generate() {
     if (!productId) return;
-    const job = await create.mutateAsync({
-      product_id: productId,
-      mode,
-      style,
-      duration_seconds: duration,
-      review_mode: reviewMode,
-      language,
-      video_model: videoModel,
-      resolution,
-      avatar_id: mode === "ai_avatar" ? avatarId : null,
-    });
-    router.push(`/app/jobs/${job.id}`);
+    // failure is surfaced as a toast by useCreateJob
+    const job = await create
+      .mutateAsync({
+        product_id: productId,
+        mode,
+        style,
+        duration_seconds: duration,
+        review_mode: reviewMode,
+        language,
+        video_model: videoModel,
+        resolution,
+        avatar_id: mode === "ai_avatar" ? avatarId : null,
+      })
+      .catch(() => null);
+    if (job) router.push(`/app/jobs/${job.id}`);
   }
 
   if (!productId) {
@@ -408,7 +411,7 @@ function StudioInner() {
                 </>
               )}
             </Button>
-            {outOfQuota ? (
+            {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 Not enough credits for a {duration}s video ({usage?.remaining} of{" "}
                 {usage?.limit} left).{" "}
@@ -416,11 +419,7 @@ function StudioInner() {
                   See plans
                 </Link>
               </p>
-            ) : create.isError ? (
-              <p className="mt-2 text-center text-xs text-rose">
-                {(create.error as Error)?.message || "Couldn't start the job. Try again."}
-              </p>
-            ) : null}
+            )}
           </div>
         </aside>
       </div>

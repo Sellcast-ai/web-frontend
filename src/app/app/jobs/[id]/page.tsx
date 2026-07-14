@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
+import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -63,7 +65,7 @@ function stepIndex(job: VideoJob): number {
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: job, isLoading } = useVideoJob(id);
+  const { data: job, isLoading, dataUpdatedAt } = useVideoJob(id);
 
   if (isLoading || !job) {
     return (
@@ -109,10 +111,8 @@ export default function JobDetailPage() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {active && (
-            <Loader2 className="h-4 w-4 animate-spin text-brand-400" />
-          )}
+        <div className="flex items-center gap-3">
+          {active && <LiveIndicator updatedAt={dataUpdatedAt} />}
           <StatusBadge status={job.status} />
         </div>
       </div>
@@ -159,6 +159,28 @@ export default function JobDetailPage() {
         </details>
       )}
     </div>
+  );
+}
+
+/* ----------------------------------------------------------------- live */
+
+/** Subtle "this page is polling" affordance: pulsing dot + last-fetch time. */
+function LiveIndicator({ updatedAt }: { updatedAt: number }) {
+  // starts at updatedAt (secs = 0) and ticks forward once a second
+  const [now, setNow] = useState(updatedAt);
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const secs = Math.max(0, Math.round((now - updatedAt) / 1000));
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+      <span className="relative flex h-2 w-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75 motion-reduce:animate-none" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
+      </span>
+      Live · updated {secs < 5 ? "just now" : `${secs}s ago`}
+    </span>
   );
 }
 
@@ -395,7 +417,12 @@ function BeatCard({
 function CompletedView({ job }: { job: VideoJob }) {
   const src = mediaUrl(job.video_url);
   async function markPosted() {
-    await api.recordEvent(job.id, { event_type: "posted" }).catch(() => undefined);
+    try {
+      await api.recordEvent(job.id, { event_type: "posted" });
+      toast.success("Marked as posted.");
+    } catch {
+      toast.error("Couldn't record that. Please try again.");
+    }
   }
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
@@ -470,11 +497,6 @@ function FailedView({ job }: { job: VideoJob }) {
             Start a new video
           </Button>
         </div>
-        {retry.isError && (
-          <p className="mt-2 text-sm text-rose">
-            {(retry.error as Error)?.message || "Couldn't retry. Try again."}
-          </p>
-        )}
       </div>
     </div>
   );
