@@ -7,6 +7,7 @@ import { useAvatars, useCreateAvatar, useDeleteAvatar } from "@/lib/api/hooks";
 import type { Avatar } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
+import { Modal } from "@/components/ui/overlay";
 import { cn } from "@/lib/utils";
 
 const MAX_UPLOAD_MB = 8;
@@ -214,6 +215,7 @@ function UploadCard() {
 
 function AvatarCard({ avatar }: { avatar: Avatar }) {
   const del = useDeleteAvatar();
+  const [confirming, setConfirming] = useState(false);
   return (
     <div className="group relative overflow-hidden rounded-card border border-border bg-card shadow-soft">
       <div className="aspect-square bg-muted">
@@ -231,7 +233,7 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
           <button
             type="button"
             aria-label="Delete avatar"
-            onClick={() => del.mutate(avatar.id)}
+            onClick={() => setConfirming(true)}
             disabled={del.isPending}
             className="shrink-0 rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-rose"
           >
@@ -239,6 +241,36 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
           </button>
         )}
       </div>
+      <Modal
+        open={confirming}
+        onClose={() => setConfirming(false)}
+        title="Delete this avatar?"
+      >
+        <p className="text-sm text-muted-foreground">
+          &ldquo;{avatar.name}&rdquo; will be removed from your avatars. Videos
+          you already made with it aren&apos;t affected.
+        </p>
+        <div className="mt-5 flex justify-end gap-3">
+          <Button variant="outline" size="sm" onClick={() => setConfirming(false)}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            className="bg-rose shadow-none hover:bg-rose/90"
+            disabled={del.isPending}
+            onClick={() =>
+              del.mutate(avatar.id, { onSuccess: () => setConfirming(false) })
+            }
+          >
+            {del.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
+            Delete
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -13,10 +13,12 @@ import {
   Sparkles,
   Eye,
   Share2,
+  FileText,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
+import { Drawer } from "@/components/ui/overlay";
 import { api } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
@@ -68,6 +70,7 @@ function stepIndex(job: VideoJob): number {
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, dataUpdatedAt } = useVideoJob(id);
+  const [scriptOpen, setScriptOpen] = useState(false);
 
   if (isLoading || !job) {
     return (
@@ -136,29 +139,41 @@ export default function JobDetailPage() {
       {/* full script — clean structured render from the beats, no internal
           prompt directives ([MUST KEEP]/[MUST AVOID]) or repeated persona */}
       {job.beats.length > 0 && (
-        <details className="mt-8 rounded-card border border-border bg-card p-5">
-          <summary className="cursor-pointer text-sm font-semibold text-ink">
-            Full script
-          </summary>
-          <div className="mt-4 space-y-4">
-            {job.beats.map((b) => (
-              <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
-                <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
-                  {beatLabel(b.beat_index, job.beats.length)}
-                  {b.duration ? ` · ${b.duration}s` : ""}
-                </p>
-                {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
-                {b.on_screen_text && (
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Caption:{" "}
-                    <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-8"
+            onClick={() => setScriptOpen(true)}
+          >
+            <FileText className="h-4 w-4" />
+            View full script
+          </Button>
+          <Drawer
+            open={scriptOpen}
+            onClose={() => setScriptOpen(false)}
+            title="Full script"
+          >
+            <div className="space-y-4">
+              {job.beats.map((b) => (
+                <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
+                    {beatLabel(b.beat_index, job.beats.length)}
+                    {b.duration ? ` · ${b.duration}s` : ""}
                   </p>
-                )}
-                {b.scene && <p className="mt-1 text-xs text-muted-foreground">{b.scene}</p>}
-              </div>
-            ))}
-          </div>
-        </details>
+                  {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
+                  {b.on_screen_text && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Caption:{" "}
+                      <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
+                    </p>
+                  )}
+                  {b.scene && <p className="mt-1 text-xs text-muted-foreground">{b.scene}</p>}
+                </div>
+              ))}
+            </div>
+          </Drawer>
+        </>
       )}
     </div>
   );
