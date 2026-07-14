@@ -6,6 +6,7 @@ import { Link2, Loader2, PackagePlus, Plus } from "lucide-react";
 import { useMyProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
 
 export default function MyProductsPage() {
   const router = useRouter();
@@ -76,8 +77,10 @@ export default function MyProductsPage() {
         </div>
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+          {products.map((p, i) => (
+            <StaggerItem key={p.id} index={i} className="h-full">
+              <ProductCard product={p} />
+            </StaggerItem>
           ))}
         </div>
       )}

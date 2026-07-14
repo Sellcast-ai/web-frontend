@@ -23,6 +23,22 @@ export function FadeIn({ delay = 0, y = RISE_Y, ...props }: FadeInProps) {
   );
 }
 
+type PopInProps = HTMLMotionProps<"span">;
+
+/** Scale+fade pop for small conditional content (badges, check marks).
+    Wrap in AnimatePresence when the exit matters. */
+export function PopIn(props: PopInProps) {
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.5 }}
+      transition={{ duration: DUR.fast, ease: EASE_OUT }}
+      {...props}
+    />
+  );
+}
+
 type StaggerItemProps = HTMLMotionProps<"div"> & {
   index?: number;
   pageSize?: number;

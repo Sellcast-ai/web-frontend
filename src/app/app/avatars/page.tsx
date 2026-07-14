@@ -6,6 +6,7 @@ import { ImagePlus, Loader2, Trash2, UserSquare2, Sparkles, X } from "lucide-rea
 import { useAvatars, useCreateAvatar, useDeleteAvatar } from "@/lib/api/hooks";
 import type { Avatar } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
 import { cn } from "@/lib/utils";
 
 const MAX_UPLOAD_MB = 8;
@@ -55,8 +56,10 @@ export default function AvatarsPage() {
           </p>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {mine.map((a) => (
-              <AvatarCard key={a.id} avatar={a} />
+            {mine.map((a, i) => (
+              <StaggerItem key={a.id} index={i}>
+                <AvatarCard avatar={a} />
+              </StaggerItem>
             ))}
           </div>
         )}
@@ -77,8 +80,10 @@ export default function AvatarsPage() {
           </div>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {digital.map((a) => (
-              <AvatarCard key={a.id} avatar={a} />
+            {digital.map((a, i) => (
+              <StaggerItem key={a.id} index={i}>
+                <AvatarCard avatar={a} />
+              </StaggerItem>
             ))}
           </div>
         )}

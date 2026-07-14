@@ -14,7 +14,9 @@ import {
   Eye,
   Share2,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
+import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { api } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
@@ -197,7 +199,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold",
+                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
                   failed && isCurrent
                     ? "bg-rose text-white"
                     : done
@@ -207,7 +209,13 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
                         : "bg-muted text-muted-foreground",
                 )}
               >
-                {done ? <Check className="h-4 w-4" /> : i + 1}
+                {done ? (
+                  <PopIn className="inline-flex">
+                    <Check className="h-4 w-4" />
+                  </PopIn>
+                ) : (
+                  i + 1
+                )}
               </span>
               <span
                 className={cn(
@@ -219,12 +227,14 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <span
-                className={cn(
-                  "h-0.5 flex-1 rounded-full",
-                  done ? "bg-success" : "bg-border",
-                )}
-              />
+              <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
+                <motion.span
+                  className="absolute inset-0 origin-left rounded-full bg-success"
+                  initial={false}
+                  animate={{ scaleX: done ? 1 : 0 }}
+                  transition={{ duration: DUR.slow, ease: EASE_OUT }}
+                />
+              </span>
             )}
           </div>
         );

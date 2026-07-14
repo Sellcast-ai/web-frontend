@@ -30,6 +30,7 @@ import {
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
 import { Button } from "@/components/ui/button";
+import { PopIn } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -165,13 +166,17 @@ function StudioInner() {
                 >
                   <span
                     className={cn(
-                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border",
+                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors",
                       style === s.value
                         ? "border-brand-500 bg-brand-500 text-white"
                         : "border-border-strong",
                     )}
                   >
-                    {style === s.value && <Check className="h-3 w-3" />}
+                    {style === s.value && (
+                      <PopIn className="inline-flex">
+                        <Check className="h-3 w-3" />
+                      </PopIn>
+                    )}
                   </span>
                   <span>
                     <span className="block text-sm font-semibold text-ink">{s.label}</span>

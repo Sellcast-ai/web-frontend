@@ -4,7 +4,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { AnimatePresence } from "motion/react";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
+import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
@@ -155,16 +157,20 @@ export default function ProfilePage() {
             onClick={save}
             disabled={update.isPending || name.trim() === user.display_name || !name.trim()}
           >
-            {update.isPending ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : saved ? (
-              <>
-                <Check className="h-4 w-4" />
-                Saved
-              </>
-            ) : (
-              "Save"
-            )}
+            <AnimatePresence mode="wait" initial={false}>
+              {update.isPending ? (
+                <PopIn key="saving" className="inline-flex">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                </PopIn>
+              ) : saved ? (
+                <PopIn key="saved" className="inline-flex items-center gap-2">
+                  <Check className="h-4 w-4" />
+                  Saved
+                </PopIn>
+              ) : (
+                <PopIn key="save">Save</PopIn>
+              )}
+            </AnimatePresence>
           </Button>
         </div>
       </section>

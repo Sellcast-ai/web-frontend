@@ -6,6 +6,7 @@ import { Loader2, Clapperboard, Play, Sparkles } from "lucide-react";
 import { useVideoJobs } from "@/lib/api/hooks";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { VIDEO_STYLES, type VideoJob } from "@/lib/api/types";
 
@@ -35,8 +36,10 @@ export default function VideosPage() {
         <Empty />
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} />
+          {jobs.map((job, i) => (
+            <StaggerItem key={job.id} index={i} className="h-full">
+              <JobCard job={job} />
+            </StaggerItem>
           ))}
         </div>
       )}
