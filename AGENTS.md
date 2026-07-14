@@ -14,7 +14,8 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - `npm run dev` - dev server (npm; `package-lock.json` is the lockfile)
 - `npm run build` / `npm run start`
 - `npm run lint` - ESLint 9 flat config (`eslint.config.mjs`, eslint-config-next)
-- No test suite, no formatter script.
+- `npm run test` - vitest (config in `vitest.config.ts`, tests co-located as `*.test.ts`)
+- No formatter script.
 
 ## Stack
 
