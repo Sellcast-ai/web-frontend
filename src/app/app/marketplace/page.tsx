@@ -6,6 +6,7 @@ import { Search, Loader2, PackageOpen, Link2, ArrowRight } from "lucide-react";
 import { useProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
 import { CATEGORIES } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 
@@ -86,8 +87,10 @@ export default function MarketplacePage() {
       ) : (
         <>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {products.map((p, i) => (
+              <StaggerItem key={p.id} index={i} className="h-full">
+                <ProductCard product={p} />
+              </StaggerItem>
             ))}
           </div>
           {canLoadMore && (
