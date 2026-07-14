@@ -124,7 +124,11 @@ export function useToggleLike() {
       liked ? api.unlikeProduct(id) : api.likeProduct(id),
     // optimistic: flip cached detail + any product lists immediately,
     // roll back from the snapshot (with a toast) if the request fails
-    onMutate: ({ id, liked }) => {
+    onMutate: async ({ id, liked }) => {
+      await Promise.all([
+        qc.cancelQueries({ queryKey: qk.product(id) }),
+        qc.cancelQueries({ queryKey: ["products"] }),
+      ]);
       const snapshot = snapshotProductQueries(qc, id);
       qc.setQueryData<ProductSummary | undefined>(qk.product(id), (p) =>
         p ? { ...p, is_liked: !liked } : p,
@@ -135,6 +139,10 @@ export function useToggleLike() {
     onError: (_err, _vars, snapshot) => {
       snapshot?.forEach(([key, data]) => qc.setQueryData(key, data));
       toast.error("Couldn't update like. Please try again.");
+    },
+    onSettled: (_data, _err, { id }) => {
+      qc.invalidateQueries({ queryKey: qk.product(id) });
+      qc.invalidateQueries({ queryKey: ["products"] });
     },
   });
 }
