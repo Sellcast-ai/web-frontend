@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { CheckCircle2, AlertCircle, Info, X } from "lucide-react";
 import {
@@ -20,12 +20,26 @@ const ICON_COLOR: Record<ToastVariant, string> = {
 
 export function Toaster() {
   const toasts = useSyncExternalStore(subscribeToasts, getToasts, getToasts);
+  const ref = useRef<HTMLDivElement>(null);
+
+  /* Modal/Drawer use dialog.showModal(), whose top layer paints above any
+     z-index. Rendering the container as a manual popover puts toasts in the
+     top layer too, and re-showing on every toast change moves them above any
+     dialog opened since (top-layer order is insertion order). */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el?.showPopover) return;
+    if (el.matches(":popover-open")) el.hidePopover();
+    el.showPopover();
+  }, [toasts]);
 
   return (
     <div
+      ref={ref}
+      popover="manual"
       role="status"
       aria-live="polite"
-      className="pointer-events-none fixed inset-x-0 bottom-4 z-[100] flex flex-col items-center gap-2 px-4 sm:inset-x-auto sm:right-4 sm:items-end"
+      className="pointer-events-none fixed inset-x-0 top-auto bottom-4 z-[100] m-0 flex h-auto w-auto max-w-none flex-col items-center gap-2 overflow-visible border-0 bg-transparent px-4 py-0 text-inherit sm:inset-x-auto sm:right-4 sm:items-end"
     >
       <AnimatePresence>
         {toasts.map((t) => {
