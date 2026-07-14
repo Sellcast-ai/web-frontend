@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
@@ -19,12 +19,9 @@ export default function ProfilePage() {
   const { data: usage } = useUsage();
   const update = useUpdateProfile();
 
-  const [name, setName] = useState("");
+  const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    if (user) setName(user.display_name);
-  }, [user]);
+  const name = nameEdit ?? user?.display_name ?? "";
 
   if (isLoading || !user) {
     return (
@@ -144,7 +141,7 @@ export default function ProfilePage() {
         <div className="mt-3 flex gap-2">
           <input
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setNameEdit(e.target.value)}
             className="flex-1 rounded-2xl border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-brand-300"
           />
           <Button

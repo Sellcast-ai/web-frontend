@@ -401,7 +401,6 @@ function CompletedView({ job }: { job: VideoJob }) {
     <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
       <div className="mx-auto w-full max-w-[20rem]">
         <div className="aspect-9/16 overflow-hidden rounded-card border border-border bg-ink shadow-card">
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             src={src}
             poster={mediaUrl(job.thumbnail_url)}

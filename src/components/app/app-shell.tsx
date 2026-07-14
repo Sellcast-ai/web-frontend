@@ -152,8 +152,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
 function Avatar({ user }: { user: { display_name: string; avatar_url: string | null } }) {
   if (user.avatar_url) {
-    // eslint-disable-next-line @next/next/no-img-element
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={user.avatar_url}
         alt=""
