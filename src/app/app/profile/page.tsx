@@ -7,6 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
 import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
+import { toast } from "@/lib/toast";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +37,12 @@ export default function ProfilePage() {
 
   async function save() {
     if (!user || name.trim() === user.display_name) return;
-    await update.mutateAsync({ display_name: name.trim() });
+    try {
+      await update.mutateAsync({ display_name: name.trim() });
+    } catch {
+      toast.error("Couldn't save your display name. Please try again.");
+      return;
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }

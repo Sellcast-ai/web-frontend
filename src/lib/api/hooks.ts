@@ -7,6 +7,7 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import { api } from "./client";
+import { toast } from "@/lib/toast";
 import type {
   ProductSummary,
   VideoJob,
@@ -112,17 +113,37 @@ export function useToggleLike() {
   return useMutation({
     mutationFn: ({ id, liked }: { id: string; liked: boolean }) =>
       liked ? api.unlikeProduct(id) : api.likeProduct(id),
-    onSuccess: (_data, { id, liked }) => {
-      // flip cached detail + any product lists
+    // optimistic: flip cached detail + any product lists immediately,
+    // roll back from the snapshot (with a toast) if the request fails
+    onMutate: ({ id, liked }) => {
+      const snapshot = snapshotProductQueries(qc, id);
       qc.setQueryData<ProductSummary | undefined>(qk.product(id), (p) =>
         p ? { ...p, is_liked: !liked } : p,
       );
       patchProductLists(qc, id, !liked);
+      return snapshot;
+    },
+    onError: (_err, _vars, snapshot) => {
+      snapshot?.forEach(([key, data]) => qc.setQueryData(key, data));
+      toast.error("Couldn't update like. Please try again.");
     },
   });
 }
 
-function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
+export function snapshotProductQueries(
+  qc: QueryClient,
+  id: string,
+): [readonly unknown[], unknown][] {
+  const entries: [readonly unknown[], unknown][] = [
+    [qk.product(id), qc.getQueryData(qk.product(id))],
+  ];
+  qc.getQueryCache()
+    .findAll({ queryKey: ["products"] })
+    .forEach((q) => entries.push([q.queryKey, q.state.data]));
+  return entries;
+}
+
+export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
   qc.getQueryCache()
     .findAll({ queryKey: ["products"] })
     .forEach((q) => {
