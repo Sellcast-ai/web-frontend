@@ -117,6 +117,8 @@ export function useVideoJob(id: string) {
 
 /* -------------------------------------------------------------- mutations */
 
+const productListKeys = [["products"], qk.myProducts] as const;
+
 export function useToggleLike() {
   const qc = useQueryClient();
   return useMutation({
@@ -127,7 +129,7 @@ export function useToggleLike() {
     onMutate: async ({ id, liked }) => {
       await Promise.all([
         qc.cancelQueries({ queryKey: qk.product(id) }),
-        qc.cancelQueries({ queryKey: ["products"] }),
+        ...productListKeys.map((queryKey) => qc.cancelQueries({ queryKey })),
       ]);
       const snapshot = snapshotProductQueries(qc, id);
       qc.setQueryData<ProductSummary | undefined>(qk.product(id), (p) =>
@@ -142,7 +144,7 @@ export function useToggleLike() {
     },
     onSettled: (_data, _err, { id }) => {
       qc.invalidateQueries({ queryKey: qk.product(id) });
-      qc.invalidateQueries({ queryKey: ["products"] });
+      productListKeys.forEach((queryKey) => qc.invalidateQueries({ queryKey }));
     },
   });
 }
@@ -154,23 +156,27 @@ export function snapshotProductQueries(
   const entries: [readonly unknown[], unknown][] = [
     [qk.product(id), qc.getQueryData(qk.product(id))],
   ];
-  qc.getQueryCache()
-    .findAll({ queryKey: ["products"] })
-    .forEach((q) => entries.push([q.queryKey, q.state.data]));
+  productListKeys.forEach((queryKey) =>
+    qc.getQueryCache()
+      .findAll({ queryKey })
+      .forEach((q) => entries.push([q.queryKey, q.state.data])),
+  );
   return entries;
 }
 
 export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
-  qc.getQueryCache()
-    .findAll({ queryKey: ["products"] })
-    .forEach((q) => {
-      const data = q.state.data as ProductSummary[] | undefined;
-      if (!Array.isArray(data)) return;
-      qc.setQueryData(
-        q.queryKey,
-        data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
-      );
-    });
+  productListKeys.forEach((queryKey) =>
+    qc.getQueryCache()
+      .findAll({ queryKey })
+      .forEach((q) => {
+        const data = q.state.data as ProductSummary[] | undefined;
+        if (!Array.isArray(data)) return;
+        qc.setQueryData(
+          q.queryKey,
+          data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
+        );
+      }),
+  );
 }
 
 export function useParseProduct() {

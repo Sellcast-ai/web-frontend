@@ -14,6 +14,7 @@ function seed() {
     product("p2", true),
   ]);
   qc.setQueryData(qk.products({ q: "shoes" }), [product("p1", false)]);
+  qc.setQueryData(qk.myProducts, [product("p1", false)]);
   return qc;
 }
 
@@ -26,8 +27,8 @@ describe("optimistic like flip + rollback", () => {
     patchProductLists(qc, "p1", true);
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(true);
-    for (const params of [{ q: "" }, { q: "shoes" }]) {
-      const list = qc.getQueryData<ProductSummary[]>(qk.products(params))!;
+    for (const key of [qk.products({ q: "" }), qk.products({ q: "shoes" }), qk.myProducts]) {
+      const list = qc.getQueryData<ProductSummary[]>(key)!;
       expect(list.find((p) => p.id === "p1")?.is_liked).toBe(true);
     }
     // untouched sibling stays as-is
@@ -46,8 +47,8 @@ describe("optimistic like flip + rollback", () => {
     snapshot.forEach(([key, data]) => qc.setQueryData(key, data));
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(false);
-    for (const params of [{ q: "" }, { q: "shoes" }]) {
-      const list = qc.getQueryData<ProductSummary[]>(qk.products(params))!;
+    for (const key of [qk.products({ q: "" }), qk.products({ q: "shoes" }), qk.myProducts]) {
+      const list = qc.getQueryData<ProductSummary[]>(key)!;
       expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
     }
   });
