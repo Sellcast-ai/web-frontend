@@ -306,6 +306,7 @@ function NewProductInner() {
               </p>
             </button>
           </div>
+          {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
         </>
       ) : (
         <>
