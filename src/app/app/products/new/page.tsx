@@ -17,6 +17,8 @@ import { useParseProduct, useCreateProduct } from "@/lib/api/hooks";
 import type { ProductDraft, SourcePlatform } from "@/lib/api/types";
 import { CATEGORIES, categoryLabel } from "@/lib/categories";
 import { Button } from "@/components/ui/button";
+import { UploadProgress } from "@/components/ui/upload-progress";
+import { useDropzone } from "@/lib/use-dropzone";
 import { cn } from "@/lib/utils";
 
 const MAX_IMAGES = 12;
@@ -122,13 +124,17 @@ function NewProductInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const parse = useParseProduct();
-  const create = useCreateProduct();
+  const [progress, setProgress] = useState(0);
+  const create = useCreateProduct(setProgress);
 
   const [url, setUrl] = useState(sp.get("url") ?? "");
   const [draft, setDraft] = useState<Draft | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [reading, setReading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const autoParsed = useRef(false);
+  // only one screen renders at a time, so both drop targets share this
+  const drop = useDropzone((files) => void addFiles(files));
 
   const runParse = useCallback(
     (target: string) => {
@@ -153,30 +159,36 @@ function NewProductInner() {
   async function addFiles(files: FileList | File[]) {
     if (!files.length) return;
     setUploadError(null);
-    const current = draft ?? emptyDraft(null);
-    const room =
-      MAX_IMAGES -
-      current.uploads.length -
-      current.parsedImages.filter((i) => i.selected).length;
-    const accepted: Upload[] = [];
-    for (const file of Array.from(files).slice(0, Math.max(room, 0))) {
-      if (!file.type.startsWith("image/")) {
-        setUploadError(`${file.name} isn't an image.`);
-        continue;
+    setReading(true);
+    try {
+      const current = draft ?? emptyDraft(null);
+      const room =
+        MAX_IMAGES -
+        current.uploads.length -
+        current.parsedImages.filter((i) => i.selected).length;
+      const accepted: Upload[] = [];
+      for (const file of Array.from(files).slice(0, Math.max(room, 0))) {
+        if (!file.type.startsWith("image/")) {
+          setUploadError(`${file.name} isn't an image.`);
+          continue;
+        }
+        if (file.size > MAX_UPLOAD_MB * 1024 * 1024) {
+          setUploadError(`${file.name} is over ${MAX_UPLOAD_MB}MB.`);
+          continue;
+        }
+        accepted.push(await readImageFile(file));
       }
-      if (file.size > MAX_UPLOAD_MB * 1024 * 1024) {
-        setUploadError(`${file.name} is over ${MAX_UPLOAD_MB}MB.`);
-        continue;
+      if (accepted.length) {
+        setDraft({ ...current, uploads: [...current.uploads, ...accepted] });
       }
-      accepted.push(await readImageFile(file));
-    }
-    if (accepted.length) {
-      setDraft({ ...current, uploads: [...current.uploads, ...accepted] });
+    } finally {
+      setReading(false);
     }
   }
 
   async function submit() {
     if (!draft) return;
+    setProgress(0);
     const imageUrls = draft.parsedImages.filter((i) => i.selected).map((i) => i.url);
     // failure is surfaced as a toast by useCreateProduct
     const product = await create.mutateAsync({
@@ -260,16 +272,26 @@ function NewProductInner() {
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
             <button
               type="button"
+              {...drop.props}
               onClick={() => {
                 setDraft(emptyDraft(null));
                 setTimeout(() => fileInput.current?.click(), 0);
               }}
-              className="rounded-2xl border-2 border-dashed border-border bg-card p-6 text-left transition-colors hover:border-brand-400"
+              className={cn(
+                "rounded-2xl border-2 border-dashed bg-card p-6 text-left transition-colors",
+                drop.over
+                  ? "border-brand-400 bg-accent/50"
+                  : "border-border hover:border-brand-400",
+              )}
             >
-              <ImagePlus className="h-6 w-6 text-brand-600" />
+              {reading ? (
+                <Loader2 className="h-6 w-6 animate-spin text-brand-600" />
+              ) : (
+                <ImagePlus className="h-6 w-6 text-brand-600" />
+              )}
               <p className="mt-2 font-display font-semibold text-ink">Start from photos</p>
               <p className="text-xs text-muted-foreground">
-                Upload product shots; describe it on the next step.
+                Drop product shots here or click to browse; describe it on the next step.
               </p>
             </button>
             <button
@@ -366,9 +388,16 @@ function NewProductInner() {
 
             <Field
               label={`Photos · ${selectedCount} selected`}
-              hint="First selected photo is the hero the video is built around. Untick size charts and banners."
+              hint="First selected photo is the hero the video is built around. Untick size charts and banners. Drag & drop photos anywhere in this grid."
             >
-              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+              <div
+                {...drop.props}
+                className={cn(
+                  "grid grid-cols-3 gap-3 rounded-xl transition-colors sm:grid-cols-4",
+                  drop.over &&
+                    "bg-accent/50 outline-2 outline-offset-4 outline-dashed outline-brand-400",
+                )}
+              >
                 {draft.parsedImages.map((image, index) => (
                   <button
                     key={image.url}
@@ -419,7 +448,11 @@ function NewProductInner() {
                   onClick={() => fileInput.current?.click()}
                   className="flex aspect-square flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-border text-muted-foreground transition-colors hover:border-brand-400 hover:text-brand-700"
                 >
-                  <ImagePlus className="h-5 w-5" />
+                  {reading ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    <ImagePlus className="h-5 w-5" />
+                  )}
                   <span className="text-xs font-semibold">Add</span>
                 </button>
               </div>
@@ -430,7 +463,7 @@ function NewProductInner() {
           <div className="mt-8 flex items-center gap-3">
             <Button size="lg" onClick={submit} disabled={!canSubmit}>
               {create.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <UploadProgress progress={progress} />
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />

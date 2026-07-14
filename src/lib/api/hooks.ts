@@ -9,6 +9,8 @@ import {
 import { api } from "./client";
 import { toast } from "@/lib/toast";
 import type {
+  AvatarCreate,
+  ProductCreate,
   ProductSummary,
   VideoJob,
   VideoJobCreate,
@@ -75,10 +77,10 @@ export function useAvatars() {
   return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
 }
 
-export function useCreateAvatar() {
+export function useCreateAvatar(onProgress?: (fraction: number) => void) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: api.createAvatar,
+    mutationFn: (payload: AvatarCreate) => api.createAvatar(payload, onProgress),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
     onError: (err) => toast.error(errMsg(err, "Couldn't save the avatar.")),
   });
@@ -167,10 +169,10 @@ export function useParseProduct() {
   return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
 }
 
-export function useCreateProduct() {
+export function useCreateProduct(onProgress?: (fraction: number) => void) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: api.createProduct,
+    mutationFn: (payload: ProductCreate) => api.createProduct(payload, onProgress),
     onSuccess: (product) => {
       qc.setQueryData(qk.product(product.id), product);
       qc.invalidateQueries({ queryKey: qk.myProducts });

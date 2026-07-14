@@ -8,6 +8,8 @@ import type { Avatar } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
 import { Modal } from "@/components/ui/overlay";
+import { UploadProgress } from "@/components/ui/upload-progress";
+import { useDropzone } from "@/lib/use-dropzone";
 import { cn } from "@/lib/utils";
 
 const MAX_UPLOAD_MB = 8;
@@ -94,12 +96,14 @@ export default function AvatarsPage() {
 }
 
 function UploadCard() {
-  const create = useCreateAvatar();
+  const [progress, setProgress] = useState(0);
+  const create = useCreateAvatar(setProgress);
   const fileInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState<{ dataUrl: string; base64: string; filename: string } | null>(null);
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const drop = useDropzone((files) => void pick(files[0]));
 
   async function pick(file: File) {
     setError(null);
@@ -113,6 +117,7 @@ function UploadCard() {
 
   async function submit() {
     if (!photo || !consent || name.trim().length < 1) return;
+    setProgress(0);
     // failure is surfaced as a toast by useCreateAvatar; keep the form filled
     try {
       await create.mutateAsync({
@@ -135,10 +140,15 @@ function UploadCard() {
         {/* photo slot */}
         <button
           type="button"
+          {...drop.props}
           onClick={() => fileInput.current?.click()}
           className={cn(
             "relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
-            photo ? "border-brand-400" : "border-border hover:border-brand-400",
+            drop.over
+              ? "border-brand-400 bg-accent/50"
+              : photo
+                ? "border-brand-400"
+                : "border-border hover:border-brand-400",
           )}
         >
           {photo ? (
@@ -177,7 +187,7 @@ function UploadCard() {
               disabled={!photo || !consent || name.trim().length < 1 || create.isPending}
             >
               {create.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <UploadProgress progress={progress} />
               ) : (
                 <>
                   <UserSquare2 className="h-4 w-4" />
