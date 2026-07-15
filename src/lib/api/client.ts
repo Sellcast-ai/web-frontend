@@ -48,6 +48,43 @@ async function bff<T>(
   return data as T;
 }
 
+/**
+ * POST with real upload progress via XHR (fetch can't observe request-body
+ * progress). Used for the base64-image payloads on product/avatar creation.
+ * `onProgress` receives the uploaded fraction in [0, 1].
+ */
+export function bffUpload<T>(
+  path: string,
+  json: unknown,
+  onProgress?: (fraction: number) => void,
+): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `/api/bff/${path.replace(/^\/+/, "")}`);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
+    };
+    xhr.onload = () => {
+      let data: unknown = null;
+      try {
+        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+      } catch {
+        // non-JSON body; fall through to statusText
+      }
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(data as T);
+        return;
+      }
+      const d = data as { detail?: unknown; error?: unknown; message?: unknown } | null;
+      const msg = (d && (d.detail || d.error || d.message)) || xhr.statusText;
+      reject(new ApiError(xhr.status, typeof msg === "string" ? msg : "Request failed"));
+    };
+    xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
+    xhr.send(JSON.stringify(json));
+  });
+}
+
 export const api = {
   /* --- products --- */
   listProducts: (
@@ -64,8 +101,8 @@ export const api = {
   listMyProducts: () => bff<ProductSummary[]>(`products/mine`),
   parseProductUrl: (url: string) =>
     bff<ProductDraft>(`products/parse`, { method: "POST", json: { url } }),
-  createProduct: (payload: ProductCreate) =>
-    bff<ProductDetail>(`products`, { method: "POST", json: payload }),
+  createProduct: (payload: ProductCreate, onProgress?: (fraction: number) => void) =>
+    bffUpload<ProductDetail>(`products`, payload, onProgress),
   likeProduct: (id: string) =>
     bff<LikeStatus>(`products/${id}/like`, { method: "PUT" }),
   unlikeProduct: (id: string) =>
@@ -73,8 +110,8 @@ export const api = {
 
   /* --- avatars --- */
   listAvatars: () => bff<Avatar[]>(`avatars`),
-  createAvatar: (payload: AvatarCreate) =>
-    bff<Avatar>(`avatars`, { method: "POST", json: payload }),
+  createAvatar: (payload: AvatarCreate, onProgress?: (fraction: number) => void) =>
+    bffUpload<Avatar>(`avatars`, payload, onProgress),
   deleteAvatar: (id: string) =>
     bff<void>(`avatars/${id}`, { method: "DELETE" }),
 

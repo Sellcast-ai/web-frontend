@@ -6,6 +6,10 @@ import { ImagePlus, Loader2, Trash2, UserSquare2, Sparkles, X } from "lucide-rea
 import { useAvatars, useCreateAvatar, useDeleteAvatar } from "@/lib/api/hooks";
 import type { Avatar } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
+import { Modal } from "@/components/ui/overlay";
+import { UploadProgress } from "@/components/ui/upload-progress";
+import { useDropzone } from "@/lib/use-dropzone";
 import { cn } from "@/lib/utils";
 
 const MAX_UPLOAD_MB = 8;
@@ -55,8 +59,10 @@ export default function AvatarsPage() {
           </p>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {mine.map((a) => (
-              <AvatarCard key={a.id} avatar={a} />
+            {mine.map((a, i) => (
+              <StaggerItem key={a.id} index={i}>
+                <AvatarCard avatar={a} />
+              </StaggerItem>
             ))}
           </div>
         )}
@@ -77,8 +83,10 @@ export default function AvatarsPage() {
           </div>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {digital.map((a) => (
-              <AvatarCard key={a.id} avatar={a} />
+            {digital.map((a, i) => (
+              <StaggerItem key={a.id} index={i}>
+                <AvatarCard avatar={a} />
+              </StaggerItem>
             ))}
           </div>
         )}
@@ -88,12 +96,14 @@ export default function AvatarsPage() {
 }
 
 function UploadCard() {
-  const create = useCreateAvatar();
+  const [progress, setProgress] = useState(0);
+  const create = useCreateAvatar(setProgress);
   const fileInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState<{ dataUrl: string; base64: string; filename: string } | null>(null);
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const drop = useDropzone((files) => void pick(files[0]));
 
   async function pick(file: File) {
     setError(null);
@@ -107,12 +117,18 @@ function UploadCard() {
 
   async function submit() {
     if (!photo || !consent || name.trim().length < 1) return;
-    await create.mutateAsync({
-      name: name.trim(),
-      filename: photo.filename,
-      data_base64: photo.base64,
-      consent,
-    });
+    setProgress(0);
+    // failure is surfaced as a toast by useCreateAvatar; keep the form filled
+    try {
+      await create.mutateAsync({
+        name: name.trim(),
+        filename: photo.filename,
+        data_base64: photo.base64,
+        consent,
+      });
+    } catch {
+      return;
+    }
     setPhoto(null);
     setName("");
     setConsent(false);
@@ -124,10 +140,15 @@ function UploadCard() {
         {/* photo slot */}
         <button
           type="button"
+          {...drop.props}
           onClick={() => fileInput.current?.click()}
           className={cn(
             "relative flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
-            photo ? "border-brand-400" : "border-border hover:border-brand-400",
+            drop.over
+              ? "border-brand-400 bg-accent/50"
+              : photo
+                ? "border-brand-400"
+                : "border-border hover:border-brand-400",
           )}
         >
           {photo ? (
@@ -166,7 +187,7 @@ function UploadCard() {
               disabled={!photo || !consent || name.trim().length < 1 || create.isPending}
             >
               {create.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <UploadProgress progress={progress} />
               ) : (
                 <>
                   <UserSquare2 className="h-4 w-4" />
@@ -184,11 +205,7 @@ function UploadCard() {
               </button>
             )}
           </div>
-          {(error || create.isError) && (
-            <p className="text-sm text-rose">
-              {error || (create.error as Error)?.message || "Couldn't save the avatar."}
-            </p>
-          )}
+          {error && <p className="text-sm text-rose">{error}</p>}
         </div>
       </div>
 
@@ -208,6 +225,7 @@ function UploadCard() {
 
 function AvatarCard({ avatar }: { avatar: Avatar }) {
   const del = useDeleteAvatar();
+  const [confirming, setConfirming] = useState(false);
   return (
     <div className="group relative overflow-hidden rounded-card border border-border bg-card shadow-soft">
       <div className="aspect-square bg-muted">
@@ -225,7 +243,7 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
           <button
             type="button"
             aria-label="Delete avatar"
-            onClick={() => del.mutate(avatar.id)}
+            onClick={() => setConfirming(true)}
             disabled={del.isPending}
             className="shrink-0 rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-rose"
           >
@@ -233,6 +251,36 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
           </button>
         )}
       </div>
+      <Modal
+        open={confirming}
+        onClose={() => setConfirming(false)}
+        title="Delete this avatar?"
+      >
+        <p className="text-sm text-muted-foreground">
+          &ldquo;{avatar.name}&rdquo; will be removed from your avatars. Videos
+          you already made with it aren&apos;t affected.
+        </p>
+        <div className="mt-5 flex justify-end gap-3">
+          <Button variant="outline" size="sm" onClick={() => setConfirming(false)}>
+            Cancel
+          </Button>
+          <Button
+            size="sm"
+            className="bg-rose shadow-none hover:bg-rose/90"
+            disabled={del.isPending}
+            onClick={() =>
+              del.mutate(avatar.id, { onSuccess: () => setConfirming(false) })
+            }
+          >
+            {del.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
+            Delete
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Search, Loader2, PackageOpen, Link2, ArrowRight } from "lucide-react";
 import { useProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
+import { StaggerItem } from "@/components/ui/motion";
 import { CATEGORIES } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 
@@ -21,8 +22,27 @@ export default function MarketplacePage() {
     return () => clearTimeout(t);
   }, [input]);
 
-  // reset paging when filters change
-  useEffect(() => setLimit(24), [q, category]);
+  // "/" focuses search (unless already typing somewhere)
+  const searchRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest("input, textarea, select, [contenteditable]")) return;
+      e.preventDefault();
+      searchRef.current?.focus();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // reset paging when filters change (adjust-state-during-render pattern)
+  const filterKey = `${q}\u0000${category ?? ""}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setLimit(24);
+  }
 
   const { data, isLoading, isFetching } = useProducts({ q, category, limit });
   const products = data ?? [];
@@ -44,12 +64,16 @@ export default function MarketplacePage() {
       <div className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300">
         <Search className="h-4 w-4 text-muted-foreground" />
         <input
+          ref={searchRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Search products — or paste any product link (Amazon, Shopee, TikTok Shop…)"
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         {isFetching && <Loader2 className="h-4 w-4 animate-spin text-brand-400" />}
+        <kbd className="hidden rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-semibold text-muted-foreground sm:block">
+          /
+        </kbd>
       </div>
 
       {/* pasted a URL? that's a product to ingest, not a search */}
@@ -86,8 +110,10 @@ export default function MarketplacePage() {
       ) : (
         <>
           <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {products.map((p, i) => (
+              <StaggerItem key={p.id} index={i} className="h-full">
+                <ProductCard product={p} />
+              </StaggerItem>
             ))}
           </div>
           {canLoadMore && (

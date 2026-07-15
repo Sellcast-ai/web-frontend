@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { MotionConfig } from "motion/react";
 import { ThemeProvider } from "./theme-provider";
+import { Toaster } from "./ui/toaster";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [client] = useState(
@@ -20,7 +22,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeProvider>
-      <QueryClientProvider client={client}>{children}</QueryClientProvider>
+      <MotionConfig reducedMotion="user">
+        <QueryClientProvider client={client}>
+          {children}
+          <Toaster />
+        </QueryClientProvider>
+      </MotionConfig>
     </ThemeProvider>
   );
 }

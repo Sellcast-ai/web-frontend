@@ -12,9 +12,11 @@ import {
   ExternalLink,
   Loader2,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useProduct, useToggleLike } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { DUR, EASE_OUT } from "@/components/ui/motion";
 import {
   compact,
   commission,
@@ -82,11 +84,18 @@ export default function ProductDetailPage() {
         <div>
           <div className="relative aspect-square overflow-hidden rounded-card border border-border bg-muted">
             {images[active] ? (
-              <img
-                src={images[active]}
-                alt={product.title}
-                className="h-full w-full object-cover"
-              />
+              <AnimatePresence initial={false}>
+                <motion.img
+                  key={images[active]}
+                  src={images[active]}
+                  alt={product.title}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: DUR.base, ease: EASE_OUT }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </AnimatePresence>
             ) : (
               <div className="bg-brand-gradient h-full w-full" />
             )}
@@ -105,8 +114,10 @@ export default function ProductDetailPage() {
                   type="button"
                   onClick={() => setActive(i)}
                   className={cn(
-                    "h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2",
-                    active === i ? "border-brand-400" : "border-border",
+                    "h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 transition-colors",
+                    active === i
+                      ? "border-brand-400"
+                      : "border-border hover:border-border-strong",
                   )}
                 >
                   <img src={src} alt="" className="h-full w-full object-cover" />

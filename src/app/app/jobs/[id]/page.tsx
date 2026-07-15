@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -12,9 +13,14 @@ import {
   Sparkles,
   Eye,
   Share2,
+  FileText,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
+import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
+import { Drawer } from "@/components/ui/overlay";
 import { api } from "@/lib/api/client";
+import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -63,7 +69,8 @@ function stepIndex(job: VideoJob): number {
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: job, isLoading } = useVideoJob(id);
+  const { data: job, isLoading, dataUpdatedAt } = useVideoJob(id);
+  const [scriptOpen, setScriptOpen] = useState(false);
 
   if (isLoading || !job) {
     return (
@@ -109,10 +116,8 @@ export default function JobDetailPage() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {active && (
-            <Loader2 className="h-4 w-4 animate-spin text-brand-400" />
-          )}
+        <div className="flex items-center gap-3">
+          {active && <LiveIndicator updatedAt={dataUpdatedAt} />}
           <StatusBadge status={job.status} />
         </div>
       </div>
@@ -134,31 +139,65 @@ export default function JobDetailPage() {
       {/* full script — clean structured render from the beats, no internal
           prompt directives ([MUST KEEP]/[MUST AVOID]) or repeated persona */}
       {job.beats.length > 0 && (
-        <details className="mt-8 rounded-card border border-border bg-card p-5">
-          <summary className="cursor-pointer text-sm font-semibold text-ink">
-            Full script
-          </summary>
-          <div className="mt-4 space-y-4">
-            {job.beats.map((b) => (
-              <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
-                <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
-                  {beatLabel(b.beat_index, job.beats.length)}
-                  {b.duration ? ` · ${b.duration}s` : ""}
-                </p>
-                {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
-                {b.on_screen_text && (
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Caption:{" "}
-                    <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
+        <>
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-8"
+            onClick={() => setScriptOpen(true)}
+          >
+            <FileText className="h-4 w-4" />
+            View full script
+          </Button>
+          <Drawer
+            open={scriptOpen}
+            onClose={() => setScriptOpen(false)}
+            title="Full script"
+          >
+            <div className="space-y-4">
+              {job.beats.map((b) => (
+                <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
+                  <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
+                    {beatLabel(b.beat_index, job.beats.length)}
+                    {b.duration ? ` · ${b.duration}s` : ""}
                   </p>
-                )}
-                {b.scene && <p className="mt-1 text-xs text-muted-foreground">{b.scene}</p>}
-              </div>
-            ))}
-          </div>
-        </details>
+                  {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
+                  {b.on_screen_text && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Caption:{" "}
+                      <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
+                    </p>
+                  )}
+                  {b.scene && <p className="mt-1 text-xs text-muted-foreground">{b.scene}</p>}
+                </div>
+              ))}
+            </div>
+          </Drawer>
+        </>
       )}
     </div>
+  );
+}
+
+/* ----------------------------------------------------------------- live */
+
+/** Subtle "this page is polling" affordance: pulsing dot + last-fetch time. */
+function LiveIndicator({ updatedAt }: { updatedAt: number }) {
+  // starts at updatedAt (secs = 0) and ticks forward once a second
+  const [now, setNow] = useState(updatedAt);
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const secs = Math.max(0, Math.round((now - updatedAt) / 1000));
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+      <span className="relative flex h-2 w-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75 motion-reduce:animate-none" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
+      </span>
+      Live · updated {secs < 5 ? "just now" : `${secs}s ago`}
+    </span>
   );
 }
 
@@ -175,7 +214,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold",
+                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
                   failed && isCurrent
                     ? "bg-rose text-white"
                     : done
@@ -185,7 +224,13 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
                         : "bg-muted text-muted-foreground",
                 )}
               >
-                {done ? <Check className="h-4 w-4" /> : i + 1}
+                {done ? (
+                  <PopIn className="inline-flex">
+                    <Check className="h-4 w-4" />
+                  </PopIn>
+                ) : (
+                  i + 1
+                )}
               </span>
               <span
                 className={cn(
@@ -197,12 +242,14 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
             </div>
             {i < STEPS.length - 1 && (
-              <span
-                className={cn(
-                  "h-0.5 flex-1 rounded-full",
-                  done ? "bg-success" : "bg-border",
-                )}
-              />
+              <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
+                <motion.span
+                  className="absolute inset-0 origin-left rounded-full bg-success"
+                  initial={false}
+                  animate={{ scaleX: done ? 1 : 0 }}
+                  transition={{ duration: DUR.slow, ease: EASE_OUT }}
+                />
+              </span>
             )}
           </div>
         );
@@ -395,13 +442,17 @@ function BeatCard({
 function CompletedView({ job }: { job: VideoJob }) {
   const src = mediaUrl(job.video_url);
   async function markPosted() {
-    await api.recordEvent(job.id, { event_type: "posted" }).catch(() => undefined);
+    try {
+      await api.recordEvent(job.id, { event_type: "posted" });
+      toast.success("Marked as posted.");
+    } catch {
+      toast.error("Couldn't record that. Please try again.");
+    }
   }
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
       <div className="mx-auto w-full max-w-[20rem]">
         <div className="aspect-9/16 overflow-hidden rounded-card border border-border bg-ink shadow-card">
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <video
             src={src}
             poster={mediaUrl(job.thumbnail_url)}
@@ -471,11 +522,6 @@ function FailedView({ job }: { job: VideoJob }) {
             Start a new video
           </Button>
         </div>
-        {retry.isError && (
-          <p className="mt-2 text-sm text-rose">
-            {(retry.error as Error)?.message || "Couldn't retry. Try again."}
-          </p>
-        )}
       </div>
     </div>
   );

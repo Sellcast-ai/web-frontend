@@ -5,11 +5,12 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useSyncExternalStore,
 } from "react";
 
 export type Theme = "system" | "light" | "dark";
 export const THEME_KEY = "lumi-theme";
+const THEME_EVENT = "lumi-theme-change";
 
 type Ctx = {
   theme: Theme;
@@ -19,43 +20,42 @@ type Ctx = {
 
 const ThemeContext = createContext<Ctx | null>(null);
 
-function systemPrefersDark() {
-  return (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  );
+function subscribe(onChange: () => void) {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  window.addEventListener(THEME_EVENT, onChange);
+  window.addEventListener("storage", onChange);
+  mq.addEventListener("change", onChange);
+  return () => {
+    window.removeEventListener(THEME_EVENT, onChange);
+    window.removeEventListener("storage", onChange);
+    mq.removeEventListener("change", onChange);
+  };
 }
 
-function apply(theme: Theme): "light" | "dark" {
-  const dark = theme === "dark" || (theme === "system" && systemPrefersDark());
-  document.documentElement.classList.toggle("dark", dark);
+function getTheme(): Theme {
+  return (localStorage.getItem(THEME_KEY) as Theme | null) ?? "system";
+}
+
+function getResolved(): "light" | "dark" {
+  const t = getTheme();
+  const dark =
+    t === "dark" ||
+    (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   return dark ? "dark" : "light";
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-  const [resolved, setResolved] = useState<"light" | "dark">("light");
+  const theme = useSyncExternalStore(subscribe, getTheme, () => "system" as const);
+  const resolved = useSyncExternalStore(subscribe, getResolved, () => "light" as const);
 
-  // hydrate from storage on mount
+  // sync the html class (the no-flash script handles first paint)
   useEffect(() => {
-    const stored = (localStorage.getItem(THEME_KEY) as Theme | null) ?? "system";
-    setThemeState(stored);
-    setResolved(apply(stored));
-  }, []);
-
-  // react to OS changes while in "system"
-  useEffect(() => {
-    if (theme !== "system") return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => setResolved(apply("system"));
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, [theme]);
+    document.documentElement.classList.toggle("dark", resolved === "dark");
+  }, [resolved]);
 
   const setTheme = useCallback((t: Theme) => {
     localStorage.setItem(THEME_KEY, t);
-    setThemeState(t);
-    setResolved(apply(t));
+    window.dispatchEvent(new Event(THEME_EVENT));
   }, []);
 
   return (

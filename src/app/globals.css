@@ -237,3 +237,19 @@
     border-radius: 0.5rem;
   }
 }
+
+/* Reduced motion: kill decorative keyframes and smooth scroll.
+   (framer-motion transforms are handled by MotionConfig reducedMotion="user".) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-float,
+  .animate-float-slow,
+  .animate-glow,
+  .animate-marquee,
+  .animate-rise {
+    animation: none;
+  }
+}

@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { AnimatePresence } from "motion/react";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
+import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
+import { toast } from "@/lib/toast";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,12 +22,9 @@ export default function ProfilePage() {
   const { data: usage } = useUsage();
   const update = useUpdateProfile();
 
-  const [name, setName] = useState("");
+  const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    if (user) setName(user.display_name);
-  }, [user]);
+  const name = nameEdit ?? user?.display_name ?? "";
 
   if (isLoading || !user) {
     return (
@@ -39,7 +39,12 @@ export default function ProfilePage() {
 
   async function save() {
     if (!user || name.trim() === user.display_name) return;
-    await update.mutateAsync({ display_name: name.trim() });
+    try {
+      await update.mutateAsync({ display_name: name.trim() });
+    } catch {
+      toast.error("Couldn't save your display name. Please try again.");
+      return;
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   }
@@ -144,7 +149,7 @@ export default function ProfilePage() {
         <div className="mt-3 flex gap-2">
           <input
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setNameEdit(e.target.value)}
             className="flex-1 rounded-2xl border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-brand-300"
           />
           <Button
@@ -152,16 +157,20 @@ export default function ProfilePage() {
             onClick={save}
             disabled={update.isPending || name.trim() === user.display_name || !name.trim()}
           >
-            {update.isPending ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : saved ? (
-              <>
-                <Check className="h-4 w-4" />
-                Saved
-              </>
-            ) : (
-              "Save"
-            )}
+            <AnimatePresence mode="wait" initial={false}>
+              {update.isPending ? (
+                <PopIn key="saving" className="inline-flex">
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                </PopIn>
+              ) : saved ? (
+                <PopIn key="saved" className="inline-flex items-center gap-2">
+                  <Check className="h-4 w-4" />
+                  Saved
+                </PopIn>
+              ) : (
+                <PopIn key="save">Save</PopIn>
+              )}
+            </AnimatePresence>
           </Button>
         </div>
       </section>

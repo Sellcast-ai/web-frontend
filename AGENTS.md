@@ -22,6 +22,7 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - Next.js 16.2.6, React 19, TypeScript, Tailwind CSS v4 (via `@tailwindcss/postcss`, theme in `src/app/globals.css`)
 - TanStack Query v5 for client state (provider in `src/components/providers.tsx`; query keys in `src/lib/api/hooks.ts` as `qk`)
 - `class-variance-authority` + `clsx` + `tailwind-merge` (`cn()` in `src/lib/utils.ts`), lucide-react icons
+- framer-motion (`motion` package, imported from `motion/react`) for animation; shared primitives/tokens in `src/components/ui/motion.tsx`, app-wide `<MotionConfig reducedMotion="user">` in `providers.tsx` (plus a `prefers-reduced-motion` guard for CSS keyframes in `globals.css`)
 - Path alias `@/*` -> `src/*`
 
 ## Structure
@@ -35,10 +36,12 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - `src/lib/api/` - the API layer:
   - `config.ts` - server-only config: `SELLCAST_API_BASE`, cookie names (`lumi_at`/`lumi_rt`)
   - `server.ts` - server-only (`import "server-only"`): `callBackend`, `proxy` with automatic refresh-token retry on 401, cookie set/clear
-  - `client.ts` - browser `api` object hitting `/api/bff/*`, throws `ApiError`
+  - `client.ts` - browser `api` object hitting `/api/bff/*`, throws `ApiError`; `bffUpload` is an XHR-based POST used by product/avatar creation to report real upload progress (fetch can't)
   - `hooks.ts` - React Query hooks wrapping `client.ts`
   - `types.ts` - shared API types mirroring backend schemas
-- `src/components/` - `ui/` (button, badge), `app/`, `auth/`, `marketing/`, theme provider/toggle
+- `src/lib/toast.ts` - framework-free toast store (`toast.success/error/info` from any event handler or mutation callback); rendered by `ui/toaster.tsx`, mounted app-wide in `providers.tsx`
+- `src/lib/use-dropzone.ts` - shared drag-and-drop hook (spread `props` on the drop target, style via `over`)
+- `src/components/` - `ui/` (button, badge, motion primitives, `overlay.tsx` Modal/Drawer on native `<dialog>`, toaster, upload-progress), `app/`, `auth/`, `marketing/`, theme provider/toggle
 
 ## Auth model
 
@@ -62,3 +65,4 @@ Vercel (this app) -> Render (FastAPI API + video worker) -> Postgres + Cloudflar
 - Never import `src/lib/api/config.ts` or `server.ts` into client components (server-only).
 - Add new backend calls to `src/lib/api/client.ts` + a hook in `hooks.ts`; the generic BFF proxy means most endpoints need no new route handler (only auth flows that touch cookies do).
 - Keep types in `src/lib/api/types.ts` in sync with backend Pydantic schemas.
+- Reuse the shared UI primitives instead of one-offs: mutations surface success/failure via `toast.*`, overlays go through `Modal`/`Drawer` in `ui/overlay.tsx`, animations use the tokens/primitives in `ui/motion.tsx`.

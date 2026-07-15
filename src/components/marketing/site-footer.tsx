@@ -74,7 +74,7 @@ export function SiteFooter() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row">
           <p>© {new Date().getFullYear()} Sellcast. Lumi is a Sellcast product.</p>
-          <p>Made for sellers who'd rather sell than film.</p>
+          <p>Made for sellers who&rsquo;d rather sell than film.</p>
         </div>
       </div>
     </footer>

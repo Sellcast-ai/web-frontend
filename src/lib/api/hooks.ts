@@ -7,7 +7,10 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import { api } from "./client";
+import { toast } from "@/lib/toast";
 import type {
+  AvatarCreate,
+  ProductCreate,
   ProductSummary,
   VideoJob,
   VideoJobCreate,
@@ -22,6 +25,11 @@ export const qk = {
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
 };
+
+/** Backend error message when it's human-readable, else the fallback. */
+function errMsg(err: unknown, fallback: string): string {
+  return (err instanceof Error && err.message) || fallback;
+}
 
 const ACTIVE: VideoJobStatus[] = [
   "queued",
@@ -69,11 +77,12 @@ export function useAvatars() {
   return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
 }
 
-export function useCreateAvatar() {
+export function useCreateAvatar(onProgress?: (fraction: number) => void) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: api.createAvatar,
+    mutationFn: (payload: AvatarCreate) => api.createAvatar(payload, onProgress),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+    onError: (err) => toast.error(errMsg(err, "Couldn't save the avatar.")),
   });
 }
 
@@ -82,6 +91,7 @@ export function useDeleteAvatar() {
   return useMutation({
     mutationFn: (id: string) => api.deleteAvatar(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
+    onError: (err) => toast.error(errMsg(err, "Couldn't delete the avatar.")),
   });
 }
 
@@ -107,46 +117,82 @@ export function useVideoJob(id: string) {
 
 /* -------------------------------------------------------------- mutations */
 
+const productListKeys = [["products"], qk.myProducts] as const;
+
 export function useToggleLike() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, liked }: { id: string; liked: boolean }) =>
       liked ? api.unlikeProduct(id) : api.likeProduct(id),
-    onSuccess: (_data, { id, liked }) => {
-      // flip cached detail + any product lists
+    // optimistic: flip cached detail + any product lists immediately,
+    // roll back from the snapshot (with a toast) if the request fails
+    onMutate: async ({ id, liked }) => {
+      await Promise.all([
+        qc.cancelQueries({ queryKey: qk.product(id) }),
+        ...productListKeys.map((queryKey) => qc.cancelQueries({ queryKey })),
+      ]);
+      const snapshot = snapshotProductQueries(qc, id);
       qc.setQueryData<ProductSummary | undefined>(qk.product(id), (p) =>
         p ? { ...p, is_liked: !liked } : p,
       );
       patchProductLists(qc, id, !liked);
+      return snapshot;
+    },
+    onError: (_err, _vars, snapshot) => {
+      snapshot?.forEach(([key, data]) => qc.setQueryData(key, data));
+      toast.error("Couldn't update like. Please try again.");
+    },
+    onSettled: (_data, _err, { id }) => {
+      qc.invalidateQueries({ queryKey: qk.product(id) });
+      productListKeys.forEach((queryKey) => qc.invalidateQueries({ queryKey }));
     },
   });
 }
 
-function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
-  qc.getQueryCache()
-    .findAll({ queryKey: ["products"] })
-    .forEach((q) => {
-      const data = q.state.data as ProductSummary[] | undefined;
-      if (!Array.isArray(data)) return;
-      qc.setQueryData(
-        q.queryKey,
-        data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
-      );
-    });
+export function snapshotProductQueries(
+  qc: QueryClient,
+  id: string,
+): [readonly unknown[], unknown][] {
+  const entries: [readonly unknown[], unknown][] = [
+    [qk.product(id), qc.getQueryData(qk.product(id))],
+  ];
+  productListKeys.forEach((queryKey) =>
+    qc.getQueryCache()
+      .findAll({ queryKey })
+      .forEach((q) => entries.push([q.queryKey, q.state.data])),
+  );
+  return entries;
+}
+
+export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
+  productListKeys.forEach((queryKey) =>
+    qc.getQueryCache()
+      .findAll({ queryKey })
+      .forEach((q) => {
+        const data = q.state.data as ProductSummary[] | undefined;
+        if (!Array.isArray(data)) return;
+        qc.setQueryData(
+          q.queryKey,
+          data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
+        );
+      }),
+  );
 }
 
 export function useParseProduct() {
   return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
 }
 
-export function useCreateProduct() {
+export function useCreateProduct(onProgress?: (fraction: number) => void) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: api.createProduct,
+    mutationFn: (payload: ProductCreate) => api.createProduct(payload, onProgress),
     onSuccess: (product) => {
       qc.setQueryData(qk.product(product.id), product);
       qc.invalidateQueries({ queryKey: qk.myProducts });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't save the product. Please try again.")),
   });
 }
 
@@ -159,6 +205,8 @@ export function useCreateJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't start the video. Please try again.")),
   });
 }
 
@@ -176,6 +224,15 @@ export function useBeatAction(jobId: string) {
         ? api.approveBeat(jobId, beatIndex)
         : api.regenerateBeat(jobId, beatIndex),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
+    onError: (err, { action }) =>
+      toast.error(
+        errMsg(
+          err,
+          action === "approve"
+            ? "Couldn't approve the shot. Please try again."
+            : "Couldn't regenerate the shot. Please try again.",
+        ),
+      ),
   });
 }
 
@@ -188,6 +245,8 @@ export function useRetryJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't retry the job. Please try again.")),
   });
 }
 

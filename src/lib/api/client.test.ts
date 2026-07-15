@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { api, ApiError } from "./client";
+import { api, ApiError, bffUpload } from "./client";
 
 function mockFetch(status: number, body: unknown = null) {
   const fn = vi.fn(async () =>
@@ -75,5 +75,116 @@ describe("api (BFF client)", () => {
 
     mockFetch(500, { detail: "boom" });
     await expect(api.me()).rejects.toMatchObject({ status: 500 });
+  });
+});
+
+type UploadProgressEvent = { lengthComputable: boolean; loaded: number; total: number };
+
+class FakeXHR {
+  static last: FakeXHR;
+  upload: { onprogress: ((e: UploadProgressEvent) => void) | null } = {
+    onprogress: null,
+  };
+  onload: (() => void) | null = null;
+  onerror: (() => void) | null = null;
+  status = 0;
+  statusText = "";
+  responseText = "";
+  method = "";
+  url = "";
+  headers: Record<string, string> = {};
+  body: string | null = null;
+
+  open(method: string, url: string) {
+    this.method = method;
+    this.url = url;
+  }
+  setRequestHeader(key: string, value: string) {
+    this.headers[key] = value;
+  }
+  send(body: string) {
+    this.body = body;
+    FakeXHR.last = this;
+  }
+}
+
+describe("bffUpload", () => {
+  it("posts JSON to the BFF, reports upload fractions, and resolves the parsed body", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const fractions: number[] = [];
+    const promise = bffUpload<{ id: string }>("products", { title: "x" }, (f) =>
+      fractions.push(f),
+    );
+    const xhr = FakeXHR.last;
+
+    expect(xhr.method).toBe("POST");
+    expect(xhr.url).toBe("/api/bff/products");
+    expect(xhr.headers["Content-Type"]).toBe("application/json");
+    expect(xhr.body).toBe(JSON.stringify({ title: "x" }));
+
+    xhr.upload.onprogress?.({ lengthComputable: true, loaded: 50, total: 200 });
+    xhr.upload.onprogress?.({ lengthComputable: true, loaded: 200, total: 200 });
+    xhr.status = 201;
+    xhr.responseText = JSON.stringify({ id: "p1" });
+    xhr.onload?.();
+
+    await expect(promise).resolves.toEqual({ id: "p1" });
+    expect(fractions).toEqual([0.25, 1]);
+  });
+
+  it("ignores progress events without a computable length", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const fractions: number[] = [];
+    const promise = bffUpload("avatars", {}, (f) => fractions.push(f));
+    const xhr = FakeXHR.last;
+
+    xhr.upload.onprogress?.({ lengthComputable: false, loaded: 10, total: 0 });
+    xhr.status = 200;
+    xhr.responseText = "null";
+    xhr.onload?.();
+
+    await promise;
+    expect(fractions).toEqual([]);
+  });
+
+  it("rejects with the backend detail message on an error status", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 422;
+    xhr.responseText = JSON.stringify({ detail: "Title is too short" });
+    xhr.onload?.();
+
+    await expect(promise).rejects.toMatchObject({
+      name: "ApiError",
+      status: 422,
+      message: "Title is too short",
+    });
+  });
+
+  it("falls back to statusText when the error body is not JSON", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 502;
+    xhr.statusText = "Bad Gateway";
+    xhr.responseText = "<html>upstream error</html>";
+    xhr.onload?.();
+
+    await expect(promise).rejects.toMatchObject({
+      status: 502,
+      message: "Bad Gateway",
+    });
+  });
+
+  it("rejects with an ApiError on network failure", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    FakeXHR.last.onerror?.();
+
+    await expect(promise).rejects.toBeInstanceOf(ApiError);
+    await expect(promise).rejects.toMatchObject({ status: 0 });
   });
 });
