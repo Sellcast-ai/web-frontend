@@ -37,6 +37,7 @@ const PLATFORM_LABELS: Record<SourcePlatform, string> = {
   mercadolibre: "Mercado Libre",
   etsy: "Etsy",
   ebay: "eBay",
+  shopify: "Shopify",
   generic: "Web store",
   manual: "Manual",
 };

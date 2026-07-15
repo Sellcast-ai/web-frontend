@@ -44,6 +44,7 @@ export type SourcePlatform =
   | "mercadolibre"
   | "etsy"
   | "ebay"
+  | "shopify"
   | "generic"
   | "manual";
 

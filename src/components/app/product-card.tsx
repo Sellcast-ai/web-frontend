@@ -18,6 +18,7 @@ const SOURCE_LABELS: Record<SourcePlatform, string> = {
   mercadolibre: "From Mercado Libre",
   etsy: "From Etsy",
   ebay: "From eBay",
+  shopify: "From Shopify",
   generic: "From your store",
   manual: "Added by you",
 };
