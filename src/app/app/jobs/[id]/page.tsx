@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -14,9 +14,20 @@ import {
   Eye,
   Share2,
   FileText,
+  Clapperboard,
+  Camera,
+  Pencil,
+  Film,
+  ChevronDown,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
+import {
+  useVideoJob,
+  useBeatAction,
+  useRetryJob,
+  useApproveStoryboard,
+  usePatchStoryboard,
+} from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer } from "@/components/ui/overlay";
 import { api } from "@/lib/api/client";
@@ -26,7 +37,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { VIDEO_STYLES } from "@/lib/api/types";
-import type { VideoJob, VideoJobBeat, BeatReviewStatus } from "@/lib/api/types";
+import type {
+  VideoJob,
+  VideoJobBeat,
+  BeatReviewStatus,
+  Storyboard,
+  Shot,
+  ShotTransition,
+  ProductVisibility,
+} from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
 const STEPS = ["Script", "Beats", "Review", "Render", "Ready"] as const;
@@ -54,6 +73,10 @@ function stepIndex(job: VideoJob): number {
       return job.beats.length ? 1 : 0;
     case "submitted":
       return 1;
+    // Storyboard gate fires right after the script is written (before beats),
+    // so it sits at the "Review" step just like the legacy image gate.
+    case "awaiting_storyboard":
+      return 2;
     case "awaiting_review":
       return 2;
     case "in_progress":
@@ -82,9 +105,13 @@ export default function JobDetailPage() {
 
   const styleLabel =
     VIDEO_STYLES[job.mode]?.find((s) => s.value === job.style)?.label ?? job.style;
-  const active = ["queued", "submitted", "in_progress", "awaiting_review"].includes(
-    job.status,
-  );
+  const active = [
+    "queued",
+    "submitted",
+    "in_progress",
+    "awaiting_storyboard",
+    "awaiting_review",
+  ].includes(job.status);
 
   return (
     <div className="container-page py-8">
@@ -130,6 +157,8 @@ export default function JobDetailPage() {
         <CompletedView job={job} />
       ) : job.status === "failed" ? (
         <FailedView job={job} />
+      ) : job.status === "awaiting_storyboard" ? (
+        <StoryboardView job={job} />
       ) : job.status === "awaiting_review" ? (
         <ReviewView job={job} />
       ) : (
@@ -301,6 +330,344 @@ function ReviewView({ job }: { job: VideoJob }) {
 
       <BeatGrid beats={job.beats} jobId={job.id} action={action} reviewable />
     </div>
+  );
+}
+
+/* ------------------------------------------------------------- storyboard */
+
+const TRANSITION_LABEL: Record<ShotTransition, string> = {
+  cut: "Hard cut",
+  dissolve: "Dissolve",
+  slide: "Slide",
+  fade: "Fade",
+  match_cut: "Match cut",
+};
+
+const PRODUCT_VISIBLE_LABEL: Record<ProductVisibility, string> = {
+  start: "Product at start",
+  throughout: "Product throughout",
+  end: "Product at end",
+  none: "No product shown",
+};
+
+/** Empty text fields go back as null so backend preflight doesn't choke on "". */
+function normalizeStoryboard(sb: Storyboard): Storyboard {
+  return {
+    ...sb,
+    shots: sb.shots.map((s) => ({
+      ...s,
+      dialogue: s.dialogue?.trim() ? s.dialogue : null,
+      on_screen_text: s.on_screen_text?.trim() ? s.on_screen_text : null,
+    })),
+  };
+}
+
+/** Warm, human shot label for the storyboard (vs the internal Hook/Proof/Offer). */
+function shotLabel(i: number, total: number): string {
+  if (i === 0) return "Hook";
+  if (i === total - 1) return "Call to action";
+  return `Shot ${i + 1}`;
+}
+
+/** The storyboard gate: the user reviews the AI-written shot-list as read-first
+ *  visual cards, taps a card to tweak a line, then approves to run hands-off.
+ *  Edits PATCH the whole VideoScript (the backend re-validates it). */
+function StoryboardView({ job }: { job: VideoJob }) {
+  const approve = useApproveStoryboard(job.id);
+  const patch = usePatchStoryboard(job.id);
+  const [draft, setDraft] = useState<Storyboard | null>(job.storyboard);
+  const [editing, setEditing] = useState<number | null>(null);
+
+  // storyboard is present once the worker has written the script; seed draft
+  // when a later poll carries it, without clobbering in-progress edits.
+  if (!draft && job.storyboard) setDraft(job.storyboard);
+  const hasDraft = draft != null;
+
+  // Reserve scroll runway equal to the sticky action bar's real height so the
+  // last card never hides behind it. The bar height varies (copy wraps on
+  // narrow screens), so measure it rather than hard-coding padding.
+  const barRef = useRef<HTMLDivElement>(null);
+  const [barH, setBarH] = useState(0);
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setBarH(el.offsetHeight));
+    ro.observe(el);
+    setBarH(el.offsetHeight);
+    return () => ro.disconnect();
+  }, [hasDraft]);
+
+  // guard the brief window before the first poll carries the storyboard.
+  if (!draft) return <WorkingView job={job} />;
+
+  const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
+  const busy = approve.isPending || patch.isPending;
+
+  function editShot(i: number, patchShot: Partial<Shot>) {
+    setDraft((d) =>
+      d
+        ? { ...d, shots: d.shots.map((s, j) => (j === i ? { ...s, ...patchShot } : s)) }
+        : d,
+    );
+  }
+
+  async function save(): Promise<boolean> {
+    const updated = await patch.mutateAsync(normalizeStoryboard(draft!)).catch(() => null);
+    if (updated?.storyboard) setDraft(updated.storyboard);
+    if (updated) toast.success("Storyboard saved.");
+    return Boolean(updated);
+  }
+
+  async function approveAndGenerate() {
+    // Persist pending edits (re-validated) before the render kicks off; bail if
+    // validation fails so the user can fix the offending shot.
+    if (dirty && !(await save())) return;
+    await approve.mutateAsync().catch(() => null);
+  }
+
+  return (
+    <div className="mt-8">
+      <div className="flex items-start gap-3 rounded-card border border-brand-200 bg-accent p-4">
+        <Clapperboard className="mt-0.5 h-5 w-5 text-accent-foreground" />
+        <div>
+          <p className="font-semibold text-ink">Here&apos;s the plan for your video</p>
+          <p className="text-sm text-muted-foreground">
+            Nothing&apos;s been made yet - this is just the plan. Read it over,
+            change any line you want, then hit go and Lumi builds the whole video
+            for you.
+          </p>
+        </div>
+      </div>
+
+      {/* shot list — bottom padding reserves runway for the sticky bar (§overlap
+          fix): it sits between the last card and the bar, not below the bar. */}
+      <div
+        className="mt-5 space-y-3"
+        style={{ paddingBottom: barH ? barH + 24 : undefined }}
+      >
+        {draft.shots.map((shot, i) => (
+          <ShotCard
+            key={i}
+            shot={shot}
+            label={shotLabel(i, draft.shots.length)}
+            onEdit={() => setEditing(i)}
+          />
+        ))}
+      </div>
+
+      {/* action bar — sticky and out of the card flow, so it never covers a card */}
+      <div
+        ref={barRef}
+        className="sticky bottom-4 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/95 p-4 shadow-card backdrop-blur"
+      >
+        <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
+          {busy ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <>
+              <Sparkles className="h-4 w-4" />
+              Approve &amp; make my video
+            </>
+          )}
+        </Button>
+        <p className="text-xs text-muted-foreground">
+          This is the only step that uses your credits.
+        </p>
+      </div>
+
+      <Drawer
+        open={editing !== null}
+        onClose={() => setEditing(null)}
+        title={
+          editing !== null
+            ? `Edit ${shotLabel(editing, draft.shots.length).toLowerCase()}`
+            : "Edit shot"
+        }
+      >
+        {editing !== null && (
+          <ShotEditor
+            shot={draft.shots[editing]}
+            disabled={busy}
+            onChange={(patchShot) => editShot(editing, patchShot)}
+            onDone={() => setEditing(null)}
+          />
+        )}
+      </Drawer>
+    </div>
+  );
+}
+
+/** Read-first shot card: a 9:16 caption preview + the spoken line as a quote,
+ *  with director metadata tucked into the tap-to-edit drawer. */
+function ShotCard({
+  shot,
+  label,
+  onEdit,
+}: {
+  shot: Shot;
+  label: string;
+  onEdit: () => void;
+}) {
+  return (
+    <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
+      {/* 9:16 preview — soft placeholder + burned-in caption, mirrors BeatCard */}
+      <div className="relative aspect-9/16 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10 sm:w-24">
+        <div className="flex h-full w-full items-center justify-center">
+          <Film className="h-5 w-5 text-brand-300" />
+        </div>
+        {shot.on_screen_text && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-1.5 pb-1.5 pt-6">
+            <p className="text-center text-[10px] font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
+              {shot.on_screen_text}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* read-first content */}
+      <div className="flex min-w-0 flex-1 flex-col">
+        <span className="inline-flex w-fit items-center rounded-full bg-ink/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
+          {label} · {shot.duration}s
+        </span>
+        {shot.dialogue ? (
+          <p className="mt-2 line-clamp-3 text-sm leading-snug text-ink">
+            “{shot.dialogue}”
+          </p>
+        ) : (
+          <p className="mt-2 text-sm italic text-muted-foreground">No spoken line</p>
+        )}
+        <div className="mt-auto flex items-center gap-2 pt-2">
+          {shot.technique && (
+            <span className="inline-flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
+              <Camera className="h-3 w-3 shrink-0" />
+              <span className="truncate">{shot.technique}</span>
+            </span>
+          )}
+          <button
+            type="button"
+            onClick={onEdit}
+            className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-muted-foreground hover:text-ink"
+          >
+            <Pencil className="h-3.5 w-3.5" />
+            Edit
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const EDIT_INPUT_CLS =
+  "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-ink outline-none focus:border-brand-300 disabled:opacity-60";
+
+/** Tap-to-edit drawer for one shot. Spoken line + on-screen text up front;
+ *  director metadata (technique, transition, product visibility) behind an
+ *  Advanced disclosure, hidden by default. */
+function ShotEditor({
+  shot,
+  disabled,
+  onChange,
+  onDone,
+}: {
+  shot: Shot;
+  disabled: boolean;
+  onChange: (patch: Partial<Shot>) => void;
+  onDone: () => void;
+}) {
+  const [advanced, setAdvanced] = useState(false);
+  return (
+    <div className="mt-2 space-y-4">
+      <EditField label="What you say">
+        <textarea
+          value={shot.dialogue ?? ""}
+          onChange={(e) => onChange({ dialogue: e.target.value })}
+          disabled={disabled}
+          rows={3}
+          placeholder="No spoken line for this shot"
+          className={cn(EDIT_INPUT_CLS, "resize-y")}
+        />
+      </EditField>
+      <EditField label="On-screen text">
+        <input
+          value={shot.on_screen_text ?? ""}
+          onChange={(e) => onChange({ on_screen_text: e.target.value })}
+          disabled={disabled}
+          placeholder="No caption"
+          className={EDIT_INPUT_CLS}
+        />
+      </EditField>
+
+      <div className="border-t border-border pt-3">
+        <button
+          type="button"
+          onClick={() => setAdvanced((v) => !v)}
+          className="flex w-full items-center justify-between text-sm font-semibold text-muted-foreground hover:text-ink"
+        >
+          Advanced
+          <ChevronDown
+            className={cn("h-4 w-4 transition-transform", advanced && "rotate-180")}
+          />
+        </button>
+        {advanced && (
+          <div className="mt-3 space-y-4">
+            <EditField label="How it's filmed">
+              <input
+                value={shot.technique}
+                onChange={(e) => onChange({ technique: e.target.value })}
+                disabled={disabled}
+                placeholder="Let Lumi choose the shot"
+                className={EDIT_INPUT_CLS}
+              />
+            </EditField>
+            <EditField label="Cut to the next shot">
+              <select
+                value={shot.transition_out}
+                onChange={(e) =>
+                  onChange({ transition_out: e.target.value as ShotTransition })
+                }
+                disabled={disabled}
+                className={EDIT_INPUT_CLS}
+              >
+                {(Object.keys(TRANSITION_LABEL) as ShotTransition[]).map((k) => (
+                  <option key={k} value={k}>
+                    {TRANSITION_LABEL[k]}
+                  </option>
+                ))}
+              </select>
+            </EditField>
+            <EditField label="When the product shows">
+              <select
+                value={shot.product_visible}
+                onChange={(e) =>
+                  onChange({ product_visible: e.target.value as ProductVisibility })
+                }
+                disabled={disabled}
+                className={EDIT_INPUT_CLS}
+              >
+                {(Object.keys(PRODUCT_VISIBLE_LABEL) as ProductVisibility[]).map((k) => (
+                  <option key={k} value={k}>
+                    {PRODUCT_VISIBLE_LABEL[k]}
+                  </option>
+                ))}
+              </select>
+            </EditField>
+          </div>
+        )}
+      </div>
+
+      <Button className="w-full" onClick={onDone} disabled={disabled}>
+        Done
+      </Button>
+    </div>
+  );
+}
+
+function EditField({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-sm font-semibold text-ink">{label}</span>
+      {children}
+    </label>
   );
 }
 

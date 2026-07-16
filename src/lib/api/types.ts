@@ -131,9 +131,41 @@ export type VideoJobStatus =
   | "queued"
   | "submitted"
   | "in_progress"
+  | "awaiting_storyboard"
   | "awaiting_review"
   | "completed"
   | "failed";
+
+/** How a shot cuts to the next one; drives the concat/editor. */
+export type ShotTransition = "cut" | "dissolve" | "slide" | "fade" | "match_cut";
+
+/** When the product is on screen during a shot (storyboard-review signal). */
+export type ProductVisibility = "start" | "throughout" | "end" | "none";
+
+/** One shot in the storyboard (VideoScript.shots[]). Mirrors backend
+ * `script_generation.Shot`. `technique`/`transition_out`/`product_visible`
+ * default on legacy scripts, so treat them as always-present. */
+export interface Shot {
+  duration: 10 | 15;
+  visual: string;
+  dialogue: string | null;
+  ambient_audio: string;
+  on_screen_text: string | null;
+  technique: string;
+  transition_out: ShotTransition;
+  product_visible: ProductVisibility;
+}
+
+/** The parsed shot-list the user reviews at the storyboard gate; the exact
+ * shape PATCH /video-jobs/{id}/storyboard accepts back (mirrors backend
+ * `script_generation.VideoScript`). */
+export interface Storyboard {
+  audience: string;
+  buying_points: string[];
+  hook_angle: string;
+  persona: string;
+  shots: Shot[];
+}
 
 export type BeatReviewStatus =
   | "pending"
@@ -266,6 +298,9 @@ export interface VideoJob {
   reference_video_source: string | null;
   synthesized_prompt: string | null;
   review_mode: boolean;
+  /** Parsed shot-list from script_json — the artifact reviewed/approved at the
+   * storyboard gate. Null until the worker has written the script. */
+  storyboard: Storyboard | null;
   beats: VideoJobBeat[];
 }
 
