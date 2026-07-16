@@ -14,9 +14,16 @@ import {
   Eye,
   Share2,
   FileText,
+  Clapperboard,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { useVideoJob, useBeatAction, useRetryJob } from "@/lib/api/hooks";
+import {
+  useVideoJob,
+  useBeatAction,
+  useRetryJob,
+  useApproveStoryboard,
+  usePatchStoryboard,
+} from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer } from "@/components/ui/overlay";
 import { api } from "@/lib/api/client";
@@ -26,7 +33,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { VIDEO_STYLES } from "@/lib/api/types";
-import type { VideoJob, VideoJobBeat, BeatReviewStatus } from "@/lib/api/types";
+import type {
+  VideoJob,
+  VideoJobBeat,
+  BeatReviewStatus,
+  Storyboard,
+  Shot,
+  ShotTransition,
+  ProductVisibility,
+} from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
 const STEPS = ["Script", "Beats", "Review", "Render", "Ready"] as const;
@@ -54,6 +69,10 @@ function stepIndex(job: VideoJob): number {
       return job.beats.length ? 1 : 0;
     case "submitted":
       return 1;
+    // Storyboard gate fires right after the script is written (before beats),
+    // so it sits at the "Review" step just like the legacy image gate.
+    case "awaiting_storyboard":
+      return 2;
     case "awaiting_review":
       return 2;
     case "in_progress":
@@ -82,9 +101,13 @@ export default function JobDetailPage() {
 
   const styleLabel =
     VIDEO_STYLES[job.mode]?.find((s) => s.value === job.style)?.label ?? job.style;
-  const active = ["queued", "submitted", "in_progress", "awaiting_review"].includes(
-    job.status,
-  );
+  const active = [
+    "queued",
+    "submitted",
+    "in_progress",
+    "awaiting_storyboard",
+    "awaiting_review",
+  ].includes(job.status);
 
   return (
     <div className="container-page py-8">
@@ -130,6 +153,8 @@ export default function JobDetailPage() {
         <CompletedView job={job} />
       ) : job.status === "failed" ? (
         <FailedView job={job} />
+      ) : job.status === "awaiting_storyboard" ? (
+        <StoryboardView job={job} />
       ) : job.status === "awaiting_review" ? (
         <ReviewView job={job} />
       ) : (
@@ -301,6 +326,200 @@ function ReviewView({ job }: { job: VideoJob }) {
 
       <BeatGrid beats={job.beats} jobId={job.id} action={action} reviewable />
     </div>
+  );
+}
+
+/* ------------------------------------------------------------- storyboard */
+
+const TRANSITION_LABEL: Record<ShotTransition, string> = {
+  cut: "Hard cut",
+  dissolve: "Dissolve",
+  slide: "Slide",
+  fade: "Fade",
+  match_cut: "Match cut",
+};
+
+const PRODUCT_VISIBLE_LABEL: Record<ProductVisibility, string> = {
+  start: "Product at start",
+  throughout: "Product throughout",
+  end: "Product at end",
+  none: "No product shown",
+};
+
+/** Empty text fields go back as null so backend preflight doesn't choke on "". */
+function normalizeStoryboard(sb: Storyboard): Storyboard {
+  return {
+    ...sb,
+    shots: sb.shots.map((s) => ({
+      ...s,
+      dialogue: s.dialogue?.trim() ? s.dialogue : null,
+      on_screen_text: s.on_screen_text?.trim() ? s.on_screen_text : null,
+    })),
+  };
+}
+
+/** The storyboard gate: the user reviews (and optionally edits) the shot-list
+ *  text before any image or video is generated, then approves to run hands-off.
+ *  Edits PATCH the whole VideoScript (the backend re-validates it). */
+function StoryboardView({ job }: { job: VideoJob }) {
+  const approve = useApproveStoryboard(job.id);
+  const patch = usePatchStoryboard(job.id);
+  const [draft, setDraft] = useState<Storyboard | null>(job.storyboard);
+
+  // storyboard is present once the worker has written the script; guard the
+  // brief window before the first poll carries it.
+  if (!draft) return <WorkingView job={job} />;
+
+  const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
+  const busy = approve.isPending || patch.isPending;
+
+  function editShot(i: number, patchShot: Partial<Shot>) {
+    setDraft((d) =>
+      d
+        ? { ...d, shots: d.shots.map((s, j) => (j === i ? { ...s, ...patchShot } : s)) }
+        : d,
+    );
+  }
+
+  async function save(): Promise<boolean> {
+    const updated = await patch.mutateAsync(normalizeStoryboard(draft!)).catch(() => null);
+    if (updated?.storyboard) setDraft(updated.storyboard);
+    if (updated) toast.success("Storyboard saved.");
+    return Boolean(updated);
+  }
+
+  async function approveAndGenerate() {
+    // Persist pending edits (re-validated) before the render kicks off; bail if
+    // validation fails so the user can fix the offending shot.
+    if (dirty && !(await save())) return;
+    await approve.mutateAsync().catch(() => null);
+  }
+
+  return (
+    <div className="mt-8">
+      <div className="flex items-start gap-3 rounded-card border border-brand-200 bg-accent p-4">
+        <Clapperboard className="mt-0.5 h-5 w-5 text-accent-foreground" />
+        <div>
+          <p className="font-semibold text-ink">Review your storyboard</p>
+          <p className="text-sm text-muted-foreground">
+            This is the plan for your video — nothing has been generated yet. Tweak
+            any lines, then approve and Lumi renders the whole thing hands-off.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-5 space-y-3">
+        {draft.shots.map((shot, i) => (
+          <ShotCard
+            key={i}
+            shot={shot}
+            label={beatLabel(i, draft.shots.length)}
+            disabled={busy}
+            onChange={(patchShot) => editShot(i, patchShot)}
+          />
+        ))}
+      </div>
+
+      <div className="sticky bottom-4 mt-6 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/90 p-4 shadow-card backdrop-blur">
+        <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
+          {busy ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <>
+              <Sparkles className="h-4 w-4" />
+              Approve storyboard &amp; generate
+            </>
+          )}
+        </Button>
+        {dirty && (
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={save}
+            disabled={busy}
+          >
+            Save edits
+          </Button>
+        )}
+        <p className="text-xs text-muted-foreground">
+          {dirty
+            ? "You have unsaved edits — approving saves them first."
+            : "Approving spends generation credits."}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function ShotCard({
+  shot,
+  label,
+  disabled,
+  onChange,
+}: {
+  shot: Shot;
+  label: string;
+  disabled: boolean;
+  onChange: (patch: Partial<Shot>) => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-border bg-card p-4 shadow-soft">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="rounded-full bg-ink/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
+          {label} · {shot.duration}s
+        </span>
+        <span className="rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground">
+          {PRODUCT_VISIBLE_LABEL[shot.product_visible]}
+        </span>
+        <span className="ml-auto rounded-full bg-brand-100 px-2.5 py-0.5 text-[11px] font-semibold text-brand-800">
+          Cut: {TRANSITION_LABEL[shot.transition_out]}
+        </span>
+      </div>
+
+      <div className="mt-3 space-y-3">
+        <Field label="Spoken line">
+          <textarea
+            value={shot.dialogue ?? ""}
+            onChange={(e) => onChange({ dialogue: e.target.value })}
+            disabled={disabled}
+            rows={2}
+            placeholder="No spoken line for this shot"
+            className="w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm text-ink outline-none focus:border-brand-300 disabled:opacity-60"
+          />
+        </Field>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Field label="On-screen caption">
+            <input
+              value={shot.on_screen_text ?? ""}
+              onChange={(e) => onChange({ on_screen_text: e.target.value })}
+              disabled={disabled}
+              placeholder="No caption"
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-ink outline-none focus:border-brand-300 disabled:opacity-60"
+            />
+          </Field>
+          <Field label="Technique">
+            <input
+              value={shot.technique}
+              onChange={(e) => onChange({ technique: e.target.value })}
+              disabled={disabled}
+              placeholder="Let Lumi choose the shot"
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-ink outline-none focus:border-brand-300 disabled:opacity-60"
+            />
+          </Field>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </span>
+      {children}
+    </label>
   );
 }
 

@@ -9,6 +9,7 @@ const MAP: Record<
   queued: { label: "Queued", className: "bg-muted text-muted-foreground", dot: "bg-muted-foreground" },
   submitted: { label: "Submitted", className: "bg-brand-100 text-brand-800", dot: "bg-brand-500" },
   in_progress: { label: "Rendering", className: "bg-brand-100 text-brand-800", dot: "bg-brand-500 animate-pulse" },
+  awaiting_storyboard: { label: "Review storyboard", className: "bg-[#fff1e0] text-[#9a5a00] dark:bg-[#3a2a10] dark:text-warning", dot: "bg-warning" },
   awaiting_review: { label: "Needs review", className: "bg-[#fff1e0] text-[#9a5a00] dark:bg-[#3a2a10] dark:text-warning", dot: "bg-warning" },
   completed: { label: "Ready", className: "bg-success-soft text-success", dot: "bg-success" },
   failed: { label: "Failed", className: "bg-[#ffe4e9] text-[#a31432] dark:bg-[#3a141d] dark:text-rose", dot: "bg-rose" },

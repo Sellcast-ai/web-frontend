@@ -69,6 +69,31 @@ describe("api (BFF client)", () => {
     });
   });
 
+  it("approveStoryboard POSTs to the approve endpoint", async () => {
+    const fetchMock = mockFetch(200, { id: "j1" });
+    await api.approveStoryboard("j1");
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("/api/bff/video-jobs/j1/storyboard/approve");
+    expect(init.method).toBe("POST");
+  });
+
+  it("patchStoryboard PATCHes the edited VideoScript as JSON", async () => {
+    const fetchMock = mockFetch(200, { id: "j1" });
+    const sb = {
+      audience: "a",
+      buying_points: ["b"],
+      hook_angle: "h",
+      persona: "p",
+      shots: [],
+    };
+    await api.patchStoryboard("j1", sb);
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("/api/bff/video-jobs/j1/storyboard");
+    expect(init.method).toBe("PATCH");
+    expect(init.headers).toMatchObject({ "Content-Type": "application/json" });
+    expect(init.body).toBe(JSON.stringify(sb));
+  });
+
   it("me() maps 401 to null but rethrows other errors", async () => {
     mockFetch(401, { detail: "unauthenticated" });
     await expect(api.me()).resolves.toBeNull();

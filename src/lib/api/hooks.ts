@@ -12,6 +12,7 @@ import type {
   AvatarCreate,
   ProductCreate,
   ProductSummary,
+  Storyboard,
   VideoJob,
   VideoJobCreate,
   VideoJobStatus,
@@ -35,6 +36,7 @@ const ACTIVE: VideoJobStatus[] = [
   "queued",
   "submitted",
   "in_progress",
+  "awaiting_storyboard",
   "awaiting_review",
 ];
 
@@ -233,6 +235,26 @@ export function useBeatAction(jobId: string) {
             : "Couldn't regenerate the shot. Please try again.",
         ),
       ),
+  });
+}
+
+export function useApproveStoryboard(jobId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: () => api.approveStoryboard(jobId),
+    onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't approve the storyboard. Please try again.")),
+  });
+}
+
+export function usePatchStoryboard(jobId: string) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (storyboard: Storyboard) => api.patchStoryboard(jobId, storyboard),
+    onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't save your edits. Please try again.")),
   });
 }
 

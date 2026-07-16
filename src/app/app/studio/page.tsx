@@ -11,7 +11,6 @@ import {
   Loader2,
   Check,
   Eye,
-  Wand2,
   Store,
 } from "lucide-react";
 import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks";
@@ -72,7 +71,9 @@ function StudioInner() {
   // until the user explicitly picks one — derived, so no effect needed.
   const [languageOverride, setLanguageOverride] = useState<VideoLanguage | null>(null);
   const language = languageOverride ?? defaultLanguageFor(product);
-  const [reviewMode, setReviewMode] = useState(false);
+  // Storyboard review is always on (the default gate); the legacy image-level
+  // review_mode stays wired but is no longer user-toggleable.
+  const reviewMode = false;
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
@@ -317,33 +318,19 @@ function StudioInner() {
             </div>
           </Section>
 
-          {/* review mode */}
+          {/* storyboard review — always on; this is the product's wedge, not an
+              option. The user reviews and approves the storyboard before any
+              image or video spend. */}
           <Section title="5 · Review">
-            <button
-              type="button"
-              onClick={() => setReviewMode((v) => !v)}
-              className="flex w-full items-center gap-4 rounded-2xl border border-border bg-card p-4 text-left"
-            >
-              <span
-                className={cn(
-                  "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
-                  reviewMode ? "bg-brand-gradient text-white" : "bg-muted text-muted-foreground",
-                )}
-              >
-                {reviewMode ? <Eye className="h-5 w-5" /> : <Wand2 className="h-5 w-5" />}
+            <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white">
+                <Eye className="h-5 w-5" />
               </span>
-              <span className="flex-1">
-                <span className="block text-sm font-semibold text-ink">
-                  {reviewMode ? "Beat-by-beat review" : "Auto-QA (hands off)"}
-                </span>
-                <span className="block text-xs text-muted-foreground">
-                  {reviewMode
-                    ? "Approve each shot's reference image before it renders."
-                    : "Lumi auto-approves beats and renders straight through."}
-                </span>
-              </span>
-              <Toggle on={reviewMode} />
-            </button>
+              <p className="text-sm text-muted-foreground">
+                Lumi will show you the storyboard before it spends anything —
+                review and approve it before any images or video are generated.
+              </p>
+            </div>
           </Section>
         </div>
 
@@ -392,7 +379,7 @@ function StudioInner() {
                 value={VIDEO_LANGUAGES.find((l) => l.value === language)?.label ?? "English"}
               />
               <Row label="Format" value="9:16" />
-              <Row label="Review" value={reviewMode ? "Manual beats" : "Auto-QA"} />
+              <Row label="Review" value="Storyboard" />
             </dl>
 
             {usage && (
@@ -486,24 +473,6 @@ function Row({ label, value }: { label: string; value: string }) {
       <dt className="text-muted-foreground">{label}</dt>
       <dd className="font-semibold text-ink">{value}</dd>
     </div>
-  );
-}
-
-function Toggle({ on }: { on: boolean }) {
-  return (
-    <span
-      className={cn(
-        "relative h-6 w-11 shrink-0 rounded-full transition-colors",
-        on ? "bg-brand-500" : "bg-border-strong",
-      )}
-    >
-      <span
-        className={cn(
-          "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all",
-          on ? "left-[22px]" : "left-0.5",
-        )}
-      />
-    </span>
   );
 }
 

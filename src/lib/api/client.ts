@@ -8,6 +8,7 @@ import type {
   VideoJob,
   VideoJobCreate,
   VideoJobEventCreate,
+  Storyboard,
   CurrentUser,
   PhoneCodeSendResponse,
   LikeStatus,
@@ -141,6 +142,13 @@ export const api = {
   regenerateBeat: (id: string, beatIndex: number) =>
     bff<VideoJob>(`video-jobs/${id}/beats/${beatIndex}/regenerate`, {
       method: "POST",
+    }),
+  approveStoryboard: (id: string) =>
+    bff<VideoJob>(`video-jobs/${id}/storyboard/approve`, { method: "POST" }),
+  patchStoryboard: (id: string, storyboard: Storyboard) =>
+    bff<VideoJob>(`video-jobs/${id}/storyboard`, {
+      method: "PATCH",
+      json: storyboard,
     }),
 
   /* --- users --- */
