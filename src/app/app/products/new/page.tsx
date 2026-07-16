@@ -540,7 +540,6 @@ function StoreImport() {
       );
       router.push("/app/products");
     } else if (job.status === "failed") {
-      done.current = true;
       toast.error(job.error ?? "The import didn't finish. Please try again.");
     }
   }, [job, qc, router]);
@@ -548,7 +547,8 @@ function StoreImport() {
   const previewData = preview.data;
 
   // step 3 — an import is running: live progress from upserted / found
-  if (jobId && job) {
+  // (a failed job falls through to the preview step so the user can retry)
+  if (jobId && job && job.status !== "failed") {
     const active = job.status === "queued" || job.status === "running";
     const fraction = job.products_found > 0 ? job.products_upserted / job.products_found : 0;
     return (
