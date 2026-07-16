@@ -19,6 +19,8 @@ import {
   Pencil,
   Film,
   ChevronDown,
+  Lock,
+  Image as ImageIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
 import {
@@ -36,6 +38,7 @@ import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
+import { orderedSubjects, SUBJECT_HEADING } from "@/lib/subjects";
 import { VIDEO_STYLES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -45,6 +48,7 @@ import type {
   Shot,
   ShotTransition,
   ProductVisibility,
+  SubjectLock,
 } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
@@ -439,6 +443,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
         </div>
       </div>
 
+      {/* locked-subjects strip — "this is your product / host / scene". Omitted
+          until the worker has written the subject rows (image step), and on
+          jobs that predate the feature. */}
+      <SubjectStrip subjects={job.subjects} />
+
       {/* shot list — bottom padding reserves runway for the sticky bar (§overlap
           fix): it sits between the last card and the bar, not below the bar. */}
       <div
@@ -493,6 +502,60 @@ function StoryboardView({ job }: { job: VideoJob }) {
           />
         )}
       </Drawer>
+    </div>
+  );
+}
+
+/** The locked-subjects strip: Product / Host / Scene, each a thumbnail + plain
+ *  label + a lock indicator, so the user sees "this is unmistakably *my*
+ *  product/host/scene" before approving. Read-only for now — unlock/swap needs
+ *  a backend endpoint (follow-up); every subject ships locked by default.
+ *  Renders nothing when there are no subjects (older jobs / pre-generation). */
+function SubjectStrip({ subjects }: { subjects: SubjectLock[] }) {
+  const items = orderedSubjects(subjects);
+  if (items.length === 0) return null;
+  return (
+    <div className="mt-5">
+      <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+        Locked in for every shot
+      </p>
+      {/* horizontally scrollable on mobile so the three cards never squash */}
+      <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
+        {items.map((s, i) => (
+          <SubjectCard key={`${s.kind}-${i}`} subject={s} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SubjectCard({ subject }: { subject: SubjectLock }) {
+  const img = mediaUrl(subject.image_url);
+  return (
+    <div className="flex w-44 shrink-0 items-center gap-3 rounded-2xl border border-border bg-card p-2.5 shadow-soft">
+      <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10">
+        {img ? (
+          <img src={img} alt="" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <ImageIcon className="h-5 w-5 text-brand-300" />
+          </div>
+        )}
+      </div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+          {SUBJECT_HEADING[subject.kind]}
+        </span>
+        <span className="truncate text-sm font-semibold text-ink">
+          {subject.label}
+        </span>
+        {subject.locked && (
+          <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success">
+            <Lock className="h-3 w-3" />
+            Locked
+          </span>
+        )}
+      </div>
     </div>
   );
 }
