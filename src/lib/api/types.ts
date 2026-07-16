@@ -62,6 +62,43 @@ export interface ProductDraft {
   warnings: string[];
 }
 
+/* ------------------------------------------------------- store batch import */
+
+/** One sample product shown on the preview card (a few of the ~N found). */
+export interface ImportSampleItem {
+  title: string;
+  image: string | null;
+}
+
+/** Fast one-page probe of a pasted store URL — count is an estimate string
+ * (e.g. "~248" or "250+"), not an exact catalog walk. */
+export interface ImportPreview {
+  platform: string;
+  store_domain: string;
+  product_count_estimate: string;
+  sample: ImportSampleItem[];
+}
+
+export type ImportStatus =
+  | "queued"
+  | "running"
+  | "succeeded"
+  | "failed"
+  | "partial";
+
+/** A store-import job's live state — returned by both enqueue and polling. */
+export interface ImportJob {
+  job_id: string;
+  status: ImportStatus;
+  store_url: string;
+  products_found: number;
+  products_upserted: number;
+  products_failed: number;
+  error: string | null;
+  started_at: string | null;
+  finished_at: string | null;
+}
+
 export interface UploadedImagePayload {
   filename: string;
   data_base64: string;

@@ -10,6 +10,7 @@ import { api } from "./client";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
+  ImportStatus,
   ProductCreate,
   ProductSummary,
   Storyboard,
@@ -25,6 +26,7 @@ export const qk = {
   product: (id: string) => ["product", id] as const,
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
+  import: (id: string) => ["import", id] as const,
 };
 
 /** Backend error message when it's human-readable, else the fallback. */
@@ -101,6 +103,24 @@ export function useVideoJobs(params: { product_id?: string } = {}) {
   return useQuery({
     queryKey: qk.jobs(params),
     queryFn: () => api.listVideoJobs(params),
+  });
+}
+
+/** Import-job poll interval: keep polling while the catalog pull is in
+ * flight, stop the moment it reaches a terminal status. */
+const IMPORT_ACTIVE: ImportStatus[] = ["queued", "running"];
+
+export function importPollInterval(status: ImportStatus | undefined): number | false {
+  return status && IMPORT_ACTIVE.includes(status) ? 2500 : false;
+}
+
+/** Polls every 2.5s while the store import is queued/running (report §4.2). */
+export function useImportJob(id: string) {
+  return useQuery({
+    queryKey: qk.import(id),
+    queryFn: () => api.getImport(id),
+    enabled: Boolean(id),
+    refetchInterval: (query) => importPollInterval(query.state.data?.status),
   });
 }
 
@@ -183,6 +203,20 @@ export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean)
 
 export function useParseProduct() {
   return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
+}
+
+export function usePreviewImport() {
+  return useMutation({ mutationFn: (storeUrl: string) => api.previewImport(storeUrl) });
+}
+
+export function useStartImport() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (storeUrl: string) => api.startImport(storeUrl),
+    onSuccess: (job) => qc.setQueryData(qk.import(job.job_id), job),
+    onError: (err) =>
+      toast.error(errMsg(err, "Couldn't start the import. Please try again.")),
+  });
 }
 
 export function useCreateProduct(onProgress?: (fraction: number) => void) {
