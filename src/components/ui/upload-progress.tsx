@@ -5,7 +5,13 @@ import { Loader2 } from "lucide-react";
  * a real progress bar while the request body is uploading, then a labelled
  * processing stage while the backend stores the images.
  */
-export function UploadProgress({ progress }: { progress: number }) {
+export function UploadProgress({
+  progress,
+  label = "Uploading",
+}: {
+  progress: number;
+  label?: string;
+}) {
   if (progress >= 1) {
     return (
       <>
@@ -14,7 +20,7 @@ export function UploadProgress({ progress }: { progress: number }) {
       </>
     );
   }
-  const pct = Math.round(progress * 100);
+  const pct = Math.round(Math.max(progress, 0) * 100);
   return (
     <>
       <span className="h-1.5 w-16 overflow-hidden rounded-full bg-white/30">
@@ -23,7 +29,7 @@ export function UploadProgress({ progress }: { progress: number }) {
           style={{ width: `${pct}%` }}
         />
       </span>
-      Uploading {pct}%
+      {label} {pct}%
     </>
   );
 }

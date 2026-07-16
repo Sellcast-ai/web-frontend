@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
-import { patchProductLists, qk, snapshotProductQueries } from "./hooks";
+import {
+  importPollInterval,
+  patchProductLists,
+  qk,
+  snapshotProductQueries,
+} from "./hooks";
 import type { ProductSummary } from "./types";
 
 const product = (id: string, is_liked: boolean) =>
@@ -51,6 +56,15 @@ describe("optimistic like flip + rollback", () => {
       const list = qc.getQueryData<ProductSummary[]>(key)!;
       expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
     }
+  });
+
+  it("polls while the import is active and stops on terminal status", () => {
+    expect(importPollInterval("queued")).toBe(2500);
+    expect(importPollInterval("running")).toBe(2500);
+    for (const terminal of ["succeeded", "partial", "failed"] as const) {
+      expect(importPollInterval(terminal)).toBe(false);
+    }
+    expect(importPollInterval(undefined)).toBe(false);
   });
 
   it("snapshots lists even when the detail query is not cached", () => {

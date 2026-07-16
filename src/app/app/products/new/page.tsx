@@ -3,6 +3,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Link2,
   Loader2,
@@ -12,10 +13,19 @@ import {
   Check,
   ArrowLeft,
   PencilLine,
+  Store,
 } from "lucide-react";
-import { useParseProduct, useCreateProduct } from "@/lib/api/hooks";
+import {
+  useParseProduct,
+  useCreateProduct,
+  usePreviewImport,
+  useStartImport,
+  useImportJob,
+  qk,
+} from "@/lib/api/hooks";
 import type { ProductDraft, SourcePlatform } from "@/lib/api/types";
 import { CATEGORIES, categoryLabel } from "@/lib/categories";
+import { toast } from "@/lib/toast";
 import { Button } from "@/components/ui/button";
 import { UploadProgress } from "@/components/ui/upload-progress";
 import { useDropzone } from "@/lib/use-dropzone";
@@ -308,6 +318,14 @@ function NewProductInner() {
             </button>
           </div>
           {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+
+          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <span className="h-px flex-1 bg-border" />
+            or
+            <span className="h-px flex-1 bg-border" />
+          </div>
+
+          <StoreImport />
         </>
       ) : (
         <>
@@ -494,6 +512,146 @@ function NewProductInner() {
         }}
       />
     </div>
+  );
+}
+
+/** "Import your whole store" — paste a store URL, preview the catalog, then
+ * kick off a batch import and watch it fill up My Products (report §4). */
+function StoreImport() {
+  const router = useRouter();
+  const qc = useQueryClient();
+  const preview = usePreviewImport();
+  const start = useStartImport();
+  const [storeUrl, setStoreUrl] = useState("");
+  const [jobId, setJobId] = useState<string | null>(null);
+  const { data: job } = useImportJob(jobId ?? "");
+  const done = useRef(false);
+
+  // route to My Products (and refresh it) the moment the import finishes
+  useEffect(() => {
+    if (!job || done.current) return;
+    if (job.status === "succeeded" || job.status === "partial") {
+      done.current = true;
+      qc.invalidateQueries({ queryKey: qk.myProducts });
+      toast.success(
+        job.status === "partial"
+          ? `Imported ${job.products_upserted} of your products (catalog cap). The rest can be added by paste.`
+          : `Imported ${job.products_upserted} products from your store.`,
+      );
+      router.push("/app/products");
+    } else if (job.status === "failed") {
+      toast.error(job.error ?? "The import didn't finish. Please try again.");
+    }
+  }, [job, qc, router]);
+
+  const previewData = preview.data;
+
+  // step 3 — an import is running: live progress from upserted / found
+  // (a failed job falls through to the preview step so the user can retry)
+  if (jobId && job && job.status !== "failed") {
+    const active = job.status === "queued" || job.status === "running";
+    const fraction = job.products_found > 0 ? job.products_upserted / job.products_found : 0;
+    return (
+      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 text-brand-600" />
+          Importing your store
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {active
+            ? `Imported ${job.products_upserted} of ~${job.products_found} products so far — this keeps going in the background.`
+            : "Wrapping up…"}
+        </p>
+        <div className="mt-4">
+          <Button size="lg" disabled className="w-full sm:w-auto">
+            <UploadProgress progress={active ? fraction : 1} label="Importing" />
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  // step 2 — preview succeeded: confirm before pulling the whole catalog
+  if (previewData) {
+    return (
+      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="font-display font-semibold text-ink">
+          We found {previewData.product_count_estimate} products from{" "}
+          {previewData.store_domain}
+        </p>
+        {previewData.sample.length > 0 && (
+          <div className="mt-3 flex gap-2">
+            {previewData.sample.map((s, i) => (
+              <div
+                key={`${s.image ?? s.title}-${i}`}
+                className="h-16 w-16 overflow-hidden rounded-xl border border-border bg-accent"
+              >
+                {s.image && (
+                  <img src={s.image} alt={s.title} className="h-full w-full object-cover" />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+        <div className="mt-4 flex items-center gap-3">
+          <Button
+            size="lg"
+            disabled={start.isPending}
+            onClick={() =>
+              start.mutate(storeUrl.trim(), {
+                onSuccess: (created) => setJobId(created.job_id),
+              })
+            }
+          >
+            {start.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <Store className="h-4 w-4" />
+                Import all products
+              </>
+            )}
+          </Button>
+          <button
+            type="button"
+            className="text-sm font-semibold text-muted-foreground hover:text-ink"
+            onClick={() => preview.reset()}
+          >
+            Try a different store
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // step 1 — paste a store URL and preview it
+  return (
+    <>
+      <form
+        className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (storeUrl.trim()) preview.mutate(storeUrl.trim());
+        }}
+      >
+        <Store className="h-4 w-4 shrink-0 text-muted-foreground" />
+        <input
+          value={storeUrl}
+          onChange={(e) => setStoreUrl(e.target.value)}
+          placeholder="your-store.myshopify.com — import your whole store"
+          className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+        />
+        <Button size="sm" type="submit" disabled={preview.isPending || !storeUrl.trim()}>
+          {preview.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Preview"}
+        </Button>
+      </form>
+      {preview.isError && (
+        <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+          <p className="text-ink">{(preview.error as Error)?.message}</p>
+        </div>
+      )}
+    </>
   );
 }
 

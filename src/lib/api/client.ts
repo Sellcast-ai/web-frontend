@@ -3,6 +3,8 @@ import type {
   ProductDetail,
   ProductDraft,
   ProductCreate,
+  ImportPreview,
+  ImportJob,
   Avatar,
   AvatarCreate,
   VideoJob,
@@ -102,6 +104,17 @@ export const api = {
   listMyProducts: () => bff<ProductSummary[]>(`products/mine`),
   parseProductUrl: (url: string) =>
     bff<ProductDraft>(`products/parse`, { method: "POST", json: { url } }),
+  previewImport: (storeUrl: string) =>
+    bff<ImportPreview>(`products/import/preview`, {
+      method: "POST",
+      json: { store_url: storeUrl },
+    }),
+  startImport: (storeUrl: string) =>
+    bff<ImportJob>(`products/import`, {
+      method: "POST",
+      json: { store_url: storeUrl },
+    }),
+  getImport: (jobId: string) => bff<ImportJob>(`products/import/${jobId}`),
   createProduct: (payload: ProductCreate, onProgress?: (fraction: number) => void) =>
     bffUpload<ProductDetail>(`products`, payload, onProgress),
   likeProduct: (id: string) =>
