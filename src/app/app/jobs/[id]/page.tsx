@@ -366,8 +366,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
   const patch = usePatchStoryboard(job.id);
   const [draft, setDraft] = useState<Storyboard | null>(job.storyboard);
 
-  // storyboard is present once the worker has written the script; guard the
-  // brief window before the first poll carries it.
+  // storyboard is present once the worker has written the script; seed draft
+  // when a later poll carries it, without clobbering in-progress edits.
+  if (!draft && job.storyboard) setDraft(job.storyboard);
+
+  // guard the brief window before the first poll carries the storyboard.
   if (!draft) return <WorkingView job={job} />;
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
