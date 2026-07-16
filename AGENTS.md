@@ -41,6 +41,7 @@ The browser never talks to the backend directly; all data flows through the BFF 
   - `types.ts` - shared API types mirroring backend schemas
 - `src/lib/toast.ts` - framework-free toast store (`toast.success/error/info` from any event handler or mutation callback); rendered by `ui/toaster.tsx`, mounted app-wide in `providers.tsx`
 - `src/lib/use-dropzone.ts` - shared drag-and-drop hook (spread `props` on the drop target, style via `over`)
+- `src/lib/subjects.ts` - pure helper for the storyboard locked-subjects strip (`orderedSubjects` sorts Product -> Host -> Scene and omits when empty; `SUBJECT_HEADING` maps kind to label)
 - `src/components/` - `ui/` (button, badge, motion primitives, `overlay.tsx` Modal/Drawer on native `<dialog>`, toaster, upload-progress), `app/`, `auth/`, `marketing/`, theme provider/toggle
 
 ## Auth model
