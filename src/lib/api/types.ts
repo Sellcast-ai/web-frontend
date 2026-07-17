@@ -210,6 +210,22 @@ export type BeatReviewStatus =
   | "user_approved"
   | "regen_requested";
 
+/** The three subject locks surfaced on the job so the storyboard can show
+ * "this is your product / host / scene". */
+export type SubjectKind = "product" | "person" | "scene";
+
+/** One locked subject the storyboard subject-strip renders. Mirrors backend
+ * `VideoJobSubjectResponse` — note the payload carries no `id`, and `image_url`
+ * is null for an `asset://` digital-character person (use `asset_id`). */
+export interface SubjectLock {
+  kind: SubjectKind;
+  image_url: string | null;
+  asset_id: string | null;
+  label: string;
+  locked: boolean;
+  source: string;
+}
+
 export interface VideoJobCreate {
   product_id: string;
   mode: VideoMode;
@@ -338,6 +354,10 @@ export interface VideoJob {
   /** Parsed shot-list from script_json — the artifact reviewed/approved at the
    * storyboard gate. Null until the worker has written the script. */
   storyboard: Storyboard | null;
+  /** Explicit product/host/scene locks, written by the worker at the image
+   * step. Empty until then, and on jobs that predate the feature — the
+   * subject strip is omitted when empty. */
+  subjects: SubjectLock[];
   beats: VideoJobBeat[];
 }
 
