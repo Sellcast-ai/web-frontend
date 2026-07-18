@@ -39,6 +39,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { orderedSubjects, SUBJECT_HEADING } from "@/lib/subjects";
+import { STEPS, stepIndex } from "@/lib/job-progress";
 import { VIDEO_STYLES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -51,48 +52,6 @@ import type {
   SubjectLock,
 } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
-
-const STEPS = ["Script", "Beats", "Review", "Render", "Ready"] as const;
-
-/** True once every beat has cleared the review gate. `every` on an empty
- *  array is vacuously true, so guard on length. */
-function allBeatsApproved(job: VideoJob): boolean {
-  return (
-    job.beats.length > 0 &&
-    job.beats.every(
-      (b) =>
-        b.review_status === "user_approved" ||
-        b.review_status === "auto_approved",
-    )
-  );
-}
-
-function stepIndex(job: VideoJob): number {
-  switch (job.status) {
-    case "queued":
-      // Re-queued after the review gate (all beats approved) → the worker is
-      // resuming at render, so advance to "Render" instead of jumping back to
-      // "Beats". The initial queue (no beats yet) still sits at "Script".
-      if (allBeatsApproved(job)) return 3;
-      return job.beats.length ? 1 : 0;
-    case "submitted":
-      return 1;
-    // Storyboard gate fires right after the script is written (before beats),
-    // so it sits at the "Review" step just like the legacy image gate.
-    case "awaiting_storyboard":
-      return 2;
-    case "awaiting_review":
-      return 2;
-    case "in_progress":
-      return 3;
-    case "completed":
-      return 4;
-    case "failed":
-      return 3;
-    default:
-      return 0;
-  }
-}
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -459,6 +418,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
             key={i}
             shot={shot}
             label={shotLabel(i, draft.shots.length)}
+            imageUrl={mediaUrl(job.product_image_url)}
             onEdit={() => setEditing(i)}
           />
         ))}
@@ -565,19 +525,27 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
 function ShotCard({
   shot,
   label,
+  imageUrl,
   onEdit,
 }: {
   shot: Shot;
   label: string;
+  imageUrl?: string;
   onEdit: () => void;
 }) {
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
-      {/* 9:16 preview — soft placeholder + burned-in caption, mirrors BeatCard */}
+      {/* 9:16 preview — no shots are generated pre-approval, so show the product
+          photo (it already exists) + burned-in caption; fall back to the soft
+          placeholder when the job has no product image. Mirrors BeatCard. */}
       <div className="relative aspect-9/16 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10 sm:w-24">
-        <div className="flex h-full w-full items-center justify-center">
-          <Film className="h-5 w-5 text-brand-300" />
-        </div>
+        {imageUrl ? (
+          <img src={imageUrl} alt="" className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <Film className="h-5 w-5 text-brand-300" />
+          </div>
+        )}
         {shot.on_screen_text && (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-1.5 pb-1.5 pt-6">
             <p className="text-center text-[10px] font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
