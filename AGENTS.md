@@ -42,6 +42,7 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - `src/lib/toast.ts` - framework-free toast store (`toast.success/error/info` from any event handler or mutation callback); rendered by `ui/toaster.tsx`, mounted app-wide in `providers.tsx`
 - `src/lib/use-dropzone.ts` - shared drag-and-drop hook (spread `props` on the drop target, style via `over`)
 - `src/lib/subjects.ts` - pure helper for the storyboard locked-subjects strip (`orderedSubjects` sorts Product -> Host -> Scene and omits when empty; `SUBJECT_HEADING` maps kind to label)
+- `src/lib/job-progress.ts` - pure helper for the job-detail progress tracker (`STEPS` + `stepIndex` map `job.status` to a stage; storyboard-present on a queued/submitted job means the review gate is behind us, so it shows Render, never backtracking to Script/Beats)
 - `src/components/` - `ui/` (button, badge, motion primitives, `overlay.tsx` Modal/Drawer on native `<dialog>`, toaster, upload-progress), `app/`, `auth/`, `marketing/`, theme provider/toggle
 
 ## Auth model
@@ -67,3 +68,10 @@ Vercel (this app) -> Render (FastAPI API + video worker) -> Postgres + Cloudflar
 - Add new backend calls to `src/lib/api/client.ts` + a hook in `hooks.ts`; the generic BFF proxy means most endpoints need no new route handler (only auth flows that touch cookies do).
 - Keep types in `src/lib/api/types.ts` in sync with backend Pydantic schemas.
 - Reuse the shared UI primitives instead of one-offs: mutations surface success/failure via `toast.*`, overlays go through `Modal`/`Drawer` in `ui/overlay.tsx`, animations use the tokens/primitives in `ui/motion.tsx`.
+
+## Maintaining this file
+
+Keep this file for knowledge useful to almost every future agent session in this project.
+Do not repeat what the codebase already shows; point to the authoritative file or command instead.
+Prefer rewriting or pruning existing entries over appending new ones.
+When updating this file, preserve this bar for all agents and keep entries concise.
