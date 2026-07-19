@@ -1,7 +1,7 @@
 import type { VideoJob } from "@/lib/api/types";
 
-/** The five stages shown in the job-detail progress tracker, in order. */
-export const STEPS = ["Script", "Beats", "Review", "Render", "Ready"] as const;
+/** Translation keys for the five job-detail progress stages, in order. */
+export const STEP_LABEL_KEYS = ["script", "beats", "review", "render", "ready"] as const;
 
 /** True once every beat has cleared the review gate. `every` on an empty
  *  array is vacuously true, so guard on length. */
@@ -16,7 +16,7 @@ export function allBeatsApproved(job: VideoJob): boolean {
   );
 }
 
-/** Index into {@link STEPS} for the job's current stage.
+/** Index into {@link STEP_LABEL_KEYS} for the job's current stage.
  *
  *  The tracker must only ever move forward. In the review-first flow, beat
  *  reference images are generated *after* the storyboard is approved, so a
@@ -30,7 +30,7 @@ export function stepIndex(job: VideoJob): number {
     case "queued":
     case "submitted":
       // Re-queued/-submitted after a review gate → the worker is resuming at
-      // render, so advance to "Render" instead of dropping back to Script/Beats.
+      // render, so advance to the Render step instead of dropping back to Script/Beats.
       // Two gates land here: the storyboard gate (storyboard present, beats not
       // yet generated) and the legacy image gate (all beats approved). The
       // initial queue (no script yet) stays at Script; a fresh `submitted`
@@ -38,7 +38,7 @@ export function stepIndex(job: VideoJob): number {
       if (job.storyboard || allBeatsApproved(job)) return 3;
       return job.status === "submitted" || job.beats.length ? 1 : 0;
     // Storyboard gate fires right after the script is written (before beats),
-    // so it sits at the "Review" step just like the legacy image gate.
+    // so it sits at the Review step just like the legacy image gate.
     case "awaiting_storyboard":
       return 2;
     case "awaiting_review":

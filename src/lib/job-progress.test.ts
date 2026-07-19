@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { STEPS, stepIndex } from "./job-progress";
+import { STEP_LABEL_KEYS, stepIndex } from "./job-progress";
 import type { VideoJob, VideoJobStatus, Storyboard } from "./api/types";
 
-const RENDER = STEPS.indexOf("Render"); // 3
-const REVIEW = STEPS.indexOf("Review"); // 2
+const RENDER = STEP_LABEL_KEYS.indexOf("render"); // 3
+const REVIEW = STEP_LABEL_KEYS.indexOf("review"); // 2
 
 const sb = { shots: [] } as unknown as Storyboard;
 
@@ -29,8 +29,8 @@ describe("stepIndex", () => {
   });
 
   it("keeps a fresh job (no script/storyboard) at Script/Beats", () => {
-    expect(stepIndex(mk({ status: "queued" }))).toBe(0); // Script
-    expect(stepIndex(mk({ status: "submitted" }))).toBe(1); // Beats
+    expect(stepIndex(mk({ status: "queued" }))).toBe(0); // script
+    expect(stepIndex(mk({ status: "submitted" }))).toBe(1); // beats
   });
 
   it("reaches Ready when completed", () => {

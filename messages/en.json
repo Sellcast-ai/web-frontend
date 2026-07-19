@@ -16,5 +16,57 @@
   },
   "languageSwitcher": {
     "label": "Language"
+  },
+  "shared": {
+    "status": {
+      "queued": "Queued",
+      "submitted": "Submitted",
+      "rendering": "Rendering",
+      "reviewStoryboard": "Review storyboard",
+      "needsReview": "Needs review",
+      "ready": "Ready",
+      "failed": "Failed"
+    },
+    "jobProgress": {
+      "script": "Script",
+      "beats": "Beats",
+      "review": "Review",
+      "render": "Render",
+      "ready": "Ready"
+    },
+    "subjects": {
+      "product": "Product",
+      "host": "Host",
+      "scene": "Scene"
+    },
+    "error": {
+      "title": "Something went wrong.",
+      "description": "That's on us — try again, and if it keeps happening, come back in a bit.",
+      "tryAgain": "Try again",
+      "backHome": "Back home"
+    },
+    "notFound": {
+      "title": "This page wandered off.",
+      "description": "The link may be broken or the page may have moved.",
+      "backHome": "Back home",
+      "goToApp": "Go to app"
+    },
+    "overlay": {
+      "close": "Close"
+    },
+    "uploadProgress": {
+      "uploading": "Uploading",
+      "processing": "Processing…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "Dismiss notification"
+    },
+    "theme": {
+      "label": "Theme",
+      "light": "Light",
+      "system": "System",
+      "dark": "Dark"
+    }
   }
 }

@@ -1,10 +1,10 @@
 import type { SubjectLock, SubjectKind } from "@/lib/api/types";
 
-/** Card heading per subject kind — the plain "role" line above the label. */
-export const SUBJECT_HEADING: Record<SubjectKind, string> = {
-  product: "Product",
-  person: "Host",
-  scene: "Scene",
+/** Translation key per subject kind for the plain "role" line above the label. */
+export const SUBJECT_HEADING_KEYS: Record<SubjectKind, "product" | "host" | "scene"> = {
+  product: "product",
+  person: "host",
+  scene: "scene",
 };
 
 const ORDER: SubjectKind[] = ["product", "person", "scene"];

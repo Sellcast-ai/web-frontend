@@ -22,4 +22,31 @@ describe("en catalog", () => {
       "videos",
     ]);
   });
+
+  it("has the shared status keys used by StatusBadge", () => {
+    expect(Object.keys(en.shared.status).sort()).toEqual([
+      "failed",
+      "needsReview",
+      "queued",
+      "ready",
+      "rendering",
+      "reviewStoryboard",
+      "submitted",
+    ]);
+  });
+
+  it("has shared enum label keys used by job progress and subject strips", () => {
+    expect(Object.keys(en.shared.jobProgress).sort()).toEqual([
+      "beats",
+      "ready",
+      "render",
+      "review",
+      "script",
+    ]);
+    expect(Object.keys(en.shared.subjects).sort()).toEqual([
+      "host",
+      "product",
+      "scene",
+    ]);
+  });
 });
