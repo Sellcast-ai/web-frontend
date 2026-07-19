@@ -7,7 +7,6 @@ import { VIDEO_LANGUAGES } from "./api/types";
 const HOST_LANGUAGE: [RegExp, VideoLanguage][] = [
   [/shopee\.co\.id$/, "id"],
   [/shopee\.co\.th$/, "th"],
-  [/shopee\.vn$/, "vi"],
   [/amazon\.(es|com\.mx)$/, "es"],
 ];
 
