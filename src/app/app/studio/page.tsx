@@ -9,7 +9,6 @@ import {
   Package,
   Sparkles,
   Loader2,
-  Check,
   Eye,
   Store,
 } from "lucide-react";
@@ -19,17 +18,17 @@ import {
   VIDEO_LANGUAGES,
   VIDEO_MODELS,
   VIDEO_RESOLUTIONS,
-  VIDEO_STYLES,
+  VIDEO_VIBES,
   type VideoLanguage,
   type VideoModelKey,
   type VideoResolution,
   type VideoMode,
-  type VideoStyle,
+  type VideoVibe,
   type VideoDuration,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
+import { defaultStyleForMode } from "@/lib/vibe";
 import { Button } from "@/components/ui/button";
-import { PopIn } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -61,8 +60,11 @@ function StudioInner() {
   const create = useCreateJob();
 
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
-  const [style, setStyle] = useState<VideoStyle>("avatar_talking_intro");
+  const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
   const [duration, setDuration] = useState<VideoDuration>(15);
+  // Style is no longer a manual pick — it auto-derives from mode (locked
+  // decision #1). We still send it so the backend schema stays intact.
+  const style = defaultStyleForMode(mode);
   const [videoModel, setVideoModel] = useState<VideoModelKey>(VIDEO_MODELS[0].value);
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [avatarId, setAvatarId] = useState<string | null>(null);
@@ -78,13 +80,6 @@ function StudioInner() {
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
 
-  // switching modes resets style to that mode's first option (in the click
-  // handler, not an effect — see react-hooks/set-state-in-effect)
-  function pickMode(next: VideoMode) {
-    setMode(next);
-    setStyle(VIDEO_STYLES[next][0].value);
-  }
-
   async function generate() {
     if (!productId) return;
     // failure is surfaced as a toast by useCreateJob
@@ -93,6 +88,7 @@ function StudioInner() {
         product_id: productId,
         mode,
         style,
+        vibe,
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
@@ -122,14 +118,36 @@ function StudioInner() {
       <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_20rem]">
         {/* config */}
         <div className="space-y-8">
+          {/* vibe — the hero creation control. Style auto-derives from mode. */}
+          <Section title="1 · What's the vibe?">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              {VIDEO_VIBES.map((v) => (
+                <button
+                  key={v.value}
+                  type="button"
+                  onClick={() => setVibe(v.value)}
+                  className={cn(
+                    "rounded-2xl border-2 p-4 text-left transition-colors",
+                    vibe === v.value
+                      ? "border-brand-400 bg-accent"
+                      : "border-border bg-card hover:border-border-strong",
+                  )}
+                >
+                  <p className="font-display font-semibold text-ink">{v.label}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">{v.blurb}</p>
+                </button>
+              ))}
+            </div>
+          </Section>
+
           {/* mode */}
-          <Section title="1 · Mode">
+          <Section title="2 · Mode">
             <div className="grid grid-cols-2 gap-3">
               {MODES.map((m) => (
                 <button
                   key={m.value}
                   type="button"
-                  onClick={() => pickMode(m.value)}
+                  onClick={() => setMode(m.value)}
                   className={cn(
                     "rounded-2xl border-2 p-4 text-left transition-colors",
                     mode === m.value
@@ -145,44 +163,6 @@ function StudioInner() {
                   />
                   <p className="mt-2 font-display font-semibold text-ink">{m.label}</p>
                   <p className="text-xs text-muted-foreground">{m.blurb}</p>
-                </button>
-              ))}
-            </div>
-          </Section>
-
-          {/* style */}
-          <Section title="2 · Style">
-            <div className="grid grid-cols-2 gap-3">
-              {VIDEO_STYLES[mode].map((s) => (
-                <button
-                  key={s.value}
-                  type="button"
-                  onClick={() => setStyle(s.value)}
-                  className={cn(
-                    "flex items-start gap-3 rounded-2xl border p-3.5 text-left transition-colors",
-                    style === s.value
-                      ? "border-brand-400 bg-accent"
-                      : "border-border bg-card hover:border-border-strong",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition-colors",
-                      style === s.value
-                        ? "border-brand-500 bg-brand-500 text-white"
-                        : "border-border-strong",
-                    )}
-                  >
-                    {style === s.value && (
-                      <PopIn className="inline-flex">
-                        <Check className="h-3 w-3" />
-                      </PopIn>
-                    )}
-                  </span>
-                  <span>
-                    <span className="block text-sm font-semibold text-ink">{s.label}</span>
-                    <span className="block text-xs text-muted-foreground">{s.blurb}</span>
-                  </span>
                 </button>
               ))}
             </div>
@@ -360,11 +340,11 @@ function StudioInner() {
             </div>
 
             <dl className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
-              <Row label="Mode" value={MODES.find((m) => m.value === mode)?.label ?? ""} />
               <Row
-                label="Style"
-                value={VIDEO_STYLES[mode].find((s) => s.value === style)?.label ?? ""}
+                label="Vibe"
+                value={VIDEO_VIBES.find((v) => v.value === vibe)?.label ?? ""}
               />
+              <Row label="Mode" value={MODES.find((m) => m.value === mode)?.label ?? ""} />
               <Row label="Length" value={`${duration}s`} />
               <Row
                 label="Model"

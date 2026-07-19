@@ -164,6 +164,16 @@ export type VideoStyle =
 
 export type VideoDuration = 10 | 15 | 20 | 25 | 30;
 
+/** The "feeling" of the video — the hero creation control. Feeds the backend's
+ * script conditioning (PR-A `VIBES`); style now auto-derives from mode. Keys
+ * are snake_case to match the backend enum exactly. */
+export type VideoVibe =
+  | "premium_clean"
+  | "fun_fast"
+  | "cozy_personal"
+  | "bold_punchy"
+  | "clean_demo";
+
 export type VideoJobStatus =
   | "queued"
   | "submitted"
@@ -230,6 +240,9 @@ export interface VideoJobCreate {
   product_id: string;
   mode: VideoMode;
   style: VideoStyle;
+  /** The hero creation choice. Style auto-derives from mode; vibe drives the
+   * feel/energy/pacing register the backend scripts in. */
+  vibe?: VideoVibe;
   duration_seconds?: VideoDuration;
   review_mode?: boolean;
   /** Gated server-side by SELLCAST_ENABLED_LANGUAGES (voice-QA'd languages only). */
@@ -433,6 +446,16 @@ export interface Usage {
 /* ----------------------------------------------------------------- presets */
 
 export const VIDEO_DURATIONS: VideoDuration[] = [10, 15, 20, 25, 30];
+
+/** The vibe picker — the hero creation control. Blurbs read as a *feeling*,
+ * not camera jargon (the technique the vibe implies is derived server-side). */
+export const VIDEO_VIBES: { value: VideoVibe; label: string; blurb: string }[] = [
+  { value: "premium_clean", label: "Premium & clean", blurb: "Slow, elegant, controlled." },
+  { value: "fun_fast", label: "Fun & fast", blurb: "Quick, playful, high energy." },
+  { value: "cozy_personal", label: "Cozy & personal", blurb: "Warm, intimate, like a friend." },
+  { value: "bold_punchy", label: "Bold & punchy", blurb: "Loud, snappy, impossible to scroll past." },
+  { value: "clean_demo", label: "Clean demo", blurb: "Steady and clear — the product does the talking." },
+];
 
 export const VIDEO_STYLES: Record<
   VideoMode,
