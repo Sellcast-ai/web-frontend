@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 
 // The 9 target UI locales, listed by endonym. Only `en` is functional in PR-1;
 // the rest are shown disabled until their catalogs land (see i18n plan §7).
-// `enabled` mirrors the gating pattern on VIDEO_LANGUAGES in api/types.ts.
 // NOTE: this is the UI-language axis, separate from the Studio video-output
-// language picker - do not conflate the two (plan §0).
+// language picker (VIDEO_LANGUAGES in api/types.ts, its own enabled set) - do
+// not conflate the two (plan §0).
 const LOCALES: { code: string; label: string; enabled: boolean }[] = [
   { code: "en", label: "English", enabled: true },
   { code: "es", label: "Español", enabled: false },
