@@ -49,4 +49,40 @@ describe("en catalog", () => {
       "scene",
     ]);
   });
+
+  it("has the auth keys used by auth pages and AuthForm", () => {
+    expect(Object.keys(en.auth.layout).sort()).toEqual([
+      "benefitPublish",
+      "benefitReview",
+      "benefitScripts",
+      "heroTitle",
+    ]);
+    expect(Object.keys(en.auth.metadata).sort()).toEqual([
+      "createAccount",
+      "signIn",
+    ]);
+    expect(Object.keys(en.auth.form).sort()).toEqual([
+      "alreadyHaveAccount",
+      "codePlaceholder",
+      "continue",
+      "continueWithGoogle",
+      "createAccountLink",
+      "devCodeAutofilled",
+      "googleDisabledTitle",
+      "googleSignInFailed",
+      "invalidPhone",
+      "loginSubtitle",
+      "loginTitle",
+      "newToLumi",
+      "phoneLabel",
+      "sendCode",
+      "sendCodeFailed",
+      "separator",
+      "signInLink",
+      "signupSubtitle",
+      "signupTitle",
+      "verificationCodeLabel",
+      "verifyCodeFailed",
+    ]);
+  });
 });

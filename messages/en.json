@@ -68,5 +68,40 @@
       "system": "System",
       "dark": "Dark"
     }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "From product link to scroll-stopping video — in minutes.",
+      "benefitScripts": "Scripts grounded in real viral patterns",
+      "benefitReview": "Review every beat before it renders",
+      "benefitPublish": "Publish-ready 9:16 for TikTok & Reels"
+    },
+    "metadata": {
+      "signIn": "Sign in",
+      "createAccount": "Create your account"
+    },
+    "form": {
+      "loginTitle": "Welcome back",
+      "signupTitle": "Create your account",
+      "loginSubtitle": "Sign in to your Lumi studio.",
+      "signupSubtitle": "Start making scroll-stopping videos in minutes.",
+      "continueWithGoogle": "Continue with Google",
+      "googleDisabledTitle": "Set NEXT_PUBLIC_GOOGLE_CLIENT_ID to enable Google sign-in",
+      "googleSignInFailed": "Google sign-in didn't complete. Please try again.",
+      "separator": "or",
+      "phoneLabel": "Phone number",
+      "invalidPhone": "Enter a valid phone number.",
+      "sendCode": "Send code",
+      "sendCodeFailed": "Could not send code.",
+      "codePlaceholder": "6-digit code",
+      "verificationCodeLabel": "Verification code",
+      "devCodeAutofilled": "Dev mode — code <code>{devCode}</code> autofilled.",
+      "continue": "Continue",
+      "verifyCodeFailed": "That code didn't work.",
+      "alreadyHaveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "newToLumi": "New to Lumi?",
+      "createAccountLink": "Create an account"
+    }
   }
 }

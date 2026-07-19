@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react";
 import { api, ApiError } from "@/lib/api/client";
@@ -19,6 +20,7 @@ function normalizePhone(raw: string) {
 export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const router = useRouter();
   const qc = useQueryClient();
+  const t = useTranslations("auth.form");
   const authPurpose = mode === "signup" ? "signup" : "login";
 
   const [step, setStep] = useState<"phone" | "code">("phone");
@@ -34,7 +36,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setError(null);
     const number = normalizePhone(phone);
     if (number.length < 8) {
-      setError("Enter a valid phone number.");
+      setError(t("invalidPhone"));
       return;
     }
     setBusy(true);
@@ -47,7 +49,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       }
       setTimeout(() => codeRef.current?.focus(), 50);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Could not send code.");
+      setError(err instanceof ApiError ? err.message : t("sendCodeFailed"));
     } finally {
       setBusy(false);
     }
@@ -62,18 +64,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       await qc.invalidateQueries({ queryKey: qk.me });
       router.replace("/app/marketplace");
     } catch (err) {
-      setError(
-        err instanceof ApiError ? err.message : "That code didn't work.",
-      );
+      setError(err instanceof ApiError ? err.message : t("verifyCodeFailed"));
       setBusy(false);
     }
   }
 
-  const title = mode === "signup" ? "Create your account" : "Welcome back";
+  const title = mode === "signup" ? t("signupTitle") : t("loginTitle");
   const subtitle =
     mode === "signup"
-      ? "Start making scroll-stopping videos in minutes."
-      : "Sign in to your Lumi studio.";
+      ? t("signupSubtitle")
+      : t("loginSubtitle");
 
   return (
     <div>
@@ -81,12 +81,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       <p className="mt-2 text-muted-foreground">{subtitle}</p>
 
       <div className="mt-8">
-        <GoogleButton />
+        <GoogleButton
+          disabledTitle={t("googleDisabledTitle")}
+          disabledLabel={t("continueWithGoogle")}
+          errorFallback={t("googleSignInFailed")}
+        />
       </div>
 
       <div className="my-6 flex items-center gap-3 text-xs font-medium uppercase tracking-widest text-muted-foreground">
         <span className="h-px flex-1 bg-border" />
-        or
+        {t("separator")}
         <span className="h-px flex-1 bg-border" />
       </div>
 
@@ -100,7 +104,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             placeholder="+1 (555) 000-0000"
             value={phone}
             onChange={setPhone}
-            label="Phone number"
+            label={t("phoneLabel")}
           />
           {error && <ErrorText>{error}</ErrorText>}
           <Button type="submit" size="lg" className="w-full" disabled={busy}>
@@ -108,7 +112,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                Send code
+                {t("sendCode")}
                 <ArrowRight className="h-4 w-4" />
               </>
             )}
@@ -132,15 +136,18 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             icon={<KeyRound className="h-4 w-4" />}
             inputMode="numeric"
             autoComplete="one-time-code"
-            placeholder="6-digit code"
+            placeholder={t("codePlaceholder")}
             value={code}
             onChange={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))}
-            label="Verification code"
+            label={t("verificationCodeLabel")}
             className="tracking-[0.4em]"
           />
           {devCode && (
             <p className="rounded-xl bg-accent px-3 py-2 text-xs text-accent-foreground">
-              Dev mode — code <strong>{devCode}</strong> autofilled.
+              {t.rich("devCodeAutofilled", {
+                devCode,
+                code: (chunks) => <strong>{chunks}</strong>,
+              })}
             </p>
           )}
           {error && <ErrorText>{error}</ErrorText>}
@@ -149,7 +156,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                Continue
+                {t("continue")}
                 <ArrowRight className="h-4 w-4" />
               </>
             )}
@@ -160,16 +167,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       <p className="mt-8 text-center text-sm text-muted-foreground">
         {mode === "signup" ? (
           <>
-            Already have an account?{" "}
+            {t("alreadyHaveAccount")}{" "}
             <Link href="/login" className="font-semibold text-brand-700">
-              Sign in
+              {t("signInLink")}
             </Link>
           </>
         ) : (
           <>
-            New to Lumi?{" "}
+            {t("newToLumi")}{" "}
             <Link href="/signup" className="font-semibold text-brand-700">
-              Create an account
+              {t("createAccountLink")}
             </Link>
           </>
         )}
@@ -235,7 +242,15 @@ declare global {
   }
 }
 
-function GoogleButton() {
+function GoogleButton({
+  disabledTitle,
+  disabledLabel,
+  errorFallback,
+}: {
+  disabledTitle: string;
+  disabledLabel: string;
+  errorFallback: string;
+}) {
   const router = useRouter();
   const qc = useQueryClient();
   const ref = useRef<HTMLDivElement>(null);
@@ -256,7 +271,7 @@ function GoogleButton() {
             toast.error(
               err instanceof ApiError
                 ? err.message
-                : "Google sign-in didn't complete. Please try again.",
+                : errorFallback,
             );
           }
         },
@@ -280,18 +295,18 @@ function GoogleButton() {
     s.id = "gis-script";
     s.onload = onLoad;
     document.body.appendChild(s);
-  }, [clientId, qc, router]);
+  }, [clientId, errorFallback, qc, router]);
 
   if (!clientId) {
     return (
       <button
         type="button"
         disabled
-        title="Set NEXT_PUBLIC_GOOGLE_CLIENT_ID to enable Google sign-in"
+        title={disabledTitle}
         className="flex w-full items-center justify-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-muted-foreground"
       >
         <GoogleGlyph />
-        Continue with Google
+        {disabledLabel}
       </button>
     );
   }
