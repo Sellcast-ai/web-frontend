@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Nunito } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { themeNoFlashScript } from "@/components/theme-provider";
@@ -45,14 +47,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Locale resolves from the `lumi-locale` cookie via i18n/request.ts. Rendered
+  // in this Server Component, NextIntlClientProvider inherits locale + messages
+  // for the client tree with no props needed.
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${nunito.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
@@ -61,7 +68,9 @@ export default function RootLayout({
         <Script id="lumi-theme-noflash" strategy="beforeInteractive">
           {themeNoFlashScript}
         </Script>
-        <Providers>{children}</Providers>
+        <NextIntlClientProvider>
+          <Providers>{children}</Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

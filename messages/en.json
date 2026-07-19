@@ -1,0 +1,20 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How it works",
+    "models": "Models",
+    "pricing": "Pricing"
+  },
+  "app": {
+    "nav": {
+      "marketplace": "Marketplace",
+      "products": "My Products",
+      "avatars": "Avatars",
+      "videos": "My Videos",
+      "profile": "Profile"
+    }
+  },
+  "languageSwitcher": {
+    "label": "Language"
+  }
+}
