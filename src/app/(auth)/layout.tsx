@@ -1,12 +1,20 @@
 import { Sparkles, ShieldCheck, Wand2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/marketing/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations("auth.layout");
+  const benefits = [
+    { Icon: Wand2, label: t("benefitScripts") },
+    { Icon: Sparkles, label: t("benefitReview") },
+    { Icon: ShieldCheck, label: t("benefitPublish") },
+  ];
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       {/* brand panel */}
@@ -15,19 +23,15 @@ export default function AuthLayout({
         <Logo href="/" className="relative [&_span]:text-white" />
         <div className="relative max-w-md">
           <h1 className="font-display text-4xl font-bold leading-tight">
-            From product link to scroll-stopping video — in minutes.
+            {t("heroTitle")}
           </h1>
           <ul className="mt-8 space-y-4 text-white/90">
-            {[
-              { Icon: Wand2, t: "Scripts grounded in real viral patterns" },
-              { Icon: Sparkles, t: "Review every beat before it renders" },
-              { Icon: ShieldCheck, t: "Publish-ready 9:16 for TikTok & Reels" },
-            ].map(({ Icon, t }) => (
-              <li key={t} className="flex items-center gap-3">
+            {benefits.map(({ Icon, label }) => (
+              <li key={label} className="flex items-center gap-3">
                 <span className="flex h-9 w-9 items-center justify-center rounded-full glass">
                   <Icon className="h-4 w-4" />
                 </span>
-                {t}
+                {label}
               </li>
             ))}
           </ul>
