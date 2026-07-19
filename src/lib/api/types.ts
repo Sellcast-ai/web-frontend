@@ -307,7 +307,15 @@ export interface AvatarCreate {
   consent: boolean;
 }
 
-export type VideoLanguage = "en" | "id" | "th" | "vi" | "es";
+export type VideoLanguage =
+  | "en"
+  | "es"
+  | "zh"
+  | "ja"
+  | "ko"
+  | "pt"
+  | "id"
+  | "th";
 
 /** Languages shown in Studio. `enabled` must mirror the backend's
  * SELLCAST_ENABLED_LANGUAGES — flip an entry on only after its voiceover
@@ -318,10 +326,13 @@ export const VIDEO_LANGUAGES: {
   enabled: boolean;
 }[] = [
   { value: "en", label: "English", enabled: true },
-  { value: "id", label: "Bahasa Indonesia", enabled: false },
-  { value: "th", label: "ไทย (Thai)", enabled: false },
-  { value: "vi", label: "Tiếng Việt", enabled: false },
-  { value: "es", label: "Español", enabled: false },
+  { value: "es", label: "Español", enabled: true },
+  { value: "zh", label: "简体中文", enabled: true },
+  { value: "ja", label: "日本語", enabled: true },
+  { value: "ko", label: "한국어", enabled: true },
+  { value: "pt", label: "Português", enabled: true },
+  { value: "id", label: "Bahasa Indonesia", enabled: true },
+  { value: "th", label: "ไทย", enabled: true },
 ];
 
 export interface VideoJobBeat {
