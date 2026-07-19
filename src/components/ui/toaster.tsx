@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
 import { CheckCircle2, AlertCircle, Info, X } from "lucide-react";
 import {
@@ -19,6 +20,7 @@ const ICON_COLOR: Record<ToastVariant, string> = {
 };
 
 export function Toaster() {
+  const translate = useTranslations("shared.toaster");
   const toasts = useSyncExternalStore(subscribeToasts, getToasts, getToasts);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -58,7 +60,7 @@ export function Toaster() {
               <p className="flex-1 text-sm text-ink">{t.message}</p>
               <button
                 type="button"
-                aria-label="Dismiss notification"
+                aria-label={translate("dismiss")}
                 onClick={() => toast.dismiss(t.id)}
                 className="shrink-0 text-muted-foreground transition-colors hover:text-ink"
               >

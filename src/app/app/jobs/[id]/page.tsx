@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -38,8 +39,8 @@ import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
-import { orderedSubjects, SUBJECT_HEADING } from "@/lib/subjects";
-import { STEPS, stepIndex } from "@/lib/job-progress";
+import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
+import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
 import { VIDEO_STYLES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -196,13 +197,16 @@ function LiveIndicator({ updatedAt }: { updatedAt: number }) {
 /* --------------------------------------------------------------- progress */
 
 function Progress({ current, failed }: { current: number; failed: boolean }) {
+  const t = useTranslations("shared.jobProgress");
+
   return (
     <div className="mt-6 flex items-center gap-2">
-      {STEPS.map((label, i) => {
+      {STEP_LABEL_KEYS.map((labelKey, i) => {
+        const label = t(labelKey);
         const done = i < current;
         const isCurrent = i === current;
         return (
-          <div key={label} className="flex flex-1 items-center gap-2">
+          <div key={labelKey} className="flex flex-1 items-center gap-2">
             <div className="flex items-center gap-2">
               <span
                 className={cn(
@@ -233,7 +237,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
                 {label}
               </span>
             </div>
-            {i < STEPS.length - 1 && (
+            {i < STEP_LABEL_KEYS.length - 1 && (
               <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
                 <motion.span
                   className="absolute inset-0 origin-left rounded-full bg-success"
@@ -490,6 +494,7 @@ function SubjectStrip({ subjects }: { subjects: SubjectLock[] }) {
 }
 
 function SubjectCard({ subject }: { subject: SubjectLock }) {
+  const t = useTranslations("shared.subjects");
   const img = mediaUrl(subject.image_url);
   return (
     <div className="flex w-44 shrink-0 items-center gap-3 rounded-2xl border border-border bg-card p-2.5 shadow-soft">
@@ -501,11 +506,11 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
             <ImageIcon className="h-5 w-5 text-brand-300" />
           </div>
         )}
-      </div>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
-          {SUBJECT_HEADING[subject.kind]}
-        </span>
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <span className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+            {t(SUBJECT_HEADING_KEYS[subject.kind])}
+          </span>
         <span className="truncate text-sm font-semibold text-ink">
           {subject.label}
         </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import { DUR, EASE_OUT, RISE_Y } from "./motion";
@@ -70,12 +71,14 @@ function Shell({
 }
 
 function Header({ title, onClose }: { title: string; onClose: () => void }) {
+  const t = useTranslations("shared.overlay");
+
   return (
     <div className="mb-4 flex items-center justify-between gap-4">
       <h2 className="font-display text-lg font-bold text-ink">{title}</h2>
       <button
         type="button"
-        aria-label="Close"
+        aria-label={t("close")}
         onClick={onClose}
         className="shrink-0 rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-ink"
       >

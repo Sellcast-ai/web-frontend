@@ -41,8 +41,8 @@ The browser never talks to the backend directly; all data flows through the BFF 
   - `types.ts` - shared API types mirroring backend schemas
 - `src/lib/toast.ts` - framework-free toast store (`toast.success/error/info` from any event handler or mutation callback); rendered by `ui/toaster.tsx`, mounted app-wide in `providers.tsx`
 - `src/lib/use-dropzone.ts` - shared drag-and-drop hook (spread `props` on the drop target, style via `over`)
-- `src/lib/subjects.ts` - pure helper for the storyboard locked-subjects strip (`orderedSubjects` sorts Product -> Host -> Scene and omits when empty; `SUBJECT_HEADING` maps kind to label)
-- `src/lib/job-progress.ts` - pure helper for the job-detail progress tracker (`STEPS` + `stepIndex` map `job.status` to a stage; storyboard-present on a queued/submitted job means the review gate is behind us, so it shows Render, never backtracking to Script/Beats)
+- `src/lib/subjects.ts` - pure helper for the storyboard locked-subjects strip (`orderedSubjects` sorts Product -> Host -> Scene and omits when empty; `SUBJECT_HEADING_KEYS` maps kind to catalog key)
+- `src/lib/job-progress.ts` - pure helper for the job-detail progress tracker (`STEP_LABEL_KEYS` + `stepIndex` map `job.status` to a stage; storyboard-present on a queued/submitted job means the review gate is behind us, so it shows Render, never backtracking to Script/Beats)
 - `src/lib/vibe.ts` - `defaultStyleForMode` derives the (now non-user-facing) `style` from mode. Vibe (`VIDEO_VIBES` in `types.ts`) is the hero creation control in Studio; style demotion is a locked product decision - keep sending a valid `style` in the create payload so the backend schema stays intact.
 - `src/components/` - `ui/` (button, badge, motion primitives, `overlay.tsx` Modal/Drawer on native `<dialog>`, toaster, upload-progress), `app/`, `auth/`, `marketing/`, theme provider/toggle
 
@@ -51,6 +51,7 @@ The browser never talks to the backend directly; all data flows through the BFF 
 App-interface localization uses **next-intl v4**, cookie-based (no `[locale]` URL segment yet). Config in `src/i18n/request.ts` (`getRequestConfig` reads the `lumi-locale` cookie, default `en`; v4 requires returning `locale`), wired via `createNextIntlPlugin` in `next.config.ts`. Root `layout.tsx` is async: `getLocale()` sets `<html lang>` and `NextIntlClientProvider` (prop-less, inherits messages) wraps the client tree.
 
 - Catalogs: `messages/<locale>.json` at repo root, `en.json` is the source of truth. Namespaced by area (`nav`, `app.nav`, ...). Migrate a literal by adding a key and calling `t()` (server: `getTranslations`, client: `useTranslations`); un-migrated areas keep hardcoded English.
+- For enum/data label maps, translate at the render site: pure `lib/*` helpers expose stable catalog keys (for example `STEP_LABEL_KEYS`, `SUBJECT_HEADING_KEYS`) and components call `t(key)`. Do not import next-intl hooks into `lib/*` or `hooks.ts`.
 - Switcher: `src/components/language-switcher.tsx` (globe dropdown, writes `lumi-locale` cookie + `router.refresh()`), mounted beside `ThemeToggle` in `SiteHeader` and `AppShell`. Lists all 9 target locales by endonym; only `en` is enabled (`enabled` flag gates the rest until their catalogs land - mirrors `VIDEO_LANGUAGES`).
 - **Separate from video-output language**: never route `VIDEO_LANGUAGES` labels through the catalog, and never wire the UI locale into the video-create `language` payload. See the i18n plan (PR sequence PR-1..PR-R) for remaining migration.
 - Reading the cookie at the root layout makes marketing pages render dynamically; static + `hreflang` SEO is restored later by the `[locale]` prefix PR (PR-R).

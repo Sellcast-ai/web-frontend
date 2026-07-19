@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 
 /**
@@ -7,20 +10,27 @@ import { Loader2 } from "lucide-react";
  */
 export function UploadProgress({
   progress,
-  label = "Uploading",
+  label,
 }: {
   progress: number;
   label?: string;
 }) {
+  const t = useTranslations("shared.uploadProgress");
+
   if (progress >= 1) {
     return (
       <>
         <Loader2 className="h-4 w-4 animate-spin" />
-        Processing…
+        {t("processing")}
       </>
     );
   }
   const pct = Math.round(Math.max(progress, 0) * 100);
+  const progressLabel = t("progress", {
+    label: label ?? t("uploading"),
+    percent: pct,
+  });
+
   return (
     <>
       <span className="h-1.5 w-16 overflow-hidden rounded-full bg-white/30">
@@ -29,7 +39,7 @@ export function UploadProgress({
           style={{ width: `${pct}%` }}
         />
       </span>
-      {label} {pct}%
+      {progressLabel}
     </>
   );
 }
