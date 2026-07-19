@@ -2,21 +2,24 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { label: "Features", href: "/features" },
-  { label: "How it works", href: "/#how" },
-  { label: "Models", href: "/models" },
-  { label: "Pricing", href: "/pricing" },
-];
+  { key: "features", href: "/features" },
+  { key: "howItWorks", href: "/#how" },
+  { key: "models", href: "/models" },
+  { key: "pricing", href: "/pricing" },
+] as const;
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const t = useTranslations("nav");
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 glass">
@@ -30,12 +33,13 @@ export function SiteHeader() {
               href={item.href}
               className="rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <LanguageSwitcher />
           <ThemeToggle className="mr-1" />
           <Button href="/login" variant="ghost" size="sm">
             Sign in
@@ -71,10 +75,14 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-medium text-ink-soft hover:bg-muted"
             >
-              {item.label}
+              {t(item.key)}
             </Link>
           ))}
           <div className="mt-2 flex flex-col gap-2">
+            <div className="flex items-center justify-between rounded-xl bg-muted px-3 py-2">
+              <span className="text-sm font-medium text-ink-soft">Language</span>
+              <LanguageSwitcher />
+            </div>
             <div className="flex items-center justify-between rounded-xl bg-muted px-3 py-2">
               <span className="text-sm font-medium text-ink-soft">Theme</span>
               <ThemeToggle />

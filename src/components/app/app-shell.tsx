@@ -3,27 +3,30 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { Store, Package, UserSquare2, Clapperboard, User, Sparkles, LogOut, Loader2 } from "lucide-react";
 import { Logo } from "@/components/marketing/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api/client";
 import { useCurrentUser } from "@/lib/api/hooks";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { href: "/app/marketplace", label: "Marketplace", Icon: Store },
-  { href: "/app/products", label: "My Products", Icon: Package },
-  { href: "/app/avatars", label: "Avatars", Icon: UserSquare2 },
-  { href: "/app/videos", label: "My Videos", Icon: Clapperboard },
-  { href: "/app/profile", label: "Profile", Icon: User },
-];
+  { href: "/app/marketplace", key: "marketplace", Icon: Store },
+  { href: "/app/products", key: "products", Icon: Package },
+  { href: "/app/avatars", key: "avatars", Icon: UserSquare2 },
+  { href: "/app/videos", key: "videos", Icon: Clapperboard },
+  { href: "/app/profile", key: "profile", Icon: User },
+] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const qc = useQueryClient();
+  const t = useTranslations("app.nav");
   const { data: user, isLoading } = useCurrentUser();
 
   // client-side gate: if the session is gone (e.g. expired), bounce to login
@@ -61,7 +64,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </Button>
 
         <nav className="mt-6 flex flex-col gap-1">
-          {NAV.map(({ href, label, Icon }) => (
+          {NAV.map(({ href, key, Icon }) => (
             <Link
               key={href}
               href={href}
@@ -73,12 +76,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               )}
             >
               <Icon className="h-[18px] w-[18px]" />
-              {label}
+              {t(key)}
             </Link>
           ))}
         </nav>
 
         <div className="mt-auto space-y-3">
+          <LanguageSwitcher />
           <ThemeToggle className="w-full justify-center" />
           <div className="flex items-center gap-3 rounded-xl border border-border p-2.5">
             <Avatar user={user} />
@@ -106,6 +110,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-border glass px-4 py-3 md:hidden">
         <Logo />
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <ThemeToggle />
           <button
             type="button"
@@ -132,7 +137,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </span>
           New
         </Link>
-        {NAV.map(({ href, label, Icon }) => (
+        {NAV.map(({ href, key, Icon }) => (
           <Link
             key={href}
             href={href}
@@ -142,7 +147,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             )}
           >
             <Icon className="h-5 w-5" />
-            {label}
+            {t(key)}
           </Link>
         ))}
       </nav>

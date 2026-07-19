@@ -46,6 +46,15 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - `src/lib/vibe.ts` - `defaultStyleForMode` derives the (now non-user-facing) `style` from mode. Vibe (`VIDEO_VIBES` in `types.ts`) is the hero creation control in Studio; style demotion is a locked product decision - keep sending a valid `style` in the create payload so the backend schema stays intact.
 - `src/components/` - `ui/` (button, badge, motion primitives, `overlay.tsx` Modal/Drawer on native `<dialog>`, toaster, upload-progress), `app/`, `auth/`, `marketing/`, theme provider/toggle
 
+## i18n (UI language)
+
+App-interface localization uses **next-intl v4**, cookie-based (no `[locale]` URL segment yet). Config in `src/i18n/request.ts` (`getRequestConfig` reads the `lumi-locale` cookie, default `en`; v4 requires returning `locale`), wired via `createNextIntlPlugin` in `next.config.ts`. Root `layout.tsx` is async: `getLocale()` sets `<html lang>` and `NextIntlClientProvider` (prop-less, inherits messages) wraps the client tree.
+
+- Catalogs: `messages/<locale>.json` at repo root, `en.json` is the source of truth. Namespaced by area (`nav`, `app.nav`, ...). Migrate a literal by adding a key and calling `t()` (server: `getTranslations`, client: `useTranslations`); un-migrated areas keep hardcoded English.
+- Switcher: `src/components/language-switcher.tsx` (globe dropdown, writes `lumi-locale` cookie + `router.refresh()`), mounted beside `ThemeToggle` in `SiteHeader` and `AppShell`. Lists all 9 target locales by endonym; only `en` is enabled (`enabled` flag gates the rest until their catalogs land - mirrors `VIDEO_LANGUAGES`).
+- **Separate from video-output language**: never route `VIDEO_LANGUAGES` labels through the catalog, and never wire the UI locale into the video-create `language` payload. See the i18n plan (PR sequence PR-1..PR-R) for remaining migration.
+- Reading the cookie at the root layout makes marketing pages render dynamically; static + `hreflang` SEO is restored later by the `[locale]` prefix PR (PR-R).
+
 ## Auth model
 
 JWTs from the FastAPI backend are stored as httpOnly cookies (`lumi_at` access ~30m, `lumi_rt` refresh ~30d) by the BFF auth routes; tokens never reach client JS.
