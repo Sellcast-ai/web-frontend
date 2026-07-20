@@ -51,10 +51,33 @@ import type {
   ShotTransition,
   ProductVisibility,
   SubjectLock,
+  VideoStyle,
 } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
+type StyleLabelKey =
+  | "avatarTalkingIntro"
+  | "avatarDemoExplainer"
+  | "avatarTestimonial"
+  | "avatarHostProduct"
+  | "productCleanShowcase"
+  | "productFeatureHighlights"
+  | "productUnboxing"
+  | "productOfferFocused";
+
+const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
+  avatar_talking_intro: "avatarTalkingIntro",
+  avatar_demo_explainer: "avatarDemoExplainer",
+  avatar_testimonial: "avatarTestimonial",
+  avatar_host_product: "avatarHostProduct",
+  product_clean_showcase: "productCleanShowcase",
+  product_feature_highlights: "productFeatureHighlights",
+  product_unboxing: "productUnboxing",
+  product_offer_focused: "productOfferFocused",
+};
+
 export default function JobDetailPage() {
+  const t = useTranslations("app.jobs");
   const { id } = useParams<{ id: string }>();
   const { data: job, isLoading, dataUpdatedAt } = useVideoJob(id);
   const [scriptOpen, setScriptOpen] = useState(false);
@@ -67,8 +90,10 @@ export default function JobDetailPage() {
     );
   }
 
-  const styleLabel =
-    VIDEO_STYLES[job.mode]?.find((s) => s.value === job.style)?.label ?? job.style;
+  const styleKey = STYLE_LABEL_KEYS[job.style];
+  const styleLabel = styleKey
+    ? t(`styles.${styleKey}`)
+    : VIDEO_STYLES[job.mode]?.find((s) => s.value === job.style)?.label ?? job.style;
   const active = [
     "queued",
     "submitted",
@@ -84,7 +109,7 @@ export default function JobDetailPage() {
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-ink"
       >
         <ArrowLeft className="h-4 w-4" />
-        My Videos
+        {t("backToVideos")}
       </Link>
 
       {/* header */}
@@ -99,7 +124,7 @@ export default function JobDetailPage() {
           )}
           <div>
             <h1 className="font-display text-xl font-bold text-ink">
-              {job.product_name ?? "Your video"}
+              {job.product_name ?? t("videoFallback")}
             </h1>
             <p className="text-sm text-muted-foreground">
               {styleLabel} · {job.duration_seconds}s · {job.aspect_ratio} ·{" "}
@@ -140,24 +165,24 @@ export default function JobDetailPage() {
             onClick={() => setScriptOpen(true)}
           >
             <FileText className="h-4 w-4" />
-            View full script
+            {t("fullScript.view")}
           </Button>
           <Drawer
             open={scriptOpen}
             onClose={() => setScriptOpen(false)}
-            title="Full script"
+            title={t("fullScript.title")}
           >
             <div className="space-y-4">
               {job.beats.map((b) => (
                 <div key={b.beat_index} className="border-l-2 border-brand-200 pl-3">
                   <p className="text-xs font-bold uppercase tracking-wide text-brand-700">
-                    {beatLabel(b.beat_index, job.beats.length)}
+                    {beatLabel(t, b.beat_index, job.beats.length)}
                     {b.duration ? ` · ${b.duration}s` : ""}
                   </p>
                   {b.dialogue && <p className="mt-1 text-sm text-ink">{b.dialogue}</p>}
                   {b.on_screen_text && (
                     <p className="mt-1 text-xs text-muted-foreground">
-                      Caption:{" "}
+                      {t("fullScript.caption")}{" "}
                       <span className="font-medium text-ink-soft">{b.on_screen_text}</span>
                     </p>
                   )}
@@ -176,6 +201,7 @@ export default function JobDetailPage() {
 
 /** Subtle "this page is polling" affordance: pulsing dot + last-fetch time. */
 function LiveIndicator({ updatedAt }: { updatedAt: number }) {
+  const t = useTranslations("app.jobs.live");
   // starts at updatedAt (secs = 0) and ticks forward once a second
   const [now, setNow] = useState(updatedAt);
   useEffect(() => {
@@ -189,7 +215,9 @@ function LiveIndicator({ updatedAt }: { updatedAt: number }) {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75 motion-reduce:animate-none" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
       </span>
-      Live · updated {secs < 5 ? "just now" : `${secs}s ago`}
+      {t("updated", {
+        time: secs < 5 ? t("justNow") : t("secondsAgo", { seconds: secs }),
+      })}
     </span>
   );
 }
@@ -257,6 +285,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
 /* ---------------------------------------------------------------- working */
 
 function WorkingView({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.working");
   return (
     <div className="mt-8">
       <div className="rounded-card border border-border bg-card p-8 text-center">
@@ -265,11 +294,11 @@ function WorkingView({ job }: { job: VideoJob }) {
         </div>
         <p className="mt-4 font-display text-lg font-semibold text-ink">
           {job.beats.length
-            ? "Rendering your beats…"
-            : "Writing your grounded script…"}
+            ? t("renderingBeats")
+            : t("writingScript")}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          This page updates automatically. You can leave and come back.
+          {t("description")}
         </p>
       </div>
       {job.beats.length > 0 && <BeatGrid beats={job.beats} />}
@@ -280,6 +309,7 @@ function WorkingView({ job }: { job: VideoJob }) {
 /* ----------------------------------------------------------------- review */
 
 function ReviewView({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.review");
   const tt = useTranslations("app.toasts");
   const action = useBeatAction(job.id, {
     approveError: tt("approveShotFailed"),
@@ -291,10 +321,9 @@ function ReviewView({ job }: { job: VideoJob }) {
       <div className="flex items-start gap-3 rounded-card border border-brand-200 bg-accent p-4">
         <Eye className="mt-0.5 h-5 w-5 text-accent-foreground" />
         <div>
-          <p className="font-semibold text-ink">Review your beats</p>
+          <p className="font-semibold text-ink">{t("title")}</p>
           <p className="text-sm text-muted-foreground">
-            Approve each shot, or regenerate the ones you don&apos;t love. Lumi
-            renders once every beat is approved.
+            {t("description")}
           </p>
         </div>
       </div>
@@ -306,19 +335,19 @@ function ReviewView({ job }: { job: VideoJob }) {
 
 /* ------------------------------------------------------------- storyboard */
 
-const TRANSITION_LABEL: Record<ShotTransition, string> = {
-  cut: "Hard cut",
-  dissolve: "Dissolve",
-  slide: "Slide",
-  fade: "Fade",
-  match_cut: "Match cut",
+const TRANSITION_LABEL_KEYS: Record<ShotTransition, string> = {
+  cut: "hardCut",
+  dissolve: "dissolve",
+  slide: "slide",
+  fade: "fade",
+  match_cut: "matchCut",
 };
 
-const PRODUCT_VISIBLE_LABEL: Record<ProductVisibility, string> = {
-  start: "Product at start",
-  throughout: "Product throughout",
-  end: "Product at end",
-  none: "No product shown",
+const PRODUCT_VISIBLE_LABEL_KEYS: Record<ProductVisibility, string> = {
+  start: "start",
+  throughout: "throughout",
+  end: "end",
+  none: "none",
 };
 
 /** Empty text fields go back as null so backend preflight doesn't choke on "". */
@@ -334,16 +363,31 @@ function normalizeStoryboard(sb: Storyboard): Storyboard {
 }
 
 /** Warm, human shot label for the storyboard (vs the internal Hook/Proof/Offer). */
-function shotLabel(i: number, total: number): string {
-  if (i === 0) return "Hook";
-  if (i === total - 1) return "Call to action";
-  return `Shot ${i + 1}`;
+function storyboardShotLabel(
+  t: ReturnType<typeof useTranslations>,
+  i: number,
+  total: number,
+): string {
+  if (i === 0) return t("shotLabels.hook");
+  if (i === total - 1) return t("shotLabels.callToAction");
+  return t("shotLabels.shot", { number: i + 1 });
+}
+
+function storyboardShotEditLabel(
+  t: ReturnType<typeof useTranslations>,
+  i: number,
+  total: number,
+): string {
+  if (i === 0) return t("shotLabels.hookLower");
+  if (i === total - 1) return t("shotLabels.callToActionLower");
+  return t("shotLabels.shotLower", { number: i + 1 });
 }
 
 /** The storyboard gate: the user reviews the AI-written shot-list as read-first
  *  visual cards, taps a card to tweak a line, then approves to run hands-off.
  *  Edits PATCH the whole VideoScript (the backend re-validates it). */
 function StoryboardView({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.storyboard");
   const tt = useTranslations("app.toasts");
   const approve = useApproveStoryboard(job.id, {
     approveError: tt("approveStoryboardFailed"),
@@ -406,11 +450,9 @@ function StoryboardView({ job }: { job: VideoJob }) {
       <div className="flex items-start gap-3 rounded-card border border-brand-200 bg-accent p-4">
         <Clapperboard className="mt-0.5 h-5 w-5 text-accent-foreground" />
         <div>
-          <p className="font-semibold text-ink">Here&apos;s the plan for your video</p>
+          <p className="font-semibold text-ink">{t("title")}</p>
           <p className="text-sm text-muted-foreground">
-            Nothing&apos;s been made yet - this is just the plan. Read it over,
-            change any line you want, then hit go and Lumi builds the whole video
-            for you.
+            {t("description")}
           </p>
         </div>
       </div>
@@ -430,7 +472,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
           <ShotCard
             key={i}
             shot={shot}
-            label={shotLabel(i, draft.shots.length)}
+            label={storyboardShotLabel(t, i, draft.shots.length)}
             imageUrl={mediaUrl(job.product_image_url)}
             onEdit={() => setEditing(i)}
           />
@@ -448,12 +490,12 @@ function StoryboardView({ job }: { job: VideoJob }) {
           ) : (
             <>
               <Sparkles className="h-4 w-4" />
-              Approve &amp; make my video
+              {t("approveAndMake")}
             </>
           )}
         </Button>
         <p className="text-xs text-muted-foreground">
-          This is the only step that uses your credits.
+          {t("creditNote")}
         </p>
       </div>
 
@@ -462,8 +504,10 @@ function StoryboardView({ job }: { job: VideoJob }) {
         onClose={() => setEditing(null)}
         title={
           editing !== null
-            ? `Edit ${shotLabel(editing, draft.shots.length).toLowerCase()}`
-            : "Edit shot"
+            ? t("editTitle", {
+                label: storyboardShotEditLabel(t, editing, draft.shots.length),
+              })
+            : t("editFallbackTitle")
         }
       >
         {editing !== null && (
@@ -485,12 +529,13 @@ function StoryboardView({ job }: { job: VideoJob }) {
  *  a backend endpoint (follow-up); every subject ships locked by default.
  *  Renders nothing when there are no subjects (older jobs / pre-generation). */
 function SubjectStrip({ subjects }: { subjects: SubjectLock[] }) {
+  const t = useTranslations("app.jobs.subjects");
   const items = orderedSubjects(subjects);
   if (items.length === 0) return null;
   return (
     <div className="mt-5">
       <p className="mb-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
-        Locked in for every shot
+        {t("heading")}
       </p>
       {/* horizontally scrollable on mobile so the three cards never squash */}
       <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-1">
@@ -504,6 +549,7 @@ function SubjectStrip({ subjects }: { subjects: SubjectLock[] }) {
 
 function SubjectCard({ subject }: { subject: SubjectLock }) {
   const t = useTranslations("shared.subjects");
+  const tj = useTranslations("app.jobs.subjects");
   const img = mediaUrl(subject.image_url);
   return (
     <div className="flex w-44 shrink-0 items-center gap-3 rounded-2xl border border-border bg-card p-2.5 shadow-soft">
@@ -526,7 +572,7 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
         {subject.locked && (
           <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success">
             <Lock className="h-3 w-3" />
-            Locked
+            {tj("locked")}
           </span>
         )}
       </div>
@@ -547,6 +593,7 @@ function ShotCard({
   imageUrl?: string;
   onEdit: () => void;
 }) {
+  const t = useTranslations("app.jobs.shotCard");
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
       {/* 9:16 preview — no shots are generated pre-approval, so show the product
@@ -579,7 +626,9 @@ function ShotCard({
             “{shot.dialogue}”
           </p>
         ) : (
-          <p className="mt-2 text-sm italic text-muted-foreground">No spoken line</p>
+          <p className="mt-2 text-sm italic text-muted-foreground">
+            {t("noSpokenLine")}
+          </p>
         )}
         <div className="mt-auto flex items-center gap-2 pt-2">
           {shot.technique && (
@@ -594,7 +643,7 @@ function ShotCard({
             className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-muted-foreground hover:text-ink"
           >
             <Pencil className="h-3.5 w-3.5" />
-            Edit
+            {t("edit")}
           </button>
         </div>
       </div>
@@ -619,25 +668,26 @@ function ShotEditor({
   onChange: (patch: Partial<Shot>) => void;
   onDone: () => void;
 }) {
+  const t = useTranslations("app.jobs.shotEditor");
   const [advanced, setAdvanced] = useState(false);
   return (
     <div className="mt-2 space-y-4">
-      <EditField label="What you say">
+      <EditField label={t("fields.dialogue")}>
         <textarea
           value={shot.dialogue ?? ""}
           onChange={(e) => onChange({ dialogue: e.target.value })}
           disabled={disabled}
           rows={3}
-          placeholder="No spoken line for this shot"
+          placeholder={t("placeholders.dialogue")}
           className={cn(EDIT_INPUT_CLS, "resize-y")}
         />
       </EditField>
-      <EditField label="On-screen text">
+      <EditField label={t("fields.onScreenText")}>
         <input
           value={shot.on_screen_text ?? ""}
           onChange={(e) => onChange({ on_screen_text: e.target.value })}
           disabled={disabled}
-          placeholder="No caption"
+          placeholder={t("placeholders.onScreenText")}
           className={EDIT_INPUT_CLS}
         />
       </EditField>
@@ -648,23 +698,23 @@ function ShotEditor({
           onClick={() => setAdvanced((v) => !v)}
           className="flex w-full items-center justify-between text-sm font-semibold text-muted-foreground hover:text-ink"
         >
-          Advanced
+          {t("advanced")}
           <ChevronDown
             className={cn("h-4 w-4 transition-transform", advanced && "rotate-180")}
           />
         </button>
         {advanced && (
           <div className="mt-3 space-y-4">
-            <EditField label="How it's filmed">
+            <EditField label={t("fields.technique")}>
               <input
                 value={shot.technique}
                 onChange={(e) => onChange({ technique: e.target.value })}
                 disabled={disabled}
-                placeholder="Let Lumi choose the shot"
+                placeholder={t("placeholders.technique")}
                 className={EDIT_INPUT_CLS}
               />
             </EditField>
-            <EditField label="Cut to the next shot">
+            <EditField label={t("fields.transition")}>
               <select
                 value={shot.transition_out}
                 onChange={(e) =>
@@ -673,14 +723,14 @@ function ShotEditor({
                 disabled={disabled}
                 className={EDIT_INPUT_CLS}
               >
-                {(Object.keys(TRANSITION_LABEL) as ShotTransition[]).map((k) => (
+                {(Object.keys(TRANSITION_LABEL_KEYS) as ShotTransition[]).map((k) => (
                   <option key={k} value={k}>
-                    {TRANSITION_LABEL[k]}
+                    {t(`transitions.${TRANSITION_LABEL_KEYS[k]}`)}
                   </option>
                 ))}
               </select>
             </EditField>
-            <EditField label="When the product shows">
+            <EditField label={t("fields.productVisible")}>
               <select
                 value={shot.product_visible}
                 onChange={(e) =>
@@ -689,9 +739,9 @@ function ShotEditor({
                 disabled={disabled}
                 className={EDIT_INPUT_CLS}
               >
-                {(Object.keys(PRODUCT_VISIBLE_LABEL) as ProductVisibility[]).map((k) => (
+                {(Object.keys(PRODUCT_VISIBLE_LABEL_KEYS) as ProductVisibility[]).map((k) => (
                   <option key={k} value={k}>
-                    {PRODUCT_VISIBLE_LABEL[k]}
+                    {t(`productVisibility.${PRODUCT_VISIBLE_LABEL_KEYS[k]}`)}
                   </option>
                 ))}
               </select>
@@ -701,7 +751,7 @@ function ShotEditor({
       </div>
 
       <Button className="w-full" onClick={onDone} disabled={disabled}>
-        Done
+        {t("done")}
       </Button>
     </div>
   );
@@ -718,11 +768,20 @@ function EditField({ label, children }: { label: string; children: React.ReactNo
 
 /* --------------------------------------------------------------- beat grid */
 
-function beatLabel(i: number, total: number): string {
-  if (total <= 3) return ["Hook", "Proof", "Offer"][i] ?? `Shot ${i + 1}`;
-  if (i === 0) return "Hook";
-  if (i === total - 1) return "CTA";
-  return `Shot ${i + 1}`;
+function beatLabel(
+  t: ReturnType<typeof useTranslations>,
+  i: number,
+  total: number,
+): string {
+  if (total <= 3) {
+    return (
+      [t("shotLabels.hook"), t("shotLabels.proof"), t("shotLabels.offer")][i] ??
+      t("shotLabels.shot", { number: i + 1 })
+    );
+  }
+  if (i === 0) return t("shotLabels.hook");
+  if (i === total - 1) return t("shotLabels.cta");
+  return t("shotLabels.shot", { number: i + 1 });
 }
 
 function BeatGrid({
@@ -736,13 +795,14 @@ function BeatGrid({
   action?: ReturnType<typeof useBeatAction>;
   reviewable?: boolean;
 }) {
+  const t = useTranslations("app.jobs");
   return (
     <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
       {beats.map((b) => (
         <BeatCard
           key={b.beat_index}
           beat={b}
-          label={beatLabel(b.beat_index, beats.length)}
+          label={beatLabel(t, b.beat_index, beats.length)}
           action={action}
           reviewable={reviewable}
           jobId={jobId}
@@ -752,11 +812,11 @@ function BeatGrid({
   );
 }
 
-const BEAT_STATUS: Record<BeatReviewStatus, { label: string; cls: string }> = {
-  pending: { label: "Pending", cls: "bg-muted text-muted-foreground" },
-  auto_approved: { label: "Auto ✓", cls: "bg-success-soft text-success" },
-  user_approved: { label: "Approved", cls: "bg-success-soft text-success" },
-  regen_requested: { label: "Regenerating", cls: "bg-brand-100 text-brand-800" },
+const BEAT_STATUS: Record<BeatReviewStatus, { labelKey: string; cls: string }> = {
+  pending: { labelKey: "pending", cls: "bg-muted text-muted-foreground" },
+  auto_approved: { labelKey: "autoApproved", cls: "bg-success-soft text-success" },
+  user_approved: { labelKey: "approved", cls: "bg-success-soft text-success" },
+  regen_requested: { labelKey: "regenerating", cls: "bg-brand-100 text-brand-800" },
 };
 
 function BeatCard({
@@ -771,6 +831,8 @@ function BeatCard({
   reviewable: boolean;
   jobId?: string;
 }) {
+  const t = useTranslations("app.jobs.beatCard");
+  const ts = useTranslations("app.jobs.beatStatus");
   const img = mediaUrl(beat.reference_image_url);
   const approved =
     beat.review_status === "user_approved" || beat.review_status === "auto_approved";
@@ -798,7 +860,7 @@ function BeatCard({
             s.cls,
           )}
         >
-          {s.label}
+          {ts(s.labelKey)}
         </span>
         {/* caption preview — burned-in style, mirrors how it appears in the video */}
         {beat.on_screen_text && (
@@ -826,7 +888,7 @@ function BeatCard({
             )}
           >
             {approved ? <Check className="h-3.5 w-3.5" /> : null}
-            {approved ? "Approved" : "Approve"}
+            {approved ? t("approved") : t("approve")}
           </button>
           <button
             type="button"
@@ -834,7 +896,7 @@ function BeatCard({
             onClick={() =>
               action.mutate({ beatIndex: beat.beat_index, action: "regenerate" })
             }
-            aria-label="Regenerate"
+            aria-label={t("regenerate")}
             className="inline-flex items-center justify-center rounded-lg border border-border px-2.5 py-1.5 text-muted-foreground hover:text-ink"
           >
             {pendingThis ? (
@@ -852,6 +914,7 @@ function BeatCard({
 /* -------------------------------------------------------------- completed */
 
 function CompletedView({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.completed");
   const tt = useTranslations("app.toasts");
   const src = mediaUrl(job.video_url);
   async function markPosted() {
@@ -876,13 +939,12 @@ function CompletedView({ job }: { job: VideoJob }) {
         </div>
       </div>
       <div>
-        <Badge variant="success">Ready to publish</Badge>
+        <Badge variant="success">{t("badge")}</Badge>
         <h2 className="mt-3 font-display text-2xl font-bold text-ink">
-          Your video is ready 🎉
+          {t("title")}
         </h2>
         <p className="mt-2 text-muted-foreground">
-          A publish-ready 9:16 cut with spoken audio. Download it or mark it
-          posted to keep your stats tidy.
+          {t("description")}
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Button
@@ -890,11 +952,11 @@ function CompletedView({ job }: { job: VideoJob }) {
             size="md"
             {...(job.download_url || src ? { target: "_blank" } : {})}
           >
-            Download
+            {t("download")}
           </Button>
           <Button variant="outline" size="md" onClick={markPosted}>
             <Share2 className="h-4 w-4" />
-            Mark as posted
+            {t("markPosted")}
           </Button>
         </div>
         {job.beats.length > 0 && <BeatGrid beats={job.beats} />}
@@ -906,15 +968,16 @@ function CompletedView({ job }: { job: VideoJob }) {
 /* ----------------------------------------------------------------- failed */
 
 function FailedView({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.failed");
   const tt = useTranslations("app.toasts");
   const retry = useRetryJob({ retryError: tt("retryJobFailed") });
   return (
     <div className="mt-8 flex items-start gap-3 rounded-card border border-rose/30 bg-rose/5 p-5">
       <AlertTriangle className="mt-0.5 h-5 w-5 text-rose" />
       <div>
-        <p className="font-semibold text-ink">Generation failed</p>
+        <p className="font-semibold text-ink">{t("title")}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {job.error_message ?? "Something went wrong. Try creating it again."}
+          {job.error_message ?? t("fallbackMessage")}
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           {/* resumes already-paid work (rendered shots, reference images) */}
@@ -928,12 +991,12 @@ function FailedView({ job }: { job: VideoJob }) {
             ) : (
               <>
                 <RefreshCw className="h-4 w-4" />
-                Retry
+                {t("retry")}
               </>
             )}
           </Button>
           <Button href="/app/marketplace" variant="outline" size="md">
-            Start a new video
+            {t("startNewVideo")}
           </Button>
         </div>
       </div>

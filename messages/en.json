@@ -239,6 +239,221 @@
         "placeholder": "your-store.myshopify.com — import your whole store",
         "preview": "Preview"
       }
+    },
+    "studio": {
+      "title": "Video Studio",
+      "subtitle": "Lumi scripts and renders a video from this product — set the direction.",
+      "loading": "Loading…",
+      "sections": {
+        "vibe": "1 · What's the vibe?",
+        "mode": "2 · Mode",
+        "presenter": "Presenter",
+        "duration": "3 · Duration",
+        "model": "Model",
+        "resolution": "Resolution",
+        "language": "4 · Language",
+        "review": "5 · Review"
+      },
+      "vibes": {
+        "premiumClean": {
+          "label": "Premium & clean",
+          "blurb": "Slow, elegant, controlled."
+        },
+        "funFast": {
+          "label": "Fun & fast",
+          "blurb": "Quick, playful, high energy."
+        },
+        "cozyPersonal": {
+          "label": "Cozy & personal",
+          "blurb": "Warm, intimate, like a friend."
+        },
+        "boldPunchy": {
+          "label": "Bold & punchy",
+          "blurb": "Loud, snappy, impossible to scroll past."
+        },
+        "cleanDemo": {
+          "label": "Clean demo",
+          "blurb": "Steady and clear — the product does the talking."
+        }
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "AI Avatar",
+          "blurb": "A presenter talks to camera."
+        },
+        "productOnly": {
+          "label": "Product Only",
+          "blurb": "No face — just the product."
+        }
+      },
+      "presenter": {
+        "auto": "Auto",
+        "autoSublabel": "AI picks a creator",
+        "manageAvatars": "Manage avatars →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "Newest · up to 1080p"
+        }
+      },
+      "resolutions": {
+        "p480": {
+          "label": "480p",
+          "blurb": "Draft · cheapest"
+        },
+        "p720": {
+          "label": "720p",
+          "blurb": "HD · standard"
+        },
+        "p1080": {
+          "label": "1080p",
+          "blurb": "Full HD · needs Seedance 2.0"
+        }
+      },
+      "durationSeconds": "{duration}s",
+      "language": {
+        "comingSoonTitle": "Coming soon",
+        "soonBadge": "soon"
+      },
+      "reviewDescription": "Lumi will show you the storyboard before it spends anything — review and approve it before any images or video are generated.",
+      "summary": {
+        "vibe": "Vibe",
+        "mode": "Mode",
+        "length": "Length",
+        "model": "Model",
+        "resolution": "Resolution",
+        "language": "Language",
+        "format": "Format",
+        "review": "Review",
+        "storyboard": "Storyboard"
+      },
+      "usageSummary": "{remaining} of {limit} credits left this month · this video uses {duration}",
+      "generateVideo": "Generate video",
+      "outOfQuota": "Not enough credits for a {duration}s video ({remaining} of {limit} left).",
+      "seePlans": "See plans",
+      "pickProduct": {
+        "title": "Pick a product first",
+        "description": "Choose a product from the marketplace and Lumi will turn it into a scroll-stopping video.",
+        "browseMarketplace": "Browse marketplace"
+      }
+    },
+    "jobs": {
+      "backToVideos": "My Videos",
+      "videoFallback": "Your video",
+      "styles": {
+        "avatarTalkingIntro": "Talking intro",
+        "avatarDemoExplainer": "Demo explainer",
+        "avatarTestimonial": "Testimonial",
+        "avatarHostProduct": "Host + product",
+        "productCleanShowcase": "Clean showcase",
+        "productFeatureHighlights": "Feature highlights",
+        "productUnboxing": "Unboxing",
+        "productOfferFocused": "Offer focused"
+      },
+      "live": {
+        "updated": "Live · updated {time}",
+        "justNow": "just now",
+        "secondsAgo": "{seconds}s ago"
+      },
+      "fullScript": {
+        "view": "View full script",
+        "title": "Full script",
+        "caption": "Caption:"
+      },
+      "shotLabels": {
+        "hook": "Hook",
+        "proof": "Proof",
+        "offer": "Offer",
+        "cta": "CTA",
+        "shot": "Shot {number}"
+      },
+      "working": {
+        "renderingBeats": "Rendering your beats…",
+        "writingScript": "Writing your grounded script…",
+        "description": "This page updates automatically. You can leave and come back."
+      },
+      "review": {
+        "title": "Review your beats",
+        "description": "Approve each shot, or regenerate the ones you don't love. Lumi renders once every beat is approved."
+      },
+      "storyboard": {
+        "title": "Here's the plan for your video",
+        "description": "Nothing's been made yet - this is just the plan. Read it over, change any line you want, then hit go and Lumi builds the whole video for you.",
+        "approveAndMake": "Approve & make my video",
+        "creditNote": "This is the only step that uses your credits.",
+        "editTitle": "Edit {label}",
+        "editFallbackTitle": "Edit shot",
+        "shotLabels": {
+          "hook": "Hook",
+          "hookLower": "hook",
+          "callToAction": "Call to action",
+          "callToActionLower": "call to action",
+          "shot": "Shot {number}",
+          "shotLower": "shot {number}"
+        }
+      },
+      "subjects": {
+        "heading": "Locked in for every shot",
+        "locked": "Locked"
+      },
+      "shotCard": {
+        "noSpokenLine": "No spoken line",
+        "edit": "Edit"
+      },
+      "shotEditor": {
+        "fields": {
+          "dialogue": "What you say",
+          "onScreenText": "On-screen text",
+          "technique": "How it's filmed",
+          "transition": "Cut to the next shot",
+          "productVisible": "When the product shows"
+        },
+        "placeholders": {
+          "dialogue": "No spoken line for this shot",
+          "onScreenText": "No caption",
+          "technique": "Let Lumi choose the shot"
+        },
+        "advanced": "Advanced",
+        "transitions": {
+          "hardCut": "Hard cut",
+          "dissolve": "Dissolve",
+          "slide": "Slide",
+          "fade": "Fade",
+          "matchCut": "Match cut"
+        },
+        "productVisibility": {
+          "start": "Product at start",
+          "throughout": "Product throughout",
+          "end": "Product at end",
+          "none": "No product shown"
+        },
+        "done": "Done"
+      },
+      "beatStatus": {
+        "pending": "Pending",
+        "autoApproved": "Auto ✓",
+        "approved": "Approved",
+        "regenerating": "Regenerating"
+      },
+      "beatCard": {
+        "approved": "Approved",
+        "approve": "Approve",
+        "regenerate": "Regenerate"
+      },
+      "completed": {
+        "badge": "Ready to publish",
+        "title": "Your video is ready 🎉",
+        "description": "A publish-ready 9:16 cut with spoken audio. Download it or mark it posted to keep your stats tidy.",
+        "download": "Download",
+        "markPosted": "Mark as posted"
+      },
+      "failed": {
+        "title": "Generation failed",
+        "fallbackMessage": "Something went wrong. Try creating it again.",
+        "retry": "Retry",
+        "startNewVideo": "Start a new video"
+      }
     }
   },
   "languageSwitcher": {
