@@ -618,6 +618,20 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
+const SUPPORTED_REFERENCE_HOSTS = [
+  "tiktok.com",
+  "instagram.com",
+  "youtube.com",
+  "youtu.be",
+  "facebook.com",
+  "fb.watch",
+  "snapchat.com",
+  "pinterest.com",
+  "pin.it",
+  "twitter.com",
+  "x.com",
+];
+
 function isSupportedReferenceUrl(value: string, mode: ReferenceMode): boolean {
   let url: URL;
   try {
@@ -627,7 +641,10 @@ function isSupportedReferenceUrl(value: string, mode: ReferenceMode): boolean {
   }
   if (url.protocol !== "http:" && url.protocol !== "https:") return false;
   if (mode === "upload") return /\.(mp4|mov|webm)$/i.test(url.pathname);
-  return true;
+  const host = url.hostname.replace(/^www\./, "").toLowerCase();
+  return SUPPORTED_REFERENCE_HOSTS.some(
+    (h) => host === h || host.endsWith(`.${h}`),
+  );
 }
 
 function PickProduct() {
