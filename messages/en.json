@@ -286,7 +286,7 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi learns vibe & energy only: pacing and mood for your product, not the original shots.",
         "uploadHelper": "Use a direct MP4, MOV, or WebM URL from a clip you already uploaded. Lumi learns vibe & energy only, not the original shots.",
-        "invalidUrl": "Enter a valid http(s) link.",
+        "invalidUrl": "Paste a supported TikTok or social video link.",
         "invalidUpload": "Enter a direct MP4, MOV, or WebM link."
       },
       "modes": {
