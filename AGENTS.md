@@ -56,6 +56,14 @@ App-interface localization uses **next-intl v4**, cookie-based (no `[locale]` UR
 - **Separate from video-output language**: never route `VIDEO_LANGUAGES` labels through the catalog, and never wire the UI locale into the video-create `language` payload. See the i18n plan (PR sequence PR-1..PR-R) for remaining migration.
 - Reading the cookie at the root layout makes marketing pages render dynamically; static + `hreflang` SEO is restored later by the `[locale]` prefix PR (PR-R).
 
+## Marketing vs app styling (split posture)
+
+The marketing surface and the logged-in app deliberately diverge (UI-sophistication PR series V1..V7).
+The marketing layout wraps its tree in a `.marketing` class (`src/app/(marketing)/layout.tsx`); the scoped block in `globals.css` overrides `--font-display` to the editorial grotesk (Geist) and defines `--font-accent` (Instrument Serif italic) + tighter tracking there only.
+The app never enters `.marketing`, so it keeps the SF-Rounded/Nunito cream system untouched - keep any editorial type/palette-restraint treatment scoped to `.marketing`, never at `:root` or in `app/*`.
+Serif accent phrases in marketing headings use `<Accent>` (`src/components/marketing/accent.tsx`), one phrase per major heading.
+Marketing palette is monochrome + one accent (the teal `brand` ramp for CTAs; green for success/live only); do not reintroduce decorative rose/gold/orange or gradient headline text.
+
 ## Auth model
 
 JWTs from the FastAPI backend are stored as httpOnly cookies (`lumi_at` access ~30m, `lumi_rt` refresh ~30d) by the BFF auth routes; tokens never reach client JS.
