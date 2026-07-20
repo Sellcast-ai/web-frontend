@@ -240,13 +240,14 @@
       "loading": "로드 중…",
       "sections": {
         "vibe": "1 · 분위기는 어떤가요?",
-        "mode": "2 · 모드",
+        "reference": "2 · 이런 느낌으로",
+        "mode": "3 · 모드",
         "presenter": "발표자",
-        "duration": "3 · 기간",
+        "duration": "4 · 기간",
         "model": "모델",
         "resolution": "해상도",
-        "language": "4 · 언어",
-        "review": "5 · 검토"
+        "language": "5 · 언어",
+        "review": "6 · 검토"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,17 @@
           "label": "클린 데모",
           "blurb": "꾸준하고 명확함 - 제품이 말을 합니다."
         }
+      },
+      "reference": {
+        "linkTab": "링크 붙여넣기",
+        "uploadTab": "업로드한 클립",
+        "linkLabel": "참고 영상 링크",
+        "uploadLabel": "업로드한 클립 링크",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi는 분위기와 에너지, 즉 제품에 맞는 속도와 무드만 학습하며 원본 장면은 복사하지 않습니다.",
+        "uploadHelper": "이미 업로드한 클립의 직접 MP4, MOV 또는 WebM URL을 사용하세요. Lumi는 분위기와 에너지만 학습하며 원본 장면은 복사하지 않습니다.",
+        "invalidUrl": "유효한 http(s) 링크를 입력하세요."
       },
       "modes": {
         "aiAvatar": {
@@ -319,6 +331,9 @@
         "resolution": "해상도",
         "language": "언어",
         "format": "형식",
+        "reference": "참고",
+        "referenceAdded": "추가됨",
+        "referenceNone": "없음",
         "review": "검토",
         "storyboard": "스토리보드"
       },

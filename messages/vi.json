@@ -240,13 +240,14 @@
       "loading": "Đang tải…",
       "sections": {
         "vibe": "1 · Sự rung cảm là gì?",
-        "mode": "2 · Chế độ",
+        "reference": "2 · Làm giống video này",
+        "mode": "3 · Chế độ",
         "presenter": "Người trình bày",
-        "duration": "3 · Thời lượng",
+        "duration": "4 · Thời lượng",
         "model": "người mẫu",
         "resolution": "Độ phân giải",
-        "language": "4 · Ngôn ngữ",
-        "review": "5 · Đánh giá"
+        "language": "5 · Ngôn ngữ",
+        "review": "6 · Đánh giá"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,17 @@
           "label": "Bản demo sạch",
           "blurb": "Ổn định và rõ ràng - sản phẩm nói lên điều đó."
         }
+      },
+      "reference": {
+        "linkTab": "Dán liên kết",
+        "uploadTab": "Clip đã tải lên",
+        "linkLabel": "Liên kết video tham chiếu",
+        "uploadLabel": "Liên kết clip đã tải lên",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi chỉ học vibe & năng lượng: nhịp độ và tâm trạng cho sản phẩm của bạn, không sao chép các cảnh gốc.",
+        "uploadHelper": "Dùng URL MP4, MOV hoặc WebM trực tiếp từ clip bạn đã tải lên. Lumi chỉ học vibe & năng lượng, không sao chép các cảnh gốc.",
+        "invalidUrl": "Nhập liên kết http(s) hợp lệ."
       },
       "modes": {
         "aiAvatar": {
@@ -319,6 +331,9 @@
         "resolution": "Độ phân giải",
         "language": "Ngôn ngữ",
         "format": "định dạng",
+        "reference": "Tham chiếu",
+        "referenceAdded": "Đã thêm",
+        "referenceNone": "Không có",
         "review": "Xem lại",
         "storyboard": "Bảng phân cảnh"
       },

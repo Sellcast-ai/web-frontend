@@ -240,13 +240,14 @@
       "loading": "Memuat…",
       "sections": {
         "vibe": "1 · Bagaimana suasananya?",
-        "mode": "2 · Modus",
+        "reference": "2 · Buat seperti ini",
+        "mode": "3 · Modus",
         "presenter": "Pembawa acara",
-        "duration": "3 · Durasi",
+        "duration": "4 · Durasi",
         "model": "Model",
         "resolution": "Resolusi",
-        "language": "4 · Bahasa",
-        "review": "5 · Ulasan"
+        "language": "5 · Bahasa",
+        "review": "6 · Ulasan"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,17 @@
           "label": "Demo bersih",
           "blurb": "Stabil dan jelas — produklah yang berbicara."
         }
+      },
+      "reference": {
+        "linkTab": "Tempel tautan",
+        "uploadTab": "Klip terunggah",
+        "linkLabel": "Tautan video referensi",
+        "uploadLabel": "Tautan klip terunggah",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi hanya mempelajari vibe & energi: tempo dan mood untuk produk Anda, bukan adegan aslinya.",
+        "uploadHelper": "Gunakan URL MP4, MOV, atau WebM langsung dari klip yang sudah Anda unggah. Lumi hanya mempelajari vibe & energi, bukan adegan aslinya.",
+        "invalidUrl": "Masukkan tautan http(s) yang valid."
       },
       "modes": {
         "aiAvatar": {
@@ -319,6 +331,9 @@
         "resolution": "Resolusi",
         "language": "Bahasa",
         "format": "Format",
+        "reference": "Referensi",
+        "referenceAdded": "Ditambahkan",
+        "referenceNone": "Tidak ada",
         "review": "Ulasan",
         "storyboard": "Papan cerita"
       },
