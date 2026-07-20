@@ -50,6 +50,21 @@ describe("en catalog", () => {
     ]);
   });
 
+  it("has the legal keys used by the terms/privacy/refunds pages", () => {
+    expect(Object.keys(en.marketing.legal).sort()).toEqual([
+      "kicker",
+      "lastUpdated",
+      "privacy",
+      "refunds",
+      "terms",
+    ]);
+    // Rich-text segments carry ICU tags that must survive translation.
+    expect(en.marketing.legal.terms.billing.body).toContain("<refunds>");
+    expect(en.marketing.legal.terms.contact.body).toContain("<email>");
+    expect(en.marketing.legal.privacy.collect.account).toContain("<strong>");
+    expect(en.marketing.legal.refunds.request.body).toContain("<email>");
+  });
+
   it("has the auth keys used by auth pages and AuthForm", () => {
     expect(Object.keys(en.auth.layout).sort()).toEqual([
       "benefitPublish",
