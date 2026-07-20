@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Accent } from "@/components/marketing/accent";
 
 /** Centered page hero used across marketing sub-pages. */
 export function PageHeader({
@@ -26,7 +27,7 @@ export function PageHeader({
           </Badge>
         )}
         <h1 className="mx-auto max-w-3xl font-display text-4xl font-bold leading-[1.08] tracking-tight text-ink sm:text-5xl">
-          {title} {highlight && <span className="text-brand">{highlight}</span>}
+          {title} {highlight && <Accent>{highlight}</Accent>}
         </h1>
         {subtitle && (
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">

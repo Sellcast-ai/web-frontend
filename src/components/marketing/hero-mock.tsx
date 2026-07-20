@@ -27,7 +27,7 @@ export function HeroMock() {
         {/* top status row */}
         <div className="absolute inset-x-0 top-0 flex items-center justify-between p-4">
           <Badge variant="glass" size="sm" className="text-white/90">
-            <span className="h-1.5 w-1.5 rounded-full bg-rose" /> 9:16
+            <span className="h-1.5 w-1.5 rounded-full bg-white/70" /> 9:16
           </Badge>
           <Badge variant="glass" size="sm" className="text-white/90">
             00:18
@@ -98,7 +98,7 @@ export function HeroMock() {
       <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 animate-float rounded-full border border-border bg-card px-4 py-2 shadow-card">
         <p className="whitespace-nowrap text-xs font-semibold text-ink">
           {t("renderedWith")}{" "}
-          <span className="text-brand font-bold">Seedance 2.0</span>
+          <span className="font-bold text-ink">Seedance 2.0</span>
         </p>
       </div>
     </div>

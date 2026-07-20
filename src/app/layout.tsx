@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Nunito } from "next/font/google";
+import { Nunito, Geist, Instrument_Serif } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import "./globals.css";
@@ -15,6 +15,23 @@ const nunito = Nunito({
   variable: "--font-nunito",
   display: "swap",
   weight: ["600", "700", "800", "900"],
+});
+
+// Editorial two-voice type — MARKETING ONLY (scoped via `.marketing` in
+// globals.css). Geist is the tight free grotesk for display; Instrument Serif
+// (italic) is the one-phrase accent. The app keeps the SF-Rounded/Nunito stack.
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+  weight: "400",
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -60,7 +77,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${nunito.variable} h-full antialiased`}
+      className={`${nunito.variable} ${geist.variable} ${instrumentSerif.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >

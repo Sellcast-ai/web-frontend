@@ -18,6 +18,7 @@ import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HeroMock } from "@/components/marketing/hero-mock";
+import { Accent } from "@/components/marketing/accent";
 import { Faq } from "@/components/marketing/faq";
 
 /* ------------------------------------------------------------------ data */
@@ -43,12 +44,7 @@ const MODELS = [
   { key: "more", live: false },
 ] as const;
 
-const USE_CASES = [
-  { key: "sellers", glow: "from-brand-300 to-brand-600" },
-  { key: "creators", glow: "from-rose to-warning" },
-  { key: "brands", glow: "from-gold to-rose" },
-  { key: "agencies", glow: "from-brand-500 to-brand-800" },
-] as const;
+const USE_CASES = ["sellers", "creators", "brands", "agencies"] as const;
 
 const STATS = ["ways", "ratio", "credit", "spend"] as const;
 
@@ -77,7 +73,7 @@ export default async function HomePage() {
             </Badge>
             <h1 className="font-display text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
               {t.rich("heroTitle", {
-                highlight: (chunks) => <span className="text-brand">{chunks}</span>,
+                highlight: (chunks) => <Accent>{chunks}</Accent>,
               })}
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
@@ -229,19 +225,17 @@ export default async function HomePage() {
           title={t("useCasesTitle")}
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {USE_CASES.map((u) => (
+          {USE_CASES.map((key) => (
             <div
-              key={u.key}
+              key={key}
               className="rounded-card border border-border bg-card p-7 shadow-soft"
             >
-              <div
-                className={`mb-5 h-1.5 w-12 rounded-full bg-linear-to-r ${u.glow}`}
-              />
+              <div className="mb-5 h-1.5 w-12 rounded-full bg-ink/15" />
               <h3 className="font-display text-2xl font-medium text-ink">
-                {t(`useCases.${u.key}.title`)}
+                {t(`useCases.${key}.title`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {t(`useCases.${u.key}.body`)}
+                {t(`useCases.${key}.body`)}
               </p>
             </div>
           ))}
