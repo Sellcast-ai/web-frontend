@@ -3,31 +3,51 @@
 
 import Link from "next/link";
 import { Heart, TrendingUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { ProductSummary, SourcePlatform } from "@/lib/api/types";
-
-const SOURCE_LABELS: Record<SourcePlatform, string> = {
-  amazon: "From Amazon",
-  shopee: "From Shopee",
-  tiktok_shop: "From TikTok Shop",
-  walmart: "From Walmart",
-  lazada: "From Lazada",
-  aliexpress: "From AliExpress",
-  temu: "From Temu",
-  alibaba: "From Alibaba",
-  taobao: "From Taobao",
-  mercadolibre: "From Mercado Libre",
-  etsy: "From Etsy",
-  ebay: "From eBay",
-  shopify: "From Shopify",
-  generic: "From your store",
-  manual: "Added by you",
-};
 import { useToggleLike } from "@/lib/api/hooks";
 import { compact, priceRange, commission, percent } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
+type SourceLabelKey =
+  | "amazon"
+  | "shopee"
+  | "tiktokShop"
+  | "walmart"
+  | "lazada"
+  | "aliexpress"
+  | "temu"
+  | "alibaba"
+  | "taobao"
+  | "mercadolibre"
+  | "etsy"
+  | "ebay"
+  | "shopify"
+  | "generic"
+  | "manual";
+
+const SOURCE_LABEL_KEYS: Record<SourcePlatform, SourceLabelKey> = {
+  amazon: "amazon",
+  shopee: "shopee",
+  tiktok_shop: "tiktokShop",
+  walmart: "walmart",
+  lazada: "lazada",
+  aliexpress: "aliexpress",
+  temu: "temu",
+  alibaba: "alibaba",
+  taobao: "taobao",
+  mercadolibre: "mercadolibre",
+  etsy: "etsy",
+  ebay: "ebay",
+  shopify: "shopify",
+  generic: "generic",
+  manual: "manual",
+};
+
 export function ProductCard({ product }: { product: ProductSummary }) {
-  const like = useToggleLike();
+  const t = useTranslations("app.productCard");
+  const tt = useTranslations("app.toasts");
+  const like = useToggleLike({ updateError: tt("updateLikeFailed") });
   const img = product.cover_image_url || product.hero_image_urls?.[0];
 
   return (
@@ -53,7 +73,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             e.preventDefault();
             like.mutate({ id: product.id, liked: product.is_liked });
           }}
-          aria-label={product.is_liked ? "Unsave" : "Save"}
+          aria-label={product.is_liked ? t("unsave") : t("save")}
           className="absolute right-2 top-2 inline-flex h-9 w-9 items-center justify-center rounded-full glass"
         >
           <Heart
@@ -74,7 +94,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
 
       <div className="flex flex-1 flex-col p-4">
         <p className="text-[11px] font-semibold uppercase tracking-wide text-brand-600">
-          {product.category_display ?? "Product"}
+          {product.category_display ?? t("productFallback")}
         </p>
         <h3 className="mt-1 line-clamp-2 text-sm font-semibold text-ink">
           {product.title}
@@ -86,20 +106,20 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             </span>
             {product.owner_user_id ? (
               <span className="text-xs text-muted-foreground">
-                {SOURCE_LABELS[product.source_platform ?? "manual"] ?? "Added by you"}
+                {t(`source.${SOURCE_LABEL_KEYS[product.source_platform ?? "manual"]}`)}
               </span>
             ) : (
               <span className="text-xs text-muted-foreground">
-                {commission(product.commission_rate)} comm.
+                {t("commissionShort", { rate: commission(product.commission_rate) })}
               </span>
             )}
           </div>
           {/* marketplace rows carry sales analytics; user-created rows don't */}
           {!product.owner_user_id && (
             <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
-              <span>{compact(product.monthly_sales)} sold/mo</span>
+              <span>{t("soldPerMonth", { count: compact(product.monthly_sales) })}</span>
               <span>·</span>
-              <span>{compact(product.creator_count_active)} creators</span>
+              <span>{t("creators", { count: compact(product.creator_count_active) })}</span>
             </div>
           )}
         </div>

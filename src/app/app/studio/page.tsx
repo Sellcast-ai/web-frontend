@@ -4,6 +4,7 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   UserSquare2,
   Package,
@@ -52,12 +53,13 @@ const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof User
 ];
 
 function StudioInner() {
+  const tt = useTranslations("app.toasts");
   const router = useRouter();
   const sp = useSearchParams();
   const productId = sp.get("product") ?? "";
   const { data: product, isLoading } = useProduct(productId);
   const { data: usage } = useUsage();
-  const create = useCreateJob();
+  const create = useCreateJob({ startError: tt("startVideoFailed") });
 
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");

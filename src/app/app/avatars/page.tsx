@@ -3,6 +3,7 @@
 
 import { useRef, useState } from "react";
 import { ImagePlus, Loader2, Trash2, UserSquare2, Sparkles, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useAvatars, useCreateAvatar, useDeleteAvatar } from "@/lib/api/hooks";
 import type { Avatar } from "@/lib/api/types";
 import { Button } from "@/components/ui/button";
@@ -27,6 +28,7 @@ function readAsBase64(file: File): Promise<{ dataUrl: string; base64: string }> 
 }
 
 export default function AvatarsPage() {
+  const t = useTranslations("app.avatars");
   const { data, isLoading } = useAvatars();
   const avatars = data ?? [];
   const mine = avatars.filter((a) => !a.is_shared);
@@ -35,10 +37,9 @@ export default function AvatarsPage() {
   return (
     <div className="container-page max-w-4xl py-8">
       <div className="flex flex-col gap-1">
-        <h1 className="font-display text-3xl font-bold text-ink">Avatars</h1>
+        <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
         <p className="text-muted-foreground">
-          The face that presents your product in AI Avatar videos. Upload your own,
-          or pick a digital character.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -47,7 +48,7 @@ export default function AvatarsPage() {
       {/* my avatars */}
       <section className="mt-10">
         <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
-          Your avatars
+          {t("yourAvatars")}
         </h2>
         {isLoading ? (
           <div className="mt-4 flex justify-center">
@@ -55,7 +56,7 @@ export default function AvatarsPage() {
           </div>
         ) : mine.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">
-            None yet — upload a photo above to use a specific face in your videos.
+            {t("emptyYourAvatars")}
           </p>
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -71,14 +72,13 @@ export default function AvatarsPage() {
       {/* digital characters (BytePlus library) */}
       <section className="mt-10">
         <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
-          Digital characters
+          {t("digitalCharacters")}
         </h2>
         {digital.length === 0 ? (
           <div className="mt-3 flex items-start gap-3 rounded-card border border-dashed border-border bg-card p-5">
             <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
             <p className="text-sm text-muted-foreground">
-              A library of ready-made digital presenters is coming — consistent,
-              licensed faces you can drop into any video without uploading a photo.
+              {t("digitalComingSoon")}
             </p>
           </div>
         ) : (
@@ -96,8 +96,10 @@ export default function AvatarsPage() {
 }
 
 function UploadCard() {
+  const t = useTranslations("app.avatars.upload");
+  const tt = useTranslations("app.toasts");
   const [progress, setProgress] = useState(0);
-  const create = useCreateAvatar(setProgress);
+  const create = useCreateAvatar({ saveError: tt("saveAvatarFailed") }, setProgress);
   const fileInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [photo, setPhoto] = useState<{ dataUrl: string; base64: string; filename: string } | null>(null);
@@ -107,9 +109,9 @@ function UploadCard() {
 
   async function pick(file: File) {
     setError(null);
-    if (!file.type.startsWith("image/")) return setError("That isn't an image.");
+    if (!file.type.startsWith("image/")) return setError(t("notImageError"));
     if (file.size > MAX_UPLOAD_MB * 1024 * 1024)
-      return setError(`Image is over ${MAX_UPLOAD_MB}MB.`);
+      return setError(t("tooLargeError", { max: MAX_UPLOAD_MB }));
     const { dataUrl, base64 } = await readAsBase64(file);
     setPhoto({ dataUrl, base64, filename: file.name });
     if (!name) setName(file.name.replace(/\.[^.]+$/, ""));
@@ -156,7 +158,7 @@ function UploadCard() {
           ) : (
             <span className="flex flex-col items-center gap-1 text-muted-foreground">
               <ImagePlus className="h-6 w-6" />
-              <span className="text-xs font-semibold">Add photo</span>
+              <span className="text-xs font-semibold">{t("addPhoto")}</span>
             </span>
           )}
         </button>
@@ -165,7 +167,7 @@ function UploadCard() {
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Name this avatar (e.g. 'Maya — founder')"
+            placeholder={t("namePlaceholder")}
             className="w-full rounded-xl border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-brand-300"
           />
           <label className="flex items-start gap-2.5 text-sm text-ink-soft">
@@ -176,8 +178,7 @@ function UploadCard() {
               className="mt-0.5 h-4 w-4 accent-brand-600"
             />
             <span>
-              I have the right to use this person&apos;s likeness in videos
-              (it&apos;s me, or I have their permission).
+              {t("consent")}
             </span>
           </label>
           <div className="flex items-center gap-3">
@@ -191,7 +192,7 @@ function UploadCard() {
               ) : (
                 <>
                   <UserSquare2 className="h-4 w-4" />
-                  Save avatar
+                  {t("saveAvatar")}
                 </>
               )}
             </Button>
@@ -201,7 +202,7 @@ function UploadCard() {
                 onClick={() => setPhoto(null)}
                 className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-ink"
               >
-                <X className="h-3.5 w-3.5" /> Clear
+                <X className="h-3.5 w-3.5" /> {t("clear")}
               </button>
             )}
           </div>
@@ -224,7 +225,9 @@ function UploadCard() {
 }
 
 function AvatarCard({ avatar }: { avatar: Avatar }) {
-  const del = useDeleteAvatar();
+  const t = useTranslations("app.avatars.card");
+  const tt = useTranslations("app.toasts");
+  const del = useDeleteAvatar({ deleteError: tt("deleteAvatarFailed") });
   const [confirming, setConfirming] = useState(false);
   return (
     <div className="group relative overflow-hidden rounded-card border border-border bg-card shadow-soft">
@@ -242,7 +245,7 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
         {!avatar.is_shared && (
           <button
             type="button"
-            aria-label="Delete avatar"
+            aria-label={t("deleteAvatar")}
             onClick={() => setConfirming(true)}
             disabled={del.isPending}
             className="shrink-0 rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-rose"
@@ -254,15 +257,14 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
       <Modal
         open={confirming}
         onClose={() => setConfirming(false)}
-        title="Delete this avatar?"
+        title={t("deleteTitle")}
       >
         <p className="text-sm text-muted-foreground">
-          &ldquo;{avatar.name}&rdquo; will be removed from your avatars. Videos
-          you already made with it aren&apos;t affected.
+          {t("deleteDescription", { name: avatar.name })}
         </p>
         <div className="mt-5 flex justify-end gap-3">
           <Button variant="outline" size="sm" onClick={() => setConfirming(false)}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button
             size="sm"
@@ -277,7 +279,7 @@ function AvatarCard({ avatar }: { avatar: Avatar }) {
             ) : (
               <Trash2 className="h-4 w-4" />
             )}
-            Delete
+            {t("delete")}
           </Button>
         </div>
       </Modal>

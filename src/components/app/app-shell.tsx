@@ -60,7 +60,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <Button href="/app/studio" size="md" className="mt-4 w-full">
           <Sparkles className="h-4 w-4" />
-          New video
+          {t("newVideo")}
         </Button>
 
         <nav className="mt-6 flex flex-col gap-1">
@@ -91,13 +91,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                 {user.display_name}
               </p>
               <p className="truncate text-xs text-muted-foreground">
-                {user.phone_number ?? user.email ?? "Signed in"}
+                {user.phone_number ?? user.email ?? t("signedIn")}
               </p>
             </div>
             <button
               type="button"
               onClick={logout}
-              aria-label="Log out"
+              aria-label={t("logOut")}
               className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-rose"
             >
               <LogOut className="h-4 w-4" />
@@ -115,7 +115,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             type="button"
             onClick={logout}
-            aria-label="Log out"
+            aria-label={t("logOut")}
             className="rounded-lg p-2 text-muted-foreground hover:bg-muted"
           >
             <LogOut className="h-4 w-4" />
@@ -135,7 +135,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-gradient text-white">
             <Sparkles className="h-4 w-4" />
           </span>
-          New
+          {t("new")}
         </Link>
         {NAV.map(({ href, key, Icon }) => (
           <Link

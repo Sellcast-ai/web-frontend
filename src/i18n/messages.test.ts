@@ -16,9 +16,13 @@ describe("en catalog", () => {
   it("has the app nav keys used by AppShell", () => {
     expect(Object.keys(en.app.nav).sort()).toEqual([
       "avatars",
+      "logOut",
       "marketplace",
+      "new",
+      "newVideo",
       "products",
       "profile",
+      "signedIn",
       "videos",
     ]);
   });

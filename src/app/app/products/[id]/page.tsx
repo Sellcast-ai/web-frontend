@@ -4,6 +4,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   ArrowLeft,
   Heart,
@@ -27,10 +28,12 @@ import {
 import { cn } from "@/lib/utils";
 
 export default function ProductDetailPage() {
+  const t = useTranslations("app.productDetail");
+  const tt = useTranslations("app.toasts");
   const params = useParams<{ id: string }>();
   const id = params.id;
   const { data: product, isLoading, isError } = useProduct(id);
-  const like = useToggleLike();
+  const like = useToggleLike({ updateError: tt("updateLikeFailed") });
 
   const images = useMemo(() => {
     if (!product) return [];
@@ -54,19 +57,19 @@ export default function ProductDetailPage() {
   if (isError || !product) {
     return (
       <div className="container-page py-16 text-center">
-        <p className="text-muted-foreground">Product not found.</p>
+        <p className="text-muted-foreground">{t("notFound")}</p>
         <Button href="/app/marketplace" variant="outline" size="md" className="mt-4">
-          Back to marketplace
+          {t("backToMarketplace")}
         </Button>
       </div>
     );
   }
 
   const metrics = [
-    { label: "Monthly sales", value: compact(product.monthly_sales) },
-    { label: "Total revenue", value: money(product.total_revenue) },
-    { label: "Active creators", value: compact(product.creator_count_active) },
-    { label: "Total views", value: compact(product.total_views) },
+    { label: t("metrics.monthlySales"), value: compact(product.monthly_sales) },
+    { label: t("metrics.totalRevenue"), value: money(product.total_revenue) },
+    { label: t("metrics.activeCreators"), value: compact(product.creator_count_active) },
+    { label: t("metrics.totalViews"), value: compact(product.total_views) },
   ];
 
   return (
@@ -76,7 +79,7 @@ export default function ProductDetailPage() {
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-ink"
       >
         <ArrowLeft className="h-4 w-4" />
-        Marketplace
+        {t("marketplace")}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-2">
@@ -102,7 +105,7 @@ export default function ProductDetailPage() {
             {product.sales_mom_pct != null && product.sales_mom_pct > 0 && (
               <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-xs font-bold text-success">
                 <TrendingUp className="h-3.5 w-3.5" />
-                {percent(product.sales_mom_pct)} MoM
+                {t("mom", { percent: percent(product.sales_mom_pct) })}
               </span>
             )}
           </div>
@@ -130,12 +133,12 @@ export default function ProductDetailPage() {
         {/* info */}
         <div className="flex flex-col">
           <div className="flex items-start justify-between gap-4">
-            <Badge variant="brand">{product.category_display ?? "Product"}</Badge>
+            <Badge variant="brand">{product.category_display ?? t("productFallback")}</Badge>
             <button
               type="button"
               onClick={() => like.mutate({ id: product.id, liked: product.is_liked })}
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card"
-              aria-label={product.is_liked ? "Unsave" : "Save"}
+              aria-label={product.is_liked ? t("unsave") : t("save")}
             >
               <Heart
                 className={cn(
@@ -151,7 +154,7 @@ export default function ProductDetailPage() {
           </h1>
           {product.shop_name && (
             <p className="mt-1 text-sm text-muted-foreground">
-              by {product.shop_name}
+              {t("byShop", { shop: product.shop_name })}
             </p>
           )}
 
@@ -159,7 +162,9 @@ export default function ProductDetailPage() {
             <span className="font-display text-3xl font-bold text-ink">
               {priceRange(product.price_min, product.price_max, product.currency)}
             </span>
-            <Badge variant="success">{commission(product.commission_rate)} commission</Badge>
+            <Badge variant="success">
+              {t("commission", { rate: commission(product.commission_rate) })}
+            </Badge>
           </div>
 
           {/* metrics */}
@@ -182,7 +187,7 @@ export default function ProductDetailPage() {
           {product.creator_hook && (
             <div className="mt-6 rounded-2xl bg-accent p-4">
               <p className="text-xs font-bold uppercase tracking-wide text-accent-foreground">
-                Creator hook
+                {t("creatorHook")}
               </p>
               <p className="mt-1 text-sm text-ink">{product.creator_hook}</p>
             </div>
@@ -226,7 +231,7 @@ export default function ProductDetailPage() {
               className="w-full sm:w-auto"
             >
               <Sparkles className="h-4 w-4" />
-              Create a video from this product
+              {t("createVideo")}
             </Button>
           </div>
         </div>

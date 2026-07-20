@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Link2, Loader2, PackagePlus, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMyProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
 
 export default function MyProductsPage() {
+  const t = useTranslations("app.products");
   const router = useRouter();
   const { data, isLoading } = useMyProducts();
   const [url, setUrl] = useState("");
@@ -27,14 +29,14 @@ export default function MyProductsPage() {
     <div className="container-page py-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex flex-col gap-1">
-          <h1 className="font-display text-3xl font-bold text-ink">My Products</h1>
+          <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
           <p className="text-muted-foreground">
-            Your own products — pasted from a link or uploaded. Only you can see these.
+            {t("subtitle")}
           </p>
         </div>
         <Button href="/app/products/new" size="md">
           <Plus className="h-4 w-4" />
-          Add product
+          {t("addProduct")}
         </Button>
       </div>
 
@@ -50,11 +52,11 @@ export default function MyProductsPage() {
         <input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
-          placeholder="Paste a product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, or any store"
+          placeholder={t("pastePlaceholder")}
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         <Button size="sm" type="submit" disabled={!url.trim()}>
-          Read link
+          {t("readLink")}
         </Button>
       </form>
 
@@ -68,11 +70,10 @@ export default function MyProductsPage() {
             <PackagePlus className="h-7 w-7" />
           </div>
           <p className="mt-4 font-display text-lg font-semibold text-ink">
-            No products yet
+            {t("emptyTitle")}
           </p>
           <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-            Paste a product link above, or add one from photos — then turn it into a
-            video in the Studio.
+            {t("emptyDescription")}
           </p>
         </div>
       ) : (

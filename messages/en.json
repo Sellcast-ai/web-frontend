@@ -11,7 +11,234 @@
       "products": "My Products",
       "avatars": "Avatars",
       "videos": "My Videos",
-      "profile": "Profile"
+      "profile": "Profile",
+      "newVideo": "New video",
+      "new": "New",
+      "signedIn": "Signed in",
+      "logOut": "Log out"
+    },
+    "toasts": {
+      "updateLikeFailed": "Couldn’t update like. Please try again.",
+      "saveAvatarFailed": "Couldn’t save the avatar.",
+      "deleteAvatarFailed": "Couldn’t delete the avatar.",
+      "startImportFailed": "Couldn’t start the import. Please try again.",
+      "saveProductFailed": "Couldn’t save the product. Please try again.",
+      "startVideoFailed": "Couldn’t start the video. Please try again.",
+      "approveShotFailed": "Couldn’t approve the shot. Please try again.",
+      "regenerateShotFailed": "Couldn’t regenerate the shot. Please try again.",
+      "approveStoryboardFailed": "Couldn’t approve the storyboard. Please try again.",
+      "saveStoryboardEditsFailed": "Couldn’t save your edits. Please try again.",
+      "retryJobFailed": "Couldn’t retry the job. Please try again.",
+      "saveDisplayNameFailed": "Couldn’t save your display name. Please try again.",
+      "importPartial": "Imported {count} of your products (catalog cap). The rest can be added by paste.",
+      "importSucceeded": "Imported {count, plural, one {# product} other {# products}} from your store.",
+      "importFailed": "The import didn’t finish. Please try again.",
+      "storyboardSaved": "Storyboard saved.",
+      "markedPosted": "Marked as posted.",
+      "recordPostedFailed": "Couldn’t record that. Please try again."
+    },
+    "categories": {
+      "beautyPersonalCare": "Beauty & Personal Care",
+      "healthWellness": "Health & Wellness",
+      "womensFashion": "Women’s Fashion",
+      "sportsOutdoors": "Sports & Outdoors",
+      "homeTextiles": "Home Textiles",
+      "householdEssentials": "Household Essentials",
+      "mobileElectronics": "Mobile & Electronics",
+      "foodBeverage": "Food & Beverage",
+      "mensFashion": "Men’s Fashion",
+      "toysHobbies": "Toys & Hobbies"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "Shopee",
+      "tiktokShop": "TikTok Shop",
+      "walmart": "Walmart",
+      "lazada": "Lazada",
+      "aliexpress": "AliExpress",
+      "temu": "Temu",
+      "alibaba": "Alibaba",
+      "taobao": "Taobao",
+      "mercadolibre": "Mercado Libre",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "Web store",
+      "manual": "Manual"
+    },
+    "productCard": {
+      "save": "Save",
+      "unsave": "Unsave",
+      "productFallback": "Product",
+      "commissionShort": "{rate} comm.",
+      "soldPerMonth": "{count} sold/mo",
+      "creators": "{count} creators",
+      "source": {
+        "amazon": "From Amazon",
+        "shopee": "From Shopee",
+        "tiktokShop": "From TikTok Shop",
+        "walmart": "From Walmart",
+        "lazada": "From Lazada",
+        "aliexpress": "From AliExpress",
+        "temu": "From Temu",
+        "alibaba": "From Alibaba",
+        "taobao": "From Taobao",
+        "mercadolibre": "From Mercado Libre",
+        "etsy": "From Etsy",
+        "ebay": "From eBay",
+        "shopify": "From Shopify",
+        "generic": "From your store",
+        "manual": "Added by you"
+      }
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "Talking intro",
+        "avatarDemoExplainer": "Demo explainer",
+        "avatarTestimonial": "Testimonial",
+        "avatarHostProduct": "Host + product",
+        "productCleanShowcase": "Clean showcase",
+        "productFeatureHighlights": "Feature highlights",
+        "productUnboxing": "Unboxing",
+        "productOfferFocused": "Offer focused"
+      }
+    },
+    "marketplace": {
+      "title": "Marketplace",
+      "subtitle": "Trending TikTok Shop products — pick one to turn into a video.",
+      "searchPlaceholder": "Search products — or paste any product link (Amazon, Shopee, TikTok Shop…)",
+      "linkCta": "Make a video from this link — Lumi will read the product page",
+      "allCategories": "All",
+      "loadMore": "Load more",
+      "empty": {
+        "title": "No products found",
+        "description": "Try a different search or category."
+      }
+    },
+    "products": {
+      "title": "My Products",
+      "subtitle": "Your own products — pasted from a link or uploaded. Only you can see these.",
+      "addProduct": "Add product",
+      "pastePlaceholder": "Paste a product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, or any store",
+      "readLink": "Read link",
+      "emptyTitle": "No products yet",
+      "emptyDescription": "Paste a product link above, or add one from photos — then turn it into a video in the Studio."
+    },
+    "productDetail": {
+      "notFound": "Product not found.",
+      "backToMarketplace": "Back to marketplace",
+      "marketplace": "Marketplace",
+      "productFallback": "Product",
+      "save": "Save",
+      "unsave": "Unsave",
+      "mom": "{percent} MoM",
+      "byShop": "by {shop}",
+      "commission": "{rate} commission",
+      "creatorHook": "Creator hook",
+      "createVideo": "Create a video from this product",
+      "metrics": {
+        "monthlySales": "Monthly sales",
+        "totalRevenue": "Total revenue",
+        "activeCreators": "Active creators",
+        "totalViews": "Total views"
+      }
+    },
+    "videos": {
+      "title": "My Videos",
+      "subtitle": "Everything you’ve generated with Lumi.",
+      "newVideo": "New video",
+      "videoFallback": "Video",
+      "empty": {
+        "title": "No videos yet",
+        "description": "Pick a trending product and Lumi will turn it into your first scroll-stopping video.",
+        "browseMarketplace": "Browse marketplace"
+      }
+    },
+    "avatars": {
+      "title": "Avatars",
+      "subtitle": "The face that presents your product in AI Avatar videos. Upload your own, or pick a digital character.",
+      "yourAvatars": "Your avatars",
+      "emptyYourAvatars": "None yet — upload a photo above to use a specific face in your videos.",
+      "digitalCharacters": "Digital characters",
+      "digitalComingSoon": "A library of ready-made digital presenters is coming — consistent, licensed faces you can drop into any video without uploading a photo.",
+      "upload": {
+        "notImageError": "That isn’t an image.",
+        "tooLargeError": "Image is over {max}MB.",
+        "addPhoto": "Add photo",
+        "namePlaceholder": "Name this avatar (e.g. “Maya — founder”)",
+        "consent": "I have the right to use this person’s likeness in videos (it’s me, or I have their permission).",
+        "saveAvatar": "Save avatar",
+        "clear": "Clear"
+      },
+      "card": {
+        "deleteAvatar": "Delete avatar",
+        "deleteTitle": "Delete this avatar?",
+        "deleteDescription": "“{name}” will be removed from your avatars. Videos you already made with it aren’t affected.",
+        "cancel": "Cancel",
+        "delete": "Delete"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "videosCreated": "Videos created",
+      "readyToPublish": "Ready to publish",
+      "thisMonth": "This month",
+      "usageSummary": "{used} of {limit} credits used · {plan} plan · resets {date}",
+      "creditNote": "1 credit = 1 second of video",
+      "creditsLeft": "left",
+      "limitHit": "You’ve hit your monthly limit.",
+      "seePlans": "See plans",
+      "forMore": "for more.",
+      "displayName": "Display name",
+      "save": "Save",
+      "saved": "Saved",
+      "connectedAccounts": "Connected accounts",
+      "appearance": "Appearance",
+      "appearanceDescription": "System, light, or dark — matches the Lumi app.",
+      "logOut": "Log out"
+    },
+    "productsNew": {
+      "startTitle": "Add a product",
+      "startSubtitle": "Paste any product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay, or your own store — or start from photos. Lumi reads the page; you confirm before anything renders.",
+      "productLinkPlaceholder": "https://… product link",
+      "readLink": "Read link",
+      "addManuallyInstead": "Add it manually instead →",
+      "or": "or",
+      "startFromPhotos": "Start from photos",
+      "startFromPhotosDescription": "Drop product shots here or click to browse; describe it on the next step.",
+      "startFromScratch": "Start from scratch",
+      "startFromScratchDescription": "Type the details yourself, add photos as you go.",
+      "startOver": "Start over",
+      "detailsTitle": "Check the details",
+      "detailsSubtitle": "This is what the video will be based on — 10 seconds here saves a bad render.",
+      "removePhoto": "Remove photo",
+      "addPhoto": "Add",
+      "saveAndMakeVideo": "Save & make a video",
+      "needPhoto": "Add at least one real product photo first.",
+      "upload": {
+        "notImageError": "{filename} isn’t an image.",
+        "tooLargeError": "{filename} is over {max}MB."
+      },
+      "fields": {
+        "title": "Title",
+        "titlePlaceholder": "Product name",
+        "description": "Description",
+        "descriptionPlaceholder": "What it is, who it’s for, why it’s good — facts only, the script is written from this.",
+        "category": "Category",
+        "photos": "Photos · {count} selected",
+        "photosHint": "First selected photo is the hero the video is built around. Untick size charts and banners. Drag & drop photos anywhere in this grid."
+      },
+      "storeImport": {
+        "importingTitle": "Importing your store",
+        "importingProgress": "Imported {upserted} of ~{found} products so far — this keeps going in the background.",
+        "wrappingUp": "Wrapping up…",
+        "importingLabel": "Importing",
+        "previewFound": "We found {count} products from {domain}",
+        "importAllProducts": "Import all products",
+        "tryDifferentStore": "Try a different store",
+        "placeholder": "your-store.myshopify.com — import your whole store",
+        "preview": "Preview"
+      }
     }
   },
   "languageSwitcher": {
