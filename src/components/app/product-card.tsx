@@ -106,7 +106,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             </span>
             {product.owner_user_id ? (
               <span className="text-xs text-muted-foreground">
-                {t(`source.${SOURCE_LABEL_KEYS[product.source_platform ?? "manual"]}`)}
+                {t(`source.${SOURCE_LABEL_KEYS[product.source_platform ?? "manual"] ?? "manual"}`)}
               </span>
             ) : (
               <span className="text-xs text-muted-foreground">
