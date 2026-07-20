@@ -20,6 +20,7 @@ const NAV = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const t = useTranslations("nav");
+  const tc = useTranslations("marketing.header");
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/70 glass">
@@ -42,10 +43,10 @@ export function SiteHeader() {
           <LanguageSwitcher />
           <ThemeToggle className="mr-1" />
           <Button href="/login" variant="ghost" size="sm">
-            Sign in
+            {tc("signIn")}
           </Button>
           <Button href="/signup" variant="primary" size="sm">
-            Start free
+            {tc("startFree")}
           </Button>
         </div>
 
@@ -53,7 +54,7 @@ export function SiteHeader() {
           type="button"
           onClick={() => setOpen((v) => !v)}
           className="inline-flex h-10 w-10 items-center justify-center rounded-full text-ink md:hidden"
-          aria-label="Toggle menu"
+          aria-label={tc("toggleMenu")}
           aria-expanded={open}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -80,18 +81,18 @@ export function SiteHeader() {
           ))}
           <div className="mt-2 flex flex-col gap-2">
             <div className="flex items-center justify-between rounded-xl bg-muted px-3 py-2">
-              <span className="text-sm font-medium text-ink-soft">Language</span>
+              <span className="text-sm font-medium text-ink-soft">{tc("language")}</span>
               <LanguageSwitcher />
             </div>
             <div className="flex items-center justify-between rounded-xl bg-muted px-3 py-2">
-              <span className="text-sm font-medium text-ink-soft">Theme</span>
+              <span className="text-sm font-medium text-ink-soft">{tc("theme")}</span>
               <ThemeToggle />
             </div>
             <Button href="/login" variant="outline" size="md">
-              Sign in
+              {tc("signIn")}
             </Button>
             <Button href="/signup" variant="primary" size="md">
-              Start free
+              {tc("startFree")}
             </Button>
           </div>
         </div>

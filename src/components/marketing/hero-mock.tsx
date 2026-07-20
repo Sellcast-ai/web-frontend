@@ -1,4 +1,5 @@
 import { Check, Play, Sparkles, TrendingUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 
 /**
@@ -6,6 +7,12 @@ import { Badge } from "@/components/ui/badge";
  * product → beats → rendered video pipeline. No external images.
  */
 export function HeroMock() {
+  const t = useTranslations("marketing.heroMock");
+  const beats = [
+    { key: "beatHook", ok: "beatOk" },
+    { key: "beatProof", ok: "beatOk" },
+    { key: "beatOffer", ok: "beatAuto" },
+  ] as const;
   return (
     <div className="relative mx-auto w-full max-w-[460px]">
       {/* glow wash */}
@@ -35,13 +42,16 @@ export function HeroMock() {
         {/* caption + cta */}
         <div className="absolute inset-x-0 bottom-0 space-y-2 p-4">
           <p className="text-center text-[15px] font-extrabold leading-tight text-white drop-shadow">
-            this $24 gadget sold out{" "}
-            <span className="rounded bg-white/25 px-1">3 times</span> 👀
+            {t.rich("caption", {
+              highlight: (chunks) => (
+                <span className="rounded bg-white/25 px-1">{chunks}</span>
+              ),
+            })}
           </p>
           <div className="flex items-center justify-center gap-2 rounded-full glass px-3 py-2">
             <span className="h-6 w-6 rounded-md bg-white/80" />
             <span className="text-xs font-semibold text-white">
-              Shop now · $23.99
+              {t("shopNow")}
             </span>
           </div>
         </div>
@@ -53,31 +63,31 @@ export function HeroMock() {
           <div className="h-10 w-10 rounded-xl bg-brand-gradient" />
           <div className="min-w-0">
             <p className="truncate text-xs font-semibold text-ink">
-              Mini Massage Gun
+              {t("productName")}
             </p>
-            <p className="text-[11px] text-muted-foreground">$23.99 · 30% comm.</p>
+            <p className="text-[11px] text-muted-foreground">{t("productMeta")}</p>
           </div>
         </div>
         <div className="mt-2 flex items-center gap-1 text-[11px] font-semibold text-success">
-          <TrendingUp className="h-3.5 w-3.5" /> 12.4k sold / mo
+          <TrendingUp className="h-3.5 w-3.5" /> {t("sold")}
         </div>
       </div>
 
       {/* floating: beat review */}
       <div className="absolute -right-2 top-28 w-48 animate-float-slow rounded-2xl border border-border bg-card p-3 shadow-card sm:-right-6">
         <p className="mb-2 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wide text-brand-700">
-          <Sparkles className="h-3.5 w-3.5" /> Beat review
+          <Sparkles className="h-3.5 w-3.5" /> {t("beatReview")}
         </p>
         <div className="space-y-1.5">
-          {["Hook", "Proof", "Offer"].map((b, i) => (
+          {beats.map((b) => (
             <div
-              key={b}
+              key={b.key}
               className="flex items-center justify-between rounded-lg bg-muted px-2 py-1.5"
             >
-              <span className="text-xs font-medium text-ink">{b}</span>
+              <span className="text-xs font-medium text-ink">{t(b.key)}</span>
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-success">
                 <Check className="h-3 w-3" />
-                {i === 2 ? "auto" : "ok"}
+                {t(b.ok)}
               </span>
             </div>
           ))}
@@ -87,7 +97,7 @@ export function HeroMock() {
       {/* floating: model chip */}
       <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 animate-float rounded-full border border-border bg-card px-4 py-2 shadow-card">
         <p className="whitespace-nowrap text-xs font-semibold text-ink">
-          Rendered with{" "}
+          {t("renderedWith")}{" "}
           <span className="text-brand font-bold">Seedance 2.0</span>
         </p>
       </div>

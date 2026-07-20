@@ -2,140 +2,57 @@
 
 import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
 import { cn } from "@/lib/utils";
 
 type Tier = {
-  name: string;
+  key: string;
   monthly: number | null;
   annual: number | null;
-  priceLabel?: string;
-  note: string;
-  /** Headline allowance, e.g. "≈ 10 videos / mo". */
-  allowance: string;
-  /** Precise credit line under the allowance. */
-  credits?: string;
-  features: string[];
-  cta: string;
+  hasPriceLabel?: boolean;
   href: string;
   featured?: boolean;
 };
 
 const TIERS: Tier[] = [
-  {
-    name: "Free",
-    monthly: 0,
-    annual: 0,
-    note: "no card",
-    allowance: "Your first video free",
-    credits: "20 credits, one-time",
-    features: ["720p · 9:16 export", "Marketplace access", "Auto-QA rendering", "Lumi watermark"],
-    cta: "Start free",
-    href: "/signup",
-  },
-  {
-    name: "Creator",
-    monthly: 29,
-    annual: 23,
-    note: "per month",
-    allowance: "≈ 3 videos / mo",
-    credits: "75 credits / mo",
-    features: ["No watermark", "Beat-by-beat review", "Avatar + product modes", "720p · 9:16 export"],
-    cta: "Start Creator",
-    href: "/signup?plan=creator",
-  },
-  {
-    name: "Pro",
-    monthly: 79,
-    annual: 63,
-    note: "per month",
-    allowance: "≈ 10 videos / mo",
-    credits: "200 credits / mo",
-    features: ["Everything in Creator", "More credits, same per-video cost", "Priority over free renders"],
-    cta: "Start Pro",
-    href: "/signup?plan=pro",
-    featured: true,
-  },
-  {
-    name: "Scale",
-    monthly: 199,
-    annual: 159,
-    note: "per month",
-    allowance: "≈ 25 videos / mo",
-    credits: "500 credits / mo",
-    features: ["Everything in Pro", "For always-on posting", "Highest self-serve volume"],
-    cta: "Start Scale",
-    href: "/signup?plan=scale",
-  },
-  {
-    name: "Enterprise",
-    monthly: null,
-    annual: null,
-    priceLabel: "Let's talk",
-    note: "for teams & agencies",
-    allowance: "Custom credit volume",
-    credits: "committed, wholesale rate",
-    features: ["Seats & roles", "Brand kits", "API access", "SSO & dedicated support"],
-    cta: "Contact sales",
-    href: "/about",
-  },
+  { key: "free", monthly: 0, annual: 0, href: "/signup" },
+  { key: "creator", monthly: 29, annual: 23, href: "/signup?plan=creator" },
+  { key: "pro", monthly: 79, annual: 63, href: "/signup?plan=pro", featured: true },
+  { key: "scale", monthly: 199, annual: 159, href: "/signup?plan=scale" },
+  { key: "enterprise", monthly: null, annual: null, hasPriceLabel: true, href: "/about" },
 ];
 
-const INCLUDED = [
-  "Pattern-grounded scripts",
-  "Beat-by-beat review",
-  "Avatar + product modes",
-  "Captions burned in",
-  "9:16 for TikTok & Reels",
-  "Paste any product link or browse the marketplace",
-];
+const BILLING = [
+  { key: "monthly", isAnnual: false },
+  { key: "annual", isAnnual: true },
+] as const;
 
-const FAQ = [
-  {
-    q: "What's a credit?",
-    a: "1 credit = 1 second of finished video. A 20-second video uses 20 credits; a 30-second one uses 30. You pick the length, and you're only charged for what you render.",
-  },
-  {
-    q: "Do regenerations cost credits?",
-    a: "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
-  },
-  {
-    q: "What if I run out of credits?",
-    a: "Upgrade anytime for a bigger monthly allowance — it applies immediately. Credits reset at the start of each billing cycle.",
-  },
-  {
-    q: "Can I change plans anytime?",
-    a: "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
-  },
-  {
-    q: "Which render model does Lumi use?",
-    a: "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot.",
-  },
-];
+const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"] as const;
 
 export function PricingClient() {
   const [annual, setAnnual] = useState(false);
+  const t = useTranslations("marketing.pricing");
 
   return (
     <>
       <PageHeader
-        kicker="Pricing"
-        title="Start free. Scale when"
-        highlight="it's working."
-        subtitle="No credit card to begin. Cancel anytime. Annual billing saves about 20%."
+        kicker={t("header.kicker")}
+        title={t("header.title")}
+        highlight={t("header.highlight")}
+        subtitle={t("header.subtitle")}
       />
 
       {/* billing toggle */}
       <div className="container-page -mt-8 flex justify-center">
         <div className="inline-flex items-center gap-1 rounded-full border border-border bg-card p-1 shadow-soft">
-          {(["Monthly", "Annual"] as const).map((label, i) => {
-            const isAnnual = i === 1;
+          {BILLING.map(({ key, isAnnual }) => {
             const active = annual === isAnnual;
             return (
               <button
-                key={label}
+                key={key}
                 type="button"
                 onClick={() => setAnnual(isAnnual)}
                 className={cn(
@@ -145,7 +62,7 @@ export function PricingClient() {
                     : "text-muted-foreground hover:text-ink",
                 )}
               >
-                {label}
+                {t(`billing.${key}`)}
                 {isAnnual && (
                   <span className="ml-1.5 text-xs font-bold text-success">−20%</span>
                 )}
@@ -158,46 +75,52 @@ export function PricingClient() {
       {/* tiers */}
       <section className="container-page py-12">
         <div className="mx-auto grid max-w-7xl gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {TIERS.map((t) => {
-            const price = t.priceLabel ?? `$${annual ? t.annual : t.monthly}`;
+          {TIERS.map((tier) => {
+            const price = tier.hasPriceLabel
+              ? t(`tiers.${tier.key}.priceLabel`)
+              : `$${annual ? tier.annual : tier.monthly}`;
+            const credits = t(`tiers.${tier.key}.credits`);
+            const features = t.raw(`tiers.${tier.key}.features`) as string[];
             return (
               <div
-                key={t.name}
+                key={tier.key}
                 className={cn(
                   "relative rounded-card bg-card p-8",
-                  t.featured
+                  tier.featured
                     ? "border-2 border-brand-400 shadow-glow"
                     : "border border-border shadow-soft",
                 )}
               >
-                {t.featured && (
+                {tier.featured && (
                   <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Sparkles className="h-3 w-3" /> Most popular
+                    <Sparkles className="h-3 w-3" /> {t("mostPopular")}
                   </Badge>
                 )}
                 <h3 className="font-display text-xl font-semibold text-ink">
-                  {t.name}
+                  {t(`tiers.${tier.key}.name`)}
                 </h3>
                 <p className="mt-3 flex items-baseline gap-1">
                   <span className="font-display text-4xl font-bold text-ink">
                     {price}
                   </span>
                   <span className="text-sm text-muted-foreground">
-                    {t.priceLabel
-                      ? t.note
-                      : annual && t.monthly
-                        ? "/mo · billed yearly"
-                        : t.note}
+                    {tier.hasPriceLabel
+                      ? t(`tiers.${tier.key}.note`)
+                      : annual && tier.monthly
+                        ? t("perMonthYearly")
+                        : t(`tiers.${tier.key}.note`)}
                   </span>
                 </p>
                 <div className="mt-4 rounded-lg bg-brand-100/60 px-3 py-2">
-                  <p className="text-sm font-bold text-brand-800">{t.allowance}</p>
-                  {t.credits && (
-                    <p className="text-xs text-muted-foreground">{t.credits}</p>
+                  <p className="text-sm font-bold text-brand-800">
+                    {t(`tiers.${tier.key}.allowance`)}
+                  </p>
+                  {credits && (
+                    <p className="text-xs text-muted-foreground">{credits}</p>
                   )}
                 </div>
                 <ul className="mt-5 space-y-3">
-                  {t.features.map((f) => (
+                  {features.map((f) => (
                     <li
                       key={f}
                       className="flex items-center gap-2.5 text-sm text-ink-soft"
@@ -210,12 +133,12 @@ export function PricingClient() {
                   ))}
                 </ul>
                 <Button
-                  href={t.href}
-                  variant={t.featured ? "primary" : "outline"}
+                  href={tier.href}
+                  variant={tier.featured ? "primary" : "outline"}
                   size="md"
                   className="mt-8 w-full"
                 >
-                  {t.cta}
+                  {t(`tiers.${tier.key}.cta`)}
                 </Button>
               </div>
             );
@@ -223,17 +146,16 @@ export function PricingClient() {
         </div>
 
         <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-muted-foreground">
-          1 credit = 1 second of video. Video counts are approximate, based on
-          20-second clips — a 15s video uses fewer credits, a 30s video more.
+          {t("creditFootnote")}
         </p>
 
         {/* included in every plan */}
         <div className="mx-auto mt-10 max-w-5xl rounded-card border border-border bg-muted/40 p-6">
           <p className="text-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
-            Every plan includes
+            {t("everyPlanIncludes")}
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {INCLUDED.map((f) => (
+            {(t.raw("included") as string[]).map((f) => (
               <span
                 key={f}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-ink"
@@ -249,19 +171,19 @@ export function PricingClient() {
       {/* billing faq */}
       <section className="container-page pb-8">
         <h2 className="text-center font-display text-2xl font-bold text-ink">
-          Billing questions
+          {t("billingQuestions")}
         </h2>
         <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
-          {FAQ.map((item) => (
+          {FAQ_KEYS.map((key) => (
             <div
-              key={item.q}
+              key={key}
               className="rounded-card border border-border bg-card p-6 shadow-soft"
             >
               <h3 className="font-display text-base font-semibold text-ink">
-                {item.q}
+                {t(`faq.${key}`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {item.a}
+                {t(`faq.${key.replace("q", "a")}`)}
               </p>
             </div>
           ))}

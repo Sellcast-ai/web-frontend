@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = { title: "Blog" };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("marketing.metadata.blog");
+  return { title: t("title") };
+}
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  const t = await getTranslations("marketing.blog");
   return (
     <div className="container-page flex min-h-[60vh] flex-col items-center justify-center py-20 text-center">
       <div className="bg-aurora absolute inset-x-0 top-16 -z-10 h-64 opacity-50" />
@@ -12,18 +17,17 @@ export default function BlogPage() {
         <Newspaper className="h-8 w-8" />
       </div>
       <h1 className="mt-6 font-display text-4xl font-bold text-ink">
-        The Lumi blog is coming soon
+        {t("title")}
       </h1>
       <p className="mt-3 max-w-md text-muted-foreground">
-        Playbooks on viral patterns, hooks that convert, and how top sellers
-        scale short-form video. Be the first to read it.
+        {t("body")}
       </p>
       <div className="mt-7 flex gap-3">
         <Button href="/signup" size="lg">
-          Start creating free
+          {t("startFree")}
         </Button>
         <Button href="/features" variant="outline" size="lg">
-          Explore features
+          {t("explore")}
         </Button>
       </div>
     </div>

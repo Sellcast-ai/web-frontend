@@ -14,6 +14,7 @@ import {
   Clapperboard,
   Check,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HeroMock } from "@/components/marketing/hero-mock";
@@ -22,129 +23,47 @@ import { Faq } from "@/components/marketing/faq";
 /* ------------------------------------------------------------------ data */
 
 const STEPS = [
-  {
-    icon: Search,
-    kicker: "Find",
-    title: "Start from any product",
-    body: "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Or browse trending picks in the marketplace.",
-  },
-  {
-    icon: ScanSearch,
-    kicker: "Deconstruct",
-    title: "Lumi learns the pattern",
-    body: "It studies ~100 real top-performers in that category and extracts the hook, proof, and CTA structure that converts.",
-  },
-  {
-    icon: PencilRuler,
-    kicker: "Script",
-    title: "Review the script & beats",
-    body: "A grounded script with shot-by-shot beats. Approve or regenerate each reference image before any render burns.",
-  },
-  {
-    icon: Clapperboard,
-    kicker: "Generate",
-    title: "Render & publish",
-    body: "Seedance 2.0 renders each beat, captions burn in, and you're ready to post.",
-  },
-];
+  { icon: Search, key: "find" },
+  { icon: ScanSearch, key: "deconstruct" },
+  { icon: PencilRuler, key: "script" },
+  { icon: Clapperboard, key: "generate" },
+] as const;
 
 const FEATURES = [
-  {
-    icon: Link2,
-    title: "Link to Video",
-    body: "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product and handles framing, script, voice, and edit automatically.",
-  },
-  {
-    icon: Wand2,
-    title: "Pattern-grounded scripts",
-    body: "Every script is built from real viral structure in your category — learn the pattern, never copy the surface.",
-  },
-  {
-    icon: ListChecks,
-    title: "Beat-by-beat review",
-    body: "See a reference image for every shot. Approve, tweak, or regenerate before spending a second of render time.",
-  },
-  {
-    icon: UserSquare2,
-    title: "Avatar & product modes",
-    body: "AI presenter talking to camera, or clean product-only showcase — eight ready-made styles to match your offer.",
-  },
-  {
-    icon: AudioLines,
-    title: "Auto dialogue QA",
-    body: "Whisper checks every rendered line against the script and flags drift, so the voice always says what it should.",
-  },
-  {
-    icon: Send,
-    title: "Captions & publish",
-    body: "Auto-burned captions and a publish-ready 9:16 cut, sized for TikTok and Reels out of the box.",
-  },
-];
+  { icon: Link2, key: "linkToVideo" },
+  { icon: Wand2, key: "scripts" },
+  { icon: ListChecks, key: "review" },
+  { icon: UserSquare2, key: "modes" },
+  { icon: AudioLines, key: "qa" },
+  { icon: Send, key: "publish" },
+] as const;
 
 const MODELS = [
-  { name: "Seedance 2.0", tag: "Live", desc: "Fast, lifelike motion for product & avatar shots — Lumi's render engine for every beat.", live: true },
-  { name: "More on the way", tag: "Soon", desc: "We're adding frontier video models as they prove out — your scripts and beats carry over.", live: false },
-];
+  { key: "seedance", live: true },
+  { key: "more", live: false },
+] as const;
 
 const USE_CASES = [
-  { title: "Sellers", body: "Scale your catalog — a converting video for every SKU, without a studio.", glow: "from-brand-300 to-brand-600" },
-  { title: "Creators", body: "Spin TikTok Shop content in minutes and keep your posting streak alive.", glow: "from-rose to-warning" },
-  { title: "Brands", body: "Stay on-brand across hundreds of unique creatives, all at once.", glow: "from-gold to-rose" },
-  { title: "Agencies", body: "Serve every client at volume with quality you don't have to babysit.", glow: "from-brand-500 to-brand-800" },
-];
+  { key: "sellers", glow: "from-brand-300 to-brand-600" },
+  { key: "creators", glow: "from-rose to-warning" },
+  { key: "brands", glow: "from-gold to-rose" },
+  { key: "agencies", glow: "from-brand-500 to-brand-800" },
+] as const;
 
-const STATS = [
-  { value: "5 ways", label: "to start: Amazon, Shopee, TikTok Shop, your store, or photos" },
-  { value: "9:16", label: "publish-ready for TikTok & Reels, every time" },
-  { value: "1 credit", label: "= 1 second of video — only pay for what you render" },
-  { value: "$0", label: "render spend until you approve the beats" },
-];
+const STATS = ["ways", "ratio", "credit", "spend"] as const;
 
 const PRICING = [
-  {
-    name: "Creator",
-    price: "$29",
-    note: "/ mo",
-    features: ["≈ 3 videos / mo · 75 credits", "No watermark", "Beat-by-beat review", "Avatar + product modes"],
-    cta: "Start Creator",
-    href: "/signup?plan=creator",
-    featured: false,
-  },
-  {
-    name: "Pro",
-    price: "$79",
-    note: "/ mo",
-    features: ["≈ 10 videos / mo · 200 credits", "Everything in Creator", "Priority over free renders", "720p · 9:16 export"],
-    cta: "Start Pro",
-    href: "/signup?plan=pro",
-    featured: true,
-  },
-  {
-    name: "Scale",
-    price: "$199",
-    note: "/ mo",
-    features: ["≈ 25 videos / mo · 500 credits", "Everything in Pro", "For always-on posting"],
-    cta: "Start Scale",
-    href: "/signup?plan=scale",
-    featured: false,
-  },
-];
-
-const MARQUEE = [
-  "TikTok Shop",
-  "Reels",
-  "Beauty",
-  "Home & Kitchen",
-  "Fitness",
-  "Gadgets",
-  "Pets",
-  "Fashion",
-  "Supplements",
-];
+  { key: "creator", href: "/signup?plan=creator", featured: false },
+  { key: "pro", href: "/signup?plan=pro", featured: true },
+  { key: "scale", href: "/signup?plan=scale", featured: false },
+] as const;
 
 /* ------------------------------------------------------------------ page */
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getTranslations("marketing.landing");
+  const marquee = t.raw("marquee") as string[];
+
   return (
     <>
       {/* ============================================================ HERO */}
@@ -154,38 +73,34 @@ export default function HomePage() {
           <div className="animate-rise">
             <Badge variant="outline" className="mb-6">
               <Sparkles className="h-3.5 w-3.5 text-brand-500" />
-              Built for TikTok &amp; Reels
+              {t("heroBadge")}
             </Badge>
             <h1 className="font-display text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
-              Turn any product into a{" "}
-              <span className="text-brand">scroll-stopping</span> shoppable
-              video.
+              {t.rich("heroTitle", {
+                highlight: (chunks) => <span className="text-brand">{chunks}</span>,
+              })}
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Paste any product link — Amazon, Shopee, TikTok Shop, or your own
-              store — or upload photos. Lumi studies what&apos;s already winning
-              in that category, scripts a video grounded in the pattern, lets you
-              review it beat-by-beat, and renders it with Seedance 2.0. In
-              minutes, no camera.
+              {t("heroSubtitle")}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button href="/signup" size="lg">
-                Start creating free
+                {t("heroStartFree")}
                 <ArrowRight className="h-4 w-4" />
               </Button>
               <Button href="/features" variant="outline" size="lg">
-                See how it works
+                {t("heroSeeHow")}
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" /> First video free
+                <Check className="h-4 w-4 text-success" /> {t("heroCheck1")}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" /> No credit card
+                <Check className="h-4 w-4 text-success" /> {t("heroCheck2")}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Check className="h-4 w-4 text-success" /> Publish-ready 9:16
+                <Check className="h-4 w-4 text-success" /> {t("heroCheck3")}
               </span>
             </div>
           </div>
@@ -199,7 +114,7 @@ export default function HomePage() {
         <div className="border-y border-border/70 bg-card/50 py-5">
           <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
             <div className="flex w-max animate-marquee gap-10">
-              {[...MARQUEE, ...MARQUEE].map((item, i) => (
+              {[...marquee, ...marquee].map((item, i) => (
                 <span
                   key={i}
                   className="text-sm font-semibold uppercase tracking-widest text-muted-foreground"
@@ -215,14 +130,14 @@ export default function HomePage() {
       {/* ===================================================== HOW IT WORKS */}
       <section id="how" className="container-page py-24">
         <SectionHeading
-          kicker="The Lumi pipeline"
-          title="Four stages, zero blank pages"
-          subtitle="Most tools start from nothing. Lumi starts from what's already winning — then keeps you in control all the way to publish."
+          kicker={t("howKicker")}
+          title={t("howTitle")}
+          subtitle={t("howSubtitle")}
         />
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
             <div
-              key={step.title}
+              key={step.key}
               className="relative rounded-card border border-border bg-card p-6 shadow-soft transition-transform hover:-translate-y-1"
             >
               <span className="font-display text-sm font-semibold text-brand-300">
@@ -232,13 +147,13 @@ export default function HomePage() {
                 <step.icon className="h-6 w-6" />
               </div>
               <p className="mt-4 text-xs font-bold uppercase tracking-widest text-brand-600">
-                {step.kicker}
+                {t(`steps.${step.key}.kicker`)}
               </p>
               <h3 className="mt-1 font-display text-xl font-medium text-ink">
-                {step.title}
+                {t(`steps.${step.key}.title`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {step.body}
+                {t(`steps.${step.key}.body`)}
               </p>
             </div>
           ))}
@@ -249,24 +164,24 @@ export default function HomePage() {
       <section className="bg-muted/40 py-24">
         <div className="container-page">
           <SectionHeading
-            kicker="Everything in one studio"
-            title="The whole video workflow, handled"
-            subtitle="From sourcing the product to a publish-ready cut — no stitching five tools together."
+            kicker={t("featuresKicker")}
+            title={t("featuresTitle")}
+            subtitle={t("featuresSubtitle")}
           />
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {FEATURES.map((f) => (
               <div
-                key={f.title}
+                key={f.key}
                 className="group rounded-card border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:shadow-card"
               >
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-glow transition-transform group-hover:scale-105">
                   <f.icon className="h-6 w-6" />
                 </div>
                 <h3 className="mt-5 font-display text-xl font-medium text-ink">
-                  {f.title}
+                  {t(`features.${f.key}.title`)}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {f.body}
+                  {t(`features.${f.key}.body`)}
                 </p>
               </div>
             ))}
@@ -277,14 +192,14 @@ export default function HomePage() {
       {/* =========================================================== MODELS */}
       <section className="container-page py-24">
         <SectionHeading
-          kicker="Frontier render engine"
-          title="Rendered with Seedance 2.0"
-          subtitle="Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive."
+          kicker={t("modelsKicker")}
+          title={t("modelsTitle")}
+          subtitle={t("modelsSubtitle")}
         />
         <div className="mx-auto mt-14 grid max-w-3xl gap-5 sm:grid-cols-2">
           {MODELS.map((m) => (
             <div
-              key={m.name}
+              key={m.key}
               className="relative overflow-hidden rounded-card border border-border bg-card p-6 shadow-soft"
             >
               <div className="bg-aurora absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-40 blur-xl" />
@@ -293,14 +208,14 @@ export default function HomePage() {
                   <Clapperboard className="h-5 w-5" />
                 </span>
                 <Badge variant={m.live ? "success" : "outline"} size="sm">
-                  {m.tag}
+                  {t(`models.${m.key}.tag`)}
                 </Badge>
               </div>
               <h3 className="relative mt-4 font-display text-lg font-semibold text-ink">
-                {m.name}
+                {t(`models.${m.key}.name`)}
               </h3>
               <p className="relative mt-1 text-sm text-muted-foreground">
-                {m.desc}
+                {t(`models.${m.key}.desc`)}
               </p>
             </div>
           ))}
@@ -310,23 +225,23 @@ export default function HomePage() {
       {/* ======================================================== USE CASES */}
       <section className="container-page pb-24">
         <SectionHeading
-          kicker="Who it's for"
-          title="Made for everyone who sells with video"
+          kicker={t("useCasesKicker")}
+          title={t("useCasesTitle")}
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {USE_CASES.map((u) => (
             <div
-              key={u.title}
+              key={u.key}
               className="rounded-card border border-border bg-card p-7 shadow-soft"
             >
               <div
                 className={`mb-5 h-1.5 w-12 rounded-full bg-linear-to-r ${u.glow}`}
               />
               <h3 className="font-display text-2xl font-medium text-ink">
-                {u.title}
+                {t(`useCases.${u.key}.title`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {u.body}
+                {t(`useCases.${u.key}.body`)}
               </p>
             </div>
           ))}
@@ -337,12 +252,12 @@ export default function HomePage() {
       <section className="bg-ink py-20 text-background">
         <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((s) => (
-            <div key={s.label} className="text-center">
+            <div key={s} className="text-center">
               <p className="text-brand-300 font-display text-5xl font-semibold">
-                {s.value}
+                {t(`stats.${s}.value`)}
               </p>
               <p className="mx-auto mt-2 max-w-[12rem] text-sm text-background/70">
-                {s.label}
+                {t(`stats.${s}.label`)}
               </p>
             </div>
           ))}
@@ -353,14 +268,14 @@ export default function HomePage() {
       <section className="bg-muted/40 py-24">
         <div className="container-page">
           <SectionHeading
-            kicker="Pricing"
-            title="Start free. Scale when it's working."
-            subtitle="Credit-based — 1 credit = 1 second of video. Your first video's free; no credit card to begin."
+            kicker={t("pricingKicker")}
+            title={t("pricingTitle")}
+            subtitle={t("pricingSubtitle")}
           />
           <div className="mx-auto mt-14 grid max-w-5xl gap-6 lg:grid-cols-3">
             {PRICING.map((p) => (
               <div
-                key={p.name}
+                key={p.key}
                 className={
                   p.featured
                     ? "relative rounded-card border-2 border-brand-400 bg-card p-8 shadow-glow"
@@ -369,27 +284,31 @@ export default function HomePage() {
               >
                 {p.featured && (
                   <Badge className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    Most popular
+                    {t("mostPopular")}
                   </Badge>
                 )}
                 <h3 className="font-display text-xl font-semibold text-ink">
-                  {p.name}
+                  {t(`pricingTiers.${p.key}.name`)}
                 </h3>
                 <p className="mt-3 flex items-baseline gap-1">
                   <span className="font-display text-4xl font-semibold text-ink">
-                    {p.price}
+                    {t(`pricingTiers.${p.key}.price`)}
                   </span>
-                  <span className="text-sm text-muted-foreground">{p.note}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {t(`pricingTiers.${p.key}.note`)}
+                  </span>
                 </p>
                 <ul className="mt-6 space-y-3">
-                  {p.features.map((feat) => (
-                    <li key={feat} className="flex items-center gap-2.5 text-sm text-ink-soft">
-                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-brand-700">
-                        <Check className="h-3 w-3" />
-                      </span>
-                      {feat}
-                    </li>
-                  ))}
+                  {(t.raw(`pricingTiers.${p.key}.features`) as string[]).map(
+                    (feat) => (
+                      <li key={feat} className="flex items-center gap-2.5 text-sm text-ink-soft">
+                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-100 text-brand-700">
+                          <Check className="h-3 w-3" />
+                        </span>
+                        {feat}
+                      </li>
+                    ),
+                  )}
                 </ul>
                 <Button
                   href={p.href}
@@ -397,27 +316,31 @@ export default function HomePage() {
                   size="md"
                   className="mt-8 w-full"
                 >
-                  {p.cta}
+                  {t(`pricingTiers.${p.key}.cta`)}
                 </Button>
               </div>
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-muted-foreground">
-            Your{" "}
-            <Link href="/signup" className="font-semibold text-brand-700">
-              first video is free
-            </Link>{" "}
-            — no card. Need the full ladder?{" "}
-            <Link href="/pricing" className="font-semibold text-brand-700">
-              See all plans →
-            </Link>
+            {t.rich("pricingFooter", {
+              signup: (chunks) => (
+                <Link href="/signup" className="font-semibold text-brand-700">
+                  {chunks}
+                </Link>
+              ),
+              plans: (chunks) => (
+                <Link href="/pricing" className="font-semibold text-brand-700">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </p>
         </div>
       </section>
 
       {/* ============================================================== FAQ */}
       <section className="container-page py-24">
-        <SectionHeading kicker="FAQ" title="Questions, answered" />
+        <SectionHeading kicker={t("faqKicker")} title={t("faqTitle")} />
         <div className="mt-12">
           <Faq />
         </div>
@@ -428,11 +351,10 @@ export default function HomePage() {
         <div className="bg-hero relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center shadow-glow sm:px-16 sm:py-20">
           <div className="bg-aurora absolute inset-0 opacity-40 mix-blend-overlay" />
           <h2 className="relative mx-auto max-w-2xl font-display text-4xl font-semibold leading-tight text-white sm:text-5xl">
-            Your next best-seller is one product link away.
+            {t("finalCtaTitle")}
           </h2>
           <p className="relative mx-auto mt-4 max-w-xl text-white/90">
-            Make your first scroll-stopping video free. No camera, no editor, no
-            blank page.
+            {t("finalCtaSubtitle")}
           </p>
           <div className="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button
@@ -441,14 +363,14 @@ export default function HomePage() {
               size="lg"
               className="bg-white text-brand-700 hover:bg-white/90"
             >
-              Start creating free
+              {t("finalCtaStartFree")}
               <ArrowRight className="h-4 w-4" />
             </Button>
             <Link
               href="/pricing"
               className="inline-flex h-13 items-center justify-center rounded-full px-8 text-base font-semibold text-white underline-offset-4 hover:underline"
             >
-              See pricing
+              {t("finalCtaSeePricing")}
             </Link>
           </div>
         </div>
