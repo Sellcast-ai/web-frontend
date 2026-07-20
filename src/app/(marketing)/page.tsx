@@ -65,7 +65,7 @@ export default async function HomePage() {
       {/* ============================================================ HERO */}
       <section className="relative overflow-hidden">
         <div className="bg-aurora absolute inset-0 -z-10 opacity-70" />
-        <div className="container-page grid items-center gap-14 py-20 lg:grid-cols-2 lg:py-28">
+        <div className="container-page grid items-center gap-14 py-24 lg:grid-cols-2 lg:py-32">
           <div className="animate-rise">
             <Badge variant="outline" className="mb-6">
               <Sparkles className="h-3.5 w-3.5 text-brand-500" />
@@ -124,12 +124,8 @@ export default async function HomePage() {
       </section>
 
       {/* ===================================================== HOW IT WORKS */}
-      <section id="how" className="container-page py-24">
-        <SectionHeading
-          kicker={t("howKicker")}
-          title={t("howTitle")}
-          subtitle={t("howSubtitle")}
-        />
+      <section id="how" className="container-page py-32">
+        <SectionHeading title={t("howTitle")} subtitle={t("howSubtitle")} />
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
             <div
@@ -142,10 +138,7 @@ export default async function HomePage() {
               <div className="mt-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
                 <step.icon className="h-6 w-6" />
               </div>
-              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-brand-600">
-                {t(`steps.${step.key}.kicker`)}
-              </p>
-              <h3 className="mt-1 font-display text-xl font-medium text-ink">
+              <h3 className="mt-4 font-display text-xl font-medium text-ink">
                 {t(`steps.${step.key}.title`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -157,10 +150,9 @@ export default async function HomePage() {
       </section>
 
       {/* ========================================================= FEATURES */}
-      <section className="bg-muted/40 py-24">
+      <section className="bg-muted/40 py-32">
         <div className="container-page">
           <SectionHeading
-            kicker={t("featuresKicker")}
             title={t("featuresTitle")}
             subtitle={t("featuresSubtitle")}
           />
@@ -186,9 +178,8 @@ export default async function HomePage() {
       </section>
 
       {/* =========================================================== MODELS */}
-      <section className="container-page py-24">
+      <section className="container-page py-32">
         <SectionHeading
-          kicker={t("modelsKicker")}
           title={t("modelsTitle")}
           subtitle={t("modelsSubtitle")}
         />
@@ -219,11 +210,8 @@ export default async function HomePage() {
       </section>
 
       {/* ======================================================== USE CASES */}
-      <section className="container-page pb-24">
-        <SectionHeading
-          kicker={t("useCasesKicker")}
-          title={t("useCasesTitle")}
-        />
+      <section className="container-page pb-32">
+        <SectionHeading title={t("useCasesTitle")} />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {USE_CASES.map((key) => (
             <div
@@ -243,7 +231,7 @@ export default async function HomePage() {
       </section>
 
       {/* ============================================================ STATS */}
-      <section className="bg-ink py-20 text-background">
+      <section className="bg-ink py-24 text-background">
         <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {STATS.map((s) => (
             <div key={s} className="text-center">
@@ -259,10 +247,9 @@ export default async function HomePage() {
       </section>
 
       {/* ========================================================== PRICING */}
-      <section className="bg-muted/40 py-24">
+      <section className="bg-muted/40 py-32">
         <div className="container-page">
           <SectionHeading
-            kicker={t("pricingKicker")}
             title={t("pricingTitle")}
             subtitle={t("pricingSubtitle")}
           />
@@ -333,15 +320,15 @@ export default async function HomePage() {
       </section>
 
       {/* ============================================================== FAQ */}
-      <section className="container-page py-24">
-        <SectionHeading kicker={t("faqKicker")} title={t("faqTitle")} />
+      <section className="container-page py-32">
+        <SectionHeading title={t("faqTitle")} />
         <div className="mt-12">
           <Faq />
         </div>
       </section>
 
       {/* ======================================================== FINAL CTA */}
-      <section className="container-page pb-24">
+      <section className="container-page pb-32">
         <div className="bg-hero relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center shadow-glow sm:px-16 sm:py-20">
           <div className="bg-aurora absolute inset-0 opacity-40 mix-blend-overlay" />
           <h2 className="relative mx-auto max-w-2xl font-display text-4xl font-semibold leading-tight text-white sm:text-5xl">
@@ -376,21 +363,18 @@ export default async function HomePage() {
 /* ---------------------------------------------------------- subcomponent */
 
 function SectionHeading({
-  kicker,
   title,
+  highlight,
   subtitle,
 }: {
-  kicker: string;
   title: string;
+  highlight?: React.ReactNode;
   subtitle?: string;
 }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
-      <p className="text-sm font-bold uppercase tracking-widest text-brand-500">
-        {kicker}
-      </p>
-      <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-        {title}
+      <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+        {title} {highlight && <Accent>{highlight}</Accent>}
       </h2>
       {subtitle && (
         <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
