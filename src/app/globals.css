@@ -165,12 +165,14 @@
   background-image: linear-gradient(125deg, #0f6c7a 0%, #2fcbe6 100%);
 }
 
-/* readable teal gradient text for headline highlights on light bg */
-@utility text-brand {
-  background-image: linear-gradient(100deg, #0f6c7a 0%, #16a0b8 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* one-phrase italic-serif accent inside marketing headings (arcads' Redaction
+   pattern). --font-accent is only defined under `.marketing`, so this stays a
+   marketing treatment even though the utility is global. */
+@utility font-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
 
 /* soft pale-aqua glow blobs (iOS AppBackground #DFFAFF) */
@@ -236,6 +238,23 @@
     box-shadow: var(--shadow-ring);
     border-radius: 0.5rem;
   }
+}
+
+/* --- Marketing editorial surface (SCOPED) ----------------------------
+   The `.marketing` wrapper (marketing/layout.tsx) swaps the rounded display
+   voice for a tight free grotesk (Geist) + italic-serif accent (Instrument
+   Serif), and tightens display tracking. Never leaks into the logged-in app,
+   which keeps the SF-Rounded/Nunito cream system unchanged. */
+.marketing {
+  --font-display: var(--font-geist), ui-sans-serif, -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+  --font-accent: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+}
+
+.marketing h1,
+.marketing h2,
+.marketing h3 {
+  letter-spacing: -0.025em;
 }
 
 /* Reduced motion: kill decorative keyframes and smooth scroll.
