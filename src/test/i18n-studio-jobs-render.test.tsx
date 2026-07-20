@@ -138,11 +138,9 @@ function makeClient(seed: (qc: QueryClient) => void) {
 
 function render(qc: QueryClient, node: React.ReactNode): string {
   return renderToStaticMarkup(
-    React.createElement(
-      NextIntlClientProvider,
-      { locale: "en", messages: en as Record<string, unknown> },
-      React.createElement(QueryClientProvider, { client: qc }, node),
-    ),
+    <NextIntlClientProvider locale="en" messages={en as Record<string, unknown>}>
+      <QueryClientProvider client={qc}>{node}</QueryClientProvider>
+    </NextIntlClientProvider>,
   );
 }
 
