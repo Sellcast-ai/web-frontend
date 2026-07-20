@@ -105,6 +105,137 @@
     }
   },
   "marketing": {
+    "legal": {
+      "kicker": "Legal",
+      "lastUpdated": "Last updated June 1, 2026",
+      "terms": {
+        "title": "Terms of Service",
+        "intro": "These Terms govern your use of Lumi, a Sellcast product. By creating an account or using the service you agree to these Terms.",
+        "service": {
+          "heading": "The service",
+          "body": "Lumi turns products into short-form videos using AI. Outputs are generated automatically and may vary in quality; you are responsible for reviewing them before publishing."
+        },
+        "account": {
+          "heading": "Your account",
+          "body": "You must provide accurate information and keep your account secure. You are responsible for activity under your account."
+        },
+        "acceptableUse": {
+          "heading": "Acceptable use",
+          "item1": "Don’t use Lumi for unlawful, deceptive, or infringing content.",
+          "item2": "Don’t misrepresent products or make false claims.",
+          "item3": "Don’t abuse, reverse-engineer, or overload the service.",
+          "item4": "Follow the rules of any platform where you publish (e.g. TikTok, Reels)."
+        },
+        "content": {
+          "heading": "Content & ownership",
+          "yourHeading": "Your content",
+          "yourBody": "You retain rights to the product information and assets you provide. You grant us a license to process them to deliver the service.",
+          "outputHeading": "Generated output",
+          "outputBody": "Subject to these Terms and your plan, you may use videos you generate for your commercial purposes. You are responsible for ensuring your use complies with applicable laws and platform policies."
+        },
+        "billing": {
+          "heading": "Subscriptions & billing",
+          "body": "Paid plans are billed in advance on a recurring basis. You can change or cancel anytime; see our <refunds>Refunds policy</refunds> for details."
+        },
+        "disclaimers": {
+          "heading": "Disclaimers",
+          "body": "Lumi is provided “as is.” We don’t guarantee that generated videos will achieve any particular performance or comply with every platform’s evolving rules."
+        },
+        "liability": {
+          "heading": "Limitation of liability",
+          "body": "To the extent permitted by law, Sellcast is not liable for indirect or consequential damages arising from your use of Lumi."
+        },
+        "termination": {
+          "heading": "Termination",
+          "body": "You may stop using Lumi at any time. We may suspend or terminate accounts that violate these Terms."
+        },
+        "changes": {
+          "heading": "Changes",
+          "body": "We may update these Terms; material changes will be reflected by the date above and continued use constitutes acceptance."
+        },
+        "contact": {
+          "heading": "Contact",
+          "body": "Questions? Email <email>legal@sellcast.ai</email>."
+        }
+      },
+      "privacy": {
+        "title": "Privacy Policy",
+        "intro": "This Privacy Policy explains how Lumi, a Sellcast product (“Lumi”, “we”), collects, uses, and protects your information when you use our website and application. By using Lumi you agree to the practices described here.",
+        "collect": {
+          "heading": "Information we collect",
+          "account": "<strong>Account data</strong> — your phone number, and (if provided) display name, email, and connected sign-in providers.",
+          "usage": "<strong>Usage data</strong> — products you browse or save, videos you generate, and the choices you make in the studio.",
+          "technical": "<strong>Technical data</strong> — device, browser, IP address, and session information used to keep you signed in and secure."
+        },
+        "use": {
+          "heading": "How we use your information",
+          "item1": "To provide, operate, and improve the Lumi service.",
+          "item2": "To generate the videos you request and show your history.",
+          "item3": "To authenticate you and protect against abuse.",
+          "item4": "To communicate service updates and respond to support."
+        },
+        "sharing": {
+          "heading": "Sharing",
+          "body": "We do not sell your personal information. We share data only with service providers that help us operate Lumi (for example, video and speech model providers, cloud storage, and SMS delivery), and only as needed to provide the service or comply with law."
+        },
+        "cookies": {
+          "heading": "Cookies & sessions",
+          "body": "We use first-party cookies to keep you signed in and remember your theme preference. We do not use them for cross-site advertising."
+        },
+        "retention": {
+          "heading": "Data retention",
+          "body": "We retain account and content data for as long as your account is active. You can delete your videos at any time, and you may request deletion of your account and associated data."
+        },
+        "rights": {
+          "heading": "Your rights",
+          "body": "Depending on your region, you may have rights to access, correct, export, or delete your personal data. Contact us to exercise them."
+        },
+        "security": {
+          "heading": "Security",
+          "body": "We use industry-standard measures to protect your data, including encrypted transport and hashed credentials. No method of transmission is perfectly secure, but we work to safeguard your information."
+        },
+        "children": {
+          "heading": "Children",
+          "body": "Lumi is not directed to children under 13 (or the minimum age in your jurisdiction), and we do not knowingly collect their data."
+        },
+        "changes": {
+          "heading": "Changes",
+          "body": "We may update this policy from time to time. Material changes will be noted by updating the date above."
+        },
+        "contact": {
+          "heading": "Contact",
+          "body": "Questions? Email <email>privacy@sellcast.ai</email>."
+        }
+      },
+      "refunds": {
+        "title": "Payments & Refunds",
+        "intro": "We want you to be happy with Lumi. This policy explains how billing and refunds work.",
+        "free": {
+          "heading": "Free plan",
+          "body": "The Free plan lets you generate your first video at no cost and with no credit card, so you can see Lumi work before paying anything."
+        },
+        "subscriptions": {
+          "heading": "Subscriptions",
+          "body": "Paid plans are billed in advance — monthly or annually. You keep access through the end of the period you’ve paid for."
+        },
+        "guarantee": {
+          "heading": "7-day money-back guarantee",
+          "body": "If you’re not satisfied within 7 days of your first paid charge, email us and we’ll refund that charge in full."
+        },
+        "annual": {
+          "heading": "Annual plans",
+          "body": "Annual plans can be refunded on a pro-rated basis within the first 30 days. After that, you keep access until the term ends."
+        },
+        "cancellations": {
+          "heading": "Cancellations",
+          "body": "Cancel anytime from your account. Cancellation stops future billing; it doesn’t retroactively refund the current period (except under the guarantee above)."
+        },
+        "request": {
+          "heading": "How to request a refund",
+          "body": "Email <email>billing@sellcast.ai</email> from your account email with your account details. We typically respond within two business days."
+        }
+      }
+    },
     "header": {
       "signIn": "Sign in",
       "startFree": "Start free",

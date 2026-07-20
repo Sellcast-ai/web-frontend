@@ -1,66 +1,52 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Prose } from "@/components/marketing/page-parts";
 
-export const metadata: Metadata = { title: "Payments & Refunds" };
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("marketing.legal.refunds");
+  return { title: t("title") };
+}
 
-export default function RefundsPage() {
+export default async function RefundsPage() {
+  const t = await getTranslations("marketing.legal");
   return (
     <div className="container-page py-16">
       <div className="mx-auto max-w-3xl">
         <p className="text-xs font-bold uppercase tracking-widest text-brand-600">
-          Legal
+          {t("kicker")}
         </p>
         <h1 className="mt-2 font-display text-4xl font-bold text-ink">
-          Payments &amp; Refunds
+          {t("refunds.title")}
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Last updated June 1, 2026
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">{t("lastUpdated")}</p>
       </div>
 
       <div className="mt-10">
         <Prose>
-          <p>
-            We want you to be happy with Lumi. This policy explains how billing
-            and refunds work.
-          </p>
+          <p>{t("refunds.intro")}</p>
 
-          <h2>Free plan</h2>
-          <p>
-            The Free plan lets you generate your first video at no cost and with
-            no credit card, so you can see Lumi work before paying anything.
-          </p>
+          <h2>{t("refunds.free.heading")}</h2>
+          <p>{t("refunds.free.body")}</p>
 
-          <h2>Subscriptions</h2>
-          <p>
-            Paid plans are billed in advance — monthly or annually. You keep
-            access through the end of the period you&apos;ve paid for.
-          </p>
+          <h2>{t("refunds.subscriptions.heading")}</h2>
+          <p>{t("refunds.subscriptions.body")}</p>
 
-          <h2>7-day money-back guarantee</h2>
-          <p>
-            If you&apos;re not satisfied within 7 days of your first paid charge,
-            email us and we&apos;ll refund that charge in full.
-          </p>
+          <h2>{t("refunds.guarantee.heading")}</h2>
+          <p>{t("refunds.guarantee.body")}</p>
 
-          <h2>Annual plans</h2>
-          <p>
-            Annual plans can be refunded on a pro-rated basis within the first 30
-            days. After that, you keep access until the term ends.
-          </p>
+          <h2>{t("refunds.annual.heading")}</h2>
+          <p>{t("refunds.annual.body")}</p>
 
-          <h2>Cancellations</h2>
-          <p>
-            Cancel anytime from your account. Cancellation stops future billing;
-            it doesn&apos;t retroactively refund the current period (except under
-            the guarantee above).
-          </p>
+          <h2>{t("refunds.cancellations.heading")}</h2>
+          <p>{t("refunds.cancellations.body")}</p>
 
-          <h2>How to request a refund</h2>
+          <h2>{t("refunds.request.heading")}</h2>
           <p>
-            Email <a href="mailto:billing@sellcast.ai">billing@sellcast.ai</a>{" "}
-            from your account email with your account details. We typically
-            respond within two business days.
+            {t.rich("refunds.request.body", {
+              email: (chunks) => (
+                <a href="mailto:billing@sellcast.ai">{chunks}</a>
+              ),
+            })}
           </p>
         </Prose>
       </div>
