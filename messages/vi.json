@@ -1,0 +1,1220 @@
+{
+  "app": {
+    "toasts": {
+      "importSucceeded": "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
+      "updateLikeFailed": "Không thể cập nhật lượt thích. Vui lòng thử lại.",
+      "saveAvatarFailed": "Không thể lưu hình đại diện.",
+      "deleteAvatarFailed": "Không thể xóa hình đại diện.",
+      "startImportFailed": "Không thể bắt đầu quá trình nhập. Vui lòng thử lại.",
+      "saveProductFailed": "Không thể lưu sản phẩm. Vui lòng thử lại.",
+      "startVideoFailed": "Không thể bắt đầu video. Vui lòng thử lại.",
+      "approveShotFailed": "Không thể phê duyệt cảnh quay. Vui lòng thử lại.",
+      "regenerateShotFailed": "Không thể tạo lại cảnh quay. Vui lòng thử lại.",
+      "approveStoryboardFailed": "Không thể phê duyệt bảng phân cảnh. Vui lòng thử lại.",
+      "saveStoryboardEditsFailed": "Không thể lưu các chỉnh sửa của bạn. Vui lòng thử lại.",
+      "retryJobFailed": "Không thể thử lại công việc. Vui lòng thử lại.",
+      "saveDisplayNameFailed": "Không thể lưu tên hiển thị của bạn. Vui lòng thử lại.",
+      "importPartial": "Đã nhập {count} cho sản phẩm của bạn (giới hạn danh mục). Phần còn lại có thể được thêm vào bằng cách dán.",
+      "importFailed": "Quá trình nhập chưa hoàn tất. Vui lòng thử lại.",
+      "storyboardSaved": "Đã lưu bảng phân cảnh.",
+      "markedPosted": "Đánh dấu là đã đăng.",
+      "recordPostedFailed": "Không thể ghi lại điều đó. Vui lòng thử lại."
+    },
+    "nav": {
+      "marketplace": "Thị trường",
+      "products": "Sản phẩm của tôi",
+      "avatars": "Hình đại diện",
+      "videos": "Video của tôi",
+      "profile": "Hồ sơ",
+      "newVideo": "Video mới",
+      "new": "Mới",
+      "signedIn": "Đã đăng nhập",
+      "logOut": "Đăng xuất"
+    },
+    "categories": {
+      "beautyPersonalCare": "Chăm sóc sắc đẹp & cá nhân",
+      "healthWellness": "Sức khỏe & Sức khỏe",
+      "womensFashion": "Thời trang nữ",
+      "sportsOutdoors": "Thể thao & Ngoài trời",
+      "homeTextiles": "Dệt may gia đình",
+      "householdEssentials": "Đồ gia dụng thiết yếu",
+      "mobileElectronics": "Điện thoại di động & Điện tử",
+      "foodBeverage": "Thực phẩm & Đồ uống",
+      "mensFashion": "Thời trang nam",
+      "toysHobbies": "Đồ chơi & Sở thích"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "SHOPPING",
+      "tiktokShop": "Cửa hàng TikTok",
+      "walmart": "Walmart",
+      "lazada": "lazada",
+      "aliexpress": "AliExpress",
+      "temu": "temu",
+      "alibaba": "Alibaba",
+      "taobao": "taobao",
+      "mercadolibre": "Mercado Libre",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "Cửa hàng trực tuyến",
+      "manual": "Hướng dẫn sử dụng"
+    },
+    "productCard": {
+      "save": "Lưu",
+      "unsave": "Bỏ lưu",
+      "productFallback": "sản phẩm",
+      "commissionShort": "{rate} comm.",
+      "soldPerMonth": "{count} đã bán/tháng",
+      "creators": "Người sáng tạo {count}",
+      "source": {
+        "amazon": "Từ Amazon",
+        "shopee": "Từ Shopee",
+        "tiktokShop": "Từ cửa hàng TikTok",
+        "walmart": "Từ Walmart",
+        "lazada": "từ lazada",
+        "aliexpress": "Từ AliExpress",
+        "temu": "Từ Temu",
+        "alibaba": "Từ Alibaba",
+        "taobao": "Từ taobao",
+        "mercadolibre": "Từ Mercado Libre",
+        "etsy": "Từ Etsy",
+        "ebay": "Từ eBay",
+        "shopify": "Từ Shopify",
+        "generic": "Từ cửa hàng của bạn",
+        "manual": "Được bạn thêm vào"
+      }
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "Nói chuyện giới thiệu",
+        "avatarDemoExplainer": "Trình giải thích demo",
+        "avatarTestimonial": "Lời chứng thực",
+        "avatarHostProduct": "Máy chủ + sản phẩm",
+        "productCleanShowcase": "Trưng bày sạch sẽ",
+        "productFeatureHighlights": "Tính năng nổi bật",
+        "productUnboxing": "Mở hộp",
+        "productOfferFocused": "Ưu đãi tập trung"
+      }
+    },
+    "marketplace": {
+      "title": "Thị trường",
+      "subtitle": "Các sản phẩm TikTok Shop thịnh hành — chọn một sản phẩm để chuyển thành video.",
+      "searchPlaceholder": "Tìm kiếm sản phẩm - hoặc dán bất kỳ liên kết sản phẩm nào (Amazon, Shopper, TikTok Shop…)",
+      "linkCta": "Tạo video từ liên kết này - Lumi sẽ đọc trang sản phẩm",
+      "allCategories": "Tất cả",
+      "loadMore": "Tải thêm",
+      "empty": {
+        "title": "Không tìm thấy sản phẩm nào",
+        "description": "Hãy thử tìm kiếm hoặc danh mục khác."
+      }
+    },
+    "products": {
+      "title": "Sản phẩm của tôi",
+      "subtitle": "Sản phẩm của riêng bạn — được dán từ một liên kết hoặc được tải lên. Chỉ có bạn mới có thể nhìn thấy những điều này.",
+      "addProduct": "Thêm sản phẩm",
+      "pastePlaceholder": "Dán liên kết sản phẩm — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify hoặc bất kỳ cửa hàng nào",
+      "readLink": "Đọc liên kết",
+      "emptyTitle": "Chưa có sản phẩm nào",
+      "emptyDescription": "Dán liên kết sản phẩm ở trên hoặc thêm liên kết từ ảnh — sau đó chuyển liên kết đó thành video trong Studio."
+    },
+    "productDetail": {
+      "notFound": "Không tìm thấy sản phẩm.",
+      "backToMarketplace": "Trở lại thị trường",
+      "marketplace": "Thị trường",
+      "productFallback": "sản phẩm",
+      "save": "Lưu",
+      "unsave": "Bỏ lưu",
+      "mom": "{percent} Mẹ",
+      "byShop": "bởi {shop}",
+      "commission": "Hoa hồng {rate}",
+      "creatorHook": "Móc của người sáng tạo",
+      "createVideo": "Tạo video từ sản phẩm này",
+      "metrics": {
+        "monthlySales": "Doanh số hàng tháng",
+        "totalRevenue": "Tổng doanh thu",
+        "activeCreators": "Người sáng tạo đang hoạt động",
+        "totalViews": "Tổng số lượt xem"
+      }
+    },
+    "videos": {
+      "title": "Video của tôi",
+      "subtitle": "Mọi thứ bạn đã tạo bằng Lumi.",
+      "newVideo": "Video mới",
+      "videoFallback": "Video",
+      "empty": {
+        "title": "Chưa có video nào",
+        "description": "Chọn một sản phẩm thịnh hành và Lumi sẽ biến sản phẩm đó thành video dừng cuộn đầu tiên của bạn.",
+        "browseMarketplace": "Duyệt qua thị trường"
+      }
+    },
+    "avatars": {
+      "title": "Hình đại diện",
+      "subtitle": "Khuôn mặt giới thiệu sản phẩm của bạn trong video Avatar AI. Tải lên của riêng bạn hoặc chọn một ký tự kỹ thuật số.",
+      "yourAvatars": "Hình đại diện của bạn",
+      "emptyYourAvatars": "Chưa có - hãy tải ảnh lên ở trên để sử dụng khuôn mặt cụ thể trong video của bạn.",
+      "digitalCharacters": "Ký tự số",
+      "digitalComingSoon": "Một thư viện gồm những người thuyết trình kỹ thuật số được tạo sẵn sắp ra mắt — những khuôn mặt nhất quán, được cấp phép mà bạn có thể đưa vào bất kỳ video nào mà không cần tải ảnh lên.",
+      "upload": {
+        "notImageError": "Đó không phải là một hình ảnh.",
+        "tooLargeError": "Hình ảnh vượt quá {max}MB.",
+        "addPhoto": "Thêm ảnh",
+        "namePlaceholder": "Đặt tên cho hình đại diện này (ví dụ: “Maya — người sáng lập”)",
+        "consent": "Tôi có quyền sử dụng hình ảnh của người này trong video (là tôi hoặc tôi được họ cho phép).",
+        "saveAvatar": "Lưu hình đại diện",
+        "clear": "Xóa"
+      },
+      "card": {
+        "deleteAvatar": "Xóa hình đại diện",
+        "deleteTitle": "Xóa hình đại diện này?",
+        "deleteDescription": "“{name}” sẽ bị xóa khỏi hình đại diện của bạn. Những video bạn đã tạo bằng nó không bị ảnh hưởng.",
+        "cancel": "Hủy bỏ",
+        "delete": "Xóa"
+      }
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "videosCreated": "Video đã được tạo",
+      "readyToPublish": "Sẵn sàng xuất bản",
+      "thisMonth": "Tháng này",
+      "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
+      "creditNote": "1 tín dụng = 1 giây của video",
+      "creditsLeft": "trái",
+      "limitHit": "Bạn đã đạt đến giới hạn hàng tháng của mình.",
+      "seePlans": "Xem kế hoạch",
+      "forMore": "để biết thêm.",
+      "displayName": "Tên hiển thị",
+      "save": "Lưu",
+      "saved": "Đã lưu",
+      "connectedAccounts": "Tài khoản được kết nối",
+      "appearance": "Ngoại hình",
+      "appearanceDescription": "Hệ thống, sáng hoặc tối - khớp với ứng dụng Lumi.",
+      "logOut": "Đăng xuất"
+    },
+    "productsNew": {
+      "startTitle": "Thêm một sản phẩm",
+      "startSubtitle": "Dán bất kỳ liên kết sản phẩm nào — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay hoặc cửa hàng của riêng bạn — hoặc bắt đầu từ ảnh. Lumi đọc trang; bạn xác nhận trước khi bất cứ điều gì hiển thị.",
+      "productLinkPlaceholder": "https://… liên kết sản phẩm",
+      "readLink": "Đọc liên kết",
+      "addManuallyInstead": "Thay vào đó hãy thêm nó theo cách thủ công →",
+      "or": "hoặc",
+      "startFromPhotos": "Bắt đầu từ những bức ảnh",
+      "startFromPhotosDescription": "Thả ảnh sản phẩm vào đây hoặc nhấp để duyệt; mô tả nó ở bước tiếp theo.",
+      "startFromScratch": "Bắt đầu lại từ đầu",
+      "startFromScratchDescription": "Tự nhập thông tin chi tiết, thêm ảnh khi bạn thực hiện.",
+      "startOver": "Bắt đầu lại",
+      "detailsTitle": "Kiểm tra chi tiết",
+      "detailsSubtitle": "Đây là nội dung của video - 10 giây ở đây sẽ lưu lại một kết xuất kém.",
+      "removePhoto": "Xóa ảnh",
+      "addPhoto": "Thêm",
+      "saveAndMakeVideo": "Lưu và tạo video",
+      "needPhoto": "Trước tiên hãy thêm ít nhất một ảnh sản phẩm thật.",
+      "upload": {
+        "notImageError": "{filename} không phải là hình ảnh.",
+        "tooLargeError": "{filename} đã vượt quá {max}MB."
+      },
+      "fields": {
+        "title": "Tiêu đề",
+        "titlePlaceholder": "Tên sản phẩm",
+        "description": "Mô tả",
+        "descriptionPlaceholder": "Nó là gì, nó dành cho ai, tại sao nó tốt - chỉ là sự thật thôi, kịch bản được viết từ đây.",
+        "category": "Danh mục",
+        "photos": "Ảnh · Đã chọn {count}",
+        "photosHint": "Ảnh được chọn đầu tiên là nhân vật chính mà video được xây dựng xung quanh. Bỏ chọn biểu đồ kích thước và biểu ngữ. Kéo và thả ảnh vào bất cứ đâu trong lưới này."
+      },
+      "storeImport": {
+        "importingTitle": "Nhập cửa hàng của bạn",
+        "importingProgress": "Cho đến nay, {upserted} đã nhập trong số các sản phẩm ~{found} - việc này vẫn tiếp tục diễn ra trong nền.",
+        "wrappingUp": "Kết thúc…",
+        "importingLabel": "Nhập khẩu",
+        "previewFound": "Chúng tôi đã tìm thấy các sản phẩm {count} từ {domain}",
+        "importAllProducts": "Nhập khẩu tất cả sản phẩm",
+        "tryDifferentStore": "Hãy thử một cửa hàng khác",
+        "placeholder": "your-store.myshopify.com — nhập toàn bộ cửa hàng của bạn",
+        "preview": "Xem trước"
+      }
+    },
+    "studio": {
+      "title": "Phòng thu video",
+      "subtitle": "Lumi viết kịch bản và hiển thị video từ sản phẩm này - đặt hướng.",
+      "loading": "Đang tải…",
+      "sections": {
+        "vibe": "1 · Sự rung cảm là gì?",
+        "mode": "2 · Chế độ",
+        "presenter": "Người trình bày",
+        "duration": "3 · Thời lượng",
+        "model": "người mẫu",
+        "resolution": "Độ phân giải",
+        "language": "4 · Ngôn ngữ",
+        "review": "5 · Đánh giá"
+      },
+      "vibes": {
+        "premiumClean": {
+          "label": "Cao cấp & sạch sẽ",
+          "blurb": "Chậm rãi, thanh lịch, có kiểm soát."
+        },
+        "funFast": {
+          "label": "Vui vẻ và nhanh chóng",
+          "blurb": "Nhanh nhẹn, vui tươi, năng lượng cao."
+        },
+        "cozyPersonal": {
+          "label": "Ấm cúng & cá nhân",
+          "blurb": "Ấm áp, thân mật như một người bạn."
+        },
+        "boldPunchy": {
+          "label": "Táo bạo và mạnh mẽ",
+          "blurb": "To, linh hoạt, không thể cuộn qua."
+        },
+        "cleanDemo": {
+          "label": "Bản demo sạch",
+          "blurb": "Ổn định và rõ ràng - sản phẩm nói lên điều đó."
+        }
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "Hình đại diện AI",
+          "blurb": "Người dẫn chương trình nói chuyện với camera."
+        },
+        "productOnly": {
+          "label": "Chỉ sản phẩm",
+          "blurb": "Không có khuôn mặt - chỉ là sản phẩm."
+        }
+      },
+      "presenter": {
+        "auto": "Tự động",
+        "autoSublabel": "AI chọn người sáng tạo",
+        "manageAvatars": "Quản lý hình đại diện →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "Mới nhất · lên tới 1080p"
+        }
+      },
+      "resolutions": {
+        "p480": {
+          "label": "480p",
+          "blurb": "Dự thảo · rẻ nhất"
+        },
+        "p720": {
+          "label": "720p",
+          "blurb": "HD · tiêu chuẩn"
+        },
+        "p1080": {
+          "label": "1080p",
+          "blurb": "Full HD · cần Seedance 2.0"
+        }
+      },
+      "durationSeconds": "{duration}",
+      "language": {
+        "comingSoonTitle": "Sắp có",
+        "soonBadge": "sớm thôi"
+      },
+      "reviewDescription": "Lumi sẽ hiển thị cho bạn bảng phân cảnh trước khi chi tiêu bất cứ thứ gì - xem xét và phê duyệt bảng phân cảnh trước khi tạo bất kỳ hình ảnh hoặc video nào.",
+      "summary": {
+        "vibe": "rung cảm",
+        "mode": "Chế độ",
+        "length": "Chiều dài",
+        "model": "người mẫu",
+        "resolution": "Độ phân giải",
+        "language": "Ngôn ngữ",
+        "format": "định dạng",
+        "review": "Xem lại",
+        "storyboard": "Bảng phân cảnh"
+      },
+      "usageSummary": "{remaining} trong số tín dụng {limit} còn lại trong tháng này · video này sử dụng {duration}",
+      "generateVideo": "Tạo video",
+      "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
+      "seePlans": "Xem kế hoạch",
+      "pickProduct": {
+        "title": "Chọn một sản phẩm đầu tiên",
+        "description": "Chọn một sản phẩm từ thị trường và Lumi sẽ biến sản phẩm đó thành một video dừng cuộn.",
+        "browseMarketplace": "Duyệt qua thị trường"
+      }
+    },
+    "jobs": {
+      "backToVideos": "Video của tôi",
+      "videoFallback": "Video của bạn",
+      "styles": {
+        "avatarTalkingIntro": "Nói chuyện giới thiệu",
+        "avatarDemoExplainer": "Trình giải thích demo",
+        "avatarTestimonial": "Lời chứng thực",
+        "avatarHostProduct": "Máy chủ + sản phẩm",
+        "productCleanShowcase": "Trưng bày sạch sẽ",
+        "productFeatureHighlights": "Tính năng nổi bật",
+        "productUnboxing": "Mở hộp",
+        "productOfferFocused": "Ưu đãi tập trung"
+      },
+      "live": {
+        "updated": "Trực tiếp · đã cập nhật {time}",
+        "justNow": "ngay bây giờ",
+        "secondsAgo": "{seconds}s trước"
+      },
+      "fullScript": {
+        "view": "Xem toàn bộ kịch bản",
+        "title": "Kịch bản đầy đủ",
+        "caption": "Chú thích:"
+      },
+      "shotLabels": {
+        "hook": "Móc",
+        "proof": "Bằng chứng",
+        "offer": "ưu đãi",
+        "cta": "CTA",
+        "shot": "Bắn {number}"
+      },
+      "working": {
+        "renderingBeats": "Đang hiển thị nhịp đập của bạn…",
+        "writingScript": "Viết kịch bản có căn cứ của bạn…",
+        "description": "Trang này cập nhật tự động. Bạn có thể rời đi và quay lại."
+      },
+      "review": {
+        "title": "Xem lại nhịp đập của bạn",
+        "description": "Phê duyệt từng cảnh quay hoặc tạo lại những cảnh bạn không yêu thích. Lumi hiển thị khi mỗi nhịp được phê duyệt."
+      },
+      "storyboard": {
+        "title": "Đây là kế hoạch cho video của bạn",
+        "description": "Chưa có gì được thực hiện - đây chỉ là kế hoạch. Đọc lại, thay đổi bất kỳ dòng nào bạn muốn, sau đó nhấn nút và Lumi sẽ xây dựng toàn bộ video cho bạn.",
+        "approveAndMake": "Phê duyệt và tạo video của tôi",
+        "creditNote": "Đây là bước duy nhất sử dụng tín dụng của bạn.",
+        "editTitle": "Chỉnh sửa {label}",
+        "editFallbackTitle": "Chỉnh sửa ảnh",
+        "shotLabels": {
+          "hook": "Móc",
+          "hookLower": "cái móc",
+          "callToAction": "Kêu gọi hành động",
+          "callToActionLower": "kêu gọi hành động",
+          "shot": "Bắn {number}",
+          "shotLower": "đã bắn {number}"
+        }
+      },
+      "subjects": {
+        "heading": "Bị khóa trong mỗi lần chụp",
+        "locked": "Đã khóa"
+      },
+      "shotCard": {
+        "noSpokenLine": "Không có lời thoại",
+        "edit": "Chỉnh sửa"
+      },
+      "shotEditor": {
+        "fields": {
+          "dialogue": "Những gì bạn nói",
+          "onScreenText": "Văn bản trên màn hình",
+          "technique": "Nó được quay như thế nào",
+          "transition": "Cắt sang cảnh tiếp theo",
+          "productVisible": "Khi sản phẩm hiển thị"
+        },
+        "placeholders": {
+          "dialogue": "Không có lời thoại nào cho ảnh này",
+          "onScreenText": "Không có chú thích",
+          "technique": "Hãy để Lumi chọn cảnh quay"
+        },
+        "advanced": "Nâng cao",
+        "transitions": {
+          "hardCut": "Cắt cứng",
+          "dissolve": "hòa tan",
+          "slide": "Trượt",
+          "fade": "Phai dần",
+          "matchCut": "Cắt diêm"
+        },
+        "productVisibility": {
+          "start": "Sản phẩm lúc bắt đầu",
+          "throughout": "Sản phẩm xuyên suốt",
+          "end": "Sản phẩm ở cuối",
+          "none": "Không có sản phẩm nào được hiển thị"
+        },
+        "done": "Xong"
+      },
+      "beatStatus": {
+        "pending": "Đang chờ xử lý",
+        "autoApproved": "Tự động ✓",
+        "approved": "Đã được phê duyệt",
+        "regenerating": "tái sinh"
+      },
+      "beatCard": {
+        "approved": "Đã được phê duyệt",
+        "approve": "Phê duyệt",
+        "regenerate": "tái sinh"
+      },
+      "completed": {
+        "badge": "Sẵn sàng xuất bản",
+        "title": "Video của bạn đã sẵn sàng 🎉",
+        "description": "Đoạn cắt 9:16 sẵn sàng xuất bản có âm thanh nói. Tải xuống hoặc đánh dấu nó đã đăng để giữ cho số liệu thống kê của bạn gọn gàng.",
+        "download": "Tải xuống",
+        "markPosted": "Đánh dấu là đã đăng"
+      },
+      "failed": {
+        "title": "Thế hệ không thành công",
+        "fallbackMessage": "Đã xảy ra lỗi. Hãy thử tạo lại.",
+        "retry": "Thử lại",
+        "startNewVideo": "Bắt đầu một video mới"
+      }
+    }
+  },
+  "nav": {
+    "features": "Tính năng",
+    "howItWorks": "Nó hoạt động như thế nào",
+    "models": "Người mẫu",
+    "pricing": "Định giá"
+  },
+  "languageSwitcher": {
+    "label": "Ngôn ngữ"
+  },
+  "shared": {
+    "status": {
+      "queued": "Đã xếp hàng",
+      "submitted": "Đã gửi",
+      "rendering": "Kết xuất",
+      "reviewStoryboard": "Xem lại bảng phân cảnh",
+      "needsReview": "Cần xem xét",
+      "ready": "Sẵn sàng",
+      "failed": "thất bại"
+    },
+    "jobProgress": {
+      "script": "kịch bản",
+      "beats": "nhịp đập",
+      "review": "Xem lại",
+      "render": "Kết xuất",
+      "ready": "Sẵn sàng"
+    },
+    "subjects": {
+      "product": "sản phẩm",
+      "host": "Máy chủ",
+      "scene": "Cảnh"
+    },
+    "error": {
+      "title": "Đã xảy ra lỗi.",
+      "description": "Việc đó thuộc về chúng tôi — hãy thử lại và nếu tình trạng này vẫn tiếp tục xảy ra, hãy quay lại sau một lát.",
+      "tryAgain": "Thử lại",
+      "backHome": "Trở về nhà"
+    },
+    "notFound": {
+      "title": "Trang này lang thang đi.",
+      "description": "Liên kết có thể bị hỏng hoặc trang có thể đã được di chuyển.",
+      "backHome": "Trở về nhà",
+      "goToApp": "Đi đến ứng dụng"
+    },
+    "overlay": {
+      "close": "Đóng"
+    },
+    "uploadProgress": {
+      "uploading": "Đang tải lên",
+      "processing": "Đang xử lý…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "Loại bỏ thông báo"
+    },
+    "theme": {
+      "label": "chủ đề",
+      "light": "Ánh sáng",
+      "system": "Hệ thống",
+      "dark": "Tối"
+    }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "Từ liên kết sản phẩm đến video dừng cuộn — chỉ trong vài phút.",
+      "benefitScripts": "Kịch bản dựa trên mô hình lan truyền thực sự",
+      "benefitReview": "Xem lại từng nhịp trước khi nó hiển thị",
+      "benefitPublish": "Sẵn sàng xuất bản 9:16 cho TikTok & Câu chuyện"
+    },
+    "metadata": {
+      "signIn": "Đăng nhập",
+      "createAccount": "Tạo tài khoản của bạn"
+    },
+    "form": {
+      "loginTitle": "Chào mừng trở lại",
+      "signupTitle": "Tạo tài khoản của bạn",
+      "loginSubtitle": "Đăng nhập vào studio Lumi của bạn.",
+      "signupSubtitle": "Bắt đầu tạo video dừng cuộn trong vài phút.",
+      "continueWithGoogle": "Tiếp tục với Google",
+      "googleDisabledTitle": "Đặt NEXT_PUBLIC_GOOGLE_CLIENT_ID để bật đăng nhập bằng Google",
+      "googleSignInFailed": "Đăng nhập bằng Google chưa hoàn tất. Vui lòng thử lại.",
+      "separator": "hoặc",
+      "phoneLabel": "Số điện thoại",
+      "invalidPhone": "Nhập số điện thoại hợp lệ.",
+      "sendCode": "Gửi mã",
+      "sendCodeFailed": "Không thể gửi mã.",
+      "codePlaceholder": "mã 6 chữ số",
+      "verificationCodeLabel": "Mã xác minh",
+      "devCodeAutofilled": "Chế độ dev - mã <code>{devCode}</code> tự động điền.",
+      "continue": "Tiếp tục",
+      "verifyCodeFailed": "Mã đó không hoạt động.",
+      "alreadyHaveAccount": "Đã có tài khoản?",
+      "signInLink": "Đăng nhập",
+      "newToLumi": "Bạn mới sử dụng Lumi?",
+      "createAccountLink": "Tạo một tài khoản"
+    }
+  },
+  "marketing": {
+    "legal": {
+      "kicker": "pháp lý",
+      "lastUpdated": "Cập nhật lần cuối vào ngày 1 tháng 6 năm 2026",
+      "terms": {
+        "title": "Điều khoản dịch vụ",
+        "intro": "Các Điều khoản này chi phối việc bạn sử dụng Lumi, một sản phẩm Sellcast. Bằng cách tạo tài khoản hoặc sử dụng dịch vụ, bạn đồng ý với các Điều khoản này.",
+        "service": {
+          "heading": "Dịch vụ",
+          "body": "Lumi biến sản phẩm thành video dạng ngắn bằng AI. Đầu ra được tạo tự động và có thể khác nhau về chất lượng; bạn có trách nhiệm xem xét chúng trước khi xuất bản."
+        },
+        "account": {
+          "heading": "Tài khoản của bạn",
+          "body": "Bạn phải cung cấp thông tin chính xác và giữ an toàn cho tài khoản của mình. Bạn chịu trách nhiệm về hoạt động trong tài khoản của mình."
+        },
+        "acceptableUse": {
+          "heading": "Sử dụng chấp nhận được",
+          "item1": "Không sử dụng Lumi cho nội dung bất hợp pháp, lừa đảo hoặc vi phạm.",
+          "item2": "Không xuyên tạc sản phẩm hoặc đưa ra tuyên bố sai sự thật.",
+          "item3": "Không lạm dụng, thiết kế ngược hoặc làm quá tải dịch vụ.",
+          "item4": "Tuân thủ các quy tắc của bất kỳ nền tảng nào nơi bạn xuất bản (ví dụ: TikTok, Reels)."
+        },
+        "content": {
+          "heading": "Nội dung và quyền sở hữu",
+          "yourHeading": "Nội dung của bạn",
+          "yourBody": "Bạn có quyền đối với thông tin sản phẩm và tài sản mà bạn cung cấp. Bạn cấp cho chúng tôi giấy phép để xử lý chúng để cung cấp dịch vụ.",
+          "outputHeading": "Đầu ra được tạo",
+          "outputBody": "Theo các Điều khoản này và gói của bạn, bạn có thể sử dụng video bạn tạo cho mục đích thương mại của mình. Bạn có trách nhiệm đảm bảo việc sử dụng của mình tuân thủ luật pháp hiện hành và chính sách nền tảng."
+        },
+        "billing": {
+          "heading": "Đăng ký và thanh toán",
+          "body": "Các gói trả phí được lập hóa đơn trước theo định kỳ. Bạn có thể thay đổi hoặc hủy bỏ bất cứ lúc nào; xem chính sách hoàn tiền <refunds></refunds> của chúng tôi để biết chi tiết."
+        },
+        "disclaimers": {
+          "heading": "Tuyên bố miễn trừ trách nhiệm",
+          "body": "Lumi được cung cấp “nguyên trạng”. Chúng tôi không đảm bảo rằng video được tạo sẽ đạt được bất kỳ hiệu suất cụ thể nào hoặc tuân thủ các quy tắc phát triển của mọi nền tảng."
+        },
+        "liability": {
+          "heading": "Giới hạn trách nhiệm pháp lý",
+          "body": "Trong phạm vi được pháp luật cho phép, Sellcast không chịu trách nhiệm về những thiệt hại gián tiếp hoặc do hậu quả phát sinh từ việc bạn sử dụng Lumi."
+        },
+        "termination": {
+          "heading": "Chấm dứt",
+          "body": "Bạn có thể ngừng sử dụng Lumi bất cứ lúc nào. Chúng tôi có thể đình chỉ hoặc chấm dứt các tài khoản vi phạm các Điều khoản này."
+        },
+        "changes": {
+          "heading": "Thay đổi",
+          "body": "Chúng tôi có thể cập nhật các Điều khoản này; những thay đổi quan trọng sẽ được phản ánh trước ngày trên và việc tiếp tục sử dụng sẽ cấu thành sự chấp nhận."
+        },
+        "contact": {
+          "heading": "Liên hệ",
+          "body": "Câu hỏi? Gửi email tới <email>legal@sellcast.ai</email>."
+        }
+      },
+      "privacy": {
+        "title": "Chính sách bảo mật",
+        "intro": "Chính sách quyền riêng tư này giải thích cách Lumi, một sản phẩm Sellcast (“Lumi”, “chúng tôi”), thu thập, sử dụng và bảo vệ thông tin của bạn khi bạn sử dụng trang web và ứng dụng của chúng tôi. Bằng cách sử dụng Lumi, bạn đồng ý với các thông lệ được mô tả ở đây.",
+        "collect": {
+          "heading": "Thông tin chúng tôi thu thập",
+          "account": "<strong>Dữ liệu tài khoản</strong> — số điện thoại của bạn và (nếu được cung cấp) tên hiển thị, email và nhà cung cấp dịch vụ đăng nhập được kết nối.",
+          "usage": "<strong>Dữ liệu sử dụng</strong> — các sản phẩm bạn duyệt hoặc lưu, video bạn tạo và các lựa chọn bạn thực hiện trong studio.",
+          "technical": "<strong>Dữ liệu kỹ thuật</strong> — thông tin về thiết bị, trình duyệt, địa chỉ IP và phiên được sử dụng để giúp bạn luôn đăng nhập và bảo mật."
+        },
+        "use": {
+          "heading": "Cách chúng tôi sử dụng thông tin của bạn",
+          "item1": "Để cung cấp, vận hành và cải thiện dịch vụ Lumi.",
+          "item2": "Để tạo các video bạn yêu cầu và hiển thị lịch sử của bạn.",
+          "item3": "Để xác thực bạn và bảo vệ khỏi sự lạm dụng.",
+          "item4": "Để truyền đạt thông tin cập nhật dịch vụ và phản hồi hỗ trợ."
+        },
+        "sharing": {
+          "heading": "Chia sẻ",
+          "body": "Chúng tôi không bán thông tin cá nhân của bạn. Chúng tôi chỉ chia sẻ dữ liệu với các nhà cung cấp dịch vụ giúp chúng tôi vận hành Lumi (ví dụ: nhà cung cấp mô hình giọng nói và video, lưu trữ đám mây và gửi SMS) và chỉ khi cần để cung cấp dịch vụ hoặc tuân thủ luật pháp."
+        },
+        "cookies": {
+          "heading": "Cookie & phiên",
+          "body": "Chúng tôi sử dụng cookie của bên thứ nhất để duy trì trạng thái đăng nhập của bạn và ghi nhớ tùy chọn chủ đề của bạn. Chúng tôi không sử dụng chúng cho quảng cáo trên nhiều trang web."
+        },
+        "retention": {
+          "heading": "Lưu giữ dữ liệu",
+          "body": "Chúng tôi lưu giữ dữ liệu tài khoản và nội dung trong thời gian tài khoản của bạn còn hoạt động. Bạn có thể xóa video của mình bất kỳ lúc nào và có thể yêu cầu xóa tài khoản cũng như dữ liệu liên quan của mình."
+        },
+        "rights": {
+          "heading": "Quyền của bạn",
+          "body": "Tùy thuộc vào khu vực của bạn, bạn có thể có quyền truy cập, sửa, xuất hoặc xóa dữ liệu cá nhân của mình. Hãy liên hệ với chúng tôi để thực hiện chúng."
+        },
+        "security": {
+          "heading": "Bảo mật",
+          "body": "Chúng tôi sử dụng các biện pháp tiêu chuẩn ngành để bảo vệ dữ liệu của bạn, bao gồm truyền tải được mã hóa và thông tin xác thực băm. Không có phương thức truyền tải nào là an toàn tuyệt đối, nhưng chúng tôi nỗ lực bảo vệ thông tin của bạn."
+        },
+        "children": {
+          "heading": "trẻ em",
+          "body": "Lumi không hướng tới trẻ em dưới 13 tuổi (hoặc độ tuổi tối thiểu trong khu vực pháp lý của bạn) và chúng tôi không cố ý thu thập dữ liệu của chúng."
+        },
+        "changes": {
+          "heading": "Thay đổi",
+          "body": "Chúng tôi có thể cập nhật chính sách này theo thời gian. Những thay đổi quan trọng sẽ được ghi nhận bằng cách cập nhật ngày ở trên."
+        },
+        "contact": {
+          "heading": "Liên hệ",
+          "body": "Câu hỏi? Gửi email tới <email>privacy@sellcast.ai</email>."
+        }
+      },
+      "refunds": {
+        "title": "Thanh toán & Hoàn tiền",
+        "intro": "Chúng tôi muốn bạn hài lòng với Lumi. Chính sách này giải thích cách hoạt động của việc thanh toán và hoàn tiền.",
+        "free": {
+          "heading": "Gói miễn phí",
+          "body": "Gói miễn phí cho phép bạn tạo video đầu tiên của mình miễn phí và không cần thẻ tín dụng, vì vậy bạn có thể thấy Lumi hoạt động trước khi thanh toán bất kỳ khoản nào."
+        },
+        "subscriptions": {
+          "heading": "Đăng ký",
+          "body": "Gói trả phí được lập hoá đơn trước - hàng tháng hoặc hàng năm. Bạn giữ quyền truy cập cho đến hết thời gian bạn đã thanh toán."
+        },
+        "guarantee": {
+          "heading": "Đảm bảo hoàn tiền trong 7 ngày",
+          "body": "Nếu bạn không hài lòng trong vòng 7 ngày kể từ lần thanh toán đầu tiên, hãy gửi email cho chúng tôi và chúng tôi sẽ hoàn lại toàn bộ khoản phí đó."
+        },
+        "annual": {
+          "heading": "kế hoạch hàng năm",
+          "body": "Các gói hàng năm có thể được hoàn tiền theo tỷ lệ trong vòng 30 ngày đầu tiên. Sau đó, bạn giữ quyền truy cập cho đến khi thời hạn kết thúc."
+        },
+        "cancellations": {
+          "heading": "Hủy bỏ",
+          "body": "Hủy bất cứ lúc nào từ tài khoản của bạn. Việc hủy sẽ ngừng thanh toán trong tương lai; nó không hoàn lại tiền cho giai đoạn hiện tại (ngoại trừ theo bảo đảm ở trên)."
+        },
+        "request": {
+          "heading": "Cách yêu cầu hoàn lại tiền",
+          "body": "Gửi email <email>billing@sellcast.ai</email> từ email tài khoản của bạn kèm theo chi tiết tài khoản của bạn. Chúng tôi thường trả lời trong vòng hai ngày làm việc."
+        }
+      }
+    },
+    "header": {
+      "signIn": "Đăng nhập",
+      "startFree": "Bắt đầu miễn phí",
+      "toggleMenu": "Chuyển đổi menu",
+      "language": "Ngôn ngữ",
+      "theme": "chủ đề"
+    },
+    "footer": {
+      "tagline": "Lumi biến bất kỳ sản phẩm nào thành video có thể mua được, dừng cuộn - dựa trên mô hình lan truyền thực sự chứ không phải phỏng đoán.",
+      "columns": {
+        "product": {
+          "title": "sản phẩm",
+          "features": "Tính năng",
+          "models": "Người mẫu",
+          "pricing": "Định giá",
+          "marketplace": "Thị trường"
+        },
+        "workflow": {
+          "title": "Quy trình làm việc",
+          "linkToVideo": "Liên kết tới Video",
+          "patternScripts": "Kịch bản mẫu",
+          "beatReview": "Đánh giá đánh giá",
+          "publish": "Xuất bản"
+        },
+        "company": {
+          "title": "Công ty",
+          "about": "Giới thiệu",
+          "blog": "Blog",
+          "careers": "Nghề nghiệp",
+          "contact": "Liên hệ"
+        },
+        "legal": {
+          "title": "pháp lý",
+          "privacy": "Quyền riêng tư",
+          "terms": "Điều khoản",
+          "refunds": "Hoàn tiền"
+        }
+      },
+      "copyright": "© {year} Sellcast. Lumi là sản phẩm Sellcast.",
+      "madeFor": "Dành cho những người bán hàng thích bán hàng hơn quay phim."
+    },
+    "cta": {
+      "title": "Sản phẩm bán chạy tiếp theo của bạn chỉ cách một liên kết sản phẩm.",
+      "subtitle": "Làm cho video dừng cuộn đầu tiên của bạn trở nên miễn phí - không có máy ảnh, không có trình chỉnh sửa, không có trang trống.",
+      "primaryLabel": "Bắt đầu tạo miễn phí",
+      "seePricing": "Xem giá"
+    },
+    "faq": {
+      "q1": "Lumi khác với các công cụ video AI thông thường như thế nào?",
+      "a1": "Lumi không đoán được. Trước khi viết một dòng, nó sẽ nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và trích xuất mô hình cấu trúc - các hình dạng hook, proof và CTA thực sự chuyển đổi. Kịch bản của bạn được căn cứ theo khuôn mẫu đó chứ không phải một trang trống.",
+      "q2": "Tôi có cần quay phim hay chụp ảnh gì không?",
+      "a2": "Không. Chọn chế độ Hình đại diện AI cho video do người thuyết trình dẫn dắt hoặc chế độ Chỉ dành cho sản phẩm để có cảnh giới thiệu rõ ràng. Lumi tạo hình ảnh, giọng nói và chú thích từ đầu đến cuối cho sản phẩm của bạn.",
+      "q3": "Tôi có thể xem lại video trước khi video được hiển thị đầy đủ không?",
+      "a3": "Vâng - đó là cổng Beat Review. Lumi tạo hình ảnh tham chiếu cho mỗi nhịp (cú đánh) trước tiên. Bạn phê duyệt hoặc tạo lại từng cái và chỉ khi đó nó mới dành thời gian hiển thị. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
+      "q4": "Lumi sử dụng mô hình video nào?",
+      "a4": "Lumi hiển thị với Seedance 2.0, điều chỉnh cài đặt cho mỗi lần chụp. Nhiều mô hình video biên giới hơn đang được triển khai — tập lệnh và nhịp điệu của bạn sẽ được chuyển tiếp khi các mô hình mới xuất hiện.",
+      "q5": "Dữ liệu sản phẩm đến từ đâu?",
+      "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải lên ảnh sản phẩm của riêng bạn — và Lumi đọc tiêu đề, mô tả và hình ảnh để xây dựng. Sản phẩm của bạn được giữ kín cho bạn. Thích ý tưởng hơn? Duyệt qua thị trường tích hợp các lựa chọn theo xu hướng.",
+      "q6": "Một video mất bao lâu?",
+      "a6": "Lumi viết kịch bản, bảng phân cảnh và kết xuất mà không cần bạn quay phim hay chỉnh sửa — bạn bắt đầu và quay lại bản cắt hoàn chỉnh, sẵn sàng xuất bản. Nghiên cứu mẫu cho một danh mục được lưu vào bộ nhớ đệm nên các video sau này trong danh mục đó sẽ bắt đầu nhanh hơn nữa."
+    },
+    "pricing": {
+      "header": {
+        "kicker": "Định giá",
+        "title": "Bắt đầu miễn phí. Chia tỷ lệ khi",
+        "highlight": "nó đang hoạt động.",
+        "subtitle": "Không có thẻ tín dụng để bắt đầu. Hủy bỏ bất cứ lúc nào. Thanh toán hàng năm tiết kiệm khoảng 20%."
+      },
+      "billing": {
+        "monthly": "hàng tháng",
+        "annual": "hàng năm"
+      },
+      "mostPopular": "Phổ biến nhất",
+      "perMonthYearly": "/tháng · thanh toán hàng năm",
+      "tiers": {
+        "free": {
+          "name": "miễn phí",
+          "note": "không có thẻ",
+          "allowance": "Video đầu tiên của bạn miễn phí",
+          "credits": "20 tín chỉ, một lần",
+          "features": [
+            "720p · xuất 9:16",
+            "Truy cập thị trường",
+            "Hiển thị QA tự động",
+            "Hình mờ Lumi"
+          ],
+          "cta": "Bắt đầu miễn phí"
+        },
+        "creator": {
+          "name": "Người sáng tạo",
+          "note": "mỗi tháng",
+          "allowance": "≈ 3 video / tháng",
+          "credits": "75 tín chỉ/tháng",
+          "features": [
+            "Không có hình mờ",
+            "Đánh giá từng nhịp",
+            "Chế độ Avatar + sản phẩm",
+            "720p · xuất 9:16"
+          ],
+          "cta": "Bắt đầu tạo"
+        },
+        "pro": {
+          "name": "chuyên nghiệp",
+          "note": "mỗi tháng",
+          "allowance": "≈ 10 video/tháng",
+          "credits": "200 tín chỉ/tháng",
+          "features": [
+            "Mọi thứ trong Creator",
+            "Nhiều tín dụng hơn, cùng chi phí cho mỗi video",
+            "Ưu tiên hơn các kết xuất miễn phí"
+          ],
+          "cta": "Bắt đầu chuyên nghiệp"
+        },
+        "scale": {
+          "name": "quy mô",
+          "note": "mỗi tháng",
+          "allowance": "≈ 25 video/tháng",
+          "credits": "500 tín chỉ/tháng",
+          "features": [
+            "Mọi thứ trong Pro",
+            "Để đăng bài liên tục",
+            "Khối lượng tự phục vụ cao nhất"
+          ],
+          "cta": "Bắt đầu thang âm"
+        },
+        "enterprise": {
+          "name": "Doanh nghiệp",
+          "priceLabel": "Hãy nói chuyện",
+          "note": "dành cho các nhóm và đại lý",
+          "allowance": "Khối lượng tín dụng tùy chỉnh",
+          "credits": "cam kết, giá sỉ",
+          "features": [
+            "Chỗ ngồi & vai trò",
+            "Bộ dụng cụ thương hiệu",
+            "Truy cập API",
+            "SSO & hỗ trợ tận tình"
+          ],
+          "cta": "Liên hệ bán hàng"
+        }
+      },
+      "creditFootnote": "1 tín dụng = 1 giây của video. Số lượng video là gần đúng, dựa trên các clip dài 20 giây - video 15 giây sử dụng ít tín dụng hơn, video 30 giây sử dụng nhiều hơn.",
+      "everyPlanIncludes": "Mỗi kế hoạch bao gồm",
+      "included": [
+        "Kịch bản dựa trên mẫu",
+        "Đánh giá từng nhịp",
+        "Chế độ Avatar + sản phẩm",
+        "Chú thích được ghi vào",
+        "9:16 cho TikTok & Cuộn phim",
+        "Dán bất kỳ liên kết sản phẩm nào hoặc duyệt qua thị trường"
+      ],
+      "billingQuestions": "Câu hỏi thanh toán",
+      "faq": {
+        "q1": "Tín dụng là gì?",
+        "a1": "1 tín dụng = 1 giây của video hoàn thành. Video dài 20 giây sử dụng 20 tín dụng; thời lượng 30 giây sử dụng 30. Bạn chọn độ dài và bạn chỉ bị tính phí cho những gì bạn hiển thị.",
+        "q2": "Việc tái tạo có tốn tín dụng không?",
+        "a2": "Không. Việc tạo lại nhịp trong khi bạn xem lại không mất thêm chi phí — tín dụng chỉ tính cho video được hiển thị cuối cùng.",
+        "q3": "Nếu tôi hết tín dụng thì sao?",
+        "a3": "Nâng cấp bất cứ lúc nào để nhận được trợ cấp hàng tháng lớn hơn — áp dụng ngay lập tức. Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán.",
+        "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
+        "a4": "Bất cứ lúc nào. Việc nâng cấp được áp dụng ngay lập tức; việc hạ cấp sẽ có hiệu lực ở chu kỳ tiếp theo. Tiết kiệm hàng năm ~ 20% so với hàng tháng.",
+        "q5": "Lumi sử dụng mô hình kết xuất nào?",
+        "a5": "Lumi hiển thị với Seedance 2.0 và sắp ra mắt nhiều mẫu hơn. Nó chọn các cài đặt tốt nhất cho mỗi lần chụp."
+      }
+    },
+    "landing": {
+      "heroBadge": "Được xây dựng cho TikTok & cuộn",
+      "heroTitle": "Biến bất kỳ sản phẩm nào thành video có thể mua được <highlight>scroll-stopping</highlight>.",
+      "heroSubtitle": "Dán bất kỳ liên kết sản phẩm nào — Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Lumi nghiên cứu những gì đã chiến thắng trong danh mục đó, viết kịch bản cho một video dựa trên mẫu, cho phép bạn xem lại từng nhịp và hiển thị video đó bằng Seedance 2.0. Trong vài phút, không có máy ảnh.",
+      "heroStartFree": "Bắt đầu tạo miễn phí",
+      "heroSeeHow": "Xem cách nó hoạt động",
+      "heroCheck1": "Video đầu tiên miễn phí",
+      "heroCheck2": "Không có thẻ tín dụng",
+      "heroCheck3": "Sẵn sàng xuất bản 9:16",
+      "marquee": [
+        "Cửa hàng TikTok",
+        "cuộn phim",
+        "sắc đẹp",
+        "Nhà & Bếp",
+        "Thể hình",
+        "Tiện ích",
+        "Thú cưng",
+        "thời trang",
+        "Thực phẩm bổ sung"
+      ],
+      "howKicker": "Đường ống Lumi",
+      "howTitle": "Bốn giai đoạn, không có trang trống",
+      "howSubtitle": "Hầu hết các công cụ đều bắt đầu từ con số không. Lumi bắt đầu từ những gì đã thắng — sau đó giúp bạn kiểm soát mọi cách xuất bản.",
+      "steps": {
+        "find": {
+          "kicker": "Tìm",
+          "title": "Bắt đầu từ bất kỳ sản phẩm nào",
+          "body": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Hoặc duyệt qua các lựa chọn theo xu hướng trên thị trường."
+        },
+        "deconstruct": {
+          "kicker": "Giải cấu trúc",
+          "title": "Lumi học mẫu",
+          "body": "Nó nghiên cứu khoảng 100 công ty thực sự có hiệu suất hàng đầu trong danh mục đó và trích xuất cấu trúc hấp dẫn, bằng chứng và CTA giúp chuyển đổi."
+        },
+        "script": {
+          "kicker": "kịch bản",
+          "title": "Xem lại kịch bản và nhịp điệu",
+          "body": "Một kịch bản có căn cứ với nhịp điệu từng cảnh một. Phê duyệt hoặc tạo lại từng hình ảnh tham chiếu trước khi kết xuất bất kỳ hình ảnh nào."
+        },
+        "generate": {
+          "kicker": "Tạo",
+          "title": "Kết xuất và xuất bản",
+          "body": "Seedance 2.0 hiển thị từng nhịp, ghi chú thích và bạn đã sẵn sàng đăng bài."
+        }
+      },
+      "featuresKicker": "Mọi thứ trong một studio",
+      "featuresTitle": "Toàn bộ quy trình làm việc của video được xử lý",
+      "featuresSubtitle": "Từ tìm nguồn cung ứng sản phẩm đến bản cắt sẵn sàng xuất bản — không cần kết hợp năm công cụ lại với nhau.",
+      "features": {
+        "linkToVideo": {
+          "title": "Liên kết tới Video",
+          "body": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Lumi đọc sản phẩm và tự động xử lý việc đóng khung, kịch bản, giọng nói và chỉnh sửa."
+        },
+        "scripts": {
+          "title": "Kịch bản dựa trên mẫu",
+          "body": "Mọi tập lệnh đều được xây dựng từ cấu trúc lan truyền thực sự trong danh mục của bạn - hãy tìm hiểu khuôn mẫu, không bao giờ sao chép bề ngoài."
+        },
+        "review": {
+          "title": "Đánh giá từng nhịp",
+          "body": "Xem hình ảnh tham khảo cho mỗi lần chụp. Phê duyệt, điều chỉnh hoặc tạo lại trước khi dành một giây thời gian kết xuất."
+        },
+        "modes": {
+          "title": "Chế độ hình đại diện và sản phẩm",
+          "body": "Người dẫn chương trình AI nói chuyện với máy ảnh hoặc nơi trưng bày sạch sẽ chỉ dành cho sản phẩm — tám kiểu được tạo sẵn để phù hợp với ưu đãi của bạn."
+        },
+        "qa": {
+          "title": "QA đối thoại tự động",
+          "body": "Whisper kiểm tra từng dòng được hiển thị so với kịch bản và cờ trôi dạt, để giọng nói luôn nói đúng những gì cần làm."
+        },
+        "publish": {
+          "title": "Chú thích & xuất bản",
+          "body": "Chú thích được tự động ghi và bản cắt 9:16 sẵn sàng xuất bản, có kích thước dành cho TikTok và Câu chuyện ngay khi lấy ra khỏi hộp."
+        }
+      },
+      "modelsKicker": "Công cụ kết xuất biên giới",
+      "modelsTitle": "Được kết xuất bằng Seedance 2.0",
+      "modelsSubtitle": "Lumi hiển thị mọi nhịp điệu với Seedance 2.0 — và tập lệnh của bạn sẽ tiếp tục khi có mẫu mới.",
+      "models": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Trực tiếp",
+          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm và hình đại diện — công cụ kết xuất của Lumi cho từng nhịp."
+        },
+        "more": {
+          "name": "Thêm nữa trên đường đi",
+          "tag": "Sớm thôi",
+          "desc": "Chúng tôi đang bổ sung thêm các mô hình video tiên tiến khi chúng chứng tỏ được điều đó — kịch bản và nhịp điệu của bạn sẽ được tiếp tục."
+        }
+      },
+      "useCasesKicker": "Nó dành cho ai",
+      "useCasesTitle": "Dành cho tất cả những người bán hàng bằng video",
+      "useCases": {
+        "sellers": {
+          "title": "Người bán",
+          "body": "Chia tỷ lệ danh mục của bạn — một video chuyển đổi cho mọi SKU mà không cần studio."
+        },
+        "creators": {
+          "title": "Người sáng tạo",
+          "body": "Quay nội dung TikTok Mua sắm trong vài phút và duy trì chuỗi bài đăng của bạn."
+        },
+        "brands": {
+          "title": "Thương hiệu",
+          "body": "Luôn giữ vững thương hiệu qua hàng trăm mẫu quảng cáo độc đáo, tất cả cùng một lúc."
+        },
+        "agencies": {
+          "title": "Đại lý",
+          "body": "Phục vụ mọi khách hàng với số lượng lớn và chất lượng mà bạn không cần phải trông trẻ."
+        }
+      },
+      "stats": {
+        "ways": {
+          "value": "5 cách",
+          "label": "để bắt đầu: Amazon, Shopee, TikTok Shop, cửa hàng của bạn hoặc ảnh"
+        },
+        "ratio": {
+          "value": "9:16",
+          "label": "sẵn sàng xuất bản cho TikTok & Reels mọi lúc"
+        },
+        "credit": {
+          "value": "1 tín chỉ",
+          "label": "= 1 giây video — chỉ trả tiền cho những gì bạn hiển thị"
+        },
+        "spend": {
+          "value": "$0",
+          "label": "hiển thị chi tiêu cho đến khi bạn phê duyệt nhịp đập"
+        }
+      },
+      "pricingKicker": "Định giá",
+      "pricingTitle": "Bắt đầu miễn phí. Chia tỷ lệ khi nó hoạt động.",
+      "pricingSubtitle": "Dựa trên tín dụng - 1 tín dụng = 1 giây của video. Video đầu tiên của bạn miễn phí; không có thẻ tín dụng để bắt đầu.",
+      "mostPopular": "Phổ biến nhất",
+      "pricingTiers": {
+        "creator": {
+          "name": "Người sáng tạo",
+          "price": "$29",
+          "note": "/ tháng",
+          "features": [
+            "≈ 3 video / tháng · 75 tín chỉ",
+            "Không có hình mờ",
+            "Đánh giá từng nhịp",
+            "Chế độ Avatar + sản phẩm"
+          ],
+          "cta": "Bắt đầu tạo"
+        },
+        "pro": {
+          "name": "chuyên nghiệp",
+          "price": "$79",
+          "note": "/ tháng",
+          "features": [
+            "≈ 10 video / tháng · 200 tín chỉ",
+            "Mọi thứ trong Creator",
+            "Ưu tiên hơn các kết xuất miễn phí",
+            "720p · xuất 9:16"
+          ],
+          "cta": "Bắt đầu chuyên nghiệp"
+        },
+        "scale": {
+          "name": "quy mô",
+          "price": "$199",
+          "note": "/ tháng",
+          "features": [
+            "≈ 25 video / tháng · 500 tín chỉ",
+            "Mọi thứ trong Pro",
+            "Để đăng bài liên tục"
+          ],
+          "cta": "Bắt đầu thang âm"
+        }
+      },
+      "pricingFooter": "Video đầu tiên <signup> của bạn là miễn phí</signup> — không có thẻ. Cần thang đầy đủ? <plans>Xem tất cả các gói →</plans>",
+      "faqKicker": "Câu hỏi thường gặp",
+      "faqTitle": "Câu hỏi, câu trả lời",
+      "finalCtaTitle": "Sản phẩm bán chạy tiếp theo của bạn chỉ cách một liên kết sản phẩm.",
+      "finalCtaSubtitle": "Làm cho video dừng cuộn đầu tiên của bạn trở nên miễn phí. Không có máy ảnh, không có trình chỉnh sửa, không có trang trống.",
+      "finalCtaStartFree": "Bắt đầu tạo miễn phí",
+      "finalCtaSeePricing": "Xem giá"
+    },
+    "heroMock": {
+      "caption": "tiện ích trị giá 24 đô la này đã bán hết <highlight>3 lần</highlight> 👀",
+      "shopNow": "Mua sắm ngay · $23,99",
+      "productName": "Súng mát xa mini",
+      "productMeta": "23,99 USD · 30% hoa hồng.",
+      "sold": "12.4k bán/tháng",
+      "beatReview": "Đánh giá đánh giá",
+      "beatHook": "Móc",
+      "beatProof": "Bằng chứng",
+      "beatOffer": "ưu đãi",
+      "beatAuto": "tự động",
+      "beatOk": "được",
+      "renderedWith": "Kết xuất với"
+    },
+    "features": {
+      "header": {
+        "kicker": "Tính năng",
+        "title": "Toàn bộ quy trình làm việc của video,",
+        "highlight": "xử lý.",
+        "subtitle": "Từ tìm nguồn cung ứng sản phẩm đến bản cắt sẵn sàng xuất bản — không cần kết hợp năm công cụ lại với nhau."
+      },
+      "pipeline": {
+        "find": "Tìm",
+        "deconstruct": "Giải cấu trúc",
+        "script": "kịch bản",
+        "generate": "Tạo"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "Nguồn",
+          "title": "Liên kết tới Video",
+          "body": "Dán liên kết sản phẩm từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Lumi đọc sản phẩm, góc nhìn và điểm kiểm chứng của nó, sau đó tự động xử lý việc đóng khung, kịch bản, giọng nói và chỉnh sửa. Sản phẩm của bạn được giữ kín cho bạn.",
+          "bullets": [
+            "Bất kỳ liên kết nào - Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn",
+            "Hoặc tải lên hình ảnh sản phẩm của riêng bạn",
+            "Hoặc duyệt qua thị trường các sản phẩm đang thịnh hành để tìm ý tưởng"
+          ]
+        },
+        "scripts": {
+          "kicker": "kịch bản",
+          "title": "Kịch bản dựa trên mẫu",
+          "body": "Trước khi viết một từ, Lumi nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và trích xuất mô hình cấu trúc — hình móc câu, bằng chứng và CTA thực sự chuyển đổi. Tập lệnh của bạn được xây dựng trên đó, không bao giờ là một trang trống.",
+          "bullets": [
+            "Tìm hiểu cấu trúc từ những người chiến thắng tự nhiên được lọc trong danh mục của bạn",
+            "Nhịp đập móc / bằng chứng / chào hàng, không thực hiện sao chép",
+            "Ngôn ngữ khán giả được mô phỏng từ những người biểu diễn hàng đầu"
+          ]
+        },
+        "review": {
+          "kicker": "Kiểm soát",
+          "title": "Đánh giá từng nhịp",
+          "body": "Lumi tạo hình ảnh tham chiếu cho mỗi nhịp đầu tiên. Phê duyệt những bức ảnh bạn yêu thích, tạo lại những bức ảnh bạn không thích — và chỉ khi đó nó mới tiêu tốn thời gian kết xuất. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
+          "bullets": [
+            "Khung tham chiếu cho mỗi lần chụp trước khi kết xuất bất kỳ kết xuất nào",
+            "Phê duyệt hoặc tái tạo, đánh bại từng nhịp",
+            "QA tự động tùy chọn cho luồng không cần nhấp chuột"
+          ]
+        },
+        "modes": {
+          "kicker": "định dạng",
+          "title": "Chế độ hình đại diện và sản phẩm",
+          "body": "Chọn một người thuyết trình AI nói chuyện với máy ảnh hoặc một buổi giới thiệu rõ ràng chỉ dành cho sản phẩm — tám kiểu được tạo sẵn bao gồm phần giới thiệu, trình diễn, lời chứng thực, mở hộp và các đoạn cắt tập trung vào ưu đãi.",
+          "bullets": [
+            "Hình đại diện AI hoặc chỉ dành cho sản phẩm",
+            "8 phong cách được điều chỉnh cho thương mại",
+            "Độ dài 10–30 giây, 9:16 bản địa"
+          ]
+        },
+        "qa": {
+          "kicker": "chất lượng",
+          "title": "QA đối thoại tự động",
+          "body": "Sau khi mỗi nhịp hiển thị, Whisper sẽ ghi lại lời thoại và kiểm tra nó với kịch bản, gắn cờ trôi dạt. Giọng nói luôn nói lên những gì nó phải nói — không có bất ngờ nào ngoài kịch bản.",
+          "bullets": [
+            "Phiên âm thì thầm trên mỗi dòng được hiển thị",
+            "Điểm trôi so với kịch bản dự định",
+            "Bắt âm thanh ngoài kịch bản trước khi bạn đăng"
+          ]
+        },
+        "publish": {
+          "kicker": "tàu",
+          "title": "Chú thích & xuất bản",
+          "body": "Chú thích được ghi vào và phần cắt có kích thước 9:16 dành cho TikTok và Câu chuyện — sẵn sàng tải xuống hoặc đánh dấu là đã đăng để số liệu thống kê của bạn luôn gọn gàng.",
+          "bullets": [
+            "Chú thích tự động ghi",
+            "Xuất bản 9:16 sẵn sàng",
+            "Bản nhạc đã đăng so với bản nhạc nháp trong Video của tôi"
+          ]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "Người mẫu",
+        "title": "Một studio, biên giới của",
+        "highlight": "AI video.",
+        "subtitle": "Lumi hiển thị mọi nhịp điệu với Seedance 2.0 — và tập lệnh của bạn sẽ tiếp tục khi có mẫu mới."
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Trực tiếp",
+          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm và hình đại diện — công cụ kết xuất của Lumi cho từng nhịp, với âm thanh được tạo ra trên mỗi lần chụp.",
+          "bestFor": [
+            "Chuyển động của sản phẩm",
+            "Avatar nói chuyện",
+            "Tốc độ"
+          ]
+        },
+        "more": {
+          "name": "Thêm nữa trên đường đi",
+          "tag": "Sớm thôi",
+          "desc": "Chúng tôi đang bổ sung thêm các mô hình video biên giới khi chúng chứng minh được điều đó. Các tập lệnh và nhịp được phê duyệt của bạn không phụ thuộc vào mô hình nên chúng sẽ tiếp tục mà không cần làm lại.",
+          "bestFor": [
+            "Lộ trình",
+            "Không làm lại"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "Điều chỉnh theo nhịp",
+          "body": "Lumi đặt chuyển động, độ dài và khung hình cho mỗi cảnh quay để mỗi nhịp thể hiện tốt nhất — bạn không bao giờ phải loay hoay với các cài đặt mô hình bằng tay."
+        },
+        "carriesOver": {
+          "title": "Công việc của bạn tiếp tục",
+          "body": "Các tập lệnh và nhịp được phê duyệt không phụ thuộc vào mô hình. Khi có mô hình mới, video của bạn có thể sử dụng mô hình đó mà không cần làm lại."
+        },
+        "oneBill": {
+          "title": "Một studio, một hóa đơn",
+          "body": "Không cần phải sử dụng các tài khoản hoặc tín dụng mô hình riêng biệt — tất cả đều có trong Lumi."
+        }
+      },
+      "ctaTitle": "Kết xuất với các mô hình tốt nhất — mà không cần phải bận rộn."
+    },
+    "about": {
+      "header": {
+        "kicker": "Giới thiệu",
+        "title": "Chúng tôi giúp bạn bán hàng bằng video —",
+        "highlight": "không có studio.",
+        "subtitle": "Lumi là sản phẩm Sellcast. Chúng tôi biến bất kỳ sản phẩm nào thành video có thể mua được, dừng cuộn, dựa trên những gì đã chiến thắng."
+      },
+      "intro1": "Video dạng ngắn hiện là mặt tiền cửa hàng — nhưng hầu hết người bán không có thời gian để quay phim, chỉnh sửa và thử nghiệm cách tìm người chiến thắng. Các công cụ AI thông thường sẽ lấp đầy khoảng trống bằng nội dung có cảm giác giống AI.",
+      "intro2": "Lumi đi theo một con đường khác. Trước khi viết kịch bản, nó sẽ nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và tìm hiểu cấu trúc <em></em> chuyển đổi — sau đó viết kịch bản, bảng phân cảnh và hiển thị video mà bạn có thể xem lại từng nhịp và xuất xưởng trong vài phút.",
+      "values": {
+        "grounded": {
+          "title": "Có căn cứ, không đoán",
+          "body": "Chúng tôi tìm hiểu từ những gì thực sự chuyển đổi trong một danh mục trước khi chúng tôi tạo ra một thứ."
+        },
+        "quality": {
+          "title": "Chất lượng hơn số lượng",
+          "body": "Quảng cáo mang lại cảm giác tự nhiên giúp dừng cuộn — không phải là công cụ bổ sung AI chung chung."
+        },
+        "control": {
+          "title": "Bạn luôn kiểm soát",
+          "body": "Xem lại từng nhịp. Không có gì làm mất thời gian kết xuất mà không có sự đăng xuất của bạn (trừ khi bạn muốn)."
+        },
+        "sellers": {
+          "title": "Được xây dựng cho người bán",
+          "body": "Dành cho những người muốn bán hàng hơn phim — những người sáng tạo riêng lẻ cho các đại lý."
+        }
+      },
+      "contact": "Bạn muốn nói chuyện về quan hệ đối tác, báo chí hoặc doanh nghiệp? <email>hello@sellcast.ai</email>"
+    },
+    "blog": {
+      "title": "Blog Lumi sắp ra mắt",
+      "body": "Sách hướng dẫn về mô hình lan truyền, điểm thu hút chuyển đổi và cách những người bán hàng hàng đầu mở rộng quy mô video dạng ngắn. Hãy là người đầu tiên đọc nó.",
+      "startFree": "Bắt đầu tạo miễn phí",
+      "explore": "Khám phá các tính năng"
+    },
+    "careers": {
+      "title": "Chúng tôi đang xây dựng tương lai của video thương mại",
+      "body": "Chúng tôi là một nhóm nhỏ đang di chuyển nhanh chóng. Chưa có vai trò mở nào được đăng - nhưng nếu bạn xuất sắc về AI, video hoặc phát triển, chúng tôi rất mong nhận được phản hồi từ bạn.",
+      "cta": "Giới thiệu bản thân"
+    },
+    "metadata": {
+      "features": {
+        "title": "Tính năng",
+        "description": "Mọi thứ Lumi thực hiện - liên kết tới video, tập lệnh dựa trên mẫu, đánh giá từng nhịp, chế độ hình đại diện và sản phẩm, QA đối thoại tự động, chú thích và xuất bản."
+      },
+      "models": {
+        "title": "Người mẫu",
+        "description": "Lumi hôm nay kết xuất với Seedance 2.0 và sắp ra mắt thêm nhiều mẫu video tiên tiến hơn. Mỗi lần chụp đều có cài đặt hiển thị tốt nhất."
+      },
+      "pricing": {
+        "title": "Định giá",
+        "description": "Bắt đầu miễn phí, mở rộng quy mô khi nó hoạt động. Giá Lumi dựa trên tín dụng - 1 tín dụng = 1 giây video. Miễn phí (video đầu tiên), Creator, Pro, Scal và Enterprise. Không có thẻ tín dụng để bắt đầu; tiết kiệm hàng năm ~ 20%."
+      },
+      "about": {
+        "title": "Giới thiệu",
+        "description": "Lumi là sản phẩm Sellcast giúp người bán và người sáng tạo biến sản phẩm thành video có thể mua được khi cuộn - dựa trên mô hình lan truyền thực sự."
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "careers": {
+        "title": "Nghề nghiệp"
+      }
+    }
+  }
+}

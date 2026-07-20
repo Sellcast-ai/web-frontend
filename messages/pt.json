@@ -1,0 +1,1220 @@
+{
+  "app": {
+    "toasts": {
+      "importSucceeded": "Importou {count, plural, one {# produto} other {# produtos}} da sua loja.",
+      "updateLikeFailed": "Não foi possível atualizar o like. Por favor, tente novamente.",
+      "saveAvatarFailed": "Não foi possível salvar o avatar.",
+      "deleteAvatarFailed": "Não foi possível excluir o avatar.",
+      "startImportFailed": "Não foi possível iniciar a importação. Por favor, tente novamente.",
+      "saveProductFailed": "Não foi possível salvar o produto. Por favor, tente novamente.",
+      "startVideoFailed": "Não foi possível iniciar o vídeo. Por favor, tente novamente.",
+      "approveShotFailed": "Não foi possível aprovar a foto. Por favor, tente novamente.",
+      "regenerateShotFailed": "Não foi possível regenerar o tiro. Por favor, tente novamente.",
+      "approveStoryboardFailed": "Não foi possível aprovar o storyboard. Por favor, tente novamente.",
+      "saveStoryboardEditsFailed": "Não foi possível salvar suas edições. Por favor, tente novamente.",
+      "retryJobFailed": "Não foi possível tentar novamente o trabalho. Por favor, tente novamente.",
+      "saveDisplayNameFailed": "Não foi possível salvar seu nome de exibição. Por favor, tente novamente.",
+      "importPartial": "{count} importado de seus produtos (tampa de catálogo). O resto pode ser adicionado por pasta.",
+      "importFailed": "A importação não terminou. Por favor, tente novamente.",
+      "storyboardSaved": "Storyboard salvo.",
+      "markedPosted": "Marcado como postado.",
+      "recordPostedFailed": "Não foi possível gravar isso. Por favor, tente novamente."
+    },
+    "nav": {
+      "marketplace": "Mercado",
+      "products": "Meus produtos",
+      "avatars": "Avatares",
+      "videos": "Meus vídeos",
+      "profile": "Perfil",
+      "newVideo": "Novo vídeo",
+      "new": "Novo",
+      "signedIn": "Conectado",
+      "logOut": "Sair"
+    },
+    "categories": {
+      "beautyPersonalCare": "Beleza e cuidados pessoais",
+      "healthWellness": "Saúde e bem-estar",
+      "womensFashion": "Moda Feminina",
+      "sportsOutdoors": "Esportes e atividades ao ar livre",
+      "homeTextiles": "Têxteis Domésticos",
+      "householdEssentials": "Fundamentos domésticos",
+      "mobileElectronics": "Celulares e Eletrônicos",
+      "foodBeverage": "Alimentos e Bebidas",
+      "mensFashion": "Moda Masculina",
+      "toysHobbies": "Brinquedos e passatempos"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "Comprador",
+      "tiktokShop": "Loja TikTok",
+      "walmart": "Wal-Mart",
+      "lazada": "Lazada",
+      "aliexpress": "AliExpress",
+      "temu": "Temu",
+      "alibaba": "Alibaba",
+      "taobao": "Taobao",
+      "mercadolibre": "Mercado Livre",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "Loja virtual",
+      "manual": "Manuais"
+    },
+    "productCard": {
+      "save": "Salvar",
+      "unsave": "Cancelar salvamento",
+      "productFallback": "Produto",
+      "commissionShort": "{rate} com.",
+      "soldPerMonth": "{count} vendido/mês",
+      "creators": "Criadores de {count}",
+      "source": {
+        "amazon": "De Amazon",
+        "shopee": "Do Shopee",
+        "tiktokShop": "Da loja TikTok",
+        "walmart": "Do Wal-Mart",
+        "lazada": "De Lazada",
+        "aliexpress": "Do AliExpress",
+        "temu": "De Temu",
+        "alibaba": "Do Alibaba",
+        "taobao": "De Taobao",
+        "mercadolibre": "Do Mercado Livre",
+        "etsy": "Do Etsy",
+        "ebay": "Do eBay",
+        "shopify": "De Shopify",
+        "generic": "Da sua loja",
+        "manual": "Adicionado por você"
+      }
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "Introdução falando",
+        "avatarDemoExplainer": "Explicador de demonstração",
+        "avatarTestimonial": "Depoimento",
+        "avatarHostProduct": "Anfitrião + produto",
+        "productCleanShowcase": "Vitrine limpa",
+        "productFeatureHighlights": "Destaques de recursos",
+        "productUnboxing": "Desembalagem",
+        "productOfferFocused": "Oferta focada"
+      }
+    },
+    "marketplace": {
+      "title": "Mercado",
+      "subtitle": "Produtos em alta da loja TikTok - escolha um para transformar em um vídeo.",
+      "searchPlaceholder": "Pesquise produtos - ou cole qualquer link de produto (Amazon, Shopee, TikTok Shop…)",
+      "linkCta": "Faça um vídeo a partir deste link – Lumi lerá a página do produto",
+      "allCategories": "Todos",
+      "loadMore": "Carregar mais",
+      "empty": {
+        "title": "Nenhum produto encontrado",
+        "description": "Tente uma pesquisa ou categoria diferente."
+      }
+    },
+    "products": {
+      "title": "Meus produtos",
+      "subtitle": "Seus próprios produtos – colados de um link ou carregados. Só você pode ver isso.",
+      "addProduct": "Adicionar produto",
+      "pastePlaceholder": "Cole o link de um produto – Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify ou qualquer loja",
+      "readLink": "Ler link",
+      "emptyTitle": "Nenhum produto ainda",
+      "emptyDescription": "Cole o link de um produto acima ou adicione um das fotos e transforme-o em um vídeo no Studio."
+    },
+    "productDetail": {
+      "notFound": "Produto não encontrado.",
+      "backToMarketplace": "De volta ao mercado",
+      "marketplace": "Mercado",
+      "productFallback": "Produto",
+      "save": "Salvar",
+      "unsave": "Cancelar salvamento",
+      "mom": "{percent} MoM",
+      "byShop": "por {shop}",
+      "commission": "Comissão {rate}",
+      "creatorHook": "Gancho do criador",
+      "createVideo": "Crie um vídeo deste produto",
+      "metrics": {
+        "monthlySales": "Vendas mensais",
+        "totalRevenue": "Receita total",
+        "activeCreators": "Criadores ativos",
+        "totalViews": "Total de visualizações"
+      }
+    },
+    "videos": {
+      "title": "Meus vídeos",
+      "subtitle": "Tudo o que você gerou com Lumi.",
+      "newVideo": "Novo vídeo",
+      "videoFallback": "Vídeo",
+      "empty": {
+        "title": "Ainda não há vídeos",
+        "description": "Escolha um produto em alta e Lumi o transformará em seu primeiro vídeo de parar a rolagem.",
+        "browseMarketplace": "Navegar no mercado"
+      }
+    },
+    "avatars": {
+      "title": "Avatares",
+      "subtitle": "O rosto que apresenta seu produto nos vídeos AI Avatar. Faça upload do seu próprio personagem ou escolha um personagem digital.",
+      "yourAvatars": "Seus avatares",
+      "emptyYourAvatars": "Nenhum ainda – carregue uma foto acima para usar um rosto específico em seus vídeos.",
+      "digitalCharacters": "Personagens digitais",
+      "digitalComingSoon": "Uma biblioteca de apresentadores digitais prontos está chegando – rostos consistentes e licenciados que você pode inserir em qualquer vídeo sem enviar uma foto.",
+      "upload": {
+        "notImageError": "Isso não é uma imagem.",
+        "tooLargeError": "A imagem acabou {max}MB.",
+        "addPhoto": "Adicionar foto",
+        "namePlaceholder": "Nomeie este avatar (por exemplo, “Maya - fundador”)",
+        "consent": "Tenho o direito de usar a imagem dessa pessoa em vídeos (sou eu ou tenho a permissão dela).",
+        "saveAvatar": "Salvar avatar",
+        "clear": "Limpar"
+      },
+      "card": {
+        "deleteAvatar": "Excluir avatar",
+        "deleteTitle": "Excluir este avatar?",
+        "deleteDescription": "“{name}” será removido dos seus avatares. Os vídeos que você já fez com ele não são afetados.",
+        "cancel": "Cancelar",
+        "delete": "Excluir"
+      }
+    },
+    "profile": {
+      "title": "Perfil",
+      "videosCreated": "Vídeos criados",
+      "readyToPublish": "Pronto para publicar",
+      "thisMonth": "Este mês",
+      "usageSummary": "{used} de créditos {limit} usados · Plano {plan} · redefine {date}",
+      "creditNote": "1 crédito = 1 segundo de vídeo",
+      "creditsLeft": "esquerda",
+      "limitHit": "Você atingiu seu limite mensal.",
+      "seePlans": "Ver planos",
+      "forMore": "para mais.",
+      "displayName": "Nome de exibição",
+      "save": "Salvar",
+      "saved": "Salvo",
+      "connectedAccounts": "Contas conectadas",
+      "appearance": "Aparência",
+      "appearanceDescription": "Sistema, claro ou escuro – corresponde ao aplicativo Lumi.",
+      "logOut": "Sair"
+    },
+    "productsNew": {
+      "startTitle": "Adicionar um produto",
+      "startSubtitle": "Cole qualquer link de produto – Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay ou sua própria loja – ou comece pelas fotos. Lumi lê a página; você confirma antes de qualquer coisa ser renderizada.",
+      "productLinkPlaceholder": "https://… link do produto",
+      "readLink": "Ler link",
+      "addManuallyInstead": "Adicione-o manualmente →",
+      "or": "ou",
+      "startFromPhotos": "Comece pelas fotos",
+      "startFromPhotosDescription": "Deixe fotos do produto aqui ou clique para navegar; descreva-o na próxima etapa.",
+      "startFromScratch": "Comece do zero",
+      "startFromScratchDescription": "Digite você mesmo os detalhes e adicione fotos à medida que avança.",
+      "startOver": "Recomeçar",
+      "detailsTitle": "Verifique os detalhes",
+      "detailsSubtitle": "É nisso que o vídeo será baseado – 10 segundos aqui salvam uma renderização ruim.",
+      "removePhoto": "Remover foto",
+      "addPhoto": "Adicionar",
+      "saveAndMakeVideo": "Salve e faça um vídeo",
+      "needPhoto": "Adicione pelo menos uma foto real do produto primeiro.",
+      "upload": {
+        "notImageError": "{filename} não é uma imagem.",
+        "tooLargeError": "{filename} acabou {max}MB."
+      },
+      "fields": {
+        "title": "Título",
+        "titlePlaceholder": "Nome do produto",
+        "description": "Descrição",
+        "descriptionPlaceholder": "O que é, para quem serve, por que é bom – apenas fatos, o roteiro é escrito a partir disso.",
+        "category": "Categoria",
+        "photos": "Fotos · {count} selecionado",
+        "photosHint": "A primeira foto selecionada é o herói em torno do qual o vídeo foi construído. Desmarque tabelas de tamanhos e banners. Arraste e solte fotos em qualquer lugar desta grade."
+      },
+      "storeImport": {
+        "importingTitle": "Importando sua loja",
+        "importingProgress": "{upserted} importado de produtos ~{found} até agora - isso continua em segundo plano.",
+        "wrappingUp": "Concluindo…",
+        "importingLabel": "Importando",
+        "previewFound": "Encontramos produtos {count} de {domain}",
+        "importAllProducts": "Importe todos os produtos",
+        "tryDifferentStore": "Experimente uma loja diferente",
+        "placeholder": "your-store.myshopify.com – importe toda a sua loja",
+        "preview": "Visualização"
+      }
+    },
+    "studio": {
+      "title": "Estúdio de vídeo",
+      "subtitle": "Lumi cria scripts e renderiza um vídeo deste produto – defina a direção.",
+      "loading": "Carregando…",
+      "sections": {
+        "vibe": "1 · Qual é a vibe?",
+        "mode": "2 · Modo",
+        "presenter": "Apresentador",
+        "duration": "3 · Duração",
+        "model": "Modelo",
+        "resolution": "Resolução",
+        "language": "4 · Idioma",
+        "review": "5 · Revisão"
+      },
+      "vibes": {
+        "premiumClean": {
+          "label": "Premium e limpo",
+          "blurb": "Lento, elegante, controlado."
+        },
+        "funFast": {
+          "label": "Divertido e rápido",
+          "blurb": "Rápido, brincalhão e com muita energia."
+        },
+        "cozyPersonal": {
+          "label": "Aconchegante e pessoal",
+          "blurb": "Caloroso, íntimo, como um amigo."
+        },
+        "boldPunchy": {
+          "label": "Ousado e vigoroso",
+          "blurb": "Alto, rápido, impossível de passar."
+        },
+        "cleanDemo": {
+          "label": "Demonstração limpa",
+          "blurb": "Estável e claro – o produto fala."
+        }
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "Avatar de IA",
+          "blurb": "Um apresentador fala para a câmera."
+        },
+        "productOnly": {
+          "label": "Somente produto",
+          "blurb": "Sem rosto – apenas o produto."
+        }
+      },
+      "presenter": {
+        "auto": "Automático",
+        "autoSublabel": "IA escolhe um criador",
+        "manageAvatars": "Gerenciar avatares →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "Mais recente · até 1080p"
+        }
+      },
+      "resolutions": {
+        "p480": {
+          "label": "480p",
+          "blurb": "Rascunho · mais barato"
+        },
+        "p720": {
+          "label": "720p",
+          "blurb": "HD · padrão"
+        },
+        "p1080": {
+          "label": "1080p",
+          "blurb": "Full HD · precisa de Seedance 2.0"
+        }
+      },
+      "durationSeconds": "{duration}s",
+      "language": {
+        "comingSoonTitle": "Em breve",
+        "soonBadge": "em breve"
+      },
+      "reviewDescription": "Lumi mostrará o storyboard antes de gastar qualquer coisa – revise e aprove antes que qualquer imagem ou vídeo seja gerado.",
+      "summary": {
+        "vibe": "Vibração",
+        "mode": "Modo",
+        "length": "Comprimento",
+        "model": "Modelo",
+        "resolution": "Resolução",
+        "language": "Idioma",
+        "format": "Formato",
+        "review": "Revisão",
+        "storyboard": "Roteiro"
+      },
+      "usageSummary": "{remaining} dos créditos {limit} restantes este mês · este vídeo usa {duration}",
+      "generateVideo": "Gerar vídeo",
+      "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
+      "seePlans": "Ver planos",
+      "pickProduct": {
+        "title": "Escolha um produto primeiro",
+        "description": "Escolha um produto do mercado e Lumi o transformará em um vídeo de parar a rolagem.",
+        "browseMarketplace": "Navegar no mercado"
+      }
+    },
+    "jobs": {
+      "backToVideos": "Meus vídeos",
+      "videoFallback": "Seu vídeo",
+      "styles": {
+        "avatarTalkingIntro": "Introdução falando",
+        "avatarDemoExplainer": "Explicador de demonstração",
+        "avatarTestimonial": "Depoimento",
+        "avatarHostProduct": "Anfitrião + produto",
+        "productCleanShowcase": "Vitrine limpa",
+        "productFeatureHighlights": "Destaques de recursos",
+        "productUnboxing": "Desembalagem",
+        "productOfferFocused": "Oferta focada"
+      },
+      "live": {
+        "updated": "Ao vivo · atualizado {time}",
+        "justNow": "agora mesmo",
+        "secondsAgo": "{seconds}s atrás"
+      },
+      "fullScript": {
+        "view": "Ver roteiro completo",
+        "title": "Roteiro completo",
+        "caption": "Legenda:"
+      },
+      "shotLabels": {
+        "hook": "Gancho",
+        "proof": "Prova",
+        "offer": "Oferta",
+        "cta": "CTA",
+        "shot": "Tiro {number}"
+      },
+      "working": {
+        "renderingBeats": "Renderizando suas batidas…",
+        "writingScript": "Escrevendo seu roteiro fundamentado…",
+        "description": "Esta página é atualizada automaticamente. Você pode sair e voltar."
+      },
+      "review": {
+        "title": "Revise suas batidas",
+        "description": "Aprove cada tiro ou regenere aqueles que você não gosta. Lumi é renderizado assim que cada batida é aprovada."
+      },
+      "storyboard": {
+        "title": "Aqui está o plano para o seu vídeo",
+        "description": "Nada foi feito ainda – este é apenas o plano. Leia, altere a linha que desejar e clique em ir e Lumi cria o vídeo inteiro para você.",
+        "approveAndMake": "Aprovar e fazer meu vídeo",
+        "creditNote": "Esta é a única etapa que utiliza seus créditos.",
+        "editTitle": "Editar {label}",
+        "editFallbackTitle": "Editar foto",
+        "shotLabels": {
+          "hook": "Gancho",
+          "hookLower": "gancho",
+          "callToAction": "Chamada para ação",
+          "callToActionLower": "apelo à ação",
+          "shot": "Tiro {number}",
+          "shotLower": "tiro {number}"
+        }
+      },
+      "subjects": {
+        "heading": "Preso em cada tiro",
+        "locked": "Bloqueado"
+      },
+      "shotCard": {
+        "noSpokenLine": "Nenhuma linha falada",
+        "edit": "Editar"
+      },
+      "shotEditor": {
+        "fields": {
+          "dialogue": "O que você diz",
+          "onScreenText": "Texto na tela",
+          "technique": "Como é filmado",
+          "transition": "Corta para a próxima cena",
+          "productVisible": "Quando o produto mostra"
+        },
+        "placeholders": {
+          "dialogue": "Nenhuma linha falada para esta foto",
+          "onScreenText": "Sem legenda",
+          "technique": "Deixe Lumi escolher a foto"
+        },
+        "advanced": "Avançado",
+        "transitions": {
+          "hardCut": "Corte duro",
+          "dissolve": "Dissolver",
+          "slide": "Deslizar",
+          "fade": "Desaparecer",
+          "matchCut": "Corte correspondente"
+        },
+        "productVisibility": {
+          "start": "Produto no início",
+          "throughout": "Produto em toda parte",
+          "end": "Produto no final",
+          "none": "Nenhum produto mostrado"
+        },
+        "done": "Concluído"
+      },
+      "beatStatus": {
+        "pending": "Pendente",
+        "autoApproved": "Automático ✓",
+        "approved": "Aprovado",
+        "regenerating": "Regenerando"
+      },
+      "beatCard": {
+        "approved": "Aprovado",
+        "approve": "Aprovar",
+        "regenerate": "Regenerar"
+      },
+      "completed": {
+        "badge": "Pronto para publicar",
+        "title": "Seu vídeo está pronto 🎉",
+        "description": "Um corte de 9:16 pronto para publicação com áudio falado. Baixe-o ou marque-o como postado para manter suas estatísticas organizadas.",
+        "download": "Baixar",
+        "markPosted": "Marcar como postado"
+      },
+      "failed": {
+        "title": "Falha na geração",
+        "fallbackMessage": "Algo deu errado. Tente criá-lo novamente.",
+        "retry": "Tentar novamente",
+        "startNewVideo": "Iniciar um novo vídeo"
+      }
+    }
+  },
+  "nav": {
+    "features": "Recursos",
+    "howItWorks": "Como funciona",
+    "models": "Modelos",
+    "pricing": "Preços"
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
+  },
+  "shared": {
+    "status": {
+      "queued": "Na fila",
+      "submitted": "Enviado",
+      "rendering": "Renderização",
+      "reviewStoryboard": "Revise o storyboard",
+      "needsReview": "Precisa de revisão",
+      "ready": "Pronto",
+      "failed": "Falha"
+    },
+    "jobProgress": {
+      "script": "Roteiro",
+      "beats": "Batidas",
+      "review": "Revisão",
+      "render": "Renderizar",
+      "ready": "Pronto"
+    },
+    "subjects": {
+      "product": "Produto",
+      "host": "Anfitrião",
+      "scene": "Cena"
+    },
+    "error": {
+      "title": "Algo deu errado.",
+      "description": "Isso é por nossa conta – tente novamente e, se continuar acontecendo, volte daqui a pouco.",
+      "tryAgain": "Tente novamente",
+      "backHome": "De volta para casa"
+    },
+    "notFound": {
+      "title": "Esta página desapareceu.",
+      "description": "O link pode estar quebrado ou a página pode ter sido movida.",
+      "backHome": "De volta para casa",
+      "goToApp": "Vá para o aplicativo"
+    },
+    "overlay": {
+      "close": "Fechar"
+    },
+    "uploadProgress": {
+      "uploading": "Enviando",
+      "processing": "Processando…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "Ignorar notificação"
+    },
+    "theme": {
+      "label": "Tema",
+      "light": "Luz",
+      "system": "Sistema",
+      "dark": "Escuro"
+    }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "Do link do produto ao vídeo de parar a rolagem – em minutos.",
+      "benefitScripts": "Scripts baseados em padrões virais reais",
+      "benefitReview": "Revise cada batida antes de renderizar",
+      "benefitPublish": "Pronto para publicação 9:16 para TikTok e Momentos"
+    },
+    "metadata": {
+      "signIn": "Faça login",
+      "createAccount": "Crie sua conta"
+    },
+    "form": {
+      "loginTitle": "Bem vindo de volta",
+      "signupTitle": "Crie sua conta",
+      "loginSubtitle": "Faça login no seu estúdio Lumi.",
+      "signupSubtitle": "Comece a fazer vídeos de parar a rolagem em minutos.",
+      "continueWithGoogle": "Continuar com o Google",
+      "googleDisabledTitle": "Defina NEXT_PUBLIC_GOOGLE_CLIENT_ID para ativar o login do Google",
+      "googleSignInFailed": "O login do Google não foi concluído. Por favor, tente novamente.",
+      "separator": "ou",
+      "phoneLabel": "Número de telefone",
+      "invalidPhone": "Insira um número de telefone válido.",
+      "sendCode": "Enviar código",
+      "sendCodeFailed": "Não foi possível enviar o código.",
+      "codePlaceholder": "Código de 6 dígitos",
+      "verificationCodeLabel": "Código de verificação",
+      "devCodeAutofilled": "Modo Dev - código <code>{devCode}</code> preenchido automaticamente.",
+      "continue": "Continuar",
+      "verifyCodeFailed": "Esse código não funcionou.",
+      "alreadyHaveAccount": "Já tem uma conta?",
+      "signInLink": "Faça login",
+      "newToLumi": "Novo em Lumi?",
+      "createAccountLink": "Crie uma conta"
+    }
+  },
+  "marketing": {
+    "legal": {
+      "kicker": "Jurídico",
+      "lastUpdated": "Última atualização em 1º de junho de 2026",
+      "terms": {
+        "title": "Termos de Serviço",
+        "intro": "Estes Termos regem o uso de Lumi, um produto Sellcast. Ao criar uma conta ou usar o serviço, você concorda com estes Termos.",
+        "service": {
+          "heading": "O serviço",
+          "body": "Lumi transforma produtos em vídeos curtos usando IA. Os resultados são gerados automaticamente e podem variar em qualidade; você é responsável por revisá-los antes de publicá-los."
+        },
+        "account": {
+          "heading": "Sua conta",
+          "body": "Você deve fornecer informações precisas e manter sua conta segura. Você é responsável pelas atividades em sua conta."
+        },
+        "acceptableUse": {
+          "heading": "Uso aceitável",
+          "item1": "Não use Lumi para conteúdo ilegal, enganoso ou infrator.",
+          "item2": "Não deturpe produtos nem faça afirmações falsas.",
+          "item3": "Não abuse, faça engenharia reversa ou sobrecarregue o serviço.",
+          "item4": "Siga as regras de qualquer plataforma onde você publica (por exemplo, TikTok, Reels)."
+        },
+        "content": {
+          "heading": "Conteúdo e propriedade",
+          "yourHeading": "Seu conteúdo",
+          "yourBody": "Você retém os direitos sobre as informações e ativos do produto que fornece. Você nos concede uma licença para processá-los para entregar o serviço.",
+          "outputHeading": "Saída gerada",
+          "outputBody": "Sujeito a estes Termos e ao seu plano, você poderá usar os vídeos gerados por você para fins comerciais. Você é responsável por garantir que seu uso esteja em conformidade com as leis e políticas da plataforma aplicáveis."
+        },
+        "billing": {
+          "heading": "Assinaturas e cobrança",
+          "body": "Os planos pagos são cobrados antecipadamente de forma recorrente. Você pode alterar ou cancelar a qualquer momento; consulte nossa <refunds>Política de reembolso</refunds> para obter detalhes."
+        },
+        "disclaimers": {
+          "heading": "Isenções de responsabilidade",
+          "body": "Lumi é fornecido “como está”. Não garantimos que os vídeos gerados atingirão qualquer desempenho específico ou cumprirão as regras em evolução de cada plataforma."
+        },
+        "liability": {
+          "heading": "Limitação de responsabilidade",
+          "body": "Na medida permitida por lei, Sellcast não é responsável por danos indiretos ou consequenciais decorrentes do uso de Lumi."
+        },
+        "termination": {
+          "heading": "Rescisão",
+          "body": "Você pode parar de usar Lumi a qualquer momento. Poderemos suspender ou encerrar contas que violem estes Termos."
+        },
+        "changes": {
+          "heading": "Mudanças",
+          "body": "Poderemos atualizar estes Termos; alterações materiais serão refletidas na data acima e o uso continuado constitui aceitação."
+        },
+        "contact": {
+          "heading": "Contato",
+          "body": "Perguntas? E-mail <email>legal@sellcast.ai</email>."
+        }
+      },
+      "privacy": {
+        "title": "Política de Privacidade",
+        "intro": "Esta Política de Privacidade explica como Lumi, um produto Sellcast (“Lumi”, “nós”), coleta, usa e protege suas informações quando você usa nosso site e aplicativo. Ao usar Lumi você concorda com as práticas descritas aqui.",
+        "collect": {
+          "heading": "Informações que coletamos",
+          "account": "<strong>Dados da conta</strong> — seu número de telefone e (se fornecido) nome de exibição, e-mail e provedores de login conectados.",
+          "usage": "<strong>Dados de uso</strong> — produtos que você navega ou salva, vídeos que você gera e as escolhas que você faz no estúdio.",
+          "technical": "<strong>Dados técnicos</strong> — dispositivo, navegador, endereço IP e informações de sessão usadas para mantê-lo conectado e seguro."
+        },
+        "use": {
+          "heading": "Como usamos suas informações",
+          "item1": "Fornecer, operar e melhorar o serviço Lumi.",
+          "item2": "Para gerar os vídeos que você solicita e mostrar seu histórico.",
+          "item3": "Para autenticá-lo e protegê-lo contra abusos.",
+          "item4": "Para comunicar atualizações de serviço e responder ao suporte."
+        },
+        "sharing": {
+          "heading": "Compartilhando",
+          "body": "Não vendemos suas informações pessoais. Compartilhamos dados apenas com provedores de serviços que nos ajudam a operar Lumi (por exemplo, provedores de modelos de vídeo e fala, armazenamento em nuvem e entrega de SMS) e somente conforme necessário para fornecer o serviço ou cumprir a lei."
+        },
+        "cookies": {
+          "heading": "Cookies e sessões",
+          "body": "Usamos cookies primários para mantê-lo conectado e lembrar sua preferência de tema. Não os usamos para publicidade entre sites."
+        },
+        "retention": {
+          "heading": "Retenção de dados",
+          "body": "Retemos os dados da conta e do conteúdo enquanto sua conta estiver ativa. Você pode excluir seus vídeos a qualquer momento e solicitar a exclusão de sua conta e dos dados associados."
+        },
+        "rights": {
+          "heading": "Seus direitos",
+          "body": "Dependendo da sua região, você pode ter direitos para acessar, corrigir, exportar ou excluir seus dados pessoais. Contacte-nos para exercê-los."
+        },
+        "security": {
+          "heading": "Segurança",
+          "body": "Usamos medidas padrão do setor para proteger seus dados, incluindo transporte criptografado e credenciais com hash. Nenhum método de transmissão é perfeitamente seguro, mas trabalhamos para salvaguardar as suas informações."
+        },
+        "children": {
+          "heading": "Crianças",
+          "body": "Lumi não é direcionado a crianças menores de 13 anos (ou à idade mínima em sua jurisdição) e não coletamos seus dados intencionalmente."
+        },
+        "changes": {
+          "heading": "Mudanças",
+          "body": "Poderemos atualizar esta política de tempos em tempos. Mudanças materiais serão observadas atualizando a data acima."
+        },
+        "contact": {
+          "heading": "Contato",
+          "body": "Perguntas? E-mail <email>privacy@sellcast.ai</email>."
+        }
+      },
+      "refunds": {
+        "title": "Pagamentos e Reembolsos",
+        "intro": "Queremos que você fique feliz com Lumi. Esta política explica como funcionam o faturamento e os reembolsos.",
+        "free": {
+          "heading": "Plano grátis",
+          "body": "O plano Gratuito permite gerar seu primeiro vídeo sem nenhum custo e sem cartão de crédito, para que você possa ver o Lumi funcionando antes de pagar qualquer coisa."
+        },
+        "subscriptions": {
+          "heading": "Assinaturas",
+          "body": "Os planos pagos são cobrados antecipadamente – mensalmente ou anualmente. Você mantém o acesso até o final do período pelo qual pagou."
+        },
+        "guarantee": {
+          "heading": "Garantia de devolução do dinheiro em 7 dias",
+          "body": "Se você não estiver satisfeito dentro de 7 dias após a primeira cobrança paga, envie-nos um e-mail e reembolsaremos a cobrança integralmente."
+        },
+        "annual": {
+          "heading": "Planos anuais",
+          "body": "Os planos anuais podem ser reembolsados proporcionalmente nos primeiros 30 dias. Depois disso, você mantém o acesso até o término do prazo."
+        },
+        "cancellations": {
+          "heading": "Cancelamentos",
+          "body": "Cancele a qualquer momento da sua conta. O cancelamento interrompe cobranças futuras; não reembolsa retroativamente o período atual (exceto sob a garantia acima)."
+        },
+        "request": {
+          "heading": "Como solicitar um reembolso",
+          "body": "Envie um e-mail para <email>billing@sellcast.ai</email> do e-mail da sua conta com os detalhes da sua conta. Normalmente respondemos dentro de dois dias úteis."
+        }
+      }
+    },
+    "header": {
+      "signIn": "Faça login",
+      "startFree": "Comece gratuitamente",
+      "toggleMenu": "Alternar menu",
+      "language": "Idioma",
+      "theme": "Tema"
+    },
+    "footer": {
+      "tagline": "Lumi transforma qualquer produto em um vídeo comprável de parar a rolagem - baseado em padrões virais reais, não em suposições.",
+      "columns": {
+        "product": {
+          "title": "Produto",
+          "features": "Recursos",
+          "models": "Modelos",
+          "pricing": "Preços",
+          "marketplace": "Mercado"
+        },
+        "workflow": {
+          "title": "Fluxo de trabalho",
+          "linkToVideo": "Link para vídeo",
+          "patternScripts": "Scripts padrão",
+          "beatReview": "Revisão de batida",
+          "publish": "Publicar"
+        },
+        "company": {
+          "title": "Empresa",
+          "about": "Sobre",
+          "blog": "Blogue",
+          "careers": "Carreiras",
+          "contact": "Contato"
+        },
+        "legal": {
+          "title": "Jurídico",
+          "privacy": "Privacidade",
+          "terms": "Termos",
+          "refunds": "Reembolsos"
+        }
+      },
+      "copyright": "© {year} Sellcast. Lumi é um produto Sellcast.",
+      "madeFor": "Feito para vendedores que preferem vender do que filmar."
+    },
+    "cta": {
+      "title": "Seu próximo best-seller está a um link de produto de distância.",
+      "subtitle": "Faça seu primeiro vídeo com rolagem gratuita - sem câmera, sem editor, sem página em branco.",
+      "primaryLabel": "Comece a criar gratuitamente",
+      "seePricing": "Ver preços"
+    },
+    "faq": {
+      "q1": "Qual a diferença entre Lumi e ferramentas genéricas de vídeo de IA?",
+      "a1": "Lumi não adivinha. Antes de escrever uma única linha, ele estuda uma grande amostra de produtos orgânicos reais de melhor desempenho na categoria do seu produto e extrai o padrão estrutural - gancho, prova e formas de CTA que realmente convertem. Seu script é baseado nesse padrão, não em uma página em branco.",
+      "q2": "Preciso filmar alguma coisa ou estar na frente das câmeras?",
+      "a2": "Não. Escolha o modo AI Avatar para um vídeo conduzido pelo apresentador ou o modo Somente Produto para imagens de demonstração limpas. Lumi gera recursos visuais, voz e legendas de ponta a ponta do seu produto.",
+      "q3": "Posso revisar o vídeo antes que ele seja totalmente renderizado?",
+      "a3": "Sim – esse é o portão do Beat Review. Lumi gera primeiro uma imagem de referência para cada batida (disparo). Você aprova ou regenera cada um e só então gasta tempo de renderização. Prefere mãos livres? O Auto-QA aprova batidas para você.",
+      "q4": "Qual modelo de vídeo Lumi usa?",
+      "a4": "Lumi é renderizado com Seedance 2.0, ajustando as configurações por cena. Mais modelos de vídeo de vanguarda estão no roteiro – seus roteiros e batidas são transferidos quando novos modelos chegam.",
+      "q5": "De onde vêm os dados do produto?",
+      "a5": "Cole um link de Amazon, Shopee, TikTok Shop ou de sua própria loja - ou carregue suas próprias fotos de produto - e Lumi lê o título, a descrição e as imagens para construir. Seus produtos permanecem privados para você. Prefere ideias? Navegue pelo mercado integrado de opções de tendências.",
+      "q6": "Quanto tempo leva um vídeo?",
+      "a6": "Lumi scripts, storyboards e renderizações sem você filmar ou editar - você começa e volta para um corte finalizado e pronto para publicação. A pesquisa de padrões para uma categoria é armazenada em cache, para que os vídeos posteriores dessa categoria sejam iniciados ainda mais rápido."
+    },
+    "pricing": {
+      "header": {
+        "kicker": "Preços",
+        "title": "Comece gratuitamente. Dimensionar quando",
+        "highlight": "está funcionando.",
+        "subtitle": "Nenhum cartão de crédito para começar. Cancele a qualquer momento. O faturamento anual economiza cerca de 20%."
+      },
+      "billing": {
+        "monthly": "Mensalmente",
+        "annual": "Anual"
+      },
+      "mostPopular": "Mais popular",
+      "perMonthYearly": "/mês · faturado anualmente",
+      "tiers": {
+        "free": {
+          "name": "Grátis",
+          "note": "sem cartão",
+          "allowance": "Seu primeiro vídeo grátis",
+          "credits": "20 créditos, uma única vez",
+          "features": [
+            "720p · 9:16 exportação",
+            "Acesso ao mercado",
+            "Renderização de controle de qualidade automático",
+            "Marca d'água Lumi"
+          ],
+          "cta": "Comece gratuitamente"
+        },
+        "creator": {
+          "name": "Criador",
+          "note": "por mês",
+          "allowance": "≈ 3 vídeos/mês",
+          "credits": "75 créditos/mês",
+          "features": [
+            "Sem marca d'água",
+            "Revisão passo a passo",
+            "Avatar + modos de produto",
+            "720p · 9:16 exportação"
+          ],
+          "cta": "Iniciar Criador"
+        },
+        "pro": {
+          "name": "Pró",
+          "note": "por mês",
+          "allowance": "≈ 10 vídeos/mês",
+          "credits": "200 créditos/mês",
+          "features": [
+            "Tudo no Criador",
+            "Mais créditos, mesmo custo por vídeo",
+            "Prioridade sobre renderizações gratuitas"
+          ],
+          "cta": "Comece profissional"
+        },
+        "scale": {
+          "name": "Escala",
+          "note": "por mês",
+          "allowance": "≈ 25 vídeos/mês",
+          "credits": "500 créditos/mês",
+          "features": [
+            "Tudo em Pró",
+            "Para postagem sempre ativa",
+            "Maior volume de autoatendimento"
+          ],
+          "cta": "Escala inicial"
+        },
+        "enterprise": {
+          "name": "Empresa",
+          "priceLabel": "Vamos conversar",
+          "note": "para equipes e agências",
+          "allowance": "Volume de crédito personalizado",
+          "credits": "taxa de atacado comprometida",
+          "features": [
+            "Assentos e funções",
+            "Kits de marca",
+            "Acesso à API",
+            "SSO e suporte dedicado"
+          ],
+          "cta": "Entre em contato com vendas"
+        }
+      },
+      "creditFootnote": "1 crédito = 1 segundo de vídeo. As contagens de vídeo são aproximadas, baseadas em clipes de 20 segundos – um vídeo de 15 segundos usa menos créditos, um vídeo de 30 segundos usa mais.",
+      "everyPlanIncludes": "Todo plano inclui",
+      "included": [
+        "Scripts baseados em padrões",
+        "Revisão passo a passo",
+        "Avatar + modos de produto",
+        "Legendas queimadas",
+        "9:16 para TikTok e carretéis",
+        "Cole qualquer link de produto ou navegue no mercado"
+      ],
+      "billingQuestions": "Perguntas sobre faturamento",
+      "faq": {
+        "q1": "O que é um crédito?",
+        "a1": "1 crédito = 1 segundo de vídeo finalizado. Um vídeo de 20 segundos utiliza 20 créditos; um de 30 segundos usa 30. Você escolhe a duração e só é cobrado pelo que renderiza.",
+        "q2": "As regenerações custam créditos?",
+        "a2": "Não. Regenerar uma batida enquanto você revisa não tem custo extra — os créditos contam apenas o vídeo final renderizado.",
+        "q3": "E se eu ficar sem créditos?",
+        "a3": "Faça upgrade a qualquer momento para obter um subsídio mensal maior – aplica-se imediatamente. Os créditos são redefinidos no início de cada ciclo de faturamento.",
+        "q4": "Posso mudar de plano a qualquer momento?",
+        "a4": "A qualquer hora. As atualizações são aplicadas imediatamente; os downgrades entrarão em vigor no próximo ciclo. Anual economiza cerca de 20% em relação ao mês.",
+        "q5": "Qual modelo de renderização Lumi usa?",
+        "a5": "Lumi é renderizado com Seedance 2.0, com mais modelos sendo lançados. Ele escolhe as melhores configurações por foto."
+      }
+    },
+    "landing": {
+      "heroBadge": "Construído para TikTok e carretéis",
+      "heroTitle": "Transforme qualquer produto em um vídeo de compra <highlight> com parada de rolagem </highlight>.",
+      "heroSubtitle": "Cole qualquer link de produto – Amazon, Shopee, TikTok Shop ou sua própria loja – ou faça upload de fotos. Lumi estuda o que já está vencendo nessa categoria, cria um script de vídeo baseado no padrão, permite revisá-lo batida por batida e renderiza-o com Seedance 2.0. Em minutos, sem câmera.",
+      "heroStartFree": "Comece a criar gratuitamente",
+      "heroSeeHow": "Veja como funciona",
+      "heroCheck1": "Primeiro vídeo grátis",
+      "heroCheck2": "Sem cartão de crédito",
+      "heroCheck3": "Pronto para publicação 9:16",
+      "marquee": [
+        "Loja TikTok",
+        "Carretéis",
+        "Beleza",
+        "Casa e cozinha",
+        "Fitness",
+        "Dispositivos",
+        "Animais de estimação",
+        "Moda",
+        "Suplementos"
+      ],
+      "howKicker": "O pipeline Lumi",
+      "howTitle": "Quatro etapas, zero páginas em branco",
+      "howSubtitle": "A maioria das ferramentas começa do nada. Lumi começa com o que já está ganhando e mantém você no controle durante todo o processo de publicação.",
+      "steps": {
+        "find": {
+          "kicker": "Encontrar",
+          "title": "Comece com qualquer produto",
+          "body": "Cole um link de Amazon, Shopee, TikTok Shop ou de sua própria loja – ou faça upload de fotos. Ou navegue pelas opções de tendências no mercado."
+        },
+        "deconstruct": {
+          "kicker": "Desconstruir",
+          "title": "Lumi aprende o padrão",
+          "body": "Ele estuda cerca de 100 pessoas reais de melhor desempenho nessa categoria e extrai o gancho, a prova e a estrutura de CTA que converte."
+        },
+        "script": {
+          "kicker": "Roteiro",
+          "title": "Revise o roteiro e as batidas",
+          "body": "Um roteiro fundamentado com batidas cena a cena. Aprove ou gere novamente cada imagem de referência antes de qualquer renderização ser queimada."
+        },
+        "generate": {
+          "kicker": "Gerar",
+          "title": "Renderizar e publicar",
+          "body": "Seedance 2.0 renderiza cada batida, as legendas são gravadas e você está pronto para postar."
+        }
+      },
+      "featuresKicker": "Tudo em um estúdio",
+      "featuresTitle": "Todo o fluxo de trabalho de vídeo, gerenciado",
+      "featuresSubtitle": "Desde a origem do produto até um corte pronto para publicação – nada de juntar cinco ferramentas.",
+      "features": {
+        "linkToVideo": {
+          "title": "Link para vídeo",
+          "body": "Cole um link de Amazon, Shopee, TikTok Shop ou de sua própria loja – ou faça upload de fotos. Lumi lê o produto e lida com enquadramento, script, voz e edição automaticamente."
+        },
+        "scripts": {
+          "title": "Scripts baseados em padrões",
+          "body": "Cada script é construído a partir de uma estrutura viral real em sua categoria – aprenda o padrão, nunca copie a superfície."
+        },
+        "review": {
+          "title": "Revisão passo a passo",
+          "body": "Veja uma imagem de referência para cada foto. Aprove, ajuste ou regenere antes de gastar um segundo de tempo de renderização."
+        },
+        "modes": {
+          "title": "Avatar e modos de produto",
+          "body": "Apresentador de IA falando para a câmera ou vitrine limpa apenas de produtos — oito estilos prontos para combinar com sua oferta."
+        },
+        "qa": {
+          "title": "Controle de qualidade de diálogo automático",
+          "body": "O Whisper verifica cada linha renderizada em relação ao script e sinaliza o desvio, para que a voz sempre diga o que deveria."
+        },
+        "publish": {
+          "title": "Legendas e publicação",
+          "body": "Legendas gravadas automaticamente e um corte 9:16 pronto para publicação, dimensionado para TikTok e Momentos prontos para uso."
+        }
+      },
+      "modelsKicker": "Mecanismo de renderização de fronteira",
+      "modelsTitle": "Renderizado com Seedance 2.0",
+      "modelsSubtitle": "Lumi renderiza cada batida com Seedance 2.0 – e seus scripts são transferidos conforme novos modelos chegam.",
+      "models": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Ao vivo",
+          "desc": "Movimento rápido e realista para fotos de produtos e avatares - mecanismo de renderização do Lumi para cada batida."
+        },
+        "more": {
+          "name": "Mais a caminho",
+          "tag": "Em breve",
+          "desc": "Estamos adicionando modelos de vídeo inovadores à medida que eles se revelam – seus roteiros e batidas são transferidos."
+        }
+      },
+      "useCasesKicker": "Para quem é",
+      "useCasesTitle": "Feito para todos que vendem com vídeo",
+      "useCases": {
+        "sellers": {
+          "title": "Vendedores",
+          "body": "Amplie seu catálogo: um vídeo de conversão para cada SKU, sem estúdio."
+        },
+        "creators": {
+          "title": "Criadores",
+          "body": "Gire TikTok Compre conteúdo em minutos e mantenha viva sua sequência de postagens."
+        },
+        "brands": {
+          "title": "Marcas",
+          "body": "Mantenha a marca em centenas de criativos exclusivos, todos de uma vez."
+        },
+        "agencies": {
+          "title": "Agências",
+          "body": "Atenda cada cliente em grande volume e com qualidade, você não precisa ser babá."
+        }
+      },
+      "stats": {
+        "ways": {
+          "value": "5 maneiras",
+          "label": "para começar: Amazon, Shopee, TikTok Loja, sua loja ou fotos"
+        },
+        "ratio": {
+          "value": "9:16",
+          "label": "pronto para publicação para TikTok e Momentos, sempre"
+        },
+        "credit": {
+          "value": "1 crédito",
+          "label": "= 1 segundo de vídeo – pague apenas pelo que renderizar"
+        },
+        "spend": {
+          "value": "US$ 0",
+          "label": "renderizar gastos até aprovar as batidas"
+        }
+      },
+      "pricingKicker": "Preços",
+      "pricingTitle": "Comece gratuitamente. Dimensione quando estiver funcionando.",
+      "pricingSubtitle": "Baseado em crédito – 1 crédito = 1 segundo de vídeo. Seu primeiro vídeo é gratuito; nenhum cartão de crédito para começar.",
+      "mostPopular": "Mais popular",
+      "pricingTiers": {
+        "creator": {
+          "name": "Criador",
+          "price": "US$ 29",
+          "note": "/ mês",
+          "features": [
+            "≈ 3 vídeos/mês · 75 créditos",
+            "Sem marca d'água",
+            "Revisão passo a passo",
+            "Avatar + modos de produto"
+          ],
+          "cta": "Iniciar Criador"
+        },
+        "pro": {
+          "name": "Pró",
+          "price": "US$ 79",
+          "note": "/ mês",
+          "features": [
+            "≈ 10 vídeos/mês · 200 créditos",
+            "Tudo no Criador",
+            "Prioridade sobre renderizações gratuitas",
+            "720p · 9:16 exportação"
+          ],
+          "cta": "Comece profissional"
+        },
+        "scale": {
+          "name": "Escala",
+          "price": "US$ 199",
+          "note": "/ mês",
+          "features": [
+            "≈ 25 vídeos/mês · 500 créditos",
+            "Tudo em Pró",
+            "Para postagem sempre ativa"
+          ],
+          "cta": "Escala inicial"
+        }
+      },
+      "pricingFooter": "Seu primeiro vídeo <signup> é gratuito </signup> - sem cartão. Precisa da escada completa? <plans>Ver todos os planos →</plans>",
+      "faqKicker": "Perguntas frequentes",
+      "faqTitle": "Perguntas, respondidas",
+      "finalCtaTitle": "Seu próximo best-seller está a um link de produto de distância.",
+      "finalCtaSubtitle": "Faça seu primeiro vídeo com rolagem gratuita. Sem câmera, sem editor, sem página em branco.",
+      "finalCtaStartFree": "Comece a criar gratuitamente",
+      "finalCtaSeePricing": "Ver preços"
+    },
+    "heroMock": {
+      "caption": "este gadget de $ 24 esgotou <highlight>3 vezes</highlight> 👀",
+      "shopNow": "Compre agora · US$ 23,99",
+      "productName": "Mini pistola de massagem",
+      "productMeta": "US$ 23,99 · 30% com.",
+      "sold": "12,4 mil vendidos/mês",
+      "beatReview": "Revisão de batida",
+      "beatHook": "Gancho",
+      "beatProof": "Prova",
+      "beatOffer": "Oferta",
+      "beatAuto": "automático",
+      "beatOk": "ok",
+      "renderedWith": "Renderizado com"
+    },
+    "features": {
+      "header": {
+        "kicker": "Recursos",
+        "title": "Todo o fluxo de trabalho de vídeo,",
+        "highlight": "manipulado.",
+        "subtitle": "Desde a origem do produto até um corte pronto para publicação – nada de juntar cinco ferramentas."
+      },
+      "pipeline": {
+        "find": "Encontrar",
+        "deconstruct": "Desconstruir",
+        "script": "Roteiro",
+        "generate": "Gerar"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "Fonte",
+          "title": "Link para vídeo",
+          "body": "Cole um link de produto de Amazon, Shopee, TikTok Shop ou de sua própria loja - ou faça upload de fotos. Lumi lê o produto, seu ângulo e seus pontos de prova e, em seguida, lida com o enquadramento, o script, a voz e a edição automaticamente. Seus produtos permanecem privados para você.",
+          "bullets": [
+            "Qualquer link – Amazon, Shopee, TikTok Shop ou sua própria loja",
+            "Ou carregue suas próprias fotos de produtos",
+            "Ou navegue no mercado de tendências em busca de ideias"
+          ]
+        },
+        "scripts": {
+          "kicker": "Roteiro",
+          "title": "Scripts baseados em padrões",
+          "body": "Antes de escrever uma palavra, Lumi estuda uma grande amostra de produtos orgânicos reais de melhor desempenho na categoria de seu produto e extrai o padrão estrutural - o gancho, a prova e as formas de CTA que realmente convertem. Seu script é baseado nisso, nunca em uma página em branco.",
+          "bullets": [
+            "Aprende a estrutura com os vencedores orgânicos filtrados em sua categoria",
+            "Batidas de gancho/prova/oferta, não execução copiada e colada",
+            "Linguagem do público modelada a partir dos melhores desempenhos"
+          ]
+        },
+        "review": {
+          "kicker": "Controle",
+          "title": "Revisão passo a passo",
+          "body": "Lumi gera primeiro uma imagem de referência para cada batida. Aprove as fotos que você adora, regenere as que não gosta - e só então isso gasta tempo de renderização. Prefere mãos livres? O Auto-QA aprova batidas para você.",
+          "bullets": [
+            "Um quadro de referência por foto antes de qualquer renderização queimar",
+            "Aprovar ou regenerar, batida por batida",
+            "Controle de qualidade automático opcional para um fluxo sem cliques"
+          ]
+        },
+        "modes": {
+          "kicker": "Formato",
+          "title": "Avatar e modos de produto",
+          "body": "Escolha um apresentador de IA falando para a câmera ou uma vitrine limpa apenas de produtos – oito estilos prontos que abrangem introduções faladas, demonstrações, depoimentos, unboxings e cortes focados em ofertas.",
+          "bullets": [
+            "Avatar AI ou somente produto",
+            "8 estilos voltados para o comércio",
+            "Duração de 10 a 30 segundos, 9:16 nativo"
+          ]
+        },
+        "qa": {
+          "kicker": "Qualidade",
+          "title": "Controle de qualidade de diálogo automático",
+          "body": "Após a renderização de cada batida, o Whisper transcreve a linha falada e a compara com o script, sinalizando o desvio. A voz sempre diz o que deveria – sem surpresas fora do roteiro.",
+          "bullets": [
+            "Transcrição sussurrada em cada linha renderizada",
+            "Pontuação de desvio em relação ao script pretendido",
+            "Captura áudio fora do script antes de você postar"
+          ]
+        },
+        "publish": {
+          "kicker": "Navio",
+          "title": "Legendas e publicação",
+          "body": "As legendas são gravadas e o corte tem tamanho 9:16 para TikTok e Momentos – prontos para download ou marcação de postagem, para que suas estatísticas permaneçam organizadas.",
+          "bullets": [
+            "Legendas gravadas automaticamente",
+            "Exportação 9:16 pronta para publicação",
+            "Acompanhar postado vs. rascunho em Meus Vídeos"
+          ]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "Modelos",
+        "title": "Um estúdio, a fronteira do",
+        "highlight": "IA de vídeo.",
+        "subtitle": "Lumi renderiza cada batida com Seedance 2.0 – e seus scripts são transferidos conforme novos modelos chegam."
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Ao vivo",
+          "desc": "Movimento rápido e realista para fotos de produtos e avatares — mecanismo de renderização do Lumi para cada batida, com áudio gerado por foto.",
+          "bestFor": [
+            "Movimento do produto",
+            "Avatar falando",
+            "Velocidade"
+          ]
+        },
+        "more": {
+          "name": "Mais a caminho",
+          "tag": "Em breve",
+          "desc": "Estamos adicionando modelos de vídeo de ponta à medida que eles são comprovados. Seus scripts e batidas aprovadas são independentes de modelo, portanto, eles são transferidos sem refazer.",
+          "bestFor": [
+            "Roteiro",
+            "Não refazer"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "Afinado por batida",
+          "body": "Lumi define o movimento, a duração e o enquadramento por cena para que cada batida tenha o melhor desempenho - você nunca mexe nas configurações do modelo manualmente."
+        },
+        "carriesOver": {
+          "title": "Seu trabalho continua",
+          "body": "Scripts e batidas aprovadas são independentes de modelo. Quando um novo modelo chega, seus vídeos podem usá-lo sem refazer."
+        },
+        "oneBill": {
+          "title": "Um estúdio, uma conta",
+          "body": "Não há malabarismos com contas ou créditos de modelo separados - está tudo dentro de Lumi."
+        }
+      },
+      "ctaTitle": "Renderize com os melhores modelos — sem muito trabalho."
+    },
+    "about": {
+      "header": {
+        "kicker": "Sobre",
+        "title": "Nós ajudamos você a vender com vídeo —",
+        "highlight": "sem o estúdio.",
+        "subtitle": "Lumi é um produto Sellcast. Transformamos qualquer produto em um vídeo que pode ser comprado de parar a rolagem, baseado no que já está ganhando."
+      },
+      "intro1": "Vídeos curtos são a vitrine agora - mas a maioria dos vendedores não tem tempo para filmar, editar e testar seu caminho até o vencedor. Ferramentas genéricas de IA preenchem a lacuna com conteúdo que parece IA.",
+      "intro2": "Lumi segue um caminho diferente. Antes de escrever um roteiro, ele estuda uma grande amostra de produtos reais e orgânicos de melhor desempenho na categoria do seu produto e aprende a estrutura <em></em> que converte - em seguida, cria scripts, storyboards e renderiza um vídeo que você pode revisar batida por batida e enviar em minutos.",
+      "values": {
+        "grounded": {
+          "title": "Aterrado, sem adivinhar",
+          "body": "Aprendemos com o que realmente é convertido em uma categoria antes de gerarmos algo."
+        },
+        "quality": {
+          "title": "Qualidade acima do volume",
+          "body": "Criativos de aparência nativa que interrompem a rolagem - não preenchimento genérico de IA."
+        },
+        "control": {
+          "title": "Você permanece no controle",
+          "body": "Revise batida por batida. Nada queima o tempo de renderização sem a sua aprovação (a menos que você queira)."
+        },
+        "sellers": {
+          "title": "Construído para vendedores",
+          "body": "Feito para pessoas que preferem vender do que filmar — criadores individuais para agências."
+        }
+      },
+      "contact": "Quer falar sobre parcerias, imprensa ou empresa? <email>hello@sellcast.ai</email>"
+    },
+    "blog": {
+      "title": "O blog Lumi estará disponível em breve",
+      "body": "Manuais sobre padrões virais, ganchos que convertem e como os principais vendedores dimensionam vídeos curtos. Seja o primeiro a lê-lo.",
+      "startFree": "Comece a criar gratuitamente",
+      "explore": "Explorar recursos"
+    },
+    "careers": {
+      "title": "Estamos construindo o futuro do vídeo comercial",
+      "body": "Somos uma equipe pequena que se move rapidamente. Nenhuma vaga aberta foi publicada ainda, mas se você for excepcional em IA, vídeo ou crescimento, adoraríamos ouvir sua opinião.",
+      "cta": "Apresente-se"
+    },
+    "metadata": {
+      "features": {
+        "title": "Recursos",
+        "description": "Tudo o que Lumi faz - link para vídeo, scripts baseados em padrões, revisão batida por batida, avatar e modos de produto, controle de qualidade de diálogo automático, legendas e publicação."
+      },
+      "models": {
+        "title": "Modelos",
+        "description": "Lumi renderiza com Seedance 2.0 hoje, com mais modelos de vídeo de ponta a caminho. Cada foto recebe as configurações que melhor a tornam."
+      },
+      "pricing": {
+        "title": "Preços",
+        "description": "Comece gratuitamente, escale quando estiver funcionando. O preço de Lumi é baseado em crédito – 1 crédito = 1 segundo de vídeo. Gratuito (primeiro vídeo), Creator, Pro, Scale e Enterprise. Nenhum cartão de crédito para começar; economia anual de aproximadamente 20%."
+      },
+      "about": {
+        "title": "Sobre",
+        "description": "Lumi é um produto Sellcast que ajuda vendedores e criadores a transformar produtos em vídeos compráveis ​​de parar a rolagem - baseados em padrões virais reais."
+      },
+      "blog": {
+        "title": "Blogue"
+      },
+      "careers": {
+        "title": "Carreiras"
+      }
+    }
+  }
+}

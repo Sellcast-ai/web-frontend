@@ -1,0 +1,1220 @@
+{
+  "app": {
+    "toasts": {
+      "importSucceeded": "스토어에서 {count, plural, one {상품 #개} other {상품 #개}}를 가져왔습니다.",
+      "updateLikeFailed": "좋아요를 업데이트할 수 없습니다. 다시 시도해 주세요.",
+      "saveAvatarFailed": "아바타를 저장할 수 없습니다.",
+      "deleteAvatarFailed": "아바타를 삭제할 수 없습니다.",
+      "startImportFailed": "가져오기를 시작할 수 없습니다. 다시 시도해 주세요.",
+      "saveProductFailed": "제품을 저장할 수 없습니다. 다시 시도해 주세요.",
+      "startVideoFailed": "동영상을 시작할 수 없습니다. 다시 시도해 주세요.",
+      "approveShotFailed": "촬영을 승인할 수 없습니다. 다시 시도해 주세요.",
+      "regenerateShotFailed": "샷을 재생성할 수 없습니다. 다시 시도해 주세요.",
+      "approveStoryboardFailed": "스토리보드를 승인할 수 없습니다. 다시 시도해 주세요.",
+      "saveStoryboardEditsFailed": "수정사항을 저장할 수 없습니다. 다시 시도해 주세요.",
+      "retryJobFailed": "작업을 다시 시도할 수 없습니다. 다시 시도해 주세요.",
+      "saveDisplayNameFailed": "표시 이름을 저장할 수 없습니다. 다시 시도해 주세요.",
+      "importPartial": "귀사 제품의 {count}를 수입했습니다(카탈로그 캡). 나머지는 붙여넣기로 추가할 수 있습니다.",
+      "importFailed": "가져오기가 완료되지 않았습니다. 다시 시도해 주세요.",
+      "storyboardSaved": "스토리보드가 저장되었습니다.",
+      "markedPosted": "게시됨으로 표시되었습니다.",
+      "recordPostedFailed": "녹음할 수 없습니다. 다시 시도해 주세요."
+    },
+    "nav": {
+      "marketplace": "마켓플레이스",
+      "products": "내 제품",
+      "avatars": "아바타",
+      "videos": "내 동영상",
+      "profile": "프로필",
+      "newVideo": "새 영상",
+      "new": "새로운",
+      "signedIn": "로그인됨",
+      "logOut": "로그아웃"
+    },
+    "categories": {
+      "beautyPersonalCare": "미용 및 개인 관리",
+      "healthWellness": "건강 및 웰빙",
+      "womensFashion": "여성 패션",
+      "sportsOutdoors": "스포츠 및 야외 활동",
+      "homeTextiles": "홈 텍스타일",
+      "householdEssentials": "가정 필수품",
+      "mobileElectronics": "모바일 및 전자제품",
+      "foodBeverage": "음식 및 음료",
+      "mensFashion": "남성 패션",
+      "toysHobbies": "장난감 및 취미"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "쇼피",
+      "tiktokShop": "TikTok 상점",
+      "walmart": "월마트",
+      "lazada": "라자다",
+      "aliexpress": "AliExpress",
+      "temu": "테무",
+      "alibaba": "알리바바",
+      "taobao": "타오바오",
+      "mercadolibre": "메르카도 리브레",
+      "etsy": "엣시",
+      "ebay": "이베이",
+      "shopify": "Shopify",
+      "generic": "웹스토어",
+      "manual": "매뉴얼"
+    },
+    "productCard": {
+      "save": "저장",
+      "unsave": "저장 취소",
+      "productFallback": "제품",
+      "commissionShort": "{rate} 통신.",
+      "soldPerMonth": "{count} 판매/월",
+      "creators": "{count} 크리에이터",
+      "source": {
+        "amazon": "Amazon에서",
+        "shopee": "Shopee에서",
+        "tiktokShop": "TikTok 상점에서",
+        "walmart": "월마트에서",
+        "lazada": "라자다에서",
+        "aliexpress": "AliExpress에서",
+        "temu": "테무에서",
+        "alibaba": "알리바바에서",
+        "taobao": "타오바오에서",
+        "mercadolibre": "메르카도 리브레에서",
+        "etsy": "Etsy에서",
+        "ebay": "이베이에서",
+        "shopify": "Shopify에서",
+        "generic": "귀하의 매장에서",
+        "manual": "내가 추가함"
+      }
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "말하는 소개",
+        "avatarDemoExplainer": "데모 설명자",
+        "avatarTestimonial": "사용후기",
+        "avatarHostProduct": "호스트 + 제품",
+        "productCleanShowcase": "깔끔한 쇼케이스",
+        "productFeatureHighlights": "기능 하이라이트",
+        "productUnboxing": "언박싱",
+        "productOfferFocused": "제안 중심"
+      }
+    },
+    "marketplace": {
+      "title": "마켓플레이스",
+      "subtitle": "인기 TikTok 제품 쇼핑 — 동영상으로 만들 제품을 선택하세요.",
+      "searchPlaceholder": "제품 검색 - 또는 제품 링크 붙여넣기(Amazon, Shopee, TikTok Shop…)",
+      "linkCta": "이 링크에서 동영상을 만드세요. Lumi가 제품 페이지를 읽습니다.",
+      "allCategories": "모두",
+      "loadMore": "더 로드하기",
+      "empty": {
+        "title": "제품을 찾을 수 없습니다",
+        "description": "다른 검색이나 카테고리를 시도해 보세요."
+      }
+    },
+    "products": {
+      "title": "내 제품",
+      "subtitle": "나만의 제품 - 링크에서 붙여넣거나 업로드합니다. 이 내용은 나만 볼 수 있습니다.",
+      "addProduct": "제품 추가",
+      "pastePlaceholder": "제품 링크 붙여넣기 — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify 또는 모든 매장",
+      "readLink": "링크 읽기",
+      "emptyTitle": "아직 제품이 없습니다",
+      "emptyDescription": "위에 제품 링크를 붙여넣거나 사진에서 링크를 추가한 다음 스튜디오에서 비디오로 변환하세요."
+    },
+    "productDetail": {
+      "notFound": "제품을 찾을 수 없습니다.",
+      "backToMarketplace": "마켓플레이스로 돌아가기",
+      "marketplace": "마켓플레이스",
+      "productFallback": "제품",
+      "save": "저장",
+      "unsave": "저장 취소",
+      "mom": "{percent} 엄마",
+      "byShop": "작성자: {shop}",
+      "commission": "{rate} 커미션",
+      "creatorHook": "크리에이터 후크",
+      "createVideo": "이 제품으로 비디오 만들기",
+      "metrics": {
+        "monthlySales": "월별매출",
+        "totalRevenue": "총수익",
+        "activeCreators": "활동적인 크리에이터",
+        "totalViews": "총 조회수"
+      }
+    },
+    "videos": {
+      "title": "내 동영상",
+      "subtitle": "Lumi로 생성한 모든 것.",
+      "newVideo": "새 영상",
+      "videoFallback": "비디오",
+      "empty": {
+        "title": "아직 동영상이 없습니다.",
+        "description": "인기 제품을 선택하면 Lumi가 해당 제품을 첫 번째 스크롤 정지 동영상으로 바꿔드립니다.",
+        "browseMarketplace": "마켓플레이스 찾아보기"
+      }
+    },
+    "avatars": {
+      "title": "아바타",
+      "subtitle": "AI 아바타 영상에서 귀하의 제품을 소개하는 얼굴입니다. 자신의 것을 업로드하거나 디지털 캐릭터를 선택하세요.",
+      "yourAvatars": "당신의 아바타",
+      "emptyYourAvatars": "아직 없습니다. 동영상에 특정 얼굴을 사용하려면 위의 사진을 업로드하세요.",
+      "digitalCharacters": "디지털 캐릭터",
+      "digitalComingSoon": "기성 디지털 발표자 라이브러리가 곧 출시됩니다. 사진을 업로드하지 않고도 어떤 비디오에든 사용할 수 있는 일관되고 라이센스가 부여된 얼굴입니다.",
+      "upload": {
+        "notImageError": "그것은 이미지가 아닙니다.",
+        "tooLargeError": "이미지가 {max}MB 이상입니다.",
+        "addPhoto": "사진 추가",
+        "namePlaceholder": "이 아바타의 이름을 지정합니다(예: \"Maya — 창립자\")",
+        "consent": "나는 이 사람의 초상을 동영상에 사용할 권리가 있습니다(나이거나 그 사람의 허락을 받았습니다).",
+        "saveAvatar": "아바타 저장",
+        "clear": "지우기"
+      },
+      "card": {
+        "deleteAvatar": "아바타 삭제",
+        "deleteTitle": "이 아바타를 삭제하시겠습니까?",
+        "deleteDescription": "\"{name}\"가 아바타에서 제거됩니다. 이미 이 기능으로 만든 동영상은 영향을 받지 않습니다.",
+        "cancel": "취소",
+        "delete": "삭제"
+      }
+    },
+    "profile": {
+      "title": "프로필",
+      "videosCreated": "제작된 동영상",
+      "readyToPublish": "게시 준비 완료",
+      "thisMonth": "이번 달",
+      "usageSummary": "사용된 {limit} 크레딧 중 {used} · {plan} 계획 · {date} 재설정",
+      "creditNote": "1크레딧 = 동영상 1초",
+      "creditsLeft": "왼쪽",
+      "limitHit": "월별 한도에 도달했습니다.",
+      "seePlans": "요금제 보기",
+      "forMore": "더 많은 것을 위해.",
+      "displayName": "표시 이름",
+      "save": "저장",
+      "saved": "저장됨",
+      "connectedAccounts": "연결된 계정",
+      "appearance": "외관",
+      "appearanceDescription": "시스템, 밝음 또는 어두움 — Lumi 앱과 일치합니다.",
+      "logOut": "로그아웃"
+    },
+    "productsNew": {
+      "startTitle": "제품 추가",
+      "startSubtitle": "Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay 또는 자체 매장 등 제품 링크를 붙여넣거나 사진에서 시작하세요. Lumi는 페이지를 읽습니다. 렌더링하기 전에 확인합니다.",
+      "productLinkPlaceholder": "https://… 제품링크",
+      "readLink": "링크 읽기",
+      "addManuallyInstead": "대신 수동으로 추가 →",
+      "or": "또는",
+      "startFromPhotos": "사진부터 시작하세요",
+      "startFromPhotosDescription": "제품 사진을 여기에 놓거나 클릭하여 찾아보세요. 다음 단계에서 설명하세요.",
+      "startFromScratch": "처음부터 시작하세요",
+      "startFromScratchDescription": "세부정보를 직접 입력하고 진행하면서 사진을 추가하세요.",
+      "startOver": "다시 시작하세요",
+      "detailsTitle": "세부정보를 확인하세요",
+      "detailsSubtitle": "이것이 비디오의 기반이 될 것입니다. 여기서 10초는 잘못된 렌더링을 저장합니다.",
+      "removePhoto": "사진 삭제",
+      "addPhoto": "추가",
+      "saveAndMakeVideo": "저장 및 동영상 만들기",
+      "needPhoto": "먼저 실제 제품 사진을 1장 이상 추가하세요.",
+      "upload": {
+        "notImageError": "{filename}는 이미지가 아닙니다.",
+        "tooLargeError": "{filename}는 {max}MB를 초과합니다."
+      },
+      "fields": {
+        "title": "제목",
+        "titlePlaceholder": "제품명",
+        "description": "설명",
+        "descriptionPlaceholder": "그것이 무엇인지, 누구를 위한 것인지, 왜 좋은지 — 사실만, 대본은 이것으로 작성되었습니다.",
+        "category": "카테고리",
+        "photos": "사진 · {count} 선택됨",
+        "photosHint": "첫 번째로 선택한 사진은 동영상의 주인공입니다. 사이즈 차트와 배너를 선택 해제하세요. 이 그리드의 아무 곳에나 사진을 드래그 앤 드롭하세요."
+      },
+      "storeImport": {
+        "importingTitle": "매장 가져오기",
+        "importingProgress": "지금까지 ~{found} 제품 중 {upserted}를 수입했습니다. 이는 백그라운드에서 계속 진행됩니다.",
+        "wrappingUp": "마무리하는 중…",
+        "importingLabel": "가져오기",
+        "previewFound": "{domain}에서 {count} 제품을 찾았습니다.",
+        "importAllProducts": "모든 제품 가져오기",
+        "tryDifferentStore": "다른 매장을 이용해 보세요",
+        "placeholder": "your-store.myshopify.com — 전체 매장 가져오기",
+        "preview": "미리보기"
+      }
+    },
+    "studio": {
+      "title": "비디오 스튜디오",
+      "subtitle": "Lumi는 이 제품의 비디오를 스크립트하고 렌더링하여 방향을 설정합니다.",
+      "loading": "로드 중…",
+      "sections": {
+        "vibe": "1 · 분위기는 어떤가요?",
+        "mode": "2 · 모드",
+        "presenter": "발표자",
+        "duration": "3 · 기간",
+        "model": "모델",
+        "resolution": "해상도",
+        "language": "4 · 언어",
+        "review": "5 · 검토"
+      },
+      "vibes": {
+        "premiumClean": {
+          "label": "프리미엄 & 클린",
+          "blurb": "느리고 우아하며 통제됩니다."
+        },
+        "funFast": {
+          "label": "재미있고 빠르다",
+          "blurb": "빠르고, 장난스럽고, 높은 에너지."
+        },
+        "cozyPersonal": {
+          "label": "아늑하고 개인적인",
+          "blurb": "친구처럼 따뜻하고 친밀합니다."
+        },
+        "boldPunchy": {
+          "label": "대담하고 펀치감 있는",
+          "blurb": "시끄럽고, 빠르고, 스크롤할 수 없습니다."
+        },
+        "cleanDemo": {
+          "label": "클린 데모",
+          "blurb": "꾸준하고 명확함 - 제품이 말을 합니다."
+        }
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "AI 아바타",
+          "blurb": "발표자가 카메라에 이야기합니다."
+        },
+        "productOnly": {
+          "label": "제품만",
+          "blurb": "얼굴은 없습니다. 제품만 있을 뿐입니다."
+        }
+      },
+      "presenter": {
+        "auto": "자동",
+        "autoSublabel": "AI가 크리에이터를 선택한다",
+        "manageAvatars": "아바타 관리 →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "최신 · 최대 1080p"
+        }
+      },
+      "resolutions": {
+        "p480": {
+          "label": "480p",
+          "blurb": "초안 · 가장 저렴"
+        },
+        "p720": {
+          "label": "720p",
+          "blurb": "HD · 표준"
+        },
+        "p1080": {
+          "label": "1080p",
+          "blurb": "풀 HD · Seedance 2.0 필요"
+        }
+      },
+      "durationSeconds": "{duration}",
+      "language": {
+        "comingSoonTitle": "곧 출시 예정",
+        "soonBadge": "곧"
+      },
+      "reviewDescription": "Lumi는 비용을 지출하기 전에 스토리보드를 보여줍니다. 이미지나 비디오가 생성되기 전에 검토하고 승인하세요.",
+      "summary": {
+        "vibe": "바이브",
+        "mode": "모드",
+        "length": "길이",
+        "model": "모델",
+        "resolution": "해상도",
+        "language": "언어",
+        "format": "형식",
+        "review": "검토",
+        "storyboard": "스토리보드"
+      },
+      "usageSummary": "이번 달에 남은 크레딧 중 {limit} 크레딧 중 {remaining} · 이 동영상에서는 {duration}를 사용합니다.",
+      "generateVideo": "비디오 생성",
+      "outOfQuota": "{duration} 동영상의 크레딧이 부족합니다({limit} 중 {remaining} 왼쪽).",
+      "seePlans": "요금제 보기",
+      "pickProduct": {
+        "title": "먼저 제품을 선택하세요",
+        "description": "마켓플레이스에서 제품을 선택하면 Lumi가 해당 제품을 스크롤을 멈추게 하는 비디오로 바꿔줍니다.",
+        "browseMarketplace": "마켓플레이스 찾아보기"
+      }
+    },
+    "jobs": {
+      "backToVideos": "내 동영상",
+      "videoFallback": "귀하의 비디오",
+      "styles": {
+        "avatarTalkingIntro": "말하는 소개",
+        "avatarDemoExplainer": "데모 설명자",
+        "avatarTestimonial": "사용후기",
+        "avatarHostProduct": "호스트 + 제품",
+        "productCleanShowcase": "깔끔한 쇼케이스",
+        "productFeatureHighlights": "기능 하이라이트",
+        "productUnboxing": "언박싱",
+        "productOfferFocused": "제안 중심"
+      },
+      "live": {
+        "updated": "실시간 · 업데이트됨 {time}",
+        "justNow": "지금 막",
+        "secondsAgo": "{seconds}초 전"
+      },
+      "fullScript": {
+        "view": "전체 스크립트 보기",
+        "title": "전체 스크립트",
+        "caption": "캡션:"
+      },
+      "shotLabels": {
+        "hook": "후크",
+        "proof": "증명",
+        "offer": "제안",
+        "cta": "CTA",
+        "shot": "샷 {number}"
+      },
+      "working": {
+        "renderingBeats": "비트를 렌더링하는 중…",
+        "writingScript": "기반 스크립트 작성 중…",
+        "description": "이 페이지는 자동으로 업데이트됩니다. 떠나고 돌아올 수 있습니다."
+      },
+      "review": {
+        "title": "비트를 검토하세요",
+        "description": "각 장면을 승인하거나 마음에 들지 않는 장면을 다시 생성하세요. Lumi는 모든 비트가 승인되면 렌더링됩니다."
+      },
+      "storyboard": {
+        "title": "동영상 계획은 다음과 같습니다.",
+        "description": "아직 아무것도 이루어지지 않았습니다. 이것은 단지 계획일 뿐입니다. 읽어보고 원하는 줄을 변경한 다음 이동을 누르면 Lumi가 전체 비디오를 빌드합니다.",
+        "approveAndMake": "승인하고 내 동영상 만들기",
+        "creditNote": "이는 크레딧을 사용하는 유일한 단계입니다.",
+        "editTitle": "{label} 편집",
+        "editFallbackTitle": "샷 편집",
+        "shotLabels": {
+          "hook": "후크",
+          "hookLower": "후크",
+          "callToAction": "행동 촉구",
+          "callToActionLower": "행동 촉구",
+          "shot": "샷 {number}",
+          "shotLower": "총 {number}"
+        }
+      },
+      "subjects": {
+        "heading": "모든 샷에 고정됨",
+        "locked": "잠김"
+      },
+      "shotCard": {
+        "noSpokenLine": "음성 대사 없음",
+        "edit": "편집"
+      },
+      "shotEditor": {
+        "fields": {
+          "dialogue": "당신이 말하는 것",
+          "onScreenText": "화면 텍스트",
+          "technique": "촬영 방법",
+          "transition": "다음 장면으로 컷",
+          "productVisible": "제품이 보여지면"
+        },
+        "placeholders": {
+          "dialogue": "이 장면에는 음성 대사가 없습니다.",
+          "onScreenText": "캡션 없음",
+          "technique": "Lumi가 샷을 선택하게 하세요"
+        },
+        "advanced": "고급",
+        "transitions": {
+          "hardCut": "하드 컷",
+          "dissolve": "디졸브",
+          "slide": "슬라이드",
+          "fade": "페이드",
+          "matchCut": "매치컷"
+        },
+        "productVisibility": {
+          "start": "시작 시 제품",
+          "throughout": "제품 전체",
+          "end": "종료된 제품",
+          "none": "표시된 제품이 없습니다."
+        },
+        "done": "완료"
+      },
+      "beatStatus": {
+        "pending": "보류 중",
+        "autoApproved": "자동 ✓",
+        "approved": "승인됨",
+        "regenerating": "재생성"
+      },
+      "beatCard": {
+        "approved": "승인됨",
+        "approve": "승인하다",
+        "regenerate": "재생성"
+      },
+      "completed": {
+        "badge": "게시 준비 완료",
+        "title": "동영상이 준비되었습니다 🎉",
+        "description": "음성 오디오가 포함된 게시 준비가 완료된 9:16 컷입니다. 통계를 깔끔하게 유지하려면 다운로드하거나 게시된 것으로 표시하세요.",
+        "download": "다운로드",
+        "markPosted": "게시됨으로 표시"
+      },
+      "failed": {
+        "title": "생성 실패",
+        "fallbackMessage": "문제가 발생했습니다. 다시 만들어 보세요.",
+        "retry": "재시도",
+        "startNewVideo": "새 비디오 시작"
+      }
+    }
+  },
+  "nav": {
+    "features": "특징",
+    "howItWorks": "작동 원리",
+    "models": "모델",
+    "pricing": "가격"
+  },
+  "languageSwitcher": {
+    "label": "언어"
+  },
+  "shared": {
+    "status": {
+      "queued": "대기 중",
+      "submitted": "제출됨",
+      "rendering": "렌더링",
+      "reviewStoryboard": "스토리보드 검토",
+      "needsReview": "검토 필요",
+      "ready": "준비",
+      "failed": "실패"
+    },
+    "jobProgress": {
+      "script": "스크립트",
+      "beats": "비트",
+      "review": "검토",
+      "render": "렌더링",
+      "ready": "준비"
+    },
+    "subjects": {
+      "product": "제품",
+      "host": "호스트",
+      "scene": "장면"
+    },
+    "error": {
+      "title": "문제가 발생했습니다.",
+      "description": "그건 우리 몫입니다. 다시 시도해 보세요. 문제가 계속 발생하면 잠시 후에 다시 오세요.",
+      "tryAgain": "다시 시도하세요",
+      "backHome": "집으로 돌아가기"
+    },
+    "notFound": {
+      "title": "이 페이지는 떠돌았습니다.",
+      "description": "링크가 깨졌거나 페이지가 이동되었을 수 있습니다.",
+      "backHome": "집으로 돌아가기",
+      "goToApp": "앱으로 이동"
+    },
+    "overlay": {
+      "close": "닫기"
+    },
+    "uploadProgress": {
+      "uploading": "업로드 중",
+      "processing": "처리 중…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "알림 닫기"
+    },
+    "theme": {
+      "label": "테마",
+      "light": "빛",
+      "system": "시스템",
+      "dark": "어둠"
+    }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "제품 링크부터 스크롤이 멈추는 동영상까지 단 몇 분 만에 가능합니다.",
+      "benefitScripts": "실제 바이럴 패턴을 기반으로 한 스크립트",
+      "benefitReview": "렌더링하기 전에 모든 비트를 검토하세요.",
+      "benefitPublish": "TikTok 및 릴용 게시 준비 9:16"
+    },
+    "metadata": {
+      "signIn": "로그인",
+      "createAccount": "계정 만들기"
+    },
+    "form": {
+      "loginTitle": "돌아온 것을 환영합니다",
+      "signupTitle": "계정 만들기",
+      "loginSubtitle": "Lumi 스튜디오에 로그인하세요.",
+      "signupSubtitle": "몇 분 만에 스크롤이 멈추는 동영상 제작을 시작해 보세요.",
+      "continueWithGoogle": "Google로 계속하기",
+      "googleDisabledTitle": "Google 로그인을 활성화하려면 NEXT_PUBLIC_GOOGLE_CLIENT_ID를 설정하세요.",
+      "googleSignInFailed": "Google 로그인이 완료되지 않았습니다. 다시 시도해 주세요.",
+      "separator": "또는",
+      "phoneLabel": "전화번호",
+      "invalidPhone": "유효한 전화번호를 입력하세요.",
+      "sendCode": "코드 보내기",
+      "sendCodeFailed": "코드를 보낼 수 없습니다.",
+      "codePlaceholder": "6자리 코드",
+      "verificationCodeLabel": "인증코드",
+      "devCodeAutofilled": "개발 모드 — 코드 <code>{devCode}</code> 자동 완성.",
+      "continue": "계속",
+      "verifyCodeFailed": "해당 코드는 작동하지 않았습니다.",
+      "alreadyHaveAccount": "이미 계정이 있나요?",
+      "signInLink": "로그인",
+      "newToLumi": "Lumi를 처음 사용하시나요?",
+      "createAccountLink": "계정 만들기"
+    }
+  },
+  "marketing": {
+    "legal": {
+      "kicker": "법적",
+      "lastUpdated": "최종 업데이트: 2026년 6월 1일",
+      "terms": {
+        "title": "서비스 약관",
+        "intro": "본 약관은 귀하의 Sellcast 제품인 Lumi 사용에 적용됩니다. 계정을 만들거나 서비스를 사용함으로써 귀하는 본 약관에 동의하게 됩니다.",
+        "service": {
+          "heading": "서비스",
+          "body": "Lumi는 AI를 사용해 제품을 짧은 동영상으로 변환합니다. 출력은 자동으로 생성되며 품질이 다를 수 있습니다. 게시하기 전에 이를 검토할 책임은 귀하에게 있습니다."
+        },
+        "account": {
+          "heading": "귀하의 계정",
+          "body": "귀하는 정확한 정보를 제공하고 계정을 안전하게 유지해야 합니다. 귀하는 귀하의 계정에 따른 활동에 대한 책임이 있습니다."
+        },
+        "acceptableUse": {
+          "heading": "허용되는 사용",
+          "item1": "불법적이거나 기만적이거나 권리를 침해하는 콘텐츠에는 Lumi를 사용하지 마세요.",
+          "item2": "제품을 허위로 표현하거나 허위 주장을 하지 마십시오.",
+          "item3": "서비스를 남용하거나 리버스 엔지니어링하거나 과부하하지 마십시오.",
+          "item4": "게시하는 플랫폼(예: TikTok, Reels)의 규칙을 따르세요."
+        },
+        "content": {
+          "heading": "콘텐츠 및 소유권",
+          "yourHeading": "귀하의 콘텐츠",
+          "yourBody": "귀하는 귀하가 제공하는 제품 정보 및 자산에 대한 권리를 보유합니다. 귀하는 서비스 제공을 위해 이를 처리할 수 있는 라이센스를 당사에 부여합니다.",
+          "outputHeading": "생성된 출력",
+          "outputBody": "본 약관 및 귀하의 계획에 따라 귀하는 귀하가 생성한 비디오를 상업적 목적으로 사용할 수 있습니다. 귀하는 귀하의 사용이 해당 법률 및 플랫폼 정책을 준수하는지 확인할 책임이 있습니다."
+        },
+        "billing": {
+          "heading": "구독 및 청구",
+          "body": "유료 요금제는 반복적으로 미리 청구됩니다. 언제든지 변경하거나 취소할 수 있습니다. 자세한 내용은 <refunds>환불 정책</refunds>를 참조하세요."
+        },
+        "disclaimers": {
+          "heading": "면책조항",
+          "body": "Lumi는 \"있는 그대로\" 제공됩니다. 우리는 생성된 비디오가 특정 성능을 달성하거나 모든 플랫폼의 진화하는 규칙을 준수한다고 보장하지 않습니다."
+        },
+        "liability": {
+          "heading": "책임의 제한",
+          "body": "법률이 허용하는 한도 내에서 Sellcast는 귀하의 Lumi 사용으로 인해 발생하는 간접적 또는 결과적 손해에 대해 책임을 지지 않습니다."
+        },
+        "termination": {
+          "heading": "종료",
+          "body": "귀하는 언제든지 Lumi 사용을 중단할 수 있습니다. 당사는 본 약관을 위반하는 계정을 정지하거나 종료할 수 있습니다."
+        },
+        "changes": {
+          "heading": "변경 사항",
+          "body": "당사는 본 약관을 업데이트할 수 있습니다. 중요한 변경 사항은 위 날짜까지 반영되며 계속 사용하면 동의하는 것으로 간주됩니다."
+        },
+        "contact": {
+          "heading": "연락처",
+          "body": "질문이 있으신가요? <email>legal@sellcast.ai</email>로 이메일을 보내세요."
+        }
+      },
+      "privacy": {
+        "title": "개인 정보 보호 정책",
+        "intro": "본 개인정보 보호정책은 귀하가 당사 웹사이트 및 애플리케이션을 사용할 때 Sellcast 제품인 Lumi(“Lumi”, “당사”)가 귀하의 정보를 수집, 사용 및 보호하는 방법을 설명합니다. Lumi를 사용하면 여기에 설명된 관행에 동의하게 됩니다.",
+        "collect": {
+          "heading": "우리가 수집하는 정보",
+          "account": "<strong>계정 데이터</strong> — 귀하의 전화번호, (제공된 경우) 표시 이름, 이메일 및 연결된 로그인 제공업체입니다.",
+          "usage": "<strong>사용 데이터</strong> — 귀하가 탐색하거나 저장하는 제품, 귀하가 생성하는 비디오, 스튜디오에서 귀하가 선택한 사항.",
+          "technical": "<strong>기술 데이터</strong> — 로그인 및 보안을 유지하는 데 사용되는 장치, 브라우저, IP 주소 및 세션 정보입니다."
+        },
+        "use": {
+          "heading": "당사가 귀하의 정보를 사용하는 방법",
+          "item1": "Lumi 서비스를 제공, 운영 및 개선합니다.",
+          "item2": "요청한 비디오를 생성하고 기록을 표시합니다.",
+          "item3": "귀하를 인증하고 남용으로부터 보호하기 위해.",
+          "item4": "서비스 업데이트를 전달하고 지원에 응답합니다."
+        },
+        "sharing": {
+          "heading": "공유",
+          "body": "우리는 귀하의 개인 정보를 판매하지 않습니다. 당사는 Lumi 운영에 도움을 주는 서비스 제공업체(예: 비디오 및 음성 모델 제공업체, 클라우드 스토리지, SMS 전송)와만 데이터를 공유하며, 서비스를 제공하거나 법률을 준수하는 데 필요한 경우에만 데이터를 공유합니다."
+        },
+        "cookies": {
+          "heading": "쿠키 및 세션",
+          "body": "당사는 귀하의 로그인 상태를 유지하고 테마 기본 설정을 기억하기 위해 자사 쿠키를 사용합니다. 우리는 교차 사이트 광고를 위해 이를 사용하지 않습니다."
+        },
+        "retention": {
+          "heading": "데이터 보존",
+          "body": "당사는 귀하의 계정이 활성화되어 있는 동안 계정 및 콘텐츠 데이터를 보관합니다. 귀하는 언제든지 동영상을 삭제할 수 있으며 계정 및 관련 데이터 삭제를 요청할 수 있습니다."
+        },
+        "rights": {
+          "heading": "귀하의 권리",
+          "body": "귀하의 지역에 따라 귀하는 귀하의 개인 데이터에 접근, 수정, 내보내기 또는 삭제할 권리가 있을 수 있습니다. 행사를 원하시면 저희에게 연락해주세요."
+        },
+        "security": {
+          "heading": "보안",
+          "body": "당사는 암호화된 전송 및 해시된 자격 증명을 포함하여 업계 표준 조치를 사용하여 데이터를 보호합니다. 완벽하게 안전한 전송 방법은 없지만 당사는 귀하의 정보를 보호하기 위해 노력하고 있습니다."
+        },
+        "children": {
+          "heading": "어린이",
+          "body": "Lumi는 13세(또는 해당 관할권의 최소 연령) 미만의 어린이를 대상으로 하지 않으며 당사는 고의로 어린이의 데이터를 수집하지 않습니다."
+        },
+        "changes": {
+          "heading": "변경 사항",
+          "body": "당사는 수시로 본 정책을 업데이트할 수 있습니다. 중요한 변경 사항은 위의 날짜를 업데이트하여 공지됩니다."
+        },
+        "contact": {
+          "heading": "연락처",
+          "body": "질문이 있으신가요? <email>privacy@sellcast.ai</email>로 이메일을 보내세요."
+        }
+      },
+      "refunds": {
+        "title": "결제 및 환불",
+        "intro": "Lumi와 함께 행복하시길 바랍니다. 이 정책에서는 청구 및 환불이 어떻게 진행되는지 설명합니다.",
+        "free": {
+          "heading": "무료 플랜",
+          "body": "무료 플랜을 사용하면 신용카드 없이 무료로 첫 번째 비디오를 생성할 수 있으므로 비용을 지불하기 전에 Lumi 작업을 확인할 수 있습니다."
+        },
+        "subscriptions": {
+          "heading": "구독",
+          "body": "유료 요금제는 월별 또는 연간으로 미리 청구됩니다. 지불한 기간이 끝날 때까지 계속 액세스할 수 있습니다."
+        },
+        "guarantee": {
+          "heading": "7일 환불 보장",
+          "body": "첫 번째 요금을 결제한 후 7일 이내에 만족하지 못할 경우 이메일을 보내주시면 해당 요금을 전액 환불해 드립니다."
+        },
+        "annual": {
+          "heading": "연간 요금제",
+          "body": "연간 요금제는 처음 30일 이내에 일할 계산하여 환불될 수 있습니다. 그 이후에는 기간이 종료될 때까지 계속 액세스할 수 있습니다."
+        },
+        "cancellations": {
+          "heading": "취소",
+          "body": "귀하의 계정에서 언제든지 취소하실 수 있습니다. 취소하면 향후 청구가 중단됩니다. 현재 기간을 소급하여 환불하지 않습니다(위의 보증 제외)."
+        },
+        "request": {
+          "heading": "환불 요청 방법",
+          "body": "계정 세부 정보가 포함된 계정 이메일에서 <email>billing@sellcast.ai</email>로 이메일을 보내세요. 일반적으로 영업일 기준 2일 이내에 응답해 드립니다."
+        }
+      }
+    },
+    "header": {
+      "signIn": "로그인",
+      "startFree": "무료로 시작하세요",
+      "toggleMenu": "토글 메뉴",
+      "language": "언어",
+      "theme": "테마"
+    },
+    "footer": {
+      "tagline": "Lumi는 추측이 아닌 실제 바이럴 패턴을 기반으로 모든 제품을 스크롤이 멈추는 쇼핑 가능한 비디오로 전환합니다.",
+      "columns": {
+        "product": {
+          "title": "제품",
+          "features": "특징",
+          "models": "모델",
+          "pricing": "가격",
+          "marketplace": "마켓플레이스"
+        },
+        "workflow": {
+          "title": "작업흐름",
+          "linkToVideo": "비디오 링크",
+          "patternScripts": "패턴 스크립트",
+          "beatReview": "비트 리뷰",
+          "publish": "게시"
+        },
+        "company": {
+          "title": "회사",
+          "about": "소개",
+          "blog": "블로그",
+          "careers": "채용",
+          "contact": "연락처"
+        },
+        "legal": {
+          "title": "법적",
+          "privacy": "개인 정보 보호",
+          "terms": "용어",
+          "refunds": "환불"
+        }
+      },
+      "copyright": "© {year} Sellcast. Lumi는 Sellcast 제품입니다.",
+      "madeFor": "영화보다 판매를 더 선호하는 판매자를 위해 제작되었습니다."
+    },
+    "cta": {
+      "title": "다음 베스트셀러는 제품 링크 하나에 있습니다.",
+      "subtitle": "스크롤이 멈추는 첫 번째 비디오를 무료로 만들어 보세요. 카메라도, 편집기도, 빈 페이지도 없습니다.",
+      "primaryLabel": "무료로 만들기 시작하세요",
+      "seePricing": "가격 보기"
+    },
+    "faq": {
+      "q1": "Lumi는 일반 AI 비디오 도구와 어떻게 다릅니까?",
+      "a1": "Lumi는 추측하지 않습니다. 한 줄을 작성하기 전에 제품 카테고리에서 실제 유기적 최고 성과를 내는 대규모 샘플을 연구하고 실제로 변환되는 후크, 증명 및 CTA 모양과 같은 구조적 패턴을 추출합니다. 귀하의 스크립트는 빈 페이지가 아닌 해당 패턴을 기반으로 합니다.",
+      "q2": "뭔가를 촬영해야 하거나 카메라에 나와야 하나요?",
+      "a2": "아니요. 발표자가 진행하는 비디오에는 AI 아바타 모드를 선택하고, 깔끔한 쇼케이스 영상에는 제품 전용 모드를 선택하세요. Lumi는 제품에서 엔드투엔드 영상, 음성 및 캡션을 생성합니다.",
+      "q3": "비디오가 완전히 렌더링되기 전에 검토할 수 있나요?",
+      "a3": "예 — 그것이 Beat Review 게이트입니다. Lumi는 먼저 모든 비트(샷)에 대한 참조 이미지를 생성합니다. 각 항목을 승인하거나 재생성한 후에만 렌더링 시간이 소모됩니다. 손을 대지 않는 것을 선호하시나요? 자동 QA가 비트를 승인합니다.",
+      "q4": "Lumi는 어떤 비디오 모델을 사용합니까?",
+      "a4": "Lumi는 Seedance 2.0으로 렌더링하여 샷당 설정을 조정합니다. 더 많은 최첨단 비디오 모델이 로드맵에 있습니다. 새 모델이 출시되면 스크립트와 비트가 그대로 유지됩니다.",
+      "q5": "제품 데이터는 어디서 나오나요?",
+      "a5": "Amazon, Shopee, TikTok Shop 또는 자신의 매장에서 링크를 붙여넣거나 자신의 제품 사진을 업로드하면 Lumi가 제목, 설명 및 이미지를 읽어 빌드합니다. 귀하의 제품은 귀하에게만 공개됩니다. 아이디어를 선호하시나요? 인기 있는 추천 상품이 내장된 마켓플레이스를 탐색해 보세요.",
+      "q6": "영상 하나에 시간이 얼마나 걸리나요?",
+      "a6": "촬영이나 편집 없이 Lumi 스크립트, 스토리보드 및 렌더를 시작하고 완성된 출판 준비 컷으로 돌아옵니다. 카테고리에 대한 패턴 조사가 캐시되므로 해당 카테고리의 이후 동영상이 더욱 빠르게 시작됩니다."
+    },
+    "pricing": {
+      "header": {
+        "kicker": "가격",
+        "title": "무료로 시작하세요. 확장 시기",
+        "highlight": "작동 중입니다.",
+        "subtitle": "시작할 신용 카드가 없습니다. 언제든지 취소하세요. 연간 청구 비용은 약 20% 절감됩니다."
+      },
+      "billing": {
+        "monthly": "월간",
+        "annual": "연간"
+      },
+      "mostPopular": "가장 인기있는",
+      "perMonthYearly": "/월 · 매년 청구됨",
+      "tiers": {
+        "free": {
+          "name": "무료",
+          "note": "카드 없음",
+          "allowance": "첫 번째 동영상은 무료입니다.",
+          "credits": "20학점, 일회성",
+          "features": [
+            "720p · 9:16 내보내기",
+            "마켓플레이스 액세스",
+            "자동 QA 렌더링",
+            "Lumi 워터마크"
+          ],
+          "cta": "무료로 시작하세요"
+        },
+        "creator": {
+          "name": "크리에이터",
+          "note": "매월",
+          "allowance": "≒ 동영상 3개/월",
+          "credits": "75학점/월",
+          "features": [
+            "워터마크 없음",
+            "비트별 검토",
+            "아바타 + 제품 모드",
+            "720p · 9:16 내보내기"
+          ],
+          "cta": "크리에이터 시작"
+        },
+        "pro": {
+          "name": "프로",
+          "note": "매월",
+          "allowance": "≒ 동영상 10개/월",
+          "credits": "200크레딧/월",
+          "features": [
+            "크리에이터의 모든 것",
+            "더 많은 크레딧, 동일한 동영상당 비용",
+            "무료 렌더링보다 우선순위"
+          ],
+          "cta": "프로 시작"
+        },
+        "scale": {
+          "name": "규모",
+          "note": "매월",
+          "allowance": "≒ 동영상 25개/월",
+          "credits": "500크레딧/월",
+          "features": [
+            "프로의 모든 것",
+            "상시 포스팅을 위해",
+            "가장 높은 셀프 서비스 볼륨"
+          ],
+          "cta": "규모 시작"
+        },
+        "enterprise": {
+          "name": "기업",
+          "priceLabel": "얘기하자",
+          "note": "팀 및 대행사용",
+          "allowance": "맞춤형 크레딧 볼륨",
+          "credits": "약정, 도매율",
+          "features": [
+            "좌석 및 역할",
+            "브랜드 키트",
+            "API 액세스",
+            "SSO 및 전담 지원"
+          ],
+          "cta": "영업팀에 문의"
+        }
+      },
+      "creditFootnote": "1크레딧 = 동영상 1초. 동영상 수는 20초 클립을 기준으로 한 대략적인 수치입니다. 15초 동영상은 더 적은 크레딧을 사용하고 30초 동영상은 더 많은 크레딧을 사용합니다.",
+      "everyPlanIncludes": "모든 계획에는 다음이 포함됩니다.",
+      "included": [
+        "패턴 기반 스크립트",
+        "비트별 검토",
+        "아바타 + 제품 모드",
+        "번인된 캡션",
+        "TikTok 및 릴의 경우 9:16",
+        "제품 링크를 붙여넣거나 마켓플레이스를 찾아보세요."
+      ],
+      "billingQuestions": "결제 관련 질문",
+      "faq": {
+        "q1": "크레딧이란 무엇인가요?",
+        "a1": "1크레딧 = 완성된 동영상의 1초. 20초짜리 비디오는 20크레딧을 사용합니다. 30초는 30을 사용합니다. 길이를 선택하면 렌더링한 것에 대해서만 비용이 청구됩니다.",
+        "q2": "재생에는 크레딧이 필요합니까?",
+        "a2": "아니요. 검토하는 동안 비트를 다시 생성하는 데는 추가 비용이 들지 않습니다. 크레딧은 최종 렌더링된 비디오만 계산합니다.",
+        "q3": "크레딧이 부족하면 어떻게 되나요?",
+        "a3": "더 큰 월별 할당량을 원하시면 언제든지 업그레이드하세요. 즉시 적용됩니다. 각 결제 주기가 시작될 때 크레딧이 재설정됩니다.",
+        "q4": "언제든지 요금제를 변경할 수 있나요?",
+        "a4": "언제든지. 업그레이드는 즉시 적용됩니다. 다운그레이드는 다음 주기에 적용됩니다. 연간 비용은 월별 비용의 약 20%를 절약합니다.",
+        "q5": "Lumi는 어떤 렌더링 모델을 사용합니까?",
+        "a5": "Lumi는 Seedance 2.0으로 렌더링되며 더 많은 모델이 출시됩니다. 샷당 최상의 설정을 선택합니다."
+      }
+    },
+    "landing": {
+      "heroBadge": "TikTok 및 릴용으로 제작됨",
+      "heroTitle": "모든 제품을 <highlight>스크롤 중지</highlight> 쇼핑 가능한 비디오로 전환하세요.",
+      "heroSubtitle": "Amazon, Shopee, TikTok Shop 또는 매장 등 제품 링크를 붙여넣거나 사진을 업로드하세요. Lumi는 해당 카테고리에서 이미 우승하고 있는 항목을 연구하고, 패턴에 기반한 비디오를 스크립팅하고, 비트별로 검토하고, Seedance 2.0으로 렌더링합니다. 몇 분 안에 카메라가 없습니다.",
+      "heroStartFree": "무료로 만들기 시작하세요",
+      "heroSeeHow": "작동 방식 보기",
+      "heroCheck1": "첫 번째 비디오 무료",
+      "heroCheck2": "신용카드 없음",
+      "heroCheck3": "게시 준비 완료 9:16",
+      "marquee": [
+        "TikTok 상점",
+        "릴",
+        "뷰티",
+        "가정 및 주방",
+        "피트니스",
+        "가젯",
+        "애완동물",
+        "패션",
+        "보충제"
+      ],
+      "howKicker": "Lumi 파이프라인",
+      "howTitle": "4단계, 빈 페이지 없음",
+      "howSubtitle": "대부분의 도구는 무에서 시작됩니다. Lumi는 이미 성공한 것부터 시작하여 게시하는 모든 과정을 제어할 수 있습니다.",
+      "steps": {
+        "find": {
+          "kicker": "찾기",
+          "title": "모든 제품에서 시작",
+          "body": "Amazon, Shopee, TikTok Shop 또는 매장의 링크를 붙여넣거나 사진을 업로드하세요. 또는 마켓플레이스에서 인기 있는 상품을 찾아보세요."
+        },
+        "deconstruct": {
+          "kicker": "해체하다",
+          "title": "Lumi는 패턴을 학습합니다.",
+          "body": "해당 카테고리에서 최대 100명의 실제 최고 성과자를 연구하고 전환에 도움이 되는 후크, 증명 및 CTA 구조를 추출합니다."
+        },
+        "script": {
+          "kicker": "스크립트",
+          "title": "스크립트 및 비트 검토",
+          "body": "샷별 비트가 포함된 기반 스크립트입니다. 렌더링을 굽기 전에 각 참조 이미지를 승인하거나 재생성합니다."
+        },
+        "generate": {
+          "kicker": "생성",
+          "title": "렌더링 및 게시",
+          "body": "Seedance 2.0은 각 비트를 렌더링하고 캡션이 번인되면 바로 게시할 수 있습니다."
+        }
+      },
+      "featuresKicker": "하나의 스튜디오에서 모든 것을",
+      "featuresTitle": "전체 비디오 워크플로가 처리됨",
+      "featuresSubtitle": "제품 소싱부터 출판 준비 컷까지 5가지 도구를 함께 연결할 필요가 없습니다.",
+      "features": {
+        "linkToVideo": {
+          "title": "비디오 링크",
+          "body": "Amazon, Shopee, TikTok Shop 또는 매장의 링크를 붙여넣거나 사진을 업로드하세요. Lumi는 제품을 읽고 프레이밍, 스크립트, 음성 및 편집을 자동으로 처리합니다."
+        },
+        "scripts": {
+          "title": "패턴 기반 스크립트",
+          "body": "모든 스크립트는 해당 카테고리의 실제 바이럴 구조를 기반으로 구축되었습니다. 패턴을 익히고 표면을 복사하지 마세요."
+        },
+        "review": {
+          "title": "비트별 검토",
+          "body": "모든 샷에 대한 참조 이미지를 확인하세요. 렌더링 시간을 1초도 소비하기 전에 승인, 조정 또는 재생성을 수행하십시오."
+        },
+        "modes": {
+          "title": "아바타 및 제품 모드",
+          "body": "카메라를 향해 말하는 AI 발표자 또는 깔끔한 제품 전용 쇼케이스 등 귀하의 제안에 맞는 8가지 기성 스타일이 제공됩니다."
+        },
+        "qa": {
+          "title": "자동 대화 QA",
+          "body": "Whisper는 렌더링된 모든 라인을 스크립트와 플래그 드리프트와 비교하여 확인하므로 음성은 항상 필요한 내용을 말해줍니다."
+        },
+        "publish": {
+          "title": "캡션 및 게시",
+          "body": "자동으로 구운 캡션과 바로 게시 가능한 9:16 컷(TikTok 및 릴 크기)."
+        }
+      },
+      "modelsKicker": "프론티어 렌더 엔진",
+      "modelsTitle": "Seedance 2.0으로 렌더링됨",
+      "modelsSubtitle": "Lumi는 Seedance 2.0으로 모든 비트를 렌더링하며 새 모델이 도착해도 스크립트가 그대로 유지됩니다.",
+      "models": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "라이브",
+          "desc": "제품 및 아바타 사진을 위한 빠르고 실감나는 모션 — Lumi의 모든 비트에 대한 렌더링 엔진."
+        },
+        "more": {
+          "name": "더 많은 정보가 제공됩니다.",
+          "tag": "곧",
+          "desc": "우리는 입증된 대로 최첨단 비디오 모델을 추가하고 있습니다. 귀하의 스크립트와 비트가 그대로 이어집니다."
+        }
+      },
+      "useCasesKicker": "누구를 위한 것인가",
+      "useCasesTitle": "비디오를 판매하는 모든 사람을 위해 제작됨",
+      "useCases": {
+        "sellers": {
+          "title": "판매자",
+          "body": "카탈로그를 확장하세요. 스튜디오 없이 모든 SKU에 대한 비디오 변환이 가능합니다."
+        },
+        "creators": {
+          "title": "크리에이터",
+          "body": "TikTok 쇼핑 콘텐츠를 몇 분 만에 돌려 연속 게시를 유지하세요."
+        },
+        "brands": {
+          "title": "브랜드",
+          "body": "수백 개의 고유한 광고 소재를 동시에 통해 브랜드 인지도를 유지하세요."
+        },
+        "agencies": {
+          "title": "대행사",
+          "body": "돌볼 필요 없이 모든 고객에게 고품질로 대량으로 서비스를 제공하세요."
+        }
+      },
+      "stats": {
+        "ways": {
+          "value": "5가지 방법",
+          "label": "시작하려면: Amazon, Shopee, TikTok Shop, 매장 또는 사진"
+        },
+        "ratio": {
+          "value": "9:16",
+          "label": "언제든지 TikTok 및 릴에 대한 게시 준비 완료"
+        },
+        "credit": {
+          "value": "1학점",
+          "label": "= 비디오 1초 — 렌더링한 것에 대해서만 비용 지불"
+        },
+        "spend": {
+          "value": "$0",
+          "label": "비트를 승인할 때까지 지출을 렌더링합니다."
+        }
+      },
+      "pricingKicker": "가격",
+      "pricingTitle": "무료로 시작하세요. 작동할 때 크기를 조정하세요.",
+      "pricingSubtitle": "크레딧 기반 — 1크레딧 = 비디오 1초. 첫 번째 동영상은 무료입니다. 시작할 신용 카드가 없습니다.",
+      "mostPopular": "가장 인기있는",
+      "pricingTiers": {
+        "creator": {
+          "name": "크리에이터",
+          "price": "$29",
+          "note": "/ 월",
+          "features": [
+            "≒ 동영상 3개/월 · 75크레딧",
+            "워터마크 없음",
+            "비트별 검토",
+            "아바타 + 제품 모드"
+          ],
+          "cta": "크리에이터 시작"
+        },
+        "pro": {
+          "name": "프로",
+          "price": "$79",
+          "note": "/ 월",
+          "features": [
+            "≒ 동영상 10개/월 · 200크레딧",
+            "크리에이터의 모든 것",
+            "무료 렌더링보다 우선순위",
+            "720p · 9:16 내보내기"
+          ],
+          "cta": "프로 시작"
+        },
+        "scale": {
+          "name": "규모",
+          "price": "$199",
+          "note": "/ 월",
+          "features": [
+            "≒ 동영상 25개/월 · 500크레딧",
+            "프로의 모든 것",
+            "상시 포스팅을 위해"
+          ],
+          "cta": "규모 시작"
+        }
+      },
+      "pricingFooter": "귀하의 <signup>첫 번째 비디오는 무료입니다.</signup> — 카드가 없습니다. 전체 사다리가 필요합니까? <plans>모든 플랜 보기 →</plans>",
+      "faqKicker": "FAQ",
+      "faqTitle": "질문, 답변",
+      "finalCtaTitle": "다음 베스트셀러는 제품 링크 하나에 있습니다.",
+      "finalCtaSubtitle": "스크롤이 멈추는 첫 번째 동영상을 무료로 만들어 보세요. 카메라도 없고, 편집자도 없고, 빈 페이지도 없습니다.",
+      "finalCtaStartFree": "무료로 만들기 시작하세요",
+      "finalCtaSeePricing": "가격 보기"
+    },
+    "heroMock": {
+      "caption": "이 24달러짜리 가젯은 <highlight>3번 매진되었습니다</highlight> 🙌",
+      "shopNow": "지금 쇼핑하세요 · $23.99",
+      "productName": "미니 마사지 건",
+      "productMeta": "$23.99 · 30% 통신료",
+      "sold": "12.4,000개 판매/월",
+      "beatReview": "비트 리뷰",
+      "beatHook": "후크",
+      "beatProof": "증명",
+      "beatOffer": "제안",
+      "beatAuto": "자동",
+      "beatOk": "알았어",
+      "renderedWith": "다음으로 렌더링됨"
+    },
+    "features": {
+      "header": {
+        "kicker": "특징",
+        "title": "전체 비디오 워크플로,",
+        "highlight": "처리.",
+        "subtitle": "제품 소싱부터 출판 준비 컷까지 5가지 도구를 함께 연결할 필요가 없습니다."
+      },
+      "pipeline": {
+        "find": "찾기",
+        "deconstruct": "해체하다",
+        "script": "스크립트",
+        "generate": "생성"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "소스",
+          "title": "비디오 링크",
+          "body": "Amazon, Shopee, TikTok Shop 또는 귀하의 매장에서 제품 링크를 붙여넣거나 사진을 업로드하세요. Lumi는 제품, 각도 및 교정 포인트를 읽은 다음 프레이밍, 스크립트, 음성 및 편집을 자동으로 처리합니다. 귀하의 제품은 귀하에게만 공개됩니다.",
+          "bullets": [
+            "모든 링크 — Amazon, Shopee, TikTok Shop 또는 자체 매장",
+            "또는 자신의 제품 사진을 업로드하세요.",
+            "또는 아이디어를 찾기 위해 인기 있는 추천 상품 시장을 탐색하세요."
+          ]
+        },
+        "scripts": {
+          "kicker": "스크립트",
+          "title": "패턴 기반 스크립트",
+          "body": "단어를 쓰기 전에 Lumi는 제품 카테고리에서 실제 유기적 최고 성능을 보이는 대규모 샘플을 연구하고 구조적 패턴(실제로 전환되는 후크, 증명 및 CTA 모양)을 추출합니다. 귀하의 스크립트는 빈 페이지가 아닌 이를 기반으로 작성되었습니다.",
+          "bullets": [
+            "해당 카테고리에서 필터링된 자연 우승자로부터 구조를 학습합니다.",
+            "복사 붙여넣기 실행이 아닌 후크/증명/비트 제공",
+            "최고의 성과를 낸 사람들을 모델로 한 청중 언어"
+          ]
+        },
+        "review": {
+          "kicker": "제어",
+          "title": "비트별 검토",
+          "body": "Lumi는 먼저 모든 비트에 대한 참조 이미지를 생성합니다. 마음에 드는 샷을 승인하고, 마음에 들지 않는 샷을 재생성한 후에야 렌더링 시간이 소모됩니다. 손을 대지 않는 것을 선호하시나요? 자동 QA가 비트를 승인합니다.",
+          "bullets": [
+            "렌더가 굽기 전 샷당 참조 프레임",
+            "비트별로 승인 또는 재생성",
+            "제로클릭 흐름을 위한 선택적 자동 QA"
+          ]
+        },
+        "modes": {
+          "kicker": "형식",
+          "title": "아바타 및 제품 모드",
+          "body": "카메라를 향해 말하는 AI 프리젠터 또는 깔끔한 제품 전용 쇼케이스를 선택하세요. 소개, 데모, 사용후기, 언박싱, 제품 중심 컷을 아우르는 8가지 기성 스타일이 준비되어 있습니다.",
+          "bullets": [
+            "AI 아바타 또는 제품 전용",
+            "상거래에 적합한 8가지 스타일",
+            "10~30초 길이, 9:16 기본"
+          ]
+        },
+        "qa": {
+          "kicker": "품질",
+          "title": "자동 대화 QA",
+          "body": "각 비트가 렌더링된 후 Whisper는 음성 대사를 기록하고 스크립트와 비교하여 드리프트를 표시합니다. 목소리는 항상 예상한 대로 말해줍니다. 대본에서 벗어난 놀라움은 없습니다.",
+          "bullets": [
+            "렌더링된 모든 라인에 속삭임 전사",
+            "의도한 스크립트에 대한 드리프트 점수",
+            "게시하기 전에 스크립트 외 오디오를 포착합니다."
+          ]
+        },
+        "publish": {
+          "kicker": "선박",
+          "title": "캡션 및 게시",
+          "body": "TikTok 및 Reels에 대한 캡션은 번인되고 컷 크기는 9:16입니다. 다운로드하거나 게시된 것으로 표시할 준비가 되어 있으므로 통계가 깔끔하게 유지됩니다.",
+          "bullets": [
+            "자동 구운 캡션",
+            "게시 준비 9:16 내보내기",
+            "내 비디오에 게시된 트랙과 초안으로 작성된 트랙"
+          ]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "모델",
+        "title": "원스튜디오, 그 최전선",
+        "highlight": "비디오 AI.",
+        "subtitle": "Lumi는 Seedance 2.0으로 모든 비트를 렌더링하며 새 모델이 도착해도 스크립트가 그대로 유지됩니다."
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "라이브",
+          "desc": "제품 및 아바타 사진을 위한 빠르고 실감나는 모션 — Lumi의 모든 비트에 대한 렌더링 엔진은 장면별로 오디오를 생성합니다.",
+          "bestFor": [
+            "제품 모션",
+            "말하는 아바타",
+            "속도"
+          ]
+        },
+        "more": {
+          "name": "더 많은 정보가 제공됩니다.",
+          "tag": "곧",
+          "desc": "우리는 입증된 대로 최첨단 비디오 모델을 추가하고 있습니다. 귀하의 스크립트와 승인된 비트는 모델에 구애받지 않으므로 다시 실행할 필요 없이 그대로 유지됩니다.",
+          "bestFor": [
+            "로드맵",
+            "다시 실행 안 함"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "비트별로 튜닝됨",
+          "body": "Lumi는 샷당 동작, 길이 및 프레임을 설정하므로 각 비트가 최상의 렌더링을 제공합니다. 모델 설정을 직접 조작할 필요가 없습니다."
+        },
+        "carriesOver": {
+          "title": "당신의 작업은 계속됩니다",
+          "body": "스크립트와 승인된 비트는 모델에 구애받지 않습니다. 새 모델이 출시되면 동영상을 다시 실행하지 않고도 사용할 수 있습니다."
+        },
+        "oneBill": {
+          "title": "하나의 스튜디오, 하나의 청구서",
+          "body": "별도의 모델 계정이나 크레딧을 조작할 필요가 없습니다. 모두 Lumi 안에 있습니다."
+        }
+      },
+      "ctaTitle": "바쁜 작업 없이 최고의 모델로 렌더링하세요."
+    },
+    "about": {
+      "header": {
+        "kicker": "소개",
+        "title": "동영상으로 판매를 도와드립니다 —",
+        "highlight": "스튜디오 없이.",
+        "subtitle": "Lumi는 Sellcast 제품입니다. 우리는 이미 성공을 거둔 제품을 기반으로 모든 제품을 스크롤이 멈추는 쇼핑 가능한 비디오로 전환합니다."
+      },
+      "intro1": "현재는 짧은 형식의 비디오가 매장의 주요 특징입니다. 그러나 대부분의 판매자는 촬영, 편집 및 테스트할 시간이 없습니다. 일반 AI 도구는 AI처럼 느껴지는 콘텐츠로 공백을 메웁니다.",
+      "intro2": "Lumi는 다른 경로를 사용합니다. 스크립트를 작성하기 전에 제품 카테고리에서 실제 유기적 최고 성능을 보이는 대규모 샘플을 연구하고 변환하는 <em>구조</em>를 학습합니다. 그런 다음 스크립트, 스토리보드를 작성하고 비트별로 검토하여 몇 분 안에 출시할 수 있는 비디오를 렌더링합니다.",
+      "values": {
+        "grounded": {
+          "title": "근거가 있고 추측하지 않음",
+          "body": "우리는 무언가를 생성하기 전에 카테고리에서 실제로 변환되는 것이 무엇인지부터 배웁니다."
+        },
+        "quality": {
+          "title": "양보다 질",
+          "body": "일반적인 AI 필러가 아닌 스크롤을 멈추는 네이티브 느낌의 크리에이티브입니다."
+        },
+        "control": {
+          "title": "당신은 통제력을 유지합니다",
+          "body": "비트별로 검토하세요. 귀하가 승인하지 않으면 렌더링 시간이 소모되지 않습니다(원하지 않는 한)."
+        },
+        "sellers": {
+          "title": "판매자를 위해 제작됨",
+          "body": "영화보다 판매를 더 선호하는 개인 제작자부터 대행사까지, 모든 사람들을 위해 제작되었습니다."
+        }
+      },
+      "contact": "파트너십, 언론 또는 기업에 대해 이야기하고 싶으십니까? <email>hello@sellcast.ai</email>"
+    },
+    "blog": {
+      "title": "Lumi 블로그가 곧 공개됩니다",
+      "body": "입소문 패턴, 전환을 유도하는 요소, 베스트셀러가 짧은 형식 동영상을 확장하는 방법에 대한 플레이북입니다. 가장 먼저 읽어보세요.",
+      "startFree": "무료로 만들기 시작하세요",
+      "explore": "기능 살펴보기"
+    },
+    "careers": {
+      "title": "우리는 커머스 비디오의 미래를 만들어가고 있습니다",
+      "body": "우리는 빠르게 움직이는 소규모 팀입니다. 아직 공석인 역할이 게시되지 않았습니다. 하지만 AI, 비디오 또는 성장 분야에서 뛰어난 능력을 갖고 계시다면 여러분의 의견을 듣고 싶습니다.",
+      "cta": "자기소개"
+    },
+    "metadata": {
+      "features": {
+        "title": "특징",
+        "description": "Lumi가 수행하는 모든 작업 — 비디오 링크, 패턴 기반 스크립트, 비트별 검토, 아바타 및 제품 모드, 자동 대화 QA, 캡션 및 게시."
+      },
+      "models": {
+        "title": "모델",
+        "description": "Lumi는 현재 Seedance 2.0으로 렌더링되며 더 많은 최첨단 비디오 모델이 제공될 예정입니다. 각 샷에는 가장 잘 렌더링되는 설정이 적용됩니다."
+      },
+      "pricing": {
+        "title": "가격",
+        "description": "무료로 시작하고 작동 시 확장하세요. Lumi 가격은 크레딧 기반입니다. 1크레딧 = 비디오 1초입니다. 무료(첫 번째 비디오), Creator, Pro, Scale 및 Enterprise. 시작할 신용 카드가 없습니다. 연간 최대 20% 절감."
+      },
+      "about": {
+        "title": "소개",
+        "description": "Lumi는 판매자와 제작자가 실제 바이럴 패턴을 기반으로 제품을 스크롤이 멈추는 쇼핑 가능한 동영상으로 전환하도록 돕는 Sellcast 제품입니다."
+      },
+      "blog": {
+        "title": "블로그"
+      },
+      "careers": {
+        "title": "채용"
+      }
+    }
+  }
+}
