@@ -47,12 +47,46 @@ export default function StudioPage() {
   );
 }
 
+type StudioOptionKeys = {
+  label: string;
+  blurb: string;
+};
+
+const VIBE_KEYS: Record<VideoVibe, StudioOptionKeys> = {
+  premium_clean: { label: "vibes.premiumClean.label", blurb: "vibes.premiumClean.blurb" },
+  fun_fast: { label: "vibes.funFast.label", blurb: "vibes.funFast.blurb" },
+  cozy_personal: { label: "vibes.cozyPersonal.label", blurb: "vibes.cozyPersonal.blurb" },
+  bold_punchy: { label: "vibes.boldPunchy.label", blurb: "vibes.boldPunchy.blurb" },
+  clean_demo: { label: "vibes.cleanDemo.label", blurb: "vibes.cleanDemo.blurb" },
+};
+
 const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof UserSquare2 }[] = [
-  { value: "ai_avatar", label: "AI Avatar", blurb: "A presenter talks to camera.", Icon: UserSquare2 },
-  { value: "product_only", label: "Product Only", blurb: "No face — just the product.", Icon: Package },
+  {
+    value: "ai_avatar",
+    label: "modes.aiAvatar.label",
+    blurb: "modes.aiAvatar.blurb",
+    Icon: UserSquare2,
+  },
+  {
+    value: "product_only",
+    label: "modes.productOnly.label",
+    blurb: "modes.productOnly.blurb",
+    Icon: Package,
+  },
 ];
 
+const MODEL_KEYS: Record<VideoModelKey, StudioOptionKeys> = {
+  "seedance-2.0": { label: "models.seedance20.label", blurb: "models.seedance20.blurb" },
+};
+
+const RESOLUTION_KEYS: Record<VideoResolution, StudioOptionKeys> = {
+  "480p": { label: "resolutions.p480.label", blurb: "resolutions.p480.blurb" },
+  "720p": { label: "resolutions.p720.label", blurb: "resolutions.p720.blurb" },
+  "1080p": { label: "resolutions.p1080.label", blurb: "resolutions.p1080.blurb" },
+};
+
 function StudioInner() {
+  const t = useTranslations("app.studio");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
   const sp = useSearchParams();
@@ -111,9 +145,9 @@ function StudioInner() {
   return (
     <div className="container-page py-8">
       <div>
-        <h1 className="font-display text-3xl font-bold text-ink">Video Studio</h1>
+        <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
         <p className="text-muted-foreground">
-          Lumi scripts and renders a video from this product — set the direction.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -121,7 +155,7 @@ function StudioInner() {
         {/* config */}
         <div className="space-y-8">
           {/* vibe — the hero creation control. Style auto-derives from mode. */}
-          <Section title="1 · What's the vibe?">
+          <Section title={t("sections.vibe")}>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               {VIDEO_VIBES.map((v) => (
                 <button
@@ -135,15 +169,19 @@ function StudioInner() {
                       : "border-border bg-card hover:border-border-strong",
                   )}
                 >
-                  <p className="font-display font-semibold text-ink">{v.label}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{v.blurb}</p>
+                  <p className="font-display font-semibold text-ink">
+                    {t(VIBE_KEYS[v.value].label)}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {t(VIBE_KEYS[v.value].blurb)}
+                  </p>
                 </button>
               ))}
             </div>
           </Section>
 
           {/* mode */}
-          <Section title="2 · Mode">
+          <Section title={t("sections.mode")}>
             <div className="grid grid-cols-2 gap-3">
               {MODES.map((m) => (
                 <button
@@ -163,8 +201,10 @@ function StudioInner() {
                       mode === m.value ? "text-brand-700" : "text-muted-foreground",
                     )}
                   />
-                  <p className="mt-2 font-display font-semibold text-ink">{m.label}</p>
-                  <p className="text-xs text-muted-foreground">{m.blurb}</p>
+                  <p className="mt-2 font-display font-semibold text-ink">
+                    {t(m.label)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{t(m.blurb)}</p>
                 </button>
               ))}
             </div>
@@ -172,13 +212,13 @@ function StudioInner() {
 
           {/* avatar — who's on screen (avatar mode only) */}
           {mode === "ai_avatar" && (
-            <Section title="Presenter">
+            <Section title={t("sections.presenter")}>
               <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
                 <AvatarChoice
                   selected={avatarId === null}
                   onClick={() => setAvatarId(null)}
-                  label="Auto"
-                  sublabel="AI picks a creator"
+                  label={t("presenter.auto")}
+                  sublabel={t("presenter.autoSublabel")}
                 />
                 {(avatars ?? []).map((a) => (
                   <AvatarChoice
@@ -194,13 +234,13 @@ function StudioInner() {
                 href="/app/avatars"
                 className="mt-3 inline-block text-xs font-semibold text-brand-700"
               >
-                Manage avatars →
+                {t("presenter.manageAvatars")}
               </Link>
             </Section>
           )}
 
           {/* duration */}
-          <Section title="3 · Duration">
+          <Section title={t("sections.duration")}>
             <div className="flex flex-wrap gap-2">
               {VIDEO_DURATIONS.map((d) => (
                 <button
@@ -214,14 +254,14 @@ function StudioInner() {
                       : "border-border bg-card text-muted-foreground hover:text-ink",
                   )}
                 >
-                  {d}s
+                  {t("durationSeconds", { duration: d })}
                 </button>
               ))}
             </div>
           </Section>
 
           {/* model — which Seedance model renders the video */}
-          <Section title="Model">
+          <Section title={t("sections.model")}>
             <div className="grid grid-cols-2 gap-3">
               {VIDEO_MODELS.map((m) => (
                 <button
@@ -238,15 +278,19 @@ function StudioInner() {
                         : "border-border bg-card hover:border-border-strong",
                   )}
                 >
-                  <p className="text-sm font-semibold text-ink">{m.label}</p>
-                  <p className="text-xs text-muted-foreground">{m.blurb}</p>
+                  <p className="text-sm font-semibold text-ink">
+                    {t(MODEL_KEYS[m.value].label)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {t(MODEL_KEYS[m.value].blurb)}
+                  </p>
                 </button>
               ))}
             </div>
           </Section>
 
           {/* resolution — render quality */}
-          <Section title="Resolution">
+          <Section title={t("sections.resolution")}>
             <div className="grid grid-cols-3 gap-3">
               {VIDEO_RESOLUTIONS.map((r) => (
                 <button
@@ -263,22 +307,26 @@ function StudioInner() {
                         : "border-border bg-card hover:border-border-strong",
                   )}
                 >
-                  <p className="text-sm font-semibold text-ink">{r.label}</p>
-                  <p className="text-xs text-muted-foreground">{r.blurb}</p>
+                  <p className="text-sm font-semibold text-ink">
+                    {t(RESOLUTION_KEYS[r.value].label)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {t(RESOLUTION_KEYS[r.value].blurb)}
+                  </p>
                 </button>
               ))}
             </div>
           </Section>
 
           {/* language — only voice-QA-validated languages are selectable */}
-          <Section title="4 · Language">
+          <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
               {VIDEO_LANGUAGES.map((lang) => (
                 <button
                   key={lang.value}
                   type="button"
                   disabled={!lang.enabled}
-                  title={lang.enabled ? undefined : "Coming soon"}
+                  title={lang.enabled ? undefined : t("language.comingSoonTitle")}
                   onClick={() => setLanguageOverride(lang.value)}
                   className={cn(
                     "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
@@ -292,7 +340,7 @@ function StudioInner() {
                   {lang.label}
                   {!lang.enabled && (
                     <span className="ml-1.5 text-[10px] font-bold uppercase tracking-wide">
-                      soon
+                      {t("language.soonBadge")}
                     </span>
                   )}
                 </button>
@@ -303,14 +351,13 @@ function StudioInner() {
           {/* storyboard review — always on; this is the product's wedge, not an
               option. The user reviews and approves the storyboard before any
               image or video spend. */}
-          <Section title="5 · Review">
+          <Section title={t("sections.review")}>
             <div className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white">
                 <Eye className="h-5 w-5" />
               </span>
               <p className="text-sm text-muted-foreground">
-                Lumi will show you the storyboard before it spends anything —
-                review and approve it before any images or video are generated.
+                {t("reviewDescription")}
               </p>
             </div>
           </Section>
@@ -331,7 +378,7 @@ function StudioInner() {
               </div>
               <div className="min-w-0">
                 <p className="line-clamp-2 text-sm font-semibold text-ink">
-                  {product?.title ?? "Loading…"}
+                  {product?.title ?? t("loading")}
                 </p>
                 {product && (
                   <p className="text-xs text-muted-foreground">
@@ -343,31 +390,43 @@ function StudioInner() {
 
             <dl className="mt-4 space-y-2 border-t border-border pt-4 text-sm">
               <Row
-                label="Vibe"
-                value={VIDEO_VIBES.find((v) => v.value === vibe)?.label ?? ""}
-              />
-              <Row label="Mode" value={MODES.find((m) => m.value === mode)?.label ?? ""} />
-              <Row label="Length" value={`${duration}s`} />
-              <Row
-                label="Model"
-                value={VIDEO_MODELS.find((m) => m.value === videoModel)?.label ?? ""}
+                label={t("summary.vibe")}
+                value={t(VIBE_KEYS[vibe].label)}
               />
               <Row
-                label="Resolution"
-                value={VIDEO_RESOLUTIONS.find((r) => r.value === resolution)?.label ?? ""}
+                label={t("summary.mode")}
+                value={t(MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label")}
               />
               <Row
-                label="Language"
-                value={VIDEO_LANGUAGES.find((l) => l.value === language)?.label ?? "English"}
+                label={t("summary.length")}
+                value={t("durationSeconds", { duration })}
               />
-              <Row label="Format" value="9:16" />
-              <Row label="Review" value="Storyboard" />
+              <Row
+                label={t("summary.model")}
+                value={t(MODEL_KEYS[videoModel].label)}
+              />
+              <Row
+                label={t("summary.resolution")}
+                value={t(RESOLUTION_KEYS[resolution].label)}
+              />
+              <Row
+                label={t("summary.language")}
+                value={
+                  VIDEO_LANGUAGES.find((l) => l.value === language)?.label ??
+                  VIDEO_LANGUAGES[0].label
+                }
+              />
+              <Row label={t("summary.format")} value="9:16" />
+              <Row label={t("summary.review")} value={t("summary.storyboard")} />
             </dl>
 
             {usage && (
               <p className="mt-4 text-center text-xs text-muted-foreground">
-                {usage.remaining} of {usage.limit} credits left this month · this
-                video uses {duration}
+                {t("usageSummary", {
+                  remaining: usage.remaining,
+                  limit: usage.limit,
+                  duration,
+                })}
               </p>
             )}
             <Button
@@ -381,16 +440,19 @@ function StudioInner() {
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  Generate video
+                  {t("generateVideo")}
                 </>
               )}
             </Button>
             {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                Not enough credits for a {duration}s video ({usage?.remaining} of{" "}
-                {usage?.limit} left).{" "}
+                {t("outOfQuota", {
+                  duration,
+                  remaining: usage?.remaining ?? 0,
+                  limit: usage?.limit ?? 0,
+                })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
-                  See plans
+                  {t("seePlans")}
                 </Link>
               </p>
             )}
@@ -459,20 +521,20 @@ function Row({ label, value }: { label: string; value: string }) {
 }
 
 function PickProduct() {
+  const t = useTranslations("app.studio.pickProduct");
   return (
     <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
         <Store className="h-8 w-8" />
       </div>
       <h1 className="mt-5 font-display text-2xl font-bold text-ink">
-        Pick a product first
+        {t("title")}
       </h1>
       <p className="mt-2 max-w-sm text-muted-foreground">
-        Choose a product from the marketplace and Lumi will turn it into a
-        scroll-stopping video.
+        {t("description")}
       </p>
       <Button href="/app/marketplace" size="lg" className="mt-6">
-        Browse marketplace
+        {t("browseMarketplace")}
       </Button>
     </div>
   );
