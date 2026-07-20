@@ -419,6 +419,7 @@
           "slowLingering": "ゆっくりと長引く"
         },
         "proMode": "プロモード",
+        "proHint": "タップやメモを変更すると、このショットが再生成されます。",
         "transitions": {
           "hardCut": "ハードカット",
           "dissolve": "溶解する",

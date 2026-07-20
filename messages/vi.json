@@ -419,6 +419,7 @@
           "slowLingering": "Chậm và kéo dài"
         },
         "proMode": "Chế độ chuyên nghiệp",
+        "proHint": "Thay đổi một lựa chọn hoặc ghi chú sẽ tạo lại cảnh quay này.",
         "transitions": {
           "hardCut": "Cắt cứng",
           "dissolve": "hòa tan",

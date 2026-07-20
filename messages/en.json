@@ -425,6 +425,7 @@
           "slowLingering": "Slow & lingering"
         },
         "proMode": "Pro mode",
+        "proHint": "Changing a tap or note re-derives this shot.",
         "transitions": {
           "hardCut": "Hard cut",
           "dissolve": "Dissolve",

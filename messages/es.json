@@ -419,6 +419,7 @@
           "slowLingering": "Lento y persistente"
         },
         "proMode": "modo profesional",
+        "proHint": "Cambiar un toque o una nota vuelve a generar esta toma.",
         "transitions": {
           "hardCut": "corte duro",
           "dissolve": "disolver",

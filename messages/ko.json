@@ -419,6 +419,7 @@
           "slowLingering": "느리고 오래 지속됨"
         },
         "proMode": "프로 모드",
+        "proHint": "탭이나 메모를 변경하면 이 샷이 다시 생성됩니다.",
         "transitions": {
           "hardCut": "하드 컷",
           "dissolve": "디졸브",

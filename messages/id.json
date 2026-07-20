@@ -419,6 +419,7 @@
           "slowLingering": "Lambat & berkepanjangan"
         },
         "proMode": "Modus profesional",
+        "proHint": "Mengubah ketukan atau catatan akan membuat ulang bidikan ini.",
         "transitions": {
           "hardCut": "Potongan keras",
           "dissolve": "Larutkan",

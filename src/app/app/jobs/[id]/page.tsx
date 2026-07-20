@@ -369,6 +369,7 @@ function normalizeStoryboard(sb: Storyboard): Storyboard {
       ...s,
       dialogue: s.dialogue?.trim() ? s.dialogue : null,
       on_screen_text: s.on_screen_text?.trim() ? s.on_screen_text : null,
+      nudge_note: s.nudge_note?.trim() ? s.nudge_note : "",
     })),
   };
 }
@@ -770,6 +771,7 @@ function ShotEditor({
         </button>
         {pro && (
           <div className="mt-3 space-y-4">
+            <p className="text-xs text-muted-foreground">{t("proHint")}</p>
             <EditField label={t("fields.technique")}>
               <input
                 value={shot.technique}

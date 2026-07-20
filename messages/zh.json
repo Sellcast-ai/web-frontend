@@ -419,6 +419,7 @@
           "slowLingering": "缓慢而缠绵"
         },
         "proMode": "专业模式",
+        "proHint": "更改点选项或备注会重新生成此镜头。",
         "transitions": {
           "hardCut": "硬切",
           "dissolve": "溶解",

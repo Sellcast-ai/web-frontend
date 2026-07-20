@@ -419,6 +419,7 @@
           "slowLingering": "Lento e persistente"
         },
         "proMode": "Modo profissional",
+        "proHint": "Alterar um toque ou nota gera esta cena novamente.",
         "transitions": {
           "hardCut": "Corte duro",
           "dissolve": "Dissolver",
