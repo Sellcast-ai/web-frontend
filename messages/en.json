@@ -342,6 +342,7 @@
       "pricingKicker": "Pricing",
       "pricingTitle": "Start free. Scale when it's working.",
       "pricingSubtitle": "Credit-based — 1 credit = 1 second of video. Your first video's free; no credit card to begin.",
+      "mostPopular": "Most popular",
       "pricingTiers": {
         "creator": {
           "name": "Creator",
