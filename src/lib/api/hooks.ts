@@ -81,21 +81,24 @@ export function useAvatars() {
   return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
 }
 
-export function useCreateAvatar(onProgress?: (fraction: number) => void) {
+export function useCreateAvatar(
+  messages: { saveError: string },
+  onProgress?: (fraction: number) => void,
+) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: AvatarCreate) => api.createAvatar(payload, onProgress),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
-    onError: (err) => toast.error(errMsg(err, "Couldn't save the avatar.")),
+    onError: (err) => toast.error(errMsg(err, messages.saveError)),
   });
 }
 
-export function useDeleteAvatar() {
+export function useDeleteAvatar(messages: { deleteError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.deleteAvatar(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
-    onError: (err) => toast.error(errMsg(err, "Couldn't delete the avatar.")),
+    onError: (err) => toast.error(errMsg(err, messages.deleteError)),
   });
 }
 
@@ -141,7 +144,7 @@ export function useVideoJob(id: string) {
 
 const productListKeys = [["products"], qk.myProducts] as const;
 
-export function useToggleLike() {
+export function useToggleLike(messages: { updateError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, liked }: { id: string; liked: boolean }) =>
@@ -162,7 +165,7 @@ export function useToggleLike() {
     },
     onError: (_err, _vars, snapshot) => {
       snapshot?.forEach(([key, data]) => qc.setQueryData(key, data));
-      toast.error("Couldn't update like. Please try again.");
+      toast.error(messages.updateError);
     },
     onSettled: (_data, _err, { id }) => {
       qc.invalidateQueries({ queryKey: qk.product(id) });
@@ -209,17 +212,19 @@ export function usePreviewImport() {
   return useMutation({ mutationFn: (storeUrl: string) => api.previewImport(storeUrl) });
 }
 
-export function useStartImport() {
+export function useStartImport(messages: { startError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (storeUrl: string) => api.startImport(storeUrl),
     onSuccess: (job) => qc.setQueryData(qk.import(job.job_id), job),
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't start the import. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.startError)),
   });
 }
 
-export function useCreateProduct(onProgress?: (fraction: number) => void) {
+export function useCreateProduct(
+  messages: { saveError: string },
+  onProgress?: (fraction: number) => void,
+) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: ProductCreate) => api.createProduct(payload, onProgress),
@@ -227,12 +232,11 @@ export function useCreateProduct(onProgress?: (fraction: number) => void) {
       qc.setQueryData(qk.product(product.id), product);
       qc.invalidateQueries({ queryKey: qk.myProducts });
     },
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't save the product. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.saveError)),
   });
 }
 
-export function useCreateJob() {
+export function useCreateJob(messages: { startError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: VideoJobCreate) => api.createVideoJob(payload),
@@ -241,12 +245,14 @@ export function useCreateJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't start the video. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.startError)),
   });
 }
 
-export function useBeatAction(jobId: string) {
+export function useBeatAction(
+  jobId: string,
+  messages: { approveError: string; regenerateError: string },
+) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({
@@ -264,35 +270,34 @@ export function useBeatAction(jobId: string) {
       toast.error(
         errMsg(
           err,
-          action === "approve"
-            ? "Couldn't approve the shot. Please try again."
-            : "Couldn't regenerate the shot. Please try again.",
+          action === "approve" ? messages.approveError : messages.regenerateError,
         ),
       ),
   });
 }
 
-export function useApproveStoryboard(jobId: string) {
+export function useApproveStoryboard(
+  jobId: string,
+  messages: { approveError: string },
+) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: () => api.approveStoryboard(jobId),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't approve the storyboard. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.approveError)),
   });
 }
 
-export function usePatchStoryboard(jobId: string) {
+export function usePatchStoryboard(jobId: string, messages: { saveError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (storyboard: Storyboard) => api.patchStoryboard(jobId, storyboard),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't save your edits. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.saveError)),
   });
 }
 
-export function useRetryJob() {
+export function useRetryJob(messages: { retryError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.retryVideoJob(id),
@@ -301,8 +306,7 @@ export function useRetryJob() {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) =>
-      toast.error(errMsg(err, "Couldn't retry the job. Please try again.")),
+    onError: (err) => toast.error(errMsg(err, messages.retryError)),
   });
 }
 

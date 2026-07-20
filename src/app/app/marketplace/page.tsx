@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Search, Loader2, PackageOpen, Link2, ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,34 @@ import { StaggerItem } from "@/components/ui/motion";
 import { CATEGORIES } from "@/lib/categories";
 import { cn } from "@/lib/utils";
 
+type CategoryLabelKey =
+  | "beautyPersonalCare"
+  | "healthWellness"
+  | "womensFashion"
+  | "sportsOutdoors"
+  | "homeTextiles"
+  | "householdEssentials"
+  | "mobileElectronics"
+  | "foodBeverage"
+  | "mensFashion"
+  | "toysHobbies";
+
+const CATEGORY_LABEL_KEYS: Record<string, CategoryLabelKey> = {
+  "Beauty & Personal Care": "beautyPersonalCare",
+  "Health & Wellness": "healthWellness",
+  "Women'S Fashion": "womensFashion",
+  "Sports & Outdoors": "sportsOutdoors",
+  "Home Textiles": "homeTextiles",
+  "Household Essentials": "householdEssentials",
+  "Mobile & Electronics": "mobileElectronics",
+  "Food & Beverage": "foodBeverage",
+  "Men'S Fashion": "mensFashion",
+  "Toys & Hobbies": "toysHobbies",
+};
+
 export default function MarketplacePage() {
+  const t = useTranslations("app.marketplace");
+  const tc = useTranslations("app.categories");
   const [input, setInput] = useState("");
   const [q, setQ] = useState("");
   const [category, setCategory] = useState<string | undefined>(undefined);
@@ -54,9 +82,9 @@ export default function MarketplacePage() {
   return (
     <div className="container-page py-8">
       <div className="flex flex-col gap-1">
-        <h1 className="font-display text-3xl font-bold text-ink">Marketplace</h1>
+        <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
         <p className="text-muted-foreground">
-          Trending TikTok Shop products — pick one to turn into a video.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -67,7 +95,7 @@ export default function MarketplacePage() {
           ref={searchRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Search products — or paste any product link (Amazon, Shopee, TikTok Shop…)"
+          placeholder={t("searchPlaceholder")}
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         {isFetching && <Loader2 className="h-4 w-4 animate-spin text-brand-400" />}
@@ -84,7 +112,7 @@ export default function MarketplacePage() {
         >
           <Link2 className="h-4 w-4 shrink-0" />
           <span className="min-w-0 flex-1 truncate">
-            Make a video from this link — Lumi will read the product page
+            {t("linkCta")}
           </span>
           <ArrowRight className="h-4 w-4 shrink-0" />
         </Link>
@@ -93,11 +121,11 @@ export default function MarketplacePage() {
       {/* category pills */}
       <div className="mt-4 -mx-1 flex gap-2 overflow-x-auto pb-2">
         <Pill active={!category} onClick={() => setCategory(undefined)}>
-          All
+          {t("allCategories")}
         </Pill>
         {CATEGORIES.map((c) => (
           <Pill key={c} active={category === c} onClick={() => setCategory(c)}>
-            {c.replace("'S", "'s")}
+            {tc(CATEGORY_LABEL_KEYS[c])}
           </Pill>
         ))}
       </div>
@@ -126,7 +154,7 @@ export default function MarketplacePage() {
                 {isFetching ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  "Load more"
+                    t("loadMore")
                 )}
               </Button>
             </div>
@@ -183,16 +211,17 @@ function SkeletonGrid() {
 }
 
 function EmptyState() {
+  const t = useTranslations("app.marketplace.empty");
   return (
     <div className="mt-16 flex flex-col items-center text-center">
       <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
         <PackageOpen className="h-7 w-7" />
       </div>
       <p className="mt-4 font-display text-lg font-semibold text-ink">
-        No products found
+        {t("title")}
       </p>
       <p className="mt-1 text-sm text-muted-foreground">
-        Try a different search or category.
+        {t("description")}
       </p>
     </div>
   );

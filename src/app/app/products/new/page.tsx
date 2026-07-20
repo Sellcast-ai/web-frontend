@@ -4,6 +4,7 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
   Link2,
   Loader2,
@@ -24,7 +25,7 @@ import {
   qk,
 } from "@/lib/api/hooks";
 import type { ProductDraft, SourcePlatform } from "@/lib/api/types";
-import { CATEGORIES, categoryLabel } from "@/lib/categories";
+import { CATEGORIES } from "@/lib/categories";
 import { toast } from "@/lib/toast";
 import { Button } from "@/components/ui/button";
 import { UploadProgress } from "@/components/ui/upload-progress";
@@ -34,22 +35,64 @@ import { cn } from "@/lib/utils";
 const MAX_IMAGES = 12;
 const MAX_UPLOAD_MB = 8;
 
-const PLATFORM_LABELS: Record<SourcePlatform, string> = {
-  amazon: "Amazon",
-  shopee: "Shopee",
-  tiktok_shop: "TikTok Shop",
-  walmart: "Walmart",
-  lazada: "Lazada",
-  aliexpress: "AliExpress",
-  temu: "Temu",
-  alibaba: "Alibaba",
-  taobao: "Taobao",
-  mercadolibre: "Mercado Libre",
-  etsy: "Etsy",
-  ebay: "eBay",
-  shopify: "Shopify",
-  generic: "Web store",
-  manual: "Manual",
+type PlatformLabelKey =
+  | "amazon"
+  | "shopee"
+  | "tiktokShop"
+  | "walmart"
+  | "lazada"
+  | "aliexpress"
+  | "temu"
+  | "alibaba"
+  | "taobao"
+  | "mercadolibre"
+  | "etsy"
+  | "ebay"
+  | "shopify"
+  | "generic"
+  | "manual";
+
+const PLATFORM_LABEL_KEYS: Record<SourcePlatform, PlatformLabelKey> = {
+  amazon: "amazon",
+  shopee: "shopee",
+  tiktok_shop: "tiktokShop",
+  walmart: "walmart",
+  lazada: "lazada",
+  aliexpress: "aliexpress",
+  temu: "temu",
+  alibaba: "alibaba",
+  taobao: "taobao",
+  mercadolibre: "mercadolibre",
+  etsy: "etsy",
+  ebay: "ebay",
+  shopify: "shopify",
+  generic: "generic",
+  manual: "manual",
+};
+
+type CategoryLabelKey =
+  | "beautyPersonalCare"
+  | "healthWellness"
+  | "womensFashion"
+  | "sportsOutdoors"
+  | "homeTextiles"
+  | "householdEssentials"
+  | "mobileElectronics"
+  | "foodBeverage"
+  | "mensFashion"
+  | "toysHobbies";
+
+const CATEGORY_LABEL_KEYS: Record<string, CategoryLabelKey> = {
+  "Beauty & Personal Care": "beautyPersonalCare",
+  "Health & Wellness": "healthWellness",
+  "Women'S Fashion": "womensFashion",
+  "Sports & Outdoors": "sportsOutdoors",
+  "Home Textiles": "homeTextiles",
+  "Household Essentials": "householdEssentials",
+  "Mobile & Electronics": "mobileElectronics",
+  "Food & Beverage": "foodBeverage",
+  "Men'S Fashion": "mensFashion",
+  "Toys & Hobbies": "toysHobbies",
 };
 
 type Upload = { filename: string; dataUrl: string; base64: string };
@@ -132,11 +175,15 @@ export default function NewProductPage() {
 }
 
 function NewProductInner() {
+  const t = useTranslations("app.productsNew");
+  const tc = useTranslations("app.categories");
+  const tp = useTranslations("app.platforms");
+  const tt = useTranslations("app.toasts");
   const router = useRouter();
   const sp = useSearchParams();
   const parse = useParseProduct();
   const [progress, setProgress] = useState(0);
-  const create = useCreateProduct(setProgress);
+  const create = useCreateProduct({ saveError: tt("saveProductFailed") }, setProgress);
 
   const [url, setUrl] = useState(sp.get("url") ?? "");
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -180,11 +227,13 @@ function NewProductInner() {
       const accepted: Upload[] = [];
       for (const file of Array.from(files).slice(0, Math.max(room, 0))) {
         if (!file.type.startsWith("image/")) {
-          setUploadError(`${file.name} isn't an image.`);
+          setUploadError(t("upload.notImageError", { filename: file.name }));
           continue;
         }
         if (file.size > MAX_UPLOAD_MB * 1024 * 1024) {
-          setUploadError(`${file.name} is over ${MAX_UPLOAD_MB}MB.`);
+          setUploadError(
+            t("upload.tooLargeError", { filename: file.name, max: MAX_UPLOAD_MB }),
+          );
           continue;
         }
         accepted.push(await readImageFile(file));
@@ -230,11 +279,9 @@ function NewProductInner() {
     <div className="container-page max-w-3xl py-8">
       {draft === null ? (
         <>
-          <h1 className="font-display text-3xl font-bold text-ink">Add a product</h1>
+          <h1 className="font-display text-3xl font-bold text-ink">{t("startTitle")}</h1>
           <p className="mt-1 text-muted-foreground">
-            Paste any product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop,
-            Etsy, eBay, or your own store — or start from photos. Lumi reads the page;
-            you confirm before anything renders.
+            {t("startSubtitle")}
           </p>
 
           {/* URL omnibox */}
@@ -249,12 +296,16 @@ function NewProductInner() {
             <input
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://… product link"
+              placeholder={t("productLinkPlaceholder")}
               className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
               autoFocus
             />
             <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
-              {parse.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Read link"}
+              {parse.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                t("readLink")
+              )}
             </Button>
           </form>
           {parse.isError && (
@@ -267,7 +318,7 @@ function NewProductInner() {
                   className="mt-1 font-semibold text-brand-700"
                   onClick={() => setDraft(emptyDraft(url.trim() || null))}
                 >
-                  Add it manually instead →
+                  {t("addManuallyInstead")}
                 </button>
               </div>
             </div>
@@ -275,7 +326,7 @@ function NewProductInner() {
 
           <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             <span className="h-px flex-1 bg-border" />
-            or
+            {t("or")}
             <span className="h-px flex-1 bg-border" />
           </div>
 
@@ -300,9 +351,11 @@ function NewProductInner() {
               ) : (
                 <ImagePlus className="h-6 w-6 text-brand-600" />
               )}
-              <p className="mt-2 font-display font-semibold text-ink">Start from photos</p>
+              <p className="mt-2 font-display font-semibold text-ink">
+                {t("startFromPhotos")}
+              </p>
               <p className="text-xs text-muted-foreground">
-                Drop product shots here or click to browse; describe it on the next step.
+                {t("startFromPhotosDescription")}
               </p>
             </button>
             <button
@@ -311,9 +364,11 @@ function NewProductInner() {
               className="rounded-2xl border-2 border-dashed border-border bg-card p-6 text-left transition-colors hover:border-brand-400"
             >
               <PencilLine className="h-6 w-6 text-brand-600" />
-              <p className="mt-2 font-display font-semibold text-ink">Start from scratch</p>
+              <p className="mt-2 font-display font-semibold text-ink">
+                {t("startFromScratch")}
+              </p>
               <p className="text-xs text-muted-foreground">
-                Type the details yourself, add photos as you go.
+                {t("startFromScratchDescription")}
               </p>
             </button>
           </div>
@@ -321,7 +376,7 @@ function NewProductInner() {
 
           <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             <span className="h-px flex-1 bg-border" />
-            or
+            {t("or")}
             <span className="h-px flex-1 bg-border" />
           </div>
 
@@ -337,18 +392,18 @@ function NewProductInner() {
             }}
             className="flex items-center gap-1 text-sm font-semibold text-muted-foreground hover:text-ink"
           >
-            <ArrowLeft className="h-4 w-4" /> Start over
+            <ArrowLeft className="h-4 w-4" /> {t("startOver")}
           </button>
           <h1 className="mt-3 font-display text-3xl font-bold text-ink">
-            Check the details
+            {t("detailsTitle")}
           </h1>
           <p className="mt-1 text-muted-foreground">
-            This is what the video will be based on — 10 seconds here saves a bad render.
+            {t("detailsSubtitle")}
           </p>
 
           {draft.source_url && (
             <p className="mt-3 inline-flex max-w-full items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">
-              {PLATFORM_LABELS[draft.source_platform]}
+              {tp(PLATFORM_LABEL_KEYS[draft.source_platform])}
               <span className="truncate font-normal opacity-80">{draft.source_url}</span>
             </p>
           )}
@@ -365,26 +420,26 @@ function NewProductInner() {
           )}
 
           <div className="mt-6 space-y-6">
-            <Field label="Title">
+            <Field label={t("fields.title")}>
               <input
                 value={draft.title}
                 onChange={(e) => setDraft({ ...draft, title: e.target.value })}
-                placeholder="Product name"
+                placeholder={t("fields.titlePlaceholder")}
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-brand-300"
               />
             </Field>
 
-            <Field label="Description">
+            <Field label={t("fields.description")}>
               <textarea
                 value={draft.description}
                 onChange={(e) => setDraft({ ...draft, description: e.target.value })}
-                placeholder="What it is, who it's for, why it's good — facts only, the script is written from this."
+                placeholder={t("fields.descriptionPlaceholder")}
                 rows={5}
                 className="w-full rounded-xl border border-border bg-card px-4 py-3 text-sm outline-none focus:border-brand-300"
               />
             </Field>
 
-            <Field label="Category">
+            <Field label={t("fields.category")}>
               <div className="flex flex-wrap gap-2">
                 {CATEGORIES.map((c) => (
                   <button
@@ -400,15 +455,15 @@ function NewProductInner() {
                         : "border-border bg-card text-muted-foreground hover:text-ink",
                     )}
                   >
-                    {categoryLabel(c)}
+                    {tc(CATEGORY_LABEL_KEYS[c])}
                   </button>
                 ))}
               </div>
             </Field>
 
             <Field
-              label={`Photos · ${selectedCount} selected`}
-              hint="First selected photo is the hero the video is built around. Untick size charts and banners. Drag & drop photos anywhere in this grid."
+              label={t("fields.photos", { count: selectedCount })}
+              hint={t("fields.photosHint")}
             >
               <div
                 {...drop.props}
@@ -450,7 +505,7 @@ function NewProductInner() {
                     <img src={upload.dataUrl} alt="" className="h-full w-full object-cover" />
                     <button
                       type="button"
-                      aria-label="Remove photo"
+                      aria-label={t("removePhoto")}
                       onClick={() =>
                         setDraft({
                           ...draft,
@@ -473,7 +528,7 @@ function NewProductInner() {
                   ) : (
                     <ImagePlus className="h-5 w-5" />
                   )}
-                  <span className="text-xs font-semibold">Add</span>
+                  <span className="text-xs font-semibold">{t("addPhoto")}</span>
                 </button>
               </div>
               {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
@@ -487,13 +542,13 @@ function NewProductInner() {
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  Save & make a video
+                  {t("saveAndMakeVideo")}
                 </>
               )}
             </Button>
             {selectedCount === 0 && (
               <p className="text-xs text-muted-foreground">
-                Add at least one real product photo first.
+                {t("needPhoto")}
               </p>
             )}
           </div>
@@ -518,10 +573,12 @@ function NewProductInner() {
 /** "Import your whole store" — paste a store URL, preview the catalog, then
  * kick off a batch import and watch it fill up My Products (report §4). */
 function StoreImport() {
+  const t = useTranslations("app.productsNew.storeImport");
+  const tt = useTranslations("app.toasts");
   const router = useRouter();
   const qc = useQueryClient();
   const preview = usePreviewImport();
-  const start = useStartImport();
+  const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
   const [jobId, setJobId] = useState<string | null>(null);
   const { data: job } = useImportJob(jobId ?? "");
@@ -535,14 +592,14 @@ function StoreImport() {
       qc.invalidateQueries({ queryKey: qk.myProducts });
       toast.success(
         job.status === "partial"
-          ? `Imported ${job.products_upserted} of your products (catalog cap). The rest can be added by paste.`
-          : `Imported ${job.products_upserted} products from your store.`,
+          ? tt("importPartial", { count: job.products_upserted })
+          : tt("importSucceeded", { count: job.products_upserted }),
       );
       router.push("/app/products");
     } else if (job.status === "failed") {
-      toast.error(job.error ?? "The import didn't finish. Please try again.");
+      toast.error(job.error ?? tt("importFailed"));
     }
-  }, [job, qc, router]);
+  }, [job, qc, router, tt]);
 
   const previewData = preview.data;
 
@@ -555,16 +612,19 @@ function StoreImport() {
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 text-brand-600" />
-          Importing your store
+          {t("importingTitle")}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
           {active
-            ? `Imported ${job.products_upserted} of ~${job.products_found} products so far — this keeps going in the background.`
-            : "Wrapping up…"}
+            ? t("importingProgress", {
+                upserted: job.products_upserted,
+                found: job.products_found,
+              })
+            : t("wrappingUp")}
         </p>
         <div className="mt-4">
           <Button size="lg" disabled className="w-full sm:w-auto">
-            <UploadProgress progress={active ? fraction : 1} label="Importing" />
+            <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
           </Button>
         </div>
       </div>
@@ -576,8 +636,10 @@ function StoreImport() {
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="font-display font-semibold text-ink">
-          We found {previewData.product_count_estimate} products from{" "}
-          {previewData.store_domain}
+          {t("previewFound", {
+            count: previewData.product_count_estimate,
+            domain: previewData.store_domain,
+          })}
         </p>
         {previewData.sample.length > 0 && (
           <div className="mt-3 flex gap-2">
@@ -608,7 +670,7 @@ function StoreImport() {
             ) : (
               <>
                 <Store className="h-4 w-4" />
-                Import all products
+                {t("importAllProducts")}
               </>
             )}
           </Button>
@@ -617,7 +679,7 @@ function StoreImport() {
             className="text-sm font-semibold text-muted-foreground hover:text-ink"
             onClick={() => preview.reset()}
           >
-            Try a different store
+            {t("tryDifferentStore")}
           </button>
         </div>
       </div>
@@ -638,11 +700,11 @@ function StoreImport() {
         <input
           value={storeUrl}
           onChange={(e) => setStoreUrl(e.target.value)}
-          placeholder="your-store.myshopify.com — import your whole store"
+          placeholder={t("placeholder")}
           className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
         />
         <Button size="sm" type="submit" disabled={preview.isPending || !storeUrl.trim()}>
-          {preview.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Preview"}
+          {preview.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t("preview")}
         </Button>
       </form>
       {preview.isError && (

@@ -12,8 +12,3 @@ export const CATEGORIES = [
   "Men'S Fashion",
   "Toys & Hobbies",
 ];
-
-/** Pretty-print a category (fixes the "'S" ingestion artifact). */
-export function categoryLabel(c: string): string {
-  return c.replace("'S", "'s");
-}

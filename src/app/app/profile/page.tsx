@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
@@ -15,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export default function ProfilePage() {
+  const t = useTranslations("app.profile");
+  const tt = useTranslations("app.toasts");
   const router = useRouter();
   const qc = useQueryClient();
   const { data: user, isLoading } = useCurrentUser();
@@ -42,7 +45,7 @@ export default function ProfilePage() {
     try {
       await update.mutateAsync({ display_name: name.trim() });
     } catch {
-      toast.error("Couldn't save your display name. Please try again.");
+      toast.error(tt("saveDisplayNameFailed"));
       return;
     }
     setSaved(true);
@@ -59,7 +62,7 @@ export default function ProfilePage() {
 
   return (
     <div className="container-page max-w-3xl py-8">
-      <h1 className="font-display text-3xl font-bold text-ink">Profile</h1>
+      <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
 
       {/* identity card */}
       <div className="mt-6 flex items-center gap-4 rounded-card border border-border bg-card p-6 shadow-soft">
@@ -97,8 +100,8 @@ export default function ProfilePage() {
 
       {/* stats */}
       <div className="mt-4 grid grid-cols-2 gap-4">
-        <Stat label="Videos created" value={total} />
-        <Stat label="Ready to publish" value={completed} />
+        <Stat label={t("videosCreated")} value={total} />
+        <Stat label={t("readyToPublish")} value={completed} />
       </div>
 
       {/* monthly quota */}
@@ -107,20 +110,26 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-lg font-semibold text-ink">
-                This month
+                {t("thisMonth")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {usage.used} of {usage.limit} credits used ·{" "}
-                <span className="capitalize">{usage.plan}</span> plan · resets{" "}
-                {usage.resets_at.slice(0, 10)}
+                {t("usageSummary", {
+                  used: usage.used,
+                  limit: usage.limit,
+                  plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
+                  date: usage.resets_at.slice(0, 10),
+                })}
               </p>
               <p className="text-xs text-muted-foreground/80">
-                1 credit = 1 second of video
+                {t("creditNote")}
               </p>
             </div>
             <span className="font-display text-2xl font-bold text-brand-700">
               {usage.remaining}
-              <span className="text-sm font-medium text-muted-foreground"> left</span>
+              <span className="text-sm font-medium text-muted-foreground">
+                {" "}
+                {t("creditsLeft")}
+              </span>
             </span>
           </div>
           <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-muted">
@@ -133,11 +142,11 @@ export default function ProfilePage() {
           </div>
           {usage.remaining <= 0 && (
             <p className="mt-3 text-sm text-muted-foreground">
-              You&apos;ve hit your monthly limit.{" "}
+              {t("limitHit")}{" "}
               <a href="/pricing" className="font-semibold text-brand-700">
-                See plans
+                {t("seePlans")}
               </a>{" "}
-              for more.
+              {t("forMore")}
             </p>
           )}
         </section>
@@ -145,7 +154,9 @@ export default function ProfilePage() {
 
       {/* edit display name */}
       <section className="mt-6 rounded-card border border-border bg-card p-6 shadow-soft">
-        <h2 className="font-display text-lg font-semibold text-ink">Display name</h2>
+        <h2 className="font-display text-lg font-semibold text-ink">
+          {t("displayName")}
+        </h2>
         <div className="mt-3 flex gap-2">
           <input
             value={name}
@@ -165,10 +176,10 @@ export default function ProfilePage() {
               ) : saved ? (
                 <PopIn key="saved" className="inline-flex items-center gap-2">
                   <Check className="h-4 w-4" />
-                  Saved
+                  {t("saved")}
                 </PopIn>
               ) : (
-                <PopIn key="save">Save</PopIn>
+                <PopIn key="save">{t("save")}</PopIn>
               )}
             </AnimatePresence>
           </Button>
@@ -179,7 +190,7 @@ export default function ProfilePage() {
       {user.identities?.length > 0 && (
         <section className="mt-6 rounded-card border border-border bg-card p-6 shadow-soft">
           <h2 className="font-display text-lg font-semibold text-ink">
-            Connected accounts
+            {t("connectedAccounts")}
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {user.identities.map((i) => (
@@ -194,9 +205,11 @@ export default function ProfilePage() {
       {/* appearance */}
       <section className="mt-6 flex items-center justify-between rounded-card border border-border bg-card p-6 shadow-soft">
         <div>
-          <h2 className="font-display text-lg font-semibold text-ink">Appearance</h2>
+          <h2 className="font-display text-lg font-semibold text-ink">
+            {t("appearance")}
+          </h2>
           <p className="text-sm text-muted-foreground">
-            System, light, or dark — matches the Lumi app.
+            {t("appearanceDescription")}
           </p>
         </div>
         <ThemeToggle />
@@ -209,7 +222,7 @@ export default function ProfilePage() {
         className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose hover:underline"
       >
         <LogOut className="h-4 w-4" />
-        Log out
+        {t("logOut")}
       </button>
     </div>
   );

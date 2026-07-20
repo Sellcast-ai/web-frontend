@@ -280,7 +280,11 @@ function WorkingView({ job }: { job: VideoJob }) {
 /* ----------------------------------------------------------------- review */
 
 function ReviewView({ job }: { job: VideoJob }) {
-  const action = useBeatAction(job.id);
+  const tt = useTranslations("app.toasts");
+  const action = useBeatAction(job.id, {
+    approveError: tt("approveShotFailed"),
+    regenerateError: tt("regenerateShotFailed"),
+  });
 
   return (
     <div className="mt-8">
@@ -340,8 +344,13 @@ function shotLabel(i: number, total: number): string {
  *  visual cards, taps a card to tweak a line, then approves to run hands-off.
  *  Edits PATCH the whole VideoScript (the backend re-validates it). */
 function StoryboardView({ job }: { job: VideoJob }) {
-  const approve = useApproveStoryboard(job.id);
-  const patch = usePatchStoryboard(job.id);
+  const tt = useTranslations("app.toasts");
+  const approve = useApproveStoryboard(job.id, {
+    approveError: tt("approveStoryboardFailed"),
+  });
+  const patch = usePatchStoryboard(job.id, {
+    saveError: tt("saveStoryboardEditsFailed"),
+  });
   const [draft, setDraft] = useState<Storyboard | null>(job.storyboard);
   const [editing, setEditing] = useState<number | null>(null);
 
@@ -381,7 +390,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
   async function save(): Promise<boolean> {
     const updated = await patch.mutateAsync(normalizeStoryboard(draft!)).catch(() => null);
     if (updated?.storyboard) setDraft(updated.storyboard);
-    if (updated) toast.success("Storyboard saved.");
+    if (updated) toast.success(tt("storyboardSaved"));
     return Boolean(updated);
   }
 
@@ -843,13 +852,14 @@ function BeatCard({
 /* -------------------------------------------------------------- completed */
 
 function CompletedView({ job }: { job: VideoJob }) {
+  const tt = useTranslations("app.toasts");
   const src = mediaUrl(job.video_url);
   async function markPosted() {
     try {
       await api.recordEvent(job.id, { event_type: "posted" });
-      toast.success("Marked as posted.");
+      toast.success(tt("markedPosted"));
     } catch {
-      toast.error("Couldn't record that. Please try again.");
+      toast.error(tt("recordPostedFailed"));
     }
   }
   return (
@@ -896,7 +906,8 @@ function CompletedView({ job }: { job: VideoJob }) {
 /* ----------------------------------------------------------------- failed */
 
 function FailedView({ job }: { job: VideoJob }) {
-  const retry = useRetryJob();
+  const tt = useTranslations("app.toasts");
+  const retry = useRetryJob({ retryError: tt("retryJobFailed") });
   return (
     <div className="mt-8 flex items-start gap-3 rounded-card border border-rose/30 bg-rose/5 p-5">
       <AlertTriangle className="mt-0.5 h-5 w-5 text-rose" />
