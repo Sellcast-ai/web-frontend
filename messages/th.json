@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "สิ่งที่คุณพูด",
           "onScreenText": "ข้อความบนหน้าจอ",
+          "nudges": "ช็อตนี้ควรทำอย่างไร?",
+          "nudgeNote": "มีอะไรอีกไหม?",
           "technique": "มันถ่ายทำยังไง.",
           "transition": "ตัดไปที่ช็อตถัดไป",
           "productVisible": "เมื่อสินค้าแสดง"
@@ -406,9 +408,17 @@
         "placeholders": {
           "dialogue": "ไม่มีคำพูดใดๆ สำหรับช็อตนี้",
           "onScreenText": "ไม่มีคำอธิบายภาพ",
+          "nudgeNote": "อธิบายด้วยคำพูดของคุณเอง",
           "technique": "ให้ Lumi เลือกช็อตครับ"
         },
-        "advanced": "ขั้นสูง",
+        "nudgeLabels": {
+          "closerProduct": "ใกล้ชิดกับผลิตภัณฑ์มากขึ้น",
+          "wholeScene": "แสดงฉากทั้งหมด",
+          "focusPerson": "มุ่งเน้นไปที่บุคคล",
+          "moreEnergy": "พลังงานมากขึ้น",
+          "slowLingering": "ช้าและเอ้อระเหย"
+        },
+        "proMode": "โหมดโปร",
         "transitions": {
           "hardCut": "ตัดยาก",
           "dissolve": "ละลาย",

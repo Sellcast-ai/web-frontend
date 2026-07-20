@@ -41,7 +41,7 @@ import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
-import { VIDEO_STYLES } from "@/lib/api/types";
+import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
   VideoJob,
   VideoJobBeat,
@@ -50,6 +50,7 @@ import type {
   Shot,
   ShotTransition,
   ProductVisibility,
+  OutcomeNudge,
   SubjectLock,
   VideoStyle,
 } from "@/lib/api/types";
@@ -350,6 +351,16 @@ const PRODUCT_VISIBLE_LABEL_KEYS: Record<ProductVisibility, string> = {
   none: "none",
 };
 
+/** Plain-language outcome tap -> catalog key (translated at the render site;
+ * the tap's canonical value string is what PATCH /storyboard sends). */
+const OUTCOME_NUDGE_KEYS: Record<OutcomeNudge, string> = {
+  "Closer on the product": "closerProduct",
+  "Show the whole scene": "wholeScene",
+  "Focus on the person": "focusPerson",
+  "More energy": "moreEnergy",
+  "Slow & lingering": "slowLingering",
+};
+
 /** Empty text fields go back as null so backend preflight doesn't choke on "". */
 function normalizeStoryboard(sb: Storyboard): Storyboard {
   return {
@@ -594,6 +605,12 @@ function ShotCard({
   onEdit: () => void;
 }) {
   const t = useTranslations("app.jobs.shotCard");
+  const te = useTranslations("app.jobs.shotEditor");
+  const nudges = shot.outcome_nudges ?? [];
+  const hint =
+    nudges.length > 0
+      ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_KEYS[n]}`)).join(" · ")
+      : shot.nudge_note?.trim() || null;
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
       {/* 9:16 preview — no shots are generated pre-approval, so show the product
@@ -631,10 +648,10 @@ function ShotCard({
           </p>
         )}
         <div className="mt-auto flex items-center gap-2 pt-2">
-          {shot.technique && (
+          {hint && (
             <span className="inline-flex min-w-0 items-center gap-1 text-xs text-muted-foreground">
               <Camera className="h-3 w-3 shrink-0" />
-              <span className="truncate">{shot.technique}</span>
+              <span className="truncate">{hint}</span>
             </span>
           )}
           <button
@@ -654,9 +671,11 @@ function ShotCard({
 const EDIT_INPUT_CLS =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-ink outline-none focus:border-brand-300 disabled:opacity-60";
 
-/** Tap-to-edit drawer for one shot. Spoken line + on-screen text up front;
- *  director metadata (technique, transition, product visibility) behind an
- *  Advanced disclosure, hidden by default. */
+/** Tap-to-edit drawer for one shot. The main path is all plain language:
+ *  spoken line, on-screen text, outcome-nudge taps, and a free-text ask. The
+ *  raw camera fields (technique, transition, product visibility) — which the
+ *  backend derives from the taps/note — live behind a "Pro mode" disclosure,
+ *  hidden by default. */
 function ShotEditor({
   shot,
   disabled,
@@ -669,7 +688,17 @@ function ShotEditor({
   onDone: () => void;
 }) {
   const t = useTranslations("app.jobs.shotEditor");
-  const [advanced, setAdvanced] = useState(false);
+  const [pro, setPro] = useState(false);
+  const active = shot.outcome_nudges ?? [];
+
+  function toggleNudge(tap: OutcomeNudge) {
+    onChange({
+      outcome_nudges: active.includes(tap)
+        ? active.filter((n) => n !== tap)
+        : [...active, tap],
+    });
+  }
+
   return (
     <div className="mt-2 space-y-4">
       <EditField label={t("fields.dialogue")}>
@@ -692,18 +721,54 @@ function ShotEditor({
         />
       </EditField>
 
+      <EditField label={t("fields.nudges")}>
+        <div className="flex flex-wrap gap-2">
+          {OUTCOME_NUDGES.map((tap) => {
+            const on = active.includes(tap);
+            return (
+              <button
+                key={tap}
+                type="button"
+                onClick={() => toggleNudge(tap)}
+                disabled={disabled}
+                aria-pressed={on}
+                className={cn(
+                  "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-60",
+                  on
+                    ? "border-brand-300 bg-accent text-accent-foreground"
+                    : "border-border bg-background text-muted-foreground hover:text-ink",
+                )}
+              >
+                {t(`nudgeLabels.${OUTCOME_NUDGE_KEYS[tap]}`)}
+              </button>
+            );
+          })}
+        </div>
+      </EditField>
+
+      <EditField label={t("fields.nudgeNote")}>
+        <textarea
+          value={shot.nudge_note ?? ""}
+          onChange={(e) => onChange({ nudge_note: e.target.value })}
+          disabled={disabled}
+          rows={2}
+          placeholder={t("placeholders.nudgeNote")}
+          className={cn(EDIT_INPUT_CLS, "resize-y")}
+        />
+      </EditField>
+
       <div className="border-t border-border pt-3">
         <button
           type="button"
-          onClick={() => setAdvanced((v) => !v)}
+          onClick={() => setPro((v) => !v)}
           className="flex w-full items-center justify-between text-sm font-semibold text-muted-foreground hover:text-ink"
         >
-          {t("advanced")}
+          {t("proMode")}
           <ChevronDown
-            className={cn("h-4 w-4 transition-transform", advanced && "rotate-180")}
+            className={cn("h-4 w-4 transition-transform", pro && "rotate-180")}
           />
         </button>
-        {advanced && (
+        {pro && (
           <div className="mt-3 space-y-4">
             <EditField label={t("fields.technique")}>
               <input

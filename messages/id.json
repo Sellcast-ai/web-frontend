@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "Apa yang kamu katakan",
           "onScreenText": "Teks di layar",
+          "nudges": "Apa yang harus dilakukan dengan suntikan ini?",
+          "nudgeNote": "Ada lagi?",
           "technique": "Bagaimana hal itu difilmkan",
           "transition": "Potong ke bidikan berikutnya",
           "productVisible": "Saat produk ditampilkan"
@@ -406,9 +408,17 @@
         "placeholders": {
           "dialogue": "Tidak ada kalimat yang diucapkan untuk pengambilan gambar ini",
           "onScreenText": "Tidak ada keterangan",
+          "nudgeNote": "Jelaskan dengan kata-kata Anda sendiri",
           "technique": "Biarkan Lumi memilih bidikannya"
         },
-        "advanced": "Lanjutan",
+        "nudgeLabels": {
+          "closerProduct": "Lebih dekat pada produk",
+          "wholeScene": "Tampilkan seluruh adegan",
+          "focusPerson": "Fokus pada orangnya",
+          "moreEnergy": "Lebih banyak energi",
+          "slowLingering": "Lambat & berkepanjangan"
+        },
+        "proMode": "Modus profesional",
         "transitions": {
           "hardCut": "Potongan keras",
           "dissolve": "Larutkan",

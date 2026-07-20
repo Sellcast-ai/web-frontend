@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "lo que dices",
           "onScreenText": "Texto en pantalla",
+          "nudges": "¿Qué debería hacer esta inyección?",
+          "nudgeNote": "¿Algo más?",
           "technique": "como se filma",
           "transition": "Pasar a la siguiente toma",
           "productVisible": "Cuando el producto se muestra"
@@ -406,9 +408,17 @@
         "placeholders": {
           "dialogue": "No hay línea hablada para esta toma.",
           "onScreenText": "Sin título",
+          "nudgeNote": "Descríbelo con tus propias palabras.",
           "technique": "Deja que Lumi elija la toma."
         },
-        "advanced": "Avanzado",
+        "nudgeLabels": {
+          "closerProduct": "Más cerca del producto",
+          "wholeScene": "Mostrar toda la escena",
+          "focusPerson": "Centrarse en la persona",
+          "moreEnergy": "Más energía",
+          "slowLingering": "Lento y persistente"
+        },
+        "proMode": "modo profesional",
         "transitions": {
           "hardCut": "corte duro",
           "dissolve": "disolver",

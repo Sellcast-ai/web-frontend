@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "Những gì bạn nói",
           "onScreenText": "Văn bản trên màn hình",
+          "nudges": "Cú đánh này nên làm gì?",
+          "nudgeNote": "Còn gì nữa không?",
           "technique": "Nó được quay như thế nào",
           "transition": "Cắt sang cảnh tiếp theo",
           "productVisible": "Khi sản phẩm hiển thị"
@@ -406,9 +408,17 @@
         "placeholders": {
           "dialogue": "Không có lời thoại nào cho ảnh này",
           "onScreenText": "Không có chú thích",
+          "nudgeNote": "Hãy mô tả nó bằng lời của bạn",
           "technique": "Hãy để Lumi chọn cảnh quay"
         },
-        "advanced": "Nâng cao",
+        "nudgeLabels": {
+          "closerProduct": "Gần gũi hơn với sản phẩm",
+          "wholeScene": "Hiển thị toàn cảnh",
+          "focusPerson": "Tập trung vào người",
+          "moreEnergy": "Thêm năng lượng",
+          "slowLingering": "Chậm và kéo dài"
+        },
+        "proMode": "Chế độ chuyên nghiệp",
         "transitions": {
           "hardCut": "Cắt cứng",
           "dissolve": "hòa tan",

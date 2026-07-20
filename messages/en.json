@@ -405,6 +405,8 @@
         "fields": {
           "dialogue": "What you say",
           "onScreenText": "On-screen text",
+          "nudges": "What should this shot do?",
+          "nudgeNote": "Anything else?",
           "technique": "How it's filmed",
           "transition": "Cut to the next shot",
           "productVisible": "When the product shows"
@@ -412,9 +414,17 @@
         "placeholders": {
           "dialogue": "No spoken line for this shot",
           "onScreenText": "No caption",
+          "nudgeNote": "Describe it in your own words",
           "technique": "Let Lumi choose the shot"
         },
-        "advanced": "Advanced",
+        "nudgeLabels": {
+          "closerProduct": "Closer on the product",
+          "wholeScene": "Show the whole scene",
+          "focusPerson": "Focus on the person",
+          "moreEnergy": "More energy",
+          "slowLingering": "Slow & lingering"
+        },
+        "proMode": "Pro mode",
         "transitions": {
           "hardCut": "Hard cut",
           "dissolve": "Dissolve",
