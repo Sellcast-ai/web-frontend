@@ -246,13 +246,14 @@
       "loading": "Loading…",
       "sections": {
         "vibe": "1 · What's the vibe?",
-        "mode": "2 · Mode",
+        "reference": "2 · Make it like this",
+        "mode": "3 · Mode",
         "presenter": "Presenter",
-        "duration": "3 · Duration",
+        "duration": "4 · Duration",
         "model": "Model",
         "resolution": "Resolution",
-        "language": "4 · Language",
-        "review": "5 · Review"
+        "language": "5 · Language",
+        "review": "6 · Review"
       },
       "vibes": {
         "premiumClean": {
@@ -275,6 +276,17 @@
           "label": "Clean demo",
           "blurb": "Steady and clear — the product does the talking."
         }
+      },
+      "reference": {
+        "linkTab": "Paste link",
+        "uploadTab": "Uploaded clip",
+        "linkLabel": "Reference video link",
+        "uploadLabel": "Uploaded clip link",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi learns vibe & energy only: pacing and mood for your product, not the original shots.",
+        "uploadHelper": "Use a direct MP4, MOV, or WebM URL from a clip you already uploaded. Lumi learns vibe & energy only, not the original shots.",
+        "invalidUrl": "Enter a valid http(s) link."
       },
       "modes": {
         "aiAvatar": {
@@ -325,6 +337,9 @@
         "resolution": "Resolution",
         "language": "Language",
         "format": "Format",
+        "reference": "Reference",
+        "referenceAdded": "Added",
+        "referenceNone": "None",
         "review": "Review",
         "storyboard": "Storyboard"
       },

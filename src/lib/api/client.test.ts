@@ -94,6 +94,29 @@ describe("api (BFF client)", () => {
     expect(init.body).toBe(JSON.stringify(sb));
   });
 
+  it("createVideoJob POSTs the reference_url field when supplied", async () => {
+    const fetchMock = mockFetch(201, { id: "j1" });
+    await api.createVideoJob({
+      product_id: "prod-1",
+      mode: "ai_avatar",
+      style: "avatar_talking_intro",
+      vibe: "fun_fast",
+      reference_url: "https://www.tiktok.com/@shop/video/123",
+      duration_seconds: 15,
+      language: "en",
+      video_model: "seedance-2.0",
+      resolution: "720p",
+      avatar_id: null,
+    });
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("/api/bff/video-jobs");
+    expect(init.method).toBe("POST");
+    expect(init.headers).toMatchObject({ "Content-Type": "application/json" });
+    expect(JSON.parse(String(init.body))).toMatchObject({
+      reference_url: "https://www.tiktok.com/@shop/video/123",
+    });
+  });
+
   it("me() maps 401 to null but rethrows other errors", async () => {
     mockFetch(401, { detail: "unauthenticated" });
     await expect(api.me()).resolves.toBeNull();

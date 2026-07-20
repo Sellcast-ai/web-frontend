@@ -12,6 +12,8 @@ import {
   Loader2,
   Eye,
   Store,
+  Link2,
+  Upload,
 } from "lucide-react";
 import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks";
 import {
@@ -51,6 +53,8 @@ type StudioOptionKeys = {
   label: string;
   blurb: string;
 };
+
+type ReferenceMode = "link" | "upload";
 
 const VIBE_KEYS: Record<VideoVibe, StudioOptionKeys> = {
   premium_clean: { label: "vibes.premiumClean.label", blurb: "vibes.premiumClean.blurb" },
@@ -97,6 +101,8 @@ function StudioInner() {
 
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
+  const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
+  const [referenceUrl, setReferenceUrl] = useState("");
   const [duration, setDuration] = useState<VideoDuration>(15);
   // Style is no longer a manual pick — it auto-derives from mode (locked
   // decision #1). We still send it so the backend schema stays intact.
@@ -115,9 +121,12 @@ function StudioInner() {
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
+  const trimmedReferenceUrl = referenceUrl.trim();
+  const hasReference = trimmedReferenceUrl.length > 0;
+  const referenceUrlInvalid = hasReference && !isHttpUrl(trimmedReferenceUrl);
 
   async function generate() {
-    if (!productId) return;
+    if (!productId || referenceUrlInvalid) return;
     // failure is surfaced as a toast by useCreateJob
     const job = await create
       .mutateAsync({
@@ -125,6 +134,7 @@ function StudioInner() {
         mode,
         style,
         vibe,
+        ...(hasReference ? { reference_url: trimmedReferenceUrl } : {}),
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
@@ -177,6 +187,58 @@ function StudioInner() {
                   </p>
                 </button>
               ))}
+            </div>
+          </Section>
+
+          {/* reference — optional vibe/energy source, not shot-copying */}
+          <Section title={t("sections.reference")}>
+            <div className="rounded-card border border-border bg-card p-4">
+              <div className="flex flex-wrap gap-2">
+                <ReferenceModeButton
+                  active={referenceMode === "link"}
+                  onClick={() => setReferenceMode("link")}
+                  icon={<Link2 className="h-4 w-4" />}
+                  label={t("reference.linkTab")}
+                />
+                <ReferenceModeButton
+                  active={referenceMode === "upload"}
+                  onClick={() => setReferenceMode("upload")}
+                  icon={<Upload className="h-4 w-4" />}
+                  label={t("reference.uploadTab")}
+                />
+              </div>
+              <label className="mt-3 block">
+                <span className="sr-only">
+                  {referenceMode === "link"
+                    ? t("reference.linkLabel")
+                    : t("reference.uploadLabel")}
+                </span>
+                <input
+                  type="url"
+                  inputMode="url"
+                  value={referenceUrl}
+                  onChange={(e) => setReferenceUrl(e.target.value)}
+                  placeholder={
+                    referenceMode === "link"
+                      ? t("reference.linkPlaceholder")
+                      : t("reference.uploadPlaceholder")
+                  }
+                  className={cn(
+                    "w-full rounded-xl border bg-background px-3 py-2 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400",
+                    referenceUrlInvalid ? "border-rose" : "border-border",
+                  )}
+                />
+              </label>
+              <p className="mt-2 text-xs text-muted-foreground">
+                {referenceMode === "link"
+                  ? t("reference.linkHelper")
+                  : t("reference.uploadHelper")}
+              </p>
+              {referenceUrlInvalid && (
+                <p className="mt-2 text-xs font-semibold text-rose">
+                  {t("reference.invalidUrl")}
+                </p>
+              )}
             </div>
           </Section>
 
@@ -394,6 +456,10 @@ function StudioInner() {
                 value={t(VIBE_KEYS[vibe].label)}
               />
               <Row
+                label={t("summary.reference")}
+                value={hasReference ? t("summary.referenceAdded") : t("summary.referenceNone")}
+              />
+              <Row
                 label={t("summary.mode")}
                 value={t(MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label")}
               />
@@ -433,7 +499,7 @@ function StudioInner() {
               size="lg"
               className="mt-2 w-full"
               onClick={generate}
-              disabled={create.isPending || !product || outOfQuota}
+              disabled={create.isPending || !product || outOfQuota || referenceUrlInvalid}
             >
               {create.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -460,6 +526,34 @@ function StudioInner() {
         </aside>
       </div>
     </div>
+  );
+}
+
+function ReferenceModeButton({
+  active,
+  onClick,
+  icon,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold transition-colors",
+        active
+          ? "border-brand-400 bg-accent text-accent-foreground"
+          : "border-border text-muted-foreground hover:text-ink",
+      )}
+    >
+      {icon}
+      {label}
+    </button>
   );
 }
 
@@ -518,6 +612,15 @@ function Row({ label, value }: { label: string; value: string }) {
       <dd className="font-semibold text-ink">{value}</dd>
     </div>
   );
+}
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
 }
 
 function PickProduct() {

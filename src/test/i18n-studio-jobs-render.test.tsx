@@ -184,6 +184,8 @@ describe("Studio page renders extracted English copy", () => {
       "Video Studio",
       "What&#x27;s the vibe?",
       "Premium &amp; clean",
+      "Make it like this",
+      "vibe &amp; energy only",
       "AI Avatar",
       "Product Only",
       "Presenter",

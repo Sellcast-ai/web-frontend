@@ -240,13 +240,14 @@
       "loading": "Cargando…",
       "sections": {
         "vibe": "1 · ¿Cuál es la vibra?",
-        "mode": "2 · Modo",
+        "reference": "2 · Hazlo como este",
+        "mode": "3 · Modo",
         "presenter": "presentador",
-        "duration": "3 · Duración",
+        "duration": "4 · Duración",
         "model": "modelo",
         "resolution": "Resolución",
-        "language": "4 · Idioma",
-        "review": "5 · Revisión"
+        "language": "5 · Idioma",
+        "review": "6 · Revisión"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,17 @@
           "label": "Demostración limpia",
           "blurb": "Estable y claro: el producto habla por sí solo."
         }
+      },
+      "reference": {
+        "linkTab": "Pegar enlace",
+        "uploadTab": "Clip subido",
+        "linkLabel": "Enlace de video de referencia",
+        "uploadLabel": "Enlace de clip subido",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi aprende solo vibra y energía: ritmo y ambiente para tu producto, no las tomas originales.",
+        "uploadHelper": "Usa una URL directa de MP4, MOV o WebM de un clip que ya subiste. Lumi aprende solo vibra y energía, no las tomas originales.",
+        "invalidUrl": "Ingresa un enlace http(s) válido."
       },
       "modes": {
         "aiAvatar": {
@@ -319,6 +331,9 @@
         "resolution": "Resolución",
         "language": "Idioma",
         "format": "Formato",
+        "reference": "Referencia",
+        "referenceAdded": "Agregada",
+        "referenceNone": "Ninguna",
         "review": "Revisión",
         "storyboard": "Guión gráfico"
       },

@@ -265,6 +265,8 @@ export interface VideoJobCreate {
   /** The hero creation choice. Style auto-derives from mode; vibe drives the
    * feel/energy/pacing register the backend scripts in. */
   vibe?: VideoVibe;
+  /** Optional "make it like this" reference. Backend learns vibe/energy only. */
+  reference_url?: string;
   duration_seconds?: VideoDuration;
   review_mode?: boolean;
   /** Gated server-side by SELLCAST_ENABLED_LANGUAGES (voice-QA'd languages only). */
