@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi chỉ học vibe & năng lượng: nhịp độ và tâm trạng cho sản phẩm của bạn, không sao chép các cảnh gốc.",
         "uploadHelper": "Dùng URL MP4, MOV hoặc WebM trực tiếp từ clip bạn đã tải lên. Lumi chỉ học vibe & năng lượng, không sao chép các cảnh gốc.",
-        "invalidUrl": "Nhập liên kết http(s) hợp lệ."
+        "invalidUrl": "Nhập liên kết http(s) hợp lệ.",
+        "invalidUpload": "Nhập liên kết trực tiếp MP4, MOV hoặc WebM."
       },
       "modes": {
         "aiAvatar": {

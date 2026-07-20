@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi 只学习氛围和能量：节奏与情绪会用于你的产品，不复制原视频镜头。",
         "uploadHelper": "使用你已上传片段的直接 MP4、MOV 或 WebM URL。Lumi 只学习氛围和能量，不复制原视频镜头。",
-        "invalidUrl": "请输入有效的 http(s) 链接。"
+        "invalidUrl": "请输入有效的 http(s) 链接。",
+        "invalidUpload": "请输入 MP4、MOV 或 WebM 的直接链接。"
       },
       "modes": {
         "aiAvatar": {

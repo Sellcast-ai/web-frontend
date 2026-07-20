@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi เรียนรู้เฉพาะ vibe & energy: จังหวะและอารมณ์สำหรับสินค้าของคุณ ไม่คัดลอกช็อตเดิม",
         "uploadHelper": "ใช้ URL MP4, MOV หรือ WebM โดยตรงจากคลิปที่คุณอัปโหลดแล้ว Lumi เรียนรู้เฉพาะ vibe & energy ไม่คัดลอกช็อตเดิม",
-        "invalidUrl": "ป้อนลิงก์ http(s) ที่ถูกต้อง"
+        "invalidUrl": "ป้อนลิงก์ http(s) ที่ถูกต้อง",
+        "invalidUpload": "ป้อนลิงก์ MP4, MOV หรือ WebM โดยตรง"
       },
       "modes": {
         "aiAvatar": {

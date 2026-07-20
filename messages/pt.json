@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "A Lumi aprende só vibe e energia: ritmo e clima para o seu produto, não as cenas originais.",
         "uploadHelper": "Use uma URL direta de MP4, MOV ou WebM de um clipe que você já enviou. A Lumi aprende só vibe e energia, não as cenas originais.",
-        "invalidUrl": "Insira um link http(s) válido."
+        "invalidUrl": "Insira um link http(s) válido.",
+        "invalidUpload": "Insira um link direto de MP4, MOV ou WebM."
       },
       "modes": {
         "aiAvatar": {

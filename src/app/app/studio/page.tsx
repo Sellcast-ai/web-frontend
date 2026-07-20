@@ -123,7 +123,9 @@ function StudioInner() {
   const outOfQuota = !!usage && usage.remaining < duration;
   const trimmedReferenceUrl = referenceUrl.trim();
   const hasReference = trimmedReferenceUrl.length > 0;
-  const referenceUrlInvalid = hasReference && !isHttpUrl(trimmedReferenceUrl);
+  const referenceUrlInvalid =
+    hasReference && !isSupportedReferenceUrl(trimmedReferenceUrl, referenceMode);
+  const referenceReady = hasReference && !referenceUrlInvalid;
 
   async function generate() {
     if (!productId || referenceUrlInvalid) return;
@@ -134,7 +136,7 @@ function StudioInner() {
         mode,
         style,
         vibe,
-        ...(hasReference ? { reference_url: trimmedReferenceUrl } : {}),
+        ...(referenceReady ? { reference_url: trimmedReferenceUrl } : {}),
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
@@ -236,7 +238,9 @@ function StudioInner() {
               </p>
               {referenceUrlInvalid && (
                 <p className="mt-2 text-xs font-semibold text-rose">
-                  {t("reference.invalidUrl")}
+                  {referenceMode === "upload"
+                    ? t("reference.invalidUpload")
+                    : t("reference.invalidUrl")}
                 </p>
               )}
             </div>
@@ -457,7 +461,7 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.reference")}
-                value={hasReference ? t("summary.referenceAdded") : t("summary.referenceNone")}
+                value={referenceReady ? t("summary.referenceAdded") : t("summary.referenceNone")}
               />
               <Row
                 label={t("summary.mode")}
@@ -614,13 +618,16 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-function isHttpUrl(value: string): boolean {
+function isSupportedReferenceUrl(value: string, mode: ReferenceMode): boolean {
+  let url: URL;
   try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:";
+    url = new URL(value);
   } catch {
     return false;
   }
+  if (url.protocol !== "http:" && url.protocol !== "https:") return false;
+  if (mode === "upload") return /\.(mp4|mov|webm)$/i.test(url.pathname);
+  return true;
 }
 
 function PickProduct() {

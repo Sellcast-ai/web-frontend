@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi aprende solo vibra y energía: ritmo y ambiente para tu producto, no las tomas originales.",
         "uploadHelper": "Usa una URL directa de MP4, MOV o WebM de un clip que ya subiste. Lumi aprende solo vibra y energía, no las tomas originales.",
-        "invalidUrl": "Ingresa un enlace http(s) válido."
+        "invalidUrl": "Ingresa un enlace http(s) válido.",
+        "invalidUpload": "Ingresa un enlace directo de MP4, MOV o WebM."
       },
       "modes": {
         "aiAvatar": {

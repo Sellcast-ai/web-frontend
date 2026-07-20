@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi は雰囲気とエネルギーだけを学びます。あなたの商品向けのテンポとムードで、元のショットはコピーしません。",
         "uploadHelper": "すでにアップロードしたクリップの直接 MP4、MOV、WebM URL を使ってください。Lumi は雰囲気とエネルギーだけを学び、元のショットはコピーしません。",
-        "invalidUrl": "有効な http(s) リンクを入力してください。"
+        "invalidUrl": "有効な http(s) リンクを入力してください。",
+        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力してください。"
       },
       "modes": {
         "aiAvatar": {
