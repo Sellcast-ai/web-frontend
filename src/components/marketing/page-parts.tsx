@@ -20,7 +20,7 @@ export function PageHeader({
   return (
     <section className="relative overflow-hidden">
       <div className="bg-aurora absolute inset-0 -z-10 opacity-60" />
-      <div className="container-page py-16 text-center sm:py-20">
+      <div className="container-page py-20 text-center sm:py-28">
         {kicker && (
           <Badge variant="outline" className="mb-5">
             {kicker}
@@ -56,7 +56,7 @@ export function CtaBand({
   const resolvedSubtitle = subtitle ?? t("subtitle");
   const resolvedPrimaryLabel = primaryLabel ?? t("primaryLabel");
   return (
-    <section className="container-page py-20">
+    <section className="container-page py-28">
       <div className="bg-hero relative overflow-hidden rounded-[2.5rem] px-8 py-16 text-center shadow-glow sm:px-16">
         <div className="bg-aurora absolute inset-0 opacity-30 mix-blend-overlay" />
         <h2 className="relative mx-auto max-w-2xl font-display text-3xl font-bold leading-tight text-white sm:text-4xl">

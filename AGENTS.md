@@ -59,7 +59,7 @@ App-interface localization uses **next-intl v4**, cookie-based (no `[locale]` UR
 ## Marketing vs app styling (split posture)
 
 The marketing surface and the logged-in app deliberately diverge (UI-sophistication PR series V1..V7).
-The marketing layout wraps its tree in a `.marketing` class (`src/app/(marketing)/layout.tsx`); the scoped block in `globals.css` overrides `--font-display` to the editorial grotesk (Geist) and defines `--font-accent` (Instrument Serif italic) + tighter tracking there only.
+The marketing layout wraps its tree in a `.marketing` class (`src/app/(marketing)/layout.tsx`); the scoped block in `globals.css` overrides `--font-display` to the editorial grotesk (Geist), defines `--font-accent` (Instrument Serif italic) + tighter tracking, and narrows `.container-page` to 64rem there only (the app keeps its wider 76rem).
 The app never enters `.marketing`, so it keeps the SF-Rounded/Nunito cream system untouched - keep any editorial type/palette-restraint treatment scoped to `.marketing`, never at `:root` or in `app/*`.
 Serif accent phrases in marketing headings use `<Accent>` (`src/components/marketing/accent.tsx`), one phrase per major heading.
 Marketing palette is monochrome + one accent (the teal `brand` ramp for CTAs; green for success/live only); do not reintroduce decorative rose/gold/orange or gradient headline text.
