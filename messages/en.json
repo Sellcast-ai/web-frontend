@@ -103,5 +103,443 @@
       "newToLumi": "New to Lumi?",
       "createAccountLink": "Create an account"
     }
+  },
+  "marketing": {
+    "header": {
+      "signIn": "Sign in",
+      "startFree": "Start free",
+      "toggleMenu": "Toggle menu",
+      "language": "Language",
+      "theme": "Theme"
+    },
+    "footer": {
+      "tagline": "Lumi turns any product into scroll-stopping shoppable video — grounded in real viral patterns, not guesswork.",
+      "columns": {
+        "product": {
+          "title": "Product",
+          "features": "Features",
+          "models": "Models",
+          "pricing": "Pricing",
+          "marketplace": "Marketplace"
+        },
+        "workflow": {
+          "title": "Workflow",
+          "linkToVideo": "Link to Video",
+          "patternScripts": "Pattern scripts",
+          "beatReview": "Beat review",
+          "publish": "Publish"
+        },
+        "company": {
+          "title": "Company",
+          "about": "About",
+          "blog": "Blog",
+          "careers": "Careers",
+          "contact": "Contact"
+        },
+        "legal": {
+          "title": "Legal",
+          "privacy": "Privacy",
+          "terms": "Terms",
+          "refunds": "Refunds"
+        }
+      },
+      "copyright": "© {year} Sellcast. Lumi is a Sellcast product.",
+      "madeFor": "Made for sellers who'd rather sell than film."
+    },
+    "cta": {
+      "title": "Your next best-seller is one product link away.",
+      "subtitle": "Make your first scroll-stopping video free — no camera, no editor, no blank page.",
+      "primaryLabel": "Start creating free",
+      "seePricing": "See pricing"
+    },
+    "faq": {
+      "q1": "How is Lumi different from generic AI video tools?",
+      "a1": "Lumi doesn't guess. Before it writes a single line, it studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — hook, proof, and CTA shapes that actually convert. Your script is grounded in that pattern, not a blank page.",
+      "q2": "Do I need to film anything or be on camera?",
+      "a2": "No. Choose AI Avatar mode for a presenter-led video, or Product-Only mode for clean showcase footage. Lumi generates the visuals, voice, and captions end-to-end from your product.",
+      "q3": "Can I review the video before it's fully rendered?",
+      "a3": "Yes — that's the Beat Review gate. Lumi generates a reference image for every beat (shot) first. You approve or regenerate each one, and only then does it spend render time. Prefer hands-off? Auto-QA approves beats for you.",
+      "q4": "Which video model does Lumi use?",
+      "a4": "Lumi renders with Seedance 2.0, tuning the settings per shot. More frontier video models are on the roadmap — your scripts and beats carry over when new models land.",
+      "q5": "Where does the product data come from?",
+      "a5": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload your own product photos — and Lumi reads the title, description, and imagery to build from. Your products stay private to you. Prefer ideas? Browse the built-in marketplace of trending picks.",
+      "q6": "How long does one video take?",
+      "a6": "Lumi scripts, storyboards, and renders without you filming or editing — you kick it off and come back to a finished, publish-ready cut. The pattern research for a category is cached, so later videos in that category start even faster."
+    },
+    "pricing": {
+      "header": {
+        "kicker": "Pricing",
+        "title": "Start free. Scale when",
+        "highlight": "it's working.",
+        "subtitle": "No credit card to begin. Cancel anytime. Annual billing saves about 20%."
+      },
+      "billing": {
+        "monthly": "Monthly",
+        "annual": "Annual"
+      },
+      "mostPopular": "Most popular",
+      "perMonthYearly": "/mo · billed yearly",
+      "tiers": {
+        "free": {
+          "name": "Free",
+          "note": "no card",
+          "allowance": "Your first video free",
+          "credits": "20 credits, one-time",
+          "features": ["720p · 9:16 export", "Marketplace access", "Auto-QA rendering", "Lumi watermark"],
+          "cta": "Start free"
+        },
+        "creator": {
+          "name": "Creator",
+          "note": "per month",
+          "allowance": "≈ 3 videos / mo",
+          "credits": "75 credits / mo",
+          "features": ["No watermark", "Beat-by-beat review", "Avatar + product modes", "720p · 9:16 export"],
+          "cta": "Start Creator"
+        },
+        "pro": {
+          "name": "Pro",
+          "note": "per month",
+          "allowance": "≈ 10 videos / mo",
+          "credits": "200 credits / mo",
+          "features": ["Everything in Creator", "More credits, same per-video cost", "Priority over free renders"],
+          "cta": "Start Pro"
+        },
+        "scale": {
+          "name": "Scale",
+          "note": "per month",
+          "allowance": "≈ 25 videos / mo",
+          "credits": "500 credits / mo",
+          "features": ["Everything in Pro", "For always-on posting", "Highest self-serve volume"],
+          "cta": "Start Scale"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "priceLabel": "Let's talk",
+          "note": "for teams & agencies",
+          "allowance": "Custom credit volume",
+          "credits": "committed, wholesale rate",
+          "features": ["Seats & roles", "Brand kits", "API access", "SSO & dedicated support"],
+          "cta": "Contact sales"
+        }
+      },
+      "creditFootnote": "1 credit = 1 second of video. Video counts are approximate, based on 20-second clips — a 15s video uses fewer credits, a 30s video more.",
+      "everyPlanIncludes": "Every plan includes",
+      "included": [
+        "Pattern-grounded scripts",
+        "Beat-by-beat review",
+        "Avatar + product modes",
+        "Captions burned in",
+        "9:16 for TikTok & Reels",
+        "Paste any product link or browse the marketplace"
+      ],
+      "billingQuestions": "Billing questions",
+      "faq": {
+        "q1": "What's a credit?",
+        "a1": "1 credit = 1 second of finished video. A 20-second video uses 20 credits; a 30-second one uses 30. You pick the length, and you're only charged for what you render.",
+        "q2": "Do regenerations cost credits?",
+        "a2": "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
+        "q3": "What if I run out of credits?",
+        "a3": "Upgrade anytime for a bigger monthly allowance — it applies immediately. Credits reset at the start of each billing cycle.",
+        "q4": "Can I change plans anytime?",
+        "a4": "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
+        "q5": "Which render model does Lumi use?",
+        "a5": "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot."
+      }
+    },
+    "landing": {
+      "heroBadge": "Built for TikTok & Reels",
+      "heroTitle": "Turn any product into a <highlight>scroll-stopping</highlight> shoppable video.",
+      "heroSubtitle": "Paste any product link — Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi studies what's already winning in that category, scripts a video grounded in the pattern, lets you review it beat-by-beat, and renders it with Seedance 2.0. In minutes, no camera.",
+      "heroStartFree": "Start creating free",
+      "heroSeeHow": "See how it works",
+      "heroCheck1": "First video free",
+      "heroCheck2": "No credit card",
+      "heroCheck3": "Publish-ready 9:16",
+      "marquee": ["TikTok Shop", "Reels", "Beauty", "Home & Kitchen", "Fitness", "Gadgets", "Pets", "Fashion", "Supplements"],
+      "howKicker": "The Lumi pipeline",
+      "howTitle": "Four stages, zero blank pages",
+      "howSubtitle": "Most tools start from nothing. Lumi starts from what's already winning — then keeps you in control all the way to publish.",
+      "steps": {
+        "find": {
+          "kicker": "Find",
+          "title": "Start from any product",
+          "body": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Or browse trending picks in the marketplace."
+        },
+        "deconstruct": {
+          "kicker": "Deconstruct",
+          "title": "Lumi learns the pattern",
+          "body": "It studies ~100 real top-performers in that category and extracts the hook, proof, and CTA structure that converts."
+        },
+        "script": {
+          "kicker": "Script",
+          "title": "Review the script & beats",
+          "body": "A grounded script with shot-by-shot beats. Approve or regenerate each reference image before any render burns."
+        },
+        "generate": {
+          "kicker": "Generate",
+          "title": "Render & publish",
+          "body": "Seedance 2.0 renders each beat, captions burn in, and you're ready to post."
+        }
+      },
+      "featuresKicker": "Everything in one studio",
+      "featuresTitle": "The whole video workflow, handled",
+      "featuresSubtitle": "From sourcing the product to a publish-ready cut — no stitching five tools together.",
+      "features": {
+        "linkToVideo": {
+          "title": "Link to Video",
+          "body": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product and handles framing, script, voice, and edit automatically."
+        },
+        "scripts": {
+          "title": "Pattern-grounded scripts",
+          "body": "Every script is built from real viral structure in your category — learn the pattern, never copy the surface."
+        },
+        "review": {
+          "title": "Beat-by-beat review",
+          "body": "See a reference image for every shot. Approve, tweak, or regenerate before spending a second of render time."
+        },
+        "modes": {
+          "title": "Avatar & product modes",
+          "body": "AI presenter talking to camera, or clean product-only showcase — eight ready-made styles to match your offer."
+        },
+        "qa": {
+          "title": "Auto dialogue QA",
+          "body": "Whisper checks every rendered line against the script and flags drift, so the voice always says what it should."
+        },
+        "publish": {
+          "title": "Captions & publish",
+          "body": "Auto-burned captions and a publish-ready 9:16 cut, sized for TikTok and Reels out of the box."
+        }
+      },
+      "modelsKicker": "Frontier render engine",
+      "modelsTitle": "Rendered with Seedance 2.0",
+      "modelsSubtitle": "Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive.",
+      "models": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Live",
+          "desc": "Fast, lifelike motion for product & avatar shots — Lumi's render engine for every beat."
+        },
+        "more": {
+          "name": "More on the way",
+          "tag": "Soon",
+          "desc": "We're adding frontier video models as they prove out — your scripts and beats carry over."
+        }
+      },
+      "useCasesKicker": "Who it's for",
+      "useCasesTitle": "Made for everyone who sells with video",
+      "useCases": {
+        "sellers": { "title": "Sellers", "body": "Scale your catalog — a converting video for every SKU, without a studio." },
+        "creators": { "title": "Creators", "body": "Spin TikTok Shop content in minutes and keep your posting streak alive." },
+        "brands": { "title": "Brands", "body": "Stay on-brand across hundreds of unique creatives, all at once." },
+        "agencies": { "title": "Agencies", "body": "Serve every client at volume with quality you don't have to babysit." }
+      },
+      "stats": {
+        "ways": { "value": "5 ways", "label": "to start: Amazon, Shopee, TikTok Shop, your store, or photos" },
+        "ratio": { "value": "9:16", "label": "publish-ready for TikTok & Reels, every time" },
+        "credit": { "value": "1 credit", "label": "= 1 second of video — only pay for what you render" },
+        "spend": { "value": "$0", "label": "render spend until you approve the beats" }
+      },
+      "pricingKicker": "Pricing",
+      "pricingTitle": "Start free. Scale when it's working.",
+      "pricingSubtitle": "Credit-based — 1 credit = 1 second of video. Your first video's free; no credit card to begin.",
+      "mostPopular": "Most popular",
+      "pricingTiers": {
+        "creator": {
+          "name": "Creator",
+          "price": "$29",
+          "note": "/ mo",
+          "features": ["≈ 3 videos / mo · 75 credits", "No watermark", "Beat-by-beat review", "Avatar + product modes"],
+          "cta": "Start Creator"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$79",
+          "note": "/ mo",
+          "features": ["≈ 10 videos / mo · 200 credits", "Everything in Creator", "Priority over free renders", "720p · 9:16 export"],
+          "cta": "Start Pro"
+        },
+        "scale": {
+          "name": "Scale",
+          "price": "$199",
+          "note": "/ mo",
+          "features": ["≈ 25 videos / mo · 500 credits", "Everything in Pro", "For always-on posting"],
+          "cta": "Start Scale"
+        }
+      },
+      "pricingFooter": "Your <signup>first video is free</signup> — no card. Need the full ladder? <plans>See all plans →</plans>",
+      "faqKicker": "FAQ",
+      "faqTitle": "Questions, answered",
+      "finalCtaTitle": "Your next best-seller is one product link away.",
+      "finalCtaSubtitle": "Make your first scroll-stopping video free. No camera, no editor, no blank page.",
+      "finalCtaStartFree": "Start creating free",
+      "finalCtaSeePricing": "See pricing"
+    },
+    "heroMock": {
+      "caption": "this $24 gadget sold out <highlight>3 times</highlight> 👀",
+      "shopNow": "Shop now · $23.99",
+      "productName": "Mini Massage Gun",
+      "productMeta": "$23.99 · 30% comm.",
+      "sold": "12.4k sold / mo",
+      "beatReview": "Beat review",
+      "beatHook": "Hook",
+      "beatProof": "Proof",
+      "beatOffer": "Offer",
+      "beatAuto": "auto",
+      "beatOk": "ok",
+      "renderedWith": "Rendered with"
+    },
+    "features": {
+      "header": {
+        "kicker": "Features",
+        "title": "The whole video workflow,",
+        "highlight": "handled.",
+        "subtitle": "From sourcing the product to a publish-ready cut — no stitching five tools together."
+      },
+      "pipeline": {
+        "find": "Find",
+        "deconstruct": "Deconstruct",
+        "script": "Script",
+        "generate": "Generate"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "Source",
+          "title": "Link to Video",
+          "body": "Paste a product link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product, its angle, and its proof points, then handles framing, script, voice, and edit automatically. Your products stay private to you.",
+          "bullets": ["Any link — Amazon, Shopee, TikTok Shop, or your own store", "Or upload your own product photos", "Or browse the marketplace of trending picks for ideas"]
+        },
+        "scripts": {
+          "kicker": "Script",
+          "title": "Pattern-grounded scripts",
+          "body": "Before writing a word, Lumi studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — the hook, proof, and CTA shapes that actually convert. Your script is built on that, never a blank page.",
+          "bullets": ["Learns structure from filtered organic winners in your category", "Hook / proof / offer beats, not copy-pasted execution", "Audience language modeled from those top-performers"]
+        },
+        "review": {
+          "kicker": "Control",
+          "title": "Beat-by-beat review",
+          "body": "Lumi generates a reference image for every beat first. Approve the shots you love, regenerate the ones you don't — and only then does it spend render time. Prefer hands-off? Auto-QA approves beats for you.",
+          "bullets": ["A reference frame per shot before any render burns", "Approve or regenerate, beat by beat", "Optional auto-QA for a zero-click flow"]
+        },
+        "modes": {
+          "kicker": "Format",
+          "title": "Avatar & product modes",
+          "body": "Choose an AI presenter talking to camera, or a clean product-only showcase — eight ready-made styles spanning talking intros, demos, testimonials, unboxings, and offer-focused cuts.",
+          "bullets": ["AI Avatar or Product-Only", "8 styles tuned for commerce", "10–30 second lengths, 9:16 native"]
+        },
+        "qa": {
+          "kicker": "Quality",
+          "title": "Auto dialogue QA",
+          "body": "After each beat renders, Whisper transcribes the spoken line and checks it against the script, flagging drift. The voice always says what it's supposed to — no off-script surprises.",
+          "bullets": ["Whisper transcription on every rendered line", "Drift score against the intended script", "Catches off-script audio before you post"]
+        },
+        "publish": {
+          "kicker": "Ship",
+          "title": "Captions & publish",
+          "body": "Captions are burned in and the cut is sized 9:16 for TikTok and Reels — ready to download or mark posted, so your stats stay tidy.",
+          "bullets": ["Auto-burned captions", "Publish-ready 9:16 export", "Track posted vs. drafted in My Videos"]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "Models",
+        "title": "One studio, the frontier of",
+        "highlight": "video AI.",
+        "subtitle": "Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive."
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Live",
+          "desc": "Fast, lifelike motion for product and avatar shots — Lumi's render engine for every beat, with audio generated per shot.",
+          "bestFor": ["Product motion", "Avatar talking", "Speed"]
+        },
+        "more": {
+          "name": "More on the way",
+          "tag": "Soon",
+          "desc": "We're adding frontier video models as they prove out. Your scripts and approved beats are model-agnostic, so they carry over with no redo.",
+          "bestFor": ["Roadmap", "No redo"]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "Tuned per beat",
+          "body": "Lumi sets motion, length, and framing per shot so each beat renders its best — you never fiddle with model settings by hand."
+        },
+        "carriesOver": {
+          "title": "Your work carries over",
+          "body": "Scripts and approved beats are model-agnostic. When a new model lands, your videos can use it without a redo."
+        },
+        "oneBill": {
+          "title": "One studio, one bill",
+          "body": "No juggling separate model accounts or credits — it's all inside Lumi."
+        }
+      },
+      "ctaTitle": "Render with the best models — without the busywork."
+    },
+    "about": {
+      "header": {
+        "kicker": "About",
+        "title": "We help you sell with video —",
+        "highlight": "without the studio.",
+        "subtitle": "Lumi is a Sellcast product. We turn any product into a scroll-stopping shoppable video, grounded in what's already winning."
+      },
+      "intro1": "Short-form video is the storefront now — but most sellers don't have time to film, edit, and test their way to a winner. Generic AI tools fill the gap with content that feels like AI.",
+      "intro2": "Lumi takes a different path. Before writing a script, it studies a large sample of real, organic top-performers in your product's category and learns the <em>structure</em> that converts — then scripts, storyboards, and renders a video you can review beat-by-beat and ship in minutes.",
+      "values": {
+        "grounded": {
+          "title": "Grounded, not guessing",
+          "body": "We learn from what actually converts in a category before we generate a thing."
+        },
+        "quality": {
+          "title": "Quality over volume",
+          "body": "Native-feeling creatives that stop the scroll — not generic AI filler."
+        },
+        "control": {
+          "title": "You stay in control",
+          "body": "Review beat-by-beat. Nothing burns render time without your sign-off (unless you want it to)."
+        },
+        "sellers": {
+          "title": "Built for sellers",
+          "body": "Made for people who'd rather sell than film — solo creators to agencies."
+        }
+      },
+      "contact": "Want to talk partnerships, press, or enterprise? <email>hello@sellcast.ai</email>"
+    },
+    "blog": {
+      "title": "The Lumi blog is coming soon",
+      "body": "Playbooks on viral patterns, hooks that convert, and how top sellers scale short-form video. Be the first to read it.",
+      "startFree": "Start creating free",
+      "explore": "Explore features"
+    },
+    "careers": {
+      "title": "We're building the future of commerce video",
+      "body": "We're a small team moving fast. No open roles posted yet — but if you're exceptional at AI, video, or growth, we'd love to hear from you.",
+      "cta": "Introduce yourself"
+    },
+    "metadata": {
+      "features": {
+        "title": "Features",
+        "description": "Everything Lumi does — link to video, pattern-grounded scripts, beat-by-beat review, avatar & product modes, auto dialogue QA, captions & publish."
+      },
+      "models": {
+        "title": "Models",
+        "description": "Lumi renders with Seedance 2.0 today, with more frontier video models on the way. Each shot gets the settings that render it best."
+      },
+      "pricing": {
+        "title": "Pricing",
+        "description": "Start free, scale when it's working. Lumi pricing is credit-based — 1 credit = 1 second of video. Free (first video), Creator, Pro, Scale, and Enterprise. No credit card to begin; annual saves ~20%."
+      },
+      "about": {
+        "title": "About",
+        "description": "Lumi is a Sellcast product helping sellers and creators turn products into scroll-stopping shoppable videos — grounded in real viral patterns."
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "careers": {
+        "title": "Careers"
+      }
+    }
   }
 }
