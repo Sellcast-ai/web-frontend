@@ -116,7 +116,7 @@ export default function ProfilePage() {
                 {t("usageSummary", {
                   used: usage.used,
                   limit: usage.limit,
-                  plan: usage.plan,
+                  plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
                   date: usage.resets_at.slice(0, 10),
                 })}
               </p>
