@@ -6,21 +6,20 @@ import { useLocale, useTranslations } from "next-intl";
 import { Check, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// The 9 target UI locales, listed by endonym. Only `en` is functional in PR-1;
-// the rest are shown disabled until their catalogs land (see i18n plan §7).
+// The 9 target UI locales, listed by endonym.
 // NOTE: this is the UI-language axis, separate from the Studio video-output
 // language picker (VIDEO_LANGUAGES in api/types.ts, its own enabled set) - do
 // not conflate the two (plan §0).
 const LOCALES: { code: string; label: string; enabled: boolean }[] = [
   { code: "en", label: "English", enabled: true },
-  { code: "es", label: "Español", enabled: false },
-  { code: "zh", label: "简体中文", enabled: false },
-  { code: "ja", label: "日本語", enabled: false },
-  { code: "ko", label: "한국어", enabled: false },
-  { code: "pt", label: "Português", enabled: false },
-  { code: "id", label: "Bahasa Indonesia", enabled: false },
-  { code: "vi", label: "Tiếng Việt", enabled: false },
-  { code: "th", label: "ไทย", enabled: false },
+  { code: "es", label: "Español", enabled: true },
+  { code: "zh", label: "简体中文", enabled: true },
+  { code: "ja", label: "日本語", enabled: true },
+  { code: "ko", label: "한국어", enabled: true },
+  { code: "pt", label: "Português", enabled: true },
+  { code: "id", label: "Bahasa Indonesia", enabled: true },
+  { code: "vi", label: "Tiếng Việt", enabled: true },
+  { code: "th", label: "ไทย", enabled: true },
 ];
 
 // Server-readable cookie so SSR renders the chosen locale on the next request.

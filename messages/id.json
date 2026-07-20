@@ -1,0 +1,1220 @@
+{
+  "app": {
+    "toasts": {
+      "importSucceeded": "Mengimpor {count, plural, one {# produk} other {# produk}} dari toko Anda.",
+      "updateLikeFailed": "Tidak dapat memperbarui suka. Silakan coba lagi.",
+      "saveAvatarFailed": "Tidak dapat menyimpan avatar.",
+      "deleteAvatarFailed": "Tidak dapat menghapus avatar.",
+      "startImportFailed": "Tidak dapat memulai impor. Silakan coba lagi.",
+      "saveProductFailed": "Tidak dapat menyimpan produk. Silakan coba lagi.",
+      "startVideoFailed": "Tidak dapat memulai video. Silakan coba lagi.",
+      "approveShotFailed": "Tidak dapat menyetujui pengambilan gambar. Silakan coba lagi.",
+      "regenerateShotFailed": "Tidak dapat membuat ulang tembakannya. Silakan coba lagi.",
+      "approveStoryboardFailed": "Tidak dapat menyetujui storyboard. Silakan coba lagi.",
+      "saveStoryboardEditsFailed": "Tidak dapat menyimpan hasil edit Anda. Silakan coba lagi.",
+      "retryJobFailed": "Tidak dapat mencoba kembali pekerjaan tersebut. Silakan coba lagi.",
+      "saveDisplayNameFailed": "Tidak dapat menyimpan nama tampilan Anda. Silakan coba lagi.",
+      "importPartial": "{count} produk Anda yang diimpor (tutup katalog). Sisanya bisa ditambahkan dengan cara ditempel.",
+      "importFailed": "Impor belum selesai. Silakan coba lagi.",
+      "storyboardSaved": "Papan cerita disimpan.",
+      "markedPosted": "Ditandai sebagai diposting.",
+      "recordPostedFailed": "Tidak dapat merekamnya. Silakan coba lagi."
+    },
+    "nav": {
+      "marketplace": "Pasar",
+      "products": "Produk Saya",
+      "avatars": "Avatar",
+      "videos": "Video Saya",
+      "profile": "Profil",
+      "newVideo": "Video baru",
+      "new": "Baru",
+      "signedIn": "Masuk",
+      "logOut": "Keluar"
+    },
+    "categories": {
+      "beautyPersonalCare": "Kecantikan & Perawatan Pribadi",
+      "healthWellness": "Kesehatan & Kebugaran",
+      "womensFashion": "Fesyen Wanita",
+      "sportsOutdoors": "Olahraga & Luar Ruangan",
+      "homeTextiles": "Tekstil Rumah",
+      "householdEssentials": "Kebutuhan Rumah Tangga",
+      "mobileElectronics": "Ponsel & Elektronik",
+      "foodBeverage": "Makanan & Minuman",
+      "mensFashion": "Fesyen Pria",
+      "toysHobbies": "Mainan & Hobi"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "Tokopedia",
+      "tiktokShop": "Toko TikTok",
+      "walmart": "Walmart",
+      "lazada": "Lazada",
+      "aliexpress": "AliExpress",
+      "temu": "Temu",
+      "alibaba": "Alibaba",
+      "taobao": "Taobao",
+      "mercadolibre": "Pasar Gratis",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "Toko web",
+      "manual": "petunjuk"
+    },
+    "productCard": {
+      "save": "Simpan",
+      "unsave": "Batalkan penyimpanan",
+      "productFallback": "Produk",
+      "commissionShort": "{rate} komunikasi.",
+      "soldPerMonth": "{count} terjual/bln",
+      "creators": "Pencipta {count}",
+      "source": {
+        "amazon": "Dari Amazon",
+        "shopee": "DariShopee",
+        "tiktokShop": "Dari Toko TikTok",
+        "walmart": "Dari Walmart",
+        "lazada": "Dari Lazada",
+        "aliexpress": "Dari AliExpress",
+        "temu": "Dari Temu",
+        "alibaba": "Dari Alibaba",
+        "taobao": "Dari Taobao",
+        "mercadolibre": "Dari Mercado Libre",
+        "etsy": "Dari Etsy",
+        "ebay": "Dari eBay",
+        "shopify": "Dari Shopify",
+        "generic": "Dari toko Anda",
+        "manual": "Ditambahkan oleh Anda"
+      }
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "Berbicara perkenalan",
+        "avatarDemoExplainer": "Penjelasan demo",
+        "avatarTestimonial": "Kesaksian",
+        "avatarHostProduct": "Tuan rumah + produk",
+        "productCleanShowcase": "Etalase bersih",
+        "productFeatureHighlights": "Sorotan fitur",
+        "productUnboxing": "Membuka kotak",
+        "productOfferFocused": "Penawaran terfokus"
+      }
+    },
+    "marketplace": {
+      "title": "Pasar",
+      "subtitle": "Produk Toko TikTok yang sedang tren — pilih salah satu untuk dijadikan video.",
+      "searchPlaceholder": "Cari produk — atau tempel tautan produk apa pun (Amazon, Shopee, TikTok Shop…)",
+      "linkCta": "Buat video dari tautan ini — Lumi akan membaca halaman produk",
+      "allCategories": "Semua",
+      "loadMore": "Muat lebih banyak",
+      "empty": {
+        "title": "Tidak ada produk yang ditemukan",
+        "description": "Coba penelusuran atau kategori lain."
+      }
+    },
+    "products": {
+      "title": "Produk Saya",
+      "subtitle": "Produk Anda sendiri — ditempel dari tautan atau diunggah. Hanya Anda yang dapat melihatnya.",
+      "addProduct": "Tambahkan produk",
+      "pastePlaceholder": "Tempel tautan produk — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, atau toko mana pun",
+      "readLink": "Baca tautan",
+      "emptyTitle": "Belum ada produk",
+      "emptyDescription": "Tempelkan tautan produk di atas, atau tambahkan tautan dari foto — lalu ubah menjadi video di Studio."
+    },
+    "productDetail": {
+      "notFound": "Produk tidak ditemukan.",
+      "backToMarketplace": "Kembali ke pasar",
+      "marketplace": "Pasar",
+      "productFallback": "Produk",
+      "save": "Simpan",
+      "unsave": "Batalkan penyimpanan",
+      "mom": "{percent} Ibu",
+      "byShop": "oleh {shop}",
+      "commission": "Komisi {rate}",
+      "creatorHook": "Kait pencipta",
+      "createVideo": "Buat video dari produk ini",
+      "metrics": {
+        "monthlySales": "Penjualan bulanan",
+        "totalRevenue": "Pendapatan total",
+        "activeCreators": "Pencipta aktif",
+        "totalViews": "Jumlah penayangan"
+      }
+    },
+    "videos": {
+      "title": "Video Saya",
+      "subtitle": "Segala sesuatu yang Anda hasilkan dengan Lumi.",
+      "newVideo": "Video baru",
+      "videoFallback": "Video",
+      "empty": {
+        "title": "Belum ada video",
+        "description": "Pilih produk yang sedang tren dan Lumi akan mengubahnya menjadi video penghenti gulir pertama Anda.",
+        "browseMarketplace": "Jelajahi pasar"
+      }
+    },
+    "avatars": {
+      "title": "Avatar",
+      "subtitle": "Wajah yang menampilkan produk Anda dalam video AI Avatar. Unggah milik Anda sendiri, atau pilih karakter digital.",
+      "yourAvatars": "Avatar Anda",
+      "emptyYourAvatars": "Belum ada — unggah foto di atas untuk menggunakan wajah tertentu dalam video Anda.",
+      "digitalCharacters": "Karakter digital",
+      "digitalComingSoon": "Perpustakaan presenter digital siap pakai akan hadir — wajah berlisensi dan konsisten yang dapat Anda masukkan ke dalam video apa pun tanpa mengunggah foto.",
+      "upload": {
+        "notImageError": "Itu bukanlah sebuah gambar.",
+        "tooLargeError": "Gambar sudah berakhir {max}MB.",
+        "addPhoto": "Tambahkan foto",
+        "namePlaceholder": "Beri nama avatar ini (misalnya “Maya — pendiri”)",
+        "consent": "Saya berhak menggunakan kemiripan orang ini dalam video (ini saya, atau saya mendapat izin dari mereka).",
+        "saveAvatar": "Simpan avatar",
+        "clear": "Jelas"
+      },
+      "card": {
+        "deleteAvatar": "Hapus avatar",
+        "deleteTitle": "Hapus avatar ini?",
+        "deleteDescription": "“{name}” akan dihapus dari avatar Anda. Video yang Anda buat dengannya tidak akan terpengaruh.",
+        "cancel": "Batalkan",
+        "delete": "Hapus"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "videosCreated": "Video dibuat",
+      "readyToPublish": "Siap dipublikasikan",
+      "thisMonth": "Bulan ini",
+      "usageSummary": "{used} dari kredit {limit} digunakan · Paket {plan} · menyetel ulang {date}",
+      "creditNote": "1 kredit = 1 detik video",
+      "creditsLeft": "kiri",
+      "limitHit": "Anda telah mencapai batas bulanan Anda.",
+      "seePlans": "Lihat rencana",
+      "forMore": "untuk lebih.",
+      "displayName": "Nama tampilan",
+      "save": "Simpan",
+      "saved": "Disimpan",
+      "connectedAccounts": "Akun yang terhubung",
+      "appearance": "Penampilan",
+      "appearanceDescription": "Sistem, terang, atau gelap — cocok dengan aplikasi Lumi.",
+      "logOut": "Keluar"
+    },
+    "productsNew": {
+      "startTitle": "Tambahkan produk",
+      "startSubtitle": "Tempel tautan produk apa pun — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay, atau toko Anda sendiri — atau mulai dari foto. Lumi membaca halaman; Anda mengonfirmasi sebelum sesuatu dirender.",
+      "productLinkPlaceholder": "https://… tautan produk",
+      "readLink": "Baca tautan",
+      "addManuallyInstead": "Tambahkan secara manual →",
+      "or": "atau",
+      "startFromPhotos": "Mulai dari foto",
+      "startFromPhotosDescription": "Letakkan foto produk di sini atau klik untuk menelusuri; jelaskan pada langkah berikutnya.",
+      "startFromScratch": "Mulai dari awal",
+      "startFromScratchDescription": "Ketik sendiri detailnya, tambahkan foto saat Anda bepergian.",
+      "startOver": "Mulai dari awal",
+      "detailsTitle": "Periksa detailnya",
+      "detailsSubtitle": "Ini adalah dasar videonya — 10 detik di sini menyimpan render yang buruk.",
+      "removePhoto": "Hapus foto",
+      "addPhoto": "Tambahkan",
+      "saveAndMakeVideo": "Simpan & buat video",
+      "needPhoto": "Tambahkan setidaknya satu foto produk asli terlebih dahulu.",
+      "upload": {
+        "notImageError": "{filename} bukanlah sebuah gambar.",
+        "tooLargeError": "{filename} sudah berakhir {max}MB."
+      },
+      "fields": {
+        "title": "Judul",
+        "titlePlaceholder": "Nama produk",
+        "description": "Deskripsi",
+        "descriptionPlaceholder": "Apa itu, untuk siapa, mengapa bagus — fakta saja, naskahnya ditulis dari sini.",
+        "category": "Kategori",
+        "photos": "Foto · {count} dipilih",
+        "photosHint": "Foto yang dipilih pertama adalah pahlawan yang menjadi dasar pembuatan video. Hapus centang pada bagan ukuran dan spanduk. Seret & lepas foto di mana saja dalam kisi ini."
+      },
+      "storeImport": {
+        "importingTitle": "Mengimpor toko Anda",
+        "importingProgress": "Produk {upserted} dari ~{found} yang diimpor sejauh ini — hal ini terus terjadi di latar belakang.",
+        "wrappingUp": "Mengakhiri…",
+        "importingLabel": "Mengimpor",
+        "previewFound": "Kami menemukan produk {count} dari {domain}",
+        "importAllProducts": "Impor semua produk",
+        "tryDifferentStore": "Coba toko lain",
+        "placeholder": "toko-anda.myshopify.com — impor seluruh toko Anda",
+        "preview": "Pratinjau"
+      }
+    },
+    "studio": {
+      "title": "Studio Video",
+      "subtitle": "Lumi membuat skrip dan merender video dari produk ini — atur arahnya.",
+      "loading": "Memuat…",
+      "sections": {
+        "vibe": "1 · Bagaimana suasananya?",
+        "mode": "2 · Modus",
+        "presenter": "Pembawa acara",
+        "duration": "3 · Durasi",
+        "model": "Model",
+        "resolution": "Resolusi",
+        "language": "4 · Bahasa",
+        "review": "5 · Ulasan"
+      },
+      "vibes": {
+        "premiumClean": {
+          "label": "Premium & bersih",
+          "blurb": "Lambat, elegan, terkendali."
+        },
+        "funFast": {
+          "label": "Menyenangkan & cepat",
+          "blurb": "Cepat, menyenangkan, berenergi tinggi."
+        },
+        "cozyPersonal": {
+          "label": "Nyaman & pribadi",
+          "blurb": "Hangat, intim, seperti seorang teman."
+        },
+        "boldPunchy": {
+          "label": "Berani & kuat",
+          "blurb": "Keras, tajam, mustahil untuk dilewati."
+        },
+        "cleanDemo": {
+          "label": "Demo bersih",
+          "blurb": "Stabil dan jelas — produklah yang berbicara."
+        }
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "Avatar AI",
+          "blurb": "Seorang presenter berbicara ke kamera."
+        },
+        "productOnly": {
+          "label": "Hanya Produk",
+          "blurb": "Tanpa wajah — hanya produknya."
+        }
+      },
+      "presenter": {
+        "auto": "Otomatis",
+        "autoSublabel": "AI memilih pencipta",
+        "manageAvatars": "Kelola avatar →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "Terbaru · hingga 1080p"
+        }
+      },
+      "resolutions": {
+        "p480": {
+          "label": "480p",
+          "blurb": "Draf · termurah"
+        },
+        "p720": {
+          "label": "720p",
+          "blurb": "HD · standar"
+        },
+        "p1080": {
+          "label": "1080p",
+          "blurb": "Full HD · membutuhkan Seedance 2.0"
+        }
+      },
+      "durationSeconds": "{duration}",
+      "language": {
+        "comingSoonTitle": "Segera hadir",
+        "soonBadge": "segera"
+      },
+      "reviewDescription": "Lumi akan menunjukkan kepada Anda storyboard sebelum menghabiskan apa pun — tinjau dan setujui sebelum gambar atau video apa pun dibuat.",
+      "summary": {
+        "vibe": "Getaran",
+        "mode": "Modus",
+        "length": "Panjangnya",
+        "model": "Model",
+        "resolution": "Resolusi",
+        "language": "Bahasa",
+        "format": "Format",
+        "review": "Ulasan",
+        "storyboard": "Papan cerita"
+      },
+      "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
+      "generateVideo": "Hasilkan video",
+      "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
+      "seePlans": "Lihat rencana",
+      "pickProduct": {
+        "title": "Pilih produk terlebih dahulu",
+        "description": "Pilih produk dari pasar dan Lumi akan mengubahnya menjadi video scroll-stopping.",
+        "browseMarketplace": "Jelajahi pasar"
+      }
+    },
+    "jobs": {
+      "backToVideos": "Video Saya",
+      "videoFallback": "Video Anda",
+      "styles": {
+        "avatarTalkingIntro": "Berbicara perkenalan",
+        "avatarDemoExplainer": "Penjelasan demo",
+        "avatarTestimonial": "Kesaksian",
+        "avatarHostProduct": "Tuan rumah + produk",
+        "productCleanShowcase": "Etalase bersih",
+        "productFeatureHighlights": "Sorotan fitur",
+        "productUnboxing": "Membuka kotak",
+        "productOfferFocused": "Penawaran terfokus"
+      },
+      "live": {
+        "updated": "Langsung · diperbarui {time}",
+        "justNow": "sekarang",
+        "secondsAgo": "{seconds} yang lalu"
+      },
+      "fullScript": {
+        "view": "Lihat skrip lengkap",
+        "title": "Skrip lengkap",
+        "caption": "Keterangan:"
+      },
+      "shotLabels": {
+        "hook": "Kait",
+        "proof": "Bukti",
+        "offer": "Penawaran",
+        "cta": "CTA",
+        "shot": "Tembakan {number}"
+      },
+      "working": {
+        "renderingBeats": "Merender ketukan Anda…",
+        "writingScript": "Menulis skrip dasar Anda…",
+        "description": "Halaman ini diperbarui secara otomatis. Anda bisa pergi dan kembali."
+      },
+      "review": {
+        "title": "Tinjau irama Anda",
+        "description": "Setujui setiap pengambilan gambar, atau buat ulang pengambilan gambar yang tidak Anda sukai. Lumi dirender setelah setiap ketukan disetujui."
+      },
+      "storyboard": {
+        "title": "Inilah rencana untuk video Anda",
+        "description": "Belum ada yang dibuat – ini hanya rencananya. Bacalah lagi, ubah baris apa pun yang Anda inginkan, lalu tekan go dan Lumi membuat keseluruhan video untuk Anda.",
+        "approveAndMake": "Setujui & buat video saya",
+        "creditNote": "Ini adalah satu-satunya langkah yang menggunakan kredit Anda.",
+        "editTitle": "Sunting {label}",
+        "editFallbackTitle": "Sunting bidikan",
+        "shotLabels": {
+          "hook": "Kait",
+          "hookLower": "kait",
+          "callToAction": "Ajakan untuk bertindak",
+          "callToActionLower": "ajakan untuk bertindak",
+          "shot": "Tembakan {number}",
+          "shotLower": "tembakan {number}"
+        }
+      },
+      "subjects": {
+        "heading": "Terkunci untuk setiap pengambilan gambar",
+        "locked": "Terkunci"
+      },
+      "shotCard": {
+        "noSpokenLine": "Tidak ada kalimat yang diucapkan",
+        "edit": "Sunting"
+      },
+      "shotEditor": {
+        "fields": {
+          "dialogue": "Apa yang kamu katakan",
+          "onScreenText": "Teks di layar",
+          "technique": "Bagaimana hal itu difilmkan",
+          "transition": "Potong ke bidikan berikutnya",
+          "productVisible": "Saat produk ditampilkan"
+        },
+        "placeholders": {
+          "dialogue": "Tidak ada kalimat yang diucapkan untuk pengambilan gambar ini",
+          "onScreenText": "Tidak ada keterangan",
+          "technique": "Biarkan Lumi memilih bidikannya"
+        },
+        "advanced": "Lanjutan",
+        "transitions": {
+          "hardCut": "Potongan keras",
+          "dissolve": "Larutkan",
+          "slide": "Geser",
+          "fade": "Memudar",
+          "matchCut": "Potongan korek api"
+        },
+        "productVisibility": {
+          "start": "Produk di awal",
+          "throughout": "Produk secara menyeluruh",
+          "end": "Produk di akhir",
+          "none": "Tidak ada produk yang ditampilkan"
+        },
+        "done": "Selesai"
+      },
+      "beatStatus": {
+        "pending": "Tertunda",
+        "autoApproved": "Otomatis ✓",
+        "approved": "Disetujui",
+        "regenerating": "Regenerasi"
+      },
+      "beatCard": {
+        "approved": "Disetujui",
+        "approve": "Menyetujui",
+        "regenerate": "Regenerasi"
+      },
+      "completed": {
+        "badge": "Siap dipublikasikan",
+        "title": "Video Anda sudah siap 🎉",
+        "description": "Potongan 9:16 yang siap dipublikasikan dengan audio lisan. Unduh atau tandai diposting agar statistik Anda tetap rapi.",
+        "download": "Unduh",
+        "markPosted": "Tandai sebagai diposting"
+      },
+      "failed": {
+        "title": "Generasi gagal",
+        "fallbackMessage": "Ada yang tidak beres. Coba buat lagi.",
+        "retry": "Coba lagi",
+        "startNewVideo": "Mulai video baru"
+      }
+    }
+  },
+  "nav": {
+    "features": "Fitur",
+    "howItWorks": "Bagaimana cara kerjanya",
+    "models": "Model",
+    "pricing": "Harga"
+  },
+  "languageSwitcher": {
+    "label": "Bahasa"
+  },
+  "shared": {
+    "status": {
+      "queued": "Mengantri",
+      "submitted": "Dikirim",
+      "rendering": "Render",
+      "reviewStoryboard": "Tinjau papan cerita",
+      "needsReview": "Perlu peninjauan",
+      "ready": "Siap",
+      "failed": "Gagal"
+    },
+    "jobProgress": {
+      "script": "naskah",
+      "beats": "mengalahkan",
+      "review": "Ulasan",
+      "render": "Render",
+      "ready": "Siap"
+    },
+    "subjects": {
+      "product": "Produk",
+      "host": "Tuan rumah",
+      "scene": "Adegan"
+    },
+    "error": {
+      "title": "Ada yang tidak beres.",
+      "description": "Itu tanggung jawab kami — coba lagi, dan jika terus terjadi, kembali lagi sebentar lagi.",
+      "tryAgain": "Coba lagi",
+      "backHome": "Kembali ke rumah"
+    },
+    "notFound": {
+      "title": "Halaman ini hilang.",
+      "description": "Tautannya mungkin rusak atau halamannya mungkin telah dipindahkan.",
+      "backHome": "Kembali ke rumah",
+      "goToApp": "Buka aplikasi"
+    },
+    "overlay": {
+      "close": "Tutup"
+    },
+    "uploadProgress": {
+      "uploading": "Mengunggah",
+      "processing": "Memproses…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "Tutup pemberitahuan"
+    },
+    "theme": {
+      "label": "Tema",
+      "light": "Ringan",
+      "system": "Sistem",
+      "dark": "Gelap"
+    }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "Dari tautan produk hingga video yang menghentikan gulir — dalam hitungan menit.",
+      "benefitScripts": "Skrip didasarkan pada pola viral yang nyata",
+      "benefitReview": "Tinjau setiap ketukan sebelum dirender",
+      "benefitPublish": "Publikasikan siap 09:16 untuk TikTok & Reel"
+    },
+    "metadata": {
+      "signIn": "Masuk",
+      "createAccount": "Buat akun Anda"
+    },
+    "form": {
+      "loginTitle": "Selamat datang kembali",
+      "signupTitle": "Buat akun Anda",
+      "loginSubtitle": "Masuk ke studio Lumi Anda.",
+      "signupSubtitle": "Mulailah membuat video yang menghentikan gulir dalam hitungan menit.",
+      "continueWithGoogle": "Lanjutkan dengan Google",
+      "googleDisabledTitle": "Setel NEXT_PUBLIC_GOOGLE_CLIENT_ID untuk mengaktifkan masuk dengan Google",
+      "googleSignInFailed": "Proses masuk dengan Google tidak selesai. Silakan coba lagi.",
+      "separator": "atau",
+      "phoneLabel": "Nomor telepon",
+      "invalidPhone": "Masukkan nomor telepon yang valid.",
+      "sendCode": "Kirim kode",
+      "sendCodeFailed": "Tidak dapat mengirim kode.",
+      "codePlaceholder": "kode 6 digit",
+      "verificationCodeLabel": "Kode verifikasi",
+      "devCodeAutofilled": "Mode pengembangan — kode <code>{devCode}</code> diisi otomatis.",
+      "continue": "Lanjutkan",
+      "verifyCodeFailed": "Kode itu tidak berfungsi.",
+      "alreadyHaveAccount": "Sudah punya akun?",
+      "signInLink": "Masuk",
+      "newToLumi": "Baru mengenal Lumi?",
+      "createAccountLink": "Buat akun"
+    }
+  },
+  "marketing": {
+    "legal": {
+      "kicker": "Hukum",
+      "lastUpdated": "Terakhir diperbarui 1 Juni 2026",
+      "terms": {
+        "title": "Ketentuan Layanan",
+        "intro": "Ketentuan ini mengatur penggunaan Anda atas Lumi, produk Sellcast. Dengan membuat akun atau menggunakan layanan, Anda menyetujui Ketentuan ini.",
+        "service": {
+          "heading": "Layanan",
+          "body": "Lumi mengubah produk menjadi video pendek menggunakan AI. Output dihasilkan secara otomatis dan kualitasnya dapat bervariasi; Anda bertanggung jawab untuk meninjaunya sebelum dipublikasikan."
+        },
+        "account": {
+          "heading": "Akun Anda",
+          "body": "Anda harus memberikan informasi yang akurat dan menjaga keamanan akun Anda. Anda bertanggung jawab atas aktivitas di akun Anda."
+        },
+        "acceptableUse": {
+          "heading": "Penggunaan yang dapat diterima",
+          "item1": "Jangan gunakan Lumi untuk konten yang melanggar hukum, menipu, atau melanggar.",
+          "item2": "Jangan salah menggambarkan produk atau membuat klaim palsu.",
+          "item3": "Jangan menyalahgunakan, merekayasa balik, atau membebani layanan secara berlebihan.",
+          "item4": "Ikuti aturan platform mana pun tempat Anda mempublikasikan (misalnya TikTok, Reels)."
+        },
+        "content": {
+          "heading": "Konten & kepemilikan",
+          "yourHeading": "Konten Anda",
+          "yourBody": "Anda memegang hak atas informasi produk dan aset yang Anda berikan. Anda memberi kami lisensi untuk memprosesnya guna memberikan layanan.",
+          "outputHeading": "Keluaran yang dihasilkan",
+          "outputBody": "Tunduk pada Ketentuan ini dan rencana Anda, Anda dapat menggunakan video yang Anda hasilkan untuk tujuan komersial. Anda bertanggung jawab untuk memastikan penggunaan Anda mematuhi hukum dan kebijakan platform yang berlaku."
+        },
+        "billing": {
+          "heading": "Langganan & penagihan",
+          "body": "Paket berbayar ditagih di muka secara berulang. Anda dapat mengubah atau membatalkan kapan saja; lihat <refunds>Kebijakan pengembalian dana</refunds> kami untuk detailnya."
+        },
+        "disclaimers": {
+          "heading": "Penafian",
+          "body": "Lumi disediakan “sebagaimana adanya.” Kami tidak menjamin bahwa video yang dihasilkan akan mencapai kinerja tertentu atau mematuhi aturan yang terus berkembang di setiap platform."
+        },
+        "liability": {
+          "heading": "Batasan tanggung jawab",
+          "body": "Sejauh diizinkan oleh hukum, Sellcast tidak bertanggung jawab atas kerugian tidak langsung atau konsekuensial yang timbul dari penggunaan Lumi oleh Anda."
+        },
+        "termination": {
+          "heading": "Penghentian",
+          "body": "Anda dapat berhenti menggunakan Lumi kapan saja. Kami dapat menangguhkan atau menghentikan akun yang melanggar Ketentuan ini."
+        },
+        "changes": {
+          "heading": "Perubahan",
+          "body": "Kami dapat memperbarui Ketentuan ini; perubahan material akan terlihat pada tanggal di atas dan penggunaan berkelanjutan dianggap sebagai penerimaan."
+        },
+        "contact": {
+          "heading": "Kontak",
+          "body": "Pertanyaan? Email <email>legal@sellcast.ai</email>."
+        }
+      },
+      "privacy": {
+        "title": "Kebijakan Privasi",
+        "intro": "Kebijakan Privasi ini menjelaskan bagaimana Lumi, produk Sellcast (“Lumi”, “kami”), mengumpulkan, menggunakan, dan melindungi informasi Anda saat Anda menggunakan situs web dan aplikasi kami. Dengan menggunakan Lumi Anda menyetujui praktik yang dijelaskan di sini.",
+        "collect": {
+          "heading": "Informasi yang kami kumpulkan",
+          "account": "<strong>Adata akun</strong> — nomor telepon Anda, dan (jika tersedia) nama tampilan, email, dan penyedia masuk yang terhubung.",
+          "usage": "<strong>Usage data</strong> — produk yang Anda jelajahi atau simpan, video yang Anda hasilkan, dan pilihan yang Anda buat di studio.",
+          "technical": "<strong>Data teknis</strong> — perangkat, browser, alamat IP, dan informasi sesi yang digunakan agar Anda tetap login dan aman."
+        },
+        "use": {
+          "heading": "Bagaimana kami menggunakan informasi Anda",
+          "item1": "Untuk menyediakan, mengoperasikan, dan meningkatkan layanan Lumi.",
+          "item2": "Untuk menghasilkan video yang Anda minta dan menampilkan riwayat Anda.",
+          "item3": "Untuk mengautentikasi Anda dan melindungi dari penyalahgunaan.",
+          "item4": "Untuk mengkomunikasikan pembaruan layanan dan menanggapi dukungan."
+        },
+        "sharing": {
+          "heading": "Berbagi",
+          "body": "Kami tidak menjual informasi pribadi Anda. Kami hanya berbagi data dengan penyedia layanan yang membantu kami mengoperasikan Lumi (misalnya, penyedia model video dan ucapan, penyimpanan cloud, dan pengiriman SMS), dan hanya jika diperlukan untuk menyediakan layanan atau mematuhi hukum."
+        },
+        "cookies": {
+          "heading": "Cookie & sesi",
+          "body": "Kami menggunakan cookie pihak pertama agar Anda tetap masuk dan mengingat preferensi tema Anda. Kami tidak menggunakannya untuk iklan lintas situs."
+        },
+        "retention": {
+          "heading": "Retensi data",
+          "body": "Kami menyimpan data akun dan konten selama akun Anda aktif. Anda dapat menghapus video Anda kapan saja, dan Anda dapat meminta penghapusan akun Anda serta data terkait."
+        },
+        "rights": {
+          "heading": "Hak Anda",
+          "body": "Tergantung pada wilayah Anda, Anda mungkin memiliki hak untuk mengakses, memperbaiki, mengekspor, atau menghapus data pribadi Anda. Hubungi kami untuk melatihnya."
+        },
+        "security": {
+          "heading": "Keamanan",
+          "body": "Kami menggunakan langkah-langkah standar industri untuk melindungi data Anda, termasuk transportasi terenkripsi dan kredensial hash. Tidak ada metode transmisi yang benar-benar aman, namun kami berupaya menjaga informasi Anda."
+        },
+        "children": {
+          "heading": "Anak-anak",
+          "body": "Lumi tidak ditujukan untuk anak-anak di bawah 13 tahun (atau usia minimum di yurisdiksi Anda), dan kami tidak dengan sengaja mengumpulkan data mereka."
+        },
+        "changes": {
+          "heading": "Perubahan",
+          "body": "Kami dapat memperbarui kebijakan ini dari waktu ke waktu. Perubahan material akan dicatat dengan memperbarui tanggal di atas."
+        },
+        "contact": {
+          "heading": "Kontak",
+          "body": "Pertanyaan? Email <email>privacy@sellcast.ai</email>."
+        }
+      },
+      "refunds": {
+        "title": "Pembayaran & Pengembalian Dana",
+        "intro": "Kami ingin Anda bahagia dengan Lumi. Kebijakan ini menjelaskan cara kerja penagihan dan pengembalian dana.",
+        "free": {
+          "heading": "Paket gratis",
+          "body": "Paket Gratis memungkinkan Anda membuat video pertama tanpa biaya dan tanpa kartu kredit, sehingga Anda dapat melihat Lumi berfungsi sebelum membayar apa pun."
+        },
+        "subscriptions": {
+          "heading": "Langganan",
+          "body": "Paket berbayar ditagih di muka — bulanan atau tahunan. Anda tetap memiliki akses hingga akhir periode yang Anda bayarkan."
+        },
+        "guarantee": {
+          "heading": "Jaminan uang kembali 7 hari",
+          "body": "Jika Anda tidak puas dalam waktu 7 hari sejak tagihan pertama Anda dibayar, kirim email kepada kami dan kami akan mengembalikan biaya tersebut secara penuh."
+        },
+        "annual": {
+          "heading": "Rencana tahunan",
+          "body": "Paket tahunan dapat dikembalikan dananya secara prorata dalam 30 hari pertama. Setelah itu, Anda tetap memiliki akses hingga jangka waktu berakhir."
+        },
+        "cancellations": {
+          "heading": "Pembatalan",
+          "body": "Batalkan kapan saja dari akun Anda. Pembatalan menghentikan penagihan di masa depan; itu tidak mengembalikan dana periode berjalan secara surut (kecuali berdasarkan jaminan di atas)."
+        },
+        "request": {
+          "heading": "Bagaimana cara meminta pengembalian dana",
+          "body": "Email <email>billing@sellcast.ai</email> dari email akun Anda dengan detail akun Anda. Kami biasanya merespons dalam dua hari kerja."
+        }
+      }
+    },
+    "header": {
+      "signIn": "Masuk",
+      "startFree": "Mulai gratis",
+      "toggleMenu": "Alihkan menu",
+      "language": "Bahasa",
+      "theme": "Tema"
+    },
+    "footer": {
+      "tagline": "Lumi mengubah produk apa pun menjadi video belanjaan yang dapat dihentikan gulir — didasarkan pada pola viral yang nyata, bukan dugaan.",
+      "columns": {
+        "product": {
+          "title": "Produk",
+          "features": "Fitur",
+          "models": "Model",
+          "pricing": "Harga",
+          "marketplace": "Pasar"
+        },
+        "workflow": {
+          "title": "Alur kerja",
+          "linkToVideo": "Tautan ke Video",
+          "patternScripts": "Skrip pola",
+          "beatReview": "Kalahkan ulasan",
+          "publish": "Publikasikan"
+        },
+        "company": {
+          "title": "Perusahaan",
+          "about": "Tentang",
+          "blog": "blog",
+          "careers": "Karier",
+          "contact": "Kontak"
+        },
+        "legal": {
+          "title": "Hukum",
+          "privacy": "Privasi",
+          "terms": "Ketentuan",
+          "refunds": "Pengembalian dana"
+        }
+      },
+      "copyright": "© {year} Sellcast. Lumi adalah produk Sellcast.",
+      "madeFor": "Dibuat untuk penjual yang lebih suka menjual daripada memfilmkan."
+    },
+    "cta": {
+      "title": "Buku terlaris Anda berikutnya hanya berjarak satu tautan produk.",
+      "subtitle": "Jadikan video penghenti gulir pertama Anda gratis — tanpa kamera, tanpa editor, tanpa halaman kosong.",
+      "primaryLabel": "Mulai berkreasi secara gratis",
+      "seePricing": "Lihat harga"
+    },
+    "faq": {
+      "q1": "Apa perbedaan Lumi dengan alat video AI umum?",
+      "a1": "Lumi tidak menebak. Sebelum menulis satu baris pun, ia mempelajari sampel besar produk organik yang berkinerja terbaik dalam kategori produk Anda dan mengekstrak pola strukturalnya — bentuk kait, bukti, dan CTA yang benar-benar berkonversi. Skrip Anda didasarkan pada pola itu, bukan halaman kosong.",
+      "q2": "Apakah saya perlu merekam sesuatu atau berada di depan kamera?",
+      "a2": "Tidak. Pilih mode AI Avatar untuk video yang dipimpin presenter, atau mode Khusus Produk untuk rekaman etalase yang bersih. Lumi menghasilkan visual, suara, dan teks menyeluruh dari produk Anda.",
+      "q3": "Bisakah saya meninjau video sebelum dirender sepenuhnya?",
+      "a3": "Ya — itulah gerbang Beat Review. Lumi menghasilkan gambar referensi untuk setiap ketukan (shot) terlebih dahulu. Anda menyetujui atau membuat ulang masing-masing, dan baru setelah itu ia menghabiskan waktu render. Lebih suka lepas tangan? Auto-QA menyetujui ketukan untuk Anda.",
+      "q4": "Model video manakah yang digunakan Lumi?",
+      "a4": "Lumi dirender dengan Seedance 2.0, menyetel pengaturan per bidikan. Lebih banyak model video terdepan yang sedang direncanakan — skrip dan irama Anda akan terbawa saat model baru hadir.",
+      "q5": "Dari mana data produk berasal?",
+      "a5": "Tempel tautan dari Amazon, Shopee, Toko TikTok, atau toko Anda sendiri — atau unggah foto produk Anda sendiri — dan Lumi akan membaca judul, deskripsi, dan gambar yang akan dijadikan dasar pembuatan. Produk Anda tetap bersifat pribadi untuk Anda. Lebih suka ide? Jelajahi pasar bawaan dari pilihan yang sedang tren.",
+      "q6": "Berapa lama waktu yang dibutuhkan untuk satu video?",
+      "a6": "Skrip, storyboard, dan rendering Lumi tanpa Anda memfilmkan atau mengedit — Anda memulainya dan kembali ke potongan yang sudah selesai dan siap dipublikasikan. Penelitian pola untuk suatu kategori disimpan dalam cache, sehingga video selanjutnya dalam kategori tersebut dapat dimulai dengan lebih cepat."
+    },
+    "pricing": {
+      "header": {
+        "kicker": "Harga",
+        "title": "Mulai gratis. Skala kapan",
+        "highlight": "itu berhasil.",
+        "subtitle": "Tidak ada kartu kredit untuk memulai. Batalkan kapan saja. Tagihan tahunan menghemat sekitar 20%."
+      },
+      "billing": {
+        "monthly": "Bulanan",
+        "annual": "Tahunan"
+      },
+      "mostPopular": "Paling populer",
+      "perMonthYearly": "/bln · ditagih setiap tahun",
+      "tiers": {
+        "free": {
+          "name": "Gratis",
+          "note": "tidak ada kartu",
+          "allowance": "Video pertama Anda gratis",
+          "credits": "20 kredit, satu kali",
+          "features": [
+            "720p · 9:16 ekspor",
+            "Akses pasar",
+            "Render QA otomatis",
+            "Tanda air Lumi"
+          ],
+          "cta": "Mulai gratis"
+        },
+        "creator": {
+          "name": "Pencipta",
+          "note": "per bulan",
+          "allowance": "≈ 3 video / bln",
+          "credits": "75 kredit / bln",
+          "features": [
+            "Tidak ada tanda air",
+            "Ulasan detak demi detak",
+            "Avatar + mode produk",
+            "720p · 9:16 ekspor"
+          ],
+          "cta": "Mulai Pencipta"
+        },
+        "pro": {
+          "name": "Pro",
+          "note": "per bulan",
+          "allowance": "≈ 10 video / bln",
+          "credits": "200 kredit / bln",
+          "features": [
+            "Segalanya ada pada Sang Pencipta",
+            "Kredit lebih banyak, biaya per video sama",
+            "Prioritas atas render gratis"
+          ],
+          "cta": "Mulai Pro"
+        },
+        "scale": {
+          "name": "Skala",
+          "note": "per bulan",
+          "allowance": "≈ 25 video / bln",
+          "credits": "500 kredit / bln",
+          "features": [
+            "Semuanya di Pro",
+            "Untuk postingan yang selalu aktif",
+            "Volume layanan mandiri tertinggi"
+          ],
+          "cta": "Mulai Skala"
+        },
+        "enterprise": {
+          "name": "Perusahaan",
+          "priceLabel": "Mari kita bicara",
+          "note": "untuk tim & agensi",
+          "allowance": "Volume kredit khusus",
+          "credits": "berkomitmen, harga grosir",
+          "features": [
+            "Kursi & peran",
+            "Kit merek",
+            "akses API",
+            "SSO & dukungan khusus"
+          ],
+          "cta": "Hubungi penjualan"
+        }
+      },
+      "creditFootnote": "1 kredit = 1 detik video. Jumlah video merupakan perkiraan, berdasarkan klip berdurasi 20 detik — video berdurasi 15 detik menggunakan kredit lebih sedikit, video berdurasi 30 detik lebih banyak.",
+      "everyPlanIncludes": "Setiap paket mencakup",
+      "included": [
+        "Skrip berdasarkan pola",
+        "Ulasan detak demi detak",
+        "Avatar + mode produk",
+        "Teksnya menyala",
+        "9:16 untuk TikTok & Gulungan",
+        "Tempel tautan produk apa pun atau jelajahi pasar"
+      ],
+      "billingQuestions": "Pertanyaan penagihan",
+      "faq": {
+        "q1": "Apa itu kredit?",
+        "a1": "1 kredit = 1 detik video selesai. Video berdurasi 20 detik menggunakan 20 kredit; yang berdurasi 30 detik menggunakan 30. Anda memilih durasinya, dan Anda hanya dikenakan biaya untuk apa yang Anda render.",
+        "q2": "Apakah regenerasi memerlukan kredit?",
+        "a2": "Tidak. Membuat ulang irama saat Anda meninjau tidak memerlukan biaya tambahan — kredit hanya menghitung video akhir yang dirender.",
+        "q3": "Bagaimana jika saya kehabisan kredit?",
+        "a3": "Tingkatkan versi kapan saja untuk mendapatkan tunjangan bulanan yang lebih besar — ini akan langsung berlaku. Kredit disetel ulang pada awal setiap siklus penagihan.",
+        "q4": "Bisakah saya mengubah rencana kapan saja?",
+        "a4": "Kapan saja. Peningkatan segera berlaku; penurunan peringkat akan berlaku pada siklus berikutnya. Penghematan tahunan ~20% dibandingkan bulanan.",
+        "q5": "Model render manakah yang digunakan Lumi?",
+        "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
+      }
+    },
+    "landing": {
+      "heroBadge": "Dibuat untuk TikTok & Gulungan",
+      "heroTitle": "Ubah produk apa pun menjadi video <highlight>scroll-stopping</highlight> yang dapat dibeli.",
+      "heroSubtitle": "Tempel tautan produk apa pun — Amazon, Shopee, TikTok Shop, atau toko Anda sendiri — atau unggah foto. Lumi mempelajari apa yang sudah unggul dalam kategori tersebut, membuat skrip video berdasarkan polanya, memungkinkan Anda meninjaunya sedikit demi sedikit, dan merendernya dengan Seedance 2.0. Dalam beberapa menit, tidak ada kamera.",
+      "heroStartFree": "Mulai berkreasi secara gratis",
+      "heroSeeHow": "Lihat cara kerjanya",
+      "heroCheck1": "Video pertama gratis",
+      "heroCheck2": "Tidak ada kartu kredit",
+      "heroCheck3": "Siap dipublikasikan 09:16",
+      "marquee": [
+        "Toko TikTok",
+        "Gulungan",
+        "Kecantikan",
+        "Rumah & Dapur",
+        "kebugaran",
+        "gadget",
+        "Hewan peliharaan",
+        "Mode",
+        "Suplemen"
+      ],
+      "howKicker": "Pipa Lumi",
+      "howTitle": "Empat tahap, tidak ada halaman kosong",
+      "howSubtitle": "Kebanyakan alat dimulai dari nol. Lumi dimulai dari apa yang sudah menjadi pemenang — lalu membuat Anda tetap memegang kendali hingga memublikasikannya.",
+      "steps": {
+        "find": {
+          "kicker": "Temukan",
+          "title": "Mulai dari produk apa pun",
+          "body": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri — atau unggah foto. Atau telusuri pilihan yang sedang tren di pasar."
+        },
+        "deconstruct": {
+          "kicker": "Dekonstruksi",
+          "title": "Lumi mempelajari polanya",
+          "body": "Ia mempelajari ~100 orang yang benar-benar berkinerja terbaik dalam kategori tersebut dan mengekstrak struktur kait, bukti, dan CTA yang mengonversi."
+        },
+        "script": {
+          "kicker": "naskah",
+          "title": "Tinjau skrip & ketukannya",
+          "body": "Skrip yang membumi dengan ketukan tembakan demi tembakan. Setujui atau buat ulang setiap gambar referensi sebelum render apa pun dibakar."
+        },
+        "generate": {
+          "kicker": "Hasilkan",
+          "title": "Render & publikasikan",
+          "body": "Seedance 2.0 merender setiap ketukan, teks menyala, dan Anda siap memposting."
+        }
+      },
+      "featuresKicker": "Semuanya dalam satu studio",
+      "featuresTitle": "Seluruh alur kerja video, ditangani",
+      "featuresSubtitle": "Dari mencari sumber produk hingga potongan siap dipublikasikan — tidak perlu menggabungkan lima alat menjadi satu.",
+      "features": {
+        "linkToVideo": {
+          "title": "Tautan ke Video",
+          "body": "Tempel tautan dari Amazon, Shopee, Toko TikTok, atau toko Anda sendiri — atau unggah foto. Lumi membaca produk dan menangani pembingkaian, skrip, suara, dan pengeditan secara otomatis."
+        },
+        "scripts": {
+          "title": "Skrip berdasarkan pola",
+          "body": "Setiap skrip dibuat dari struktur viral nyata dalam kategori Anda — pelajari polanya, jangan pernah meniru permukaannya."
+        },
+        "review": {
+          "title": "Ulasan detak demi detak",
+          "body": "Lihat gambar referensi untuk setiap pengambilan gambar. Setujui, sesuaikan, atau buat ulang sebelum menghabiskan waktu render sedetik pun."
+        },
+        "modes": {
+          "title": "Avatar & mode produk",
+          "body": "Presenter AI yang berbicara di depan kamera, atau etalase produk yang bersih — delapan gaya siap pakai yang sesuai dengan penawaran Anda."
+        },
+        "qa": {
+          "title": "Dialog otomatis QA",
+          "body": "Whisper memeriksa setiap baris yang dirender terhadap skrip dan penyimpangan bendera, sehingga suara selalu mengatakan apa yang seharusnya."
+        },
+        "publish": {
+          "title": "Teks & publikasikan",
+          "body": "Teks yang dibakar secara otomatis dan potongan 09:16 yang siap dipublikasikan, berukuran untuk TikTok dan Reel yang siap digunakan."
+        }
+      },
+      "modelsKicker": "Mesin render perbatasan",
+      "modelsTitle": "Dirender dengan Seedance 2.0",
+      "modelsSubtitle": "Lumi merender setiap irama dengan Seedance 2.0 — dan skrip Anda terbawa saat model baru tiba.",
+      "models": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Hidup",
+          "desc": "Gerakan cepat dan nyata untuk pengambilan gambar produk & avatar — mesin render Lumi untuk setiap ketukan."
+        },
+        "more": {
+          "name": "Lebih banyak lagi di jalan",
+          "tag": "Segera",
+          "desc": "Kami menambahkan model video terdepan seiring dengan terbuktinya — skrip dan irama Anda tetap ada."
+        }
+      },
+      "useCasesKicker": "Untuk siapa ini",
+      "useCasesTitle": "Dibuat untuk semua orang yang menjual dengan video",
+      "useCases": {
+        "sellers": {
+          "title": "Penjual",
+          "body": "Skalakan katalog Anda — video konversi untuk setiap SKU, tanpa studio."
+        },
+        "creators": {
+          "title": "Pencipta",
+          "body": "Putar TikTok Belanja konten dalam hitungan menit dan pertahankan postingan Anda tetap hidup."
+        },
+        "brands": {
+          "title": "Merek",
+          "body": "Tetap pada merek di ratusan materi iklan unik, semuanya sekaligus."
+        },
+        "agencies": {
+          "title": "Agensi",
+          "body": "Layani setiap klien dalam jumlah besar dengan kualitas yang tidak perlu Anda jaga."
+        }
+      },
+      "stats": {
+        "ways": {
+          "value": "5 cara",
+          "label": "untuk memulai: Amazon, Shopee, TikTok Toko, toko Anda, atau foto"
+        },
+        "ratio": {
+          "value": "9:16",
+          "label": "siap dipublikasikan untuk TikTok & Reel, setiap saat"
+        },
+        "credit": {
+          "value": "1 kredit",
+          "label": "= Video berdurasi 1 detik — hanya membayar sesuai apa yang Anda render"
+        },
+        "spend": {
+          "value": "$0",
+          "label": "render pembelanjaan sampai Anda menyetujui ketukannya"
+        }
+      },
+      "pricingKicker": "Harga",
+      "pricingTitle": "Mulai gratis. Skalakan saat berhasil.",
+      "pricingSubtitle": "Berbasis kredit — 1 kredit = 1 detik video. Video pertama Anda gratis; tidak ada kartu kredit untuk memulai.",
+      "mostPopular": "Paling populer",
+      "pricingTiers": {
+        "creator": {
+          "name": "Pencipta",
+          "price": "$29",
+          "note": "/ bln",
+          "features": [
+            "≈ 3 video / bln · 75 kredit",
+            "Tidak ada tanda air",
+            "Ulasan detak demi detak",
+            "Avatar + mode produk"
+          ],
+          "cta": "Mulai Pencipta"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$79",
+          "note": "/ bln",
+          "features": [
+            "≈ 10 video / bln · 200 kredit",
+            "Segalanya ada pada Sang Pencipta",
+            "Prioritas atas render gratis",
+            "720p · 9:16 ekspor"
+          ],
+          "cta": "Mulai Pro"
+        },
+        "scale": {
+          "name": "Skala",
+          "price": "$199",
+          "note": "/ bln",
+          "features": [
+            "≈ 25 video / bln · 500 kredit",
+            "Semuanya di Pro",
+            "Untuk postingan yang selalu aktif"
+          ],
+          "cta": "Mulai Skala"
+        }
+      },
+      "pricingFooter": "<signup>video pertama Anda gratis</signup> — tanpa kartu. Butuh tangga lengkap? <plans>Lihat semua paket →</plans>",
+      "faqKicker": "Pertanyaan Umum",
+      "faqTitle": "Pertanyaan, terjawab",
+      "finalCtaTitle": "Buku terlaris Anda berikutnya hanya berjarak satu tautan produk.",
+      "finalCtaSubtitle": "Jadikan video penghenti gulir pertama Anda gratis. Tanpa kamera, tanpa editor, tanpa halaman kosong.",
+      "finalCtaStartFree": "Mulai berkreasi secara gratis",
+      "finalCtaSeePricing": "Lihat harga"
+    },
+    "heroMock": {
+      "caption": "gadget seharga $24 ini terjual habis <highlight>3 kali</highlight> 👀",
+      "shopNow": "Belanja sekarang · $23,99",
+      "productName": "Pistol Pijat Mini",
+      "productMeta": "$23,99 · 30% komunikasi.",
+      "sold": "12,4k terjual / bln",
+      "beatReview": "Kalahkan ulasan",
+      "beatHook": "Kait",
+      "beatProof": "Bukti",
+      "beatOffer": "Penawaran",
+      "beatAuto": "otomatis",
+      "beatOk": "oke",
+      "renderedWith": "Diberikan dengan"
+    },
+    "features": {
+      "header": {
+        "kicker": "Fitur",
+        "title": "Seluruh alur kerja video,",
+        "highlight": "ditangani.",
+        "subtitle": "Dari mencari sumber produk hingga potongan siap dipublikasikan — tidak perlu menggabungkan lima alat menjadi satu."
+      },
+      "pipeline": {
+        "find": "Temukan",
+        "deconstruct": "Dekonstruksi",
+        "script": "naskah",
+        "generate": "Hasilkan"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "Sumber",
+          "title": "Tautan ke Video",
+          "body": "Tempel tautan produk dari Amazon, Shopee, Toko TikTok, atau toko Anda sendiri — atau unggah foto. Lumi membaca produk, sudutnya, dan titik pembuktiannya, lalu menangani pembingkaian, skrip, suara, dan pengeditan secara otomatis. Produk Anda tetap bersifat pribadi untuk Anda.",
+          "bullets": [
+            "Tautan apa pun — Amazon, Shopee, TikTok Shop, atau toko Anda sendiri",
+            "Atau unggah foto produk Anda sendiri",
+            "Atau telusuri pasar pilihan yang sedang tren untuk mendapatkan ide"
+          ]
+        },
+        "scripts": {
+          "kicker": "naskah",
+          "title": "Skrip berdasarkan pola",
+          "body": "Sebelum menulis sepatah kata pun, Lumi mempelajari sampel besar produk organik yang berkinerja terbaik dalam kategori produk Anda dan mengekstrak pola strukturalnya — bentuk pengait, bukti, dan CTA yang benar-benar berkonversi. Skrip Anda dibuat berdasarkan hal itu, tidak pernah berupa halaman kosong.",
+          "bullets": [
+            "Pelajari struktur dari pemenang organik yang difilter dalam kategori Anda",
+            "Ketukan hook / proof / offer, bukan eksekusi copy-paste",
+            "Bahasa audiens meniru model bahasa audiens yang berkinerja terbaik tersebut"
+          ]
+        },
+        "review": {
+          "kicker": "Kontrol",
+          "title": "Ulasan detak demi detak",
+          "body": "Lumi menghasilkan gambar referensi untuk setiap ketukan terlebih dahulu. Setujui gambar yang Anda sukai, buat ulang gambar yang tidak Anda suka — dan baru setelah itu barulah gambar tersebut menghabiskan waktu render. Lebih suka lepas tangan? Auto-QA menyetujui ketukan untuk Anda.",
+          "bullets": [
+            "Bingkai referensi per bidikan sebelum render apa pun dibakar",
+            "Setujui atau buat ulang, ketukan demi ketukan",
+            "QA otomatis opsional untuk alur tanpa klik"
+          ]
+        },
+        "modes": {
+          "kicker": "Format",
+          "title": "Avatar & mode produk",
+          "body": "Pilih presenter AI yang berbicara di depan kamera, atau etalase produk yang bersih — delapan gaya siap pakai yang mencakup intro pembicaraan, demo, testimonial, unboxing, dan potongan yang berfokus pada penawaran.",
+          "bullets": [
+            "Avatar AI atau Khusus Produk",
+            "8 gaya disetel untuk perdagangan",
+            "Durasi 10–30 detik, asli 9:16"
+          ]
+        },
+        "qa": {
+          "kicker": "Kualitas",
+          "title": "Dialog otomatis QA",
+          "body": "Setelah setiap ketukan ditampilkan, Whisper mentranskripsikan kalimat yang diucapkan dan membandingkannya dengan skrip, menandai penyimpangan. Suaranya selalu mengatakan apa yang seharusnya — tidak ada kejutan di luar naskah.",
+          "bullets": [
+            "Transkripsi bisikan pada setiap baris yang dirender",
+            "Skor drift terhadap skrip yang dimaksudkan",
+            "Menangkap audio di luar skrip sebelum Anda memposting"
+          ]
+        },
+        "publish": {
+          "kicker": "Kapal",
+          "title": "Teks & publikasikan",
+          "body": "Teks dibakar dan potongannya berukuran 9:16 untuk TikTok dan Reel — siap diunduh atau ditandai diposting, sehingga statistik Anda tetap rapi.",
+          "bullets": [
+            "Teks yang dibakar otomatis",
+            "Ekspor siap publikasi 9:16",
+            "Lagu yang diposting vs. yang disusun di Video Saya"
+          ]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "Model",
+        "title": "Satu studio, perbatasan",
+        "highlight": "video AI.",
+        "subtitle": "Lumi merender setiap irama dengan Seedance 2.0 — dan skrip Anda terbawa saat model baru tiba."
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "Hidup",
+          "desc": "Gerakan cepat dan nyata untuk pengambilan gambar produk dan avatar — mesin render Lumi untuk setiap ketukan, dengan audio yang dihasilkan per pengambilan gambar.",
+          "bestFor": [
+            "Gerakan produk",
+            "Avatar berbicara",
+            "Kecepatan"
+          ]
+        },
+        "more": {
+          "name": "Lebih banyak lagi di jalan",
+          "tag": "Segera",
+          "desc": "Kami menambahkan model video frontier setelah terbukti. Skrip dan ketukan Anda yang disetujui bersifat model-agnostik, sehingga dapat diterapkan tanpa pengulangan.",
+          "bestFor": [
+            "Peta jalan",
+            "Tidak ada pengulangan"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "Disetel per ketukan",
+          "body": "Lumi mengatur gerakan, panjang, dan framing per pengambilan gambar sehingga setiap ketukan menampilkan yang terbaik — Anda tidak perlu mengutak-atik pengaturan model secara manual."
+        },
+        "carriesOver": {
+          "title": "Pekerjaan Anda berlanjut",
+          "body": "Skrip dan ketukan yang disetujui bersifat model-agnostik. Saat model baru hadir, video Anda dapat menggunakannya tanpa pengulangan."
+        },
+        "oneBill": {
+          "title": "Satu studio, satu tagihan",
+          "body": "Tidak perlu mengatur akun atau kredit model terpisah — semuanya ada di dalam Lumi."
+        }
+      },
+      "ctaTitle": "Render dengan model terbaik — tanpa kerumitan."
+    },
+    "about": {
+      "header": {
+        "kicker": "Tentang",
+        "title": "Kami membantu Anda menjual dengan video —",
+        "highlight": "tanpa studio.",
+        "subtitle": "Lumi adalah produk Sellcast. Kami mengubah produk apa pun menjadi video belanjaan yang menarik, berdasarkan pada produk yang sudah unggul."
+      },
+      "intro1": "Video berdurasi pendek kini menjadi etalase — namun sebagian besar penjual tidak punya waktu untuk memfilmkan, mengedit, dan menguji cara mereka untuk menjadi pemenang. Alat AI generik mengisi kesenjangan dengan konten yang terasa seperti AI.",
+      "intro2": "Lumi mengambil jalan yang berbeda. Sebelum menulis skrip, skrip mempelajari sampel besar yang nyata dan organik dengan kinerja terbaik dalam kategori produk Anda dan mempelajari struktur <em></em> yang mengonversi — lalu skrip, storyboard, dan merender video yang dapat Anda tinjau sedikit demi sedikit dan dikirimkan dalam hitungan menit.",
+      "values": {
+        "grounded": {
+          "title": "Beralas, tidak menebak-nebak",
+          "body": "Kita belajar dari apa yang sebenarnya mengubah suatu kategori sebelum kita menghasilkan sesuatu."
+        },
+        "quality": {
+          "title": "Kualitas melebihi volume",
+          "body": "Materi iklan bernuansa asli yang menghentikan guliran — bukan pengisi AI umum."
+        },
+        "control": {
+          "title": "Anda tetap memegang kendali",
+          "body": "Tinjau irama demi irama. Tidak ada yang menghabiskan waktu render tanpa persetujuan Anda (kecuali jika Anda menginginkannya)."
+        },
+        "sellers": {
+          "title": "Dibangun untuk penjual",
+          "body": "Dibuat untuk orang-orang yang lebih suka menjual daripada film — pencipta solo hingga agensi."
+        }
+      },
+      "contact": "Ingin membicarakan kemitraan, pers, atau perusahaan? <email>hello@sellcast.ai</email>"
+    },
+    "blog": {
+      "title": "Blog Lumi akan segera hadir",
+      "body": "Buku pedoman tentang pola viral, kaitan yang menghasilkan konversi, dan cara penjual teratas menskalakan video berdurasi pendek. Jadilah orang pertama yang membacanya.",
+      "startFree": "Mulai berkreasi secara gratis",
+      "explore": "Jelajahi fitur"
+    },
+    "careers": {
+      "title": "Kami sedang membangun masa depan video perdagangan",
+      "body": "Kami adalah tim kecil yang bergerak cepat. Belum ada peran terbuka yang diposting — tetapi jika Anda ahli dalam AI, video, atau pertumbuhan, kami akan senang mendengar pendapat Anda.",
+      "cta": "Perkenalkan diri Anda"
+    },
+    "metadata": {
+      "features": {
+        "title": "Fitur",
+        "description": "Segala sesuatu yang dilakukan Lumi — tautan ke video, skrip berdasarkan pola, ulasan detak demi detak, avatar & mode produk, QA dialog otomatis, teks & publikasi."
+      },
+      "models": {
+        "title": "Model",
+        "description": "Lumi dirender dengan Seedance 2.0 hari ini, dengan lebih banyak model video terdepan yang akan segera hadir. Setiap pengambilan gambar mendapatkan pengaturan yang menjadikannya terbaik."
+      },
+      "pricing": {
+        "title": "Harga",
+        "description": "Mulai dengan gratis, skalakan saat berhasil. Harga Lumi berbasis kredit — 1 kredit = 1 detik video. Gratis (video pertama), Kreator, Pro, Skala, dan Perusahaan. Tidak ada kartu kredit untuk memulai; penghematan tahunan ~20%."
+      },
+      "about": {
+        "title": "Tentang",
+        "description": "Lumi adalah produk Sellcast yang membantu penjual dan pembuat konten mengubah produk menjadi video yang dapat dibeli tanpa henti — berdasarkan pola viral yang nyata."
+      },
+      "blog": {
+        "title": "blog"
+      },
+      "careers": {
+        "title": "Karier"
+      }
+    }
+  }
+}

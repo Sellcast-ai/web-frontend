@@ -1,5 +1,49 @@
 import { describe, expect, it } from "vitest";
+import { createTranslator } from "next-intl";
 import en from "../../messages/en.json";
+import es from "../../messages/es.json";
+import id from "../../messages/id.json";
+import ja from "../../messages/ja.json";
+import ko from "../../messages/ko.json";
+import pt from "../../messages/pt.json";
+import th from "../../messages/th.json";
+import vi from "../../messages/vi.json";
+import zh from "../../messages/zh.json";
+
+const catalogs = { en, es, zh, ja, ko, pt, id, vi, th };
+const nonEnglishLocales = ["es", "zh", "ja", "ko", "pt", "id", "vi", "th"] as const;
+
+function flattenMessages(value: unknown, prefix = "", out: Record<string, string> = {}) {
+  if (typeof value === "string") {
+    out[prefix] = value;
+    return out;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => flattenMessages(item, `${prefix}[${index}]`, out));
+    return out;
+  }
+  if (value && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) {
+      flattenMessages(child, prefix ? `${prefix}.${key}` : key, out);
+    }
+    return out;
+  }
+  out[prefix] = String(value);
+  return out;
+}
+
+function placeholderSignature(message: string) {
+  return {
+    tags: Array.from(message.matchAll(/<\/?([A-Za-z][A-Za-z0-9-]*)(?:\s[^>]*)?>/g))
+      .map((match) => match[0])
+      .sort(),
+    variables: Array.from(
+      message.matchAll(/\{([A-Za-z_][A-Za-z0-9_]*)(?:\s*,\s*([A-Za-z]+))?/g),
+    )
+      .map((match) => `${match[1]}:${match[2] ?? ""}`)
+      .sort(),
+  };
+}
 
 // The proof-surface nav labels (SiteHeader + AppShell) resolve from these keys.
 // A missing key makes next-intl throw at render, so guard them explicitly.
@@ -103,5 +147,58 @@ describe("en catalog", () => {
       "verificationCodeLabel",
       "verifyCodeFailed",
     ]);
+  });
+});
+
+describe("locale catalogs", () => {
+  const sourceMessages = flattenMessages(catalogs.en);
+  const sourceKeys = Object.keys(sourceMessages).sort();
+
+  it("has every target locale catalog", () => {
+    expect(Object.keys(catalogs).sort()).toEqual([
+      "en",
+      "es",
+      "id",
+      "ja",
+      "ko",
+      "pt",
+      "th",
+      "vi",
+      "zh",
+    ]);
+  });
+
+  it("keeps every non-English catalog structurally identical to en", () => {
+    for (const locale of nonEnglishLocales) {
+      expect(Object.keys(flattenMessages(catalogs[locale])).sort()).toEqual(sourceKeys);
+    }
+  });
+
+  it("preserves ICU placeholders and rich-text tags across locales", () => {
+    for (const locale of nonEnglishLocales) {
+      const messages = flattenMessages(catalogs[locale]);
+      for (const key of sourceKeys) {
+        expect(placeholderSignature(messages[key]), `${locale}.${key}`).toEqual(
+          placeholderSignature(sourceMessages[key]),
+        );
+      }
+    }
+  });
+
+  it("resolves representative marketing, app, rich-text, and plural messages", () => {
+    for (const locale of nonEnglishLocales) {
+      const t = createTranslator({ locale, messages: catalogs[locale] });
+
+      expect(t("nav.features"), locale).not.toBe(sourceMessages["nav.features"]);
+      expect(t("app.nav.products"), locale).not.toBe(sourceMessages["app.nav.products"]);
+      expect(t("app.toasts.importSucceeded", { count: 1 }), locale).toContain("1");
+      expect(t("app.toasts.importSucceeded", { count: 2 }), locale).toContain("2");
+      expect(
+        t.rich("marketing.landing.heroTitle", {
+          highlight: (chunks) => `[${chunks}]`,
+        }),
+        locale,
+      ).toContain("[");
+    }
   });
 });
