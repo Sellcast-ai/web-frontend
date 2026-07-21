@@ -125,7 +125,9 @@ function StudioInner() {
   const outOfQuota = !!usage && usage.remaining < duration;
   const trimmedReferenceUrl = referenceUrl.trim();
   const linkInvalid =
-    trimmedReferenceUrl.length > 0 && !isSupportedReferenceUrl(trimmedReferenceUrl);
+    referenceMode === "link" &&
+    trimmedReferenceUrl.length > 0 &&
+    !isSupportedReferenceUrl(trimmedReferenceUrl);
   // The reference actually sent depends on the active tab: a valid pasted link,
   // or the R2 URL returned by a completed upload. Anything else sends nothing.
   const activeReferenceUrl =

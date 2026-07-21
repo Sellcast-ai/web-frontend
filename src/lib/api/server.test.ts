@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { COOKIE } from "./config";
 import { proxy } from "./server";
+import { POST as uploadReferenceVideo } from "@/app/api/bff/uploads/reference-video/route";
 import type { AuthSuccess } from "./types";
 
 const session: AuthSuccess["session"] = {
@@ -142,5 +143,83 @@ describe("proxy", () => {
 
     expect(res.status).toBe(204);
     expect(res.body).toBeNull();
+  });
+});
+
+function uploadReq(
+  init: { cookies?: Record<string, string>; boundary?: string } = {},
+) {
+  const boundary = init.boundary ?? "----boundary123";
+  const headers = new Headers();
+  headers.set("content-type", `multipart/form-data; boundary=${boundary}`);
+  if (init.cookies) {
+    headers.set(
+      "cookie",
+      Object.entries(init.cookies)
+        .map(([k, v]) => `${k}=${v}`)
+        .join("; "),
+    );
+  }
+  const body = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="clip.mp4"\r\nContent-Type: video/mp4\r\n\r\nFAKEBYTES\r\n--${boundary}--\r\n`;
+  return new NextRequest(new URL("http://localhost:3000/api/bff/uploads/reference-video"), {
+    method: "POST",
+    body,
+    headers,
+  });
+}
+
+describe("uploads/reference-video route", () => {
+  it("rejects requests without session cookies before touching the backend", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await uploadReferenceVideo(uploadReq());
+    expect(res.status).toBe(401);
+    await expect(res.json()).resolves.toEqual({ error: "unauthenticated" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("forwards multipart to the backend intact — no JSON content-type corruption", async () => {
+    const fetchMock = vi.fn(async () => json(200, { url: "https://r2/clip.mp4" }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await uploadReferenceVideo(
+      uploadReq({ cookies: { [COOKIE.access]: "at1" } }),
+    );
+
+    expect(res.status).toBe(200);
+    await expect(res.json()).resolves.toEqual({ url: "https://r2/clip.mp4" });
+    const [url, reqInit] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("http://127.0.0.1:8000/api/v1/uploads/reference-video");
+    expect(reqInit.method).toBe("POST");
+    const ct = (reqInit.headers as Record<string, string>)["Content-Type"];
+    expect(ct).toMatch(/^multipart\/form-data; boundary=/);
+    expect((reqInit.headers as Record<string, string>).Authorization).toBe("Bearer at1");
+    // The raw multipart bytes must pass through untouched (not JSON-stringified).
+    expect(new TextDecoder().decode(reqInit.body as ArrayBuffer)).toContain("FAKEBYTES");
+  });
+
+  it("refreshes on 401, replays the multipart body, and re-issues cookies", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(json(401, { detail: "expired" }))
+      .mockResolvedValueOnce(json(200, { user: {}, session }))
+      .mockResolvedValueOnce(json(200, { url: "https://r2/clip.mp4" }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await uploadReferenceVideo(
+      uploadReq({ cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt1" } }),
+    );
+
+    expect(fetchMock).toHaveBeenCalledTimes(3);
+    const [refreshUrl] = fetchMock.mock.calls[1] as [string, RequestInit];
+    expect(refreshUrl).toBe("http://127.0.0.1:8000/api/v1/auth/refresh");
+    const [, retryInit] = fetchMock.mock.calls[2] as [string, RequestInit];
+    expect((retryInit.headers as Record<string, string>).Authorization).toBe("Bearer new-at");
+    expect(new TextDecoder().decode(retryInit.body as ArrayBuffer)).toContain("FAKEBYTES");
+
+    expect(res.status).toBe(200);
+    expect(res.cookies.get(COOKIE.access)?.value).toBe("new-at");
+    expect(res.cookies.get(COOKIE.refresh)?.value).toBe("new-rt");
   });
 });

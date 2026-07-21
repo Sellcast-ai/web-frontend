@@ -35,6 +35,10 @@ export function clearSessionCookies(res: NextResponse) {
 type CallInit = {
   method?: string;
   body?: unknown;
+  // Raw passthrough body (e.g. multipart/form-data). When set, the body is
+  // sent verbatim and never JSON-encoded; the caller owns the Content-Type
+  // header (boundary included) via `headers`.
+  rawBody?: BodyInit;
   accessToken?: string | null;
   headers?: Record<string, string>;
   search?: string;
@@ -44,17 +48,18 @@ type CallInit = {
 export async function callBackend(path: string, init: CallInit = {}): Promise<Response> {
   const url = `${API_BASE}/${path.replace(/^\/+/, "")}${init.search ?? ""}`;
   const headers: Record<string, string> = { ...(init.headers ?? {}) };
-  if (init.body !== undefined && init.body !== null) headers["Content-Type"] = "application/json";
+  const hasJsonBody = init.rawBody === undefined && init.body !== undefined && init.body !== null;
+  if (hasJsonBody) headers["Content-Type"] = "application/json";
   if (init.accessToken) headers["Authorization"] = `Bearer ${init.accessToken}`;
   return fetch(url, {
     method: init.method ?? "GET",
     headers,
-    body: init.body !== undefined && init.body !== null ? JSON.stringify(init.body) : undefined,
+    body: init.rawBody ?? (hasJsonBody ? JSON.stringify(init.body) : undefined),
     cache: "no-store",
   });
 }
 
-async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
+export async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
   const res = await callBackend("auth/refresh", {
     method: "POST",
     body: { refresh_token: refreshToken },
