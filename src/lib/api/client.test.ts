@@ -1,6 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { api, ApiError, bffUpload } from "./client";
 
+class FakeFormData {
+  entries: [string, unknown][] = [];
+  append(key: string, value: unknown) {
+    this.entries.push([key, value]);
+  }
+  get(key: string) {
+    return this.entries.find((e) => e[0] === key)?.[1];
+  }
+}
+
 function mockFetch(status: number, body: unknown = null) {
   const fn = vi.fn(async () =>
     new Response(body === null ? null : JSON.stringify(body), {
@@ -234,5 +244,50 @@ describe("bffUpload", () => {
 
     await expect(promise).rejects.toBeInstanceOf(ApiError);
     await expect(promise).rejects.toMatchObject({ status: 0 });
+  });
+});
+
+describe("uploadReferenceVideo", () => {
+  // Backend contract (built in parallel): POST /uploads/reference-video,
+  // multipart/form-data, file field named "file", 200 -> { url: "<r2 url>" }.
+  it("posts the file as multipart, reports progress, and returns the url", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    vi.stubGlobal("FormData", FakeFormData);
+    const file = { name: "clip.mp4", type: "video/mp4", size: 1024 } as unknown as File;
+    const fractions: number[] = [];
+    const promise = api.uploadReferenceVideo(file, (f) => fractions.push(f));
+    const xhr = FakeXHR.last;
+
+    expect(xhr.method).toBe("POST");
+    expect(xhr.url).toBe("/api/bff/uploads/reference-video");
+    // The browser sets the multipart boundary; we must NOT force a Content-Type.
+    expect(xhr.headers["Content-Type"]).toBeUndefined();
+    expect((xhr.body as unknown as FakeFormData).get("file")).toBe(file);
+
+    xhr.upload.onprogress?.({ lengthComputable: true, loaded: 5, total: 10 });
+    xhr.status = 200;
+    xhr.responseText = JSON.stringify({ url: "https://r2.example/ref/clip.mp4" });
+    xhr.onload?.();
+
+    await expect(promise).resolves.toEqual({ url: "https://r2.example/ref/clip.mp4" });
+    expect(fractions).toEqual([0.5]);
+  });
+
+  it("rejects with the backend detail message on an error status", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    vi.stubGlobal("FormData", FakeFormData);
+    const file = { name: "clip.mp4", type: "video/mp4", size: 1024 } as unknown as File;
+    const promise = api.uploadReferenceVideo(file);
+    const xhr = FakeXHR.last;
+
+    xhr.status = 413;
+    xhr.responseText = JSON.stringify({ detail: "File too large" });
+    xhr.onload?.();
+
+    await expect(promise).rejects.toMatchObject({
+      name: "ApiError",
+      status: 413,
+      message: "File too large",
+    });
   });
 });

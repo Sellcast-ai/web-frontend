@@ -279,9 +279,15 @@
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi aprende solo vibra y energía: ritmo y ambiente para tu producto, no las tomas originales.",
-        "uploadHelper": "Usa una URL directa de MP4, MOV o WebM de un clip que ya subiste. Lumi aprende solo vibra y energía, no las tomas originales.",
+        "uploadHelper": "Cargue un clip privado (MP4, MOV o WebM), hasta 50 MB. Lumi aprende solo vibración y energía, no las tomas originales.",
         "invalidUrl": "Pega un enlace de video compatible de TikTok o redes sociales.",
-        "invalidUpload": "Ingresa un enlace directo de MP4, MOV o WebM."
+        "invalidUpload": "Ingresa un enlace directo de MP4, MOV o WebM.",
+        "uploadCta": "Elige un archivo de vídeo",
+        "uploadReplace": "Reemplazar",
+        "uploadRemove": "Eliminar",
+        "uploadTypeError": "Elija un video MP4, MOV o WebM.",
+        "uploadSizeError": "Ese clip supera el límite de 50 MB.",
+        "uploadFailed": "La carga no terminó. Por favor inténtalo de nuevo."
       },
       "modes": {
         "aiAvatar": {

@@ -279,9 +279,15 @@
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi เรียนรู้เฉพาะ vibe & energy: จังหวะและอารมณ์สำหรับสินค้าของคุณ ไม่คัดลอกช็อตเดิม",
-        "uploadHelper": "ใช้ URL MP4, MOV หรือ WebM โดยตรงจากคลิปที่คุณอัปโหลดแล้ว Lumi เรียนรู้เฉพาะ vibe & energy ไม่คัดลอกช็อตเดิม",
+        "uploadHelper": "อัปโหลดคลิปส่วนตัว (MP4, MOV หรือ WebM) สูงสุด 50MB Lumi เรียนรู้เฉพาะความรู้สึกและพลังงานเท่านั้น ไม่ใช่ภาพต้นฉบับ",
         "invalidUrl": "วางลิงก์วิดีโอ TikTok หรือโซเชียลที่รองรับ",
-        "invalidUpload": "ป้อนลิงก์ MP4, MOV หรือ WebM โดยตรง"
+        "invalidUpload": "ป้อนลิงก์ MP4, MOV หรือ WebM โดยตรง",
+        "uploadCta": "เลือกไฟล์วิดีโอ",
+        "uploadReplace": "แทนที่",
+        "uploadRemove": "ลบ",
+        "uploadTypeError": "เลือกวิดีโอ MP4, MOV หรือ WebM",
+        "uploadSizeError": "คลิปนั้นมีขนาดเกินขีดจำกัด 50MB",
+        "uploadFailed": "การอัปโหลดไม่เสร็จสิ้น โปรดลองอีกครั้ง"
       },
       "modes": {
         "aiAvatar": {

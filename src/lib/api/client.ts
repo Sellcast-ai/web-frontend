@@ -88,6 +88,44 @@ export function bffUpload<T>(
   });
 }
 
+/**
+ * Multipart POST with real upload progress via XHR. Sends a single `file`
+ * field (the backend contract for `/uploads/reference-video`).
+ * `onProgress` receives the uploaded fraction in [0, 1].
+ */
+export function bffUploadFile<T>(
+  path: string,
+  file: File,
+  onProgress?: (fraction: number) => void,
+): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const form = new FormData();
+    form.append("file", file);
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `/api/bff/${path.replace(/^\/+/, "")}`);
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
+    };
+    xhr.onload = () => {
+      let data: unknown = null;
+      try {
+        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+      } catch {
+        // non-JSON body; fall through to statusText
+      }
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(data as T);
+        return;
+      }
+      const d = data as { detail?: unknown; error?: unknown; message?: unknown } | null;
+      const msg = (d && (d.detail || d.error || d.message)) || xhr.statusText;
+      reject(new ApiError(xhr.status, typeof msg === "string" ? msg : "Request failed"));
+    };
+    xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
+    xhr.send(form);
+  });
+}
+
 export const api = {
   /* --- products --- */
   listProducts: (
@@ -142,6 +180,8 @@ export const api = {
   getVideoJob: (id: string) => bff<VideoJob>(`video-jobs/${id}`),
   createVideoJob: (payload: VideoJobCreate) =>
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
+  uploadReferenceVideo: (file: File, onProgress?: (fraction: number) => void) =>
+    bffUploadFile<{ url: string }>(`uploads/reference-video`, file, onProgress),
   deleteVideoJob: (id: string) =>
     bff<void>(`video-jobs/${id}`, { method: "DELETE" }),
   retryVideoJob: (id: string) =>

@@ -279,9 +279,15 @@
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi chỉ học vibe & năng lượng: nhịp độ và tâm trạng cho sản phẩm của bạn, không sao chép các cảnh gốc.",
-        "uploadHelper": "Dùng URL MP4, MOV hoặc WebM trực tiếp từ clip bạn đã tải lên. Lumi chỉ học vibe & năng lượng, không sao chép các cảnh gốc.",
+        "uploadHelper": "Tải lên clip riêng tư (MP4, MOV hoặc WebM), tối đa 50 MB. Lumi chỉ học được cảm xúc và năng lượng chứ không phải những bức ảnh gốc.",
         "invalidUrl": "Dán liên kết video TikTok hoặc mạng xã hội được hỗ trợ.",
-        "invalidUpload": "Nhập liên kết trực tiếp MP4, MOV hoặc WebM."
+        "invalidUpload": "Nhập liên kết trực tiếp MP4, MOV hoặc WebM.",
+        "uploadCta": "Chọn một tập tin video",
+        "uploadReplace": "Thay thế",
+        "uploadRemove": "Di dời",
+        "uploadTypeError": "Chọn video MP4, MOV hoặc WebM.",
+        "uploadSizeError": "Clip đó vượt quá giới hạn 50MB.",
+        "uploadFailed": "Tải lên chưa hoàn tất. Vui lòng thử lại."
       },
       "modes": {
         "aiAvatar": {

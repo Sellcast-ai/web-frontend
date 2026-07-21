@@ -279,9 +279,15 @@
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi hanya mempelajari vibe & energi: tempo dan mood untuk produk Anda, bukan adegan aslinya.",
-        "uploadHelper": "Gunakan URL MP4, MOV, atau WebM langsung dari klip yang sudah Anda unggah. Lumi hanya mempelajari vibe & energi, bukan adegan aslinya.",
+        "uploadHelper": "Unggah klip pribadi (MP4, MOV, atau WebM), hingga 50MB. Lumi hanya mempelajari getaran & energi, bukan bidikan aslinya.",
         "invalidUrl": "Tempel tautan video TikTok atau media sosial yang didukung.",
-        "invalidUpload": "Masukkan tautan langsung MP4, MOV, atau WebM."
+        "invalidUpload": "Masukkan tautan langsung MP4, MOV, atau WebM.",
+        "uploadCta": "Pilih file video",
+        "uploadReplace": "Mengganti",
+        "uploadRemove": "Menghapus",
+        "uploadTypeError": "Pilih video MP4, MOV, atau WebM.",
+        "uploadSizeError": "Klip itu melebihi batas 50 MB.",
+        "uploadFailed": "Pengunggahan belum selesai. Silakan coba lagi."
       },
       "modes": {
         "aiAvatar": {

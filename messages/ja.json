@@ -279,9 +279,15 @@
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi は雰囲気とエネルギーだけを学びます。あなたの商品向けのテンポとムードで、元のショットはコピーしません。",
-        "uploadHelper": "すでにアップロードしたクリップの直接 MP4、MOV、WebM URL を使ってください。Lumi は雰囲気とエネルギーだけを学び、元のショットはコピーしません。",
+        "uploadHelper": "最大 50MB のプライベート クリップ (MP4、MOV、または WebM) をアップロードします。Lumiはバイブとエネルギーのみを学習し、オリジナルのショットは学習しません。",
         "invalidUrl": "対応している TikTok またはソーシャル動画のリンクを貼り付けてください。",
-        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力してください。"
+        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力してください。",
+        "uploadCta": "ビデオファイルを選択してください",
+        "uploadReplace": "交換する",
+        "uploadRemove": "取り除く",
+        "uploadTypeError": "MP4、MOV、または WebM ビデオを選択します。",
+        "uploadSizeError": "そのクリップは 50MB の制限を超えています。",
+        "uploadFailed": "アップロードが完了しませんでした。もう一度試してください。"
       },
       "modes": {
         "aiAvatar": {
