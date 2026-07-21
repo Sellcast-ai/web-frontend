@@ -346,6 +346,7 @@
       },
       "usageSummary": "{remaining} de {limit} créditos restantes este mes · este video usa {duration}",
       "generateVideo": "Generar vídeo",
+      "generateUploading": "Subiendo referencia…",
       "outOfQuota": "No hay suficientes créditos para un vídeo de {duration}s (quedan {remaining} de {limit}).",
       "seePlans": "Ver planos",
       "pickProduct": {

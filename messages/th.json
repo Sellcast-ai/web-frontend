@@ -346,6 +346,7 @@
       },
       "usageSummary": "เครดิต {remaining} ของ {limit} เหลือในเดือนนี้ · วิดีโอนี้ใช้ {duration}",
       "generateVideo": "สร้างวิดีโอ",
+      "generateUploading": "กำลังอัปโหลดตัวอ้างอิง…",
       "outOfQuota": "เครดิตไม่เพียงพอสำหรับวิดีโอ {duration}s (เหลือ {remaining} จาก {limit})",
       "seePlans": "ดูแผน",
       "pickProduct": {

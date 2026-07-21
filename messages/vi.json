@@ -346,6 +346,7 @@
       },
       "usageSummary": "{remaining} trong số tín dụng {limit} còn lại trong tháng này · video này sử dụng {duration}",
       "generateVideo": "Tạo video",
+      "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
       "seePlans": "Xem kế hoạch",
       "pickProduct": {

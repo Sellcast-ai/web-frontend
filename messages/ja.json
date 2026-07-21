@@ -346,6 +346,7 @@
       },
       "usageSummary": "今月は {limit} クレジット中 {remaining} クレジットが残っています · このビデオは {duration} を使用しています",
       "generateVideo": "ビデオの生成",
+      "generateUploading": "参照をアップロード中…",
       "outOfQuota": "{duration} のビデオのクレジットが足りません ({remaining}/{limit} が残っています)。",
       "seePlans": "プランを見る",
       "pickProduct": {

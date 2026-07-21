@@ -346,6 +346,7 @@
       },
       "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
       "generateVideo": "Hasilkan video",
+      "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
       "seePlans": "Lihat rencana",
       "pickProduct": {

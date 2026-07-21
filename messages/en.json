@@ -352,6 +352,7 @@
       },
       "usageSummary": "{remaining} of {limit} credits left this month · this video uses {duration}",
       "generateVideo": "Generate video",
+      "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for a {duration}s video ({remaining} of {limit} left).",
       "seePlans": "See plans",
       "pickProduct": {

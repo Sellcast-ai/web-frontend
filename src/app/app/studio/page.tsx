@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -105,6 +105,7 @@ function StudioInner() {
   const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
   const [referenceUrl, setReferenceUrl] = useState("");
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [referenceUploading, setReferenceUploading] = useState(false);
   const [duration, setDuration] = useState<VideoDuration>(15);
   // Style is no longer a manual pick — it auto-derives from mode (locked
   // decision #1). We still send it so the backend schema stays intact.
@@ -139,7 +140,7 @@ function StudioInner() {
   const referenceReady = activeReferenceUrl.length > 0;
 
   async function generate() {
-    if (!productId || linkInvalid) return;
+    if (!productId || linkInvalid || referenceUploading) return;
     // failure is surfaced as a toast by useCreateJob
     const job = await create
       .mutateAsync({
@@ -249,6 +250,7 @@ function StudioInner() {
                 <ReferenceUpload
                   uploadedUrl={uploadedUrl}
                   onChange={setUploadedUrl}
+                  onUploadingChange={setReferenceUploading}
                 />
               )}
             </div>
@@ -511,10 +513,21 @@ function StudioInner() {
               size="lg"
               className="mt-2 w-full"
               onClick={generate}
-              disabled={create.isPending || !product || outOfQuota || linkInvalid}
+              disabled={
+                create.isPending ||
+                !product ||
+                outOfQuota ||
+                linkInvalid ||
+                referenceUploading
+              }
             >
               {create.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
+              ) : referenceUploading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {t("generateUploading")}
+                </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
@@ -667,9 +680,11 @@ function isAcceptedReferenceVideo(file: File): boolean {
 function ReferenceUpload({
   uploadedUrl,
   onChange,
+  onUploadingChange,
 }: {
   uploadedUrl: string | null;
   onChange: (url: string | null) => void;
+  onUploadingChange: (uploading: boolean) => void;
 }) {
   const t = useTranslations("app.studio");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -677,6 +692,13 @@ function ReferenceUpload({
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function setUploadingState(next: boolean) {
+    setUploading(next);
+    onUploadingChange(next);
+  }
+
+  useEffect(() => () => onUploadingChange(false), [onUploadingChange]);
 
   async function handleFile(file: File) {
     setError(null);
@@ -690,7 +712,7 @@ function ReferenceUpload({
     }
     onChange(null);
     setFileName(file.name);
-    setUploading(true);
+    setUploadingState(true);
     setProgress(0);
     try {
       const { url } = await api.uploadReferenceVideo(file, setProgress);
@@ -699,7 +721,7 @@ function ReferenceUpload({
       setError(t("reference.uploadFailed"));
       setFileName(null);
     } finally {
-      setUploading(false);
+      setUploadingState(false);
     }
   }
 

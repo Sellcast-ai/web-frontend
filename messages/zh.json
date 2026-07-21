@@ -346,6 +346,7 @@
       },
       "usageSummary": "{limit} 的学分本月剩余 {remaining} · 该视频使用 {duration}",
       "generateVideo": "生成视频",
+      "generateUploading": "正在上传参考…",
       "outOfQuota": "{duration} 视频的学分不足（剩余 {limit} 的 {remaining}）。",
       "seePlans": "查看计划",
       "pickProduct": {
