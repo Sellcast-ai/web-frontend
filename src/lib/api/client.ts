@@ -16,6 +16,7 @@ import type {
   LikeStatus,
   UserProfileUpdate,
   Usage,
+  ReferencePresign,
 } from "./types";
 
 export class ApiError extends Error {
@@ -89,40 +90,32 @@ export function bffUpload<T>(
 }
 
 /**
- * Multipart POST with real upload progress via XHR. Sends a single `file`
- * field (the backend contract for `/uploads/reference-video`).
+ * PUT raw file bytes directly to a presigned storage URL (R2/S3), bypassing the
+ * BFF and the app server so large clips don't hit serverless body limits.
+ * `Content-Type` must match what the presign was issued for. Progress via XHR;
  * `onProgress` receives the uploaded fraction in [0, 1].
  */
-export function bffUploadFile<T>(
-  path: string,
+function putFileWithProgress(
+  url: string,
   file: File,
   onProgress?: (fraction: number) => void,
-): Promise<T> {
-  return new Promise<T>((resolve, reject) => {
-    const form = new FormData();
-    form.append("file", file);
+): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", `/api/bff/${path.replace(/^\/+/, "")}`);
+    xhr.open("PUT", url);
+    xhr.setRequestHeader("Content-Type", file.type);
     xhr.upload.onprogress = (e) => {
       if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
     };
     xhr.onload = () => {
-      let data: unknown = null;
-      try {
-        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-      } catch {
-        // non-JSON body; fall through to statusText
-      }
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(data as T);
+        resolve();
         return;
       }
-      const d = data as { detail?: unknown; error?: unknown; message?: unknown } | null;
-      const msg = (d && (d.detail || d.error || d.message)) || xhr.statusText;
-      reject(new ApiError(xhr.status, typeof msg === "string" ? msg : "Request failed"));
+      reject(new ApiError(xhr.status, xhr.statusText || "Upload failed"));
     };
     xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
-    xhr.send(form);
+    xhr.send(file);
   });
 }
 
@@ -180,8 +173,20 @@ export const api = {
   getVideoJob: (id: string) => bff<VideoJob>(`video-jobs/${id}`),
   createVideoJob: (payload: VideoJobCreate) =>
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
-  uploadReferenceVideo: (file: File, onProgress?: (fraction: number) => void) =>
-    bffUploadFile<{ url: string }>(`uploads/reference-video`, file, onProgress),
+  uploadReferenceVideo: async (
+    file: File,
+    onProgress?: (fraction: number) => void,
+  ): Promise<{ url: string }> => {
+    const { upload_url, public_url } = await bff<ReferencePresign>(
+      `uploads/reference-video/presign`,
+      {
+        method: "POST",
+        json: { filename: file.name, content_type: file.type, size: file.size },
+      },
+    );
+    await putFileWithProgress(upload_url, file, onProgress);
+    return { url: public_url };
+  },
   deleteVideoJob: (id: string) =>
     bff<void>(`video-jobs/${id}`, { method: "DELETE" }),
   retryVideoJob: (id: string) =>

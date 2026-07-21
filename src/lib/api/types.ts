@@ -281,6 +281,16 @@ export interface VideoJobCreate {
   resolution?: VideoResolution;
 }
 
+/** Presigned direct-to-storage handshake for reference-clip uploads. The
+ * browser PUTs the bytes straight to `upload_url` (bypassing the BFF so large
+ * clips don't hit serverless body limits), then sends `public_url` as the
+ * job's `reference_url`. */
+export interface ReferencePresign {
+  upload_url: string;
+  public_url: string;
+  key: string;
+}
+
 export type VideoModelKey = "seedance-2.0";
 
 /** Models shown in the Studio picker. `value`/`enabled` must mirror the

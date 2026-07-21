@@ -744,6 +744,8 @@ function ReferenceUpload({
         className="sr-only"
         onChange={(e) => {
           const file = e.target.files?.[0];
+          // Reset so re-selecting the SAME file after an error still fires onChange.
+          e.target.value = "";
           if (file) void handleFile(file);
         }}
       />

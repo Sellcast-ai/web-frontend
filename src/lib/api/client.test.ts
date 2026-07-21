@@ -1,16 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { api, ApiError, bffUpload } from "./client";
 
-class FakeFormData {
-  entries: [string, unknown][] = [];
-  append(key: string, value: unknown) {
-    this.entries.push([key, value]);
-  }
-  get(key: string) {
-    return this.entries.find((e) => e[0] === key)?.[1];
-  }
-}
-
 function mockFetch(status: number, body: unknown = null) {
   const fn = vi.fn(async () =>
     new Response(body === null ? null : JSON.stringify(body), {
@@ -247,47 +237,80 @@ describe("bffUpload", () => {
   });
 });
 
+const flush = () => new Promise((r) => setTimeout(r, 0));
+
 describe("uploadReferenceVideo", () => {
-  // Backend contract (built in parallel): POST /uploads/reference-video,
-  // multipart/form-data, file field named "file", 200 -> { url: "<r2 url>" }.
-  it("posts the file as multipart, reports progress, and returns the url", async () => {
+  // Backend contract (built in parallel): POST /uploads/reference-video/presign
+  // { filename, content_type, size } -> { upload_url, public_url, key }; the
+  // browser then PUTs the bytes DIRECTLY to upload_url (not via the BFF) so
+  // large clips don't hit serverless body limits.
+  it("presigns, PUTs the bytes directly, reports progress, and returns the public url", async () => {
     vi.stubGlobal("XMLHttpRequest", FakeXHR);
-    vi.stubGlobal("FormData", FakeFormData);
+    const fetchMock = mockFetch(200, {
+      upload_url: "https://storage.example/put?sig=abc",
+      public_url: "https://r2.example/ref/clip.mp4",
+      key: "ref/clip.mp4",
+    });
     const file = { name: "clip.mp4", type: "video/mp4", size: 1024 } as unknown as File;
     const fractions: number[] = [];
     const promise = api.uploadReferenceVideo(file, (f) => fractions.push(f));
-    const xhr = FakeXHR.last;
 
-    expect(xhr.method).toBe("POST");
-    expect(xhr.url).toBe("/api/bff/uploads/reference-video");
-    // The browser sets the multipart boundary; we must NOT force a Content-Type.
-    expect(xhr.headers["Content-Type"]).toBeUndefined();
-    expect((xhr.body as unknown as FakeFormData).get("file")).toBe(file);
+    await flush();
+    const [presignUrl, presignInit] = fetchMock.mock.calls[0] as unknown as [
+      string,
+      RequestInit,
+    ];
+    expect(presignUrl).toBe("/api/bff/uploads/reference-video/presign");
+    expect(presignInit.method).toBe("POST");
+    expect(presignInit.body).toBe(
+      JSON.stringify({ filename: "clip.mp4", content_type: "video/mp4", size: 1024 }),
+    );
+
+    const xhr = FakeXHR.last;
+    expect(xhr.method).toBe("PUT");
+    expect(xhr.url).toBe("https://storage.example/put?sig=abc");
+    // Bytes go straight to storage with the file's own Content-Type — no BFF.
+    expect(xhr.headers["Content-Type"]).toBe("video/mp4");
+    expect(xhr.body).toBe(file);
 
     xhr.upload.onprogress?.({ lengthComputable: true, loaded: 5, total: 10 });
     xhr.status = 200;
-    xhr.responseText = JSON.stringify({ url: "https://r2.example/ref/clip.mp4" });
     xhr.onload?.();
 
     await expect(promise).resolves.toEqual({ url: "https://r2.example/ref/clip.mp4" });
     expect(fractions).toEqual([0.5]);
   });
 
-  it("rejects with the backend detail message on an error status", async () => {
+  it("rejects when the direct storage PUT fails", async () => {
     vi.stubGlobal("XMLHttpRequest", FakeXHR);
-    vi.stubGlobal("FormData", FakeFormData);
+    mockFetch(200, {
+      upload_url: "https://storage.example/put?sig=abc",
+      public_url: "https://r2.example/ref/clip.mp4",
+      key: "ref/clip.mp4",
+    });
     const file = { name: "clip.mp4", type: "video/mp4", size: 1024 } as unknown as File;
     const promise = api.uploadReferenceVideo(file);
-    const xhr = FakeXHR.last;
 
-    xhr.status = 413;
-    xhr.responseText = JSON.stringify({ detail: "File too large" });
+    await flush();
+    const xhr = FakeXHR.last;
+    xhr.status = 403;
+    xhr.statusText = "Forbidden";
     xhr.onload?.();
 
-    await expect(promise).rejects.toMatchObject({
+    await expect(promise).rejects.toMatchObject({ name: "ApiError", status: 403 });
+  });
+
+  it("rejects when the presign handshake fails, before any PUT", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    FakeXHR.last = undefined as unknown as FakeXHR;
+    mockFetch(422, { detail: "Unsupported file type" });
+    const file = { name: "clip.mp4", type: "video/mp4", size: 1024 } as unknown as File;
+
+    await expect(api.uploadReferenceVideo(file)).rejects.toMatchObject({
       name: "ApiError",
-      status: 413,
-      message: "File too large",
+      status: 422,
+      message: "Unsupported file type",
     });
+    expect(FakeXHR.last).toBeUndefined();
   });
 });
