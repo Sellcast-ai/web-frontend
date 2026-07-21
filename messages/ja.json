@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "特長",
+    "howItWorks": "仕組み",
+    "models": "モデル",
+    "pricing": "価格設定"
+  },
   "app": {
+    "nav": {
+      "marketplace": "マーケットプレイス",
+      "products": "私の製品",
+      "avatars": "アバター",
+      "videos": "私のビデオ",
+      "profile": "プロフィール",
+      "newVideo": "新しいビデオ",
+      "new": "新しい",
+      "signedIn": "サインインしました",
+      "logOut": "ログアウト"
+    },
     "toasts": {
-      "importSucceeded": "ストアから {count, plural, one {# 個の商品} other {# 個の商品}} をインポートしました。",
       "updateLikeFailed": "「いいね」を更新できませんでした。もう一度試してください。",
       "saveAvatarFailed": "アバターを保存できませんでした。",
       "deleteAvatarFailed": "アバターを削除できませんでした。",
@@ -15,21 +31,11 @@
       "retryJobFailed": "ジョブを再試行できませんでした。もう一度試してください。",
       "saveDisplayNameFailed": "表示名を保存できませんでした。もう一度試してください。",
       "importPartial": "御社製品（カタログキャップ）の{count}を輸入しました。残りはペーストで追加できます。",
+      "importSucceeded": "ストアから {count, plural, one {# 個の商品} other {# 個の商品}} をインポートしました。",
       "importFailed": "インポートが完了しませんでした。もう一度試してください。",
       "storyboardSaved": "ストーリーボードが保存されました。",
       "markedPosted": "投稿済みとしてマークされます。",
       "recordPostedFailed": "それを記録できませんでした。もう一度試してください。"
-    },
-    "nav": {
-      "marketplace": "マーケットプレイス",
-      "products": "私の製品",
-      "avatars": "アバター",
-      "videos": "私のビデオ",
-      "profile": "プロフィール",
-      "newVideo": "新しいビデオ",
-      "new": "新しい",
-      "signedIn": "サインインしました",
-      "logOut": "ログアウト"
     },
     "categories": {
       "beautyPersonalCare": "美容とパーソナルケア",
@@ -484,21 +490,97 @@
       }
     }
   },
-  "marketing": {
-    "heroMock": {
-      "caption": "この24ドルのガジェットは<highlight>3回</highlight>完売しました 👀",
-      "shopNow": "今すぐ購入 · $23.99",
-      "productName": "ミニマッサージガン",
-      "productMeta": "$23.99 · 30% 通信",
-      "sold": "12.4k 販売/月",
-      "beatReview": "ビートレビュー",
-      "beatHook": "フック",
-      "beatProof": "証明",
-      "beatOffer": "オファー",
-      "beatAuto": "自動",
-      "beatOk": "わかりました",
-      "renderedWith": "でレンダリング"
+  "languageSwitcher": {
+    "label": "言語"
+  },
+  "shared": {
+    "status": {
+      "queued": "キューに入れられました",
+      "submitted": "提出済み",
+      "rendering": "レンダリング",
+      "reviewStoryboard": "ストーリーボードをレビューする",
+      "needsReview": "見直しが必要",
+      "ready": "準備完了",
+      "failed": "失敗しました"
     },
+    "jobProgress": {
+      "script": "スクリプト",
+      "beats": "ビート",
+      "review": "レビュー",
+      "render": "レンダリング",
+      "ready": "準備完了"
+    },
+    "subjects": {
+      "product": "製品",
+      "host": "ホスト",
+      "scene": "シーン"
+    },
+    "error": {
+      "title": "何か問題が発生しました。",
+      "description": "それは私たちの責任です。もう一度試してください。問題が続く場合は、少し待ってから戻ってきてください。",
+      "tryAgain": "もう一度試してください",
+      "backHome": "家に帰ります"
+    },
+    "notFound": {
+      "title": "このページは途中で消えてしまいました。",
+      "description": "リンクが切れているか、ページが移動した可能性があります。",
+      "backHome": "家に帰ります",
+      "goToApp": "アプリに移動"
+    },
+    "overlay": {
+      "close": "閉じる"
+    },
+    "uploadProgress": {
+      "uploading": "アップロード中",
+      "processing": "処理中…",
+      "progress": "{label} {percent}%"
+    },
+    "toaster": {
+      "dismiss": "通知を閉じる"
+    },
+    "theme": {
+      "label": "テーマ",
+      "light": "ライト",
+      "system": "システム",
+      "dark": "暗い"
+    }
+  },
+  "auth": {
+    "layout": {
+      "heroTitle": "製品リンクからスクロールが止まるビデオまで、数分で完了します。",
+      "benefitScripts": "実際のウイルスパターンに基づいたスクリプト",
+      "benefitReview": "レンダリング前にすべてのビートを確認する",
+      "benefitPublish": "TikTok およびリールの公開準備完了 9:16"
+    },
+    "metadata": {
+      "signIn": "サインイン",
+      "createAccount": "アカウントを作成する"
+    },
+    "form": {
+      "loginTitle": "おかえりなさい",
+      "signupTitle": "アカウントを作成する",
+      "loginSubtitle": "Lumi スタジオにサインインします。",
+      "signupSubtitle": "スクロールが止まらないビデオの作成を数分で始められます。",
+      "continueWithGoogle": "Google を続ける",
+      "googleDisabledTitle": "NEXT_PUBLIC_GOOGLE_CLIENT_ID を設定して Google ログインを有効にします",
+      "googleSignInFailed": "Google サインインが完了しませんでした。もう一度試してください。",
+      "separator": "または",
+      "phoneLabel": "電話番号",
+      "invalidPhone": "有効な電話番号を入力してください。",
+      "sendCode": "コードを送信する",
+      "sendCodeFailed": "コードを送信できませんでした。",
+      "codePlaceholder": "6桁のコード",
+      "verificationCodeLabel": "認証コード",
+      "devCodeAutofilled": "開発モード — コード <code>{devCode}</code> が自動入力されます。",
+      "continue": "続ける",
+      "verifyCodeFailed": "そのコードは機能しませんでした。",
+      "alreadyHaveAccount": "すでにアカウントをお持ちですか?",
+      "signInLink": "サインイン",
+      "newToLumi": "Lumi は初めてですか?",
+      "createAccountLink": "アカウントを作成する"
+    }
+  },
+  "marketing": {
     "legal": {
       "kicker": "法的",
       "lastUpdated": "最終更新日: 2026 年 6 月 1 日",
@@ -632,13 +714,10 @@
     },
     "header": {
       "signIn": "サインイン",
-      "startFree": "無料で始める",
-      "toggleMenu": "メニューの切り替え",
-      "language": "言語",
-      "theme": "テーマ"
+      "startFree": "無料で始める"
     },
     "footer": {
-      "tagline": "Lumi は、あらゆる商品を、推測ではなく実際のバイラル パターンに基づいて、スクロールを止めるほどのショッピング可能なビデオに変えます。",
+      "tagline": "商品リンクを入れると、公開できる動画が出てくる。すでに売れているパターンだけを土台に。",
       "columns": {
         "product": {
           "title": "製品",
@@ -669,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. LumiはSellcastの商品です。",
-      "madeFor": "フィルムよりも販売したい販売者向けに作られています。"
+      "madeFor": "フィルムよりも販売したい販売者向けに作られています。",
+      "signIn": "ログイン"
     },
     "cta": {
       "title": "次のベストセラーは、製品リンク 1 つ先にあります。",
@@ -795,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "TikTok およびリール用に構築",
-      "heroTitle": "あらゆる商品を <highlight> スクロールが止まらない </highlight> ショッピング可能なビデオに変えます。",
-      "heroSubtitle": "任意の製品リンク (Amazon、Shopee、TikTok Shop、または自分のストア) を貼り付けるか、写真をアップロードします。 Lumi は、そのカテゴリーですでに成功しているものを研究し、そのパターンに基づいてビデオをスクリプト化し、ビートごとにレビューして、Seedance 2.0 でレンダリングできるようにします。数分でカメラがなくなりました。",
-      "heroStartFree": "無料で作成を開始",
-      "heroSeeHow": "どのように機能するか見てみましょう",
-      "heroCheck1": "最初のビデオは無料",
-      "heroCheck2": "クレジットカードなし",
-      "heroCheck3": "公開準備完了 9:16",
-      "marquee": [
-        "ショップ",
-        "リール",
-        "美しさ",
-        "ホーム&キッチン",
-        "フィットネス",
-        "ガジェット",
-        "ペット",
-        "ファッション",
-        "サプリメント"
-      ],
-      "howKicker": "Lumi パイプライン",
-      "howTitle": "4 段階、空白ページなし",
-      "howSubtitle": "ほとんどのツールは何もないところから始まります。 Lumi は、すでに成功しているものから開始し、公開するまでずっと制御し続けます。",
-      "steps": {
-        "find": {
-          "kicker": "探す",
-          "title": "どの製品からでも始められます",
-          "body": "Amazon、Shopee、TikTok Shop、または自分のストアからリンクを貼り付けるか、写真をアップロードします。または、マーケットプレイスでトレンドのアイテムを閲覧してください。"
+      "heroTitle": "商品リンクを<highlight>売れる動画へ。</highlight>",
+      "heroSubtitle": "リンクを貼るだけ。Lumi がカテゴリで最も成果を出している動画のパターンを学び、台本を書き、ショットごとにレンダリングします。クレジットが使われる前に、すべてのビートをあなたが承認できます。",
+      "heroPrimary": "最初の動画をつくる",
+      "heroSecondary": "仕組みを見る",
+      "heroFinePrint": "初回の動画は無料 · カード不要 · 9:16 でそのまま投稿可能",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "商品を読み取り中",
+        "pattern": "ビューティー系トップ動画 約100本を学習済み",
+        "productName": "グロウセラム 30 ml",
+        "productMeta": "$24 · ビューティー",
+        "beats": {
+          "hook": {
+            "label": "フック",
+            "line": "最初の1秒でスクロールを止める。"
+          },
+          "proof": {
+            "label": "実証",
+            "line": "セラムが実際に効く様子を見せる。"
+          },
+          "offer": {
+            "label": "オファー",
+            "line": "価格を画面に。行動をはっきりと。"
+          }
         },
-        "deconstruct": {
-          "kicker": "解体する",
-          "title": "Lumi はパターンを学習します",
-          "body": "そのカテゴリの実際のトップパフォーマー約 100 人を調査し、コンバージョンにつながるフック、証拠、CTA 構造を抽出します。"
-        },
-        "script": {
-          "kicker": "スクリプト",
-          "title": "脚本とビートを確認する",
-          "body": "ショットごとのビートを備えた地に足の着いた脚本。レンダリングを書き込む前に、各参照イメージを承認または再生成します。"
-        },
-        "generate": {
-          "kicker": "生成する",
-          "title": "レンダリングとパブリッシュ",
-          "body": "Seedance 2.0 では各ビートがレンダリングされ、キャプションが焼き付けられるので、投稿の準備は完了です。"
-        }
+        "approve": "承認",
+        "approved": "承認済み",
+        "rendering": "Seedance 2.0 でレンダリング中",
+        "rendered": "レンダリング完了",
+        "duration": "0:18",
+        "caption": "今月3回も再入荷。理由はこれ。",
+        "shopNow": "今すぐ購入"
       },
-      "featuresKicker": "すべてを 1 つのスタジオで",
-      "featuresTitle": "ビデオワークフロー全体を処理",
-      "featuresSubtitle": "製品の調達から公開可能なカットまで、5 つのツールをつなぎ合わせる必要はありません。",
-      "features": {
-        "linkToVideo": {
-          "title": "ビデオへのリンク",
-          "body": "Amazon、Shopee、TikTok Shop、または自分のストアからリンクを貼り付けるか、写真をアップロードします。 Lumi はプロダクトを読み取り、フレーミング、スクリプト、音声、編集を自動的に処理します。"
-        },
-        "scripts": {
-          "title": "パターンに基づいたスクリプト",
-          "body": "すべてのスクリプトは、カテゴリ内の実際のウイルス構造から構築されています。パターンを学習し、決して表面をコピーしないでください。"
+      "marquee": {
+        "seedance": "Seedance 2.0 レンダリング",
+        "languages": "8言語のナレーション",
+        "avatar": "AIアバターモード",
+        "productOnly": "商品のみモード",
+        "review": "ビートごとのレビュー",
+        "qa": "セリフの自動QA",
+        "captions": "字幕焼き込み",
+        "ratio": "9:16 投稿レディ",
+        "vibes": "5つのバイブ",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "10–30秒のカット"
+      },
+      "whyTitle": "<highlight>すでに機能しているもの</highlight>の上に築く",
+      "whySubtitle": "白紙からは始めません。Lumi はカテゴリがすでに評価しているパターンから出発し、すべてのフレームの決定権はあなたに残します。",
+      "why": {
+        "pattern": {
+          "body": "一行も書き始める前に、Lumi はカテゴリのトップ動画およそ100本を分解し、転換につながる構造だけを残します。",
+          "caption": "台本は、証拠が書く。",
+          "uiHeading": "パターン抽出",
+          "uiSample": "約100本 · ビューティー",
+          "uiHook": "フック — まず主張",
+          "uiProof": "実証 — 効く様子を見せる",
+          "uiOffer": "オファー — 明確な誘導"
         },
         "review": {
-          "title": "ビートごとのレビュー",
-          "body": "すべてのショットの参考画像を参照してください。レンダリング時間を 1 秒も費やす前に、承認、調整、または再生成を行ってください。"
+          "body": "すべてのショットに、まず参考フレームが付きます。承認・微調整・再生成は何度でも。クレジットが減るのは、あなたがGOを出してからです。",
+          "caption": "レンダリングの前に、あなたが決める。",
+          "uiHeading": "ストーリーボード審査",
+          "uiSpend": "消費 $0",
+          "uiRegenerate": "再生成"
         },
-        "modes": {
-          "title": "アバターと製品モード",
-          "body": "カメラに向かって話す AI プレゼンター、またはクリーンな製品のみのショーケース — あなたのオファーにマッチする 8 つの既製のスタイル。"
-        },
-        "qa": {
-          "title": "自動ダイアログQA",
-          "body": "Whisper はレンダリングされたすべての行をスクリプトと照合してチェックし、フラグがドリフトするため、音声は常に必要なことを伝えます。"
-        },
-        "publish": {
-          "title": "キャプションと公開",
-          "body": "自動焼き付けキャプションとすぐに公開できる 9:16 カット、TikTok およびリール用のサイズに設定されています。"
+        "reach": {
+          "body": "プレゼンター付きでも商品のみでも。5つのバイブ、8言語のナレーション。ひとつの商品リンクが、売るすべての市場へ届きます。",
+          "caption": "8つの言語で、同時に売る。",
+          "uiAvatar": "AIアバター",
+          "uiProductOnly": "商品のみ",
+          "uiVibe": "プレミアム&クリーン"
         }
       },
-      "modelsKicker": "フロンティアレンダリングエンジン",
-      "modelsTitle": "Seedance 2.0でレンダリング",
-      "modelsSubtitle": "Lumi は Seedance 2.0 ですべてのビートをレンダリングします。新しいモデルが到着してもスクリプトは引き継がれます。",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "ライブ",
-          "desc": "製品やアバターのショットの高速でリアルなモーション — Lumi のレンダリング エンジンであらゆるビートを表現します。"
+      "storyTitle": "商品リンクから<highlight>公開動画まで</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "どのリンクからでも",
+          "body": "Amazon、Shopee、TikTok Shop、自社ストア——カメラロールの写真からでも始められます。"
         },
-        "more": {
-          "name": "さらに途中で",
-          "tag": "もうすぐ",
-          "desc": "実証済みのフロンティア ビデオ モデルを追加していきます。スクリプトやビートはそのまま引き継がれます。"
+        "learn": {
+          "title": "Lumi がパターンを学ぶ",
+          "body": "カテゴリの優秀動画およそ100本を研究し、転換を生む構造——フック、実証、オファー——を抽出します。"
+        },
+        "approve": {
+          "title": "あなたがストーリーボードを承認",
+          "body": "各ビートには先に参考フレームが付きます。あなたが承認するまで、レンダリングも課金も一切ありません。"
+        },
+        "render": {
+          "title": "Seedance がレンダリング",
+          "body": "字幕が焼き込まれ、自動QAがセリフを台本と照合し、9:16 のカットが投稿できる状態で仕上がります。"
         }
       },
-      "useCasesKicker": "誰のためのものか",
-      "useCasesTitle": "動画で販売するすべての人のために作られました",
-      "useCases": {
-        "sellers": {
-          "title": "販売者",
-          "body": "カタログを拡張します。スタジオを使わずに、すべての SKU のビデオを変換します。"
+      "storyFact1": "承認するまでレンダリング費用は $0",
+      "storyFact2": "1クレジット = 動画1秒",
+      "wallTitle": "投稿レディ、<highlight>あらゆる市場へ</highlight>",
+      "wallSubtitle": "すべての動画は 9:16・字幕焼き込みで仕上がり、向け先の市場の言語で台本とナレーションが作られます。",
+      "wallAudience": "セラー、クリエイター、ブランド、代理店のために——動画で売るすべての人へ。",
+      "wall": {
+        "beauty": {
+          "category": "ビューティー",
+          "vibe": "プレミアム&クリーン",
+          "language": "English"
         },
-        "creators": {
-          "title": "クリエイター",
-          "body": "TikTok をスピンして数分でコンテンツを購入し、連続投稿を続けましょう。"
+        "gadgets": {
+          "category": "ガジェット",
+          "vibe": "大胆&パンチ",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "ブランド",
-          "body": "何百ものユニークなクリエイティブを一度にすべてブランドに合わせて維持します。"
+        "home": {
+          "category": "ホーム&キッチン",
+          "vibe": "クリーンなデモ",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "代理店",
-          "body": "子守をする必要がなく、あらゆるクライアントに質の高いサービスを大量に提供します。"
+        "pets": {
+          "category": "ペット",
+          "vibe": "楽しく軽快",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "ファッション",
+          "vibe": "あたたかく親密",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "フィットネス",
+          "vibe": "大胆&パンチ",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5つの方法",
-          "label": "開始するには: Amazon、Shopee、TikTok ショップ、あなたのストア、または写真"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "TikTok とリールでは毎回公開準備完了"
-        },
-        "credit": {
-          "value": "1クレジット",
-          "label": "= 1 秒のビデオ — レンダリングしたものに対してのみ支払います"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "ビートを承認するまでレンダリング費用を支払う"
-        }
-      },
-      "pricingKicker": "価格設定",
-      "pricingTitle": "無料で始めましょう。動作中にスケールします。",
-      "pricingSubtitle": "クレジットベース — 1 クレジット = 1 秒のビデオ。最初のビデオは無料です。クレジットカードは必要ありません。",
+      "pricingTitle": "無料で始めて、<highlight>効いたら広げる。</highlight>",
+      "pricingSubtitle": "クレジット制：1クレジット = 動画1秒。初回の動画は無料——カード不要です。",
       "mostPopular": "最も人気のある",
       "pricingTiers": {
         "creator": {
@@ -931,10 +1016,10 @@
           "price": "29ドル",
           "note": "/月",
           "features": [
-            "≈ 3 ビデオ/月 · 75 クレジット",
+            "75クレジット — 動画約3本",
             "透かしなし",
             "ビートごとのレビュー",
-            "アバター + 製品モード"
+            "アバター&商品モード"
           ],
           "cta": "クリエイターをスタート"
         },
@@ -943,9 +1028,9 @@
           "price": "79ドル",
           "note": "/月",
           "features": [
-            "≈ 10 ビデオ/月 · 200 クレジット",
+            "200クレジット — 動画約10本",
             "Creator のすべて",
-            "無料レンダリングよりも優先",
+            "優先レンダリング",
             "720p · 9:16 エクスポート"
           ],
           "cta": "プロを始める"
@@ -955,20 +1040,19 @@
           "price": "$199",
           "note": "/月",
           "features": [
-            "≈ 25 ビデオ/月 · 500 クレジット",
+            "500クレジット — 動画約25本",
             "プロのすべて",
-            "常時投稿の場合"
+            "常時投稿する方のために"
           ],
           "cta": "開始スケール"
         }
       },
-      "pricingFooter": "<signup>最初のビデオは無料です</signup> - カードはありません。完全なはしごが必要ですか? <plans>すべてのプランを見る→</plans>",
-      "faqKicker": "よくある質問",
-      "faqTitle": "質問、回答済み",
-      "finalCtaTitle": "次のベストセラーは、製品リンク 1 つ先にあります。",
-      "finalCtaSubtitle": "最初のスクロール停止ビデオを無料にしましょう。カメラも編集者も空白のページもありません。",
-      "finalCtaStartFree": "無料で作成を開始",
-      "finalCtaSeePricing": "価格を見る"
+      "pricingFooter": "<signup>初回の動画は無料</signup>——カード不要。<plans>全プランを比較 →</plans>",
+      "faqTitle": "よくある質問に、<highlight>お答えします</highlight>",
+      "finalCtaTitle": "次のベストセラーは、<highlight>リンクひとつ先に。</highlight>",
+      "finalCtaSubtitle": "最初の動画を無料で。カメラも、編集も、白紙のページも要りません。",
+      "finalCtaPrimary": "最初の動画をつくる",
+      "finalCtaSecondary": "料金を見る"
     },
     "features": {
       "header": {
@@ -1153,102 +1237,6 @@
       "careers": {
         "title": "キャリア"
       }
-    }
-  },
-  "nav": {
-    "features": "特長",
-    "howItWorks": "仕組み",
-    "models": "モデル",
-    "pricing": "価格設定"
-  },
-  "languageSwitcher": {
-    "label": "言語"
-  },
-  "shared": {
-    "status": {
-      "queued": "キューに入れられました",
-      "submitted": "提出済み",
-      "rendering": "レンダリング",
-      "reviewStoryboard": "ストーリーボードをレビューする",
-      "needsReview": "見直しが必要",
-      "ready": "準備完了",
-      "failed": "失敗しました"
-    },
-    "jobProgress": {
-      "script": "スクリプト",
-      "beats": "ビート",
-      "review": "レビュー",
-      "render": "レンダリング",
-      "ready": "準備完了"
-    },
-    "subjects": {
-      "product": "製品",
-      "host": "ホスト",
-      "scene": "シーン"
-    },
-    "error": {
-      "title": "何か問題が発生しました。",
-      "description": "それは私たちの責任です。もう一度試してください。問題が続く場合は、少し待ってから戻ってきてください。",
-      "tryAgain": "もう一度試してください",
-      "backHome": "家に帰ります"
-    },
-    "notFound": {
-      "title": "このページは途中で消えてしまいました。",
-      "description": "リンクが切れているか、ページが移動した可能性があります。",
-      "backHome": "家に帰ります",
-      "goToApp": "アプリに移動"
-    },
-    "overlay": {
-      "close": "閉じる"
-    },
-    "uploadProgress": {
-      "uploading": "アップロード中",
-      "processing": "処理中…",
-      "progress": "{label} {percent}%"
-    },
-    "toaster": {
-      "dismiss": "通知を閉じる"
-    },
-    "theme": {
-      "label": "テーマ",
-      "light": "ライト",
-      "system": "システム",
-      "dark": "暗い"
-    }
-  },
-  "auth": {
-    "layout": {
-      "heroTitle": "製品リンクからスクロールが止まるビデオまで、数分で完了します。",
-      "benefitScripts": "実際のウイルスパターンに基づいたスクリプト",
-      "benefitReview": "レンダリング前にすべてのビートを確認する",
-      "benefitPublish": "TikTok およびリールの公開準備完了 9:16"
-    },
-    "metadata": {
-      "signIn": "サインイン",
-      "createAccount": "アカウントを作成する"
-    },
-    "form": {
-      "loginTitle": "おかえりなさい",
-      "signupTitle": "アカウントを作成する",
-      "loginSubtitle": "Lumi スタジオにサインインします。",
-      "signupSubtitle": "スクロールが止まらないビデオの作成を数分で始められます。",
-      "continueWithGoogle": "Google を続ける",
-      "googleDisabledTitle": "NEXT_PUBLIC_GOOGLE_CLIENT_ID を設定して Google ログインを有効にします",
-      "googleSignInFailed": "Google サインインが完了しませんでした。もう一度試してください。",
-      "separator": "または",
-      "phoneLabel": "電話番号",
-      "invalidPhone": "有効な電話番号を入力してください。",
-      "sendCode": "コードを送信する",
-      "sendCodeFailed": "コードを送信できませんでした。",
-      "codePlaceholder": "6桁のコード",
-      "verificationCodeLabel": "認証コード",
-      "devCodeAutofilled": "開発モード — コード <code>{devCode}</code> が自動入力されます。",
-      "continue": "続ける",
-      "verifyCodeFailed": "そのコードは機能しませんでした。",
-      "alreadyHaveAccount": "すでにアカウントをお持ちですか?",
-      "signInLink": "サインイン",
-      "newToLumi": "Lumi は初めてですか?",
-      "createAccountLink": "アカウントを作成する"
     }
   }
 }

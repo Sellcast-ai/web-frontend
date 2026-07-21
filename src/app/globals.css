@@ -59,6 +59,9 @@
   --color-gold: #f5a623;
   --color-success: #16a34a;
   --color-success-soft: #dcf5e5;
+  /* "live/approved" green tuned for dark marketing panels (arcads' one-accent
+     rule: green only ever means live/winning) */
+  --color-live: #2fd98b;
 
   /* --- Typography ----------------------------------------------------- */
   /* body ≈ SF Pro (system); display ≈ SF Rounded via ui-rounded + Nunito */
@@ -88,6 +91,8 @@
   --animate-glow: glowPulse 6s ease-in-out infinite;
   --animate-marquee: marquee 34s linear infinite;
   --animate-rise: rise 0.7s cubic-bezier(0.21, 1, 0.4, 1) both;
+  --animate-drift: drift 46s ease-in-out infinite alternate;
+  --animate-drift-slow: drift 64s ease-in-out infinite alternate-reverse;
 }
 
 /* Map semantic + next/font runtime vars into the token namespace */
@@ -148,6 +153,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* slow wallpaper drift for the hero's blurred product-still texture */
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(4rem, -2.5rem, 0) scale(1.12);
   }
 }
 
@@ -277,7 +292,9 @@
   .animate-float-slow,
   .animate-glow,
   .animate-marquee,
-  .animate-rise {
+  .animate-rise,
+  .animate-drift,
+  .animate-drift-slow {
     animation: none;
   }
 }

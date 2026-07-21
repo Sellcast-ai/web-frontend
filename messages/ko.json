@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "특징",
+    "howItWorks": "작동 원리",
+    "models": "모델",
+    "pricing": "가격"
+  },
   "app": {
+    "nav": {
+      "marketplace": "마켓플레이스",
+      "products": "내 제품",
+      "avatars": "아바타",
+      "videos": "내 동영상",
+      "profile": "프로필",
+      "newVideo": "새 영상",
+      "new": "새로운",
+      "signedIn": "로그인됨",
+      "logOut": "로그아웃"
+    },
     "toasts": {
-      "importSucceeded": "스토어에서 {count, plural, one {상품 #개} other {상품 #개}}를 가져왔습니다.",
       "updateLikeFailed": "좋아요를 업데이트할 수 없습니다. 다시 시도해 주세요.",
       "saveAvatarFailed": "아바타를 저장할 수 없습니다.",
       "deleteAvatarFailed": "아바타를 삭제할 수 없습니다.",
@@ -15,21 +31,11 @@
       "retryJobFailed": "작업을 다시 시도할 수 없습니다. 다시 시도해 주세요.",
       "saveDisplayNameFailed": "표시 이름을 저장할 수 없습니다. 다시 시도해 주세요.",
       "importPartial": "귀사 제품의 {count}를 수입했습니다(카탈로그 캡). 나머지는 붙여넣기로 추가할 수 있습니다.",
+      "importSucceeded": "스토어에서 {count, plural, one {상품 #개} other {상품 #개}}를 가져왔습니다.",
       "importFailed": "가져오기가 완료되지 않았습니다. 다시 시도해 주세요.",
       "storyboardSaved": "스토리보드가 저장되었습니다.",
       "markedPosted": "게시됨으로 표시되었습니다.",
       "recordPostedFailed": "녹음할 수 없습니다. 다시 시도해 주세요."
-    },
-    "nav": {
-      "marketplace": "마켓플레이스",
-      "products": "내 제품",
-      "avatars": "아바타",
-      "videos": "내 동영상",
-      "profile": "프로필",
-      "newVideo": "새 영상",
-      "new": "새로운",
-      "signedIn": "로그인됨",
-      "logOut": "로그아웃"
     },
     "categories": {
       "beautyPersonalCare": "미용 및 개인 관리",
@@ -484,12 +490,6 @@
       }
     }
   },
-  "nav": {
-    "features": "특징",
-    "howItWorks": "작동 원리",
-    "models": "모델",
-    "pricing": "가격"
-  },
   "languageSwitcher": {
     "label": "언어"
   },
@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "로그인",
-      "startFree": "무료로 시작하세요",
-      "toggleMenu": "토글 메뉴",
-      "language": "언어",
-      "theme": "테마"
+      "startFree": "무료로 시작하세요"
     },
     "footer": {
-      "tagline": "Lumi는 추측이 아닌 실제 바이럴 패턴을 기반으로 모든 제품을 스크롤이 멈추는 쇼핑 가능한 비디오로 전환합니다.",
+      "tagline": "제품 링크가 들어가면, 게시할 수 있는 영상이 나옵니다. 이미 팔리고 있는 패턴 위에서.",
       "columns": {
         "product": {
           "title": "제품",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. Lumi는 Sellcast 제품입니다.",
-      "madeFor": "영화보다 판매를 더 선호하는 판매자를 위해 제작되었습니다."
+      "madeFor": "영화보다 판매를 더 선호하는 판매자를 위해 제작되었습니다.",
+      "signIn": "로그인"
     },
     "cta": {
       "title": "다음 베스트셀러는 제품 링크 하나에 있습니다.",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "TikTok 및 릴용으로 제작됨",
-      "heroTitle": "모든 제품을 <highlight>스크롤 중지</highlight> 쇼핑 가능한 비디오로 전환하세요.",
-      "heroSubtitle": "Amazon, Shopee, TikTok Shop 또는 매장 등 제품 링크를 붙여넣거나 사진을 업로드하세요. Lumi는 해당 카테고리에서 이미 우승하고 있는 항목을 연구하고, 패턴에 기반한 비디오를 스크립팅하고, 비트별로 검토하고, Seedance 2.0으로 렌더링합니다. 몇 분 안에 카메라가 없습니다.",
-      "heroStartFree": "무료로 만들기 시작하세요",
-      "heroSeeHow": "작동 방식 보기",
-      "heroCheck1": "첫 번째 비디오 무료",
-      "heroCheck2": "신용카드 없음",
-      "heroCheck3": "게시 준비 완료 9:16",
-      "marquee": [
-        "TikTok 상점",
-        "릴",
-        "뷰티",
-        "가정 및 주방",
-        "피트니스",
-        "가젯",
-        "애완동물",
-        "패션",
-        "보충제"
-      ],
-      "howKicker": "Lumi 파이프라인",
-      "howTitle": "4단계, 빈 페이지 없음",
-      "howSubtitle": "대부분의 도구는 무에서 시작됩니다. Lumi는 이미 성공한 것부터 시작하여 게시하는 모든 과정을 제어할 수 있습니다.",
-      "steps": {
-        "find": {
-          "kicker": "찾기",
-          "title": "모든 제품에서 시작",
-          "body": "Amazon, Shopee, TikTok Shop 또는 매장의 링크를 붙여넣거나 사진을 업로드하세요. 또는 마켓플레이스에서 인기 있는 상품을 찾아보세요."
+      "heroTitle": "제품 링크를 <highlight>팔리는 영상으로.</highlight>",
+      "heroSubtitle": "링크만 붙여넣으세요. Lumi가 해당 카테고리에서 가장 성과가 좋은 영상들의 패턴을 학습해 대본을 쓰고, 숏 단위로 렌더링합니다. 크레딧이 쓰이기 전에 모든 비트를 직접 승인할 수 있습니다.",
+      "heroPrimary": "첫 영상 만들기",
+      "heroSecondary": "작동 방식 보기",
+      "heroFinePrint": "첫 영상 무료 · 카드 불필요 · 바로 게시 가능한 9:16",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "제품 정보를 읽는 중",
+        "pattern": "뷰티 상위 영상 약 100편 학습 완료",
+        "productName": "글로우 세럼 30 ml",
+        "productMeta": "$24 · 뷰티",
+        "beats": {
+          "hook": {
+            "label": "훅",
+            "line": "첫 1초에 스크롤을 멈추게."
+          },
+          "proof": {
+            "label": "증거",
+            "line": "세럼이 실제로 작동하는 모습."
+          },
+          "offer": {
+            "label": "오퍼",
+            "line": "가격은 화면에, 요청은 분명하게."
+          }
         },
-        "deconstruct": {
-          "kicker": "해체하다",
-          "title": "Lumi는 패턴을 학습합니다.",
-          "body": "해당 카테고리에서 최대 100명의 실제 최고 성과자를 연구하고 전환에 도움이 되는 후크, 증명 및 CTA 구조를 추출합니다."
-        },
-        "script": {
-          "kicker": "스크립트",
-          "title": "스크립트 및 비트 검토",
-          "body": "샷별 비트가 포함된 기반 스크립트입니다. 렌더링을 굽기 전에 각 참조 이미지를 승인하거나 재생성합니다."
-        },
-        "generate": {
-          "kicker": "생성",
-          "title": "렌더링 및 게시",
-          "body": "Seedance 2.0은 각 비트를 렌더링하고 캡션이 번인되면 바로 게시할 수 있습니다."
-        }
+        "approve": "승인",
+        "approved": "승인됨",
+        "rendering": "Seedance 2.0으로 렌더링 중",
+        "rendered": "렌더링 완료",
+        "duration": "0:18",
+        "caption": "이번 달에만 세 번 재입고. 이게 그 이유.",
+        "shopNow": "지금 구매"
       },
-      "featuresKicker": "하나의 스튜디오에서 모든 것을",
-      "featuresTitle": "전체 비디오 워크플로가 처리됨",
-      "featuresSubtitle": "제품 소싱부터 출판 준비 컷까지 5가지 도구를 함께 연결할 필요가 없습니다.",
-      "features": {
-        "linkToVideo": {
-          "title": "비디오 링크",
-          "body": "Amazon, Shopee, TikTok Shop 또는 매장의 링크를 붙여넣거나 사진을 업로드하세요. Lumi는 제품을 읽고 프레이밍, 스크립트, 음성 및 편집을 자동으로 처리합니다."
-        },
-        "scripts": {
-          "title": "패턴 기반 스크립트",
-          "body": "모든 스크립트는 해당 카테고리의 실제 바이럴 구조를 기반으로 구축되었습니다. 패턴을 익히고 표면을 복사하지 마세요."
+      "marquee": {
+        "seedance": "Seedance 2.0 렌더링",
+        "languages": "8개 언어 보이스오버",
+        "avatar": "AI 아바타 모드",
+        "productOnly": "제품 단독 모드",
+        "review": "비트 단위 검토",
+        "qa": "대사 자동 QA",
+        "captions": "자막 번인",
+        "ratio": "바로 게시 가능한 9:16",
+        "vibes": "5가지 시그니처 바이브",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "10–30초 컷"
+      },
+      "whyTitle": "<highlight>이미 통하는 것</highlight> 위에 짓다",
+      "whySubtitle": "빈 캔버스에서 시작하지 않습니다. Lumi는 카테고리가 이미 보상한 패턴에서 출발하고, 모든 프레임의 결정권은 당신에게 남깁니다.",
+      "why": {
+        "pattern": {
+          "body": "한 줄을 쓰기 전에, Lumi는 카테고리 상위 영상 약 100편을 분해해 전환을 만드는 구조만 남깁니다.",
+          "caption": "대본은 증거가 씁니다.",
+          "uiHeading": "패턴 추출",
+          "uiSample": "약 100편 · 뷰티",
+          "uiHook": "훅 — 주장부터",
+          "uiProof": "증거 — 작동을 보여주기",
+          "uiOffer": "오퍼 — 분명한 요청"
         },
         "review": {
-          "title": "비트별 검토",
-          "body": "모든 샷에 대한 참조 이미지를 확인하세요. 렌더링 시간을 1초도 소비하기 전에 승인, 조정 또는 재생성을 수행하십시오."
+          "body": "모든 숏에 참조 프레임이 먼저 생성됩니다. 승인하고, 다듬고, 원하는 만큼 다시 생성하세요. 크레딧은 당신이 승인한 뒤에만 소모됩니다.",
+          "caption": "렌더링 전에, 당신이 결정합니다.",
+          "uiHeading": "스토리보드 검토",
+          "uiSpend": "지출 $0",
+          "uiRegenerate": "다시 생성"
         },
-        "modes": {
-          "title": "아바타 및 제품 모드",
-          "body": "카메라를 향해 말하는 AI 발표자 또는 깔끔한 제품 전용 쇼케이스 등 귀하의 제안에 맞는 8가지 기성 스타일이 제공됩니다."
-        },
-        "qa": {
-          "title": "자동 대화 QA",
-          "body": "Whisper는 렌더링된 모든 라인을 스크립트와 플래그 드리프트와 비교하여 확인하므로 음성은 항상 필요한 내용을 말해줍니다."
-        },
-        "publish": {
-          "title": "캡션 및 게시",
-          "body": "자동으로 구운 캡션과 바로 게시 가능한 9:16 컷(TikTok 및 릴 크기)."
+        "reach": {
+          "body": "진행자 등장형이든 제품 단독이든, 5가지 바이브와 8개 언어 보이스오버. 하나의 제품 링크가 당신이 판매하는 모든 시장으로 갑니다.",
+          "caption": "8개 언어로 동시에 판매하세요.",
+          "uiAvatar": "AI 아바타",
+          "uiProductOnly": "제품 단독",
+          "uiVibe": "프리미엄 & 클린"
         }
       },
-      "modelsKicker": "프론티어 렌더 엔진",
-      "modelsTitle": "Seedance 2.0으로 렌더링됨",
-      "modelsSubtitle": "Lumi는 Seedance 2.0으로 모든 비트를 렌더링하며 새 모델이 도착해도 스크립트가 그대로 유지됩니다.",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "라이브",
-          "desc": "제품 및 아바타 사진을 위한 빠르고 실감나는 모션 — Lumi의 모든 비트에 대한 렌더링 엔진."
+      "storyTitle": "제품 링크에서 <highlight>게시된 영상까지</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "어떤 링크로든 시작",
+          "body": "Amazon, Shopee, TikTok Shop, 자체 스토어 — 혹은 카메라 롤의 사진으로도."
         },
-        "more": {
-          "name": "더 많은 정보가 제공됩니다.",
-          "tag": "곧",
-          "desc": "우리는 입증된 대로 최첨단 비디오 모델을 추가하고 있습니다. 귀하의 스크립트와 비트가 그대로 이어집니다."
+        "learn": {
+          "title": "Lumi가 패턴을 학습",
+          "body": "카테고리 최고 성과 영상 약 100편을 연구해 전환을 만드는 구조 — 훅, 증거, 오퍼 — 를 추출합니다."
+        },
+        "approve": {
+          "title": "스토리보드는 당신이 승인",
+          "body": "모든 비트에 참조 프레임이 먼저 생성됩니다. 당신이 사인하기 전까지 렌더링도, 과금도 없습니다."
+        },
+        "render": {
+          "title": "Seedance가 렌더링",
+          "body": "자막이 입혀지고, 자동 QA가 모든 대사를 대본과 대조하며, 9:16 컷이 게시 가능한 상태로 완성됩니다."
         }
       },
-      "useCasesKicker": "누구를 위한 것인가",
-      "useCasesTitle": "비디오를 판매하는 모든 사람을 위해 제작됨",
-      "useCases": {
-        "sellers": {
-          "title": "판매자",
-          "body": "카탈로그를 확장하세요. 스튜디오 없이 모든 SKU에 대한 비디오 변환이 가능합니다."
+      "storyFact1": "승인 전까지 렌더링 비용 $0",
+      "storyFact2": "1 크레딧 = 영상 1초",
+      "wallTitle": "게시 준비 완료, <highlight>모든 시장에서</highlight>",
+      "wallSubtitle": "모든 영상은 자막이 입혀진 9:16으로 완성되며, 향하는 시장의 언어로 대본과 보이스오버가 만들어집니다.",
+      "wallAudience": "셀러, 크리에이터, 브랜드, 에이전시 — 영상으로 판매하는 모두를 위해.",
+      "wall": {
+        "beauty": {
+          "category": "뷰티",
+          "vibe": "프리미엄 & 클린",
+          "language": "English"
         },
-        "creators": {
-          "title": "크리에이터",
-          "body": "TikTok 쇼핑 콘텐츠를 몇 분 만에 돌려 연속 게시를 유지하세요."
+        "gadgets": {
+          "category": "가젯",
+          "vibe": "볼드 & 펀치",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "브랜드",
-          "body": "수백 개의 고유한 광고 소재를 동시에 통해 브랜드 인지도를 유지하세요."
+        "home": {
+          "category": "홈 & 키친",
+          "vibe": "클린 데모",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "대행사",
-          "body": "돌볼 필요 없이 모든 고객에게 고품질로 대량으로 서비스를 제공하세요."
+        "pets": {
+          "category": "펫",
+          "vibe": "펀 & 패스트",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "패션",
+          "vibe": "코지 & 퍼스널",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "피트니스",
+          "vibe": "볼드 & 펀치",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5가지 방법",
-          "label": "시작하려면: Amazon, Shopee, TikTok Shop, 매장 또는 사진"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "언제든지 TikTok 및 릴에 대한 게시 준비 완료"
-        },
-        "credit": {
-          "value": "1학점",
-          "label": "= 비디오 1초 — 렌더링한 것에 대해서만 비용 지불"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "비트를 승인할 때까지 지출을 렌더링합니다."
-        }
-      },
-      "pricingKicker": "가격",
-      "pricingTitle": "무료로 시작하세요. 작동할 때 크기를 조정하세요.",
-      "pricingSubtitle": "크레딧 기반 — 1크레딧 = 비디오 1초. 첫 번째 동영상은 무료입니다. 시작할 신용 카드가 없습니다.",
+      "pricingTitle": "무료로 시작하고, <highlight>통하면 확장하세요.</highlight>",
+      "pricingSubtitle": "크레딧 기반: 1 크레딧 = 영상 1초. 첫 영상은 무료 — 카드도 필요 없습니다.",
       "mostPopular": "가장 인기있는",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "$29",
           "note": "/ 월",
           "features": [
-            "≒ 동영상 3개/월 · 75크레딧",
+            "75 크레딧 — 약 3편",
             "워터마크 없음",
             "비트별 검토",
-            "아바타 + 제품 모드"
+            "아바타 & 제품 모드"
           ],
           "cta": "크리에이터 시작"
         },
@@ -1025,9 +1028,9 @@
           "price": "$79",
           "note": "/ 월",
           "features": [
-            "≒ 동영상 10개/월 · 200크레딧",
+            "200 크레딧 — 약 10편",
             "크리에이터의 모든 것",
-            "무료 렌더링보다 우선순위",
+            "우선 렌더링",
             "720p · 9:16 내보내기"
           ],
           "cta": "프로 시작"
@@ -1037,34 +1040,19 @@
           "price": "$199",
           "note": "/ 월",
           "features": [
-            "≒ 동영상 25개/월 · 500크레딧",
+            "500 크레딧 — 약 25편",
             "프로의 모든 것",
-            "상시 포스팅을 위해"
+            "상시 게시를 위한 플랜"
           ],
           "cta": "규모 시작"
         }
       },
-      "pricingFooter": "귀하의 <signup>첫 번째 비디오는 무료입니다.</signup> — 카드가 없습니다. 전체 사다리가 필요합니까? <plans>모든 플랜 보기 →</plans>",
-      "faqKicker": "FAQ",
-      "faqTitle": "질문, 답변",
-      "finalCtaTitle": "다음 베스트셀러는 제품 링크 하나에 있습니다.",
-      "finalCtaSubtitle": "스크롤이 멈추는 첫 번째 동영상을 무료로 만들어 보세요. 카메라도 없고, 편집자도 없고, 빈 페이지도 없습니다.",
-      "finalCtaStartFree": "무료로 만들기 시작하세요",
-      "finalCtaSeePricing": "가격 보기"
-    },
-    "heroMock": {
-      "caption": "이 24달러짜리 가젯은 <highlight>3번 매진되었습니다</highlight> 🙌",
-      "shopNow": "지금 쇼핑하세요 · $23.99",
-      "productName": "미니 마사지 건",
-      "productMeta": "$23.99 · 30% 통신료",
-      "sold": "12.4,000개 판매/월",
-      "beatReview": "비트 리뷰",
-      "beatHook": "후크",
-      "beatProof": "증명",
-      "beatOffer": "제안",
-      "beatAuto": "자동",
-      "beatOk": "알았어",
-      "renderedWith": "다음으로 렌더링됨"
+      "pricingFooter": "<signup>첫 영상은 무료</signup> — 카드 불필요. <plans>전체 플랜 비교 →</plans>",
+      "faqTitle": "궁금한 점, <highlight>여기 답이 있습니다</highlight>",
+      "finalCtaTitle": "다음 베스트셀러는 <highlight>링크 하나 거리에.</highlight>",
+      "finalCtaSubtitle": "첫 영상을 무료로 만들어 보세요. 카메라도, 편집자도, 빈 페이지도 없이.",
+      "finalCtaPrimary": "첫 영상 만들기",
+      "finalCtaSecondary": "요금 보기"
     },
     "features": {
       "header": {

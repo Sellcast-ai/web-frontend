@@ -28,7 +28,7 @@ export function Faq() {
               </span>
               <Plus
                 className={cn(
-                  "h-5 w-5 shrink-0 text-brand-500 transition-transform duration-300",
+                  "h-5 w-5 shrink-0 text-ink/40 transition-transform duration-300",
                   isOpen && "rotate-45",
                 )}
               />

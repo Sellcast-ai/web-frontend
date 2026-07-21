@@ -29,7 +29,14 @@ function writeLocaleCookie(code: string) {
   document.cookie = `lumi-locale=${code}; path=/; max-age=31536000; samesite=lax`;
 }
 
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function LanguageSwitcher({
+  className,
+  up = false,
+}: {
+  className?: string;
+  /** Open the menu above the trigger (for footer placement). */
+  up?: boolean;
+}) {
   const t = useTranslations("languageSwitcher");
   const locale = useLocale();
   const router = useRouter();
@@ -80,7 +87,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         <div
           role="menu"
           aria-label={t("label")}
-          className="absolute right-0 z-50 mt-2 min-w-44 overflow-hidden rounded-xl border border-border bg-card p-1 shadow-lg"
+          className={cn(
+            "absolute right-0 z-50 min-w-44 overflow-hidden rounded-xl border border-border bg-card p-1 shadow-lg",
+            up ? "bottom-full mb-2" : "mt-2",
+          )}
         >
           {LOCALES.map(({ code, label, enabled }) => (
             <button

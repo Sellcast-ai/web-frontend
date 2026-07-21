@@ -17,9 +17,6 @@ const TARGETS = {
 };
 
 const MANUAL_OVERRIDES = {
-  "marketing.heroMock.caption": {
-    ja: "この24ドルのガジェットは<highlight>3回</highlight>完売しました 👀",
-  },
   "app.toasts.importSucceeded": {
     es: "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
     zh: "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",

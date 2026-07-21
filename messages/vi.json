@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "Tính năng",
+    "howItWorks": "Nó hoạt động như thế nào",
+    "models": "Người mẫu",
+    "pricing": "Định giá"
+  },
   "app": {
+    "nav": {
+      "marketplace": "Thị trường",
+      "products": "Sản phẩm của tôi",
+      "avatars": "Hình đại diện",
+      "videos": "Video của tôi",
+      "profile": "Hồ sơ",
+      "newVideo": "Video mới",
+      "new": "Mới",
+      "signedIn": "Đã đăng nhập",
+      "logOut": "Đăng xuất"
+    },
     "toasts": {
-      "importSucceeded": "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
       "updateLikeFailed": "Không thể cập nhật lượt thích. Vui lòng thử lại.",
       "saveAvatarFailed": "Không thể lưu hình đại diện.",
       "deleteAvatarFailed": "Không thể xóa hình đại diện.",
@@ -15,21 +31,11 @@
       "retryJobFailed": "Không thể thử lại công việc. Vui lòng thử lại.",
       "saveDisplayNameFailed": "Không thể lưu tên hiển thị của bạn. Vui lòng thử lại.",
       "importPartial": "Đã nhập {count} cho sản phẩm của bạn (giới hạn danh mục). Phần còn lại có thể được thêm vào bằng cách dán.",
+      "importSucceeded": "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
       "importFailed": "Quá trình nhập chưa hoàn tất. Vui lòng thử lại.",
       "storyboardSaved": "Đã lưu bảng phân cảnh.",
       "markedPosted": "Đánh dấu là đã đăng.",
       "recordPostedFailed": "Không thể ghi lại điều đó. Vui lòng thử lại."
-    },
-    "nav": {
-      "marketplace": "Thị trường",
-      "products": "Sản phẩm của tôi",
-      "avatars": "Hình đại diện",
-      "videos": "Video của tôi",
-      "profile": "Hồ sơ",
-      "newVideo": "Video mới",
-      "new": "Mới",
-      "signedIn": "Đã đăng nhập",
-      "logOut": "Đăng xuất"
     },
     "categories": {
       "beautyPersonalCare": "Chăm sóc sắc đẹp & cá nhân",
@@ -484,12 +490,6 @@
       }
     }
   },
-  "nav": {
-    "features": "Tính năng",
-    "howItWorks": "Nó hoạt động như thế nào",
-    "models": "Người mẫu",
-    "pricing": "Định giá"
-  },
   "languageSwitcher": {
     "label": "Ngôn ngữ"
   },
@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "Đăng nhập",
-      "startFree": "Bắt đầu miễn phí",
-      "toggleMenu": "Chuyển đổi menu",
-      "language": "Ngôn ngữ",
-      "theme": "chủ đề"
+      "startFree": "Bắt đầu miễn phí"
     },
     "footer": {
-      "tagline": "Lumi biến bất kỳ sản phẩm nào thành video có thể mua được, dừng cuộn - dựa trên mô hình lan truyền thực sự chứ không phải phỏng đoán.",
+      "tagline": "Liên kết sản phẩm đi vào. Video sẵn sàng đăng đi ra. Dựa trên những mẫu hình đã chứng minh là bán được.",
       "columns": {
         "product": {
           "title": "sản phẩm",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. Lumi là sản phẩm Sellcast.",
-      "madeFor": "Dành cho những người bán hàng thích bán hàng hơn quay phim."
+      "madeFor": "Dành cho những người bán hàng thích bán hàng hơn quay phim.",
+      "signIn": "Đăng nhập"
     },
     "cta": {
       "title": "Sản phẩm bán chạy tiếp theo của bạn chỉ cách một liên kết sản phẩm.",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "Được xây dựng cho TikTok & cuộn",
-      "heroTitle": "Biến bất kỳ sản phẩm nào thành video có thể mua được <highlight>scroll-stopping</highlight>.",
-      "heroSubtitle": "Dán bất kỳ liên kết sản phẩm nào — Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Lumi nghiên cứu những gì đã chiến thắng trong danh mục đó, viết kịch bản cho một video dựa trên mẫu, cho phép bạn xem lại từng nhịp và hiển thị video đó bằng Seedance 2.0. Trong vài phút, không có máy ảnh.",
-      "heroStartFree": "Bắt đầu tạo miễn phí",
-      "heroSeeHow": "Xem cách nó hoạt động",
-      "heroCheck1": "Video đầu tiên miễn phí",
-      "heroCheck2": "Không có thẻ tín dụng",
-      "heroCheck3": "Sẵn sàng xuất bản 9:16",
-      "marquee": [
-        "Cửa hàng TikTok",
-        "cuộn phim",
-        "sắc đẹp",
-        "Nhà & Bếp",
-        "Thể hình",
-        "Tiện ích",
-        "Thú cưng",
-        "thời trang",
-        "Thực phẩm bổ sung"
-      ],
-      "howKicker": "Đường ống Lumi",
-      "howTitle": "Bốn giai đoạn, không có trang trống",
-      "howSubtitle": "Hầu hết các công cụ đều bắt đầu từ con số không. Lumi bắt đầu từ những gì đã thắng — sau đó giúp bạn kiểm soát mọi cách xuất bản.",
-      "steps": {
-        "find": {
-          "kicker": "Tìm",
-          "title": "Bắt đầu từ bất kỳ sản phẩm nào",
-          "body": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Hoặc duyệt qua các lựa chọn theo xu hướng trên thị trường."
+      "heroTitle": "Biến mọi liên kết sản phẩm thành <highlight>video bán được hàng.</highlight>",
+      "heroSubtitle": "Dán liên kết vào. Lumi học mẫu hình từ những video hiệu quả nhất trong ngành hàng của bạn, viết kịch bản và render từng cảnh một. Bạn duyệt từng beat trước khi một credit nào bị trừ.",
+      "heroPrimary": "Tạo video đầu tiên của bạn",
+      "heroSecondary": "Xem cách hoạt động",
+      "heroFinePrint": "Video đầu tiên miễn phí · Không cần thẻ · 9:16 sẵn sàng đăng",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "Đang đọc sản phẩm",
+        "pattern": "Đã học ~100 video hàng đầu ngành Làm đẹp",
+        "productName": "Glow Serum 30 ml",
+        "productMeta": "$24 · Làm đẹp",
+        "beats": {
+          "hook": {
+            "label": "Hook",
+            "line": "Chặn cú lướt ngay giây đầu tiên."
+          },
+          "proof": {
+            "label": "Bằng chứng",
+            "line": "Cho thấy serum thật sự hiệu quả."
+          },
+          "offer": {
+            "label": "Ưu đãi",
+            "line": "Giá hiện trên màn hình. Lời mời rõ ràng."
+          }
         },
-        "deconstruct": {
-          "kicker": "Giải cấu trúc",
-          "title": "Lumi học mẫu",
-          "body": "Nó nghiên cứu khoảng 100 công ty thực sự có hiệu suất hàng đầu trong danh mục đó và trích xuất cấu trúc hấp dẫn, bằng chứng và CTA giúp chuyển đổi."
-        },
-        "script": {
-          "kicker": "kịch bản",
-          "title": "Xem lại kịch bản và nhịp điệu",
-          "body": "Một kịch bản có căn cứ với nhịp điệu từng cảnh một. Phê duyệt hoặc tạo lại từng hình ảnh tham chiếu trước khi kết xuất bất kỳ hình ảnh nào."
-        },
-        "generate": {
-          "kicker": "Tạo",
-          "title": "Kết xuất và xuất bản",
-          "body": "Seedance 2.0 hiển thị từng nhịp, ghi chú thích và bạn đã sẵn sàng đăng bài."
-        }
+        "approve": "Duyệt",
+        "approved": "Đã duyệt",
+        "rendering": "Đang render với Seedance 2.0",
+        "rendered": "Đã render",
+        "duration": "0:18",
+        "caption": "Nhập hàng lại ba lần trong tháng. Đây là lý do.",
+        "shopNow": "Mua ngay"
       },
-      "featuresKicker": "Mọi thứ trong một studio",
-      "featuresTitle": "Toàn bộ quy trình làm việc của video được xử lý",
-      "featuresSubtitle": "Từ tìm nguồn cung ứng sản phẩm đến bản cắt sẵn sàng xuất bản — không cần kết hợp năm công cụ lại với nhau.",
-      "features": {
-        "linkToVideo": {
-          "title": "Liên kết tới Video",
-          "body": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải ảnh lên. Lumi đọc sản phẩm và tự động xử lý việc đóng khung, kịch bản, giọng nói và chỉnh sửa."
-        },
-        "scripts": {
-          "title": "Kịch bản dựa trên mẫu",
-          "body": "Mọi tập lệnh đều được xây dựng từ cấu trúc lan truyền thực sự trong danh mục của bạn - hãy tìm hiểu khuôn mẫu, không bao giờ sao chép bề ngoài."
+      "marquee": {
+        "seedance": "Render bằng Seedance 2.0",
+        "languages": "8 ngôn ngữ lồng tiếng",
+        "avatar": "Chế độ avatar AI",
+        "productOnly": "Chế độ chỉ sản phẩm",
+        "review": "Duyệt từng beat",
+        "qa": "QA lời thoại tự động",
+        "captions": "Phụ đề gắn sẵn",
+        "ratio": "9:16 sẵn sàng đăng",
+        "vibes": "5 vibe đặc trưng",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "Video 10–30 giây"
+      },
+      "whyTitle": "Xây trên <highlight>những gì đã hiệu quả</highlight>",
+      "whySubtitle": "Không phải trang giấy trắng. Lumi xuất phát từ những mẫu hình mà ngành hàng của bạn đã tưởng thưởng — và vẫn để bạn nắm quyền với từng khung hình.",
+      "why": {
+        "pattern": {
+          "body": "Trước khi viết một dòng nào, Lumi mổ xẻ khoảng một trăm video hiệu quả nhất trong ngành hàng của bạn và giữ lại cấu trúc tạo chuyển đổi.",
+          "caption": "Kịch bản tự viết — từ bằng chứng.",
+          "uiHeading": "Trích xuất mẫu hình",
+          "uiSample": "~100 video · Làm đẹp",
+          "uiHook": "Hook — tuyên bố trước",
+          "uiProof": "Bằng chứng — cho thấy hiệu quả",
+          "uiOffer": "Ưu đãi — lời mời rõ ràng"
         },
         "review": {
-          "title": "Đánh giá từng nhịp",
-          "body": "Xem hình ảnh tham khảo cho mỗi lần chụp. Phê duyệt, điều chỉnh hoặc tạo lại trước khi dành một giây thời gian kết xuất."
+          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại bao nhiêu lần tùy thích — credit chỉ bị trừ sau khi bạn bấm chạy.",
+          "caption": "Bạn quyết định, trước khi render.",
+          "uiHeading": "Duyệt storyboard",
+          "uiSpend": "Đã chi $0",
+          "uiRegenerate": "Tạo lại"
         },
-        "modes": {
-          "title": "Chế độ hình đại diện và sản phẩm",
-          "body": "Người dẫn chương trình AI nói chuyện với máy ảnh hoặc nơi trưng bày sạch sẽ chỉ dành cho sản phẩm — tám kiểu được tạo sẵn để phù hợp với ưu đãi của bạn."
-        },
-        "qa": {
-          "title": "QA đối thoại tự động",
-          "body": "Whisper kiểm tra từng dòng được hiển thị so với kịch bản và cờ trôi dạt, để giọng nói luôn nói đúng những gì cần làm."
-        },
-        "publish": {
-          "title": "Chú thích & xuất bản",
-          "body": "Chú thích được tự động ghi và bản cắt 9:16 sẵn sàng xuất bản, có kích thước dành cho TikTok và Câu chuyện ngay khi lấy ra khỏi hộp."
+        "reach": {
+          "body": "Có người dẫn hay chỉ sản phẩm, năm vibe, tám ngôn ngữ lồng tiếng. Cùng một liên kết sản phẩm đi tới mọi thị trường bạn bán.",
+          "caption": "Bán bằng tám ngôn ngữ cùng lúc.",
+          "uiAvatar": "Avatar AI",
+          "uiProductOnly": "Chỉ sản phẩm",
+          "uiVibe": "Cao cấp & tinh gọn"
         }
       },
-      "modelsKicker": "Công cụ kết xuất biên giới",
-      "modelsTitle": "Được kết xuất bằng Seedance 2.0",
-      "modelsSubtitle": "Lumi hiển thị mọi nhịp điệu với Seedance 2.0 — và tập lệnh của bạn sẽ tiếp tục khi có mẫu mới.",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "Trực tiếp",
-          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm và hình đại diện — công cụ kết xuất của Lumi cho từng nhịp."
+      "storyTitle": "Từ liên kết sản phẩm <highlight>đến video lên sóng</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "Bắt đầu từ bất kỳ liên kết nào",
+          "body": "Amazon, Shopee, TikTok Shop hay cửa hàng của riêng bạn — hoặc ảnh chụp ngay trong máy."
         },
-        "more": {
-          "name": "Thêm nữa trên đường đi",
-          "tag": "Sớm thôi",
-          "desc": "Chúng tôi đang bổ sung thêm các mô hình video tiên tiến khi chúng chứng tỏ được điều đó — kịch bản và nhịp điệu của bạn sẽ được tiếp tục."
+        "learn": {
+          "title": "Lumi học mẫu hình",
+          "body": "Nó nghiên cứu khoảng một trăm video hiệu quả nhất của ngành hàng và trích ra cấu trúc tạo chuyển đổi: hook, bằng chứng, ưu đãi."
+        },
+        "approve": {
+          "title": "Bạn duyệt storyboard",
+          "body": "Mỗi beat có khung hình tham chiếu trước. Không render — và không tính phí — cho đến khi bạn ký duyệt."
+        },
+        "render": {
+          "title": "Seedance render",
+          "body": "Phụ đề được gắn vào, QA tự động đối chiếu từng câu thoại với kịch bản, và bản cắt 9:16 sẵn sàng để đăng."
         }
       },
-      "useCasesKicker": "Nó dành cho ai",
-      "useCasesTitle": "Dành cho tất cả những người bán hàng bằng video",
-      "useCases": {
-        "sellers": {
-          "title": "Người bán",
-          "body": "Chia tỷ lệ danh mục của bạn — một video chuyển đổi cho mọi SKU mà không cần studio."
+      "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
+      "storyFact2": "1 credit = 1 giây video",
+      "wallTitle": "Sẵn sàng đăng, <highlight>ở mọi thị trường</highlight>",
+      "wallSubtitle": "Mỗi video xuất ra ở 9:16 với phụ đề gắn sẵn — kịch bản và lồng tiếng bằng ngôn ngữ của thị trường nó hướng tới.",
+      "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
+      "wall": {
+        "beauty": {
+          "category": "Làm đẹp",
+          "vibe": "Cao cấp & tinh gọn",
+          "language": "English"
         },
-        "creators": {
-          "title": "Người sáng tạo",
-          "body": "Quay nội dung TikTok Mua sắm trong vài phút và duy trì chuỗi bài đăng của bạn."
+        "gadgets": {
+          "category": "Đồ công nghệ",
+          "vibe": "Táo bạo & dứt khoát",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "Thương hiệu",
-          "body": "Luôn giữ vững thương hiệu qua hàng trăm mẫu quảng cáo độc đáo, tất cả cùng một lúc."
+        "home": {
+          "category": "Nhà cửa & bếp",
+          "vibe": "Demo gọn gàng",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "Đại lý",
-          "body": "Phục vụ mọi khách hàng với số lượng lớn và chất lượng mà bạn không cần phải trông trẻ."
+        "pets": {
+          "category": "Thú cưng",
+          "vibe": "Vui & nhanh",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "Thời trang",
+          "vibe": "Ấm áp & gần gũi",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "Thể hình",
+          "vibe": "Táo bạo & dứt khoát",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5 cách",
-          "label": "để bắt đầu: Amazon, Shopee, TikTok Shop, cửa hàng của bạn hoặc ảnh"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "sẵn sàng xuất bản cho TikTok & Reels mọi lúc"
-        },
-        "credit": {
-          "value": "1 tín chỉ",
-          "label": "= 1 giây video — chỉ trả tiền cho những gì bạn hiển thị"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "hiển thị chi tiêu cho đến khi bạn phê duyệt nhịp đập"
-        }
-      },
-      "pricingKicker": "Định giá",
-      "pricingTitle": "Bắt đầu miễn phí. Chia tỷ lệ khi nó hoạt động.",
-      "pricingSubtitle": "Dựa trên tín dụng - 1 tín dụng = 1 giây của video. Video đầu tiên của bạn miễn phí; không có thẻ tín dụng để bắt đầu.",
+      "pricingTitle": "Bắt đầu miễn phí. <highlight>Hiệu quả rồi mở rộng.</highlight>",
+      "pricingSubtitle": "Theo credit: 1 credit = 1 giây video. Video đầu tiên miễn phí — không cần thẻ.",
       "mostPopular": "Phổ biến nhất",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "$29",
           "note": "/ tháng",
           "features": [
-            "≈ 3 video / tháng · 75 tín chỉ",
+            "75 credit — khoảng 3 video",
             "Không có hình mờ",
             "Đánh giá từng nhịp",
-            "Chế độ Avatar + sản phẩm"
+            "Chế độ avatar & sản phẩm"
           ],
           "cta": "Bắt đầu tạo"
         },
@@ -1025,9 +1028,9 @@
           "price": "$79",
           "note": "/ tháng",
           "features": [
-            "≈ 10 video / tháng · 200 tín chỉ",
+            "200 credit — khoảng 10 video",
             "Mọi thứ trong Creator",
-            "Ưu tiên hơn các kết xuất miễn phí",
+            "Render ưu tiên",
             "720p · xuất 9:16"
           ],
           "cta": "Bắt đầu chuyên nghiệp"
@@ -1037,34 +1040,19 @@
           "price": "$199",
           "note": "/ tháng",
           "features": [
-            "≈ 25 video / tháng · 500 tín chỉ",
+            "500 credit — khoảng 25 video",
             "Mọi thứ trong Pro",
-            "Để đăng bài liên tục"
+            "Cho việc đăng đều đặn không ngừng"
           ],
           "cta": "Bắt đầu thang âm"
         }
       },
-      "pricingFooter": "Video đầu tiên <signup> của bạn là miễn phí</signup> — không có thẻ. Cần thang đầy đủ? <plans>Xem tất cả các gói →</plans>",
-      "faqKicker": "Câu hỏi thường gặp",
-      "faqTitle": "Câu hỏi, câu trả lời",
-      "finalCtaTitle": "Sản phẩm bán chạy tiếp theo của bạn chỉ cách một liên kết sản phẩm.",
-      "finalCtaSubtitle": "Làm cho video dừng cuộn đầu tiên của bạn trở nên miễn phí. Không có máy ảnh, không có trình chỉnh sửa, không có trang trống.",
-      "finalCtaStartFree": "Bắt đầu tạo miễn phí",
-      "finalCtaSeePricing": "Xem giá"
-    },
-    "heroMock": {
-      "caption": "tiện ích trị giá 24 đô la này đã bán hết <highlight>3 lần</highlight> 👀",
-      "shopNow": "Mua sắm ngay · $23,99",
-      "productName": "Súng mát xa mini",
-      "productMeta": "23,99 USD · 30% hoa hồng.",
-      "sold": "12.4k bán/tháng",
-      "beatReview": "Đánh giá đánh giá",
-      "beatHook": "Móc",
-      "beatProof": "Bằng chứng",
-      "beatOffer": "ưu đãi",
-      "beatAuto": "tự động",
-      "beatOk": "được",
-      "renderedWith": "Kết xuất với"
+      "pricingFooter": "<signup>Video đầu tiên miễn phí</signup> — không cần thẻ. <plans>So sánh tất cả các gói →</plans>",
+      "faqTitle": "Thắc mắc, <highlight>đã có lời đáp</highlight>",
+      "finalCtaTitle": "Sản phẩm bán chạy tiếp theo của bạn <highlight>chỉ cách một liên kết.</highlight>",
+      "finalCtaSubtitle": "Làm video đầu tiên miễn phí. Không máy quay, không dựng phim, không trang giấy trắng.",
+      "finalCtaPrimary": "Tạo video đầu tiên của bạn",
+      "finalCtaSecondary": "Xem bảng giá"
     },
     "features": {
       "header": {

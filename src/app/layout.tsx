@@ -42,11 +42,11 @@ export const metadata: Metadata = {
   // already work since they send no referer).
   referrer: "no-referrer",
   title: {
-    default: "Lumi — Turn any product into a scroll-stopping shoppable video",
+    default: "Lumi — Turn any product link into video that sells",
     template: "%s · Lumi",
   },
   description:
-    "Lumi turns a product link into conversion-ready TikTok & Reels videos. Grounded in real viral patterns, scripted by AI, reviewed beat-by-beat, rendered with Seedance 2.0.",
+    "Lumi studies the top-performing videos in your category, writes the script, and renders publish-ready 9:16 video with Seedance 2.0. You approve every beat before a credit is spent.",
   keywords: [
     "AI video",
     "shoppable video",
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
     "Seedance",
   ],
   openGraph: {
-    title: "Lumi — Scroll-stopping shoppable videos, on autopilot",
+    title: "Lumi — Product links in. Publish-ready video out.",
     description:
-      "From product link to converting short-form video in minutes. Built for sellers, creators, brands, and agencies.",
+      "Grounded in the patterns that already sell. Scripted by AI, approved beat by beat, rendered with Seedance 2.0 — for sellers, creators, brands, and agencies.",
     type: "website",
     siteName: "Lumi",
   },

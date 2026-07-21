@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "Características",
+    "howItWorks": "como funciona",
+    "models": "Modelos",
+    "pricing": "Precios"
+  },
   "app": {
+    "nav": {
+      "marketplace": "Mercado",
+      "products": "Mis productos",
+      "avatars": "avatares",
+      "videos": "Mis vídeos",
+      "profile": "Perfil",
+      "newVideo": "Nuevo vídeo",
+      "new": "Nuevo",
+      "signedIn": "Iniciado sesión",
+      "logOut": "Cerrar sesión"
+    },
     "toasts": {
-      "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
       "updateLikeFailed": "No se pudo actualizar como. Por favor inténtalo de nuevo.",
       "saveAvatarFailed": "No se pudo guardar el avatar.",
       "deleteAvatarFailed": "No se pudo eliminar el avatar.",
@@ -15,21 +31,11 @@
       "retryJobFailed": "No se pudo volver a intentar el trabajo. Por favor inténtalo de nuevo.",
       "saveDisplayNameFailed": "No se pudo guardar su nombre para mostrar. Por favor inténtalo de nuevo.",
       "importPartial": "Importado {count} de sus productos (tapa de catálogo). El resto se puede añadir mediante pasta.",
+      "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
       "importFailed": "La importación no terminó. Por favor inténtalo de nuevo.",
       "storyboardSaved": "Guión gráfico guardado.",
       "markedPosted": "Marcado como publicado.",
       "recordPostedFailed": "No pude grabar eso. Por favor inténtalo de nuevo."
-    },
-    "nav": {
-      "marketplace": "Mercado",
-      "products": "Mis productos",
-      "avatars": "avatares",
-      "videos": "Mis vídeos",
-      "profile": "Perfil",
-      "newVideo": "Nuevo vídeo",
-      "new": "Nuevo",
-      "signedIn": "Iniciado sesión",
-      "logOut": "Cerrar sesión"
     },
     "categories": {
       "beautyPersonalCare": "Belleza y cuidado personal",
@@ -484,12 +490,6 @@
       }
     }
   },
-  "nav": {
-    "features": "Características",
-    "howItWorks": "como funciona",
-    "models": "Modelos",
-    "pricing": "Precios"
-  },
   "languageSwitcher": {
     "label": "Idioma"
   },
@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "Iniciar sesión",
-      "startFree": "Empieza gratis",
-      "toggleMenu": "Alternar menú",
-      "language": "Idioma",
-      "theme": "Tema"
+      "startFree": "Empieza gratis"
     },
     "footer": {
-      "tagline": "Lumi convierte cualquier producto en un vídeo de compra que hace que se detenga el desplazamiento, basado en patrones virales reales, no en conjeturas.",
+      "tagline": "Entra un enlace de producto. Sale un video listo para publicar. Basado en los patrones que ya venden.",
       "columns": {
         "product": {
           "title": "Producto",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. Lumi es un producto Sellcast.",
-      "madeFor": "Hecho para vendedores que prefieren vender que filmar."
+      "madeFor": "Hecho para vendedores que prefieren vender que filmar.",
+      "signIn": "Iniciar sesión"
     },
     "cta": {
       "title": "Su próximo éxito de ventas está a un enlace de producto de distancia.",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "Construido para TikTok y carretes",
-      "heroTitle": "Convierta cualquier producto en un video de compra <highlight> que detiene el desplazamiento </highlight>.",
-      "heroSubtitle": "Pegue el enlace de cualquier producto (Amazon, Shopee, TikTok Shop o su propia tienda) o cargue fotos. Lumi estudia lo que ya está ganando en esa categoría, escribe un vídeo basado en el patrón, le permite revisarlo paso a paso y lo renderiza con Seedance 2.0. En minutos, sin cámara.",
-      "heroStartFree": "Empieza a crear gratis",
-      "heroSeeHow": "Mira como funciona",
-      "heroCheck1": "primer vídeo gratis",
-      "heroCheck2": "Sin tarjeta de crédito",
-      "heroCheck3": "Listo para publicar 9:16",
-      "marquee": [
-        "Tienda TikTok",
-        "Carretes",
-        "Belleza",
-        "Hogar y cocina",
-        "aptitud",
-        "artilugios",
-        "Mascotas",
-        "Moda",
-        "Suplementos"
-      ],
-      "howKicker": "El oleoducto Lumi",
-      "howTitle": "Cuatro etapas, cero páginas en blanco",
-      "howSubtitle": "La mayoría de las herramientas empiezan desde cero. Lumi parte de lo que ya está ganando y luego te mantiene en control hasta el final de la publicación.",
-      "steps": {
-        "find": {
-          "kicker": "encontrar",
-          "title": "Empezar desde cualquier producto",
-          "body": "Pegue un enlace de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue fotos. O busque opciones de tendencias en el mercado."
+      "heroTitle": "Convierte cualquier enlace de producto en <highlight>video que vende.</highlight>",
+      "heroSubtitle": "Pega un enlace. Lumi aprende el patrón de los videos que mejor funcionan en tu categoría, escribe el guion y lo renderiza toma a toma. Tú apruebas cada beat antes de gastar un solo crédito.",
+      "heroPrimary": "Crea tu primer video",
+      "heroSecondary": "Ver cómo funciona",
+      "heroFinePrint": "Primer video gratis · Sin tarjeta · 9:16 listo para publicar",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "Leyendo el producto",
+        "pattern": "Aprendido de ~100 videos top de Belleza",
+        "productName": "Sérum Glow 30 ml",
+        "productMeta": "$24 · Belleza",
+        "beats": {
+          "hook": {
+            "label": "Hook",
+            "line": "Detiene el scroll en el primer segundo."
+          },
+          "proof": {
+            "label": "Prueba",
+            "line": "Muestra el sérum funcionando de verdad."
+          },
+          "offer": {
+            "label": "Oferta",
+            "line": "Precio en pantalla. Llamada clara."
+          }
         },
-        "deconstruct": {
-          "kicker": "Deconstruir",
-          "title": "Lumi aprende el patrón",
-          "body": "Estudia ~100 empresas reales de alto rendimiento en esa categoría y extrae el gancho, la prueba y la estructura de CTA que convierte."
-        },
-        "script": {
-          "kicker": "Guión",
-          "title": "Revisa el guión y los ritmos.",
-          "body": "Un guión fundamentado con ritmos plano a plano. Apruebe o regenere cada imagen de referencia antes de quemar cualquier renderizado."
-        },
-        "generate": {
-          "kicker": "generar",
-          "title": "Renderizar y publicar",
-          "body": "Seedance 2.0 procesa cada ritmo, los subtítulos se graban y estás listo para publicar."
-        }
+        "approve": "Aprobar",
+        "approved": "Aprobado",
+        "rendering": "Renderizando con Seedance 2.0",
+        "rendered": "Renderizado",
+        "duration": "0:18",
+        "caption": "Agotado tres veces este mes. Por esto.",
+        "shopNow": "Comprar ahora"
       },
-      "featuresKicker": "Todo en un solo estudio.",
-      "featuresTitle": "Todo el flujo de trabajo del vídeo, gestionado",
-      "featuresSubtitle": "Desde la obtención del producto hasta un corte listo para publicar, sin necesidad de unir cinco herramientas.",
-      "features": {
-        "linkToVideo": {
-          "title": "Enlace al vídeo",
-          "body": "Pegue un enlace de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue fotos. Lumi lee el producto y maneja el encuadre, el guión, la voz y la edición automáticamente."
-        },
-        "scripts": {
-          "title": "Guiones basados en patrones",
-          "body": "Cada guión se construye a partir de una estructura viral real en su categoría: aprenda el patrón, nunca copie la superficie."
+      "marquee": {
+        "seedance": "Renderizado con Seedance 2.0",
+        "languages": "8 idiomas de voz en off",
+        "avatar": "Modo avatar IA",
+        "productOnly": "Modo solo producto",
+        "review": "Revisión beat a beat",
+        "qa": "QA automático de diálogo",
+        "captions": "Subtítulos integrados",
+        "ratio": "9:16 listo para publicar",
+        "vibes": "5 vibes de autor",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "Cortes de 10–30 segundos"
+      },
+      "whyTitle": "Construido sobre <highlight>lo que ya funciona</highlight>",
+      "whySubtitle": "Nada de lienzo en blanco. Lumi parte de los patrones que tu categoría ya premia — y te deja al mando de cada fotograma.",
+      "why": {
+        "pattern": {
+          "body": "Antes de escribir una línea, Lumi desmonta alrededor de cien de los videos con mejor rendimiento de tu categoría y conserva la estructura que convierte.",
+          "caption": "El guion se escribe solo — con evidencia.",
+          "uiHeading": "Extracto del patrón",
+          "uiSample": "~100 videos · Belleza",
+          "uiHook": "Hook — la promesa primero",
+          "uiProof": "Prueba — muéstralo funcionando",
+          "uiOffer": "Oferta — petición clara"
         },
         "review": {
-          "title": "Revisión latido a latido",
-          "body": "Vea una imagen de referencia para cada toma. Apruebe, modifique o regenere antes de dedicar un segundo de tiempo de renderizado."
+          "body": "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera cuantas veces quieras — los créditos solo se gastan cuando das el visto bueno.",
+          "caption": "Tú decides, antes del render.",
+          "uiHeading": "Revisión del storyboard",
+          "uiSpend": "$0 gastados",
+          "uiRegenerate": "Regenerar"
         },
-        "modes": {
-          "title": "Modos de avatar y producto",
-          "body": "Presentador de IA hablando a la cámara o escaparate limpio solo de productos: ocho estilos listos para usar que se adaptan a su oferta."
-        },
-        "qa": {
-          "title": "Control de calidad del diálogo automático",
-          "body": "Whisper compara cada línea renderizada con el guión y las banderas se desplazan, por lo que la voz siempre dice lo que debería."
-        },
-        "publish": {
-          "title": "Subtítulos y publicación",
-          "body": "Subtítulos grabados automáticamente y un corte de 9:16 listo para publicar, con tamaño para TikTok y carretes listos para usar."
+        "reach": {
+          "body": "Con presentador o solo producto, cinco vibes, ocho idiomas de voz. El mismo enlace de producto viaja a todos tus mercados.",
+          "caption": "Vende en ocho idiomas a la vez.",
+          "uiAvatar": "Avatar IA",
+          "uiProductOnly": "Solo producto",
+          "uiVibe": "Premium y limpio"
         }
       },
-      "modelsKicker": "Motor de renderizado de frontera",
-      "modelsTitle": "Renderizado con Seedance 2.0",
-      "modelsSubtitle": "Lumi reproduce cada ritmo con Seedance 2.0 y sus scripts se conservan a medida que llegan nuevos modelos.",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "en vivo",
-          "desc": "Movimiento rápido y realista para tomas de productos y avatares: el motor de renderizado de Lumi para cada ritmo."
+      "storyTitle": "Del enlace de producto <highlight>al video publicado</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "Empieza con cualquier enlace",
+          "body": "Amazon, Shopee, TikTok Shop o tu propia tienda — o fotos directas de tu galería."
         },
-        "more": {
-          "name": "Más en camino",
-          "tag": "pronto",
-          "desc": "Estamos agregando modelos de video de vanguardia a medida que se van demostrando: sus guiones y ritmos se trasladan."
+        "learn": {
+          "title": "Lumi aprende el patrón",
+          "body": "Estudia alrededor de cien de los mejores videos de la categoría y extrae la estructura que convierte: hook, prueba, oferta."
+        },
+        "approve": {
+          "title": "Tú apruebas el storyboard",
+          "body": "Cada beat recibe primero un fotograma de referencia. Nada se renderiza — ni se cobra — hasta que des tu visto bueno."
+        },
+        "render": {
+          "title": "Seedance lo renderiza",
+          "body": "Los subtítulos se integran, el QA automático compara cada línea hablada con el guion y el corte 9:16 queda listo para publicar."
         }
       },
-      "useCasesKicker": "para quien es",
-      "useCasesTitle": "Hecho para todos los que venden con video",
-      "useCases": {
-        "sellers": {
-          "title": "Vendedores",
-          "body": "Amplíe su catálogo: un vídeo de conversión para cada SKU, sin estudio."
+      "storyFact1": "$0 de gasto en render hasta que apruebes",
+      "storyFact2": "1 crédito = 1 segundo de video",
+      "wallTitle": "Listo para publicar, <highlight>en cada mercado</highlight>",
+      "wallSubtitle": "Cada video sale en 9:16 con subtítulos integrados — con guion y voz en el idioma del mercado al que va.",
+      "wallAudience": "Hecho para vendedores, creadores, marcas y agencias — cualquiera que venda con video.",
+      "wall": {
+        "beauty": {
+          "category": "Belleza",
+          "vibe": "Premium y limpio",
+          "language": "English"
         },
-        "creators": {
-          "title": "Creadores",
-          "body": "Spin TikTok Compre contenido en minutos y mantenga viva su racha de publicaciones."
+        "gadgets": {
+          "category": "Gadgets",
+          "vibe": "Audaz y directo",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "Marcas",
-          "body": "Manténgase fiel a su marca a través de cientos de creatividades únicas, todas a la vez."
+        "home": {
+          "category": "Hogar y cocina",
+          "vibe": "Demo limpia",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "Agencias",
-          "body": "Atiende a cada cliente en volumen y con una calidad que no tienes que cuidar."
+        "pets": {
+          "category": "Mascotas",
+          "vibe": "Divertido y ágil",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "Moda",
+          "vibe": "Cercano y personal",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "Fitness",
+          "vibe": "Audaz y directo",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5 maneras",
-          "label": "para empezar: Amazon, Shopee, TikTok Shop, tu tienda o fotos"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "listo para publicar para TikTok y carretes, siempre"
-        },
-        "credit": {
-          "value": "1 crédito",
-          "label": "= 1 segundo de vídeo: paga solo por lo que renderizas"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "renderizar gastar hasta que apruebes los ritmos"
-        }
-      },
-      "pricingKicker": "Precios",
-      "pricingTitle": "Empieza gratis. Escale cuando esté funcionando.",
-      "pricingSubtitle": "Basado en créditos: 1 crédito = 1 segundo de vídeo. Tu primer vídeo es gratis; sin tarjeta de crédito para empezar.",
+      "pricingTitle": "Empieza gratis. <highlight>Escala cuando funcione.</highlight>",
+      "pricingSubtitle": "Por créditos: 1 crédito = 1 segundo de video. Tu primer video es gratis — sin tarjeta.",
       "mostPopular": "mas popular",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "$29",
           "note": "/ mes",
           "features": [
-            "≈ 3 vídeos / mes · 75 créditos",
+            "75 créditos — unos 3 videos",
             "Sin marca de agua",
             "Revisión latido a latido",
-            "Avatar + modos de producto"
+            "Modos avatar y producto"
           ],
           "cta": "Iniciar creador"
         },
@@ -1025,9 +1028,9 @@
           "price": "$79",
           "note": "/ mes",
           "features": [
-            "≈ 10 vídeos/mes · 200 créditos",
+            "200 créditos — unos 10 videos",
             "Todo en Creador",
-            "Prioridad sobre renderizados gratuitos",
+            "Render prioritario",
             "720p · 9:16 exportar"
           ],
           "cta": "Iniciar profesional"
@@ -1037,34 +1040,19 @@
           "price": "$199",
           "note": "/ mes",
           "features": [
-            "≈ 25 vídeos/mes · 500 créditos",
+            "500 créditos — unos 25 videos",
             "Todo en Pro",
-            "Para publicar siempre"
+            "Para publicar sin parar"
           ],
           "cta": "Escala inicial"
         }
       },
-      "pricingFooter": "Tu primer vídeo <signup> es gratuito</signup>, sin tarjeta. ¿Necesitas la escalera completa? <plans>Ver todos los planes →</plans>",
-      "faqKicker": "Preguntas frecuentes",
-      "faqTitle": "Preguntas, respondidas",
-      "finalCtaTitle": "Su próximo éxito de ventas está a un enlace de producto de distancia.",
-      "finalCtaSubtitle": "Crea gratis tu primer vídeo que detenga el desplazamiento. Sin cámara, sin editor, sin página en blanco.",
-      "finalCtaStartFree": "Empieza a crear gratis",
-      "finalCtaSeePricing": "Ver precios"
-    },
-    "heroMock": {
-      "caption": "este gadget de $24 se agotó <highlight>3 veces</highlight> 👀",
-      "shopNow": "Compra ahora · $23.99",
-      "productName": "Mini pistola de masaje",
-      "productMeta": "$23,99 · 30% comm.",
-      "sold": "12,4k vendidos / mes",
-      "beatReview": "revisión de ritmo",
-      "beatHook": "Gancho",
-      "beatProof": "Prueba",
-      "beatOffer": "oferta",
-      "beatAuto": "automático",
-      "beatOk": "bien",
-      "renderedWith": "Renderizado con"
+      "pricingFooter": "Tu <signup>primer video es gratis</signup> — sin tarjeta. <plans>Compara todos los planes →</plans>",
+      "faqTitle": "Preguntas, <highlight>respondidas</highlight>",
+      "finalCtaTitle": "Tu próximo superventas está a <highlight>un enlace de distancia.</highlight>",
+      "finalCtaSubtitle": "Haz tu primer video gratis. Sin cámara, sin editor, sin página en blanco.",
+      "finalCtaPrimary": "Crea tu primer video",
+      "finalCtaSecondary": "Ver precios"
     },
     "features": {
       "header": {
