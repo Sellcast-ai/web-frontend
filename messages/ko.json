@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "당신이 말하는 것",
           "onScreenText": "화면 텍스트",
+          "nudges": "이 장면은 무엇을 해야 합니까?",
+          "nudgeNote": "다른 건 없나요?",
           "technique": "촬영 방법",
           "transition": "다음 장면으로 컷",
           "productVisible": "제품이 보여지면"
@@ -406,9 +408,18 @@
         "placeholders": {
           "dialogue": "이 장면에는 음성 대사가 없습니다.",
           "onScreenText": "캡션 없음",
+          "nudgeNote": "자신의 말로 설명해보세요.",
           "technique": "Lumi가 샷을 선택하게 하세요"
         },
-        "advanced": "고급",
+        "nudgeLabels": {
+          "closerProduct": "제품에 더 가까이 다가가세요",
+          "wholeScene": "전체 장면을 보여주세요",
+          "focusPerson": "사람에게 집중하세요",
+          "moreEnergy": "더 많은 에너지",
+          "slowLingering": "느리고 오래 지속됨"
+        },
+        "proMode": "프로 모드",
+        "proHint": "탭이나 메모를 변경하면 이 샷이 다시 생성됩니다.",
         "transitions": {
           "hardCut": "하드 컷",
           "dissolve": "디졸브",

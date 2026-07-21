@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "あなたが言うこと",
           "onScreenText": "画面上のテキスト",
+          "nudges": "このショットは何をすべきでしょうか?",
+          "nudgeNote": "他に何かありますか？",
           "technique": "撮影方法",
           "transition": "次のショットにカットします",
           "productVisible": "製品が表示されるとき"
@@ -406,9 +408,18 @@
         "placeholders": {
           "dialogue": "このショットにはセリフはありません",
           "onScreenText": "キャプションなし",
+          "nudgeNote": "自分の言葉で説明してください",
           "technique": "Lumi にショットを選んでもらいましょう"
         },
-        "advanced": "上級者向け",
+        "nudgeLabels": {
+          "closerProduct": "製品をもっと詳しく見る",
+          "wholeScene": "シーン全体を表示する",
+          "focusPerson": "その人に焦点を当てる",
+          "moreEnergy": "より多くのエネルギー",
+          "slowLingering": "ゆっくりと長引く"
+        },
+        "proMode": "プロモード",
+        "proHint": "タップやメモを変更すると、このショットが再生成されます。",
         "transitions": {
           "hardCut": "ハードカット",
           "dissolve": "溶解する",

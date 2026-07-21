@@ -399,6 +399,8 @@
         "fields": {
           "dialogue": "O que você diz",
           "onScreenText": "Texto na tela",
+          "nudges": "O que essa foto deve fazer?",
+          "nudgeNote": "Mais alguma coisa?",
           "technique": "Como é filmado",
           "transition": "Corta para a próxima cena",
           "productVisible": "Quando o produto mostra"
@@ -406,9 +408,18 @@
         "placeholders": {
           "dialogue": "Nenhuma linha falada para esta foto",
           "onScreenText": "Sem legenda",
+          "nudgeNote": "Descreva com suas próprias palavras",
           "technique": "Deixe Lumi escolher a foto"
         },
-        "advanced": "Avançado",
+        "nudgeLabels": {
+          "closerProduct": "Mais perto do produto",
+          "wholeScene": "Mostre toda a cena",
+          "focusPerson": "Concentre-se na pessoa",
+          "moreEnergy": "Mais energia",
+          "slowLingering": "Lento e persistente"
+        },
+        "proMode": "Modo profissional",
+        "proHint": "Alterar um toque ou nota gera esta cena novamente.",
         "transitions": {
           "hardCut": "Corte duro",
           "dissolve": "Dissolver",
