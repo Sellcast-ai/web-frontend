@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi เรียนรู้เฉพาะ vibe & energy: จังหวะและอารมณ์สำหรับสินค้าของคุณ ไม่คัดลอกช็อตเดิม",
         "uploadHelper": "ใช้ URL MP4, MOV หรือ WebM โดยตรงจากคลิปที่คุณอัปโหลดแล้ว Lumi เรียนรู้เฉพาะ vibe & energy ไม่คัดลอกช็อตเดิม",
-        "invalidUrl": "ป้อนลิงก์ http(s) ที่ถูกต้อง"
+        "invalidUrl": "วางลิงก์วิดีโอ TikTok หรือโซเชียลที่รองรับ",
+        "invalidUpload": "ป้อนลิงก์ MP4, MOV หรือ WebM โดยตรง"
       },
       "modes": {
         "aiAvatar": {
@@ -414,6 +415,8 @@
         "fields": {
           "dialogue": "สิ่งที่คุณพูด",
           "onScreenText": "ข้อความบนหน้าจอ",
+          "nudges": "ช็อตนี้ควรทำอย่างไร?",
+          "nudgeNote": "มีอะไรอีกไหม?",
           "technique": "มันถ่ายทำยังไง.",
           "transition": "ตัดไปที่ช็อตถัดไป",
           "productVisible": "เมื่อสินค้าแสดง"
@@ -421,9 +424,18 @@
         "placeholders": {
           "dialogue": "ไม่มีคำพูดใดๆ สำหรับช็อตนี้",
           "onScreenText": "ไม่มีคำอธิบายภาพ",
+          "nudgeNote": "อธิบายด้วยคำพูดของคุณเอง",
           "technique": "ให้ Lumi เลือกช็อตครับ"
         },
-        "advanced": "ขั้นสูง",
+        "nudgeLabels": {
+          "closerProduct": "ใกล้ชิดกับผลิตภัณฑ์มากขึ้น",
+          "wholeScene": "แสดงฉากทั้งหมด",
+          "focusPerson": "มุ่งเน้นไปที่บุคคล",
+          "moreEnergy": "พลังงานมากขึ้น",
+          "slowLingering": "ช้าและเอ้อระเหย"
+        },
+        "proMode": "โหมดโปร",
+        "proHint": "การเปลี่ยนการแตะหรือโน้ตจะสร้างช็อตนี้ใหม่",
         "transitions": {
           "hardCut": "ตัดยาก",
           "dissolve": "ละลาย",

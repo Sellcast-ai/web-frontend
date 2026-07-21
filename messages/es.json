@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi aprende solo vibra y energía: ritmo y ambiente para tu producto, no las tomas originales.",
         "uploadHelper": "Usa una URL directa de MP4, MOV o WebM de un clip que ya subiste. Lumi aprende solo vibra y energía, no las tomas originales.",
-        "invalidUrl": "Ingresa un enlace http(s) válido."
+        "invalidUrl": "Pega un enlace de video compatible de TikTok o redes sociales.",
+        "invalidUpload": "Ingresa un enlace directo de MP4, MOV o WebM."
       },
       "modes": {
         "aiAvatar": {
@@ -414,6 +415,8 @@
         "fields": {
           "dialogue": "lo que dices",
           "onScreenText": "Texto en pantalla",
+          "nudges": "¿Qué debería hacer esta inyección?",
+          "nudgeNote": "¿Algo más?",
           "technique": "como se filma",
           "transition": "Pasar a la siguiente toma",
           "productVisible": "Cuando el producto se muestra"
@@ -421,9 +424,18 @@
         "placeholders": {
           "dialogue": "No hay línea hablada para esta toma.",
           "onScreenText": "Sin título",
+          "nudgeNote": "Descríbelo con tus propias palabras.",
           "technique": "Deja que Lumi elija la toma."
         },
-        "advanced": "Avanzado",
+        "nudgeLabels": {
+          "closerProduct": "Más cerca del producto",
+          "wholeScene": "Mostrar toda la escena",
+          "focusPerson": "Centrarse en la persona",
+          "moreEnergy": "Más energía",
+          "slowLingering": "Lento y persistente"
+        },
+        "proMode": "modo profesional",
+        "proHint": "Cambiar un toque o una nota vuelve a generar esta toma.",
         "transitions": {
           "hardCut": "corte duro",
           "dissolve": "disolver",

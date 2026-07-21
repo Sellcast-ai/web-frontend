@@ -286,7 +286,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi learns vibe & energy only: pacing and mood for your product, not the original shots.",
         "uploadHelper": "Use a direct MP4, MOV, or WebM URL from a clip you already uploaded. Lumi learns vibe & energy only, not the original shots.",
-        "invalidUrl": "Enter a valid http(s) link."
+        "invalidUrl": "Paste a supported TikTok or social video link.",
+        "invalidUpload": "Enter a direct MP4, MOV, or WebM link."
       },
       "modes": {
         "aiAvatar": {
@@ -420,6 +421,8 @@
         "fields": {
           "dialogue": "What you say",
           "onScreenText": "On-screen text",
+          "nudges": "What should this shot do?",
+          "nudgeNote": "Anything else?",
           "technique": "How it's filmed",
           "transition": "Cut to the next shot",
           "productVisible": "When the product shows"
@@ -427,9 +430,18 @@
         "placeholders": {
           "dialogue": "No spoken line for this shot",
           "onScreenText": "No caption",
+          "nudgeNote": "Describe it in your own words",
           "technique": "Let Lumi choose the shot"
         },
-        "advanced": "Advanced",
+        "nudgeLabels": {
+          "closerProduct": "Closer on the product",
+          "wholeScene": "Show the whole scene",
+          "focusPerson": "Focus on the person",
+          "moreEnergy": "More energy",
+          "slowLingering": "Slow & lingering"
+        },
+        "proMode": "Pro mode",
+        "proHint": "Changing a tap or note re-derives this shot.",
         "transitions": {
           "hardCut": "Hard cut",
           "dissolve": "Dissolve",

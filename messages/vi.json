@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi chỉ học vibe & năng lượng: nhịp độ và tâm trạng cho sản phẩm của bạn, không sao chép các cảnh gốc.",
         "uploadHelper": "Dùng URL MP4, MOV hoặc WebM trực tiếp từ clip bạn đã tải lên. Lumi chỉ học vibe & năng lượng, không sao chép các cảnh gốc.",
-        "invalidUrl": "Nhập liên kết http(s) hợp lệ."
+        "invalidUrl": "Dán liên kết video TikTok hoặc mạng xã hội được hỗ trợ.",
+        "invalidUpload": "Nhập liên kết trực tiếp MP4, MOV hoặc WebM."
       },
       "modes": {
         "aiAvatar": {
@@ -414,6 +415,8 @@
         "fields": {
           "dialogue": "Những gì bạn nói",
           "onScreenText": "Văn bản trên màn hình",
+          "nudges": "Cú đánh này nên làm gì?",
+          "nudgeNote": "Còn gì nữa không?",
           "technique": "Nó được quay như thế nào",
           "transition": "Cắt sang cảnh tiếp theo",
           "productVisible": "Khi sản phẩm hiển thị"
@@ -421,9 +424,18 @@
         "placeholders": {
           "dialogue": "Không có lời thoại nào cho ảnh này",
           "onScreenText": "Không có chú thích",
+          "nudgeNote": "Hãy mô tả nó bằng lời của bạn",
           "technique": "Hãy để Lumi chọn cảnh quay"
         },
-        "advanced": "Nâng cao",
+        "nudgeLabels": {
+          "closerProduct": "Gần gũi hơn với sản phẩm",
+          "wholeScene": "Hiển thị toàn cảnh",
+          "focusPerson": "Tập trung vào người",
+          "moreEnergy": "Thêm năng lượng",
+          "slowLingering": "Chậm và kéo dài"
+        },
+        "proMode": "Chế độ chuyên nghiệp",
+        "proHint": "Thay đổi một lựa chọn hoặc ghi chú sẽ tạo lại cảnh quay này.",
         "transitions": {
           "hardCut": "Cắt cứng",
           "dissolve": "hòa tan",

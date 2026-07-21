@@ -189,15 +189,37 @@ export type ShotTransition = "cut" | "dissolve" | "slide" | "fade" | "match_cut"
 /** When the product is on screen during a shot (storyboard-review signal). */
 export type ProductVisibility = "start" | "throughout" | "end" | "none";
 
+/** The plain-language outcome taps the seller picks per shot; the backend
+ * DERIVES the raw camera fields from these (deterministic map in
+ * `script_generation.OUTCOME_NUDGES`), so the value strings must match it
+ * exactly. */
+export type OutcomeNudge =
+  | "Closer on the product"
+  | "Show the whole scene"
+  | "Focus on the person"
+  | "More energy"
+  | "Slow & lingering";
+
+export const OUTCOME_NUDGES: OutcomeNudge[] = [
+  "Closer on the product",
+  "Show the whole scene",
+  "Focus on the person",
+  "More energy",
+  "Slow & lingering",
+];
+
 /** One shot in the storyboard (VideoScript.shots[]). Mirrors backend
  * `script_generation.Shot`. `technique`/`transition_out`/`product_visible`
- * default on legacy scripts, so treat them as always-present. */
+ * are derived from `outcome_nudges`/`nudge_note` (the main-path controls) and
+ * default on legacy scripts, so treat them all as always-present. */
 export interface Shot {
   duration: 10 | 15;
   visual: string;
   dialogue: string | null;
   ambient_audio: string;
   on_screen_text: string | null;
+  outcome_nudges: OutcomeNudge[];
+  nudge_note: string;
   technique: string;
   transition_out: ShotTransition;
   product_visible: ProductVisibility;

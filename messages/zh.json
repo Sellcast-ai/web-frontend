@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "Lumi 只学习氛围和能量：节奏与情绪会用于你的产品，不复制原视频镜头。",
         "uploadHelper": "使用你已上传片段的直接 MP4、MOV 或 WebM URL。Lumi 只学习氛围和能量，不复制原视频镜头。",
-        "invalidUrl": "请输入有效的 http(s) 链接。"
+        "invalidUrl": "请粘贴受支持的 TikTok 或社交媒体视频链接。",
+        "invalidUpload": "请输入 MP4、MOV 或 WebM 的直接链接。"
       },
       "modes": {
         "aiAvatar": {
@@ -414,6 +415,8 @@
         "fields": {
           "dialogue": "你说什么",
           "onScreenText": "屏幕上的文字",
+          "nudges": "这个镜头应该做什么？",
+          "nudgeNote": "还有别的吗？",
           "technique": "是如何拍摄的",
           "transition": "切到下一个镜头",
           "productVisible": "当产品展示时"
@@ -421,9 +424,18 @@
         "placeholders": {
           "dialogue": "这张照片没有台词",
           "onScreenText": "无标题",
+          "nudgeNote": "用你自己的话描述一下",
           "technique": "让Lumi选择镜头"
         },
-        "advanced": "高级",
+        "nudgeLabels": {
+          "closerProduct": "更接近产品",
+          "wholeScene": "显示整个场景",
+          "focusPerson": "专注于人",
+          "moreEnergy": "更多能量",
+          "slowLingering": "缓慢而缠绵"
+        },
+        "proMode": "专业模式",
+        "proHint": "更改点选项或备注会重新生成此镜头。",
         "transitions": {
           "hardCut": "硬切",
           "dissolve": "溶解",

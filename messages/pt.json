@@ -280,7 +280,8 @@
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
         "linkHelper": "A Lumi aprende só vibe e energia: ritmo e clima para o seu produto, não as cenas originais.",
         "uploadHelper": "Use uma URL direta de MP4, MOV ou WebM de um clipe que você já enviou. A Lumi aprende só vibe e energia, não as cenas originais.",
-        "invalidUrl": "Insira um link http(s) válido."
+        "invalidUrl": "Cole um link de vídeo compatível do TikTok ou de redes sociais.",
+        "invalidUpload": "Insira um link direto de MP4, MOV ou WebM."
       },
       "modes": {
         "aiAvatar": {
@@ -414,6 +415,8 @@
         "fields": {
           "dialogue": "O que você diz",
           "onScreenText": "Texto na tela",
+          "nudges": "O que essa foto deve fazer?",
+          "nudgeNote": "Mais alguma coisa?",
           "technique": "Como é filmado",
           "transition": "Corta para a próxima cena",
           "productVisible": "Quando o produto mostra"
@@ -421,9 +424,18 @@
         "placeholders": {
           "dialogue": "Nenhuma linha falada para esta foto",
           "onScreenText": "Sem legenda",
+          "nudgeNote": "Descreva com suas próprias palavras",
           "technique": "Deixe Lumi escolher a foto"
         },
-        "advanced": "Avançado",
+        "nudgeLabels": {
+          "closerProduct": "Mais perto do produto",
+          "wholeScene": "Mostre toda a cena",
+          "focusPerson": "Concentre-se na pessoa",
+          "moreEnergy": "Mais energia",
+          "slowLingering": "Lento e persistente"
+        },
+        "proMode": "Modo profissional",
+        "proHint": "Alterar um toque ou nota gera esta cena novamente.",
         "transitions": {
           "hardCut": "Corte duro",
           "dissolve": "Dissolver",
