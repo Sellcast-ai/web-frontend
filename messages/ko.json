@@ -240,13 +240,14 @@
       "loading": "로드 중…",
       "sections": {
         "vibe": "1 · 분위기는 어떤가요?",
-        "mode": "2 · 모드",
+        "reference": "2 · 이런 느낌으로",
+        "mode": "3 · 모드",
         "presenter": "발표자",
-        "duration": "3 · 기간",
+        "duration": "4 · 기간",
         "model": "모델",
         "resolution": "해상도",
-        "language": "4 · 언어",
-        "review": "5 · 검토"
+        "language": "5 · 언어",
+        "review": "6 · 검토"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "클린 데모",
           "blurb": "꾸준하고 명확함 - 제품이 말을 합니다."
         }
+      },
+      "reference": {
+        "linkTab": "링크 붙여넣기",
+        "uploadTab": "업로드한 클립",
+        "linkLabel": "참고 영상 링크",
+        "uploadLabel": "업로드한 클립 링크",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi는 분위기와 에너지, 즉 제품에 맞는 속도와 무드만 학습하며 원본 장면은 복사하지 않습니다.",
+        "uploadHelper": "최대 50MB의 비공개 클립(MP4, MOV 또는 WebM)을 업로드하세요. 루미는 원본 샷이 아닌 바이브와 에너지만 학습합니다.",
+        "invalidUrl": "지원되는 TikTok 또는 소셜 동영상 링크를 붙여넣으세요.",
+        "invalidUpload": "MP4, MOV 또는 WebM 직접 링크를 입력하세요.",
+        "uploadCta": "비디오 파일을 선택하세요",
+        "uploadReplace": "바꾸다",
+        "uploadRemove": "제거하다",
+        "uploadTypeError": "MP4, MOV 또는 WebM 비디오를 선택합니다.",
+        "uploadSizeError": "해당 클립은 50MB 제한을 초과했습니다.",
+        "uploadFailed": "업로드가 완료되지 않았습니다. 다시 시도해 주세요."
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "해상도",
         "language": "언어",
         "format": "형식",
+        "reference": "참고",
+        "referenceAdded": "추가됨",
+        "referenceNone": "없음",
         "review": "검토",
         "storyboard": "스토리보드"
       },
       "usageSummary": "이번 달에 남은 크레딧 중 {limit} 크레딧 중 {remaining} · 이 동영상에서는 {duration}를 사용합니다.",
       "generateVideo": "비디오 생성",
+      "generateUploading": "참조 업로드 중…",
       "outOfQuota": "{duration} 동영상의 크레딧이 부족합니다({limit} 중 {remaining} 왼쪽).",
       "seePlans": "요금제 보기",
       "pickProduct": {

@@ -240,13 +240,14 @@
       "loading": "読み込み中…",
       "sections": {
         "vibe": "1・どんな雰囲気ですか？",
-        "mode": "2・モード",
+        "reference": "2・この雰囲気にする",
+        "mode": "3・モード",
         "presenter": "プレゼンター",
-        "duration": "3・期間",
+        "duration": "4・期間",
         "model": "モデル",
         "resolution": "解像度",
-        "language": "4・言語",
-        "review": "5・レビュー"
+        "language": "5・言語",
+        "review": "6・レビュー"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "クリーンなデモ",
           "blurb": "安定して明確 — 製品が語りかけます。"
         }
+      },
+      "reference": {
+        "linkTab": "リンクを貼る",
+        "uploadTab": "アップロード済みクリップ",
+        "linkLabel": "参考動画リンク",
+        "uploadLabel": "アップロード済みクリップのリンク",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi は雰囲気とエネルギーだけを学びます。あなたの商品向けのテンポとムードで、元のショットはコピーしません。",
+        "uploadHelper": "最大 50MB のプライベート クリップ (MP4、MOV、または WebM) をアップロードします。Lumiはバイブとエネルギーのみを学習し、オリジナルのショットは学習しません。",
+        "invalidUrl": "対応している TikTok またはソーシャル動画のリンクを貼り付けてください。",
+        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力してください。",
+        "uploadCta": "ビデオファイルを選択してください",
+        "uploadReplace": "交換する",
+        "uploadRemove": "取り除く",
+        "uploadTypeError": "MP4、MOV、または WebM ビデオを選択します。",
+        "uploadSizeError": "そのクリップは 50MB の制限を超えています。",
+        "uploadFailed": "アップロードが完了しませんでした。もう一度試してください。"
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "解像度",
         "language": "言語",
         "format": "フォーマット",
+        "reference": "参考",
+        "referenceAdded": "追加済み",
+        "referenceNone": "なし",
         "review": "レビュー",
         "storyboard": "絵コンテ"
       },
       "usageSummary": "今月は {limit} クレジット中 {remaining} クレジットが残っています · このビデオは {duration} を使用しています",
       "generateVideo": "ビデオの生成",
+      "generateUploading": "参照をアップロード中…",
       "outOfQuota": "{duration} のビデオのクレジットが足りません ({remaining}/{limit} が残っています)。",
       "seePlans": "プランを見る",
       "pickProduct": {

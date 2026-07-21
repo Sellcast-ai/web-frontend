@@ -240,13 +240,14 @@
       "loading": "Carregando…",
       "sections": {
         "vibe": "1 · Qual é a vibe?",
-        "mode": "2 · Modo",
+        "reference": "2 · Faça parecido com isto",
+        "mode": "3 · Modo",
         "presenter": "Apresentador",
-        "duration": "3 · Duração",
+        "duration": "4 · Duração",
         "model": "Modelo",
         "resolution": "Resolução",
-        "language": "4 · Idioma",
-        "review": "5 · Revisão"
+        "language": "5 · Idioma",
+        "review": "6 · Revisão"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "Demonstração limpa",
           "blurb": "Estável e claro – o produto fala."
         }
+      },
+      "reference": {
+        "linkTab": "Colar link",
+        "uploadTab": "Clipe enviado",
+        "linkLabel": "Link do vídeo de referência",
+        "uploadLabel": "Link do clipe enviado",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "A Lumi aprende só vibe e energia: ritmo e clima para o seu produto, não as cenas originais.",
+        "uploadHelper": "Carregue um clipe privado (MP4, MOV ou WebM), de até 50 MB. Lumi aprende apenas vibração e energia, não as cenas originais.",
+        "invalidUrl": "Cole um link de vídeo compatível do TikTok ou de redes sociais.",
+        "invalidUpload": "Insira um link direto de MP4, MOV ou WebM.",
+        "uploadCta": "Escolha um arquivo de vídeo",
+        "uploadReplace": "Substituir",
+        "uploadRemove": "Remover",
+        "uploadTypeError": "Escolha um vídeo MP4, MOV ou WebM.",
+        "uploadSizeError": "Esse clipe ultrapassou o limite de 50 MB.",
+        "uploadFailed": "O upload não foi concluído. Por favor, tente novamente."
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "Resolução",
         "language": "Idioma",
         "format": "Formato",
+        "reference": "Referência",
+        "referenceAdded": "Adicionada",
+        "referenceNone": "Nenhuma",
         "review": "Revisão",
         "storyboard": "Roteiro"
       },
       "usageSummary": "{remaining} dos créditos {limit} restantes este mês · este vídeo usa {duration}",
       "generateVideo": "Gerar vídeo",
+      "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
       "seePlans": "Ver planos",
       "pickProduct": {

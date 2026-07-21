@@ -16,6 +16,7 @@ import type {
   LikeStatus,
   UserProfileUpdate,
   Usage,
+  ReferencePresign,
 } from "./types";
 
 export class ApiError extends Error {
@@ -88,6 +89,36 @@ export function bffUpload<T>(
   });
 }
 
+/**
+ * PUT raw file bytes directly to a presigned storage URL (R2/S3), bypassing the
+ * BFF and the app server so large clips don't hit serverless body limits.
+ * `Content-Type` must match what the presign was issued for. Progress via XHR;
+ * `onProgress` receives the uploaded fraction in [0, 1].
+ */
+function putFileWithProgress(
+  url: string,
+  file: File,
+  onProgress?: (fraction: number) => void,
+): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("PUT", url);
+    xhr.setRequestHeader("Content-Type", file.type);
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
+    };
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve();
+        return;
+      }
+      reject(new ApiError(xhr.status, xhr.statusText || "Upload failed"));
+    };
+    xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
+    xhr.send(file);
+  });
+}
+
 export const api = {
   /* --- products --- */
   listProducts: (
@@ -142,6 +173,20 @@ export const api = {
   getVideoJob: (id: string) => bff<VideoJob>(`video-jobs/${id}`),
   createVideoJob: (payload: VideoJobCreate) =>
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
+  uploadReferenceVideo: async (
+    file: File,
+    onProgress?: (fraction: number) => void,
+  ): Promise<{ url: string }> => {
+    const { upload_url, public_url } = await bff<ReferencePresign>(
+      `uploads/reference-video/presign`,
+      {
+        method: "POST",
+        json: { filename: file.name, content_type: file.type, size: file.size },
+      },
+    );
+    await putFileWithProgress(upload_url, file, onProgress);
+    return { url: public_url };
+  },
   deleteVideoJob: (id: string) =>
     bff<void>(`video-jobs/${id}`, { method: "DELETE" }),
   retryVideoJob: (id: string) =>

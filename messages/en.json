@@ -246,13 +246,14 @@
       "loading": "Loading…",
       "sections": {
         "vibe": "1 · What's the vibe?",
-        "mode": "2 · Mode",
+        "reference": "2 · Make it like this",
+        "mode": "3 · Mode",
         "presenter": "Presenter",
-        "duration": "3 · Duration",
+        "duration": "4 · Duration",
         "model": "Model",
         "resolution": "Resolution",
-        "language": "4 · Language",
-        "review": "5 · Review"
+        "language": "5 · Language",
+        "review": "6 · Review"
       },
       "vibes": {
         "premiumClean": {
@@ -275,6 +276,24 @@
           "label": "Clean demo",
           "blurb": "Steady and clear — the product does the talking."
         }
+      },
+      "reference": {
+        "linkTab": "Paste link",
+        "uploadTab": "Uploaded clip",
+        "linkLabel": "Reference video link",
+        "uploadLabel": "Uploaded clip link",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi learns vibe & energy only: pacing and mood for your product, not the original shots.",
+        "uploadHelper": "Upload a private clip (MP4, MOV, or WebM), up to 50MB. Lumi learns vibe & energy only, not the original shots.",
+        "invalidUrl": "Paste a supported TikTok or social video link.",
+        "invalidUpload": "Enter a direct MP4, MOV, or WebM link.",
+        "uploadCta": "Choose a video file",
+        "uploadReplace": "Replace",
+        "uploadRemove": "Remove",
+        "uploadTypeError": "Choose an MP4, MOV, or WebM video.",
+        "uploadSizeError": "That clip is over the 50MB limit.",
+        "uploadFailed": "Upload didn’t finish. Please try again."
       },
       "modes": {
         "aiAvatar": {
@@ -325,11 +344,15 @@
         "resolution": "Resolution",
         "language": "Language",
         "format": "Format",
+        "reference": "Reference",
+        "referenceAdded": "Added",
+        "referenceNone": "None",
         "review": "Review",
         "storyboard": "Storyboard"
       },
       "usageSummary": "{remaining} of {limit} credits left this month · this video uses {duration}",
       "generateVideo": "Generate video",
+      "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for a {duration}s video ({remaining} of {limit} left).",
       "seePlans": "See plans",
       "pickProduct": {
@@ -769,7 +792,12 @@
           "note": "no card",
           "allowance": "Your first video free",
           "credits": "20 credits, one-time",
-          "features": ["720p · 9:16 export", "Marketplace access", "Auto-QA rendering", "Lumi watermark"],
+          "features": [
+            "720p · 9:16 export",
+            "Marketplace access",
+            "Auto-QA rendering",
+            "Lumi watermark"
+          ],
           "cta": "Start free"
         },
         "creator": {
@@ -777,7 +805,12 @@
           "note": "per month",
           "allowance": "≈ 3 videos / mo",
           "credits": "75 credits / mo",
-          "features": ["No watermark", "Beat-by-beat review", "Avatar + product modes", "720p · 9:16 export"],
+          "features": [
+            "No watermark",
+            "Beat-by-beat review",
+            "Avatar + product modes",
+            "720p · 9:16 export"
+          ],
           "cta": "Start Creator"
         },
         "pro": {
@@ -785,7 +818,11 @@
           "note": "per month",
           "allowance": "≈ 10 videos / mo",
           "credits": "200 credits / mo",
-          "features": ["Everything in Creator", "More credits, same per-video cost", "Priority over free renders"],
+          "features": [
+            "Everything in Creator",
+            "More credits, same per-video cost",
+            "Priority over free renders"
+          ],
           "cta": "Start Pro"
         },
         "scale": {
@@ -793,7 +830,11 @@
           "note": "per month",
           "allowance": "≈ 25 videos / mo",
           "credits": "500 credits / mo",
-          "features": ["Everything in Pro", "For always-on posting", "Highest self-serve volume"],
+          "features": [
+            "Everything in Pro",
+            "For always-on posting",
+            "Highest self-serve volume"
+          ],
           "cta": "Start Scale"
         },
         "enterprise": {
@@ -802,7 +843,12 @@
           "note": "for teams & agencies",
           "allowance": "Custom credit volume",
           "credits": "committed, wholesale rate",
-          "features": ["Seats & roles", "Brand kits", "API access", "SSO & dedicated support"],
+          "features": [
+            "Seats & roles",
+            "Brand kits",
+            "API access",
+            "SSO & dedicated support"
+          ],
           "cta": "Contact sales"
         }
       },
@@ -839,7 +885,17 @@
       "heroCheck1": "First video free",
       "heroCheck2": "No credit card",
       "heroCheck3": "Publish-ready 9:16",
-      "marquee": ["TikTok Shop", "Reels", "Beauty", "Home & Kitchen", "Fitness", "Gadgets", "Pets", "Fashion", "Supplements"],
+      "marquee": [
+        "TikTok Shop",
+        "Reels",
+        "Beauty",
+        "Home & Kitchen",
+        "Fitness",
+        "Gadgets",
+        "Pets",
+        "Fashion",
+        "Supplements"
+      ],
       "howKicker": "The Lumi pipeline",
       "howTitle": "Four stages, zero blank pages",
       "howSubtitle": "Most tools start from nothing. Lumi starts from what's already winning — then keeps you in control all the way to publish.",
@@ -912,16 +968,40 @@
       "useCasesKicker": "Who it's for",
       "useCasesTitle": "Made for everyone who sells with video",
       "useCases": {
-        "sellers": { "title": "Sellers", "body": "Scale your catalog — a converting video for every SKU, without a studio." },
-        "creators": { "title": "Creators", "body": "Spin TikTok Shop content in minutes and keep your posting streak alive." },
-        "brands": { "title": "Brands", "body": "Stay on-brand across hundreds of unique creatives, all at once." },
-        "agencies": { "title": "Agencies", "body": "Serve every client at volume with quality you don't have to babysit." }
+        "sellers": {
+          "title": "Sellers",
+          "body": "Scale your catalog — a converting video for every SKU, without a studio."
+        },
+        "creators": {
+          "title": "Creators",
+          "body": "Spin TikTok Shop content in minutes and keep your posting streak alive."
+        },
+        "brands": {
+          "title": "Brands",
+          "body": "Stay on-brand across hundreds of unique creatives, all at once."
+        },
+        "agencies": {
+          "title": "Agencies",
+          "body": "Serve every client at volume with quality you don't have to babysit."
+        }
       },
       "stats": {
-        "ways": { "value": "5 ways", "label": "to start: Amazon, Shopee, TikTok Shop, your store, or photos" },
-        "ratio": { "value": "9:16", "label": "publish-ready for TikTok & Reels, every time" },
-        "credit": { "value": "1 credit", "label": "= 1 second of video — only pay for what you render" },
-        "spend": { "value": "$0", "label": "render spend until you approve the beats" }
+        "ways": {
+          "value": "5 ways",
+          "label": "to start: Amazon, Shopee, TikTok Shop, your store, or photos"
+        },
+        "ratio": {
+          "value": "9:16",
+          "label": "publish-ready for TikTok & Reels, every time"
+        },
+        "credit": {
+          "value": "1 credit",
+          "label": "= 1 second of video — only pay for what you render"
+        },
+        "spend": {
+          "value": "$0",
+          "label": "render spend until you approve the beats"
+        }
       },
       "pricingKicker": "Pricing",
       "pricingTitle": "Start free. Scale when it's working.",
@@ -932,21 +1012,35 @@
           "name": "Creator",
           "price": "$29",
           "note": "/ mo",
-          "features": ["≈ 3 videos / mo · 75 credits", "No watermark", "Beat-by-beat review", "Avatar + product modes"],
+          "features": [
+            "≈ 3 videos / mo · 75 credits",
+            "No watermark",
+            "Beat-by-beat review",
+            "Avatar + product modes"
+          ],
           "cta": "Start Creator"
         },
         "pro": {
           "name": "Pro",
           "price": "$79",
           "note": "/ mo",
-          "features": ["≈ 10 videos / mo · 200 credits", "Everything in Creator", "Priority over free renders", "720p · 9:16 export"],
+          "features": [
+            "≈ 10 videos / mo · 200 credits",
+            "Everything in Creator",
+            "Priority over free renders",
+            "720p · 9:16 export"
+          ],
           "cta": "Start Pro"
         },
         "scale": {
           "name": "Scale",
           "price": "$199",
           "note": "/ mo",
-          "features": ["≈ 25 videos / mo · 500 credits", "Everything in Pro", "For always-on posting"],
+          "features": [
+            "≈ 25 videos / mo · 500 credits",
+            "Everything in Pro",
+            "For always-on posting"
+          ],
           "cta": "Start Scale"
         }
       },
@@ -990,37 +1084,61 @@
           "kicker": "Source",
           "title": "Link to Video",
           "body": "Paste a product link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product, its angle, and its proof points, then handles framing, script, voice, and edit automatically. Your products stay private to you.",
-          "bullets": ["Any link — Amazon, Shopee, TikTok Shop, or your own store", "Or upload your own product photos", "Or browse the marketplace of trending picks for ideas"]
+          "bullets": [
+            "Any link — Amazon, Shopee, TikTok Shop, or your own store",
+            "Or upload your own product photos",
+            "Or browse the marketplace of trending picks for ideas"
+          ]
         },
         "scripts": {
           "kicker": "Script",
           "title": "Pattern-grounded scripts",
           "body": "Before writing a word, Lumi studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — the hook, proof, and CTA shapes that actually convert. Your script is built on that, never a blank page.",
-          "bullets": ["Learns structure from filtered organic winners in your category", "Hook / proof / offer beats, not copy-pasted execution", "Audience language modeled from those top-performers"]
+          "bullets": [
+            "Learns structure from filtered organic winners in your category",
+            "Hook / proof / offer beats, not copy-pasted execution",
+            "Audience language modeled from those top-performers"
+          ]
         },
         "review": {
           "kicker": "Control",
           "title": "Beat-by-beat review",
           "body": "Lumi generates a reference image for every beat first. Approve the shots you love, regenerate the ones you don't — and only then does it spend render time. Prefer hands-off? Auto-QA approves beats for you.",
-          "bullets": ["A reference frame per shot before any render burns", "Approve or regenerate, beat by beat", "Optional auto-QA for a zero-click flow"]
+          "bullets": [
+            "A reference frame per shot before any render burns",
+            "Approve or regenerate, beat by beat",
+            "Optional auto-QA for a zero-click flow"
+          ]
         },
         "modes": {
           "kicker": "Format",
           "title": "Avatar & product modes",
           "body": "Choose an AI presenter talking to camera, or a clean product-only showcase — eight ready-made styles spanning talking intros, demos, testimonials, unboxings, and offer-focused cuts.",
-          "bullets": ["AI Avatar or Product-Only", "8 styles tuned for commerce", "10–30 second lengths, 9:16 native"]
+          "bullets": [
+            "AI Avatar or Product-Only",
+            "8 styles tuned for commerce",
+            "10–30 second lengths, 9:16 native"
+          ]
         },
         "qa": {
           "kicker": "Quality",
           "title": "Auto dialogue QA",
           "body": "After each beat renders, Whisper transcribes the spoken line and checks it against the script, flagging drift. The voice always says what it's supposed to — no off-script surprises.",
-          "bullets": ["Whisper transcription on every rendered line", "Drift score against the intended script", "Catches off-script audio before you post"]
+          "bullets": [
+            "Whisper transcription on every rendered line",
+            "Drift score against the intended script",
+            "Catches off-script audio before you post"
+          ]
         },
         "publish": {
           "kicker": "Ship",
           "title": "Captions & publish",
           "body": "Captions are burned in and the cut is sized 9:16 for TikTok and Reels — ready to download or mark posted, so your stats stay tidy.",
-          "bullets": ["Auto-burned captions", "Publish-ready 9:16 export", "Track posted vs. drafted in My Videos"]
+          "bullets": [
+            "Auto-burned captions",
+            "Publish-ready 9:16 export",
+            "Track posted vs. drafted in My Videos"
+          ]
         }
       }
     },
@@ -1036,13 +1154,20 @@
           "name": "Seedance 2.0",
           "tag": "Live",
           "desc": "Fast, lifelike motion for product and avatar shots — Lumi's render engine for every beat, with audio generated per shot.",
-          "bestFor": ["Product motion", "Avatar talking", "Speed"]
+          "bestFor": [
+            "Product motion",
+            "Avatar talking",
+            "Speed"
+          ]
         },
         "more": {
           "name": "More on the way",
           "tag": "Soon",
           "desc": "We're adding frontier video models as they prove out. Your scripts and approved beats are model-agnostic, so they carry over with no redo.",
-          "bestFor": ["Roadmap", "No redo"]
+          "bestFor": [
+            "Roadmap",
+            "No redo"
+          ]
         }
       },
       "points": {

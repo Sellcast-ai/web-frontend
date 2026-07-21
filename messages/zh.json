@@ -240,13 +240,14 @@
       "loading": "加载中...",
       "sections": {
         "vibe": "1·气氛如何？",
-        "mode": "2·模式",
+        "reference": "2·做成这种感觉",
+        "mode": "3·模式",
         "presenter": "主持人",
-        "duration": "3·持续时间",
+        "duration": "4·持续时间",
         "model": "型号",
         "resolution": "分辨率",
-        "language": "4·语言",
-        "review": "5·回顾"
+        "language": "5·语言",
+        "review": "6·回顾"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "干净的演示",
           "blurb": "稳定、清晰——产品说话。"
         }
+      },
+      "reference": {
+        "linkTab": "粘贴链接",
+        "uploadTab": "已上传片段",
+        "linkLabel": "参考视频链接",
+        "uploadLabel": "已上传片段链接",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi 只学习氛围和能量：节奏与情绪会用于你的产品，不复制原视频镜头。",
+        "uploadHelper": "上传私人剪辑（MP4、MOV 或 WebM），最大 50MB。 Lumi 只学习氛围和能量，而不是原始镜头。",
+        "invalidUrl": "请粘贴受支持的 TikTok 或社交媒体视频链接。",
+        "invalidUpload": "请输入 MP4、MOV 或 WebM 的直接链接。",
+        "uploadCta": "选择视频文件",
+        "uploadReplace": "替换",
+        "uploadRemove": "移除",
+        "uploadTypeError": "选择 MP4、MOV 或 WebM 视频。",
+        "uploadSizeError": "该剪辑超过了 50MB 限制。",
+        "uploadFailed": "上传未完成。请再试一次。"
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "分辨率",
         "language": "语言",
         "format": "格式",
+        "reference": "参考",
+        "referenceAdded": "已添加",
+        "referenceNone": "无",
         "review": "评论",
         "storyboard": "故事板"
       },
       "usageSummary": "{limit} 的学分本月剩余 {remaining} · 该视频使用 {duration}",
       "generateVideo": "生成视频",
+      "generateUploading": "正在上传参考…",
       "outOfQuota": "{duration} 视频的学分不足（剩余 {limit} 的 {remaining}）。",
       "seePlans": "查看计划",
       "pickProduct": {

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -12,8 +12,11 @@ import {
   Loader2,
   Eye,
   Store,
+  Link2,
+  Upload,
 } from "lucide-react";
 import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks";
+import { api } from "@/lib/api/client";
 import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
@@ -51,6 +54,8 @@ type StudioOptionKeys = {
   label: string;
   blurb: string;
 };
+
+type ReferenceMode = "link" | "upload";
 
 const VIBE_KEYS: Record<VideoVibe, StudioOptionKeys> = {
   premium_clean: { label: "vibes.premiumClean.label", blurb: "vibes.premiumClean.blurb" },
@@ -97,6 +102,10 @@ function StudioInner() {
 
   const [mode, setMode] = useState<VideoMode>("ai_avatar");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
+  const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
+  const [referenceUrl, setReferenceUrl] = useState("");
+  const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
+  const [referenceUploading, setReferenceUploading] = useState(false);
   const [duration, setDuration] = useState<VideoDuration>(15);
   // Style is no longer a manual pick — it auto-derives from mode (locked
   // decision #1). We still send it so the backend schema stays intact.
@@ -115,9 +124,23 @@ function StudioInner() {
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
+  const trimmedReferenceUrl = referenceUrl.trim();
+  const linkInvalid =
+    referenceMode === "link" &&
+    trimmedReferenceUrl.length > 0 &&
+    !isSupportedReferenceUrl(trimmedReferenceUrl);
+  // The reference actually sent depends on the active tab: a valid pasted link,
+  // or the R2 URL returned by a completed upload. Anything else sends nothing.
+  const activeReferenceUrl =
+    referenceMode === "link"
+      ? linkInvalid
+        ? ""
+        : trimmedReferenceUrl
+      : uploadedUrl ?? "";
+  const referenceReady = activeReferenceUrl.length > 0;
 
   async function generate() {
-    if (!productId) return;
+    if (!productId || linkInvalid || referenceUploading) return;
     // failure is surfaced as a toast by useCreateJob
     const job = await create
       .mutateAsync({
@@ -125,6 +148,7 @@ function StudioInner() {
         mode,
         style,
         vibe,
+        ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
@@ -177,6 +201,69 @@ function StudioInner() {
                   </p>
                 </button>
               ))}
+            </div>
+          </Section>
+
+          {/* reference — optional vibe/energy source, not shot-copying */}
+          <Section title={t("sections.reference")}>
+            <div className="rounded-card border border-border bg-card p-4">
+              <div className="flex flex-wrap gap-2">
+                <ReferenceModeButton
+                  active={referenceMode === "link"}
+                  onClick={() => setReferenceMode("link")}
+                  icon={<Link2 className="h-4 w-4" />}
+                  label={t("reference.linkTab")}
+                />
+                <ReferenceModeButton
+                  active={referenceMode === "upload"}
+                  onClick={() => setReferenceMode("upload")}
+                  icon={<Upload className="h-4 w-4" />}
+                  label={t("reference.uploadTab")}
+                />
+              </div>
+              {referenceMode === "link" ? (
+                <>
+                  <label className="mt-3 block">
+                    <span className="sr-only">{t("reference.linkLabel")}</span>
+                    <input
+                      type="url"
+                      inputMode="url"
+                      value={referenceUrl}
+                      onChange={(e) => setReferenceUrl(e.target.value)}
+                      placeholder={t("reference.linkPlaceholder")}
+                      className={cn(
+                        "w-full rounded-xl border bg-background px-3 py-2 text-sm text-ink outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-400",
+                        linkInvalid ? "border-rose" : "border-border",
+                      )}
+                    />
+                  </label>
+                  <div className="mt-2 flex items-start justify-between gap-3">
+                    <p className="text-xs text-muted-foreground">
+                      {t("reference.linkHelper")}
+                    </p>
+                    {trimmedReferenceUrl.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setReferenceUrl("")}
+                        className="shrink-0 text-xs font-semibold text-muted-foreground hover:text-ink"
+                      >
+                        {t("reference.uploadRemove")}
+                      </button>
+                    )}
+                  </div>
+                  {linkInvalid && (
+                    <p className="mt-2 text-xs font-semibold text-rose">
+                      {t("reference.invalidUrl")}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <ReferenceUpload
+                  uploadedUrl={uploadedUrl}
+                  onChange={setUploadedUrl}
+                  onUploadingChange={setReferenceUploading}
+                />
+              )}
             </div>
           </Section>
 
@@ -394,6 +481,10 @@ function StudioInner() {
                 value={t(VIBE_KEYS[vibe].label)}
               />
               <Row
+                label={t("summary.reference")}
+                value={referenceReady ? t("summary.referenceAdded") : t("summary.referenceNone")}
+              />
+              <Row
                 label={t("summary.mode")}
                 value={t(MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label")}
               />
@@ -433,10 +524,21 @@ function StudioInner() {
               size="lg"
               className="mt-2 w-full"
               onClick={generate}
-              disabled={create.isPending || !product || outOfQuota}
+              disabled={
+                create.isPending ||
+                !product ||
+                outOfQuota ||
+                linkInvalid ||
+                referenceUploading
+              }
             >
               {create.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
+              ) : referenceUploading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  {t("generateUploading")}
+                </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
@@ -460,6 +562,34 @@ function StudioInner() {
         </aside>
       </div>
     </div>
+  );
+}
+
+function ReferenceModeButton({
+  active,
+  onClick,
+  icon,
+  label,
+}: {
+  active: boolean;
+  onClick: () => void;
+  icon: React.ReactNode;
+  label: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold transition-colors",
+        active
+          ? "border-brand-400 bg-accent text-accent-foreground"
+          : "border-border text-muted-foreground hover:text-ink",
+      )}
+    >
+      {icon}
+      {label}
+    </button>
   );
 }
 
@@ -516,6 +646,170 @@ function Row({ label, value }: { label: string; value: string }) {
     <div className="flex items-center justify-between">
       <dt className="text-muted-foreground">{label}</dt>
       <dd className="font-semibold text-ink">{value}</dd>
+    </div>
+  );
+}
+
+const SUPPORTED_REFERENCE_HOSTS = [
+  "tiktok.com",
+  "instagram.com",
+  "youtube.com",
+  "youtu.be",
+  "facebook.com",
+  "fb.watch",
+  "snapchat.com",
+  "pinterest.com",
+  "pin.it",
+  "twitter.com",
+  "x.com",
+];
+
+function isSupportedReferenceUrl(value: string): boolean {
+  let url: URL;
+  try {
+    url = new URL(value);
+  } catch {
+    return false;
+  }
+  if (url.protocol !== "http:" && url.protocol !== "https:") return false;
+  const host = url.hostname.replace(/^www\./, "").toLowerCase();
+  return SUPPORTED_REFERENCE_HOSTS.some(
+    (h) => host === h || host.endsWith(`.${h}`),
+  );
+}
+
+const REFERENCE_UPLOAD_MAX_BYTES = 50 * 1024 * 1024;
+const REFERENCE_UPLOAD_ACCEPT = "video/mp4,video/quicktime,video/webm";
+const REFERENCE_UPLOAD_MIME = ["video/mp4", "video/quicktime", "video/webm"];
+
+function isAcceptedReferenceVideo(file: File): boolean {
+  return (
+    REFERENCE_UPLOAD_MIME.includes(file.type) || /\.(mp4|mov|webm)$/i.test(file.name)
+  );
+}
+
+function ReferenceUpload({
+  uploadedUrl,
+  onChange,
+  onUploadingChange,
+}: {
+  uploadedUrl: string | null;
+  onChange: (url: string | null) => void;
+  onUploadingChange: (uploading: boolean) => void;
+}) {
+  const t = useTranslations("app.studio");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [progress, setProgress] = useState(0);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  function setUploadingState(next: boolean) {
+    setUploading(next);
+    onUploadingChange(next);
+  }
+
+  useEffect(() => () => onUploadingChange(false), [onUploadingChange]);
+
+  async function handleFile(file: File) {
+    setError(null);
+    if (!isAcceptedReferenceVideo(file)) {
+      setError(t("reference.uploadTypeError"));
+      return;
+    }
+    if (file.size > REFERENCE_UPLOAD_MAX_BYTES) {
+      setError(t("reference.uploadSizeError"));
+      return;
+    }
+    onChange(null);
+    setFileName(file.name);
+    setUploadingState(true);
+    setProgress(0);
+    try {
+      const { url } = await api.uploadReferenceVideo(file, setProgress);
+      onChange(url);
+    } catch {
+      setError(t("reference.uploadFailed"));
+      setFileName(null);
+    } finally {
+      setUploadingState(false);
+    }
+  }
+
+  function clear() {
+    onChange(null);
+    setFileName(null);
+    setError(null);
+    setProgress(0);
+    if (inputRef.current) inputRef.current.value = "";
+  }
+
+  const done = !!uploadedUrl && !uploading;
+
+  return (
+    <div className="mt-3">
+      <input
+        ref={inputRef}
+        type="file"
+        accept={REFERENCE_UPLOAD_ACCEPT}
+        className="sr-only"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          // Reset so re-selecting the SAME file after an error still fires onChange.
+          e.target.value = "";
+          if (file) void handleFile(file);
+        }}
+      />
+      {!fileName && !uploading && !uploadedUrl ? (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => inputRef.current?.click()}
+        >
+          <Upload className="h-4 w-4" />
+          {t("reference.uploadCta")}
+        </Button>
+      ) : (
+        <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-3 py-2">
+          <span className="min-w-0 flex-1 truncate text-sm text-ink">
+            {fileName ?? t("reference.uploadTab")}
+          </span>
+          {uploading ? (
+            <span className="flex items-center gap-2 text-xs text-muted-foreground">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              {Math.round(Math.max(progress, 0) * 100)}%
+            </span>
+          ) : done ? (
+            <span className="text-xs font-semibold text-brand-700">
+              {t("summary.referenceAdded")}
+            </span>
+          ) : null}
+          {!uploading && (
+            <div className="flex shrink-0 items-center gap-3">
+              {done && (
+                <button
+                  type="button"
+                  onClick={() => inputRef.current?.click()}
+                  className="text-xs font-semibold text-muted-foreground hover:text-ink"
+                >
+                  {t("reference.uploadReplace")}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={clear}
+                className="text-xs font-semibold text-muted-foreground hover:text-ink"
+              >
+                {t("reference.uploadRemove")}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+      <p className="mt-2 text-xs text-muted-foreground">{t("reference.uploadHelper")}</p>
+      {error && (
+        <p className="mt-2 text-xs font-semibold text-rose">{error}</p>
+      )}
     </div>
   );
 }

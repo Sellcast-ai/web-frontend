@@ -240,13 +240,14 @@
       "loading": "Đang tải…",
       "sections": {
         "vibe": "1 · Sự rung cảm là gì?",
-        "mode": "2 · Chế độ",
+        "reference": "2 · Làm giống video này",
+        "mode": "3 · Chế độ",
         "presenter": "Người trình bày",
-        "duration": "3 · Thời lượng",
+        "duration": "4 · Thời lượng",
         "model": "người mẫu",
         "resolution": "Độ phân giải",
-        "language": "4 · Ngôn ngữ",
-        "review": "5 · Đánh giá"
+        "language": "5 · Ngôn ngữ",
+        "review": "6 · Đánh giá"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "Bản demo sạch",
           "blurb": "Ổn định và rõ ràng - sản phẩm nói lên điều đó."
         }
+      },
+      "reference": {
+        "linkTab": "Dán liên kết",
+        "uploadTab": "Clip đã tải lên",
+        "linkLabel": "Liên kết video tham chiếu",
+        "uploadLabel": "Liên kết clip đã tải lên",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi chỉ học vibe & năng lượng: nhịp độ và tâm trạng cho sản phẩm của bạn, không sao chép các cảnh gốc.",
+        "uploadHelper": "Tải lên clip riêng tư (MP4, MOV hoặc WebM), tối đa 50 MB. Lumi chỉ học được cảm xúc và năng lượng chứ không phải những bức ảnh gốc.",
+        "invalidUrl": "Dán liên kết video TikTok hoặc mạng xã hội được hỗ trợ.",
+        "invalidUpload": "Nhập liên kết trực tiếp MP4, MOV hoặc WebM.",
+        "uploadCta": "Chọn một tập tin video",
+        "uploadReplace": "Thay thế",
+        "uploadRemove": "Di dời",
+        "uploadTypeError": "Chọn video MP4, MOV hoặc WebM.",
+        "uploadSizeError": "Clip đó vượt quá giới hạn 50MB.",
+        "uploadFailed": "Tải lên chưa hoàn tất. Vui lòng thử lại."
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "Độ phân giải",
         "language": "Ngôn ngữ",
         "format": "định dạng",
+        "reference": "Tham chiếu",
+        "referenceAdded": "Đã thêm",
+        "referenceNone": "Không có",
         "review": "Xem lại",
         "storyboard": "Bảng phân cảnh"
       },
       "usageSummary": "{remaining} trong số tín dụng {limit} còn lại trong tháng này · video này sử dụng {duration}",
       "generateVideo": "Tạo video",
+      "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
       "seePlans": "Xem kế hoạch",
       "pickProduct": {

@@ -240,13 +240,14 @@
       "loading": "กำลังโหลด...",
       "sections": {
         "vibe": "1 · บรรยากาศเป็นอย่างไร?",
-        "mode": "2 · โหมด",
+        "reference": "2 · ทำให้คล้ายวิดีโอนี้",
+        "mode": "3 · โหมด",
         "presenter": "ผู้นำเสนอ",
-        "duration": "3 · ระยะเวลา",
+        "duration": "4 · ระยะเวลา",
         "model": "รุ่น",
         "resolution": "ความละเอียด",
-        "language": "4 · ภาษา",
-        "review": "5 · ทบทวน"
+        "language": "5 · ภาษา",
+        "review": "6 · ทบทวน"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "การสาธิตที่สะอาด",
           "blurb": "มั่นคงและชัดเจน — ผลิตภัณฑ์พูดได้"
         }
+      },
+      "reference": {
+        "linkTab": "วางลิงก์",
+        "uploadTab": "คลิปที่อัปโหลด",
+        "linkLabel": "ลิงก์วิดีโออ้างอิง",
+        "uploadLabel": "ลิงก์คลิปที่อัปโหลด",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi เรียนรู้เฉพาะ vibe & energy: จังหวะและอารมณ์สำหรับสินค้าของคุณ ไม่คัดลอกช็อตเดิม",
+        "uploadHelper": "อัปโหลดคลิปส่วนตัว (MP4, MOV หรือ WebM) สูงสุด 50MB Lumi เรียนรู้เฉพาะความรู้สึกและพลังงานเท่านั้น ไม่ใช่ภาพต้นฉบับ",
+        "invalidUrl": "วางลิงก์วิดีโอ TikTok หรือโซเชียลที่รองรับ",
+        "invalidUpload": "ป้อนลิงก์ MP4, MOV หรือ WebM โดยตรง",
+        "uploadCta": "เลือกไฟล์วิดีโอ",
+        "uploadReplace": "แทนที่",
+        "uploadRemove": "ลบ",
+        "uploadTypeError": "เลือกวิดีโอ MP4, MOV หรือ WebM",
+        "uploadSizeError": "คลิปนั้นมีขนาดเกินขีดจำกัด 50MB",
+        "uploadFailed": "การอัปโหลดไม่เสร็จสิ้น โปรดลองอีกครั้ง"
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "ความละเอียด",
         "language": "ภาษา",
         "format": "รูปแบบ",
+        "reference": "อ้างอิง",
+        "referenceAdded": "เพิ่มแล้ว",
+        "referenceNone": "ไม่มี",
         "review": "รีวิว",
         "storyboard": "สตอรี่บอร์ด"
       },
       "usageSummary": "เครดิต {remaining} ของ {limit} เหลือในเดือนนี้ · วิดีโอนี้ใช้ {duration}",
       "generateVideo": "สร้างวิดีโอ",
+      "generateUploading": "กำลังอัปโหลดตัวอ้างอิง…",
       "outOfQuota": "เครดิตไม่เพียงพอสำหรับวิดีโอ {duration}s (เหลือ {remaining} จาก {limit})",
       "seePlans": "ดูแผน",
       "pickProduct": {

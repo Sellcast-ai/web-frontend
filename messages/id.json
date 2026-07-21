@@ -240,13 +240,14 @@
       "loading": "Memuat…",
       "sections": {
         "vibe": "1 · Bagaimana suasananya?",
-        "mode": "2 · Modus",
+        "reference": "2 · Buat seperti ini",
+        "mode": "3 · Modus",
         "presenter": "Pembawa acara",
-        "duration": "3 · Durasi",
+        "duration": "4 · Durasi",
         "model": "Model",
         "resolution": "Resolusi",
-        "language": "4 · Bahasa",
-        "review": "5 · Ulasan"
+        "language": "5 · Bahasa",
+        "review": "6 · Ulasan"
       },
       "vibes": {
         "premiumClean": {
@@ -269,6 +270,24 @@
           "label": "Demo bersih",
           "blurb": "Stabil dan jelas — produklah yang berbicara."
         }
+      },
+      "reference": {
+        "linkTab": "Tempel tautan",
+        "uploadTab": "Klip terunggah",
+        "linkLabel": "Tautan video referensi",
+        "uploadLabel": "Tautan klip terunggah",
+        "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
+        "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
+        "linkHelper": "Lumi hanya mempelajari vibe & energi: tempo dan mood untuk produk Anda, bukan adegan aslinya.",
+        "uploadHelper": "Unggah klip pribadi (MP4, MOV, atau WebM), hingga 50MB. Lumi hanya mempelajari getaran & energi, bukan bidikan aslinya.",
+        "invalidUrl": "Tempel tautan video TikTok atau media sosial yang didukung.",
+        "invalidUpload": "Masukkan tautan langsung MP4, MOV, atau WebM.",
+        "uploadCta": "Pilih file video",
+        "uploadReplace": "Mengganti",
+        "uploadRemove": "Menghapus",
+        "uploadTypeError": "Pilih video MP4, MOV, atau WebM.",
+        "uploadSizeError": "Klip itu melebihi batas 50 MB.",
+        "uploadFailed": "Pengunggahan belum selesai. Silakan coba lagi."
       },
       "modes": {
         "aiAvatar": {
@@ -319,11 +338,15 @@
         "resolution": "Resolusi",
         "language": "Bahasa",
         "format": "Format",
+        "reference": "Referensi",
+        "referenceAdded": "Ditambahkan",
+        "referenceNone": "Tidak ada",
         "review": "Ulasan",
         "storyboard": "Papan cerita"
       },
       "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
       "generateVideo": "Hasilkan video",
+      "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
       "seePlans": "Lihat rencana",
       "pickProduct": {

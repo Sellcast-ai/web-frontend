@@ -265,6 +265,8 @@ export interface VideoJobCreate {
   /** The hero creation choice. Style auto-derives from mode; vibe drives the
    * feel/energy/pacing register the backend scripts in. */
   vibe?: VideoVibe;
+  /** Optional "make it like this" reference. Backend learns vibe/energy only. */
+  reference_url?: string;
   duration_seconds?: VideoDuration;
   review_mode?: boolean;
   /** Gated server-side by SELLCAST_ENABLED_LANGUAGES (voice-QA'd languages only). */
@@ -277,6 +279,16 @@ export interface VideoJobCreate {
   /** Render resolution (Studio picker). 1080p needs a 1080p-capable model
    * (Seedance 2.0); on fast/mini the server clamps it to 720p. */
   resolution?: VideoResolution;
+}
+
+/** Presigned direct-to-storage handshake for reference-clip uploads. The
+ * browser PUTs the bytes straight to `upload_url` (bypassing the BFF so large
+ * clips don't hit serverless body limits), then sends `public_url` as the
+ * job's `reference_url`. */
+export interface ReferencePresign {
+  upload_url: string;
+  public_url: string;
+  key: string;
 }
 
 export type VideoModelKey = "seedance-2.0";
