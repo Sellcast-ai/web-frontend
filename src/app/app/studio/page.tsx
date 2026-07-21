@@ -237,9 +237,20 @@ function StudioInner() {
                       )}
                     />
                   </label>
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    {t("reference.linkHelper")}
-                  </p>
+                  <div className="mt-2 flex items-start justify-between gap-3">
+                    <p className="text-xs text-muted-foreground">
+                      {t("reference.linkHelper")}
+                    </p>
+                    {trimmedReferenceUrl.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setReferenceUrl("")}
+                        className="shrink-0 text-xs font-semibold text-muted-foreground hover:text-ink"
+                      >
+                        {t("reference.uploadRemove")}
+                      </button>
+                    )}
+                  </div>
                   {linkInvalid && (
                     <p className="mt-2 text-xs font-semibold text-rose">
                       {t("reference.invalidUrl")}
@@ -774,13 +785,24 @@ function ReferenceUpload({
             </span>
           ) : null}
           {!uploading && (
-            <button
-              type="button"
-              onClick={() => (done ? inputRef.current?.click() : clear())}
-              className="text-xs font-semibold text-muted-foreground hover:text-ink"
-            >
-              {done ? t("reference.uploadReplace") : t("reference.uploadRemove")}
-            </button>
+            <div className="flex shrink-0 items-center gap-3">
+              {done && (
+                <button
+                  type="button"
+                  onClick={() => inputRef.current?.click()}
+                  className="text-xs font-semibold text-muted-foreground hover:text-ink"
+                >
+                  {t("reference.uploadReplace")}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={clear}
+                className="text-xs font-semibold text-muted-foreground hover:text-ink"
+              >
+                {t("reference.uploadRemove")}
+              </button>
+            </div>
           )}
         </div>
       )}

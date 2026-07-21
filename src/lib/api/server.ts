@@ -44,18 +44,17 @@ type CallInit = {
 export async function callBackend(path: string, init: CallInit = {}): Promise<Response> {
   const url = `${API_BASE}/${path.replace(/^\/+/, "")}${init.search ?? ""}`;
   const headers: Record<string, string> = { ...(init.headers ?? {}) };
-  const hasJsonBody = init.body !== undefined && init.body !== null;
-  if (hasJsonBody) headers["Content-Type"] = "application/json";
+  if (init.body !== undefined && init.body !== null) headers["Content-Type"] = "application/json";
   if (init.accessToken) headers["Authorization"] = `Bearer ${init.accessToken}`;
   return fetch(url, {
     method: init.method ?? "GET",
     headers,
-    body: hasJsonBody ? JSON.stringify(init.body) : undefined,
+    body: init.body !== undefined && init.body !== null ? JSON.stringify(init.body) : undefined,
     cache: "no-store",
   });
 }
 
-export async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
+async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
   const res = await callBackend("auth/refresh", {
     method: "POST",
     body: { refresh_token: refreshToken },
