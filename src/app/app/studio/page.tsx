@@ -18,11 +18,13 @@ import {
 import { useProduct, useCreateJob, useUsage, useAvatars } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
 import {
+  VIDEO_ASPECT_RATIOS,
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
   VIDEO_MODELS,
   VIDEO_RESOLUTIONS,
   VIDEO_VIBES,
+  type VideoAspectRatio,
   type VideoLanguage,
   type VideoModelKey,
   type VideoResolution,
@@ -112,6 +114,7 @@ function StudioInner() {
   const style = defaultStyleForMode(mode);
   const [videoModel, setVideoModel] = useState<VideoModelKey>(VIDEO_MODELS[0].value);
   const [resolution, setResolution] = useState<VideoResolution>("720p");
+  const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
@@ -154,6 +157,7 @@ function StudioInner() {
         language,
         video_model: videoModel,
         resolution,
+        aspect_ratio: aspectRatio,
         avatar_id: mode === "ai_avatar" ? avatarId : null,
       })
       .catch(() => null);
@@ -405,6 +409,34 @@ function StudioInner() {
             </div>
           </Section>
 
+          {/* size — output aspect ratio. All sizes stay selectable in every
+              mode; talking-head output may adapt its shape server-side. */}
+          <Section title={t("sections.size")}>
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
+              {VIDEO_ASPECT_RATIOS.map((a) => (
+                <button
+                  key={a.value}
+                  type="button"
+                  onClick={() => setAspectRatio(a.value)}
+                  className={cn(
+                    "rounded-2xl border p-3.5 text-left transition-colors",
+                    aspectRatio === a.value
+                      ? "border-brand-400 bg-accent"
+                      : "border-border bg-card hover:border-border-strong",
+                  )}
+                >
+                  <p className="text-sm font-semibold text-ink">{a.label}</p>
+                  <p className="text-xs text-muted-foreground">{a.blurb}</p>
+                </button>
+              ))}
+            </div>
+            {mode === "ai_avatar" && (
+              <p className="mt-2 text-xs text-muted-foreground">
+                {t("size.avatarHint")}
+              </p>
+            )}
+          </Section>
+
           {/* language — only voice-QA-validated languages are selectable */}
           <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
@@ -507,7 +539,7 @@ function StudioInner() {
                   VIDEO_LANGUAGES[0].label
                 }
               />
-              <Row label={t("summary.format")} value="9:16" />
+              <Row label={t("summary.format")} value={aspectRatio} />
               <Row label={t("summary.review")} value={t("summary.storyboard")} />
             </dl>
 

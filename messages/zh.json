@@ -252,6 +252,7 @@
         "duration": "4·持续时间",
         "model": "型号",
         "resolution": "分辨率",
+        "size": "尺寸",
         "language": "5·语言",
         "review": "6·回顾"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "无",
         "review": "评论",
         "storyboard": "故事板"
+      },
+      "size": {
+        "avatarHint": "数字人出镜的成片可能会调整画面比例以适配主播。"
       },
       "usageSummary": "{limit} 的学分本月剩余 {remaining} · 该视频使用 {duration}",
       "generateVideo": "生成视频",

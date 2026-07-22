@@ -252,6 +252,7 @@
         "duration": "4 · Durasi",
         "model": "Model",
         "resolution": "Resolusi",
+        "size": "Ukuran",
         "language": "5 · Bahasa",
         "review": "6 · Ulasan"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "Tidak ada",
         "review": "Ulasan",
         "storyboard": "Papan cerita"
+      },
+      "size": {
+        "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
       "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
       "generateVideo": "Hasilkan video",

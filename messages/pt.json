@@ -252,6 +252,7 @@
         "duration": "4 · Duração",
         "model": "Modelo",
         "resolution": "Resolução",
+        "size": "Tamanho",
         "language": "5 · Idioma",
         "review": "6 · Revisão"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "Nenhuma",
         "review": "Revisão",
         "storyboard": "Roteiro"
+      },
+      "size": {
+        "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
       "usageSummary": "{remaining} dos créditos {limit} restantes este mês · este vídeo usa {duration}",
       "generateVideo": "Gerar vídeo",
