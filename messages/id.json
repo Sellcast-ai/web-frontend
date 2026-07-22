@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "Fitur",
+    "howItWorks": "Bagaimana cara kerjanya",
+    "models": "Model",
+    "pricing": "Harga"
+  },
   "app": {
+    "nav": {
+      "marketplace": "Pasar",
+      "products": "Produk Saya",
+      "avatars": "Avatar",
+      "videos": "Video Saya",
+      "profile": "Profil",
+      "newVideo": "Video baru",
+      "new": "Baru",
+      "signedIn": "Masuk",
+      "logOut": "Keluar"
+    },
     "toasts": {
-      "importSucceeded": "Mengimpor {count, plural, one {# produk} other {# produk}} dari toko Anda.",
       "updateLikeFailed": "Tidak dapat memperbarui suka. Silakan coba lagi.",
       "saveAvatarFailed": "Tidak dapat menyimpan avatar.",
       "deleteAvatarFailed": "Tidak dapat menghapus avatar.",
@@ -15,21 +31,11 @@
       "retryJobFailed": "Tidak dapat mencoba kembali pekerjaan tersebut. Silakan coba lagi.",
       "saveDisplayNameFailed": "Tidak dapat menyimpan nama tampilan Anda. Silakan coba lagi.",
       "importPartial": "{count} produk Anda yang diimpor (tutup katalog). Sisanya bisa ditambahkan dengan cara ditempel.",
+      "importSucceeded": "Mengimpor {count, plural, one {# produk} other {# produk}} dari toko Anda.",
       "importFailed": "Impor belum selesai. Silakan coba lagi.",
       "storyboardSaved": "Papan cerita disimpan.",
       "markedPosted": "Ditandai sebagai diposting.",
       "recordPostedFailed": "Tidak dapat merekamnya. Silakan coba lagi."
-    },
-    "nav": {
-      "marketplace": "Pasar",
-      "products": "Produk Saya",
-      "avatars": "Avatar",
-      "videos": "Video Saya",
-      "profile": "Profil",
-      "newVideo": "Video baru",
-      "new": "Baru",
-      "signedIn": "Masuk",
-      "logOut": "Keluar"
     },
     "categories": {
       "beautyPersonalCare": "Kecantikan & Perawatan Pribadi",
@@ -484,12 +490,6 @@
       }
     }
   },
-  "nav": {
-    "features": "Fitur",
-    "howItWorks": "Bagaimana cara kerjanya",
-    "models": "Model",
-    "pricing": "Harga"
-  },
   "languageSwitcher": {
     "label": "Bahasa"
   },
@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "Masuk",
-      "startFree": "Mulai gratis",
-      "toggleMenu": "Alihkan menu",
-      "language": "Bahasa",
-      "theme": "Tema"
+      "startFree": "Mulai gratis"
     },
     "footer": {
-      "tagline": "Lumi mengubah produk apa pun menjadi video belanjaan yang dapat dihentikan gulir — didasarkan pada pola viral yang nyata, bukan dugaan.",
+      "tagline": "Tautan produk masuk. Video siap terbit keluar. Berlandaskan pola yang sudah terbukti menjual.",
       "columns": {
         "product": {
           "title": "Produk",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. Lumi adalah produk Sellcast.",
-      "madeFor": "Dibuat untuk penjual yang lebih suka menjual daripada memfilmkan."
+      "madeFor": "Dibuat untuk penjual yang lebih suka menjual daripada memfilmkan.",
+      "signIn": "Masuk"
     },
     "cta": {
       "title": "Buku terlaris Anda berikutnya hanya berjarak satu tautan produk.",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "Dibuat untuk TikTok & Gulungan",
-      "heroTitle": "Ubah produk apa pun menjadi video <highlight>scroll-stopping</highlight> yang dapat dibeli.",
-      "heroSubtitle": "Tempel tautan produk apa pun — Amazon, Shopee, TikTok Shop, atau toko Anda sendiri — atau unggah foto. Lumi mempelajari apa yang sudah unggul dalam kategori tersebut, membuat skrip video berdasarkan polanya, memungkinkan Anda meninjaunya sedikit demi sedikit, dan merendernya dengan Seedance 2.0. Dalam beberapa menit, tidak ada kamera.",
-      "heroStartFree": "Mulai berkreasi secara gratis",
-      "heroSeeHow": "Lihat cara kerjanya",
-      "heroCheck1": "Video pertama gratis",
-      "heroCheck2": "Tidak ada kartu kredit",
-      "heroCheck3": "Siap dipublikasikan 09:16",
-      "marquee": [
-        "Toko TikTok",
-        "Gulungan",
-        "Kecantikan",
-        "Rumah & Dapur",
-        "kebugaran",
-        "gadget",
-        "Hewan peliharaan",
-        "Mode",
-        "Suplemen"
-      ],
-      "howKicker": "Pipa Lumi",
-      "howTitle": "Empat tahap, tidak ada halaman kosong",
-      "howSubtitle": "Kebanyakan alat dimulai dari nol. Lumi dimulai dari apa yang sudah menjadi pemenang — lalu membuat Anda tetap memegang kendali hingga memublikasikannya.",
-      "steps": {
-        "find": {
-          "kicker": "Temukan",
-          "title": "Mulai dari produk apa pun",
-          "body": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri — atau unggah foto. Atau telusuri pilihan yang sedang tren di pasar."
+      "heroTitle": "Ubah tautan produk apa pun menjadi <highlight>video yang menjual.</highlight>",
+      "heroSubtitle": "Tempel tautan. Lumi mempelajari pola video berperforma terbaik di kategori Anda, menulis naskah, lalu merendernya shot demi shot. Anda menyetujui setiap beat sebelum satu kredit pun terpakai.",
+      "heroPrimary": "Buat video pertama Anda",
+      "heroSecondary": "Lihat cara kerjanya",
+      "heroFinePrint": "Video pertama gratis · Tanpa kartu · 9:16 siap terbit",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "Membaca produk",
+        "pattern": "Belajar dari ~100 video top Kecantikan",
+        "productName": "Glow Serum 30 ml",
+        "productMeta": "$24 · Kecantikan",
+        "beats": {
+          "hook": {
+            "label": "Hook",
+            "line": "Menghentikan scroll di detik pertama."
+          },
+          "proof": {
+            "label": "Bukti",
+            "line": "Menunjukkan serum benar-benar bekerja."
+          },
+          "offer": {
+            "label": "Penawaran",
+            "line": "Harga di layar. Ajakan yang jelas."
+          }
         },
-        "deconstruct": {
-          "kicker": "Dekonstruksi",
-          "title": "Lumi mempelajari polanya",
-          "body": "Ia mempelajari ~100 orang yang benar-benar berkinerja terbaik dalam kategori tersebut dan mengekstrak struktur kait, bukti, dan CTA yang mengonversi."
-        },
-        "script": {
-          "kicker": "naskah",
-          "title": "Tinjau skrip & ketukannya",
-          "body": "Skrip yang membumi dengan ketukan tembakan demi tembakan. Setujui atau buat ulang setiap gambar referensi sebelum render apa pun dibakar."
-        },
-        "generate": {
-          "kicker": "Hasilkan",
-          "title": "Render & publikasikan",
-          "body": "Seedance 2.0 merender setiap ketukan, teks menyala, dan Anda siap memposting."
-        }
+        "approve": "Setujui",
+        "approved": "Disetujui",
+        "rendering": "Merender dengan Seedance 2.0",
+        "rendered": "Selesai dirender",
+        "duration": "0:18",
+        "caption": "Restok tiga kali bulan ini. Ini alasannya.",
+        "shopNow": "Beli sekarang"
       },
-      "featuresKicker": "Semuanya dalam satu studio",
-      "featuresTitle": "Seluruh alur kerja video, ditangani",
-      "featuresSubtitle": "Dari mencari sumber produk hingga potongan siap dipublikasikan — tidak perlu menggabungkan lima alat menjadi satu.",
-      "features": {
-        "linkToVideo": {
-          "title": "Tautan ke Video",
-          "body": "Tempel tautan dari Amazon, Shopee, Toko TikTok, atau toko Anda sendiri — atau unggah foto. Lumi membaca produk dan menangani pembingkaian, skrip, suara, dan pengeditan secara otomatis."
-        },
-        "scripts": {
-          "title": "Skrip berdasarkan pola",
-          "body": "Setiap skrip dibuat dari struktur viral nyata dalam kategori Anda — pelajari polanya, jangan pernah meniru permukaannya."
+      "marquee": {
+        "seedance": "Rendering Seedance 2.0",
+        "languages": "8 bahasa sulih suara",
+        "avatar": "Mode avatar AI",
+        "productOnly": "Mode produk saja",
+        "review": "Tinjauan beat demi beat",
+        "qa": "QA dialog otomatis",
+        "captions": "Takarir menyatu di video",
+        "ratio": "9:16 siap terbit",
+        "vibes": "5 vibe khas",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "Durasi 10–30 detik"
+      },
+      "whyTitle": "Dibangun di atas <highlight>yang sudah terbukti</highlight>",
+      "whySubtitle": "Bukan kanvas kosong. Lumi berangkat dari pola yang sudah diganjar kategori Anda — dan tetap menyerahkan setiap frame kepada Anda.",
+      "why": {
+        "pattern": {
+          "body": "Sebelum menulis satu baris pun, Lumi membedah sekitar seratus video berperforma terbaik di kategori Anda dan menyimpan struktur yang menghasilkan konversi.",
+          "caption": "Naskah menulis dirinya sendiri — dari bukti.",
+          "uiHeading": "Ekstrak pola",
+          "uiSample": "~100 video · Kecantikan",
+          "uiHook": "Hook — klaim lebih dulu",
+          "uiProof": "Bukti — tunjukkan bekerja",
+          "uiOffer": "Penawaran — ajakan jelas"
         },
         "review": {
-          "title": "Ulasan detak demi detak",
-          "body": "Lihat gambar referensi untuk setiap pengambilan gambar. Setujui, sesuaikan, atau buat ulang sebelum menghabiskan waktu render sedetik pun."
+          "body": "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sesuka Anda — kredit baru terpakai setelah Anda bilang jalan.",
+          "caption": "Anda yang putuskan, sebelum render.",
+          "uiHeading": "Tinjauan storyboard",
+          "uiSpend": "$0 terpakai",
+          "uiRegenerate": "Buat ulang"
         },
-        "modes": {
-          "title": "Avatar & mode produk",
-          "body": "Presenter AI yang berbicara di depan kamera, atau etalase produk yang bersih — delapan gaya siap pakai yang sesuai dengan penawaran Anda."
-        },
-        "qa": {
-          "title": "Dialog otomatis QA",
-          "body": "Whisper memeriksa setiap baris yang dirender terhadap skrip dan penyimpangan bendera, sehingga suara selalu mengatakan apa yang seharusnya."
-        },
-        "publish": {
-          "title": "Teks & publikasikan",
-          "body": "Teks yang dibakar secara otomatis dan potongan 09:16 yang siap dipublikasikan, berukuran untuk TikTok dan Reel yang siap digunakan."
+        "reach": {
+          "body": "Dibawakan presenter atau produk saja, lima vibe, delapan bahasa sulih suara. Satu tautan produk menjangkau semua pasar tempat Anda berjualan.",
+          "caption": "Jualan dalam delapan bahasa sekaligus.",
+          "uiAvatar": "Avatar AI",
+          "uiProductOnly": "Produk saja",
+          "uiVibe": "Premium & bersih"
         }
       },
-      "modelsKicker": "Mesin render perbatasan",
-      "modelsTitle": "Dirender dengan Seedance 2.0",
-      "modelsSubtitle": "Lumi merender setiap irama dengan Seedance 2.0 — dan skrip Anda terbawa saat model baru tiba.",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "Hidup",
-          "desc": "Gerakan cepat dan nyata untuk pengambilan gambar produk & avatar — mesin render Lumi untuk setiap ketukan."
+      "storyTitle": "Dari tautan produk <highlight>sampai video tayang</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "Mulai dari tautan mana pun",
+          "body": "Amazon, Shopee, TikTok Shop, atau toko Anda sendiri — atau foto langsung dari galeri."
         },
-        "more": {
-          "name": "Lebih banyak lagi di jalan",
-          "tag": "Segera",
-          "desc": "Kami menambahkan model video terdepan seiring dengan terbuktinya — skrip dan irama Anda tetap ada."
+        "learn": {
+          "title": "Lumi mempelajari polanya",
+          "body": "Ia meneliti sekitar seratus video terbaik di kategori itu dan mengekstrak struktur yang menghasilkan konversi: hook, bukti, penawaran."
+        },
+        "approve": {
+          "title": "Anda menyetujui storyboard",
+          "body": "Setiap beat mendapat frame acuan lebih dulu. Tidak ada yang dirender — dan tidak ada tagihan — sebelum Anda setuju."
+        },
+        "render": {
+          "title": "Seedance merendernya",
+          "body": "Takarir menyatu, QA otomatis mencocokkan tiap kalimat dengan naskah, dan potongan 9:16 siap diunggah."
         }
       },
-      "useCasesKicker": "Untuk siapa ini",
-      "useCasesTitle": "Dibuat untuk semua orang yang menjual dengan video",
-      "useCases": {
-        "sellers": {
-          "title": "Penjual",
-          "body": "Skalakan katalog Anda — video konversi untuk setiap SKU, tanpa studio."
+      "storyFact1": "$0 biaya render sampai Anda menyetujui",
+      "storyFact2": "1 kredit = 1 detik video",
+      "wallTitle": "Siap terbit, <highlight>di setiap pasar</highlight>",
+      "wallSubtitle": "Setiap video hadir 9:16 dengan takarir menyatu — dinaskahi dan disuarakan dalam bahasa pasar tujuannya.",
+      "wallAudience": "Dibuat untuk penjual, kreator, merek, dan agensi — siapa pun yang berjualan lewat video.",
+      "wall": {
+        "beauty": {
+          "category": "Kecantikan",
+          "vibe": "Premium & bersih",
+          "language": "English"
         },
-        "creators": {
-          "title": "Pencipta",
-          "body": "Putar TikTok Belanja konten dalam hitungan menit dan pertahankan postingan Anda tetap hidup."
+        "gadgets": {
+          "category": "Gadget",
+          "vibe": "Berani & menghentak",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "Merek",
-          "body": "Tetap pada merek di ratusan materi iklan unik, semuanya sekaligus."
+        "home": {
+          "category": "Rumah & dapur",
+          "vibe": "Demo bersih",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "Agensi",
-          "body": "Layani setiap klien dalam jumlah besar dengan kualitas yang tidak perlu Anda jaga."
+        "pets": {
+          "category": "Hewan peliharaan",
+          "vibe": "Seru & cepat",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "Fesyen",
+          "vibe": "Hangat & personal",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "Kebugaran",
+          "vibe": "Berani & menghentak",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5 cara",
-          "label": "untuk memulai: Amazon, Shopee, TikTok Toko, toko Anda, atau foto"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "siap dipublikasikan untuk TikTok & Reel, setiap saat"
-        },
-        "credit": {
-          "value": "1 kredit",
-          "label": "= Video berdurasi 1 detik — hanya membayar sesuai apa yang Anda render"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "render pembelanjaan sampai Anda menyetujui ketukannya"
-        }
-      },
-      "pricingKicker": "Harga",
-      "pricingTitle": "Mulai gratis. Skalakan saat berhasil.",
-      "pricingSubtitle": "Berbasis kredit — 1 kredit = 1 detik video. Video pertama Anda gratis; tidak ada kartu kredit untuk memulai.",
+      "pricingTitle": "Mulai gratis. <highlight>Skalakan saat berhasil.</highlight>",
+      "pricingSubtitle": "Berbasis kredit: 1 kredit = 1 detik video. Video pertama Anda gratis — tanpa kartu.",
       "mostPopular": "Paling populer",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "$29",
           "note": "/ bln",
           "features": [
-            "≈ 3 video / bln · 75 kredit",
+            "75 kredit — sekitar 3 video",
             "Tidak ada tanda air",
             "Ulasan detak demi detak",
-            "Avatar + mode produk"
+            "Mode avatar & produk"
           ],
           "cta": "Mulai Pencipta"
         },
@@ -1025,9 +1028,9 @@
           "price": "$79",
           "note": "/ bln",
           "features": [
-            "≈ 10 video / bln · 200 kredit",
+            "200 kredit — sekitar 10 video",
             "Segalanya ada pada Sang Pencipta",
-            "Prioritas atas render gratis",
+            "Render prioritas",
             "720p · 9:16 ekspor"
           ],
           "cta": "Mulai Pro"
@@ -1037,34 +1040,19 @@
           "price": "$199",
           "note": "/ bln",
           "features": [
-            "≈ 25 video / bln · 500 kredit",
+            "500 kredit — sekitar 25 video",
             "Semuanya di Pro",
-            "Untuk postingan yang selalu aktif"
+            "Untuk posting tanpa henti"
           ],
           "cta": "Mulai Skala"
         }
       },
-      "pricingFooter": "<signup>video pertama Anda gratis</signup> — tanpa kartu. Butuh tangga lengkap? <plans>Lihat semua paket →</plans>",
-      "faqKicker": "Pertanyaan Umum",
-      "faqTitle": "Pertanyaan, terjawab",
-      "finalCtaTitle": "Buku terlaris Anda berikutnya hanya berjarak satu tautan produk.",
-      "finalCtaSubtitle": "Jadikan video penghenti gulir pertama Anda gratis. Tanpa kamera, tanpa editor, tanpa halaman kosong.",
-      "finalCtaStartFree": "Mulai berkreasi secara gratis",
-      "finalCtaSeePricing": "Lihat harga"
-    },
-    "heroMock": {
-      "caption": "gadget seharga $24 ini terjual habis <highlight>3 kali</highlight> 👀",
-      "shopNow": "Belanja sekarang · $23,99",
-      "productName": "Pistol Pijat Mini",
-      "productMeta": "$23,99 · 30% komunikasi.",
-      "sold": "12,4k terjual / bln",
-      "beatReview": "Kalahkan ulasan",
-      "beatHook": "Kait",
-      "beatProof": "Bukti",
-      "beatOffer": "Penawaran",
-      "beatAuto": "otomatis",
-      "beatOk": "oke",
-      "renderedWith": "Diberikan dengan"
+      "pricingFooter": "<signup>Video pertama Anda gratis</signup> — tanpa kartu. <plans>Bandingkan semua paket →</plans>",
+      "faqTitle": "Pertanyaan, <highlight>terjawab</highlight>",
+      "finalCtaTitle": "Produk terlaris Anda berikutnya <highlight>tinggal satu tautan.</highlight>",
+      "finalCtaSubtitle": "Buat video pertama Anda gratis. Tanpa kamera, tanpa editor, tanpa halaman kosong.",
+      "finalCtaPrimary": "Buat video pertama Anda",
+      "finalCtaSecondary": "Lihat harga"
     },
     "features": {
       "header": {

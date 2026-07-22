@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "Sign in",
-      "startFree": "Start free",
-      "toggleMenu": "Toggle menu",
-      "language": "Language",
-      "theme": "Theme"
+      "startFree": "Start free"
     },
     "footer": {
-      "tagline": "Lumi turns any product into scroll-stopping shoppable video — grounded in real viral patterns, not guesswork.",
+      "tagline": "Product links in. Publish-ready video out. Grounded in the patterns that already sell.",
       "columns": {
         "product": {
           "title": "Product",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast. Lumi is a Sellcast product.",
-      "madeFor": "Made for sellers who'd rather sell than film."
+      "madeFor": "Made for sellers who'd rather sell than film.",
+      "signIn": "Sign in"
     },
     "cta": {
       "title": "Your next best-seller is one product link away.",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "Built for TikTok & Reels",
-      "heroTitle": "Turn any product into a <highlight>scroll-stopping</highlight> shoppable video.",
-      "heroSubtitle": "Paste any product link — Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi studies what's already winning in that category, scripts a video grounded in the pattern, lets you review it beat-by-beat, and renders it with Seedance 2.0. In minutes, no camera.",
-      "heroStartFree": "Start creating free",
-      "heroSeeHow": "See how it works",
-      "heroCheck1": "First video free",
-      "heroCheck2": "No credit card",
-      "heroCheck3": "Publish-ready 9:16",
-      "marquee": [
-        "TikTok Shop",
-        "Reels",
-        "Beauty",
-        "Home & Kitchen",
-        "Fitness",
-        "Gadgets",
-        "Pets",
-        "Fashion",
-        "Supplements"
-      ],
-      "howKicker": "The Lumi pipeline",
-      "howTitle": "Four stages, zero blank pages",
-      "howSubtitle": "Most tools start from nothing. Lumi starts from what's already winning — then keeps you in control all the way to publish.",
-      "steps": {
-        "find": {
-          "kicker": "Find",
-          "title": "Start from any product",
-          "body": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Or browse trending picks in the marketplace."
+      "heroTitle": "Turn any product link into <highlight>video that sells.</highlight>",
+      "heroSubtitle": "Paste a link. Lumi learns the pattern behind your category's best-performing videos, writes the script, and renders it shot by shot. You approve every beat before a credit is spent.",
+      "heroPrimary": "Create your first video",
+      "heroSecondary": "See how it works",
+      "heroFinePrint": "First video free · No card required · Publish-ready 9:16",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "Reading the product",
+        "pattern": "Learned from ~100 top videos in Beauty",
+        "productName": "Glow Serum 30 ml",
+        "productMeta": "$24 · Beauty",
+        "beats": {
+          "hook": {
+            "label": "Hook",
+            "line": "Stops the scroll in the first second."
+          },
+          "proof": {
+            "label": "Proof",
+            "line": "Shows the serum actually working."
+          },
+          "offer": {
+            "label": "Offer",
+            "line": "Price on screen. Clear ask."
+          }
         },
-        "deconstruct": {
-          "kicker": "Deconstruct",
-          "title": "Lumi learns the pattern",
-          "body": "It studies ~100 real top-performers in that category and extracts the hook, proof, and CTA structure that converts."
-        },
-        "script": {
-          "kicker": "Script",
-          "title": "Review the script & beats",
-          "body": "A grounded script with shot-by-shot beats. Approve or regenerate each reference image before any render burns."
-        },
-        "generate": {
-          "kicker": "Generate",
-          "title": "Render & publish",
-          "body": "Seedance 2.0 renders each beat, captions burn in, and you're ready to post."
-        }
+        "approve": "Approve",
+        "approved": "Approved",
+        "rendering": "Rendering with Seedance 2.0",
+        "rendered": "Rendered",
+        "duration": "0:18",
+        "caption": "Restocked three times this month. This is why.",
+        "shopNow": "Shop now"
       },
-      "featuresKicker": "Everything in one studio",
-      "featuresTitle": "The whole video workflow, handled",
-      "featuresSubtitle": "From sourcing the product to a publish-ready cut — no stitching five tools together.",
-      "features": {
-        "linkToVideo": {
-          "title": "Link to Video",
-          "body": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload photos. Lumi reads the product and handles framing, script, voice, and edit automatically."
-        },
-        "scripts": {
-          "title": "Pattern-grounded scripts",
-          "body": "Every script is built from real viral structure in your category — learn the pattern, never copy the surface."
+      "marquee": {
+        "seedance": "Seedance 2.0 rendering",
+        "languages": "8 voiceover languages",
+        "avatar": "AI avatar mode",
+        "productOnly": "Product-only mode",
+        "review": "Beat-by-beat review",
+        "qa": "Automatic dialogue QA",
+        "captions": "Burned-in captions",
+        "ratio": "Publish-ready 9:16",
+        "vibes": "5 signature vibes",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "10–30 second cuts"
+      },
+      "whyTitle": "Built on <highlight>what already works</highlight>",
+      "whySubtitle": "Not a blank canvas. Lumi starts from the patterns your category already rewards — and keeps you in charge of every frame.",
+      "why": {
+        "pattern": {
+          "body": "Before writing a line, Lumi deconstructs around a hundred of the top-performing videos in your category and keeps the structure that converts.",
+          "caption": "The script writes itself — from evidence.",
+          "uiHeading": "Pattern extract",
+          "uiSample": "~100 videos · Beauty",
+          "uiHook": "Hook — claim first",
+          "uiProof": "Proof — show it working",
+          "uiOffer": "Offer — clear ask"
         },
         "review": {
-          "title": "Beat-by-beat review",
-          "body": "See a reference image for every shot. Approve, tweak, or regenerate before spending a second of render time."
+          "body": "Every shot gets a reference frame first. Approve, tweak, or regenerate as many times as you like — credits only burn after you say go.",
+          "caption": "Your call, before the render.",
+          "uiHeading": "Storyboard review",
+          "uiSpend": "$0 spent so far",
+          "uiRegenerate": "Regenerate"
         },
-        "modes": {
-          "title": "Avatar & product modes",
-          "body": "AI presenter talking to camera, or clean product-only showcase — eight ready-made styles to match your offer."
-        },
-        "qa": {
-          "title": "Auto dialogue QA",
-          "body": "Whisper checks every rendered line against the script and flags drift, so the voice always says what it should."
-        },
-        "publish": {
-          "title": "Captions & publish",
-          "body": "Auto-burned captions and a publish-ready 9:16 cut, sized for TikTok and Reels out of the box."
+        "reach": {
+          "body": "Presenter-led or product-only, five vibes, eight voiceover languages. The same product link travels everywhere you sell.",
+          "caption": "Sell in eight languages at once.",
+          "uiAvatar": "AI avatar",
+          "uiProductOnly": "Product only",
+          "uiVibe": "Premium & clean"
         }
       },
-      "modelsKicker": "Frontier render engine",
-      "modelsTitle": "Rendered with Seedance 2.0",
-      "modelsSubtitle": "Lumi renders every beat with Seedance 2.0 — and your scripts carry over as new models arrive.",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "Live",
-          "desc": "Fast, lifelike motion for product & avatar shots — Lumi's render engine for every beat."
+      "storyTitle": "From product link <highlight>to live video</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "Start from any link",
+          "body": "Amazon, Shopee, TikTok Shop, or your own store — or photos straight from your camera roll."
         },
-        "more": {
-          "name": "More on the way",
-          "tag": "Soon",
-          "desc": "We're adding frontier video models as they prove out — your scripts and beats carry over."
+        "learn": {
+          "title": "Lumi learns the pattern",
+          "body": "It studies around a hundred of the category's best-performing videos and extracts the structure that converts: hook, proof, offer."
+        },
+        "approve": {
+          "title": "You approve the storyboard",
+          "body": "Every beat gets a reference frame first. Nothing renders — and nothing is charged — until you sign off."
+        },
+        "render": {
+          "title": "Seedance renders it",
+          "body": "Captions burn in, automatic QA checks every spoken line against the script, and the 9:16 cut is ready to post."
         }
       },
-      "useCasesKicker": "Who it's for",
-      "useCasesTitle": "Made for everyone who sells with video",
-      "useCases": {
-        "sellers": {
-          "title": "Sellers",
-          "body": "Scale your catalog — a converting video for every SKU, without a studio."
+      "storyFact1": "$0 render spend until you approve",
+      "storyFact2": "1 credit = 1 second of video",
+      "wallTitle": "Publish-ready, <highlight>in every market</highlight>",
+      "wallSubtitle": "Every video ships 9:16 with burned-in captions — scripted and voiced in the language of the market it's for.",
+      "wallAudience": "Built for sellers, creators, brands, and agencies — anyone who sells with video.",
+      "wall": {
+        "beauty": {
+          "category": "Beauty",
+          "vibe": "Premium & clean",
+          "language": "English"
         },
-        "creators": {
-          "title": "Creators",
-          "body": "Spin TikTok Shop content in minutes and keep your posting streak alive."
+        "gadgets": {
+          "category": "Gadgets",
+          "vibe": "Bold & punchy",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "Brands",
-          "body": "Stay on-brand across hundreds of unique creatives, all at once."
+        "home": {
+          "category": "Home & kitchen",
+          "vibe": "Clean demo",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "Agencies",
-          "body": "Serve every client at volume with quality you don't have to babysit."
+        "pets": {
+          "category": "Pets",
+          "vibe": "Fun & fast",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "Fashion",
+          "vibe": "Cozy & personal",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "Fitness",
+          "vibe": "Bold & punchy",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5 ways",
-          "label": "to start: Amazon, Shopee, TikTok Shop, your store, or photos"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "publish-ready for TikTok & Reels, every time"
-        },
-        "credit": {
-          "value": "1 credit",
-          "label": "= 1 second of video — only pay for what you render"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "render spend until you approve the beats"
-        }
-      },
-      "pricingKicker": "Pricing",
-      "pricingTitle": "Start free. Scale when it's working.",
-      "pricingSubtitle": "Credit-based — 1 credit = 1 second of video. Your first video's free; no credit card to begin.",
+      "pricingTitle": "Start free. <highlight>Scale when it works.</highlight>",
+      "pricingSubtitle": "Credit-based: 1 credit = 1 second of video. Your first video is free — no card.",
       "mostPopular": "Most popular",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "$29",
           "note": "/ mo",
           "features": [
-            "≈ 3 videos / mo · 75 credits",
+            "75 credits — about 3 videos",
             "No watermark",
             "Beat-by-beat review",
-            "Avatar + product modes"
+            "Avatar & product modes"
           ],
           "cta": "Start Creator"
         },
@@ -1025,9 +1028,9 @@
           "price": "$79",
           "note": "/ mo",
           "features": [
-            "≈ 10 videos / mo · 200 credits",
+            "200 credits — about 10 videos",
             "Everything in Creator",
-            "Priority over free renders",
+            "Priority rendering",
             "720p · 9:16 export"
           ],
           "cta": "Start Pro"
@@ -1037,34 +1040,19 @@
           "price": "$199",
           "note": "/ mo",
           "features": [
-            "≈ 25 videos / mo · 500 credits",
+            "500 credits — about 25 videos",
             "Everything in Pro",
-            "For always-on posting"
+            "Built for always-on posting"
           ],
           "cta": "Start Scale"
         }
       },
-      "pricingFooter": "Your <signup>first video is free</signup> — no card. Need the full ladder? <plans>See all plans →</plans>",
-      "faqKicker": "FAQ",
-      "faqTitle": "Questions, answered",
-      "finalCtaTitle": "Your next best-seller is one product link away.",
-      "finalCtaSubtitle": "Make your first scroll-stopping video free. No camera, no editor, no blank page.",
-      "finalCtaStartFree": "Start creating free",
-      "finalCtaSeePricing": "See pricing"
-    },
-    "heroMock": {
-      "caption": "this $24 gadget sold out <highlight>3 times</highlight> 👀",
-      "shopNow": "Shop now · $23.99",
-      "productName": "Mini Massage Gun",
-      "productMeta": "$23.99 · 30% comm.",
-      "sold": "12.4k sold / mo",
-      "beatReview": "Beat review",
-      "beatHook": "Hook",
-      "beatProof": "Proof",
-      "beatOffer": "Offer",
-      "beatAuto": "auto",
-      "beatOk": "ok",
-      "renderedWith": "Rendered with"
+      "pricingFooter": "Your <signup>first video is free</signup> — no card required. <plans>Compare all plans →</plans>",
+      "faqTitle": "Questions, <highlight>answered</highlight>",
+      "finalCtaTitle": "Your next best‑seller is <highlight>one link away.</highlight>",
+      "finalCtaSubtitle": "Make your first video free. No camera, no editor, no blank page.",
+      "finalCtaPrimary": "Create your first video",
+      "finalCtaSecondary": "See pricing"
     },
     "features": {
       "header": {

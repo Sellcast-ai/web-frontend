@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 const COLUMNS: { key: string; links: { key: string; href: string }[] }[] = [
   {
@@ -44,8 +45,8 @@ export async function SiteFooter() {
   const t = await getTranslations("marketing.footer");
 
   return (
-    <footer className="border-t border-border bg-muted/40">
-      <div className="container-page py-16">
+    <footer className="overflow-hidden border-t border-border bg-muted/40">
+      <div className="container-page pt-16">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-xs">
             <Logo href={null} />
@@ -63,7 +64,7 @@ export async function SiteFooter() {
                   <li key={link.key}>
                     <Link
                       href={link.href}
-                      className="text-sm text-ink-soft transition-colors hover:text-brand-700"
+                      className="text-sm text-ink-soft transition-colors hover:text-ink"
                     >
                       {t(`columns.${col.key}.${link.key}`)}
                     </Link>
@@ -74,10 +75,26 @@ export async function SiteFooter() {
           ))}
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-5 border-t border-border pt-8 text-sm text-muted-foreground sm:flex-row">
           <p>{t("copyright", { year: new Date().getFullYear() })}</p>
-          <p>{t("madeFor")}</p>
+          <div className="flex items-center gap-5">
+            <p className="hidden md:block">{t("madeFor")}</p>
+            <Link
+              href="/login"
+              className="font-medium text-ink-soft transition-colors hover:text-ink"
+            >
+              {t("signIn")}
+            </Link>
+            <LanguageSwitcher up />
+          </div>
         </div>
+      </div>
+
+      {/* ghost wordmark — the page signs off */}
+      <div aria-hidden className="pointer-events-none select-none">
+        <p className="translate-y-[32%] text-center font-display text-[clamp(7rem,23vw,20rem)] font-semibold leading-none tracking-tight text-ink/[0.05]">
+          Lumi
+        </p>
       </div>
     </footer>
   );

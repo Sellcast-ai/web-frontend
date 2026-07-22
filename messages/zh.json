@@ -1,7 +1,23 @@
 {
+  "nav": {
+    "features": "特点",
+    "howItWorks": "它是如何运作的",
+    "models": "型号",
+    "pricing": "定价"
+  },
   "app": {
+    "nav": {
+      "marketplace": "市场",
+      "products": "我的产品",
+      "avatars": "头像",
+      "videos": "我的视频",
+      "profile": "公司简介",
+      "newVideo": "新视频",
+      "new": "新",
+      "signedIn": "已登录",
+      "logOut": "退出"
+    },
     "toasts": {
-      "importSucceeded": "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
       "updateLikeFailed": "无法更新之类的。请再试一次。",
       "saveAvatarFailed": "无法保存头像。",
       "deleteAvatarFailed": "无法删除头像。",
@@ -15,21 +31,11 @@
       "retryJobFailed": "无法重试该作业。请再试一次。",
       "saveDisplayNameFailed": "无法保存您的显示名称。请再试一次。",
       "importPartial": "进口{count}您的产品（目录上限）。其余的可以通过粘贴添加。",
+      "importSucceeded": "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
       "importFailed": "导入没有完成。请再试一次。",
       "storyboardSaved": "故事板已保存。",
       "markedPosted": "标记为已发布。",
       "recordPostedFailed": "无法记录下来。请再试一次。"
-    },
-    "nav": {
-      "marketplace": "市场",
-      "products": "我的产品",
-      "avatars": "头像",
-      "videos": "我的视频",
-      "profile": "公司简介",
-      "newVideo": "新视频",
-      "new": "新",
-      "signedIn": "已登录",
-      "logOut": "退出"
     },
     "categories": {
       "beautyPersonalCare": "美容及个人护理",
@@ -484,12 +490,6 @@
       }
     }
   },
-  "nav": {
-    "features": "特点",
-    "howItWorks": "它是如何运作的",
-    "models": "型号",
-    "pricing": "定价"
-  },
   "languageSwitcher": {
     "label": "语言"
   },
@@ -714,13 +714,10 @@
     },
     "header": {
       "signIn": "登录",
-      "startFree": "免费开始",
-      "toggleMenu": "切换菜单",
-      "language": "语言",
-      "theme": "主题"
+      "startFree": "免费开始"
     },
     "footer": {
-      "tagline": "Lumi 将任何产品变成滚动停止的购物视频——基于真实的病毒模式，而不是猜测。",
+      "tagline": "商品链接进，成片视频出。一切都基于已经被验证能卖货的模式。",
       "columns": {
         "product": {
           "title": "产品展示",
@@ -751,7 +748,8 @@
         }
       },
       "copyright": "© {year} Sellcast。 Lumi 是 Sellcast 产品。",
-      "madeFor": "专为那些更愿意销售而不是胶片的卖家而设计。"
+      "madeFor": "专为那些更愿意销售而不是胶片的卖家而设计。",
+      "signIn": "登录"
     },
     "cta": {
       "title": "您的下一本畅销书只需一个产品链接即可。",
@@ -877,135 +875,140 @@
       }
     },
     "landing": {
-      "heroBadge": "专为 TikTok 和卷轴而设计",
-      "heroTitle": "将任何产品变成 <highlight> 滚动停止的 </highlight> 可购物视频。",
-      "heroSubtitle": "粘贴任何产品链接 - Amazon、Shopee、TikTok 商店或您自己的商店 - 或上传照片。 Lumi 研究该类别中已经获胜的内容，根据该模式编写视频脚本，让您逐个节拍地查看它，并使用 Seedance 2.0 进行渲染。几分钟后，没有相机。",
-      "heroStartFree": "开始免费创作",
-      "heroSeeHow": "看看它是如何工作的",
-      "heroCheck1": "第一个视频免费",
-      "heroCheck2": "没有信用卡",
-      "heroCheck3": "发布就绪 9:16",
-      "marquee": [
-        "TikTok 店铺",
-        "卷轴",
-        "美容",
-        "家居及厨房",
-        "健身",
-        "小工具",
-        "宠物",
-        "时尚",
-        "补充剂"
-      ],
-      "howKicker": "Lumi管道",
-      "howTitle": "四个阶段，零空白页",
-      "howSubtitle": "大多数工具都是从零开始的。 Lumi 从已经获胜的内容开始，然后让您全程掌控发布。",
-      "steps": {
-        "find": {
-          "kicker": "查找",
-          "title": "从任何产品开始",
-          "body": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的链接 - 或上传照片。或者浏览市场中的热门精选。"
+      "heroTitle": "把任何商品链接，变成<highlight>能卖货的视频。</highlight>",
+      "heroSubtitle": "粘贴一个链接，Lumi 会学习你所在品类中表现最好的视频背后的规律，写出脚本，并逐镜头渲染。每个分镜都由你确认之后，才会消耗积分。",
+      "heroPrimary": "创建你的第一支视频",
+      "heroSecondary": "看看它如何运作",
+      "heroFinePrint": "首支视频免费 · 无需信用卡 · 9:16 发布就绪",
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "正在读取商品",
+        "pattern": "已学习美妆品类约 100 支爆款视频",
+        "productName": "焕光精华 30 ml",
+        "productMeta": "$24 · 美妆",
+        "beats": {
+          "hook": {
+            "label": "开场钩子",
+            "line": "第一秒就让人停下滑动。"
+          },
+          "proof": {
+            "label": "效果实证",
+            "line": "让人看到精华真实起效。"
+          },
+          "offer": {
+            "label": "购买引导",
+            "line": "价格上屏，行动指令清晰。"
+          }
         },
-        "deconstruct": {
-          "kicker": "解构",
-          "title": "Lumi 学习模式",
-          "body": "它研究了大约 100 个该类别中真正的顶尖表现者，并提取了可转换的钩子、证明和 CTA 结构。"
-        },
-        "script": {
-          "kicker": "脚本",
-          "title": "回顾剧本和节拍",
-          "body": "一个接地气的剧本，有逐个镜头的节奏。在任何渲染刻录之前批准或重新生成每个参考图像。"
-        },
-        "generate": {
-          "kicker": "生成",
-          "title": "渲染和发布",
-          "body": "Seedance 2.0 渲染每个节拍，刻录字幕，然后您就可以发布了。"
-        }
+        "approve": "通过",
+        "approved": "已通过",
+        "rendering": "正在使用 Seedance 2.0 渲染",
+        "rendered": "渲染完成",
+        "duration": "0:18",
+        "caption": "这个月补货三次，看完你就懂了。",
+        "shopNow": "立即购买"
       },
-      "featuresKicker": "一切尽在一个工作室",
-      "featuresTitle": "整个视频工作流程，处理",
-      "featuresSubtitle": "从采购产品到准备发布的剪辑——无需将五种工具拼接在一起。",
-      "features": {
-        "linkToVideo": {
-          "title": "视频链接",
-          "body": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的链接 - 或上传照片。 Lumi 读取产品并自动处理框架、脚本、语音和编辑。"
-        },
-        "scripts": {
-          "title": "基于模式的脚本",
-          "body": "每个脚本都是根据您所在类别中真实的病毒结构构建的 - 学习模式，切勿复制表面。"
+      "marquee": {
+        "seedance": "Seedance 2.0 渲染",
+        "languages": "8 种配音语言",
+        "avatar": "AI 出镜人模式",
+        "productOnly": "纯商品模式",
+        "review": "逐分镜审阅",
+        "qa": "台词自动质检",
+        "captions": "字幕内嵌成片",
+        "ratio": "9:16 发布就绪",
+        "vibes": "5 种风格气质",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "10–30 秒成片"
+      },
+      "whyTitle": "建立在<highlight>已被验证的方法</highlight>之上",
+      "whySubtitle": "不是从空白画布开始。Lumi 从你的品类已经奖励过的模式出发——每一帧仍由你掌控。",
+      "why": {
+        "pattern": {
+          "body": "在写下第一句台词之前，Lumi 会拆解你所在品类约一百支表现最好的视频，只保留真正带来转化的结构。",
+          "caption": "脚本自己写自己——用证据。",
+          "uiHeading": "模式提取",
+          "uiSample": "约 100 支视频 · 美妆",
+          "uiHook": "钩子——先给主张",
+          "uiProof": "实证——展示效果",
+          "uiOffer": "引导——明确行动"
         },
         "review": {
-          "title": "逐个节拍回顾",
-          "body": "查看每个镜头的参考图像。在花费一秒钟的渲染时间之前批准、调整或重新生成。"
+          "body": "每个镜头都会先生成一张参考图。随意通过、微调或重新生成——只有你点头之后，积分才会开始消耗。",
+          "caption": "渲染之前，你说了算。",
+          "uiHeading": "分镜审阅",
+          "uiSpend": "已花费 $0",
+          "uiRegenerate": "重新生成"
         },
-        "modes": {
-          "title": "头像和产品模式",
-          "body": "人工智能演示者对着镜头说话，或者干净的产品展示 - 八种现成的样式可以匹配您的报价。"
-        },
-        "qa": {
-          "title": "自动对话QA",
-          "body": "Whisper 根据脚本检查每条渲染的线条并标记漂移，因此声音总是说出它应该说的话。"
-        },
-        "publish": {
-          "title": "字幕和发布",
-          "body": "自动刻录字幕和可发布的 9:16 剪辑，尺寸适合 TikTok 和开箱即用的卷轴。"
+        "reach": {
+          "body": "出镜讲解或纯商品展示，五种风格、八种配音语言。同一个商品链接，走遍你卖货的每个市场。",
+          "caption": "八种语言，同时开卖。",
+          "uiAvatar": "AI 出镜人",
+          "uiProductOnly": "纯商品",
+          "uiVibe": "高级简约"
         }
       },
-      "modelsKicker": "前沿渲染引擎",
-      "modelsTitle": "使用 Seedance 2.0 渲染",
-      "modelsSubtitle": "Lumi 使用 Seedance 2.0 渲染每个节拍 - 并且您的脚本会随着新模型的到来而保留。",
-      "models": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "直播",
-          "desc": "产品和头像镜头的快速、逼真的运动 - Lumi 的渲染引擎适合每个节拍。"
+      "storyTitle": "从商品链接<highlight>到成片发布</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "从任何链接开始",
+          "body": "Amazon、Shopee、TikTok Shop 或你自己的店铺——也可以直接上传相册里的商品照片。"
         },
-        "more": {
-          "name": "更多内容正在路上",
-          "tag": "很快",
-          "desc": "我们正在添加前沿视频模型，正如它们所证明的那样——您的脚本和节拍将继续使用。"
+        "learn": {
+          "title": "Lumi 学习爆款规律",
+          "body": "它研究该品类约一百支表现最好的视频，提取真正转化的结构：钩子、实证、引导。"
+        },
+        "approve": {
+          "title": "你来审定分镜脚本",
+          "body": "每个分镜先出参考图。你确认之前，不渲染，也不扣费。"
+        },
+        "render": {
+          "title": "Seedance 渲染成片",
+          "body": "字幕自动内嵌，语音质检逐句核对台词与脚本，9:16 成片即刻可发。"
         }
       },
-      "useCasesKicker": "这是给谁的",
-      "useCasesTitle": "专为所有通过视频进行销售的人而设计",
-      "useCases": {
-        "sellers": {
-          "title": "卖家",
-          "body": "扩展您的目录 - 无需工作室即可转换每个 SKU 的视频。"
+      "storyFact1": "审定之前，渲染花费为 $0",
+      "storyFact2": "1 积分 = 1 秒视频",
+      "wallTitle": "发布就绪，<highlight>直达每个市场</highlight>",
+      "wallSubtitle": "每支视频都是 9:16、字幕内嵌成片——脚本与配音都使用目标市场的语言。",
+      "wallAudience": "为卖家、创作者、品牌和代理机构打造——所有靠视频卖货的人。",
+      "wall": {
+        "beauty": {
+          "category": "美妆",
+          "vibe": "高级简约",
+          "language": "English"
         },
-        "creators": {
-          "title": "创作者",
-          "body": "旋转 TikTok 在几分钟内购买内容并保持您的发帖记录。"
+        "gadgets": {
+          "category": "数码好物",
+          "vibe": "大胆有力",
+          "language": "日本語"
         },
-        "brands": {
-          "title": "品牌",
-          "body": "一次性通过数百个独特的创意保持品牌形象。"
+        "home": {
+          "category": "家居厨房",
+          "vibe": "清晰演示",
+          "language": "Español"
         },
-        "agencies": {
-          "title": "机构",
-          "body": "为每位客户提供大量高质量的服务，您无需照顾。"
+        "pets": {
+          "category": "宠物",
+          "vibe": "轻快有趣",
+          "language": "English"
+        },
+        "fashion": {
+          "category": "时尚",
+          "vibe": "温暖亲近",
+          "language": "한국어"
+        },
+        "fitness": {
+          "category": "健身",
+          "vibe": "大胆有力",
+          "language": "Português"
         }
       },
-      "stats": {
-        "ways": {
-          "value": "5种方式",
-          "label": "开始：Amazon、Shopee、TikTok 商店、您的商店或照片"
-        },
-        "ratio": {
-          "value": "9:16",
-          "label": "每次都可发布 TikTok 和卷轴"
-        },
-        "credit": {
-          "value": "1 学分",
-          "label": "= 1 秒的视频 — 只需为您渲染的内容付费"
-        },
-        "spend": {
-          "value": "$0",
-          "label": "渲染支出，直到您批准节拍"
-        }
-      },
-      "pricingKicker": "定价",
-      "pricingTitle": "开始免费。工作时进行缩放。",
-      "pricingSubtitle": "基于学分 — 1 个学分 = 1 秒的视频。您的第一个视频是免费的；没有信用卡可以开始。",
+      "pricingTitle": "免费开始。<highlight>见效再扩量。</highlight>",
+      "pricingSubtitle": "按积分计费：1 积分 = 1 秒视频。首支视频免费——无需信用卡。",
       "mostPopular": "最受欢迎",
       "pricingTiers": {
         "creator": {
@@ -1013,10 +1016,10 @@
           "price": "29 美元",
           "note": "/ 莫",
           "features": [
-            "≈ 3 个视频/月 · 75 学分",
+            "75 积分——约 3 支视频",
             "无水印",
             "逐个节拍回顾",
-            "头像+产品模式"
+            "出镜人与纯商品模式"
           ],
           "cta": "启动创作者"
         },
@@ -1025,9 +1028,9 @@
           "price": "79 美元",
           "note": "/ 莫",
           "features": [
-            "≈ 10 个视频/月 · 200 学分",
+            "200 积分——约 10 支视频",
             "一切尽在造物主",
-            "优先于免费渲染",
+            "渲染优先",
             "720p · 9:16 导出"
           ],
           "cta": "开始专业版"
@@ -1037,34 +1040,19 @@
           "price": "199 美元",
           "note": "/ 莫",
           "features": [
-            "≈ 25 个视频/月 · 500 学分",
+            "500 积分——约 25 支视频",
             "专业版中的一切",
-            "用于始终在线发布"
+            "为持续发布而生"
           ],
           "cta": "开始规模"
         }
       },
-      "pricingFooter": "您的 <signup> 第一个视频是免费的 </signup> — 无卡。需要完整的梯子吗？ <plans>查看所有计划→</plans>",
-      "faqKicker": "常见问题解答",
-      "faqTitle": "问题，已解答",
-      "finalCtaTitle": "您的下一本畅销书只需一个产品链接即可。",
-      "finalCtaSubtitle": "让您的第一个滚动停止视频免费。没有相机，没有编辑器，没有空白页。",
-      "finalCtaStartFree": "开始免费创作",
-      "finalCtaSeePricing": "查看定价"
-    },
-    "heroMock": {
-      "caption": "这个 24 美元的小玩意已售罄 <highlight>3 次</highlight> 👀",
-      "shopNow": "立即购买 · $23.99",
-      "productName": "迷你按摩枪",
-      "productMeta": "23.99 美元 · 30% 佣金。",
-      "sold": "每月售出 12,400 件",
-      "beatReview": "打败评论",
-      "beatHook": "钩子",
-      "beatProof": "证明",
-      "beatOffer": "优惠",
-      "beatAuto": "汽车",
-      "beatOk": "好的",
-      "renderedWith": "渲染为"
+      "pricingFooter": "你的<signup>首支视频免费</signup>——无需信用卡。<plans>对比全部方案 →</plans>",
+      "faqTitle": "你想问的，<highlight>都在这里</highlight>",
+      "finalCtaTitle": "你的下一个爆款，<highlight>只差一个链接。</highlight>",
+      "finalCtaSubtitle": "免费做出你的第一支视频。不用相机，不用剪辑，不用面对空白页。",
+      "finalCtaPrimary": "创建你的第一支视频",
+      "finalCtaSecondary": "查看价格"
     },
     "features": {
       "header": {
