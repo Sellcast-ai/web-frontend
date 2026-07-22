@@ -14,6 +14,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import en from "../../messages/en.json";
 import { qk } from "@/lib/api/hooks";
+import { VIDEO_ASPECT_RATIOS } from "@/lib/api/types";
 import type { ProductSummary, Usage, VideoJob } from "@/lib/api/types";
 
 // The pages call these; none are exercised for a static render.
@@ -24,7 +25,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 const EVIDENCE_DIR =
-  "/var/folders/dl/ss70wk2x45b39_4pclg537_m0000gn/T/no-mistakes-evidence/01KXZNBP7ZK5PJRY2Z2BKVJCFZ";
+  "/var/folders/dl/ss70wk2x45b39_4pclg537_m0000gn/T/no-mistakes-evidence/01KY4SBQQR1YSQ39XRGSE4KCG4";
 
 const product: ProductSummary = {
   id: "prod-1",
@@ -201,6 +202,58 @@ describe("Studio page renders extracted English copy", () => {
     // picker still renders the raw endonyms from VIDEO_LANGUAGES.
     expect(text).toContain("Español");
     expect(text).toContain("简体中文");
+  });
+
+  it("renders the Size (aspect ratio) picker below Resolution with all five options", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    save("studio-size-picker", html);
+
+    const text = html.replace(/<[^>]+>/g, " ");
+    // Section heading is translated (catalog); ratio labels + platform blurbs
+    // are NOT (brand names / numeric ratios — same posture as the Format row).
+    expect(text).toContain("Size");
+    for (const s of [
+      "9:16",
+      "TikTok / Reels / Shorts",
+      "16:9",
+      "YouTube",
+      "1:1",
+      "Square feed",
+      "4:3",
+      "RedNote",
+      "3:4",
+      "Xiaohongshu",
+    ]) {
+      expect(text, `expected size option "${s}" in studio render`).toContain(s);
+    }
+    // Every size stays selectable — none of the five buttons is disabled
+    // (product decision: nothing greyed out in any mode).
+    const sizeSection = html.slice(html.indexOf(">Size<"), html.indexOf("5 · Language"));
+    expect(sizeSection).not.toContain("disabled");
+    // Default mode is ai_avatar, so the talking-head shape hint shows.
+    expect(text).toContain("Talking-head output may adapt its shape");
+    // Positioning: the Size picker renders after the Resolution picker.
+    expect(html.indexOf("Resolution")).toBeGreaterThan(-1);
+    expect(html.indexOf("Size")).toBeGreaterThan(html.indexOf("Resolution"));
+    // Summary Format row reflects the (default) chosen size, not a literal.
+    expect(text).toContain("9:16");
+  });
+});
+
+describe("Aspect-ratio picker shares the backend contract", () => {
+  it("exposes exactly the agreed enum, 9:16 default first", () => {
+    const values = VIDEO_ASPECT_RATIOS.map((a) => a.value);
+    // Must mirror fm/video-size-be-q7 exactly: enum + order + default.
+    expect(values).toEqual(["9:16", "16:9", "1:1", "4:3", "3:4"]);
+    // Default the Studio state initialises with is the first / 9:16.
+    expect(values[0]).toBe("9:16");
+    // Every option carries a platform blurb (brand hints, not i18n'd).
+    for (const a of VIDEO_ASPECT_RATIOS) expect(a.blurb.length).toBeGreaterThan(0);
   });
 });
 
