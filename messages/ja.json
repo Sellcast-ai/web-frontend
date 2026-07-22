@@ -252,6 +252,7 @@
         "duration": "4・期間",
         "model": "モデル",
         "resolution": "解像度",
+        "size": "サイズ",
         "language": "5・言語",
         "review": "6・レビュー"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "なし",
         "review": "レビュー",
         "storyboard": "絵コンテ"
+      },
+      "size": {
+        "avatarHint": "アバター出演の動画は、プレゼンターに合わせて形状が調整される場合があります。"
       },
       "usageSummary": "今月は {limit} クレジット中 {remaining} クレジットが残っています · このビデオは {duration} を使用しています",
       "generateVideo": "ビデオの生成",

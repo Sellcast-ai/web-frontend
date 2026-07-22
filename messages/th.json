@@ -252,6 +252,7 @@
         "duration": "4 · ระยะเวลา",
         "model": "รุ่น",
         "resolution": "ความละเอียด",
+        "size": "ขนาด",
         "language": "5 · ภาษา",
         "review": "6 · ทบทวน"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "ไม่มี",
         "review": "รีวิว",
         "storyboard": "สตอรี่บอร์ด"
+      },
+      "size": {
+        "avatarHint": "วิดีโอที่มีผู้นำเสนออาจปรับสัดส่วนภาพให้เข้ากับผู้นำเสนอ"
       },
       "usageSummary": "เครดิต {remaining} ของ {limit} เหลือในเดือนนี้ · วิดีโอนี้ใช้ {duration}",
       "generateVideo": "สร้างวิดีโอ",

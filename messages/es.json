@@ -252,6 +252,7 @@
         "duration": "4 · Duración",
         "model": "modelo",
         "resolution": "Resolución",
+        "size": "Tamaño",
         "language": "5 · Idioma",
         "review": "6 · Revisión"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "Ninguna",
         "review": "Revisión",
         "storyboard": "Guión gráfico"
+      },
+      "size": {
+        "avatarHint": "La salida con presentador puede adaptar su forma para encajar con el presentador."
       },
       "usageSummary": "{remaining} de {limit} créditos restantes este mes · este video usa {duration}",
       "generateVideo": "Generar vídeo",

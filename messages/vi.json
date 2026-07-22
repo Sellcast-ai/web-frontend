@@ -252,6 +252,7 @@
         "duration": "4 · Thời lượng",
         "model": "người mẫu",
         "resolution": "Độ phân giải",
+        "size": "Kích thước",
         "language": "5 · Ngôn ngữ",
         "review": "6 · Đánh giá"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "Không có",
         "review": "Xem lại",
         "storyboard": "Bảng phân cảnh"
+      },
+      "size": {
+        "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
       "usageSummary": "{remaining} trong số tín dụng {limit} còn lại trong tháng này · video này sử dụng {duration}",
       "generateVideo": "Tạo video",

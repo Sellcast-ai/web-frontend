@@ -252,6 +252,7 @@
         "duration": "4 · Duration",
         "model": "Model",
         "resolution": "Resolution",
+        "size": "Size",
         "language": "5 · Language",
         "review": "6 · Review"
       },
@@ -349,6 +350,9 @@
         "referenceNone": "None",
         "review": "Review",
         "storyboard": "Storyboard"
+      },
+      "size": {
+        "avatarHint": "Talking-head output may adapt its shape to fit the presenter."
       },
       "usageSummary": "{remaining} of {limit} credits left this month · this video uses {duration}",
       "generateVideo": "Generate video",

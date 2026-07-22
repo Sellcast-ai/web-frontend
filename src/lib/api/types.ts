@@ -279,6 +279,9 @@ export interface VideoJobCreate {
   /** Render resolution (Studio picker). 1080p needs a 1080p-capable model
    * (Seedance 2.0); on fast/mini the server clamps it to 720p. */
   resolution?: VideoResolution;
+  /** Output aspect ratio (Studio picker). Defaults to 9:16; talking-head
+   * output may adapt its shape server-side. */
+  aspect_ratio?: VideoAspectRatio;
 }
 
 /** Presigned direct-to-storage handshake for reference-clip uploads. The
@@ -319,6 +322,23 @@ export const VIDEO_RESOLUTIONS: {
   { value: "480p", label: "480p", blurb: "Draft · cheapest", enabled: true },
   { value: "720p", label: "720p", blurb: "HD · standard", enabled: true },
   { value: "1080p", label: "1080p", blurb: "Full HD · needs Seedance 2.0", enabled: true },
+];
+
+export type VideoAspectRatio = "9:16" | "16:9" | "1:1" | "4:3" | "3:4";
+
+/** Output sizes shown in the Studio picker. Enum + default must mirror the
+ * backend schema exactly. Labels are ratios + platform hints (brand names, not
+ * translated — same posture as the resolution/format rows). */
+export const VIDEO_ASPECT_RATIOS: {
+  value: VideoAspectRatio;
+  label: string;
+  blurb: string;
+}[] = [
+  { value: "9:16", label: "9:16", blurb: "TikTok / Reels / Shorts" },
+  { value: "16:9", label: "16:9", blurb: "YouTube" },
+  { value: "1:1", label: "1:1", blurb: "Square feed" },
+  { value: "4:3", label: "4:3", blurb: "RedNote" },
+  { value: "3:4", label: "3:4", blurb: "RedNote / Xiaohongshu portrait" },
 ];
 
 /* ----------------------------------------------------------------- avatars */
