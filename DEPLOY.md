@@ -13,7 +13,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] **Render** (API + worker) — Starter (~$7/svc)  *(or Fly/Railway)*
 - [ ] **Prod Postgres** — a new Neon project/branch (NOT the dev one), or Render Postgres
 - [ ] **Google Cloud OAuth** — a **Web** OAuth client (free) → enables Google login
-- [ ] **Twilio** *(optional for beta)* — only if you want phone-OTP SMS; Google login alone is enough to launch
+- [ ] **Twilio** *(optional for beta)* — only if you want phone-OTP SMS; Google login alone is enough to launch (without it the web signup form shows phone as unavailable, see §3)
 - [ ] **Cloudflare R2** — already configured (reuse the dev bucket or make a prod one)
 - [ ] A **domain** (optional; Vercel/Render give free subdomains)
 
@@ -46,13 +46,19 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
   **Web** client; Authorized JavaScript origins = your Vercel URL. Put the client
   id in BOTH `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (web) and `SELLCAST_GOOGLE_IOS_CLIENT_ID`
   (backend — it's the `aud` we verify).
-- **Phone OTP:** works once Twilio creds are set; otherwise leave it (Google covers login).
+- **Phone OTP:** works once Twilio creds are set. Until then the backend answers
+  `send-code` with `delivery_channel: "development"` (codes logged, never sent),
+  and the web form disables the phone step with a "Phone unavailable" message
+  pointing at Google, so an unconfigured phone path never looks broken, it just
+  looks closed. Note the form only learns this from the first send response, so
+  the user spends one attempt before seeing it.
 
 ## 4. Verify before announcing
 - [ ] `curl -H 'X-User-Id: x' https://<api>/api/v1/products` → **401** (dev bypass is OFF)
 - [ ] Sign in with Google on the live site → lands in `/app/marketplace`
 - [ ] Create a video → worker renders it → plays on the job page
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
+- [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` in `src/app/layout.tsx` must match the production domain for the card URL to resolve.
 
 ## Cost control (free beta)
 Each rendered video spends OpenAI + FAL credit. The guardrail is the per-user

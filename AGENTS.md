@@ -28,8 +28,8 @@ The browser never talks to the backend directly; all data flows through the BFF 
 ## Structure
 
 - `src/app/(marketing)/` - public pages (landing, pricing, features, legal, blog...)
-- `src/app/(auth)/` - login/signup (phone OTP + Google OAuth)
-- `src/app/app/` - authenticated product app (marketplace, products, studio, videos, jobs, avatars, profile). `app/layout.tsx` redirects to `/login` when session cookies are absent (no middleware.ts).
+- `src/app/(auth)/` - login/signup (phone OTP + Google OAuth). Phone is not a guaranteed path: when `send-code` answers with the `development` delivery channel (see `src/lib/phone-auth.ts`), the form latches into an unavailable state and points at Google instead.
+- `src/app/app/` - authenticated product app (marketplace, products, studio, videos, jobs, avatars, profile). `app/layout.tsx` redirects to `/login` when session cookies are absent (no middleware.ts), and sets the `Studio` title default + `TITLE_TEMPLATE`; each route owns a thin `layout.tsx` whose `generateMetadata` pulls its title from the catalog (page files are client components, so they can't export metadata themselves). A segment that declares `title.default` drops the inherited template for its children, so `products/layout.tsx` re-declares `TITLE_TEMPLATE` to keep `products/new` and `products/[id]` suffixed.
 - `src/app/api/bff/` - BFF route handlers:
   - `[...path]/route.ts` - generic authenticated proxy (`maxDuration = 180` for slow Apify product parses)
   - `auth/google`, `auth/phone/send-code`, `auth/phone/verify`, `auth/logout` - set/clear session cookies
@@ -43,6 +43,8 @@ The browser never talks to the backend directly; all data flows through the BFF 
 - `src/lib/use-dropzone.ts` - shared drag-and-drop hook (spread `props` on the drop target, style via `over`)
 - `src/lib/subjects.ts` - pure helper for the storyboard locked-subjects strip (`orderedSubjects` sorts Product -> Host -> Scene and omits when empty; `SUBJECT_HEADING_KEYS` maps kind to catalog key)
 - `src/lib/job-progress.ts` - pure helper for the job-detail progress tracker (`STEP_LABEL_KEYS` + `stepIndex` map `job.status` to a stage; storyboard-present on a queued/submitted job means the review gate is behind us, so it shows Render, never backtracking to Script/Beats)
+- `src/lib/phone-auth.ts` - `isDevDeliveryChannel` / `DEV_DELIVERY_CHANNEL`, the single place that knows the backend's `development` SMS provider literal (`PhoneDeliveryChannel` in `types.ts`); keep it in sync with backend `app/services/sms.py` rather than string-matching the channel at call sites
+- `src/lib/metadata.ts` - `TITLE_TEMPLATE` (`%s · Lumi Studio`) shared by the app-shell layouts; the marketing/root template stays `%s · Lumi` in `src/app/layout.tsx`
 - `src/lib/menu-placement.ts` - pure helper picking which side a popover opens on and its `maxHeight` from the trigger rect + viewport (never below `MIN_MENU_HEIGHT`), so tall menus scroll instead of spilling past the fold
 - `src/lib/vibe.ts` - `defaultStyleForMode` derives the (now non-user-facing) `style` from mode. Vibe (`VIDEO_VIBES` in `types.ts`) is the hero creation control in Studio; style demotion is a locked product decision - keep sending a valid `style` in the create payload so the backend schema stays intact. Studio also has an optional "Make it like this" reference input with two tabs - paste a supported social link, or upload a clip (`api.uploadReferenceVideo` presigns + streams direct to storage) - that adds `reference_url` to the create payload only when a valid link is entered or an upload completes; Generate is gated while an upload is in flight or the link is invalid. It's additive, so no reference means the body is unchanged; the seller-facing framing is that Lumi learns vibe/energy only, never the reference's shots.
 - Shot edit drawer (`ShotEditor` in `src/app/app/jobs/[id]/page.tsx`) is plain-language first: spoken line, on-screen text, the `OUTCOME_NUDGES` taps (`Shot.outcome_nudges`) and a free-text `nudge_note`; raw camera fields (`technique`/`transition_out`/`product_visible`) hide behind the "Pro mode" disclosure. The backend derives the camera fields from the taps/note (deterministic map + single-shot GPT re-derive, all via the existing `PATCH /storyboard` sending the full `VideoScript`), so the `OutcomeNudge` value strings are canonical English the backend keys on exactly - don't reword them, and don't leak camera jargon onto the main read-first path (the shot card hint shows applied taps/note, not `technique`).
@@ -70,10 +72,20 @@ Showcase footage is wired through `marketing/showcase.ts` (`HERO_OUTPUT_VIDEO`, 
 Those slots currently hold licensed stock (provenance in `public/marketing/videos/SOURCES.md`), so the page labels it via `marketing.landing.heroStageNote` / `wallDisclaimer` - never let footage that is not a Lumi render read as Lumi output.
 The marketing header is deliberately slim (logo, Pricing, language switcher, Sign in, one CTA; server component, no menu state); below `sm` the Pricing and Sign in links drop out so the row can't overflow at 320px, leaving logo + switcher + CTA (both links stay reachable from the footer, which also keeps its own sign-in link), and the theme toggle is app-only.
 
+## Brand & share metadata
+
+Icons and share cards are file-convention based, so there is no hand-written `<link rel="icon">` anywhere.
+`src/app/favicon.ico` + `src/app/apple-icon.png` (opaque full-bleed square - iOS applies its own rounded mask and composites any transparency onto black) are picked up by Next; the 512px `public/icon.png` and `public/icon-maskable.png` deliberately live in `public/` and are referenced only from `src/app/manifest.ts`, because an `icon.png` in `src/app/` would emit a second `<link rel="icon">` competing with the favicon.
+`public/lumi-mark.svg` is the vector source the raster icons were exported from - it is not loaded at runtime; re-export the PNGs from it when the mark changes.
+`src/app/opengraph-image.tsx` renders the 1200x630 card with `next/og` (its inline mark must keep matching `bg-brand-gradient`); it serves Twitter/X too, so do not add a separate `twitter-image` route.
+The teal gradients in `globals.css` (`bg-hero`, `bg-brand-gradient`) carry white text on the surfaces that use them (avatar initials, step badges, dark panels) - both stops must stay dark enough for 4.5:1, so do not brighten the end stop back toward the iOS aqua.
+
 ## Auth model
 
 JWTs from the FastAPI backend are stored as httpOnly cookies (`lumi_at` access ~30m, `lumi_rt` refresh ~30d) by the BFF auth routes; tokens never reach client JS.
 The catch-all proxy transparently refreshes on 401 and re-issues cookies, clearing them if refresh fails.
+Google is the only path guaranteed to work in every environment: `send-code` returning `delivery_channel: "development"` means the backend only logs codes, so `AuthForm` latches the phone step into a disabled "Phone unavailable" state (`auth.phoneUnavailable*` catalog keys) instead of advancing to code entry.
+That check is post-submit - availability is only known from the first send response, so the user spends one attempt before seeing it; a pre-flight availability endpoint would remove that.
 
 ## Environment
 
