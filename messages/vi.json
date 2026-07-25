@@ -912,7 +912,7 @@
         "approved": "Đã duyệt",
         "rendering": "Đang render với Seedance 2.0",
         "rendered": "Đã render",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "Nhập hàng lại ba lần trong tháng. Đây là lý do.",
         "shopNow": "Mua ngay"
       },
@@ -978,7 +978,7 @@
       "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
       "storyFact2": "1 credit = 1 giây video",
       "wallTitle": "Mọi ngành hàng, <highlight>mọi thị trường</highlight>",
-      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm phụ đề gắn sẵn, kịch bản và giọng đọc theo ngôn ngữ của thị trường mục tiêu: English, 日本語, Español, 한국어, Português và nhiều hơn nữa.",
+      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm phụ đề gắn sẵn, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
       "wallDisclaimer": "Ví dụ theo ngành hàng dùng video tư liệu có bản quyền, không phải video do Lumi tạo.",
       "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
       "wall": {

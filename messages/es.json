@@ -912,7 +912,7 @@
         "approved": "Aprobado",
         "rendering": "Renderizando con Seedance 2.0",
         "rendered": "Renderizado",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "Agotado tres veces este mes. Por esto.",
         "shopNow": "Comprar ahora"
       },
@@ -978,7 +978,7 @@
       "storyFact1": "$0 de gasto en render hasta que apruebes",
       "storyFact2": "1 crédito = 1 segundo de video",
       "wallTitle": "Cada categoría, <highlight>cada mercado</highlight>",
-      "wallSubtitle": "Cada vídeo de Lumi se entrega en 9:16 con subtítulos incrustados, con guión y voz en el idioma del mercado al que va dirigido: English, 日本語, Español, 한국어, Português y más.",
+      "wallSubtitle": "Cada vídeo de Lumi se entrega en 9:16 con subtítulos incrustados, con guion y voz adaptados a cada mercado objetivo.",
       "wallDisclaimer": "Ejemplos por categoría mostrados con material de archivo con licencia; no son salidas de Lumi.",
       "wallAudience": "Hecho para vendedores, creadores, marcas y agencias — cualquiera que venda con video.",
       "wall": {

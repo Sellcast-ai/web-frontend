@@ -912,7 +912,7 @@
         "approved": "承認済み",
         "rendering": "Seedance 2.0 でレンダリング中",
         "rendered": "レンダリング完了",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "今月3回も再入荷。理由はこれ。",
         "shopNow": "今すぐ購入"
       },
@@ -978,7 +978,7 @@
       "storyFact1": "承認するまでレンダリング費用は $0",
       "storyFact2": "1クレジット = 動画1秒",
       "wallTitle": "すべてのカテゴリー、<highlight>すべての市場へ</highlight>",
-      "wallSubtitle": "Lumi の動画はすべて 9:16 で字幕を焼き込み、届ける市場の言語で台本と音声を制作します。English、日本語、Español、한국어、Português など。",
+      "wallSubtitle": "Lumi の動画はすべて 9:16 で字幕を焼き込み、各ターゲット市場に合わせて台本と音声を調整します。",
       "wallDisclaimer": "カテゴリーの例にはライセンス取得済みのストック映像を使用しています。Lumi が生成した動画ではありません。",
       "wallAudience": "セラー、クリエイター、ブランド、代理店のために——動画で売るすべての人へ。",
       "wall": {
