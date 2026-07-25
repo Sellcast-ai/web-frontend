@@ -62,6 +62,7 @@ export function ShowcaseVideo({
       loop
       playsInline
       preload="none"
+      aria-hidden="true"
     />
   );
 }
