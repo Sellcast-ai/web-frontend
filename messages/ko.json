@@ -884,6 +884,7 @@
       "heroPrimary": "첫 영상 만들기",
       "heroSecondary": "작동 방식 보기",
       "heroFinePrint": "첫 영상 무료 · 카드 불필요 · 바로 게시 가능한 9:16",
+      "heroStageNote": "제품 시뮬레이션 - 화면 속 영상은 라이선스를 받은 스톡 영상이며 Lumi가 생성한 결과물이 아닙니다.",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -911,7 +912,7 @@
         "approved": "승인됨",
         "rendering": "Seedance 2.0으로 렌더링 중",
         "rendered": "렌더링 완료",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "이번 달에만 세 번 재입고. 이게 그 이유.",
         "shopNow": "지금 구매"
       },
@@ -976,39 +977,34 @@
       },
       "storyFact1": "승인 전까지 렌더링 비용 $0",
       "storyFact2": "1 크레딧 = 영상 1초",
-      "wallTitle": "게시 준비 완료, <highlight>모든 시장에서</highlight>",
-      "wallSubtitle": "모든 영상은 자막이 입혀진 9:16으로 완성되며, 향하는 시장의 언어로 대본과 보이스오버가 만들어집니다.",
+      "wallTitle": "모든 카테고리, <highlight>모든 시장</highlight>",
+      "wallSubtitle": "모든 Lumi 영상은 자막을 입힌 9:16으로 제공되며, 대본과 보이스는 각 목표 시장에 맞춰 조정됩니다.",
+      "wallDisclaimer": "카테고리 예시는 라이선스를 받은 스톡 영상이며 Lumi가 생성한 결과물이 아닙니다.",
       "wallAudience": "셀러, 크리에이터, 브랜드, 에이전시 — 영상으로 판매하는 모두를 위해.",
       "wall": {
         "beauty": {
           "category": "뷰티",
-          "vibe": "프리미엄 & 클린",
-          "language": "English"
+          "vibe": "프리미엄 & 클린"
         },
         "gadgets": {
           "category": "가젯",
-          "vibe": "볼드 & 펀치",
-          "language": "日本語"
+          "vibe": "볼드 & 펀치"
         },
         "home": {
           "category": "홈 & 키친",
-          "vibe": "클린 데모",
-          "language": "Español"
+          "vibe": "클린 데모"
         },
         "pets": {
           "category": "펫",
-          "vibe": "펀 & 패스트",
-          "language": "English"
+          "vibe": "펀 & 패스트"
         },
         "fashion": {
           "category": "패션",
-          "vibe": "코지 & 퍼스널",
-          "language": "한국어"
+          "vibe": "코지 & 퍼스널"
         },
         "fitness": {
           "category": "피트니스",
-          "vibe": "볼드 & 펀치",
-          "language": "Português"
+          "vibe": "볼드 & 펀치"
         }
       },
       "pricingTitle": "무료로 시작하고, <highlight>통하면 확장하세요.</highlight>",

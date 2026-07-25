@@ -884,6 +884,7 @@
       "heroPrimary": "创建你的第一支视频",
       "heroSecondary": "看看它如何运作",
       "heroFinePrint": "首支视频免费 · 无需信用卡 · 9:16 发布就绪",
+      "heroStageNote": "产品演示：手机中的片段为已授权素材影片，并非 Lumi 生成的成片。",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -911,7 +912,7 @@
         "approved": "已通过",
         "rendering": "正在使用 Seedance 2.0 渲染",
         "rendered": "渲染完成",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "这个月补货三次，看完你就懂了。",
         "shopNow": "立即购买"
       },
@@ -976,39 +977,34 @@
       },
       "storyFact1": "审定之前，渲染花费为 $0",
       "storyFact2": "1 积分 = 1 秒视频",
-      "wallTitle": "发布就绪，<highlight>直达每个市场</highlight>",
-      "wallSubtitle": "每支视频都是 9:16、字幕内嵌成片——脚本与配音都使用目标市场的语言。",
+      "wallTitle": "每个品类，<highlight>每个市场</highlight>",
+      "wallSubtitle": "每条 Lumi 视频都以 9:16 输出并内嵌字幕，脚本与配音会适配每个目标市场。",
+      "wallDisclaimer": "品类示例使用已授权素材影片，并非 Lumi 生成的成片。",
       "wallAudience": "为卖家、创作者、品牌和代理机构打造——所有靠视频卖货的人。",
       "wall": {
         "beauty": {
           "category": "美妆",
-          "vibe": "高级简约",
-          "language": "English"
+          "vibe": "高级简约"
         },
         "gadgets": {
           "category": "数码好物",
-          "vibe": "大胆有力",
-          "language": "日本語"
+          "vibe": "大胆有力"
         },
         "home": {
           "category": "家居厨房",
-          "vibe": "清晰演示",
-          "language": "Español"
+          "vibe": "清晰演示"
         },
         "pets": {
           "category": "宠物",
-          "vibe": "轻快有趣",
-          "language": "English"
+          "vibe": "轻快有趣"
         },
         "fashion": {
           "category": "时尚",
-          "vibe": "温暖亲近",
-          "language": "한국어"
+          "vibe": "温暖亲近"
         },
         "fitness": {
           "category": "健身",
-          "vibe": "大胆有力",
-          "language": "Português"
+          "vibe": "大胆有力"
         }
       },
       "pricingTitle": "免费开始。<highlight>见效再扩量。</highlight>",

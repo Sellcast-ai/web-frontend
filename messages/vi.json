@@ -884,6 +884,7 @@
       "heroPrimary": "Tạo video đầu tiên của bạn",
       "heroSecondary": "Xem cách hoạt động",
       "heroFinePrint": "Video đầu tiên miễn phí · Không cần thẻ · 9:16 sẵn sàng đăng",
+      "heroStageNote": "Mô phỏng sản phẩm - đoạn video trong điện thoại là video tư liệu có bản quyền, không phải video do Lumi tạo.",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -911,7 +912,7 @@
         "approved": "Đã duyệt",
         "rendering": "Đang render với Seedance 2.0",
         "rendered": "Đã render",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "Nhập hàng lại ba lần trong tháng. Đây là lý do.",
         "shopNow": "Mua ngay"
       },
@@ -976,39 +977,34 @@
       },
       "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
       "storyFact2": "1 credit = 1 giây video",
-      "wallTitle": "Sẵn sàng đăng, <highlight>ở mọi thị trường</highlight>",
-      "wallSubtitle": "Mỗi video xuất ra ở 9:16 với phụ đề gắn sẵn — kịch bản và lồng tiếng bằng ngôn ngữ của thị trường nó hướng tới.",
+      "wallTitle": "Mọi ngành hàng, <highlight>mọi thị trường</highlight>",
+      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm phụ đề gắn sẵn, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
+      "wallDisclaimer": "Ví dụ theo ngành hàng dùng video tư liệu có bản quyền, không phải video do Lumi tạo.",
       "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
       "wall": {
         "beauty": {
           "category": "Làm đẹp",
-          "vibe": "Cao cấp & tinh gọn",
-          "language": "English"
+          "vibe": "Cao cấp & tinh gọn"
         },
         "gadgets": {
           "category": "Đồ công nghệ",
-          "vibe": "Táo bạo & dứt khoát",
-          "language": "日本語"
+          "vibe": "Táo bạo & dứt khoát"
         },
         "home": {
           "category": "Nhà cửa & bếp",
-          "vibe": "Demo gọn gàng",
-          "language": "Español"
+          "vibe": "Demo gọn gàng"
         },
         "pets": {
           "category": "Thú cưng",
-          "vibe": "Vui & nhanh",
-          "language": "English"
+          "vibe": "Vui & nhanh"
         },
         "fashion": {
           "category": "Thời trang",
-          "vibe": "Ấm áp & gần gũi",
-          "language": "한국어"
+          "vibe": "Ấm áp & gần gũi"
         },
         "fitness": {
           "category": "Thể hình",
-          "vibe": "Táo bạo & dứt khoát",
-          "language": "Português"
+          "vibe": "Táo bạo & dứt khoát"
         }
       },
       "pricingTitle": "Bắt đầu miễn phí. <highlight>Hiệu quả rồi mở rộng.</highlight>",

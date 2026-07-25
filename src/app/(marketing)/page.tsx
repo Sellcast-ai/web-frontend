@@ -23,6 +23,7 @@ import { Accent } from "@/components/marketing/accent";
 import { Faq } from "@/components/marketing/faq";
 import { PipelineHero } from "@/components/marketing/pipeline-hero";
 import { OUTPUT_WALL_VIDEOS, type WallTileKey } from "@/components/marketing/showcase";
+import { ShowcaseVideo } from "@/components/marketing/showcase-video";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ data */
@@ -44,8 +45,9 @@ const MARQUEE = [
 const STORY_STEPS = ["link", "learn", "approve", "render"] as const;
 
 /* Muted duotone posters for the output wall — colour lives inside the media
-   frames (the arcads rule), never on the page canvas. Swapped for real
-   footage via OUTPUT_WALL_VIDEOS in showcase.ts. */
+   frames (the arcads rule), never on the page canvas. Only drawn for a tile
+   whose slot in OUTPUT_WALL_VIDEOS (showcase.ts) is empty; a filled slot plays
+   its clip instead. */
 const WALL_TILES: { key: WallTileKey; art: string }[] = [
   { key: "beauty", art: "linear-gradient(160deg,#8a6a5e 0%,#2e2320 72%)" },
   { key: "gadgets", art: "linear-gradient(160deg,#5c6d78 0%,#1d2429 72%)" },
@@ -116,6 +118,9 @@ export default async function HomePage() {
 
           <div className="animate-rise mx-auto mt-16 max-w-4xl [animation-delay:150ms]">
             <PipelineHero />
+            <p className="mx-auto mt-4 max-w-md text-balance text-center text-xs leading-relaxed text-muted-foreground">
+              {t("heroStageNote")}
+            </p>
           </div>
         </div>
 
@@ -342,6 +347,9 @@ export default async function HomePage() {
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
             {t("wallSubtitle")}
           </p>
+          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
+            {t("wallDisclaimer")}
+          </p>
         </FadeIn>
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
@@ -355,14 +363,10 @@ export default async function HomePage() {
               >
                 <div className="group relative aspect-9/16 overflow-hidden rounded-3xl border border-border shadow-soft">
                   {video ? (
-                    <video
+                    <ShowcaseVideo
                       className="absolute inset-0 h-full w-full object-cover"
                       src={video.src}
                       poster={video.poster}
-                      muted
-                      loop
-                      playsInline
-                      autoPlay
                     />
                   ) : (
                     <div
@@ -376,7 +380,7 @@ export default async function HomePage() {
                     </div>
                   )}
                   <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-3">
-                    {(["category", "vibe", "language"] as const).map((chip) => (
+                    {(["category", "vibe"] as const).map((chip) => (
                       <span
                         key={chip}
                         className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/90 backdrop-blur-sm"

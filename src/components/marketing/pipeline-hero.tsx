@@ -17,6 +17,7 @@ import {
 import { useTranslations } from "next-intl";
 import { EASE_OUT } from "@/components/ui/motion";
 import { HERO_OUTPUT_VIDEO } from "./showcase";
+import { ShowcaseVideo } from "./showcase-video";
 import { cn } from "@/lib/utils";
 
 /* The simulated-pipeline hero: Lumi's real differentiator — link → learned
@@ -32,7 +33,12 @@ const APPROVE = 5;
 const RENDERING = 6;
 const DONE = 7;
 
-/* Hold per step (ms) before advancing. TYPING advances per character. */
+/* Hold per step (ms) before advancing. TYPING advances per character. DONE is
+   a fallback only: from the second cycle on, once the clip reports its length
+   the rendered step holds for exactly that long, so the replay never truncates
+   the footage it is showing off however long a future clip runs. (The first
+   pass opens on the server-rendered finished state and leaves it after 900 ms
+   to start the replay.) */
 const HOLD: Record<number, number> = {
   [READING]: 1000,
   [PATTERN]: 1300,
@@ -65,6 +71,7 @@ export function PipelineHero() {
   const [typed, setTyped] = useState(url.length);
   const [clickDone, setClickDone] = useState(true);
   const [cycle, setCycle] = useState(0);
+  const [clipMs, setClipMs] = useState(0);
 
   useEffect(() => {
     if (!playing) return;
@@ -76,7 +83,12 @@ export function PipelineHero() {
       const id = setTimeout(() => setTyped((n) => n + 1), 36);
       return () => clearTimeout(id);
     }
-    const hold = step === DONE && cycle === 0 ? 900 : HOLD[step];
+    const hold =
+      step === DONE
+        ? cycle === 0
+          ? 900
+          : clipMs || HOLD[DONE]
+        : HOLD[step];
     const id = setTimeout(() => {
       if (step === DONE) {
         setTyped(0);
@@ -88,7 +100,7 @@ export function PipelineHero() {
       }
     }, hold);
     return () => clearTimeout(id);
-  }, [playing, step, typed, cycle, url.length]);
+  }, [playing, step, typed, cycle, clipMs, url.length]);
 
   /* The cursor "click" flips the storyboard to approved mid-APPROVE. */
   useEffect(() => {
@@ -101,6 +113,10 @@ export function PipelineHero() {
      internal replay is — a mid-session preference flip must not freeze the
      stage half-typed. */
   const shownStep = reduced ? DONE : step;
+  const clipSeconds = Math.round(clipMs / 1000);
+  const clipLabel = clipMs
+    ? `${Math.floor(clipSeconds / 60)}:${String(clipSeconds % 60).padStart(2, "0")}`
+    : t("duration");
   const shownTyped = reduced ? url.length : typed;
   const approved =
     shownStep >= RENDERING || (shownStep === APPROVE && clickDone);
@@ -306,69 +322,80 @@ export function PipelineHero() {
         {/* ---------------------------------------------------- the output */}
         <div className="mx-auto w-44 shrink-0 sm:w-52">
           <div className="relative aspect-9/16 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#0d1013]">
-            {video ? (
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
+            <AnimatePresence initial={false}>
+              {shownStep === DONE ? (
+                <motion.div
+                  key="rendered"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: EASE_OUT }}
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(130% 90% at 72% 6%, #33545e 0%, #131a1e 58%, #0c0f12 100%)",
+                  }}
+                >
+                  {!video && (
+                    <div className="absolute -left-10 top-1/4 h-56 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="stage"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,#181d22_0%,#0d1013_70%)]"
+                />
+              )}
+            </AnimatePresence>
+
+            {/* Mounted across replay cycles so the clip is fetched once and is
+                ready the moment the render lands. */}
+            {video && (
+              <ShowcaseVideo
+                active={shownStep === DONE}
+                className={cn(
+                  "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+                  shownStep === DONE ? "opacity-100" : "opacity-0",
+                )}
                 src={video.src}
                 poster={video.poster}
-                muted
-                loop
-                playsInline
-                autoPlay
+                onDuration={(s) => setClipMs(Math.round(s * 1000))}
               />
-            ) : (
-              <AnimatePresence initial={false}>
-                {shownStep === DONE ? (
-                  <motion.div
-                    key="rendered"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: EASE_OUT }}
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "radial-gradient(130% 90% at 72% 6%, #33545e 0%, #131a1e 58%, #0c0f12 100%)",
-                    }}
-                  >
-                    <div className="absolute -left-10 top-1/4 h-56 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="stage"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,#181d22_0%,#0d1013_70%)]"
-                  />
-                )}
-              </AnimatePresence>
             )}
 
-            {/* rendered overlay */}
-            {shownStep === DONE && (
-              <>
-                <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
-                  <motion.span
-                    initial={playing ? { opacity: 0, scale: 0.6 } : false}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.25, ease: EASE_OUT, delay: playing ? 0.35 : 0 }}
-                    className="flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-live" />
-                    {t("rendered")}
-                  </motion.span>
-                  <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
-                    {t("duration")}
-                  </span>
-                </div>
-                {!video && (
+            {/* rendered overlay - fades out with the clip behind it */}
+            <AnimatePresence initial={false}>
+              {shownStep === DONE && (
+                <motion.div
+                  key="overlay"
+                  initial={false}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: EASE_OUT }}
+                  className="pointer-events-none absolute inset-0"
+                >
+                  <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
+                    <motion.span
+                      initial={playing ? { opacity: 0, scale: 0.6 } : false}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.25, ease: EASE_OUT, delay: playing ? 0.35 : 0 }}
+                      className="flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-live" />
+                      {t("rendered")}
+                    </motion.span>
+                    <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
+                      {clipLabel}
+                    </span>
+                  </div>
                   <motion.div
                     initial={playing ? { opacity: 0, y: 12 } : false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
-                    className="absolute inset-x-0 bottom-0 space-y-2.5 p-3.5"
+                    className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
                   >
                     <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
                       {t("caption")}
@@ -380,9 +407,9 @@ export function PipelineHero() {
                       </span>
                     </div>
                   </motion.div>
-                )}
-              </>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -884,6 +884,7 @@
       "heroPrimary": "最初の動画をつくる",
       "heroSecondary": "仕組みを見る",
       "heroFinePrint": "初回の動画は無料 · カード不要 · 9:16 でそのまま投稿可能",
+      "heroStageNote": "製品シミュレーション：スマホ内の映像はライセンス取得済みのストック素材で、Lumi が生成した動画ではありません。",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -911,7 +912,7 @@
         "approved": "承認済み",
         "rendering": "Seedance 2.0 でレンダリング中",
         "rendered": "レンダリング完了",
-        "duration": "0:18",
+        "duration": "0:09",
         "caption": "今月3回も再入荷。理由はこれ。",
         "shopNow": "今すぐ購入"
       },
@@ -976,39 +977,34 @@
       },
       "storyFact1": "承認するまでレンダリング費用は $0",
       "storyFact2": "1クレジット = 動画1秒",
-      "wallTitle": "投稿レディ、<highlight>あらゆる市場へ</highlight>",
-      "wallSubtitle": "すべての動画は 9:16・字幕焼き込みで仕上がり、向け先の市場の言語で台本とナレーションが作られます。",
+      "wallTitle": "すべてのカテゴリー、<highlight>すべての市場へ</highlight>",
+      "wallSubtitle": "Lumi の動画はすべて 9:16 で字幕を焼き込み、各ターゲット市場に合わせて台本と音声を調整します。",
+      "wallDisclaimer": "カテゴリーの例にはライセンス取得済みのストック映像を使用しています。Lumi が生成した動画ではありません。",
       "wallAudience": "セラー、クリエイター、ブランド、代理店のために——動画で売るすべての人へ。",
       "wall": {
         "beauty": {
           "category": "ビューティー",
-          "vibe": "プレミアム&クリーン",
-          "language": "English"
+          "vibe": "プレミアム&クリーン"
         },
         "gadgets": {
           "category": "ガジェット",
-          "vibe": "大胆&パンチ",
-          "language": "日本語"
+          "vibe": "大胆&パンチ"
         },
         "home": {
           "category": "ホーム&キッチン",
-          "vibe": "クリーンなデモ",
-          "language": "Español"
+          "vibe": "クリーンなデモ"
         },
         "pets": {
           "category": "ペット",
-          "vibe": "楽しく軽快",
-          "language": "English"
+          "vibe": "楽しく軽快"
         },
         "fashion": {
           "category": "ファッション",
-          "vibe": "あたたかく親密",
-          "language": "한국어"
+          "vibe": "あたたかく親密"
         },
         "fitness": {
           "category": "フィットネス",
-          "vibe": "大胆&パンチ",
-          "language": "Português"
+          "vibe": "大胆&パンチ"
         }
       },
       "pricingTitle": "無料で始めて、<highlight>効いたら広げる。</highlight>",
