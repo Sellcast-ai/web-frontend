@@ -111,6 +111,10 @@ export function PipelineHero() {
      internal replay is — a mid-session preference flip must not freeze the
      stage half-typed. */
   const shownStep = reduced ? DONE : step;
+  const clipSeconds = Math.round(clipMs / 1000);
+  const clipLabel = clipMs
+    ? `${Math.floor(clipSeconds / 60)}:${String(clipSeconds % 60).padStart(2, "0")}`
+    : t("duration");
   const shownTyped = reduced ? url.length : typed;
   const approved =
     shownStep >= RENDERING || (shownStep === APPROVE && clickDone);
@@ -382,7 +386,7 @@ export function PipelineHero() {
                       {t("rendered")}
                     </motion.span>
                     <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
-                      {t("duration")}
+                      {clipLabel}
                     </span>
                   </div>
                   <motion.div

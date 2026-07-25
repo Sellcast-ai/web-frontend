@@ -16,7 +16,7 @@ Two limits that bind this page:
 ## Files
 
 Each `.mp4` is a local derivative: cropped/scaled to 720x1280, trimmed to a 5-10 s loop, audio stripped, ~1.1-1.7 MB.
-Each `.jpg` is a frame from its clip, used as the `poster`.
+Each `.webp` is a frame from its clip downscaled to 480x854, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
 
 | Slot | File | Source clip |
 | --- | --- | --- |
