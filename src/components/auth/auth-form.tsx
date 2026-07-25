@@ -279,6 +279,7 @@ function GoogleButton({
     if (!clientId || !ref.current) return;
     let cleanup: (() => void) | undefined;
     let cancelled = false;
+    let renderedWidth = 0;
 
     function renderGoogleButton() {
       if (!window.google || !ref.current) return;
@@ -286,6 +287,8 @@ function GoogleButton({
         240,
         Math.min(320, Math.floor(ref.current.getBoundingClientRect().width)),
       );
+      if (width === renderedWidth) return;
+      renderedWidth = width;
       ref.current.replaceChildren();
       window.google.accounts.id.renderButton(ref.current, {
         theme: "outline",
@@ -318,18 +321,21 @@ function GoogleButton({
       ro.observe(ref.current);
       cleanup = () => ro.disconnect();
     };
-    if (document.getElementById("gis-script")) {
-      onLoad();
+    const existing = document.getElementById("gis-script");
+    if (existing) {
+      if (window.google) onLoad();
+      else existing.addEventListener("load", onLoad);
     } else {
       const s = document.createElement("script");
       s.src = "https://accounts.google.com/gsi/client";
       s.async = true;
       s.id = "gis-script";
-      s.onload = onLoad;
+      s.addEventListener("load", onLoad);
       document.body.appendChild(s);
     }
     return () => {
       cancelled = true;
+      document.getElementById("gis-script")?.removeEventListener("load", onLoad);
       cleanup?.();
     };
   }, [clientId, errorFallback, qc, router]);
