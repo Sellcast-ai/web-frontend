@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { menuPlacement } from "./menu-placement";
+import { MIN_MENU_HEIGHT, menuPlacement } from "./menu-placement";
 
 const header = { triggerTop: 24, triggerBottom: 60, menuHeight: 332 };
 
@@ -30,7 +30,7 @@ describe("menuPlacement", () => {
     ).toEqual({ up: true, maxHeight: 684 });
   });
 
-  it("never reports negative space", () => {
+  it("keeps a usable scrollable height when no side has room", () => {
     expect(
       menuPlacement({
         triggerTop: 0,
@@ -38,6 +38,6 @@ describe("menuPlacement", () => {
         viewportHeight: 30,
         menuHeight: 332,
       }).maxHeight,
-    ).toBe(0);
+    ).toBe(MIN_MENU_HEIGHT);
   });
 });
