@@ -18,10 +18,8 @@
 /** Sits inside the hero phone frame; revealed and played only while the
  * simulated pipeline is on its rendered step, hidden behind the stage
  * gradient for the rest of the replay. Each replay's rendered step holds for as
- * long as this clip runs, and the overlay badge is formatted from the same
- * measured length (the catalog string `marketing.landing.pipeline.duration` is
- * only the pre-metadata fallback), so any length works and swapping the file is
- * enough. */
+ * long as this clip runs (measured from the file, never hardcoded), so any
+ * length works and swapping the file is enough. */
 export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   src: "/marketing/videos/hero.mp4",
   poster: "/marketing/videos/hero.webp",

@@ -165,6 +165,7 @@ export function ShowcaseVideo({
                 if (!refusedForSound(err)) return;
                 el.muted = true;
                 if (soundOwner === id) claimSound(null);
+                el.play().catch(() => {});
               });
           }}
           aria-label={loud ? t("mute") : t("unmute")}

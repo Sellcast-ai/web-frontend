@@ -113,10 +113,6 @@ export function PipelineHero() {
      internal replay is — a mid-session preference flip must not freeze the
      stage half-typed. */
   const shownStep = reduced ? DONE : step;
-  const clipSeconds = Math.round(clipMs / 1000);
-  const clipLabel = clipMs
-    ? `${Math.floor(clipSeconds / 60)}:${String(clipSeconds % 60).padStart(2, "0")}`
-    : t("duration");
   const shownTyped = reduced ? url.length : typed;
   const approved =
     shownStep >= RENDERING || (shownStep === APPROVE && clickDone);
@@ -377,7 +373,7 @@ export function PipelineHero() {
                   transition={{ duration: 0.5, ease: EASE_OUT }}
                   className="pointer-events-none absolute inset-0"
                 >
-                  {/* both badges hug the left - the sound toggle owns the
+                  {/* the badge hugs the left - the sound toggle owns the
                       top-right corner of every showcase clip */}
                   <div className="absolute inset-x-0 top-0 flex items-center gap-2 p-3">
                     <motion.span
@@ -389,11 +385,6 @@ export function PipelineHero() {
                       <span className="h-1.5 w-1.5 rounded-full bg-live" />
                       {t("rendered")}
                     </motion.span>
-                    {/* decorative, so it yields to the sound toggle on the
-                        narrow frame rather than colliding with it */}
-                    <span className="hidden rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm sm:block">
-                      {clipLabel}
-                    </span>
                   </div>
                   <motion.div
                     initial={playing ? { opacity: 0, y: 12 } : false}
