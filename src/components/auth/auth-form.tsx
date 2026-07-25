@@ -9,6 +9,7 @@ import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react"
 import { api, ApiError } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
+import { isDevDeliveryChannel, isSmsNotConfigured } from "@/lib/phone-auth";
 import { Button } from "@/components/ui/button";
 
 function normalizePhone(raw: string) {
@@ -43,7 +44,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setBusy(true);
     try {
       const res = await api.sendPhoneCode(number, authPurpose);
-      if (res.delivery_channel === "development") {
+      if (isDevDeliveryChannel(res.delivery_channel)) {
         setPhoneUnavailable(true);
         setError(t("phoneUnavailable"));
         return;
@@ -55,6 +56,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       }
       setTimeout(() => codeRef.current?.focus(), 50);
     } catch (err) {
+      if (err instanceof ApiError && isSmsNotConfigured(err.message)) {
+        setPhoneUnavailable(true);
+        setError(t("phoneUnavailable"));
+        return;
+      }
       setError(err instanceof ApiError ? err.message : t("sendCodeFailed"));
     } finally {
       setBusy(false);

@@ -485,10 +485,13 @@ export interface AuthSuccess {
   session: AuthTokens;
 }
 
+/** SMS provider name; "development" means codes are logged, never delivered. */
+export type PhoneDeliveryChannel = "development" | (string & {});
+
 export interface PhoneCodeSendResponse {
   verification_id: string;
   expires_at: string;
-  delivery_channel: string;
+  delivery_channel: PhoneDeliveryChannel;
   dev_code: string | null;
 }
 
