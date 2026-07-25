@@ -17,6 +17,7 @@ import {
 import { useTranslations } from "next-intl";
 import { EASE_OUT } from "@/components/ui/motion";
 import { HERO_OUTPUT_VIDEO } from "./showcase";
+import { ShowcaseVideo } from "./showcase-video";
 import { cn } from "@/lib/utils";
 
 /* The simulated-pipeline hero: Lumi's real differentiator — link → learned
@@ -306,45 +307,41 @@ export function PipelineHero() {
         {/* ---------------------------------------------------- the output */}
         <div className="mx-auto w-44 shrink-0 sm:w-52">
           <div className="relative aspect-9/16 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#0d1013]">
-            {video ? (
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                src={video.src}
-                poster={video.poster}
-                muted
-                loop
-                playsInline
-                autoPlay
-              />
-            ) : (
-              <AnimatePresence initial={false}>
-                {shownStep === DONE ? (
-                  <motion.div
-                    key="rendered"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: EASE_OUT }}
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "radial-gradient(130% 90% at 72% 6%, #33545e 0%, #131a1e 58%, #0c0f12 100%)",
-                    }}
-                  >
+            <AnimatePresence initial={false}>
+              {shownStep === DONE ? (
+                <motion.div
+                  key="rendered"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: EASE_OUT }}
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(130% 90% at 72% 6%, #33545e 0%, #131a1e 58%, #0c0f12 100%)",
+                  }}
+                >
+                  {video ? (
+                    <ShowcaseVideo
+                      className="absolute inset-0 h-full w-full object-cover"
+                      src={video.src}
+                      poster={video.poster}
+                    />
+                  ) : (
                     <div className="absolute -left-10 top-1/4 h-56 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="stage"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,#181d22_0%,#0d1013_70%)]"
-                  />
-                )}
-              </AnimatePresence>
-            )}
+                  )}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="stage"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute inset-0 bg-[radial-gradient(120%_85%_at_50%_0%,#181d22_0%,#0d1013_70%)]"
+                />
+              )}
+            </AnimatePresence>
 
             {/* rendered overlay */}
             {shownStep === DONE && (
@@ -363,24 +360,22 @@ export function PipelineHero() {
                     {t("duration")}
                   </span>
                 </div>
-                {!video && (
-                  <motion.div
-                    initial={playing ? { opacity: 0, y: 12 } : false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
-                    className="absolute inset-x-0 bottom-0 space-y-2.5 p-3.5"
-                  >
-                    <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
-                      {t("caption")}
-                    </p>
-                    <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
-                      <span className="h-4 w-4 rounded bg-white/80" />
-                      <span className="text-[11px] font-semibold text-white">
-                        {t("shopNow")}
-                      </span>
-                    </div>
-                  </motion.div>
-                )}
+                <motion.div
+                  initial={playing ? { opacity: 0, y: 12 } : false}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
+                  className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
+                >
+                  <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
+                    {t("caption")}
+                  </p>
+                  <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
+                    <span className="h-4 w-4 rounded bg-white/80" />
+                    <span className="text-[11px] font-semibold text-white">
+                      {t("shopNow")}
+                    </span>
+                  </div>
+                </motion.div>
               </>
             )}
           </div>

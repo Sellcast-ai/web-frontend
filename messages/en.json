@@ -884,6 +884,7 @@
       "heroPrimary": "Create your first video",
       "heroSecondary": "See how it works",
       "heroFinePrint": "First video free · No card required · Publish-ready 9:16",
+      "heroStageNote": "Product simulation - the clip in the phone is licensed stock footage, not Lumi output.",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -976,39 +977,34 @@
       },
       "storyFact1": "$0 render spend until you approve",
       "storyFact2": "1 credit = 1 second of video",
-      "wallTitle": "Publish-ready, <highlight>in every market</highlight>",
-      "wallSubtitle": "Every video ships 9:16 with burned-in captions — scripted and voiced in the language of the market it's for.",
+      "wallTitle": "Every category, <highlight>every market</highlight>",
+      "wallSubtitle": "Every Lumi video ships 9:16 with burned-in captions, scripted and voiced in the language of the market it's for - English, 日本語, Español, 한국어, Português and more.",
+      "wallDisclaimer": "Category examples shown with licensed stock footage - not Lumi output.",
       "wallAudience": "Built for sellers, creators, brands, and agencies — anyone who sells with video.",
       "wall": {
         "beauty": {
           "category": "Beauty",
-          "vibe": "Premium & clean",
-          "language": "English"
+          "vibe": "Premium & clean"
         },
         "gadgets": {
           "category": "Gadgets",
-          "vibe": "Bold & punchy",
-          "language": "日本語"
+          "vibe": "Bold & punchy"
         },
         "home": {
           "category": "Home & kitchen",
-          "vibe": "Clean demo",
-          "language": "Español"
+          "vibe": "Clean demo"
         },
         "pets": {
           "category": "Pets",
-          "vibe": "Fun & fast",
-          "language": "English"
+          "vibe": "Fun & fast"
         },
         "fashion": {
           "category": "Fashion",
-          "vibe": "Cozy & personal",
-          "language": "한국어"
+          "vibe": "Cozy & personal"
         },
         "fitness": {
           "category": "Fitness",
-          "vibe": "Bold & punchy",
-          "language": "Português"
+          "vibe": "Bold & punchy"
         }
       },
       "pricingTitle": "Start free. <highlight>Scale when it works.</highlight>",

@@ -884,6 +884,7 @@
       "heroPrimary": "Buat video pertama Anda",
       "heroSecondary": "Lihat cara kerjanya",
       "heroFinePrint": "Video pertama gratis · Tanpa kartu · 9:16 siap terbit",
+      "heroStageNote": "Simulasi produk - klip di layar ponsel adalah footage stok berlisensi, bukan hasil buatan Lumi.",
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -976,39 +977,34 @@
       },
       "storyFact1": "$0 biaya render sampai Anda menyetujui",
       "storyFact2": "1 kredit = 1 detik video",
-      "wallTitle": "Siap terbit, <highlight>di setiap pasar</highlight>",
-      "wallSubtitle": "Setiap video hadir 9:16 dengan takarir menyatu — dinaskahi dan disuarakan dalam bahasa pasar tujuannya.",
+      "wallTitle": "Setiap kategori, <highlight>setiap pasar</highlight>",
+      "wallSubtitle": "Setiap video Lumi hadir dalam 9:16 dengan teks terpasang, naskah dan suaranya dibuat dalam bahasa pasar yang dituju: English, 日本語, Español, 한국어, Português, dan lainnya.",
+      "wallDisclaimer": "Contoh kategori ditampilkan dengan footage stok berlisensi, bukan hasil buatan Lumi.",
       "wallAudience": "Dibuat untuk penjual, kreator, merek, dan agensi — siapa pun yang berjualan lewat video.",
       "wall": {
         "beauty": {
           "category": "Kecantikan",
-          "vibe": "Premium & bersih",
-          "language": "English"
+          "vibe": "Premium & bersih"
         },
         "gadgets": {
           "category": "Gadget",
-          "vibe": "Berani & menghentak",
-          "language": "日本語"
+          "vibe": "Berani & menghentak"
         },
         "home": {
           "category": "Rumah & dapur",
-          "vibe": "Demo bersih",
-          "language": "Español"
+          "vibe": "Demo bersih"
         },
         "pets": {
           "category": "Hewan peliharaan",
-          "vibe": "Seru & cepat",
-          "language": "English"
+          "vibe": "Seru & cepat"
         },
         "fashion": {
           "category": "Fesyen",
-          "vibe": "Hangat & personal",
-          "language": "한국어"
+          "vibe": "Hangat & personal"
         },
         "fitness": {
           "category": "Kebugaran",
-          "vibe": "Berani & menghentak",
-          "language": "Português"
+          "vibe": "Berani & menghentak"
         }
       },
       "pricingTitle": "Mulai gratis. <highlight>Skalakan saat berhasil.</highlight>",

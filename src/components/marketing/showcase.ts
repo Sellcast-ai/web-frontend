@@ -1,10 +1,15 @@
 /**
- * Real curated Lumi output footage drops in here once the captain has picked
- * it — no component changes needed, just fill in the URLs (R2/CDN, muted-loop
- * friendly MP4/WebM, ~1–2 MB each, 9:16).
+ * Footage for the landing showcase slots. Assets are committed under
+ * `public/marketing/videos/` and referenced by absolute path - see
+ * `public/marketing/videos/SOURCES.md` for provenance and licence.
+ * Spec: 9:16, 720x1280, silent, 5-12 s loop, ~1-2 MB each.
  *
- * While a slot is null the components render their designed placeholder state
- * instead of a <video>, so the page never fakes having customer footage.
+ * What is here today is licensed stock, not Lumi output, so the page labels it
+ * as such (`marketing.landing.heroStageNote` / `wallDisclaimer`). Swapping in
+ * real Lumi renders means replacing the files AND dropping those two strings -
+ * never let stock footage read as generated output.
+ *
+ * A null slot renders the designed placeholder state instead of a <video>.
  */
 
 /** Plays inside the hero phone frame (poster shown until it loads). */
