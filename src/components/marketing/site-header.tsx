@@ -5,8 +5,10 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 
 /* Slim, zero-state marketing chrome: logo, Pricing, language, Sign in, one
-   primary CTA. Features/Models/theme live in the footer or the app; the page
-   itself does the talking. Server component; no menu state. */
+   primary CTA. Below sm the two text links drop out (they stay reachable from
+   the footer) so the row can't overflow a 320px screen. Features/Models/theme
+   live in the footer or the app; the page itself does the talking. Server
+   component; no menu state. */
 export async function SiteHeader() {
   const t = await getTranslations("nav");
   const tc = await getTranslations("marketing.header");
