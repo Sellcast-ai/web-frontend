@@ -377,7 +377,9 @@ export function PipelineHero() {
                   transition={{ duration: 0.5, ease: EASE_OUT }}
                   className="pointer-events-none absolute inset-0"
                 >
-                  <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
+                  {/* both badges hug the left - the sound toggle owns the
+                      top-right corner of every showcase clip */}
+                  <div className="absolute inset-x-0 top-0 flex items-center gap-2 p-3">
                     <motion.span
                       initial={playing ? { opacity: 0, scale: 0.6 } : false}
                       animate={{ opacity: 1, scale: 1 }}
@@ -387,7 +389,9 @@ export function PipelineHero() {
                       <span className="h-1.5 w-1.5 rounded-full bg-live" />
                       {t("rendered")}
                     </motion.span>
-                    <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
+                    {/* decorative, so it yields to the sound toggle on the
+                        narrow frame rather than colliding with it */}
+                    <span className="hidden rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm sm:block">
                       {clipLabel}
                     </span>
                   </div>
@@ -397,9 +401,14 @@ export function PipelineHero() {
                     transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
                     className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
                   >
-                    <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
-                      {t("caption")}
-                    </p>
+                    {/* the fake caption stands in only for the placeholder
+                        state - a real render burns in its own, and two caption
+                        layers collide on the narrow frame */}
+                    {!video && (
+                      <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
+                        {t("caption")}
+                      </p>
+                    )}
                     <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
                       <span className="h-4 w-4 rounded bg-white/80" />
                       <span className="text-[11px] font-semibold text-white">

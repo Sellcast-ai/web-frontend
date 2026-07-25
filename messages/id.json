@@ -884,7 +884,10 @@
       "heroPrimary": "Buat video pertama Anda",
       "heroSecondary": "Lihat cara kerjanya",
       "heroFinePrint": "Video pertama gratis · Tanpa kartu · 9:16 siap terbit",
-      "heroStageNote": "Simulasi produk - klip di layar ponsel adalah footage stok berlisensi, bukan hasil buatan Lumi.",
+      "sound": {
+        "unmute": "Nyalakan suara",
+        "mute": "Bisukan"
+      },
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -912,7 +915,7 @@
         "approved": "Disetujui",
         "rendering": "Merender dengan Seedance 2.0",
         "rendered": "Selesai dirender",
-        "duration": "0:09",
+        "duration": "0:16",
         "caption": "Restok tiga kali bulan ini. Ini alasannya.",
         "shopNow": "Beli sekarang"
       },
@@ -979,7 +982,6 @@
       "storyFact2": "1 kredit = 1 detik video",
       "wallTitle": "Setiap kategori, <highlight>setiap pasar</highlight>",
       "wallSubtitle": "Setiap video Lumi hadir dalam 9:16 dengan teks terpasang, dengan naskah dan suara yang disesuaikan untuk tiap target pasar.",
-      "wallDisclaimer": "Contoh kategori ditampilkan dengan footage stok berlisensi, bukan hasil buatan Lumi.",
       "wallAudience": "Dibuat untuk penjual, kreator, merek, dan agensi — siapa pun yang berjualan lewat video.",
       "wall": {
         "beauty": {

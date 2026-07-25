@@ -1,29 +1,27 @@
 # Landing showcase footage - provenance
 
-All clips here are royalty-free stock from [Pexels](https://www.pexels.com), added 22 July 2026.
-They are **not** Lumi output; the landing page says so in `marketing.landing.heroStageNote` and `marketing.landing.wallDisclaimer`.
+Every clip here is **real Lumi output** - rendered by the product itself, not licensed stock (25 July 2026).
+That is why the landing page carries no stock-footage disclaimer.
+If a slot ever has to fall back to stock again, the disclaimer copy has to come back with it.
 Slots are wired up in `src/components/marketing/showcase.ts`.
-
-## Licence
-
-[Pexels License](https://www.pexels.com/license/): free for commercial use, no attribution required, modification allowed.
-Two limits that bind this page:
-
-- Identifiable people (`hero`, `fashion`, `fitness`, `home`; `beauty` shows a partial face) must not be shown as endorsing a product or service.
-  Keep the "licensed stock footage, not Lumi output" copy in place, and never attribute a testimonial, quote, or result to anyone on screen.
-- The clips may not be resold or redistributed as stock.
 
 ## Files
 
-Each `.mp4` is a local derivative: cropped/scaled to 720x1280, trimmed to a 5-10 s loop, audio stripped, ~1.1-1.7 MB.
+Each `.mp4` is the render exactly as Lumi produced it: 9:16, 720x1280, H.264 + AAC audio, burned-in captions where the script has voice.
 Each `.webp` is a frame from its clip downscaled to 480x853, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
+The clips carry voice, so `showcase-video.tsx` plays them muted behind a user-operated sound toggle.
 
-| Slot | File | Source clip |
-| --- | --- | --- |
-| `HERO_OUTPUT_VIDEO` | `hero.mp4` | https://www.pexels.com/video/video-of-woman-advertising-a-beauty-product-8141582/ |
-| `beauty` | `beauty.mp4` | https://www.pexels.com/video/close-up-footage-of-a-woman-holding-a-serum-bottle-8955653/ |
-| `gadgets` | `gadgets.mp4` | https://www.pexels.com/video/4982728/ |
-| `home` | `home.mp4` | https://www.pexels.com/video/a-woman-using-a-kitchen-appliance-8090692/ |
-| `pets` | `pets.mp4` | https://www.pexels.com/video/8473395/ |
-| `fashion` | `fashion.mp4` | https://www.pexels.com/video/woman-trying-the-clothes-in-front-of-the-mirror-7679420/ |
-| `fitness` | `fitness.mp4` | https://www.pexels.com/video/a-woman-working-out-using-a-resistance-band-8836979/ |
+| Slot | File | Lumi render | Length |
+| --- | --- | --- | --- |
+| `HERO_OUTPUT_VIDEO` | `hero.mp4` | `593af0e7cb72c9905973b307130e976e` - jacket try-on, host to camera | 15.7 s (trimmed from 22.6 s) |
+| `beauty` | `beauty.mp4` | `e9e35a9ba8b93267f590b2a931e6d24f` - fragrance product beauty shot | 15.1 s |
+
+`hero.mp4` is a stream copy of the render cut at 15.6 s, in the speech gap after "I also have this in ivory".
+The hero's simulated pipeline holds its rendered step for exactly as long as this clip runs, so the full 22.6 s left the rest of the replay motionless for three quarters of every loop.
+
+The render id is the output filename Lumi's video worker wrote, which is how the job is looked up backend-side.
+
+## Empty slots
+
+`gadgets`, `home`, `pets`, `fashion` and `fitness` are intentionally `null` in `showcase.ts` and render the designed gradient placeholder.
+They stay empty until each has its own Lumi render - do not refill them with stock.
