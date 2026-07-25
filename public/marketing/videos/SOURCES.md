@@ -27,6 +27,3 @@ Each `.jpg` is a frame from its clip, used as the `poster`.
 | `pets` | `pets.mp4` | https://www.pexels.com/video/pouring-dog-food-in-a-pet-bowl-8434094/ |
 | `fashion` | `fashion.mp4` | https://www.pexels.com/video/woman-trying-the-clothes-in-front-of-the-mirror-7679420/ |
 | `fitness` | `fitness.mp4` | https://www.pexels.com/video/a-woman-working-out-using-a-resistance-band-8836979/ |
-
-The slot-to-clip mapping was reconstructed from the sourcing shortlist and checked frame by frame against the committed derivatives.
-Re-verify a row before relying on it for a licence question.

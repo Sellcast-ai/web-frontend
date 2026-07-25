@@ -48,11 +48,10 @@ export function ShowcaseVideo({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (onScreen && active && !reduced) el.play().catch(() => {});
-    else {
-      el.pause();
+    if (onScreen && active && !reduced) {
       el.currentTime = 0;
-    }
+      el.play().catch(() => {});
+    } else el.pause();
   }, [onScreen, active, reduced]);
 
   return (
