@@ -351,41 +351,49 @@ export function PipelineHero() {
               />
             )}
 
-            {/* rendered overlay */}
-            {shownStep === DONE && (
-              <>
-                <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
-                  <motion.span
-                    initial={playing ? { opacity: 0, scale: 0.6 } : false}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.25, ease: EASE_OUT, delay: playing ? 0.35 : 0 }}
-                    className="flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-live" />
-                    {t("rendered")}
-                  </motion.span>
-                  <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
-                    {t("duration")}
-                  </span>
-                </div>
+            {/* rendered overlay - fades out with the clip behind it */}
+            <AnimatePresence initial={false}>
+              {shownStep === DONE && (
                 <motion.div
-                  initial={playing ? { opacity: 0, y: 12 } : false}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
-                  className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
+                  key="overlay"
+                  initial={false}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: EASE_OUT }}
+                  className="pointer-events-none absolute inset-0"
                 >
-                  <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
-                    {t("caption")}
-                  </p>
-                  <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
-                    <span className="h-4 w-4 rounded bg-white/80" />
-                    <span className="text-[11px] font-semibold text-white">
-                      {t("shopNow")}
+                  <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
+                    <motion.span
+                      initial={playing ? { opacity: 0, scale: 0.6 } : false}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.25, ease: EASE_OUT, delay: playing ? 0.35 : 0 }}
+                      className="flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-live" />
+                      {t("rendered")}
+                    </motion.span>
+                    <span className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/85 backdrop-blur-sm">
+                      {t("duration")}
                     </span>
                   </div>
+                  <motion.div
+                    initial={playing ? { opacity: 0, y: 12 } : false}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
+                    className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
+                  >
+                    <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
+                      {t("caption")}
+                    </p>
+                    <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
+                      <span className="h-4 w-4 rounded bg-white/80" />
+                      <span className="text-[11px] font-semibold text-white">
+                        {t("shopNow")}
+                      </span>
+                    </div>
+                  </motion.div>
                 </motion.div>
-              </>
-            )}
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>
