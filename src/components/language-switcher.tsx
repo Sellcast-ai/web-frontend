@@ -48,6 +48,7 @@ export function LanguageSwitcher({
   }>({ up: false, maxHeight: null });
   const ref = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const scrolledRef = useRef(false);
 
   // Close on outside click / Escape.
   useEffect(() => {
@@ -92,16 +93,28 @@ export function LanguageSwitcher({
     return () => {
       window.removeEventListener("resize", update);
       window.removeEventListener("scroll", update, true);
+      setPlacement({ up: false, maxHeight: null });
     };
   }, [open]);
 
   // Once a maxHeight caps the menu it can open scrolled past the selected
-  // locale, hiding the check mark; pull it into view after each placement.
+  // locale, hiding the check mark. Scroll the menu itself (not via
+  // scrollIntoView, which would also scroll the page) after the first
+  // measurement of this open, and never again under the user's own scrolling.
   useLayoutEffect(() => {
-    if (!open) return;
-    menuRef.current
-      ?.querySelector('[aria-checked="true"]')
-      ?.scrollIntoView({ block: "nearest" });
+    if (!open) {
+      scrolledRef.current = false;
+      return;
+    }
+    const menu = menuRef.current;
+    const checked = menu?.querySelector<HTMLElement>('[aria-checked="true"]');
+    if (!menu || !checked || placement.maxHeight === null || scrolledRef.current)
+      return;
+    scrolledRef.current = true;
+    menu.scrollTop = Math.max(
+      0,
+      checked.offsetTop + checked.offsetHeight - menu.clientHeight,
+    );
   }, [open, placement.maxHeight]);
 
   function select(code: string) {
