@@ -36,6 +36,11 @@ function claimSound(owner: string | null) {
   for (const notify of soundSubscribers) notify();
 }
 
+/* `play()` also rejects with AbortError when a later pause()/load() interrupts
+   it, which is routine here - only a policy refusal means sound isn't allowed. */
+const refusedForSound = (err: unknown) =>
+  err instanceof DOMException && err.name === "NotAllowedError";
+
 export function ShowcaseVideo({
   src,
   poster,
@@ -108,8 +113,8 @@ export function ShowcaseVideo({
       /* Re-activation happens from a timer/observer, not a user gesture, so an
          unmuted clip can be refused outright. Fall back to silent playback
          rather than holding a frozen first frame. */
-      el.play().catch(() => {
-        if (el.muted) return;
+      el.play().catch((err) => {
+        if (el.muted || !refusedForSound(err)) return;
         el.muted = true;
         if (soundOwner === id) claimSound(null);
         el.play().catch(() => {});
@@ -156,7 +161,8 @@ export function ShowcaseVideo({
             if (!el) return;
             el.muted = !next;
             if (next && onScreen && active)
-              el.play().catch(() => {
+              el.play().catch((err) => {
+                if (!refusedForSound(err)) return;
                 el.muted = true;
                 if (soundOwner === id) claimSound(null);
               });
