@@ -18,7 +18,7 @@ export async function SiteHeader() {
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/pricing"
-            className="rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+            className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"
           >
             {t("pricing")}
           </Link>
