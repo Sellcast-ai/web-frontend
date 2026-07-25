@@ -45,8 +45,9 @@ const MARQUEE = [
 const STORY_STEPS = ["link", "learn", "approve", "render"] as const;
 
 /* Muted duotone posters for the output wall — colour lives inside the media
-   frames (the arcads rule), never on the page canvas. Swapped for real
-   footage via OUTPUT_WALL_VIDEOS in showcase.ts. */
+   frames (the arcads rule), never on the page canvas. Only drawn for a tile
+   whose slot in OUTPUT_WALL_VIDEOS (showcase.ts) is empty; a filled slot plays
+   its clip instead. */
 const WALL_TILES: { key: WallTileKey; art: string }[] = [
   { key: "beauty", art: "linear-gradient(160deg,#8a6a5e 0%,#2e2320 72%)" },
   { key: "gadgets", art: "linear-gradient(160deg,#5c6d78 0%,#1d2429 72%)" },

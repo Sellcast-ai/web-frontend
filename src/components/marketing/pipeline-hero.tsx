@@ -34,9 +34,11 @@ const RENDERING = 6;
 const DONE = 7;
 
 /* Hold per step (ms) before advancing. TYPING advances per character. DONE is
-   a fallback only: once the clip reports its length the rendered step holds for
-   exactly that long, so the replay never truncates the footage it is showing
-   off however long a future clip runs. */
+   a fallback only: from the second cycle on, once the clip reports its length
+   the rendered step holds for exactly that long, so the replay never truncates
+   the footage it is showing off however long a future clip runs. (The first
+   pass opens on the server-rendered finished state and leaves it after 900 ms
+   to start the replay.) */
 const HOLD: Record<number, number> = {
   [READING]: 1000,
   [PATTERN]: 1300,

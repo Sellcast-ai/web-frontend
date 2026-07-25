@@ -9,14 +9,14 @@ Slots are wired up in `src/components/marketing/showcase.ts`.
 [Pexels License](https://www.pexels.com/license/): free for commercial use, no attribution required, modification allowed.
 Two limits that bind this page:
 
-- Identifiable people (`hero`, `fashion`, `fitness`, `home`) must not be shown as endorsing a product or service.
+- Identifiable people (`hero`, `fashion`, `fitness`, `home`; `beauty` shows a partial face) must not be shown as endorsing a product or service.
   Keep the "licensed stock footage, not Lumi output" copy in place, and never attribute a testimonial, quote, or result to anyone on screen.
 - The clips may not be resold or redistributed as stock.
 
 ## Files
 
 Each `.mp4` is a local derivative: cropped/scaled to 720x1280, trimmed to a 5-10 s loop, audio stripped, ~1.1-1.7 MB.
-Each `.webp` is a frame from its clip downscaled to 480x854, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
+Each `.webp` is a frame from its clip downscaled to 480x853, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
 
 | Slot | File | Source clip |
 | --- | --- | --- |

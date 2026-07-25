@@ -3,7 +3,7 @@
  * `public/marketing/videos/` and referenced by absolute path - see
  * `public/marketing/videos/SOURCES.md` for provenance and licence.
  * Spec: 9:16, 720x1280, silent, 5-12 s loop, ~1-2 MB each; posters are the one
- * eager fetch on the page, so they stay 480x854 WebP (tens of KB).
+ * eager fetch on the page, so they stay 480x853 WebP (tens of KB).
  *
  * What is here today is licensed stock, not Lumi output, so the page labels it
  * as such (`marketing.landing.heroStageNote` / `wallDisclaimer`). Swapping in
@@ -15,10 +15,11 @@
 
 /** Sits inside the hero phone frame; revealed and played only while the
  * simulated pipeline is on its rendered step, hidden behind the stage
- * gradient for the rest of the replay. The rendered step holds for as long as
- * this clip runs, and the overlay badge is formatted from the same measured
- * length (the catalog string `marketing.landing.pipeline.duration` is only the
- * pre-metadata fallback), so any length works and swapping the file is enough. */
+ * gradient for the rest of the replay. Each replay's rendered step holds for as
+ * long as this clip runs, and the overlay badge is formatted from the same
+ * measured length (the catalog string `marketing.landing.pipeline.duration` is
+ * only the pre-metadata fallback), so any length works and swapping the file is
+ * enough. */
 export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   src: "/marketing/videos/hero.mp4",
   poster: "/marketing/videos/hero.webp",
