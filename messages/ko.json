@@ -885,8 +885,8 @@
       "heroSecondary": "작동 방식 보기",
       "heroFinePrint": "첫 영상 무료 · 카드 불필요 · 바로 게시 가능한 9:16",
       "sound": {
-        "unmute": "소리 켜기",
-        "mute": "음소거"
+        "unmute": "샘플 영상 소리 켜기",
+        "mute": "샘플 영상 음소거"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

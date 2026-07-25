@@ -885,8 +885,8 @@
       "heroSecondary": "Xem cách hoạt động",
       "heroFinePrint": "Video đầu tiên miễn phí · Không cần thẻ · 9:16 sẵn sàng đăng",
       "sound": {
-        "unmute": "Bật tiếng",
-        "mute": "Tắt tiếng"
+        "unmute": "Bật tiếng video mẫu",
+        "mute": "Tắt tiếng video mẫu"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

@@ -1,7 +1,8 @@
 /**
  * Footage for the landing showcase slots. Assets are committed under
  * `public/marketing/videos/` and referenced by absolute path - see
- * `public/marketing/videos/SOURCES.md` for which Lumi job produced each clip.
+ * `docs/marketing-showcase-sources.md` (kept out of `public/`, which is served
+ * verbatim) for which Lumi job produced each clip.
  * Spec: 9:16, 720x1280, 10 s or longer, ~1-3 MB each; posters are the one
  * eager fetch on the page, so they stay 480x853 WebP (tens of KB).
  *

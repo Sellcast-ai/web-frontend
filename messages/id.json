@@ -885,8 +885,8 @@
       "heroSecondary": "Lihat cara kerjanya",
       "heroFinePrint": "Video pertama gratis · Tanpa kartu · 9:16 siap terbit",
       "sound": {
-        "unmute": "Nyalakan suara",
-        "mute": "Bisukan"
+        "unmute": "Nyalakan suara video contoh",
+        "mute": "Bisukan video contoh"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

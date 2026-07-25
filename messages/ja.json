@@ -885,8 +885,8 @@
       "heroSecondary": "仕組みを見る",
       "heroFinePrint": "初回の動画は無料 · カード不要 · 9:16 でそのまま投稿可能",
       "sound": {
-        "unmute": "音声をオンにする",
-        "mute": "ミュート"
+        "unmute": "サンプル動画の音声をオンにする",
+        "mute": "サンプル動画をミュートする"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

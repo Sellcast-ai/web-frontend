@@ -885,8 +885,8 @@
       "heroSecondary": "Veja como funciona",
       "heroFinePrint": "Primeiro vídeo grátis · Sem cartão · 9:16 pronto para publicar",
       "sound": {
-        "unmute": "Ativar som",
-        "mute": "Silenciar"
+        "unmute": "Ativar o som do vídeo de demonstração",
+        "mute": "Silenciar o vídeo de demonstração"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

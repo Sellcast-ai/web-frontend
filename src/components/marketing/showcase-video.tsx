@@ -90,9 +90,17 @@ export function ShowcaseVideo({
     if (!el) return;
     if (onScreen && active && !reduced) {
       el.currentTime = 0;
-      el.play().catch(() => {});
+      /* Re-activation happens from a timer/observer, not a user gesture, so an
+         unmuted clip can be refused outright. Fall back to silent playback
+         rather than holding a frozen first frame. */
+      el.play().catch(() => {
+        if (el.muted) return;
+        el.muted = true;
+        if (soundOwner === id) claimSound(null);
+        el.play().catch(() => {});
+      });
     } else el.pause();
-  }, [onScreen, active, reduced]);
+  }, [onScreen, active, reduced, id]);
 
   useEffect(() => {
     const notify = (owner: string | null) => setLoud(owner === id);

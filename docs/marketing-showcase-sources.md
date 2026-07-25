@@ -3,7 +3,8 @@
 Every clip here is **real Lumi output** - rendered by the product itself, not licensed stock (25 July 2026).
 That is why the landing page carries no stock-footage disclaimer.
 If a slot ever has to fall back to stock again, the disclaimer copy has to come back with it.
-Slots are wired up in `src/components/marketing/showcase.ts`.
+Slots are wired up in `src/components/marketing/showcase.ts`; the assets themselves live under `public/marketing/videos/`.
+This document stays out of `public/`, which Next.js serves verbatim - the render ids below are internal.
 
 ## Files
 

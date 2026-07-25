@@ -10,7 +10,6 @@ import {
   ListChecks,
   MousePointer2,
   Package,
-  Play,
   Smartphone,
   Sparkles,
   Timer,
@@ -368,9 +367,6 @@ export default async function HomePage() {
                       style={{ background: tile.art }}
                     >
                       <div className="absolute -left-12 top-1/3 h-64 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
-                      <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
-                        <Play className="ml-0.5 h-4 w-4 fill-white text-white" />
-                      </span>
                     </div>
                   )}
                   <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-3">

@@ -885,8 +885,8 @@
       "heroSecondary": "看看它如何运作",
       "heroFinePrint": "首支视频免费 · 无需信用卡 · 9:16 发布就绪",
       "sound": {
-        "unmute": "开启声音",
-        "mute": "关闭声音"
+        "unmute": "开启示例视频声音",
+        "mute": "关闭示例视频声音"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",

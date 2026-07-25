@@ -885,8 +885,8 @@
       "heroSecondary": "See how it works",
       "heroFinePrint": "First video free · No card required · Publish-ready 9:16",
       "sound": {
-        "unmute": "Unmute",
-        "mute": "Mute"
+        "unmute": "Unmute showcase video",
+        "mute": "Mute showcase video"
       },
       "pipeline": {
         "stageLabel": "Lumi Studio",
