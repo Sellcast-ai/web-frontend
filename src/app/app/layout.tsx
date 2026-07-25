@@ -3,8 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app/app-shell";
 import { COOKIE } from "@/lib/api/config";
-
-export const TITLE_TEMPLATE = "%s · Lumi Studio";
+import { TITLE_TEMPLATE } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: {
