@@ -49,7 +49,10 @@ export function ShowcaseVideo({
     const el = ref.current;
     if (!el) return;
     if (onScreen && active && !reduced) el.play().catch(() => {});
-    else el.pause();
+    else {
+      el.pause();
+      el.currentTime = 0;
+    }
   }, [onScreen, active, reduced]);
 
   return (
