@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 
-/* Slim, zero-state marketing chrome: logo, Pricing, Sign in, one primary CTA.
-   Features/Models/language/theme all live in the footer or the app — the page
+/* Slim, zero-state marketing chrome: logo, Pricing, language, Sign in, one
+   primary CTA. Features/Models/theme live in the footer or the app; the page
    itself does the talking. Server component; no menu state. */
 export async function SiteHeader() {
   const t = await getTranslations("nav");
@@ -21,6 +22,7 @@ export async function SiteHeader() {
           >
             {t("pricing")}
           </Link>
+          <LanguageSwitcher compactOnSmall />
           <Link
             href="/login"
             className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"

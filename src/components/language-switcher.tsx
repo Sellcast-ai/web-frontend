@@ -22,6 +22,9 @@ const LOCALES: { code: string; label: string; enabled: boolean }[] = [
   { code: "th", label: "ไทย", enabled: true },
 ];
 
+const MENU_HEIGHT = LOCALES.length * 36 + 10;
+const MENU_GAP = 8;
+
 // Server-readable cookie so SSR renders the chosen locale on the next request.
 // Kept at module scope (not inside the component) so the DOM write isn't flagged
 // by the react-hooks immutability rule.
@@ -31,16 +34,17 @@ function writeLocaleCookie(code: string) {
 
 export function LanguageSwitcher({
   className,
-  up = false,
+  compactOnSmall = false,
 }: {
   className?: string;
-  /** Open the menu above the trigger (for footer placement). */
-  up?: boolean;
+  /** Hide the current locale label below the sm breakpoint. */
+  compactOnSmall?: boolean;
 }) {
   const t = useTranslations("languageSwitcher");
   const locale = useLocale();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [openUp, setOpenUp] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // Close on outside click / Escape.
@@ -67,20 +71,32 @@ export function LanguageSwitcher({
     router.refresh();
   }
 
+  function toggleOpen() {
+    if (!open && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      setOpenUp(spaceBelow < MENU_HEIGHT + MENU_GAP && spaceAbove > spaceBelow);
+    }
+    setOpen((v) => !v);
+  }
+
   const current = LOCALES.find((l) => l.code === locale) ?? LOCALES[0];
 
   return (
     <div ref={ref} className={cn("relative", className)}>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggleOpen}
         aria-label={t("label")}
         aria-haspopup="menu"
         aria-expanded={open}
         className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"
       >
         <Globe className="h-4 w-4" />
-        <span>{current.label}</span>
+        <span className={cn(compactOnSmall && "hidden sm:inline")}>
+          {current.label}
+        </span>
       </button>
 
       {open && (
@@ -89,7 +105,7 @@ export function LanguageSwitcher({
           aria-label={t("label")}
           className={cn(
             "absolute right-0 z-50 min-w-44 overflow-hidden rounded-xl border border-border bg-card p-1 shadow-lg",
-            up ? "bottom-full mb-2" : "mt-2",
+            openUp ? "bottom-full mb-2" : "mt-2",
           )}
         >
           {LOCALES.map(({ code, label, enabled }) => (
