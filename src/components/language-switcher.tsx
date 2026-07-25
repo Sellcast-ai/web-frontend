@@ -131,13 +131,18 @@ export function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={`${t("label")}: ${current.label}`}
         aria-haspopup="menu"
         aria-expanded={open}
         className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"
       >
         <Globe className="h-4 w-4" />
-        <span className={cn(compactOnSmall && "hidden sm:inline")}>
+        <span className="sr-only">{t("label")}</span>
+        {/* sr-only (not hidden) when compact, so the current locale stays in the
+            accessible name and `lang` still applies to it. */}
+        <span
+          lang={current.code}
+          className={cn(compactOnSmall && "sr-only sm:not-sr-only")}
+        >
           {current.label}
         </span>
       </button>
@@ -172,7 +177,7 @@ export function LanguageSwitcher({
                   : "cursor-not-allowed text-muted-foreground/60",
               )}
             >
-              <span>{label}</span>
+              <span lang={code}>{label}</span>
               {code === locale && <Check className="h-4 w-4 text-brand-500" />}
             </button>
           ))}

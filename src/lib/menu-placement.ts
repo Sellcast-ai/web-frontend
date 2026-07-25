@@ -1,3 +1,10 @@
+// Floor for a capped menu: a couple of scrollable rows.
+export const MIN_MENU_HEIGHT = 96;
+
+// Must match the menu's `mt-2`/`mb-2` offset from its trigger.
+const GAP = 8;
+const VIEWPORT_EDGE = 8;
+
 /** Placement for a popover anchored under (or over) its trigger.
  *
  * Opens downward by default and flips up only when the menu's real height does
@@ -6,12 +13,6 @@
  * instead of spilling past the fold where nothing can reach it. It never drops
  * below `MIN_MENU_HEIGHT`, so a very short viewport degrades to a couple of
  * scrollable rows rather than a collapsed, invisible menu. */
-export const MIN_MENU_HEIGHT = 96;
-
-// Must match the menu's `mt-2`/`mb-2` offset from its trigger.
-const GAP = 8;
-const VIEWPORT_EDGE = 8;
-
 export function menuPlacement({
   triggerTop,
   triggerBottom,
