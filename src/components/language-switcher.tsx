@@ -131,7 +131,7 @@ export function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={t("label")}
+        aria-label={`${t("label")}: ${current.label}`}
         aria-haspopup="menu"
         aria-expanded={open}
         className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"

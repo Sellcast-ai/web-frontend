@@ -8,23 +8,23 @@
  * scrollable rows rather than a collapsed, invisible menu. */
 export const MIN_MENU_HEIGHT = 96;
 
+// Must match the menu's `mt-2`/`mb-2` offset from its trigger.
+const GAP = 8;
+const VIEWPORT_EDGE = 8;
+
 export function menuPlacement({
   triggerTop,
   triggerBottom,
   viewportHeight,
   menuHeight,
-  gap = 8,
-  edge = 8,
 }: {
   triggerTop: number;
   triggerBottom: number;
   viewportHeight: number;
   menuHeight: number;
-  gap?: number;
-  edge?: number;
 }): { up: boolean; maxHeight: number } {
-  const below = viewportHeight - triggerBottom - gap - edge;
-  const above = triggerTop - gap - edge;
+  const below = viewportHeight - triggerBottom - GAP - VIEWPORT_EDGE;
+  const above = triggerTop - GAP - VIEWPORT_EDGE;
   const up = menuHeight > below && above > below;
   return { up, maxHeight: Math.max(MIN_MENU_HEIGHT, up ? above : below) };
 }
