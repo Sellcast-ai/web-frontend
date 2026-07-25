@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, Globe } from "lucide-react";
+import { menuPlacement } from "@/lib/menu-placement";
 import { cn } from "@/lib/utils";
 
 // The 9 target UI locales, listed by endonym.
@@ -31,17 +32,23 @@ function writeLocaleCookie(code: string) {
 
 export function LanguageSwitcher({
   className,
-  up = false,
+  compactOnSmall = false,
 }: {
   className?: string;
-  /** Open the menu above the trigger (for footer placement). */
-  up?: boolean;
+  /** Hide the current locale label below the sm breakpoint. */
+  compactOnSmall?: boolean;
 }) {
   const t = useTranslations("languageSwitcher");
   const locale = useLocale();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<{
+    up: boolean;
+    maxHeight: number | null;
+  }>({ up: false, maxHeight: null });
   const ref = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const scrolledRef = useRef(false);
 
   // Close on outside click / Escape.
   useEffect(() => {
@@ -60,6 +67,56 @@ export function LanguageSwitcher({
     };
   }, [open]);
 
+  // Measure the rendered menu (before paint) and keep re-measuring while it is
+  // open, so viewport resizes or a moving trigger can't leave a locale off the
+  // fold with no way to scroll to it.
+  useLayoutEffect(() => {
+    if (!open) return;
+    function update() {
+      const trigger = ref.current;
+      const menu = menuRef.current;
+      if (!trigger || !menu) return;
+      const rect = trigger.getBoundingClientRect();
+      const next = menuPlacement({
+        triggerTop: rect.top,
+        triggerBottom: rect.bottom,
+        viewportHeight: window.innerHeight,
+        menuHeight: menu.scrollHeight,
+      });
+      setPlacement((prev) =>
+        prev.up === next.up && prev.maxHeight === next.maxHeight ? prev : next,
+      );
+    }
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+      setPlacement({ up: false, maxHeight: null });
+    };
+  }, [open]);
+
+  // Once a maxHeight caps the menu it can open scrolled past the selected
+  // locale, hiding the check mark. Scroll the menu itself (not via
+  // scrollIntoView, which would also scroll the page) after the first
+  // measurement of this open, and never again under the user's own scrolling.
+  useLayoutEffect(() => {
+    if (!open) {
+      scrolledRef.current = false;
+      return;
+    }
+    const menu = menuRef.current;
+    const checked = menu?.querySelector<HTMLElement>('[aria-checked="true"]');
+    if (!menu || !checked || placement.maxHeight === null || scrolledRef.current)
+      return;
+    scrolledRef.current = true;
+    menu.scrollTop = Math.max(
+      0,
+      checked.offsetTop + checked.offsetHeight - menu.clientHeight,
+    );
+  }, [open, placement.maxHeight]);
+
   function select(code: string) {
     setOpen(false);
     if (code === locale) return;
@@ -74,22 +131,35 @@ export function LanguageSwitcher({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={t("label")}
         aria-haspopup="menu"
         aria-expanded={open}
         className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"
       >
         <Globe className="h-4 w-4" />
-        <span>{current.label}</span>
+        <span className="sr-only">{t("label")}</span>
+        {/* sr-only (not hidden) when compact, so the current locale stays in the
+            accessible name and `lang` still applies to it. */}
+        <span
+          lang={current.code}
+          className={cn(compactOnSmall && "sr-only sm:not-sr-only")}
+        >
+          {current.label}
+        </span>
       </button>
 
       {open && (
         <div
+          ref={menuRef}
           role="menu"
           aria-label={t("label")}
+          style={
+            placement.maxHeight === null
+              ? undefined
+              : { maxHeight: placement.maxHeight }
+          }
           className={cn(
-            "absolute right-0 z-50 min-w-44 overflow-hidden rounded-xl border border-border bg-card p-1 shadow-lg",
-            up ? "bottom-full mb-2" : "mt-2",
+            "absolute right-0 z-50 min-w-44 overflow-y-auto overscroll-contain rounded-xl border border-border bg-card p-1 shadow-lg",
+            placement.up ? "bottom-full mb-2" : "mt-2",
           )}
         >
           {LOCALES.map(({ code, label, enabled }) => (
@@ -107,7 +177,7 @@ export function LanguageSwitcher({
                   : "cursor-not-allowed text-muted-foreground/60",
               )}
             >
-              <span>{label}</span>
+              <span lang={code}>{label}</span>
               {code === locale && <Check className="h-4 w-4 text-brand-500" />}
             </button>
           ))}

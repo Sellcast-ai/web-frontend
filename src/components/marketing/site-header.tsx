@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 
-/* Slim, zero-state marketing chrome: logo, Pricing, Sign in, one primary CTA.
-   Features/Models/language/theme all live in the footer or the app — the page
-   itself does the talking. Server component; no menu state. */
+/* Slim, zero-state marketing chrome: logo, Pricing, language, Sign in, one
+   primary CTA. Below sm the two text links drop out (they stay reachable from
+   the footer) so the row can't overflow a 320px screen. Features/Models/theme
+   live in the footer or the app; the page itself does the talking. Server
+   component; no menu state. */
 export async function SiteHeader() {
   const t = await getTranslations("nav");
   const tc = await getTranslations("marketing.header");
@@ -17,10 +20,11 @@ export async function SiteHeader() {
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/pricing"
-            className="rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink"
+            className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"
           >
             {t("pricing")}
           </Link>
+          <LanguageSwitcher compactOnSmall />
           <Link
             href="/login"
             className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink sm:block"
