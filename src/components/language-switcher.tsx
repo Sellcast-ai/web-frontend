@@ -95,6 +95,15 @@ export function LanguageSwitcher({
     };
   }, [open]);
 
+  // Once a maxHeight caps the menu it can open scrolled past the selected
+  // locale, hiding the check mark; pull it into view after each placement.
+  useLayoutEffect(() => {
+    if (!open) return;
+    menuRef.current
+      ?.querySelector('[aria-checked="true"]')
+      ?.scrollIntoView({ block: "nearest" });
+  }, [open, placement.maxHeight]);
+
   function select(code: string) {
     setOpen(false);
     if (code === locale) return;
