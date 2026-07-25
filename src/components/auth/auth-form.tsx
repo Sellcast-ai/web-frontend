@@ -120,7 +120,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
           )}
           <Button
             type="submit"
-            variant="outline"
+            variant={phoneUnavailable ? "outline" : "primary"}
             size="lg"
             className="w-full"
             disabled={busy || phoneUnavailable}
