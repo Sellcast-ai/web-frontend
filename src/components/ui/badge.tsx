@@ -7,10 +7,10 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        brand: "bg-brand-100 text-brand-800",
+        brand: "bg-brand-100 text-brand-800 dark:bg-[#0f3a42] dark:text-brand-100",
         outline: "border border-border-strong bg-card/60 text-ink-soft",
         glass: "glass border border-white/60 text-ink-soft",
-        success: "bg-success-soft text-success",
+        success: "bg-success-soft text-success dark:bg-[#123524] dark:text-live",
       },
       size: {
         sm: "px-2.5 py-0.5 text-[11px]",

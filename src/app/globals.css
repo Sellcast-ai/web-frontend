@@ -168,13 +168,13 @@
 
 /* --- Custom utilities ------------------------------------------------- */
 
-/* dramatic dark→teal→aqua wash (iOS heroGradient) — for dark panels */
+/* dramatic dark -> teal wash for dark panels with white text */
 @utility bg-hero {
   background-image: linear-gradient(
     135deg,
     #111111 0%,
-    #2f4450 52%,
-    #8be5fc 100%
+    #263c46 52%,
+    #0f6c7a 100%
   );
 }
 
