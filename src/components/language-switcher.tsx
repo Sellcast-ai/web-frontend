@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, Globe } from "lucide-react";
+import { menuPlacement } from "@/lib/menu-placement";
 import { cn } from "@/lib/utils";
 
 // The 9 target UI locales, listed by endonym.
@@ -21,9 +22,6 @@ const LOCALES: { code: string; label: string; enabled: boolean }[] = [
   { code: "vi", label: "Tiếng Việt", enabled: true },
   { code: "th", label: "ไทย", enabled: true },
 ];
-
-const MENU_HEIGHT = LOCALES.length * 36 + 10;
-const MENU_GAP = 8;
 
 // Server-readable cookie so SSR renders the chosen locale on the next request.
 // Kept at module scope (not inside the component) so the DOM write isn't flagged
@@ -44,8 +42,12 @@ export function LanguageSwitcher({
   const locale = useLocale();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [openUp, setOpenUp] = useState(false);
+  const [placement, setPlacement] = useState<{
+    up: boolean;
+    maxHeight: number | null;
+  }>({ up: false, maxHeight: null });
   const ref = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // Close on outside click / Escape.
   useEffect(() => {
@@ -64,21 +66,40 @@ export function LanguageSwitcher({
     };
   }, [open]);
 
+  // Measure the rendered menu (before paint) and keep re-measuring while it is
+  // open, so viewport resizes or a moving trigger can't leave a locale off the
+  // fold with no way to scroll to it.
+  useLayoutEffect(() => {
+    if (!open) return;
+    function update() {
+      const trigger = ref.current;
+      const menu = menuRef.current;
+      if (!trigger || !menu) return;
+      const rect = trigger.getBoundingClientRect();
+      const next = menuPlacement({
+        triggerTop: rect.top,
+        triggerBottom: rect.bottom,
+        viewportHeight: window.innerHeight,
+        menuHeight: menu.scrollHeight,
+      });
+      setPlacement((prev) =>
+        prev.up === next.up && prev.maxHeight === next.maxHeight ? prev : next,
+      );
+    }
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [open]);
+
   function select(code: string) {
     setOpen(false);
     if (code === locale) return;
     writeLocaleCookie(code);
     router.refresh();
-  }
-
-  function toggleOpen() {
-    if (!open && ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      setOpenUp(spaceBelow < MENU_HEIGHT + MENU_GAP && spaceAbove > spaceBelow);
-    }
-    setOpen((v) => !v);
   }
 
   const current = LOCALES.find((l) => l.code === locale) ?? LOCALES[0];
@@ -87,7 +108,7 @@ export function LanguageSwitcher({
     <div ref={ref} className={cn("relative", className)}>
       <button
         type="button"
-        onClick={toggleOpen}
+        onClick={() => setOpen((v) => !v)}
         aria-label={t("label")}
         aria-haspopup="menu"
         aria-expanded={open}
@@ -101,11 +122,17 @@ export function LanguageSwitcher({
 
       {open && (
         <div
+          ref={menuRef}
           role="menu"
           aria-label={t("label")}
+          style={
+            placement.maxHeight === null
+              ? undefined
+              : { maxHeight: placement.maxHeight }
+          }
           className={cn(
-            "absolute right-0 z-50 min-w-44 overflow-hidden rounded-xl border border-border bg-card p-1 shadow-lg",
-            openUp ? "bottom-full mb-2" : "mt-2",
+            "absolute right-0 z-50 min-w-44 overflow-y-auto overscroll-contain rounded-xl border border-border bg-card p-1 shadow-lg",
+            placement.up ? "bottom-full mb-2" : "mt-2",
           )}
         >
           {LOCALES.map(({ code, label, enabled }) => (
