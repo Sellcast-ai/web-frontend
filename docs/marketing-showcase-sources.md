@@ -8,7 +8,7 @@ This document stays out of `public/`, which Next.js serves verbatim - the render
 
 ## Files
 
-Each `.mp4` is the render exactly as Lumi produced it: 9:16, 720x1280, H.264 + AAC audio, burned-in captions where the script has voice.
+Each `.mp4` is the render as Lumi produced it - 9:16, 720x1280, H.264 + AAC audio, burned-in captions where the script has voice - never re-encoded (`hero.mp4` is trimmed with a stream copy, see below).
 Each `.webp` is a frame from its clip downscaled to 480x853, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
 The clips carry voice, so `showcase-video.tsx` plays them muted behind a user-operated sound toggle.
 
@@ -17,7 +17,7 @@ The clips carry voice, so `showcase-video.tsx` plays them muted behind a user-op
 | `HERO_OUTPUT_VIDEO` | `hero.mp4` | `593af0e7cb72c9905973b307130e976e` - jacket try-on, host to camera | 15.7 s (trimmed from 22.6 s) |
 | `beauty` | `beauty.mp4` | `e9e35a9ba8b93267f590b2a931e6d24f` - fragrance product beauty shot | 15.1 s |
 
-`hero.mp4` is a stream copy of the render cut at 15.6 s, in the speech gap after "I also have this in ivory".
+`hero.mp4` is a stream copy of the render cut in the speech gap after "I also have this in ivory".
 The hero's simulated pipeline holds its rendered step for exactly as long as this clip runs, so the full 22.6 s left the rest of the replay motionless for three quarters of every loop.
 
 The render id is the output filename Lumi's video worker wrote, which is how the job is looked up backend-side.

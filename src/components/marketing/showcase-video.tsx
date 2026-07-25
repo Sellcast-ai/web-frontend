@@ -20,7 +20,9 @@ import { useTranslations } from "next-intl";
    visibility (the hero uses it to hold the clip until the pipeline reaches its
    rendered step); every activation restarts the loop from the first frame.
    `onDuration` reports the clip length once known, so a caller pacing itself
-   against the footage doesn't have to hardcode it. */
+   against the footage doesn't have to hardcode it.
+   Renders the <video> plus a corner sound toggle pinned to the slot's top-right,
+   so mount it inside a positioned frame and leave that corner free. */
 
 /* The clips carry real voice, but autoplay with sound is blocked outright, so
    every clip starts muted behind a user-operated toggle. Only one may be loud
