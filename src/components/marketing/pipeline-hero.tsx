@@ -33,7 +33,10 @@ const APPROVE = 5;
 const RENDERING = 6;
 const DONE = 7;
 
-/* Hold per step (ms) before advancing. TYPING advances per character. */
+/* Hold per step (ms) before advancing. TYPING advances per character. DONE is
+   a fallback only: once the clip reports its length the rendered step holds for
+   exactly that long, so the replay never truncates the footage it is showing
+   off however long a future clip runs. */
 const HOLD: Record<number, number> = {
   [READING]: 1000,
   [PATTERN]: 1300,
@@ -66,6 +69,7 @@ export function PipelineHero() {
   const [typed, setTyped] = useState(url.length);
   const [clickDone, setClickDone] = useState(true);
   const [cycle, setCycle] = useState(0);
+  const [clipMs, setClipMs] = useState(0);
 
   useEffect(() => {
     if (!playing) return;
@@ -77,7 +81,12 @@ export function PipelineHero() {
       const id = setTimeout(() => setTyped((n) => n + 1), 36);
       return () => clearTimeout(id);
     }
-    const hold = step === DONE && cycle === 0 ? 900 : HOLD[step];
+    const hold =
+      step === DONE
+        ? cycle === 0
+          ? 900
+          : clipMs || HOLD[DONE]
+        : HOLD[step];
     const id = setTimeout(() => {
       if (step === DONE) {
         setTyped(0);
@@ -89,7 +98,7 @@ export function PipelineHero() {
       }
     }, hold);
     return () => clearTimeout(id);
-  }, [playing, step, typed, cycle, url.length]);
+  }, [playing, step, typed, cycle, clipMs, url.length]);
 
   /* The cursor "click" flips the storyboard to approved mid-APPROVE. */
   useEffect(() => {
@@ -348,6 +357,7 @@ export function PipelineHero() {
                 )}
                 src={video.src}
                 poster={video.poster}
+                onDuration={(s) => setClipMs(Math.round(s * 1000))}
               />
             )}
 

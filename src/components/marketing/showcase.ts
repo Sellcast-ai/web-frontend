@@ -14,7 +14,10 @@
 
 /** Sits inside the hero phone frame; revealed and played only while the
  * simulated pipeline is on its rendered step, hidden behind the stage
- * gradient for the rest of the replay. */
+ * gradient for the rest of the replay. The rendered step holds for as long as
+ * this clip runs, so any length works - but the overlay badge is the catalog
+ * string `marketing.landing.pipeline.duration`, so swapping the file means
+ * updating that value too. */
 export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   src: "/marketing/videos/hero.mp4",
   poster: "/marketing/videos/hero.jpg",
