@@ -30,7 +30,7 @@ export default function Image() {
                 width: 86,
                 height: 86,
                 borderRadius: 999,
-                background: "linear-gradient(125deg, #0f6c7a 0%, #2fcbe6 100%)",
+                background: "linear-gradient(125deg, #0f6c7a 0%, #157e8f 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
