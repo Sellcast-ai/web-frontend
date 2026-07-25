@@ -12,7 +12,9 @@
  * A null slot renders the designed placeholder state instead of a <video>.
  */
 
-/** Plays inside the hero phone frame (poster shown until it loads). */
+/** Sits inside the hero phone frame; revealed and played only while the
+ * simulated pipeline is on its rendered step, hidden behind the stage
+ * gradient for the rest of the replay. */
 export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   src: "/marketing/videos/hero.mp4",
   poster: "/marketing/videos/hero.jpg",

@@ -6,7 +6,9 @@ import { useReducedMotion } from "motion/react";
 /* Shared player for the showcase slots. The poster carries first paint, the
    bytes are warmed just before the tile reaches the viewport but playback only
    starts once it is actually on screen, and under reduced motion the clip
-   never plays (so it never loads either). */
+   never plays (so it never loads either). `active` is a second gate on top of
+   visibility (the hero uses it to hold the clip until the pipeline reaches its
+   rendered step); every activation restarts the loop from the first frame. */
 export function ShowcaseVideo({
   src,
   poster,
