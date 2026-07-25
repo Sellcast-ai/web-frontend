@@ -18,8 +18,9 @@ export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   poster: "/marketing/videos/hero.jpg",
 };
 
-/** Keys match `marketing.landing.wall.*` in the catalog (category/vibe/language
- * chips). A tile with a src plays muted-loop; without one it stays a poster. */
+/** Keys match `marketing.landing.wall.*` in the catalog (category/vibe chips).
+ * A tile with a src plays muted-loop; without one it renders the designed
+ * gradient placeholder. */
 export type WallTileKey =
   | "beauty"
   | "gadgets"

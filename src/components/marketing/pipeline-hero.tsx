@@ -321,13 +321,7 @@ export function PipelineHero() {
                       "radial-gradient(130% 90% at 72% 6%, #33545e 0%, #131a1e 58%, #0c0f12 100%)",
                   }}
                 >
-                  {video ? (
-                    <ShowcaseVideo
-                      className="absolute inset-0 h-full w-full object-cover"
-                      src={video.src}
-                      poster={video.poster}
-                    />
-                  ) : (
+                  {!video && (
                     <div className="absolute -left-10 top-1/4 h-56 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
                   )}
                 </motion.div>
@@ -342,6 +336,20 @@ export function PipelineHero() {
                 />
               )}
             </AnimatePresence>
+
+            {/* Mounted across replay cycles so the clip is fetched once and is
+                ready the moment the render lands. */}
+            {video && (
+              <ShowcaseVideo
+                active={shownStep === DONE}
+                className={cn(
+                  "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+                  shownStep === DONE ? "opacity-100" : "opacity-0",
+                )}
+                src={video.src}
+                poster={video.poster}
+              />
+            )}
 
             {/* rendered overlay */}
             {shownStep === DONE && (

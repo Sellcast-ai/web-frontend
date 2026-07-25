@@ -117,7 +117,7 @@ export default async function HomePage() {
 
           <div className="animate-rise mx-auto mt-16 max-w-4xl [animation-delay:150ms]">
             <PipelineHero />
-            <p className="mx-auto mt-4 max-w-md text-balance text-center text-xs leading-relaxed text-muted-foreground/75">
+            <p className="mx-auto mt-4 max-w-md text-balance text-center text-xs leading-relaxed text-muted-foreground">
               {t("heroStageNote")}
             </p>
           </div>
@@ -346,7 +346,7 @@ export default async function HomePage() {
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
             {t("wallSubtitle")}
           </p>
-          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground/75">
+          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
             {t("wallDisclaimer")}
           </p>
         </FadeIn>
