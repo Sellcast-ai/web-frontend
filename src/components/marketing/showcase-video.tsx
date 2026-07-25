@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   useEffect,
   useId,
   useRef,
@@ -25,14 +26,14 @@ import { useTranslations } from "next-intl";
    every clip starts muted behind a user-operated toggle. Only one may be loud
    at a time - two voices at once is worse than none - so ownership lives
    module-wide and every mounted player subscribes to it. */
-const soundSubscribers = new Set<(owner: string | null) => void>();
+const soundSubscribers = new Set<() => void>();
 let soundOwner: string | null = null;
 
 const neverChanges = () => () => {};
 
 function claimSound(owner: string | null) {
   soundOwner = owner;
-  for (const notify of soundSubscribers) notify(owner);
+  for (const notify of soundSubscribers) notify();
 }
 
 export function ShowcaseVideo({
@@ -53,12 +54,26 @@ export function ShowcaseVideo({
   const ref = useRef<HTMLVideoElement>(null);
   const [onScreen, setOnScreen] = useState(false);
   const id = useId();
-  const [loud, setLoud] = useState(false);
   /* The toggle is client-only: `reduced` is unknown while server-rendering, so
      deciding there would hydrate a different tree than the browser wants. */
   const hydrated = useSyncExternalStore(
     neverChanges,
     () => true,
+    () => false,
+  );
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      soundSubscribers.add(onChange);
+      return () => {
+        soundSubscribers.delete(onChange);
+        if (soundOwner === id) claimSound(null);
+      };
+    },
+    [id],
+  );
+  const loud = useSyncExternalStore(
+    subscribe,
+    () => soundOwner === id,
     () => false,
   );
 
@@ -102,18 +117,13 @@ export function ShowcaseVideo({
     } else el.pause();
   }, [onScreen, active, reduced, id]);
 
+  /* Only the losing side runs here: unmuting must happen inside the click that
+     carries the user activation (WebKit pauses a clip unmuted without one), so
+     the toggle writes `muted` itself and this just silences a clip that another
+     player took ownership from. */
   useEffect(() => {
-    const notify = (owner: string | null) => setLoud(owner === id);
-    soundSubscribers.add(notify);
-    return () => {
-      soundSubscribers.delete(notify);
-      if (soundOwner === id) claimSound(null);
-    };
-  }, [id]);
-
-  /* React only writes `muted` on mount, so track it imperatively. */
-  useEffect(() => {
-    if (ref.current) ref.current.muted = !loud;
+    const el = ref.current;
+    if (el && !loud) el.muted = true;
   }, [loud]);
 
   return (
@@ -133,12 +143,24 @@ export function ShowcaseVideo({
           if (Number.isFinite(d) && d > 0) onDuration?.(d);
         }}
       />
-      {/* Hidden while the clip is silent anyway: under reduced motion it never
-          plays, and an inactive hero slot sits behind the stage gradient. */}
-      {hydrated && active && !reduced && (
+      {/* Mounted for the whole replay cycle so it never leaves the tab order:
+          an inactive slot can still be armed ahead of the clip appearing. Under
+          reduced motion nothing plays, so there is nothing to unmute. */}
+      {hydrated && !reduced && (
         <button
           type="button"
-          onClick={() => claimSound(loud ? null : id)}
+          onClick={() => {
+            const el = ref.current;
+            const next = !loud;
+            claimSound(next ? id : null);
+            if (!el) return;
+            el.muted = !next;
+            if (next && onScreen && active)
+              el.play().catch(() => {
+                el.muted = true;
+                if (soundOwner === id) claimSound(null);
+              });
+          }}
           aria-label={loud ? t("mute") : t("unmute")}
           title={loud ? t("mute") : t("unmute")}
           className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-black/45 text-white/90 backdrop-blur-sm transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
