@@ -278,6 +278,7 @@ function GoogleButton({
   useEffect(() => {
     if (!clientId || !ref.current) return;
     let cleanup: (() => void) | undefined;
+    let cancelled = false;
 
     function renderGoogleButton() {
       if (!window.google || !ref.current) return;
@@ -296,7 +297,7 @@ function GoogleButton({
     }
 
     const onLoad = () => {
-      if (!window.google || !ref.current) return;
+      if (cancelled || !window.google || !ref.current) return;
       window.google.accounts.id.initialize({
         client_id: clientId,
         callback: async (resp) => {
@@ -313,23 +314,24 @@ function GoogleButton({
           }
         },
       });
-      renderGoogleButton();
       const ro = new ResizeObserver(renderGoogleButton);
       ro.observe(ref.current);
       cleanup = () => ro.disconnect();
     };
-    const existing = document.getElementById("gis-script");
-    if (existing) {
+    if (document.getElementById("gis-script")) {
       onLoad();
-      return;
+    } else {
+      const s = document.createElement("script");
+      s.src = "https://accounts.google.com/gsi/client";
+      s.async = true;
+      s.id = "gis-script";
+      s.onload = onLoad;
+      document.body.appendChild(s);
     }
-    const s = document.createElement("script");
-    s.src = "https://accounts.google.com/gsi/client";
-    s.async = true;
-    s.id = "gis-script";
-    s.onload = onLoad;
-    document.body.appendChild(s);
-    return () => cleanup?.();
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
   }, [clientId, errorFallback, qc, router]);
 
   if (!clientId) {

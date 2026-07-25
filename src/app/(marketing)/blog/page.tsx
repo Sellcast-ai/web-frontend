@@ -22,11 +22,11 @@ export default async function BlogPage() {
       <p className="mt-3 max-w-md text-muted-foreground">
         {t("body")}
       </p>
-      <div className="mt-7 flex w-full max-w-sm flex-col gap-3 sm:w-auto sm:max-w-none sm:flex-row">
-        <Button href="/signup" size="lg" className="w-full sm:w-auto">
+      <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+        <Button href="/signup" size="lg">
           {t("startFree")}
         </Button>
-        <Button href="/features" variant="outline" size="lg" className="w-full sm:w-auto">
+        <Button href="/features" variant="outline" size="lg">
           {t("explore")}
         </Button>
       </div>
