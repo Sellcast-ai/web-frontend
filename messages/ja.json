@@ -239,6 +239,7 @@
         "resumeReview": "{domain} から商品を選んでいる途中でした。",
         "resumeReviewAction": "続きから再開する",
         "discardReview": "最初からやり直す",
+        "importMaybeRunning": "このストアから {count, plural, one {# 個の商品} other {# 個の商品}} のインポートを依頼済みです。まだ実行中の可能性があります。",
         "tryDifferentStore": "別の店舗を試してみる",
         "placeholder": "your-store.myshopify.com — ストア全体をインポートします",
         "preview": "プレビュー"

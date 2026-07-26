@@ -239,6 +239,7 @@
         "resumeReview": "You were choosing products from {domain}.",
         "resumeReviewAction": "Pick up where you left off",
         "discardReview": "Start over",
+        "importMaybeRunning": "You asked to import {count, plural, one {# product} other {# products}} from this store - that import may already be running.",
         "tryDifferentStore": "Try a different store",
         "placeholder": "your-store.myshopify.com — import your whole store",
         "preview": "Preview"

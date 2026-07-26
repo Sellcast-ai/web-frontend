@@ -239,6 +239,7 @@
         "resumeReview": "{domain}에서 상품을 고르던 중이었습니다.",
         "resumeReviewAction": "이어서 계속하기",
         "discardReview": "처음부터 다시 시작",
+        "importMaybeRunning": "이 매장에서 {count, plural, one {상품 #개} other {상품 #개}} 가져오기를 요청했습니다. 아직 진행 중일 수 있습니다.",
         "tryDifferentStore": "다른 매장을 이용해 보세요",
         "placeholder": "your-store.myshopify.com — 전체 매장 가져오기",
         "preview": "미리보기"

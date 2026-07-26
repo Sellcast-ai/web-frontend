@@ -12,6 +12,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api/client";
 import { useCurrentUser } from "@/lib/api/hooks";
+import { clearSelection } from "@/lib/import-selection";
 import { STUDIO_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
@@ -37,6 +38,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   async function logout() {
     await api.logout().catch(() => undefined);
     qc.clear();
+    // sessionStorage outlives the session: without this the next account in this
+    // tab is offered a resume of someone else's store review
+    clearSelection();
     router.replace("/login");
   }
 

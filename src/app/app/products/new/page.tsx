@@ -34,6 +34,7 @@ import {
   importRequested,
   isStaleJobHandle,
   loadSelection,
+  pendingMarker,
   resumeFor,
   saveSelection,
   selectedUrls,
@@ -617,7 +618,11 @@ function StoreImport() {
    * it never witnessed would re-toast - and re-redirect - on every later visit to
    * this page in the same tab. */
   const [watchedJob, setWatchedJob] = useState<string | null>(null);
-  const { data: job } = useImportJob(jobId ?? "");
+  /** What the in-flight start request asked for, so a reload between the click
+   * and the response says an import may already be running instead of arming
+   * "Import N products" again. */
+  const [pendingCount, setPendingCount] = useState<number | null>(null);
+  const { data: job, isError: jobUnreadable } = useImportJob(jobId ?? "");
   // a restored job that is still running becomes ours to report on, the same as
   // one started here (React's adjust-state-during-render, not an effect)
   if (job && (job.status === "queued" || job.status === "running") && watchedJob !== job.job_id) {
@@ -631,9 +636,17 @@ function StoreImport() {
   const ownedPlatform = review?.platform ?? saved?.platform;
   const ownedDomain = review?.domain ?? saved?.domain;
 
-  /** A restored handle for an import that already finished: nothing left to
-   * report, since whatever this job did happened on an earlier visit. */
-  const staleJob = isStaleJobHandle(job?.status, watchedJob === job?.job_id);
+  /** A handle with nothing left to report on: an import that already finished on
+   * an earlier visit, or one that never resolved at all - the row is gone, the
+   * backend is erroring, or the handle belongs to whoever used the tab before.
+   * Without the second case a handle that only ever errors renders neither the
+   * progress card nor the resume offer, and the saved pass is stranded behind a
+   * bare paste form. A failing poll for a job we *have* read stays on the
+   * progress card: that one still has something to report. */
+  const staleJob =
+    isStaleJobHandle(job?.status, watchedJob === job?.job_id) || (jobUnreadable && !job);
+
+  const pending = pendingMarker(pendingCount, start.isPending);
 
   useEffect(() => {
     if (!ownedStoreUrl) return;
@@ -646,8 +659,9 @@ function StoreImport() {
       // fetch, and another decision to ignore it, on every later visit
       jobId: staleJob ? null : jobId,
       requested: staleJob ? null : requested,
+      pending,
     });
-  }, [ownedStoreUrl, ownedPlatform, ownedDomain, deselected, jobId, requested, staleJob]);
+  }, [ownedStoreUrl, ownedPlatform, ownedDomain, deselected, jobId, requested, staleJob, pending]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -696,13 +710,13 @@ function StoreImport() {
    * anything still running holds the progress card, so whatever handle is left
    * here is dead and would only replay an old outcome. */
   function reviewStore(url: string, platform?: string, domain?: string) {
-    const resume = resumeFor(saved, url);
-    setDeselected(new Set(resume.deselected));
+    setDeselected(new Set(resumeFor(saved, url)));
     setJobId(null);
     setRequested(null);
+    setPendingCount(null);
     setWatchedJob(null);
     done.current = false;
-    setReview({ storeUrl: url, platform, domain: domain ?? resume.domain });
+    setReview({ storeUrl: url, platform, domain });
   }
 
   function leaveReview() {
@@ -714,12 +728,16 @@ function StoreImport() {
     // so drop it rather than carrying a dead handle into the next store
     setJobId(null);
     setRequested(null);
+    setPendingCount(null);
     setWatchedJob(null);
     done.current = false;
     preview.reset();
   }
 
   function runImport(sourceUrls: string[], platform: string) {
+    // marks the store as "an import was asked for" before the request leaves, so
+    // a reload before the handle comes back doesn't look like nothing happened
+    setPendingCount(sourceUrls.length);
     start.mutate(
       { storeUrl: review?.storeUrl ?? storeUrl, sourceUrls, platform },
       {
@@ -1002,24 +1020,34 @@ function StoreImport() {
       {/* An unfinished deselection pass is one click from where it was - the
         * click is the point, since the walk behind it is billed. */}
       {saved && (!jobId || jobFellThrough || staleJob) && (
-        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-3 text-sm">
-          <p className="text-muted-foreground">
-            {t("resumeReview", { domain: saved.domain ?? saved.storeUrl })}
-          </p>
-          <button
-            type="button"
-            className="font-semibold text-brand-700"
-            onClick={() => reviewStore(saved.storeUrl, saved.platform, saved.domain)}
-          >
-            {t("resumeReviewAction")}
-          </button>
-          <button
-            type="button"
-            className="font-semibold text-muted-foreground hover:text-ink"
-            onClick={leaveReview}
-          >
-            {t("discardReview")}
-          </button>
+        <div className="mt-3 rounded-xl border border-border bg-card p-3 text-sm">
+          {/* the click that bought an import, with the reply lost to a reload:
+            * say so rather than letting them re-arm it as if nothing happened */}
+          {!!saved.pending && (
+            <p className="mb-2 flex items-start gap-2 text-ink">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              {t("importMaybeRunning", { count: saved.pending })}
+            </p>
+          )}
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="text-muted-foreground">
+              {t("resumeReview", { domain: saved.domain ?? saved.storeUrl })}
+            </p>
+            <button
+              type="button"
+              className="font-semibold text-brand-700"
+              onClick={() => reviewStore(saved.storeUrl, saved.platform, saved.domain)}
+            >
+              {t("resumeReviewAction")}
+            </button>
+            <button
+              type="button"
+              className="font-semibold text-muted-foreground hover:text-ink"
+              onClick={leaveReview}
+            >
+              {t("discardReview")}
+            </button>
+          </div>
         </div>
       )}
     </>

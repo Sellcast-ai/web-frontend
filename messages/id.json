@@ -239,6 +239,7 @@
         "resumeReview": "Anda sedang memilih produk dari {domain}.",
         "resumeReviewAction": "Lanjutkan dari tempat terakhir",
         "discardReview": "Mulai dari awal",
+        "importMaybeRunning": "Anda meminta impor {count, plural, one {# produk} other {# produk}} dari toko ini - impor itu mungkin sedang berjalan.",
         "tryDifferentStore": "Coba toko lain",
         "placeholder": "toko-anda.myshopify.com — impor seluruh toko Anda",
         "preview": "Pratinjau"

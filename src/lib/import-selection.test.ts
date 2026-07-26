@@ -6,6 +6,7 @@ import {
   importRequested,
   isStaleJobHandle,
   loadSelection,
+  pendingMarker,
   resumeFor,
   saveSelection,
   selectedUrls,
@@ -148,18 +149,32 @@ describe("resumeFor", () => {
   it("carries the pass back into a review of the same store", () => {
     // never the job: a review is entered with nothing to report on, so a dead
     // handle can't be persisted under the store the user is reviewing next
-    expect(resumeFor(saved, "https://shop.example")).toEqual({
-      deselected: ["/a"],
-      domain: "shop.example",
-    });
+    expect(resumeFor(saved, "https://shop.example")).toEqual(["/a"]);
   });
 
   it("starts a different store all-selected", () => {
-    expect(resumeFor(saved, "https://other.example")).toEqual({ deselected: [] });
+    expect(resumeFor(saved, "https://other.example")).toEqual([]);
   });
 
   it("has nothing to carry when nothing was stored", () => {
-    expect(resumeFor(null, "https://shop.example")).toEqual({ deselected: [] });
+    expect(resumeFor(null, "https://shop.example")).toEqual([]);
+  });
+});
+
+describe("pendingMarker", () => {
+  it("marks the store while the start request is in flight", () => {
+    expect(pendingMarker(5, true)).toBe(5);
+  });
+
+  it("is gone the moment the request settles, succeeded or failed", () => {
+    // the marker is derived from the request, not cleared by hand, so a failed
+    // or aborted start cannot leave "an import may already be running" behind
+    expect(pendingMarker(5, false)).toBeNull();
+  });
+
+  it("has nothing to mark before an import is asked for", () => {
+    expect(pendingMarker(null, true)).toBeNull();
+    expect(pendingMarker(0, true)).toBeNull();
   });
 });
 
@@ -210,7 +225,26 @@ describe("selection persistence", () => {
       deselected: ["/a", "/b"],
       jobId: null,
       requested: null,
+      pending: null,
     });
+  });
+
+  it("round-trips the pre-flight marker of an import that was asked for", () => {
+    saveSelection({
+      storeUrl: "https://shop.example",
+      deselected: [],
+      pending: pendingMarker(6, true),
+    });
+    expect(loadSelection()).toMatchObject({ pending: 6, jobId: null });
+  });
+
+  it("stores no marker for a start request that already settled", () => {
+    saveSelection({
+      storeUrl: "https://shop.example",
+      deselected: [],
+      pending: pendingMarker(6, false),
+    });
+    expect(loadSelection()).toMatchObject({ pending: null });
   });
 
   it("round-trips the running import so a reload can't buy it twice", () => {
@@ -229,6 +263,7 @@ describe("selection persistence", () => {
       deselected: ["/a"],
       jobId: "job-1",
       requested: 4,
+      pending: null,
     });
   });
 

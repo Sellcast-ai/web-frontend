@@ -2,7 +2,12 @@ import type { ImportCandidate, ImportJob, ImportStatus } from "@/lib/api/types";
 
 /** Store-import review step: selection is stored as the *deselected* set, because
  * everything arrives selected. That also means a candidate the store adds between
- * a save and a restore defaults to selected, same as a first visit. */
+ * a save and a restore defaults to selected, same as a first visit.
+ *
+ * This state outlives the visit *and the session*: sessionStorage survives a
+ * logout in the same tab, so signing out clears it (see the logout handlers).
+ * Anything added here has to answer three questions - what does it do on a
+ * reload, on a logout, and when the job it names never resolves. */
 
 const STORAGE_KEY = "lumi.import-selection";
 
@@ -21,7 +26,14 @@ export type StoredSelection = {
   jobId?: string | null;
   /** How many products were actually sent as `source_urls`. */
   requested?: number | null;
+  /** How many products a start request that is *still in flight* asked for, so a
+   * reload between the click and the response knows an import may already be
+   * running rather than arming the button again. See `pendingMarker`. */
+  pending?: number | null;
 };
+
+const finiteCount = (value: unknown): number | null =>
+  typeof value === "number" && Number.isFinite(value) ? value : null;
 
 /** sessionStorage so a reload doesn't throw away a long deselection pass.
  * Every access is guarded: no `window` on the server, and Safari private mode
@@ -39,10 +51,8 @@ export function loadSelection(): StoredSelection | null {
       domain: typeof parsed.domain === "string" ? parsed.domain : undefined,
       deselected: parsed.deselected.filter((u) => typeof u === "string"),
       jobId: typeof parsed.jobId === "string" ? parsed.jobId : null,
-      requested:
-        typeof parsed.requested === "number" && Number.isFinite(parsed.requested)
-          ? parsed.requested
-          : null,
+      requested: finiteCount(parsed.requested),
+      pending: finiteCount(parsed.pending),
     };
   } catch {
     return null;
@@ -67,15 +77,20 @@ export function clearSelection(): void {
   }
 }
 
-/** What a review of `url` may carry over from a stored pass: the opt-outs and the
- * display domain, and only for the store they were made against. Never an import
- * handle - a review is only ever entered with no job to report on. */
-export function resumeFor(
-  saved: StoredSelection | null,
-  url: string,
-): { deselected: string[]; domain?: string } {
-  if (!saved || saved.storeUrl !== url) return { deselected: [] };
-  return { deselected: saved.deselected, domain: saved.domain };
+/** What a review of `url` may carry over from a stored pass: the opt-outs, and
+ * only for the store they were made against. Never an import handle - a review
+ * is only ever entered with no job to report on. */
+export function resumeFor(saved: StoredSelection | null, url: string): string[] {
+  return saved && saved.storeUrl === url ? saved.deselected : [];
+}
+
+/** The pre-flight marker: how many products a start request that is still in
+ * flight asked for. Derived from the request's own pending state rather than
+ * cleared by hand, so it cannot outlive the request it describes - a marker left
+ * behind by a *failed* start would restore forever as "an import may already be
+ * running", which is the same stale-replay bug as a terminal `jobId`. */
+export function pendingMarker(count: number | null, inFlight: boolean): number | null {
+  return inFlight && count && count > 0 ? count : null;
 }
 
 /** A job handle worth nothing to this mount: already terminal, and nobody here
