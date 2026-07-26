@@ -1,3 +1,7 @@
+// Client behaviour only - which subset the client computes, persists and reports.
+// Not evidence of the end-to-end outcome: measured against the real backend,
+// `source_urls` is silently dropped and the whole catalog imports anyway
+// (136 selected, 139 imported). See the import-selection entry in AGENTS.md.
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import type { ImportCandidate } from "@/lib/api/types";
 import {

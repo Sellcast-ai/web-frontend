@@ -238,7 +238,7 @@
         "untitledProduct": "名称未設定の商品",
         "reviewEmpty": "このストアからは商品を一件も取得できませんでした。別のストアを試すか、リンクを貼り付けて商品を追加してください。",
         "tryDifferentStore": "別の店舗を試してみる",
-        "placeholder": "your-store.myshopify.com — ストア全体をインポートします",
+        "placeholder": "your-store.myshopify.com - 次のステップで商品を選びます",
         "preview": "プレビュー"
       }
     },
