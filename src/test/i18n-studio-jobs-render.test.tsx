@@ -204,6 +204,17 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).not.toContain("Manage avatars");
   });
 
+  // The presenter section only renders under the ai_avatar mode, which this
+  // static harness can't select, so assert its keys resolve in the catalog.
+  it("keeps the presenter section keys in the en catalog", () => {
+    expect(en.app.studio.sections.presenter).toBeTruthy();
+    expect(Object.keys(en.app.studio.presenter).sort()).toEqual([
+      "auto",
+      "autoSublabel",
+      "manageAvatars",
+    ]);
+  });
+
   it("renders the Size (aspect ratio) picker below Resolution with all five options", () => {
     const qc = makeClient((c) => {
       c.setQueryData(qk.product("prod-1"), product);

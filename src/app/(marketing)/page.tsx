@@ -121,7 +121,10 @@ export default async function HomePage() {
         <div className="border-y border-border/70 bg-card/40 py-6">
           <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex w-max animate-marquee gap-3.5 pr-3.5">
-              {[...MARQUEE, ...MARQUEE].map((chip, i) => (
+              {/* three copies + a -33.333% keyframe: the loop stays seamless
+                  even when one copy is narrower than the viewport (short CJK
+                  strings on a wide desktop) */}
+              {[...MARQUEE, ...MARQUEE, ...MARQUEE].map((chip, i) => (
                 <span
                   key={i}
                   className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-[13px] font-medium text-ink-soft"

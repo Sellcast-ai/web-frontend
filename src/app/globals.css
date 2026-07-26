@@ -136,12 +136,13 @@
   }
 }
 
+/* -33.333% == one of the three copies rendered by the landing chip strip */
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(-33.333%);
   }
 }
 
