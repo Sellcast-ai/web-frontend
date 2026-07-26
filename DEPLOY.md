@@ -35,7 +35,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 
 ## 2. Web (Vercel)
 1. Vercel → **Import** the `Sellcast-ai/web-frontend` repo → **Root Directory = repo root** (leave default; the Next.js app is at the repo root, not under `web/`).
-2. Env vars (see `web/.env.production.example`):
+2. Env vars:
    - `SELLCAST_API_BASE = https://<lumi-api>.onrender.com/api/v1`
    - `NEXT_PUBLIC_GOOGLE_CLIENT_ID = <google web client id>`
    - `NEXT_PUBLIC_MEDIA_ORIGIN = https://<lumi-api>.onrender.com`

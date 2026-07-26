@@ -92,7 +92,7 @@ That check is post-submit - availability is only known from the first send respo
 
 ## Environment
 
-See `.env.production.example` (Vercel) and `.env.local` (dev):
+No env example file is tracked (`.env*` is gitignored); this list is the source of truth, set in Vercel for production and in `.env.local` for dev:
 
 - `SELLCAST_API_BASE` - server-only, backend base URL for the BFF
 - `NEXT_PUBLIC_MEDIA_ORIGIN` - origin prefixed onto relative media paths returned by the backend
