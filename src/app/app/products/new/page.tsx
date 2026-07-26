@@ -632,7 +632,7 @@ function StoreImport() {
       toast.error(tt(outcome.key, outcome.values));
       return;
     }
-    clearSelection();
+    clearSelection(persistTo.current);
     // an import that went past the chosen subset isn't a success to celebrate:
     // the user still has to go find what they didn't pick
     const announce = outcome.key === "importOvershoot" ? toast.info : toast.success;
@@ -695,7 +695,7 @@ function StoreImport() {
   /** Leaving a review the user has actually seen: they're moving on, so the
    * stored pass goes with it. */
   function discardReview() {
-    clearSelection();
+    clearSelection(persistTo.current);
     leaveWalk();
   }
 
@@ -886,7 +886,7 @@ function StoreImport() {
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            disabled={start.isPending || chosen.length === 0}
+            disabled={start.isPending || (jobId !== null && !jobFellThrough) || chosen.length === 0}
             onClick={() => runImport(review.storeUrl, chosen, candidateData.platform)}
           >
             {start.isPending ? (

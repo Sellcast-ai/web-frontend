@@ -61,8 +61,13 @@ export function saveSelection(selection: StoredSelection): void {
   }
 }
 
-export function clearSelection(): void {
-  if (typeof window === "undefined") return;
+/** Drops the pass a review owns, and only that one. Storage holds a single pass,
+ * so a caller has to say which store it is leaving: without that, discarding a
+ * review of store B deletes the opt-outs the user made for store A. Taking the
+ * identity as an argument is what makes every call site right by construction. */
+export function clearSelection(target: { userId: string; storeDomain: string } | null): void {
+  if (typeof window === "undefined" || !target) return;
+  if (loadSelection(target.userId)?.storeDomain !== target.storeDomain) return;
   try {
     window.sessionStorage.removeItem(STORAGE_KEY);
   } catch {
@@ -118,9 +123,11 @@ export function importOutcome(job: OutcomeCounts, requestedCount?: number | null
   const failed = Math.max(requested - imported, 0);
   if (imported === 0) return { key: "importNone", values: { requested } };
   // the run touched more products than were chosen - it either upserted past the
-  // subset or failed reads the subset can't account for. Either way it ignored
-  // `source_urls`, and the user is the one who has to hear about it.
-  if (imported + job.products_failed > requested) {
+  // subset or, having already landed all of it, failed reads the subset can't
+  // account for. Either way it ignored `source_urls`, and the user is the one who
+  // has to hear about it. A run that landed *less* is a plain shortfall: counting
+  // its failures here would announce extra products that don't exist.
+  if (imported > requested || (imported === requested && job.products_failed > 0)) {
     return { key: "importOvershoot", values: { imported, requested } };
   }
   if (failed > 0) return { key: "importPartial", values: { imported, requested, failed } };

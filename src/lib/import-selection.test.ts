@@ -121,6 +121,14 @@ describe("importOutcome", () => {
       importOutcome({ products_found: 200, products_upserted: 3, products_failed: 2 }, 5),
     ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
   });
+
+  it("keeps a short import a partial even when its failure count overruns", () => {
+    // 5 chosen, 3 landed, 3 reported failed: fewer products arrived than were
+    // picked, so pointing the user at extras they didn't choose would be wrong
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 3, products_failed: 3 }, 5),
+    ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
+  });
 });
 
 describe("importRequested", () => {
@@ -164,7 +172,7 @@ describe("selection persistence", () => {
     };
   });
 
-  beforeEach(() => clearSelection());
+  beforeEach(() => window.sessionStorage.removeItem("lumi.import-selection"));
 
   const pass = {
     userId: "u1",
@@ -202,6 +210,34 @@ describe("selection persistence", () => {
     expect(loadSelection("u1")).toBeNull();
     window.sessionStorage.setItem("lumi.import-selection", JSON.stringify({ storeDomain: 1 }));
     expect(loadSelection("u1")).toBeNull();
+  });
+
+  describe("clearSelection", () => {
+    it("drops the pass the review it is leaving owns", () => {
+      saveSelection(pass);
+      clearSelection({ userId: "u1", storeDomain: "shop.example" });
+      expect(loadSelection("u1")).toBeNull();
+    });
+
+    it("leaves another store's pass alone", () => {
+      // reviewing store B never wrote anything, so discarding B must not take
+      // the opt-outs the user made for store A with it
+      saveSelection(pass);
+      clearSelection({ userId: "u1", storeDomain: "other.example" });
+      expect(loadSelection("u1")).toEqual(pass);
+    });
+
+    it("leaves another account's pass alone", () => {
+      saveSelection(pass);
+      clearSelection({ userId: "u2", storeDomain: "shop.example" });
+      expect(loadSelection("u1")).toEqual(pass);
+    });
+
+    it("is a no-op outside a review", () => {
+      saveSelection(pass);
+      clearSelection(null);
+      expect(loadSelection("u1")).toEqual(pass);
+    });
   });
 
   describe("beginSelection", () => {
