@@ -27,12 +27,9 @@ describe("optimistic like flip + rollback", () => {
     patchProductLists(qc, "p1", true);
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(true);
-    for (const key of [qk.myProducts]) {
-      const list = qc.getQueryData<ProductSummary[]>(key)!;
-      expect(list.find((p) => p.id === "p1")?.is_liked).toBe(true);
-    }
-    // untouched sibling stays as-is
     const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
+    expect(list.find((p) => p.id === "p1")?.is_liked).toBe(true);
+    // untouched sibling stays as-is
     expect(list.find((p) => p.id === "p2")?.is_liked).toBe(true);
   });
 
@@ -47,10 +44,8 @@ describe("optimistic like flip + rollback", () => {
     snapshot.forEach(([key, data]) => qc.setQueryData(key, data));
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(false);
-    for (const key of [qk.myProducts]) {
-      const list = qc.getQueryData<ProductSummary[]>(key)!;
-      expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
-    }
+    const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
+    expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
   });
 
   it("polls while the import is active and stops on terminal status", () => {

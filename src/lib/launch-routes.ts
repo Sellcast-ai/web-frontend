@@ -5,4 +5,5 @@
  */
 export const PRODUCTS_HREF = "/app/products";
 export const NEW_PRODUCT_HREF = "/app/products/new";
+export const STUDIO_HREF = "/app/studio";
 export const APP_HOME_HREF = PRODUCTS_HREF;

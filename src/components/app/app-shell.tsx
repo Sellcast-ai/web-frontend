@@ -12,7 +12,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api/client";
 import { useCurrentUser } from "@/lib/api/hooks";
-import { APP_HOME_HREF } from "@/lib/launch-routes";
+import { STUDIO_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -58,7 +58,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <Logo />
         </div>
 
-        <Button href={APP_HOME_HREF} size="md" className="mt-4 w-full">
+        <Button href={STUDIO_HREF} size="md" className="mt-4 w-full">
           <Sparkles className="h-4 w-4" />
           {t("newVideo")}
         </Button>
@@ -129,7 +129,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* ---- mobile bottom tab bar (echoes the iOS tab bar) ---- */}
       <nav className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border glass px-2 py-2 md:hidden">
         <Link
-          href={APP_HOME_HREF}
+          href={STUDIO_HREF}
           className="flex flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[11px] font-semibold text-brand-700"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-gradient text-white">

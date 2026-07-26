@@ -66,6 +66,8 @@ export default function ProductDetailPage() {
     );
   }
 
+  // marketplace rows carry commission + sales analytics; user-created rows don't
+  const isMarketplaceRow = !product.owner_user_id;
   const metrics = [
     { label: t("metrics.monthlySales"), value: compact(product.monthly_sales) },
     { label: t("metrics.totalRevenue"), value: money(product.total_revenue) },
@@ -163,27 +165,31 @@ export default function ProductDetailPage() {
             <span className="font-display text-3xl font-bold text-ink">
               {priceRange(product.price_min, product.price_max, product.currency)}
             </span>
-            <Badge variant="success">
-              {t("commission", { rate: commission(product.commission_rate) })}
-            </Badge>
+            {isMarketplaceRow && (
+              <Badge variant="success">
+                {t("commission", { rate: commission(product.commission_rate) })}
+              </Badge>
+            )}
           </div>
 
           {/* metrics */}
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div
-                key={m.label}
-                className="rounded-2xl border border-border bg-card p-3 shadow-soft"
-              >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                  {m.label}
-                </p>
-                <p className="mt-1 font-display text-lg font-bold text-brand-700">
-                  {m.value}
-                </p>
-              </div>
-            ))}
-          </div>
+          {isMarketplaceRow && (
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="rounded-2xl border border-border bg-card p-3 shadow-soft"
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {m.label}
+                  </p>
+                  <p className="mt-1 font-display text-lg font-bold text-brand-700">
+                    {m.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
 
           {product.creator_hook && (
             <div className="mt-6 rounded-2xl bg-accent p-4">
