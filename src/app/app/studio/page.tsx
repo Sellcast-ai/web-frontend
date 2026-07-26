@@ -111,6 +111,8 @@ function StudioInner() {
   const { data: usage } = useUsage();
   const create = useCreateJob({ startError: tt("startVideoFailed") });
 
+  // default is product_only, not ai_avatar: avatar mode is selectable but does
+  // not currently render, and a first attempt must not land on it. See AGENTS.md.
   const [mode, setMode] = useState<VideoMode>("product_only");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
   const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
