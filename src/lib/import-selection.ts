@@ -115,23 +115,15 @@ export type ImportOutcome =
     }
   | { key: "importNone"; values: { requested: number } };
 
-/** How many products the import was asked for: the length of the `source_urls`
- * the client sent, never `products_found`, which counts the store's catalog
- * rather than the chosen subset. Both the in-flight progress bar and the
- * finished toast read the total through here, so the two can never quote
- * different numbers - and neither of them raises it to meet `products_upserted`,
- * because an import that lands more than was chosen means the backend ignored
- * `source_urls` and that has to stay visible instead of being clamped away. */
-export function importRequested(requested: number): number {
-  return requested;
-}
-
 /** Which toast a finished import earns, from the counters rather than `status` —
  * a job can report `succeeded` while some of the selected products failed to
- * read, and calling that a clean success is a lie. */
-export function importOutcome(job: OutcomeCounts, requestedCount: number): ImportOutcome {
+ * read, and calling that a clean success is a lie. `requested` is the length of
+ * the `source_urls` the client sent, never `products_found`, which counts the
+ * store's catalog rather than the chosen subset; it is never raised to meet
+ * `products_upserted`, because an import that lands more than was chosen means
+ * the backend ignored `source_urls` and that has to stay visible. */
+export function importOutcome(job: OutcomeCounts, requested: number): ImportOutcome {
   const imported = job.products_upserted;
-  const requested = importRequested(requestedCount);
   if (imported === 0) return { key: "importNone", values: { requested } };
   // reads the chosen subset can't account for: the run landed everything that was
   // picked and still failed on top of that, so it went outside `source_urls`.

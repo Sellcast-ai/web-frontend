@@ -4,7 +4,6 @@ import {
   beginSelection,
   clearSelection,
   importOutcome,
-  importRequested,
   loadSelection,
   saveSelection,
   selectedUrls,
@@ -124,17 +123,6 @@ describe("importOutcome", () => {
     expect(
       importOutcome({ products_found: 200, products_upserted: 3, products_failed: 3 }, 5),
     ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
-  });
-});
-
-describe("importRequested", () => {
-  it("gives the toast and the progress bar the same total", () => {
-    // the one place either of them reads the total from, so an import that
-    // overshoots the chosen subset can't quietly read as a finished one
-    const job = { products_found: 200, products_upserted: 3, products_failed: 2 };
-    const outcome = importOutcome(job, 5);
-    expect(outcome.key).toBe("importPartial");
-    expect(outcome.values).toMatchObject({ requested: importRequested(5) });
   });
 });
 

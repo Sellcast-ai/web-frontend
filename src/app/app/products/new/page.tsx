@@ -33,7 +33,6 @@ import {
   beginSelection,
   clearSelection,
   importOutcome,
-  importRequested,
   saveSelection,
   selectedUrls,
 } from "@/lib/import-selection";
@@ -726,10 +725,10 @@ function StoreImport() {
   // step 4 — an import is running: live progress against the requested subset
   if (running && job && !jobFellThrough) {
     const active = job.status === "queued" || job.status === "running";
-    // same helper the finished-import toast uses, so the bar and the toast can
-    // never quote different totals — an import that overshoots the chosen subset
-    // still reads its real total, only the bar itself stops at full
-    const total = importRequested(running.requested);
+    // the same `running.requested` the finished-import toast reads, so the bar
+    // and the toast can never quote different totals — an import that overshoots
+    // the chosen subset still reads its real total, only the bar stops at full
+    const total = running.requested;
     const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
@@ -817,7 +816,7 @@ function StoreImport() {
         <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
           <p className="flex items-center gap-2 font-display font-semibold text-ink">
             <Store className="h-4 w-4 shrink-0 text-brand-600" />
-            {t("reviewTitle", { domain: candidateData.store_domain })}
+            {t("reviewTitle", { domain: review.domain })}
           </p>
           <p className="mt-2 text-sm text-muted-foreground">{t("reviewEmpty")}</p>
           <div className="mt-4">
@@ -832,7 +831,7 @@ function StoreImport() {
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
-          {t("reviewTitle", { domain: candidateData.store_domain })}
+          {t("reviewTitle", { domain: review.domain })}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">{t("reviewSubtitle")}</p>
         {candidateData.truncated && (
