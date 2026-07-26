@@ -239,7 +239,7 @@
         "resumeReview": "Você estava escolhendo produtos de {domain}.",
         "resumeReviewAction": "Continue de onde parou",
         "discardReview": "Começar de novo",
-        "importMaybeRunning": "Você pediu para importar {count, plural, one {# produto} other {# produtos}} desta loja: essa importação pode já estar em andamento.",
+        "importUnreadable": "Não conseguimos verificar essa importação agora: ela provavelmente ainda está em andamento. Tente novamente em instantes.",
         "tryDifferentStore": "Experimente uma loja diferente",
         "placeholder": "your-store.myshopify.com – importe toda a sua loja",
         "preview": "Visualização"

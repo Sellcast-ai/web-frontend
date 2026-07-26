@@ -26,10 +26,6 @@ export type StoredSelection = {
   jobId?: string | null;
   /** How many products were actually sent as `source_urls`. */
   requested?: number | null;
-  /** How many products a start request that is *still in flight* asked for, so a
-   * reload between the click and the response knows an import may already be
-   * running rather than arming the button again. See `pendingMarker`. */
-  pending?: number | null;
 };
 
 const finiteCount = (value: unknown): number | null =>
@@ -52,7 +48,6 @@ export function loadSelection(): StoredSelection | null {
       deselected: parsed.deselected.filter((u) => typeof u === "string"),
       jobId: typeof parsed.jobId === "string" ? parsed.jobId : null,
       requested: finiteCount(parsed.requested),
-      pending: finiteCount(parsed.pending),
     };
   } catch {
     return null;
@@ -82,15 +77,6 @@ export function clearSelection(): void {
  * is only ever entered with no job to report on. */
 export function resumeFor(saved: StoredSelection | null, url: string): string[] {
   return saved && saved.storeUrl === url ? saved.deselected : [];
-}
-
-/** The pre-flight marker: how many products a start request that is still in
- * flight asked for. Derived from the request's own pending state rather than
- * cleared by hand, so it cannot outlive the request it describes - a marker left
- * behind by a *failed* start would restore forever as "an import may already be
- * running", which is the same stale-replay bug as a terminal `jobId`. */
-export function pendingMarker(count: number | null, inFlight: boolean): number | null {
-  return inFlight && count && count > 0 ? count : null;
 }
 
 /** A job handle worth nothing to this mount: already terminal, and nobody here
@@ -135,7 +121,10 @@ export function importRequested(job: OutcomeCounts, requested?: number | null): 
 export function importOutcome(job: OutcomeCounts, requestedCount?: number | null): ImportOutcome {
   const imported = job.products_upserted;
   const requested = importRequested(job, requestedCount);
-  const failed = Math.max(requested - imported, 0);
+  // the backend's own count is authoritative when it is the larger one: a run
+  // that upserted everything asked for while failing a dozen other reads is not
+  // a clean success
+  const failed = Math.max(requested - imported, job.products_failed, 0);
   if (imported === 0) return { key: "importNone", values: { requested } };
   // more landed than was chosen: the import ignored `source_urls`, and the user
   // is the one who has to hear about the products they didn't pick

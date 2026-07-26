@@ -239,7 +239,7 @@
         "resumeReview": "Bạn đang chọn sản phẩm từ {domain}.",
         "resumeReviewAction": "Tiếp tục từ chỗ đang dở",
         "discardReview": "Bắt đầu lại",
-        "importMaybeRunning": "Bạn đã yêu cầu nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng này - lần nhập đó có thể đang chạy.",
+        "importUnreadable": "Hiện chúng tôi không kiểm tra được lần nhập đó - có thể nó vẫn đang chạy. Hãy thử lại sau giây lát.",
         "tryDifferentStore": "Hãy thử một cửa hàng khác",
         "placeholder": "your-store.myshopify.com — nhập toàn bộ cửa hàng của bạn",
         "preview": "Xem trước"

@@ -23,6 +23,7 @@ import {
   useImportCandidates,
   useStartImport,
   useImportJob,
+  isJobMissing,
   qk,
 } from "@/lib/api/hooks";
 import type { ImportCandidate, ProductDraft, SourcePlatform } from "@/lib/api/types";
@@ -34,7 +35,6 @@ import {
   importRequested,
   isStaleJobHandle,
   loadSelection,
-  pendingMarker,
   resumeFor,
   saveSelection,
   selectedUrls,
@@ -618,11 +618,7 @@ function StoreImport() {
    * it never witnessed would re-toast - and re-redirect - on every later visit to
    * this page in the same tab. */
   const [watchedJob, setWatchedJob] = useState<string | null>(null);
-  /** What the in-flight start request asked for, so a reload between the click
-   * and the response says an import may already be running instead of arming
-   * "Import N products" again. */
-  const [pendingCount, setPendingCount] = useState<number | null>(null);
-  const { data: job, isError: jobUnreadable } = useImportJob(jobId ?? "");
+  const { data: job, error: jobError, refetch: refetchJob } = useImportJob(jobId ?? "");
   // a restored job that is still running becomes ours to report on, the same as
   // one started here (React's adjust-state-during-render, not an effect)
   if (job && (job.status === "queued" || job.status === "running") && watchedJob !== job.job_id) {
@@ -637,16 +633,19 @@ function StoreImport() {
   const ownedDomain = review?.domain ?? saved?.domain;
 
   /** A handle with nothing left to report on: an import that already finished on
-   * an earlier visit, or one that never resolved at all - the row is gone, the
-   * backend is erroring, or the handle belongs to whoever used the tab before.
-   * Without the second case a handle that only ever errors renders neither the
-   * progress card nor the resume offer, and the saved pass is stranded behind a
-   * bare paste form. A failing poll for a job we *have* read stays on the
-   * progress card: that one still has something to report. */
-  const staleJob =
-    isStaleJobHandle(job?.status, watchedJob === job?.job_id) || (jobUnreadable && !job);
+   * an earlier visit, or one the backend says does not exist - the row is gone,
+   * or it belongs to whoever used the tab before. Without the second case a dead
+   * handle renders neither the progress card nor the resume offer, and the saved
+   * pass is stranded behind a bare paste form. Only a 404 counts: a 500 or a
+   * dropped connection says nothing about whether the import is still running,
+   * and throwing the handle away over one would cost a billed walk to get back
+   * (see `jobUnreadable`). */
+  const jobMissing = isJobMissing(jobError) && !job;
+  const staleJob = isStaleJobHandle(job?.status, watchedJob === job?.job_id) || jobMissing;
 
-  const pending = pendingMarker(pendingCount, start.isPending);
+  /** The handle is real but we can't read it right now. Keep it and let the user
+   * retry - the import is very likely still running. */
+  const jobUnreadable = !!jobId && !job && !!jobError && !jobMissing;
 
   useEffect(() => {
     if (!ownedStoreUrl) return;
@@ -659,9 +658,8 @@ function StoreImport() {
       // fetch, and another decision to ignore it, on every later visit
       jobId: staleJob ? null : jobId,
       requested: staleJob ? null : requested,
-      pending,
     });
-  }, [ownedStoreUrl, ownedPlatform, ownedDomain, deselected, jobId, requested, staleJob, pending]);
+  }, [ownedStoreUrl, ownedPlatform, ownedDomain, deselected, jobId, requested, staleJob]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -713,7 +711,6 @@ function StoreImport() {
     setDeselected(new Set(resumeFor(saved, url)));
     setJobId(null);
     setRequested(null);
-    setPendingCount(null);
     setWatchedJob(null);
     done.current = false;
     setReview({ storeUrl: url, platform, domain });
@@ -728,16 +725,15 @@ function StoreImport() {
     // so drop it rather than carrying a dead handle into the next store
     setJobId(null);
     setRequested(null);
-    setPendingCount(null);
     setWatchedJob(null);
     done.current = false;
     preview.reset();
   }
 
   function runImport(sourceUrls: string[], platform: string) {
-    // marks the store as "an import was asked for" before the request leaves, so
-    // a reload before the handle comes back doesn't look like nothing happened
-    setPendingCount(sourceUrls.length);
+    // no client-side pre-flight guard against a double start: the backend hands
+    // back the caller's existing active job instead of enqueueing a second, so a
+    // reload-then-click can't buy the same import twice
     start.mutate(
       { storeUrl: review?.storeUrl ?? storeUrl, sourceUrls, platform },
       {
@@ -761,6 +757,35 @@ function StoreImport() {
     (job.status === "failed" ||
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
+
+  // step 4 — the import is very likely still running, we just can't read it:
+  // hold the handle and offer an explicit retry rather than dropping a live job
+  if (jobUnreadable) {
+    return (
+      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 shrink-0 text-brand-600" />
+          {t("importingTitle")}
+        </p>
+        <p className="mt-2 flex items-start gap-2 text-sm text-ink">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+          {t("importUnreadable")}
+        </p>
+        <div className="mt-4 flex items-center gap-3">
+          <Button size="lg" onClick={() => refetchJob()}>
+            {t("retryReview")}
+          </Button>
+          <button
+            type="button"
+            className="text-sm font-semibold text-muted-foreground hover:text-ink"
+            onClick={leaveReview}
+          >
+            {t("discardReview")}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   // step 4 — an import is running: live progress against the requested subset
   if (jobId && job && !jobFellThrough && !staleJob) {
@@ -1021,14 +1046,6 @@ function StoreImport() {
         * click is the point, since the walk behind it is billed. */}
       {saved && (!jobId || jobFellThrough || staleJob) && (
         <div className="mt-3 rounded-xl border border-border bg-card p-3 text-sm">
-          {/* the click that bought an import, with the reply lost to a reload:
-            * say so rather than letting them re-arm it as if nothing happened */}
-          {!!saved.pending && (
-            <p className="mb-2 flex items-start gap-2 text-ink">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-              {t("importMaybeRunning", { count: saved.pending })}
-            </p>
-          )}
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-muted-foreground">
               {t("resumeReview", { domain: saved.domain ?? saved.storeUrl })}

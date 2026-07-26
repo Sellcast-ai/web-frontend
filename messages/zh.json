@@ -239,7 +239,7 @@
         "resumeReview": "你之前在从 {domain} 选择商品。",
         "resumeReviewAction": "从上次的地方继续",
         "discardReview": "重新开始",
-        "importMaybeRunning": "你已请求从这家商店导入 {count, plural, one {# 件商品} other {# 件商品}}，该导入可能正在进行中。",
+        "importUnreadable": "暂时无法查看该导入的状态，它很可能仍在进行中。请稍后重试。",
         "tryDifferentStore": "尝试不同的商店",
         "placeholder": "your-store.myshopify.com — 导入您的整个商店",
         "preview": "预览"

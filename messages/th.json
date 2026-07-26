@@ -239,7 +239,7 @@
         "resumeReview": "คุณกำลังเลือกสินค้าจาก {domain} อยู่",
         "resumeReviewAction": "ทำต่อจากที่ค้างไว้",
         "discardReview": "เริ่มใหม่",
-        "importMaybeRunning": "คุณได้สั่งนำเข้า {count, plural, one {สินค้า # รายการ} other {สินค้า # รายการ}} จากร้านค้านี้แล้ว การนำเข้านั้นอาจกำลังทำงานอยู่",
+        "importUnreadable": "ตอนนี้เราตรวจสอบการนำเข้านั้นไม่ได้ - น่าจะยังทำงานอยู่ ลองอีกครั้งในอีกสักครู่",
         "tryDifferentStore": "ลองร้านอื่น",
         "placeholder": "your-store.myshopify.com — นำเข้าร้านค้าทั้งหมดของคุณ",
         "preview": "ดูตัวอย่าง"
