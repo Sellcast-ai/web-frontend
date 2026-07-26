@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "市场",
       "products": "我的产品",
       "avatars": "头像",
       "videos": "我的视频",
@@ -103,18 +102,6 @@
         "productOfferFocused": "专注于报价"
       }
     },
-    "marketplace": {
-      "title": "市场",
-      "subtitle": "热门 TikTok 购买产品 - 选择一款将其制作为视频。",
-      "searchPlaceholder": "搜索产品 - 或粘贴任何产品链接（Amazon、Shopee、TikTok 商店...）",
-      "linkCta": "通过此链接制作视频 — Lumi 将阅读产品页面",
-      "allCategories": "全部",
-      "loadMore": "加载更多",
-      "empty": {
-        "title": "没有找到产品",
-        "description": "尝试不同的搜索或类别。"
-      }
-    },
     "products": {
       "title": "我的产品",
       "subtitle": "您自己的产品 - 从链接粘贴或上传。只有你能看到这些。",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "未找到产品。",
-      "backToMarketplace": "返回市场",
-      "marketplace": "市场",
       "productFallback": "产品展示",
       "save": "保存",
       "unsave": "取消保存",
@@ -141,7 +126,9 @@
         "totalRevenue": "总收入",
         "activeCreators": "活跃创作者",
         "totalViews": "总浏览次数"
-      }
+      },
+      "backToProducts": "返回产品",
+      "products": "我的产品"
     },
     "videos": {
       "title": "我的视频",
@@ -150,8 +137,8 @@
       "videoFallback": "视频",
       "empty": {
         "title": "还没有视频",
-        "description": "选择一个热门产品，Lumi 会将其变成您的第一个滚动停止视频。",
-        "browseMarketplace": "浏览市场"
+        "description": "选择你的一个产品，Lumi 会将其变成你的第一条让人停下滑动的视频。",
+        "startFirstVideo": "开始第一个视频"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "查看计划",
       "pickProduct": {
         "title": "首先选择产品",
-        "description": "从市场上选择一个产品，Lumi 会将其变成滚动停止的视频。",
-        "browseMarketplace": "浏览市场"
+        "description": "添加或选择你的一个产品，Lumi 会将其变成让人停下滑动的视频。",
+        "addProduct": "添加产品",
+        "viewProducts": "查看产品"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "产品展示",
           "features": "特点",
           "models": "型号",
-          "pricing": "定价",
-          "marketplace": "市场"
+          "pricing": "定价"
         },
         "workflow": {
           "title": "工作流程",
@@ -774,7 +761,7 @@
       "q4": "Lumi使用哪种视频模型？",
       "a4": "Lumi 使用 Seedance 2.0 进行渲染，调整每个镜头的设置。更多前沿视频模型已在路线图上 - 当新模型登陆时，您的脚本和节拍将继续存在。",
       "q5": "产品数据从哪里来？",
-      "a5": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的链接 - 或上传您自己的产品照片 - Lumi 会读取标题、描述和图像以进行构建。您的产品对您保密。更喜欢想法？浏览热门精选的内置市场。",
+      "a5": "粘贴来自 Amazon、Shopee、TikTok Shop 或你自己店铺的链接，或者上传自己的产品照片，Lumi 会读取标题、描述和图像来生成内容。你的产品只对你可见。",
       "q6": "一个视频需要多长时间？",
       "a6": "Lumi 脚本、故事板和渲染，无需您拍摄或编辑 - 您可以开始制作并返回已完成、可发布的剪辑。某个类别的模式研究会被缓存，因此该类别中的后续视频启动速度更快。"
     },
@@ -799,7 +786,7 @@
           "credits": "20学分，一次性",
           "features": [
             "720p · 9:16 导出",
-            "市场准入",
+            "产品链接导入",
             "自动 QA 渲染",
             "Lumi水印"
           ],
@@ -865,7 +852,7 @@
         "头像+产品模式",
         "字幕被烧毁",
         "9:16 对于 TikTok 和卷轴",
-        "粘贴任何产品链接或浏览市场"
+        "粘贴任意产品链接或上传产品照片"
       ],
       "billingQuestions": "计费问题",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "任何链接 - Amazon、Shopee、TikTok 商店或您自己的商店",
             "或者上传您自己的产品照片",
-            "或者浏览流行精选市场以寻找创意"
+            "或手动上传产品照片和详情"
           ]
         },
         "scripts": {

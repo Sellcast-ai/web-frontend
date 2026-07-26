@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/marketing/logo";
 import { Button } from "@/components/ui/button";
+import { APP_HOME_HREF } from "@/lib/launch-routes";
 
 export default async function NotFound() {
   const t = await getTranslations("shared.notFound");
@@ -20,7 +21,7 @@ export default async function NotFound() {
         <Button href="/" size="lg">
           {t("backHome")}
         </Button>
-        <Button href="/app/marketplace" variant="outline" size="lg">
+        <Button href={APP_HOME_HREF} variant="outline" size="lg">
           {t("goToApp")}
         </Button>
       </div>

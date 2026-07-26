@@ -11,7 +11,7 @@ import {
   Sparkles,
   Loader2,
   Eye,
-  Store,
+  PackagePlus,
   Link2,
   Upload,
 } from "lucide-react";
@@ -36,6 +36,7 @@ import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
 import { Button } from "@/components/ui/button";
 import { priceRange } from "@/lib/format";
+import { NEW_PRODUCT_HREF, PRODUCTS_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
 export default function StudioPage() {
@@ -851,7 +852,7 @@ function PickProduct() {
   return (
     <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
       <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
-        <Store className="h-8 w-8" />
+        <PackagePlus className="h-8 w-8" />
       </div>
       <h1 className="mt-5 font-display text-2xl font-bold text-ink">
         {t("title")}
@@ -859,9 +860,14 @@ function PickProduct() {
       <p className="mt-2 max-w-sm text-muted-foreground">
         {t("description")}
       </p>
-      <Button href="/app/marketplace" size="lg" className="mt-6">
-        {t("browseMarketplace")}
-      </Button>
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <Button href={NEW_PRODUCT_HREF} size="lg">
+          {t("addProduct")}
+        </Button>
+        <Button href={PRODUCTS_HREF} variant="outline" size="lg">
+          {t("viewProducts")}
+        </Button>
+      </div>
     </div>
   );
 }

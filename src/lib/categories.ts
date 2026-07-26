@@ -1,4 +1,4 @@
-/** Marketplace categories — must match the backend's CategoryPattern keys
+/** Product categories — must match the backend's CategoryPattern keys
  * (app/services/product_parser.py KNOWN_CATEGORIES). */
 export const CATEGORIES = [
   "Beauty & Personal Care",

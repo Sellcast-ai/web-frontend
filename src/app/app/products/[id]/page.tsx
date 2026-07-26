@@ -18,6 +18,7 @@ import { useProduct, useToggleLike } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DUR, EASE_OUT } from "@/components/ui/motion";
+import { PRODUCTS_HREF } from "@/lib/launch-routes";
 import {
   compact,
   commission,
@@ -58,8 +59,8 @@ export default function ProductDetailPage() {
     return (
       <div className="container-page py-16 text-center">
         <p className="text-muted-foreground">{t("notFound")}</p>
-        <Button href="/app/marketplace" variant="outline" size="md" className="mt-4">
-          {t("backToMarketplace")}
+        <Button href={PRODUCTS_HREF} variant="outline" size="md" className="mt-4">
+          {t("backToProducts")}
         </Button>
       </div>
     );
@@ -75,11 +76,11 @@ export default function ProductDetailPage() {
   return (
     <div className="container-page py-8">
       <Link
-        href="/app/marketplace"
+        href={PRODUCTS_HREF}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-ink"
       >
         <ArrowLeft className="h-4 w-4" />
-        {t("marketplace")}
+        {t("products")}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-2">

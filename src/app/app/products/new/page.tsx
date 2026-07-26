@@ -205,7 +205,7 @@ function NewProductInner() {
     [parse],
   );
 
-  // ?url= deep link (from the marketplace search box) parses on arrival
+  // ?url= deep link (from the Products paste box) parses on arrival
   useEffect(() => {
     const fromQuery = sp.get("url");
     if (fromQuery && !autoParsed.current) {

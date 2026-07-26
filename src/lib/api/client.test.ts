@@ -17,21 +17,6 @@ afterEach(() => {
 });
 
 describe("api (BFF client)", () => {
-  it("builds product list URLs with defaults and filters", async () => {
-    const fetchMock = mockFetch(200, []);
-    await api.listProducts();
-    expect(fetchMock).toHaveBeenCalledWith(
-      "/api/bff/products?limit=24&offset=0",
-      expect.anything(),
-    );
-
-    await api.listProducts({ q: "lamp", category: "home", limit: 5, offset: 10 });
-    expect(fetchMock).toHaveBeenLastCalledWith(
-      "/api/bff/products?q=lamp&category=home&limit=5&offset=10",
-      expect.anything(),
-    );
-  });
-
   it("serializes json payloads with a Content-Type header", async () => {
     const fetchMock = mockFetch(200, {});
     await api.parseProductUrl("https://example.com/p/1");

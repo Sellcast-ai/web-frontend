@@ -21,7 +21,6 @@ import type {
 
 export const qk = {
   me: ["me"] as const,
-  products: (p: Record<string, unknown>) => ["products", p] as const,
   myProducts: ["my-products"] as const,
   product: (id: string) => ["product", id] as const,
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
@@ -50,19 +49,6 @@ export function useCurrentUser() {
 
 export function useUsage() {
   return useQuery({ queryKey: ["usage"], queryFn: api.getUsage, staleTime: 15_000 });
-}
-
-export function useProducts(params: {
-  q?: string;
-  category?: string;
-  limit?: number;
-  offset?: number;
-}) {
-  return useQuery({
-    queryKey: qk.products(params),
-    queryFn: () => api.listProducts(params),
-    placeholderData: (prev) => prev,
-  });
 }
 
 export function useProduct(id: string) {
@@ -142,7 +128,7 @@ export function useVideoJob(id: string) {
 
 /* -------------------------------------------------------------- mutations */
 
-const productListKeys = [["products"], qk.myProducts] as const;
+const productListKeys = [qk.myProducts] as const;
 
 export function useToggleLike(messages: { updateError: string }) {
   const qc = useQueryClient();

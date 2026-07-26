@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "Thị trường",
       "products": "Sản phẩm của tôi",
       "avatars": "Hình đại diện",
       "videos": "Video của tôi",
@@ -103,18 +102,6 @@
         "productOfferFocused": "Ưu đãi tập trung"
       }
     },
-    "marketplace": {
-      "title": "Thị trường",
-      "subtitle": "Các sản phẩm TikTok Shop thịnh hành — chọn một sản phẩm để chuyển thành video.",
-      "searchPlaceholder": "Tìm kiếm sản phẩm - hoặc dán bất kỳ liên kết sản phẩm nào (Amazon, Shopper, TikTok Shop…)",
-      "linkCta": "Tạo video từ liên kết này - Lumi sẽ đọc trang sản phẩm",
-      "allCategories": "Tất cả",
-      "loadMore": "Tải thêm",
-      "empty": {
-        "title": "Không tìm thấy sản phẩm nào",
-        "description": "Hãy thử tìm kiếm hoặc danh mục khác."
-      }
-    },
     "products": {
       "title": "Sản phẩm của tôi",
       "subtitle": "Sản phẩm của riêng bạn — được dán từ một liên kết hoặc được tải lên. Chỉ có bạn mới có thể nhìn thấy những điều này.",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "Không tìm thấy sản phẩm.",
-      "backToMarketplace": "Trở lại thị trường",
-      "marketplace": "Thị trường",
       "productFallback": "sản phẩm",
       "save": "Lưu",
       "unsave": "Bỏ lưu",
@@ -141,7 +126,9 @@
         "totalRevenue": "Tổng doanh thu",
         "activeCreators": "Người sáng tạo đang hoạt động",
         "totalViews": "Tổng số lượt xem"
-      }
+      },
+      "backToProducts": "Quay lại sản phẩm",
+      "products": "Sản phẩm của tôi"
     },
     "videos": {
       "title": "Video của tôi",
@@ -150,8 +137,8 @@
       "videoFallback": "Video",
       "empty": {
         "title": "Chưa có video nào",
-        "description": "Chọn một sản phẩm thịnh hành và Lumi sẽ biến sản phẩm đó thành video dừng cuộn đầu tiên của bạn.",
-        "browseMarketplace": "Duyệt qua thị trường"
+        "description": "Chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video đầu tiên khiến người xem dừng cuộn.",
+        "startFirstVideo": "Tạo video đầu tiên"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "Xem kế hoạch",
       "pickProduct": {
         "title": "Chọn một sản phẩm đầu tiên",
-        "description": "Chọn một sản phẩm từ thị trường và Lumi sẽ biến sản phẩm đó thành một video dừng cuộn.",
-        "browseMarketplace": "Duyệt qua thị trường"
+        "description": "Thêm hoặc chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video khiến người xem dừng cuộn.",
+        "addProduct": "Thêm sản phẩm",
+        "viewProducts": "Xem sản phẩm"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "sản phẩm",
           "features": "Tính năng",
           "models": "Người mẫu",
-          "pricing": "Định giá",
-          "marketplace": "Thị trường"
+          "pricing": "Định giá"
         },
         "workflow": {
           "title": "Quy trình làm việc",
@@ -774,7 +761,7 @@
       "q4": "Lumi sử dụng mô hình video nào?",
       "a4": "Lumi hiển thị với Seedance 2.0, điều chỉnh cài đặt cho mỗi lần chụp. Nhiều mô hình video biên giới hơn đang được triển khai — tập lệnh và nhịp điệu của bạn sẽ được chuyển tiếp khi các mô hình mới xuất hiện.",
       "q5": "Dữ liệu sản phẩm đến từ đâu?",
-      "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn — hoặc tải lên ảnh sản phẩm của riêng bạn — và Lumi đọc tiêu đề, mô tả và hình ảnh để xây dựng. Sản phẩm của bạn được giữ kín cho bạn. Thích ý tưởng hơn? Duyệt qua thị trường tích hợp các lựa chọn theo xu hướng.",
+      "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của bạn, hoặc tải lên ảnh sản phẩm của riêng bạn, và Lumi sẽ đọc tiêu đề, mô tả, hình ảnh để tạo nội dung. Sản phẩm của bạn chỉ riêng tư với bạn.",
       "q6": "Một video mất bao lâu?",
       "a6": "Lumi viết kịch bản, bảng phân cảnh và kết xuất mà không cần bạn quay phim hay chỉnh sửa — bạn bắt đầu và quay lại bản cắt hoàn chỉnh, sẵn sàng xuất bản. Nghiên cứu mẫu cho một danh mục được lưu vào bộ nhớ đệm nên các video sau này trong danh mục đó sẽ bắt đầu nhanh hơn nữa."
     },
@@ -799,7 +786,7 @@
           "credits": "20 tín chỉ, một lần",
           "features": [
             "720p · xuất 9:16",
-            "Truy cập thị trường",
+            "Nhập bằng liên kết sản phẩm",
             "Hiển thị QA tự động",
             "Hình mờ Lumi"
           ],
@@ -865,7 +852,7 @@
         "Chế độ Avatar + sản phẩm",
         "Chú thích được ghi vào",
         "9:16 cho TikTok & Cuộn phim",
-        "Dán bất kỳ liên kết sản phẩm nào hoặc duyệt qua thị trường"
+        "Dán bất kỳ liên kết sản phẩm nào hoặc tải ảnh sản phẩm lên"
       ],
       "billingQuestions": "Câu hỏi thanh toán",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "Bất kỳ liên kết nào - Amazon, Shopee, TikTok Shop hoặc cửa hàng của riêng bạn",
             "Hoặc tải lên hình ảnh sản phẩm của riêng bạn",
-            "Hoặc duyệt qua thị trường các sản phẩm đang thịnh hành để tìm ý tưởng"
+            "Hoặc tải ảnh và chi tiết sản phẩm lên thủ công"
           ]
         },
         "scripts": {

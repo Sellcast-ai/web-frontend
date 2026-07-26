@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "마켓플레이스",
       "products": "내 제품",
       "avatars": "아바타",
       "videos": "내 동영상",
@@ -103,18 +102,6 @@
         "productOfferFocused": "제안 중심"
       }
     },
-    "marketplace": {
-      "title": "마켓플레이스",
-      "subtitle": "인기 TikTok 제품 쇼핑 — 동영상으로 만들 제품을 선택하세요.",
-      "searchPlaceholder": "제품 검색 - 또는 제품 링크 붙여넣기(Amazon, Shopee, TikTok Shop…)",
-      "linkCta": "이 링크에서 동영상을 만드세요. Lumi가 제품 페이지를 읽습니다.",
-      "allCategories": "모두",
-      "loadMore": "더 로드하기",
-      "empty": {
-        "title": "제품을 찾을 수 없습니다",
-        "description": "다른 검색이나 카테고리를 시도해 보세요."
-      }
-    },
     "products": {
       "title": "내 제품",
       "subtitle": "나만의 제품 - 링크에서 붙여넣거나 업로드합니다. 이 내용은 나만 볼 수 있습니다.",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "제품을 찾을 수 없습니다.",
-      "backToMarketplace": "마켓플레이스로 돌아가기",
-      "marketplace": "마켓플레이스",
       "productFallback": "제품",
       "save": "저장",
       "unsave": "저장 취소",
@@ -141,7 +126,9 @@
         "totalRevenue": "총수익",
         "activeCreators": "활동적인 크리에이터",
         "totalViews": "총 조회수"
-      }
+      },
+      "backToProducts": "제품으로 돌아가기",
+      "products": "내 제품"
     },
     "videos": {
       "title": "내 동영상",
@@ -150,8 +137,8 @@
       "videoFallback": "비디오",
       "empty": {
         "title": "아직 동영상이 없습니다.",
-        "description": "인기 제품을 선택하면 Lumi가 해당 제품을 첫 번째 스크롤 정지 동영상으로 바꿔드립니다.",
-        "browseMarketplace": "마켓플레이스 찾아보기"
+        "description": "제품을 선택하면 Lumi가 첫 번째 스크롤을 멈추게 하는 영상으로 바꿔줍니다.",
+        "startFirstVideo": "첫 영상 만들기"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "요금제 보기",
       "pickProduct": {
         "title": "먼저 제품을 선택하세요",
-        "description": "마켓플레이스에서 제품을 선택하면 Lumi가 해당 제품을 스크롤을 멈추게 하는 비디오로 바꿔줍니다.",
-        "browseMarketplace": "마켓플레이스 찾아보기"
+        "description": "제품을 추가하거나 선택하면 Lumi가 스크롤을 멈추게 하는 영상으로 바꿔줍니다.",
+        "addProduct": "제품 추가",
+        "viewProducts": "제품 보기"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "제품",
           "features": "특징",
           "models": "모델",
-          "pricing": "가격",
-          "marketplace": "마켓플레이스"
+          "pricing": "가격"
         },
         "workflow": {
           "title": "작업흐름",
@@ -774,7 +761,7 @@
       "q4": "Lumi는 어떤 비디오 모델을 사용합니까?",
       "a4": "Lumi는 Seedance 2.0으로 렌더링하여 샷당 설정을 조정합니다. 더 많은 최첨단 비디오 모델이 로드맵에 있습니다. 새 모델이 출시되면 스크립트와 비트가 그대로 유지됩니다.",
       "q5": "제품 데이터는 어디서 나오나요?",
-      "a5": "Amazon, Shopee, TikTok Shop 또는 자신의 매장에서 링크를 붙여넣거나 자신의 제품 사진을 업로드하면 Lumi가 제목, 설명 및 이미지를 읽어 빌드합니다. 귀하의 제품은 귀하에게만 공개됩니다. 아이디어를 선호하시나요? 인기 있는 추천 상품이 내장된 마켓플레이스를 탐색해 보세요.",
+      "a5": "Amazon, Shopee, TikTok Shop 또는 내 스토어 링크를 붙여넣거나 제품 사진을 업로드하면 Lumi가 제목, 설명, 이미지를 읽어 제작합니다. 제품은 나에게만 비공개로 유지됩니다.",
       "q6": "영상 하나에 시간이 얼마나 걸리나요?",
       "a6": "촬영이나 편집 없이 Lumi 스크립트, 스토리보드 및 렌더를 시작하고 완성된 출판 준비 컷으로 돌아옵니다. 카테고리에 대한 패턴 조사가 캐시되므로 해당 카테고리의 이후 동영상이 더욱 빠르게 시작됩니다."
     },
@@ -799,7 +786,7 @@
           "credits": "20학점, 일회성",
           "features": [
             "720p · 9:16 내보내기",
-            "마켓플레이스 액세스",
+            "제품 링크 가져오기",
             "자동 QA 렌더링",
             "Lumi 워터마크"
           ],
@@ -865,7 +852,7 @@
         "아바타 + 제품 모드",
         "번인된 캡션",
         "TikTok 및 릴의 경우 9:16",
-        "제품 링크를 붙여넣거나 마켓플레이스를 찾아보세요."
+        "제품 링크를 붙여넣거나 제품 사진 업로드"
       ],
       "billingQuestions": "결제 관련 질문",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "모든 링크 — Amazon, Shopee, TikTok Shop 또는 자체 매장",
             "또는 자신의 제품 사진을 업로드하세요.",
-            "또는 아이디어를 찾기 위해 인기 있는 추천 상품 시장을 탐색하세요."
+            "또는 제품 사진과 세부 정보를 직접 업로드"
           ]
         },
         "scripts": {

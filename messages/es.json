@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "Mercado",
       "products": "Mis productos",
       "avatars": "avatares",
       "videos": "Mis vídeos",
@@ -103,18 +102,6 @@
         "productOfferFocused": "Oferta enfocada"
       }
     },
-    "marketplace": {
-      "title": "Mercado",
-      "subtitle": "Productos de tendencia TikTok Compre productos: elija uno para convertirlo en un video.",
-      "searchPlaceholder": "Busque productos o pegue el enlace de cualquier producto (Amazon, Shopee, TikTok Shop…)",
-      "linkCta": "Haga un vídeo desde este enlace: Lumi leerá la página del producto",
-      "allCategories": "Todos",
-      "loadMore": "Cargar más",
-      "empty": {
-        "title": "No se encontraron productos",
-        "description": "Pruebe con una búsqueda o categoría diferente."
-      }
-    },
     "products": {
       "title": "Mis productos",
       "subtitle": "Sus propios productos: pegados desde un enlace o cargados. Sólo tú puedes verlos.",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "Producto no encontrado.",
-      "backToMarketplace": "Volver al mercado",
-      "marketplace": "Mercado",
       "productFallback": "Producto",
       "save": "Guardar",
       "unsave": "Dejar de guardar",
@@ -141,7 +126,9 @@
         "totalRevenue": "Ingresos totales",
         "activeCreators": "Creadores activos",
         "totalViews": "Vistas totales"
-      }
+      },
+      "backToProducts": "Volver a productos",
+      "products": "Mis productos"
     },
     "videos": {
       "title": "Mis vídeos",
@@ -150,8 +137,8 @@
       "videoFallback": "Vídeo",
       "empty": {
         "title": "Aún no hay vídeos",
-        "description": "Elija un producto de tendencia y Lumi lo convertirá en su primer vídeo espectacular.",
-        "browseMarketplace": "Explorar el mercado"
+        "description": "Elige uno de tus productos y Lumi lo convertirá en tu primer video que detiene el desplazamiento.",
+        "startFirstVideo": "Crear primer video"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "Ver planos",
       "pickProduct": {
         "title": "Elige un producto primero",
-        "description": "Elija un producto del mercado y Lumi lo convertirá en un vídeo que hará que se detenga el desplazamiento.",
-        "browseMarketplace": "Explorar el mercado"
+        "description": "Agrega o elige uno de tus productos y Lumi lo convertirá en un video que detiene el desplazamiento.",
+        "addProduct": "Agregar producto",
+        "viewProducts": "Ver productos"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "Producto",
           "features": "Características",
           "models": "Modelos",
-          "pricing": "Precios",
-          "marketplace": "Mercado"
+          "pricing": "Precios"
         },
         "workflow": {
           "title": "Flujo de trabajo",
@@ -774,7 +761,7 @@
       "q4": "¿Qué modelo de vídeo utiliza Lumi?",
       "a4": "Lumi renderiza con Seedance 2.0, ajustando la configuración por toma. Hay más modelos de video de vanguardia en la hoja de ruta: sus guiones y ritmos se conservan cuando llegan nuevos modelos.",
       "q5": "¿De dónde provienen los datos del producto?",
-      "a5": "Pegue un enlace de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue sus propias fotos de productos, y Lumi leerá el título, la descripción y las imágenes a partir de las cuales construir. Sus productos permanecen privados para usted. ¿Prefieres ideas? Explore el mercado integrado de selecciones de tendencias.",
+      "a5": "Pega un enlace de Amazon, Shopee, TikTok Shop o tu propia tienda, o sube tus propias fotos de producto, y Lumi leerá el título, la descripción y las imágenes para construir desde ahí. Tus productos permanecen privados para ti.",
       "q6": "¿Cuánto tiempo dura un vídeo?",
       "a6": "Lumi guiones, guiones gráficos y renderizados sin que usted filme o edite: lo inicia y regresa a un montaje terminado y listo para publicar. La búsqueda de patrones para una categoría se almacena en caché, por lo que los vídeos posteriores de esa categoría comienzan aún más rápido."
     },
@@ -799,7 +786,7 @@
           "credits": "20 créditos, una sola vez",
           "features": [
             "720p · 9:16 exportar",
-            "Acceso al mercado",
+            "Importación de enlaces de producto",
             "Representación de control de calidad automático",
             "Marca de agua Lumi"
           ],
@@ -865,7 +852,7 @@
         "Avatar + modos de producto",
         "Subtítulos quemados en",
         "9:16 para TikTok y carretes",
-        "Pegue el enlace de cualquier producto o navegue por el mercado"
+        "Pega cualquier enlace de producto o sube fotos de producto"
       ],
       "billingQuestions": "Preguntas sobre facturación",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "Cualquier enlace: Amazon, Shopee, TikTok Shop o su propia tienda",
             "O sube tus propias fotos de producto",
-            "O explore el mercado de selecciones de tendencias en busca de ideas."
+            "O sube fotos y detalles del producto manualmente"
           ]
         },
         "scripts": {

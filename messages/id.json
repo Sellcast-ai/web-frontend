@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "Pasar",
       "products": "Produk Saya",
       "avatars": "Avatar",
       "videos": "Video Saya",
@@ -103,18 +102,6 @@
         "productOfferFocused": "Penawaran terfokus"
       }
     },
-    "marketplace": {
-      "title": "Pasar",
-      "subtitle": "Produk Toko TikTok yang sedang tren — pilih salah satu untuk dijadikan video.",
-      "searchPlaceholder": "Cari produk — atau tempel tautan produk apa pun (Amazon, Shopee, TikTok Shop…)",
-      "linkCta": "Buat video dari tautan ini — Lumi akan membaca halaman produk",
-      "allCategories": "Semua",
-      "loadMore": "Muat lebih banyak",
-      "empty": {
-        "title": "Tidak ada produk yang ditemukan",
-        "description": "Coba penelusuran atau kategori lain."
-      }
-    },
     "products": {
       "title": "Produk Saya",
       "subtitle": "Produk Anda sendiri — ditempel dari tautan atau diunggah. Hanya Anda yang dapat melihatnya.",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "Produk tidak ditemukan.",
-      "backToMarketplace": "Kembali ke pasar",
-      "marketplace": "Pasar",
       "productFallback": "Produk",
       "save": "Simpan",
       "unsave": "Batalkan penyimpanan",
@@ -141,7 +126,9 @@
         "totalRevenue": "Pendapatan total",
         "activeCreators": "Pencipta aktif",
         "totalViews": "Jumlah penayangan"
-      }
+      },
+      "backToProducts": "Kembali ke produk",
+      "products": "Produk saya"
     },
     "videos": {
       "title": "Video Saya",
@@ -150,8 +137,8 @@
       "videoFallback": "Video",
       "empty": {
         "title": "Belum ada video",
-        "description": "Pilih produk yang sedang tren dan Lumi akan mengubahnya menjadi video penghenti gulir pertama Anda.",
-        "browseMarketplace": "Jelajahi pasar"
+        "description": "Pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video pertama yang menghentikan scroll.",
+        "startFirstVideo": "Buat video pertama"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "Lihat rencana",
       "pickProduct": {
         "title": "Pilih produk terlebih dahulu",
-        "description": "Pilih produk dari pasar dan Lumi akan mengubahnya menjadi video scroll-stopping.",
-        "browseMarketplace": "Jelajahi pasar"
+        "description": "Tambahkan atau pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video yang menghentikan scroll.",
+        "addProduct": "Tambah produk",
+        "viewProducts": "Lihat produk"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "Produk",
           "features": "Fitur",
           "models": "Model",
-          "pricing": "Harga",
-          "marketplace": "Pasar"
+          "pricing": "Harga"
         },
         "workflow": {
           "title": "Alur kerja",
@@ -774,7 +761,7 @@
       "q4": "Model video manakah yang digunakan Lumi?",
       "a4": "Lumi dirender dengan Seedance 2.0, menyetel pengaturan per bidikan. Lebih banyak model video terdepan yang sedang direncanakan — skrip dan irama Anda akan terbawa saat model baru hadir.",
       "q5": "Dari mana data produk berasal?",
-      "a5": "Tempel tautan dari Amazon, Shopee, Toko TikTok, atau toko Anda sendiri — atau unggah foto produk Anda sendiri — dan Lumi akan membaca judul, deskripsi, dan gambar yang akan dijadikan dasar pembuatan. Produk Anda tetap bersifat pribadi untuk Anda. Lebih suka ide? Jelajahi pasar bawaan dari pilihan yang sedang tren.",
+      "a5": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri, atau unggah foto produk Anda sendiri, dan Lumi akan membaca judul, deskripsi, serta gambar untuk dibuat. Produk Anda tetap pribadi untuk Anda.",
       "q6": "Berapa lama waktu yang dibutuhkan untuk satu video?",
       "a6": "Skrip, storyboard, dan rendering Lumi tanpa Anda memfilmkan atau mengedit — Anda memulainya dan kembali ke potongan yang sudah selesai dan siap dipublikasikan. Penelitian pola untuk suatu kategori disimpan dalam cache, sehingga video selanjutnya dalam kategori tersebut dapat dimulai dengan lebih cepat."
     },
@@ -799,7 +786,7 @@
           "credits": "20 kredit, satu kali",
           "features": [
             "720p · 9:16 ekspor",
-            "Akses pasar",
+            "Impor tautan produk",
             "Render QA otomatis",
             "Tanda air Lumi"
           ],
@@ -865,7 +852,7 @@
         "Avatar + mode produk",
         "Teksnya menyala",
         "9:16 untuk TikTok & Gulungan",
-        "Tempel tautan produk apa pun atau jelajahi pasar"
+        "Tempel tautan produk apa pun atau unggah foto produk"
       ],
       "billingQuestions": "Pertanyaan penagihan",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "Tautan apa pun — Amazon, Shopee, TikTok Shop, atau toko Anda sendiri",
             "Atau unggah foto produk Anda sendiri",
-            "Atau telusuri pasar pilihan yang sedang tren untuk mendapatkan ide"
+            "Atau unggah foto dan detail produk secara manual"
           ]
         },
         "scripts": {

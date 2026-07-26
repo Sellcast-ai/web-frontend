@@ -7,7 +7,6 @@
   },
   "app": {
     "nav": {
-      "marketplace": "Marketplace",
       "products": "My Products",
       "avatars": "Avatars",
       "videos": "My Videos",
@@ -103,18 +102,6 @@
         "productOfferFocused": "Offer focused"
       }
     },
-    "marketplace": {
-      "title": "Marketplace",
-      "subtitle": "Trending TikTok Shop products — pick one to turn into a video.",
-      "searchPlaceholder": "Search products — or paste any product link (Amazon, Shopee, TikTok Shop…)",
-      "linkCta": "Make a video from this link — Lumi will read the product page",
-      "allCategories": "All",
-      "loadMore": "Load more",
-      "empty": {
-        "title": "No products found",
-        "description": "Try a different search or category."
-      }
-    },
     "products": {
       "title": "My Products",
       "subtitle": "Your own products — pasted from a link or uploaded. Only you can see these.",
@@ -126,8 +113,6 @@
     },
     "productDetail": {
       "notFound": "Product not found.",
-      "backToMarketplace": "Back to marketplace",
-      "marketplace": "Marketplace",
       "productFallback": "Product",
       "save": "Save",
       "unsave": "Unsave",
@@ -141,7 +126,9 @@
         "totalRevenue": "Total revenue",
         "activeCreators": "Active creators",
         "totalViews": "Total views"
-      }
+      },
+      "backToProducts": "Back to products",
+      "products": "My Products"
     },
     "videos": {
       "title": "My Videos",
@@ -150,8 +137,8 @@
       "videoFallback": "Video",
       "empty": {
         "title": "No videos yet",
-        "description": "Pick a trending product and Lumi will turn it into your first scroll-stopping video.",
-        "browseMarketplace": "Browse marketplace"
+        "description": "Choose one of your products and Lumi will turn it into your first scroll-stopping video.",
+        "startFirstVideo": "Start first video"
       }
     },
     "avatars": {
@@ -361,8 +348,9 @@
       "seePlans": "See plans",
       "pickProduct": {
         "title": "Pick a product first",
-        "description": "Choose a product from the marketplace and Lumi will turn it into a scroll-stopping video.",
-        "browseMarketplace": "Browse marketplace"
+        "description": "Add or choose one of your products and Lumi will turn it into a scroll-stopping video.",
+        "addProduct": "Add product",
+        "viewProducts": "View products"
       }
     },
     "jobs": {
@@ -730,8 +718,7 @@
           "title": "Product",
           "features": "Features",
           "models": "Models",
-          "pricing": "Pricing",
-          "marketplace": "Marketplace"
+          "pricing": "Pricing"
         },
         "workflow": {
           "title": "Workflow",
@@ -774,7 +761,7 @@
       "q4": "Which video model does Lumi use?",
       "a4": "Lumi renders with Seedance 2.0, tuning the settings per shot. More frontier video models are on the roadmap — your scripts and beats carry over when new models land.",
       "q5": "Where does the product data come from?",
-      "a5": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload your own product photos — and Lumi reads the title, description, and imagery to build from. Your products stay private to you. Prefer ideas? Browse the built-in marketplace of trending picks.",
+      "a5": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload your own product photos — and Lumi reads the title, description, and imagery to build from. Your products stay private to you.",
       "q6": "How long does one video take?",
       "a6": "Lumi scripts, storyboards, and renders without you filming or editing — you kick it off and come back to a finished, publish-ready cut. The pattern research for a category is cached, so later videos in that category start even faster."
     },
@@ -799,7 +786,7 @@
           "credits": "20 credits, one-time",
           "features": [
             "720p · 9:16 export",
-            "Marketplace access",
+            "Product link import",
             "Auto-QA rendering",
             "Lumi watermark"
           ],
@@ -865,7 +852,7 @@
         "Avatar + product modes",
         "Captions burned in",
         "9:16 for TikTok & Reels",
-        "Paste any product link or browse the marketplace"
+        "Paste any product link or upload product photos"
       ],
       "billingQuestions": "Billing questions",
       "faq": {
@@ -1079,7 +1066,7 @@
           "bullets": [
             "Any link — Amazon, Shopee, TikTok Shop, or your own store",
             "Or upload your own product photos",
-            "Or browse the marketplace of trending picks for ideas"
+            "Or upload product photos and details manually"
           ]
         },
         "scripts": {
