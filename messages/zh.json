@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "无法保存您的显示名称。请再试一次。",
       "importPartial": "已导入 {requested} 件商品中的 {imported} 件 - {failed, plural, one {# 件无法读取} other {# 件无法读取}}。你可以逐个粘贴链接添加这些商品。",
       "importOvershoot": "这次导入超出了你选择的 {requested, plural, one {# 件} other {# 件}} 商品。已导入 {imported, plural, one {# 件} other {# 件}}。请在“我的商品”中查看你没有选择的商品。",
+      "importIgnoredSelection": "这次导入没有只处理你选择的 {requested, plural, one {# 件} other {# 件}} 商品：已导入 {imported, plural, one {# 件} other {# 件}}，另有 {failed, plural, one {# 件无法读取} other {# 件无法读取}}。请在“我的商品”中查看你没有选择的商品。",
       "importSucceeded": "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
       "importFailed": "导入没有完成。请再试一次。",
       "storyboardSaved": "故事板已保存。",

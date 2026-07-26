@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "Não foi possível salvar seu nome de exibição. Por favor, tente novamente.",
       "importPartial": "Importou {imported} de {requested} produtos - {failed, plural, one {# não pôde ser lido} other {# não puderam ser lidos}}. Você pode adicioná-los colando cada link.",
       "importOvershoot": "Esta importação foi além dos {requested, plural, one {# produto} other {# produtos}} que você escolheu. Foram importados {imported, plural, one {# produto} other {# produtos}} - confira Meus produtos para ver o que você não escolheu.",
+      "importIgnoredSelection": "Esta importação não ficou só nos {requested, plural, one {# produto} other {# produtos}} que você escolheu: {imported, plural, one {# produto} other {# produtos}} importados e {failed, plural, one {# a mais não pôde ser lido} other {# a mais não puderam ser lidos}}. Confira Meus produtos para ver o que você não escolheu.",
       "importSucceeded": "Importou {count, plural, one {# produto} other {# produtos}} da sua loja.",
       "importFailed": "A importação não terminou. Por favor, tente novamente.",
       "storyboardSaved": "Storyboard salvo.",

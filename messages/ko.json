@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "표시 이름을 저장할 수 없습니다. 다시 시도해 주세요.",
       "importPartial": "{requested}개 중 {imported}개를 가져왔습니다 - {failed, plural, one {#개는 읽지 못했습니다} other {#개는 읽지 못했습니다}}. 해당 상품은 링크를 붙여 넣어 추가할 수 있습니다.",
       "importOvershoot": "이번 가져오기는 선택한 {requested, plural, one {#개} other {#개}}를 넘어섰습니다. {imported, plural, one {#개} other {#개}}를 가져왔습니다. 선택하지 않은 상품이 있는지 내 상품에서 확인해 주세요.",
+      "importIgnoredSelection": "이번 가져오기는 선택한 {requested, plural, one {#개} other {#개}}에만 머무르지 않았습니다. {imported, plural, one {#개} other {#개}}를 가져왔고 {failed, plural, one {#개는 더 읽지 못했습니다} other {#개는 더 읽지 못했습니다}}. 선택하지 않은 상품이 있는지 내 상품에서 확인해 주세요.",
       "importSucceeded": "스토어에서 {count, plural, one {상품 #개} other {상품 #개}}를 가져왔습니다.",
       "importFailed": "가져오기가 완료되지 않았습니다. 다시 시도해 주세요.",
       "storyboardSaved": "스토리보드가 저장되었습니다.",

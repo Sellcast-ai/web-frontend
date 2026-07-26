@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "No se pudo guardar su nombre para mostrar. Por favor inténtalo de nuevo.",
       "importPartial": "Importaste {imported} de {requested} productos - {failed, plural, one {# no se pudo leer} other {# no se pudieron leer}}. Puedes añadirlos pegando cada enlace.",
       "importOvershoot": "Esta importación fue más allá de {requested, plural, one {# producto} other {# productos}} que elegiste. Se importaron {imported, plural, one {# producto} other {# productos}}: revisa Mis productos para ver lo que no elegiste.",
+      "importIgnoredSelection": "Esta importación no se limitó a los {requested, plural, one {# producto} other {# productos}} que elegiste: se importaron {imported, plural, one {# producto} other {# productos}} y {failed, plural, one {# más no se pudo leer} other {# más no se pudieron leer}}. Revisa Mis productos para ver lo que no elegiste.",
       "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
       "importFailed": "La importación no terminó. Por favor inténtalo de nuevo.",
       "storyboardSaved": "Guión gráfico guardado.",

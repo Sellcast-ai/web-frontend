@@ -603,10 +603,10 @@ function StoreImport() {
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
-  const [jobId, setJobId] = useState<string | null>(null);
-  /** Exactly how many `source_urls` the running import carries. */
-  const [requested, setRequested] = useState<number | null>(null);
-  const { data: job } = useImportJob(jobId ?? "");
+  /** The running import: its handle and exactly how many `source_urls` it
+   * carries, as one value so a job can never be watched without its total. */
+  const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
+  const { data: job } = useImportJob(running?.jobId ?? "");
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
@@ -617,7 +617,7 @@ function StoreImport() {
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
-    if (!job || done.current) return;
+    if (!job || !running || done.current) return;
     if (job.status === "queued" || job.status === "running") return;
     done.current = true;
     if (job.status === "failed") {
@@ -625,7 +625,7 @@ function StoreImport() {
       return;
     }
     qc.invalidateQueries({ queryKey: qk.myProducts });
-    const outcome = importOutcome(job, requested);
+    const outcome = importOutcome(job, running.requested);
     if (outcome.key === "importNone") {
       // nothing landed: report it honestly and leave the user on the review
       // step (see `jobFellThrough`) rather than on an unchanged product list
@@ -633,12 +633,14 @@ function StoreImport() {
       return;
     }
     clearSelection(persistTo.current);
-    // an import that went past the chosen subset isn't a success to celebrate:
-    // the user still has to go find what they didn't pick
-    const announce = outcome.key === "importOvershoot" ? toast.info : toast.success;
+    // an import that didn't stick to the chosen subset isn't a success to
+    // celebrate: the user still has to go find what they didn't pick
+    const ignoredSelection =
+      outcome.key === "importOvershoot" || outcome.key === "importIgnoredSelection";
+    const announce = ignoredSelection ? toast.info : toast.success;
     announce(tt(outcome.key, outcome.values));
     router.push("/app/products");
-  }, [job, requested, qc, router, tt]);
+  }, [job, running, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -674,8 +676,7 @@ function StoreImport() {
   function reviewStore(url: string, platform: string, domain: string) {
     setDeselected(new Set(beginSelection(userId, domain)));
     persistTo.current = { userId, storeDomain: domain };
-    setJobId(null);
-    setRequested(null);
+    setRunning(null);
     done.current = false;
     setReview({ storeUrl: url, platform, domain });
   }
@@ -686,8 +687,7 @@ function StoreImport() {
     setReview(null);
     persistTo.current = null;
     setDeselected(new Set());
-    setJobId(null);
-    setRequested(null);
+    setRunning(null);
     done.current = false;
     preview.reset();
   }
@@ -708,8 +708,7 @@ function StoreImport() {
       {
         onSuccess: (created) => {
           done.current = false;
-          setRequested(sourceUrls.length);
-          setJobId(created.job_id);
+          setRunning({ jobId: created.job_id, requested: sourceUrls.length });
         },
       },
     );
@@ -725,12 +724,12 @@ function StoreImport() {
         job.products_upserted === 0));
 
   // step 4 — an import is running: live progress against the requested subset
-  if (jobId && job && !jobFellThrough) {
+  if (running && job && !jobFellThrough) {
     const active = job.status === "queued" || job.status === "running";
     // same helper the finished-import toast uses, so the bar and the toast can
     // never quote different totals — an import that overshoots the chosen subset
     // still reads its real total, only the bar itself stops at full
-    const total = importRequested(job, requested);
+    const total = importRequested(running.requested);
     const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
@@ -886,7 +885,7 @@ function StoreImport() {
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            disabled={start.isPending || (jobId !== null && !jobFellThrough) || chosen.length === 0}
+            disabled={start.isPending || (running !== null && !jobFellThrough) || chosen.length === 0}
             onClick={() => runImport(review.storeUrl, chosen, candidateData.platform)}
           >
             {start.isPending ? (

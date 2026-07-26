@@ -43,13 +43,13 @@ describe("selectedUrls", () => {
 describe("importOutcome", () => {
   it("reports a clean success", () => {
     expect(
-      importOutcome({ products_found: 12, products_upserted: 12, products_failed: 0 }),
+      importOutcome({ products_found: 12, products_upserted: 12, products_failed: 0 }, 12),
     ).toEqual({ key: "importSucceeded", values: { count: 12 } });
   });
 
   it("reports a partial even when the job called itself succeeded", () => {
     expect(
-      importOutcome({ products_found: 12, products_upserted: 10, products_failed: 2 }),
+      importOutcome({ products_found: 12, products_upserted: 10, products_failed: 2 }, 12),
     ).toEqual({
       key: "importPartial",
       values: { imported: 10, requested: 12, failed: 2 },
@@ -58,25 +58,16 @@ describe("importOutcome", () => {
 
   it("counts a short upsert as failed even when the job forgot to", () => {
     expect(
-      importOutcome({ products_found: 12, products_upserted: 10, products_failed: 0 }),
+      importOutcome({ products_found: 12, products_upserted: 10, products_failed: 0 }, 12),
     ).toEqual({
       key: "importPartial",
       values: { imported: 10, requested: 12, failed: 2 },
     });
   });
 
-  it("trusts the larger of found and upserted+failed", () => {
-    expect(
-      importOutcome({ products_found: 0, products_upserted: 3, products_failed: 1 }),
-    ).toEqual({
-      key: "importPartial",
-      values: { imported: 3, requested: 4, failed: 1 },
-    });
-  });
-
   it("reports nothing-imported instead of a success with a zero count", () => {
     expect(
-      importOutcome({ products_found: 5, products_upserted: 0, products_failed: 5 }),
+      importOutcome({ products_found: 5, products_upserted: 0, products_failed: 5 }, 5),
     ).toEqual({ key: "importNone", values: { requested: 5 } });
   });
 
@@ -86,14 +77,6 @@ describe("importOutcome", () => {
     expect(
       importOutcome({ products_found: 200, products_upserted: 9, products_failed: 0 }, 5),
     ).toEqual({ key: "importOvershoot", values: { imported: 9, requested: 5 } });
-  });
-
-  it("cannot report an overshoot off the job counters alone", () => {
-    // without a client-known count the total is derived to be >= what landed,
-    // so the fallback path keeps its existing success/partial behaviour
-    expect(
-      importOutcome({ products_found: 0, products_upserted: 9, products_failed: 0 }),
-    ).toEqual({ key: "importSucceeded", values: { count: 9 } });
   });
 
   it("counts against the requested subset, not the store catalog", () => {
@@ -107,13 +90,26 @@ describe("importOutcome", () => {
     ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
   });
 
-  it("calls read failures the subset can't explain an overshoot, not a partial", () => {
+  it("reports read failures the subset can't explain, with their count", () => {
     // 5 chosen, 5 upserted, 12 read failures: the import read 17 products, so it
-    // didn't honour the selection. Reporting "5 of 5 - 12 couldn't be read"
-    // would be a partial whose own numbers contradict each other.
+    // didn't honour the selection. "5 of 5 - 12 couldn't be read" would be a
+    // partial whose own numbers contradict each other, and a plain overshoot
+    // would drop the dozen failures entirely.
     expect(
       importOutcome({ products_found: 200, products_upserted: 5, products_failed: 12 }, 5),
-    ).toEqual({ key: "importOvershoot", values: { imported: 5, requested: 5 } });
+    ).toEqual({
+      key: "importIgnoredSelection",
+      values: { imported: 5, requested: 5, failed: 12 },
+    });
+  });
+
+  it("carries the failures of an overshoot that also failed reads", () => {
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 9, products_failed: 3 }, 5),
+    ).toEqual({
+      key: "importIgnoredSelection",
+      values: { imported: 9, requested: 5, failed: 3 },
+    });
   });
 
   it("keeps a partial a partial when the failures fit inside the subset", () => {
@@ -132,29 +128,13 @@ describe("importOutcome", () => {
 });
 
 describe("importRequested", () => {
-  const counters = { products_found: 200, products_upserted: 5, products_failed: 0 };
-
-  it("is the exact requested count when the client knows it", () => {
-    expect(importRequested(counters, 5)).toBe(5);
-  });
-
-  it("falls back to the job counters when it doesn't", () => {
-    expect(importRequested(counters, null)).toBe(200);
-    expect(importRequested(counters, undefined)).toBe(200);
-    expect(importRequested(counters, 0)).toBe(200);
-  });
-
-  it("stays at what the user chose even when the import overshoots it", () => {
-    // the backend ignoring `source_urls` has to stay visible: rewriting the
-    // total up to what landed would quietly read as a finished import
-    expect(importRequested({ ...counters, products_upserted: 9 }, 5)).toBe(5);
-  });
-
   it("gives the toast and the progress bar the same total", () => {
+    // the one place either of them reads the total from, so an import that
+    // overshoots the chosen subset can't quietly read as a finished one
     const job = { products_found: 200, products_upserted: 3, products_failed: 2 };
     const outcome = importOutcome(job, 5);
     expect(outcome.key).toBe("importPartial");
-    expect(outcome.values).toMatchObject({ requested: importRequested(job, 5) });
+    expect(outcome.values).toMatchObject({ requested: importRequested(5) });
   });
 });
 

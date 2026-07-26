@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "Tidak dapat menyimpan nama tampilan Anda. Silakan coba lagi.",
       "importPartial": "Mengimpor {imported} dari {requested} produk - {failed, plural, one {# tidak bisa dibaca} other {# tidak bisa dibaca}}. Anda bisa menambahkannya dengan menempelkan tiap tautan.",
       "importOvershoot": "Impor ini melampaui {requested, plural, one {# produk} other {# produk}} yang Anda pilih. {imported, plural, one {# produk} other {# produk}} diimpor - periksa Produk Saya untuk melihat yang tidak Anda pilih.",
+      "importIgnoredSelection": "Impor ini tidak berhenti pada {requested, plural, one {# produk} other {# produk}} yang Anda pilih: {imported, plural, one {# produk} other {# produk}} diimpor dan {failed, plural, one {# lainnya tidak bisa dibaca} other {# lainnya tidak bisa dibaca}}. Periksa Produk Saya untuk melihat yang tidak Anda pilih.",
       "importSucceeded": "Mengimpor {count, plural, one {# produk} other {# produk}} dari toko Anda.",
       "importFailed": "Impor belum selesai. Silakan coba lagi.",
       "storyboardSaved": "Papan cerita disimpan.",

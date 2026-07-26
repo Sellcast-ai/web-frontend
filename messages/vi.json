@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "Không thể lưu tên hiển thị của bạn. Vui lòng thử lại.",
       "importPartial": "Đã nhập {imported} trong số {requested} sản phẩm - {failed, plural, one {# sản phẩm không đọc được} other {# sản phẩm không đọc được}}. Bạn có thể thêm những sản phẩm đó bằng cách dán từng liên kết.",
       "importOvershoot": "Lần nhập này đã vượt quá {requested, plural, one {# sản phẩm} other {# sản phẩm}} bạn đã chọn. Đã nhập {imported, plural, one {# sản phẩm} other {# sản phẩm}} - hãy kiểm tra Sản phẩm của tôi để xem những gì bạn không chọn.",
+      "importIgnoredSelection": "Lần nhập này không chỉ dừng ở {requested, plural, one {# sản phẩm} other {# sản phẩm}} bạn đã chọn: đã nhập {imported, plural, one {# sản phẩm} other {# sản phẩm}} và {failed, plural, one {# sản phẩm khác không đọc được} other {# sản phẩm khác không đọc được}}. Hãy kiểm tra Sản phẩm của tôi để xem những gì bạn không chọn.",
       "importSucceeded": "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
       "importFailed": "Quá trình nhập chưa hoàn tất. Vui lòng thử lại.",
       "storyboardSaved": "Đã lưu bảng phân cảnh.",

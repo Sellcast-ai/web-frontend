@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "Couldn’t save your display name. Please try again.",
       "importPartial": "Imported {imported} of {requested} products - {failed, plural, one {# couldn’t be read} other {# couldn’t be read}}. You can add those by pasting each link.",
       "importOvershoot": "This import went beyond the {requested, plural, one {# product} other {# products}} you chose. {imported, plural, one {# product} other {# products}} imported - check My Products for anything you didn’t pick.",
+      "importIgnoredSelection": "This import didn’t stick to the {requested, plural, one {# product} other {# products}} you chose - {imported, plural, one {# product} other {# products}} imported and {failed, plural, one {# more couldn’t be read} other {# more couldn’t be read}}. Check My Products for anything you didn’t pick.",
       "importSucceeded": "Imported {count, plural, one {# product} other {# products}} from your store.",
       "importFailed": "The import didn’t finish. Please try again.",
       "storyboardSaved": "Storyboard saved.",

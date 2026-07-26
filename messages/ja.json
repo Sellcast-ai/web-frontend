@@ -31,6 +31,7 @@
       "saveDisplayNameFailed": "表示名を保存できませんでした。もう一度試してください。",
       "importPartial": "{requested} 件中 {imported} 件をインポートしました — {failed, plural, one {# 件は読み取れませんでした} other {# 件は読み取れませんでした}}。それらはリンクを貼り付けて追加できます。",
       "importOvershoot": "このインポートは選択した {requested, plural, one {# 件} other {# 件}} を超えて実行されました。{imported, plural, one {# 件} other {# 件}} をインポートしています。選んでいない商品がないか「マイプロダクト」で確認してください。",
+      "importIgnoredSelection": "このインポートは選択した {requested, plural, one {# 件} other {# 件}} だけにとどまりませんでした。{imported, plural, one {# 件} other {# 件}} をインポートし、さらに {failed, plural, one {# 件は読み取れませんでした} other {# 件は読み取れませんでした}}。選んでいない商品がないか「マイプロダクト」で確認してください。",
       "importSucceeded": "ストアから {count, plural, one {# 個の商品} other {# 個の商品}} をインポートしました。",
       "importFailed": "インポートが完了しませんでした。もう一度試してください。",
       "storyboardSaved": "ストーリーボードが保存されました。",

@@ -4,6 +4,15 @@ import type { ImportCandidate, ImportJob } from "@/lib/api/types";
  * everything arrives selected. That also means a candidate the store adds between
  * a save and a restore defaults to selected, same as a first visit.
  *
+ * Storage is one slot, deliberately:
+ * - it holds one pass, for one store;
+ * - incidental operations - leaving a card, finishing an import - never touch
+ *   another store's pass;
+ * - a deliberate selection gesture in a new store takes the slot.
+ * The requirement was that a reload mid-review doesn't cost the user their pass,
+ * which one slot covers. Keeping several stores alive at once means a map plus an
+ * eviction policy, and new surface here is where the bugs came from.
+ *
  * The pass is all that outlives the visit - no import handle, no pre-flight
  * marker. Both were tried and both only ever produced stale-restore bugs, while
  * the one thing they guarded (starting the same import twice) is already held
@@ -100,36 +109,46 @@ export type ImportOutcome =
   | { key: "importSucceeded"; values: { count: number } }
   | { key: "importPartial"; values: { imported: number; requested: number; failed: number } }
   | { key: "importOvershoot"; values: { imported: number; requested: number } }
+  | {
+      key: "importIgnoredSelection";
+      values: { imported: number; requested: number; failed: number };
+    }
   | { key: "importNone"; values: { requested: number } };
 
-/** How many products the import was asked for. The client knows this exactly:
- * it is the length of the `source_urls` it sent, so prefer it over
- * `products_found`, which counts the store's catalog, not the chosen subset.
- * The single source for both the in-flight progress bar and the finished toast,
- * so the two can never disagree. It is never raised to meet `products_upserted`:
- * an import that lands more than was chosen means the backend ignored
- * `source_urls`, and that has to stay visible rather than being clamped away. */
-export function importRequested(job: OutcomeCounts, requested?: number | null): number {
-  if (typeof requested === "number" && requested > 0) return requested;
-  return Math.max(job.products_found, job.products_upserted + job.products_failed);
+/** How many products the import was asked for: the length of the `source_urls`
+ * the client sent, never `products_found`, which counts the store's catalog
+ * rather than the chosen subset. Both the in-flight progress bar and the
+ * finished toast read the total through here, so the two can never quote
+ * different numbers - and neither of them raises it to meet `products_upserted`,
+ * because an import that lands more than was chosen means the backend ignored
+ * `source_urls` and that has to stay visible instead of being clamped away. */
+export function importRequested(requested: number): number {
+  return requested;
 }
 
 /** Which toast a finished import earns, from the counters rather than `status` —
  * a job can report `succeeded` while some of the selected products failed to
  * read, and calling that a clean success is a lie. */
-export function importOutcome(job: OutcomeCounts, requestedCount?: number | null): ImportOutcome {
+export function importOutcome(job: OutcomeCounts, requestedCount: number): ImportOutcome {
   const imported = job.products_upserted;
-  const requested = importRequested(job, requestedCount);
-  const failed = Math.max(requested - imported, 0);
+  const requested = importRequested(requestedCount);
   if (imported === 0) return { key: "importNone", values: { requested } };
-  // the run touched more products than were chosen - it either upserted past the
-  // subset or, having already landed all of it, failed reads the subset can't
-  // account for. Either way it ignored `source_urls`, and the user is the one who
-  // has to hear about it. A run that landed *less* is a plain shortfall: counting
-  // its failures here would announce extra products that don't exist.
-  if (imported > requested || (imported === requested && job.products_failed > 0)) {
-    return { key: "importOvershoot", values: { imported, requested } };
+  // reads the chosen subset can't account for: the run landed everything that was
+  // picked and still failed on top of that, so it went outside `source_urls`.
+  // Reporting it as a partial would put two counts that don't add up in one
+  // sentence; reporting it as a plain overshoot would drop the failures entirely.
+  if (imported >= requested && job.products_failed > 0) {
+    return {
+      key: "importIgnoredSelection",
+      values: { imported, requested, failed: job.products_failed },
+    };
   }
+  // more products landed than were chosen - same ignored `source_urls`, and the
+  // user is the one who has to go find what they didn't pick
+  if (imported > requested) return { key: "importOvershoot", values: { imported, requested } };
+  // a run that landed *less* is a plain shortfall: counting the job's own failures
+  // here would announce extra products that don't exist
+  const failed = requested - imported;
   if (failed > 0) return { key: "importPartial", values: { imported, requested, failed } };
   return { key: "importSucceeded", values: { count: imported } };
 }
