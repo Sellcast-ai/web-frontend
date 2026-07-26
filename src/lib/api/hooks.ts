@@ -116,13 +116,18 @@ export function useImportJob(id: string) {
 
 /** The store catalog the review step chooses from. A *query*, not a mutation, so
  * the walk is cached under the store URL: the list survives a remount and a
- * restored-from-storage selection can be re-hydrated on page load. */
+ * restored-from-storage selection can be re-hydrated on page load.
+ * Every automatic trigger is off: the walk runs a billed third-party parser, so
+ * it may only ever start from a click (entering the review step, or the explicit
+ * "Try again" button) - never from a retry, a reconnect, or a refocus. */
 export function useImportCandidates(target: { storeUrl: string; platform?: string } | null) {
   return useQuery({
     queryKey: qk.importCandidates(target?.storeUrl ?? ""),
     queryFn: () => api.listImportCandidates(target!.storeUrl, target?.platform),
     enabled: Boolean(target?.storeUrl),
     staleTime: 5 * 60_000,
+    retry: false,
+    refetchOnReconnect: false,
   });
 }
 

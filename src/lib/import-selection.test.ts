@@ -4,7 +4,9 @@ import {
   clearSelection,
   importOutcome,
   importRequested,
+  isStaleJobHandle,
   loadSelection,
+  resumeFor,
   saveSelection,
   selectedUrls,
 } from "./import-selection";
@@ -104,8 +106,14 @@ describe("importRequested", () => {
     expect(importRequested(counters, 0)).toBe(200);
   });
 
-  it("never reads below what already landed, so a progress bar can't exceed 1", () => {
-    expect(importRequested({ ...counters, products_upserted: 9 }, 5)).toBe(9);
+  it("stays at what the user chose even when the import overshoots it", () => {
+    // the backend ignoring `source_urls` has to stay visible: rewriting the
+    // total up to what landed would quietly read as a finished import
+    expect(importRequested({ ...counters, products_upserted: 9 }, 5)).toBe(5);
+    expect(importOutcome({ ...counters, products_upserted: 9 }, 5)).toEqual({
+      key: "importSucceeded",
+      values: { count: 9 },
+    });
   });
 
   it("gives the toast and the progress bar the same total", () => {
@@ -113,6 +121,62 @@ describe("importRequested", () => {
     const outcome = importOutcome(job, 5);
     expect(outcome.key).toBe("importPartial");
     expect(outcome.values).toMatchObject({ requested: importRequested(job, 5) });
+  });
+});
+
+describe("resumeFor", () => {
+  const saved = {
+    storeUrl: "https://shop.example",
+    domain: "shop.example",
+    deselected: ["/a"],
+    jobId: "job-1",
+    requested: 4,
+  };
+
+  it("carries the pass back into a review of the same store", () => {
+    expect(resumeFor(saved, "https://shop.example")).toEqual({
+      deselected: ["/a"],
+      domain: "shop.example",
+      keepJob: true,
+    });
+  });
+
+  it("starts a different store all-selected and without the old job", () => {
+    // a dead handle from store A must never be persisted under store B, where a
+    // reload would replay A's outcome
+    expect(resumeFor(saved, "https://other.example")).toEqual({
+      deselected: [],
+      keepJob: false,
+    });
+  });
+
+  it("has nothing to carry when nothing was stored", () => {
+    expect(resumeFor(null, "https://shop.example")).toEqual({
+      deselected: [],
+      keepJob: false,
+    });
+  });
+});
+
+describe("isStaleJobHandle", () => {
+  it("drops a restored handle for an import that already finished", () => {
+    for (const status of ["succeeded", "partial", "failed"] as const) {
+      expect(isStaleJobHandle(status, false)).toBe(true);
+    }
+  });
+
+  it("keeps a restored handle for an import that is still working", () => {
+    expect(isStaleJobHandle("queued", false)).toBe(false);
+    expect(isStaleJobHandle("running", false)).toBe(false);
+  });
+
+  it("keeps a completion this mount watched, so it still gets announced", () => {
+    expect(isStaleJobHandle("succeeded", true)).toBe(false);
+    expect(isStaleJobHandle("failed", true)).toBe(false);
+  });
+
+  it("is nothing to decide before the job has been fetched", () => {
+    expect(isStaleJobHandle(undefined, false)).toBe(false);
   });
 });
 
@@ -137,6 +201,7 @@ describe("selection persistence", () => {
     expect(loadSelection()).toEqual({
       storeUrl: "https://shop.example",
       platform: undefined,
+      domain: undefined,
       deselected: ["/a", "/b"],
       jobId: null,
       requested: null,
@@ -147,6 +212,7 @@ describe("selection persistence", () => {
     saveSelection({
       storeUrl: "https://shop.example",
       platform: "shopify",
+      domain: "shop.example",
       deselected: ["/a"],
       jobId: "job-1",
       requested: 4,
@@ -154,6 +220,7 @@ describe("selection persistence", () => {
     expect(loadSelection()).toEqual({
       storeUrl: "https://shop.example",
       platform: "shopify",
+      domain: "shop.example",
       deselected: ["/a"],
       jobId: "job-1",
       requested: 4,

@@ -1,4 +1,4 @@
-import type { ImportCandidate, ImportJob } from "@/lib/api/types";
+import type { ImportCandidate, ImportJob, ImportStatus } from "@/lib/api/types";
 
 /** Store-import review step: selection is stored as the *deselected* set, because
  * everything arrives selected. That also means a candidate the store adds between
@@ -12,6 +12,9 @@ export type StoredSelection = {
    * on its own. */
   storeUrl: string;
   platform?: string;
+  /** Display name for that store, so a resume offer names the domain rather
+   * than the raw URL the user happened to paste. */
+  domain?: string;
   deselected: string[];
   /** The import this selection was committed as, so a reload lands on the
    * running job's progress instead of an armed "Import N products" button. */
@@ -33,6 +36,7 @@ export function loadSelection(): StoredSelection | null {
     return {
       storeUrl: parsed.storeUrl,
       platform: typeof parsed.platform === "string" ? parsed.platform : undefined,
+      domain: typeof parsed.domain === "string" ? parsed.domain : undefined,
       deselected: parsed.deselected.filter((u) => typeof u === "string"),
       jobId: typeof parsed.jobId === "string" ? parsed.jobId : null,
       requested:
@@ -63,6 +67,25 @@ export function clearSelection(): void {
   }
 }
 
+/** What a review of `url` may carry over from a stored pass. Opt-outs and the
+ * display domain belong to the store they were made against, and an import
+ * handle never follows the user to a different store - restoring one would
+ * replay the old store's outcome under the new store's review. */
+export function resumeFor(
+  saved: StoredSelection | null,
+  url: string,
+): { deselected: string[]; domain?: string; keepJob: boolean } {
+  if (!saved || saved.storeUrl !== url) return { deselected: [], keepJob: false };
+  return { deselected: saved.deselected, domain: saved.domain, keepJob: true };
+}
+
+/** A job handle worth nothing to this mount: already terminal, and nobody here
+ * watched it run. Its outcome belongs to the visit that started it, so replaying
+ * the toast (or the redirect) at whoever opens the page next is just noise. */
+export function isStaleJobHandle(status: ImportStatus | undefined, watched: boolean): boolean {
+  return !!status && !watched && status !== "queued" && status !== "running";
+}
+
 /** The chosen subset, in catalog order. Filtering the live candidate list means a
  * stale persisted key can never inflate or shrink the count. */
 export function selectedUrls(candidates: ImportCandidate[], deselected: Set<string>): string[] {
@@ -83,11 +106,11 @@ export type ImportOutcome =
  * it is the length of the `source_urls` it sent, so prefer it over
  * `products_found`, which counts the store's catalog, not the chosen subset.
  * The single source for both the in-flight progress bar and the finished toast,
- * so the two can never disagree. */
+ * so the two can never disagree. It is never raised to meet `products_upserted`:
+ * an import that lands more than was chosen means the backend ignored
+ * `source_urls`, and that has to stay visible rather than being clamped away. */
 export function importRequested(job: OutcomeCounts, requested?: number | null): number {
-  if (typeof requested === "number" && requested > 0) {
-    return Math.max(requested, job.products_upserted);
-  }
+  if (typeof requested === "number" && requested > 0) return requested;
   return Math.max(job.products_found, job.products_upserted + job.products_failed);
 }
 
