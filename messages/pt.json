@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "Ver roteiro completo",
         "title": "Roteiro completo",
-        "caption": "Legenda:"
+        "caption": "Texto na tela:"
       },
       "shotLabels": {
         "hook": "Gancho",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "Nenhuma linha falada para esta foto",
-          "onScreenText": "Sem legenda",
+          "onScreenText": "Sem texto na tela",
           "nudgeNote": "Descreva com suas próprias palavras",
           "technique": "Deixe Lumi escolher a foto"
         },

@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "スクリプト全体を表示",
         "title": "完全なスクリプト",
-        "caption": "キャプション:"
+        "caption": "画面上のテキスト:"
       },
       "shotLabels": {
         "hook": "フック",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "このショットにはセリフはありません",
-          "onScreenText": "キャプションなし",
+          "onScreenText": "画面上のテキストなし",
           "nudgeNote": "自分の言葉で説明してください",
           "technique": "Lumi にショットを選んでもらいましょう"
         },

@@ -245,7 +245,9 @@ export default async function HomePage() {
           <FadeIn delay={0.24}>
             <MediaCard>
               <div className="flex flex-wrap gap-1.5">
-                {VIDEO_LANGUAGES.map(({ label: lang }) => (
+                {/* `why.reach.body` hardcodes "eight" — disabling a language
+                    means editing that string in all 9 catalogs too. */}
+                {VIDEO_LANGUAGES.filter((l) => l.enabled).map(({ label: lang }) => (
                   <span
                     key={lang}
                     className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[10px] font-medium text-white/70"

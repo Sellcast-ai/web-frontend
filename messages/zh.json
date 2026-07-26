@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "查看完整脚本",
         "title": "完整剧本",
-        "caption": "说明文字："
+        "caption": "屏幕上的文字："
       },
       "shotLabels": {
         "hook": "钩子",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "这张照片没有台词",
-          "onScreenText": "无标题",
+          "onScreenText": "无屏幕文字",
           "nudgeNote": "用你自己的话描述一下",
           "technique": "让Lumi选择镜头"
         },

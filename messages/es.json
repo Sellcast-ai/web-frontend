@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "Ver guión completo",
         "title": "guión completo",
-        "caption": "Título:"
+        "caption": "Texto en pantalla:"
       },
       "shotLabels": {
         "hook": "Gancho",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "No hay línea hablada para esta toma.",
-          "onScreenText": "Sin título",
+          "onScreenText": "Sin texto en pantalla",
           "nudgeNote": "Descríbelo con tus propias palabras.",
           "technique": "Deja que Lumi elija la toma."
         },

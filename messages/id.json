@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "Lihat skrip lengkap",
         "title": "Skrip lengkap",
-        "caption": "Keterangan:"
+        "caption": "Teks di layar:"
       },
       "shotLabels": {
         "hook": "Kait",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "Tidak ada kalimat yang diucapkan untuk pengambilan gambar ini",
-          "onScreenText": "Tidak ada keterangan",
+          "onScreenText": "Tidak ada teks di layar",
           "nudgeNote": "Jelaskan dengan kata-kata Anda sendiri",
           "technique": "Biarkan Lumi memilih bidikannya"
         },

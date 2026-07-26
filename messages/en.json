@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "View full script",
         "title": "Full script",
-        "caption": "Caption:"
+        "caption": "On-screen text:"
       },
       "shotLabels": {
         "hook": "Hook",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "No spoken line for this shot",
-          "onScreenText": "No caption",
+          "onScreenText": "No on-screen text",
           "nudgeNote": "Describe it in your own words",
           "technique": "Let Lumi choose the shot"
         },

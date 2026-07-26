@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "Xem toàn bộ kịch bản",
         "title": "Kịch bản đầy đủ",
-        "caption": "Chú thích:"
+        "caption": "Văn bản trên màn hình:"
       },
       "shotLabels": {
         "hook": "Móc",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "Không có lời thoại nào cho ảnh này",
-          "onScreenText": "Không có chú thích",
+          "onScreenText": "Không có văn bản trên màn hình",
           "nudgeNote": "Hãy mô tả nó bằng lời của bạn",
           "technique": "Hãy để Lumi chọn cảnh quay"
         },

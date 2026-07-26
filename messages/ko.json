@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "전체 스크립트 보기",
         "title": "전체 스크립트",
-        "caption": "캡션:"
+        "caption": "화면 텍스트:"
       },
       "shotLabels": {
         "hook": "후크",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "이 장면에는 음성 대사가 없습니다.",
-          "onScreenText": "캡션 없음",
+          "onScreenText": "화면 텍스트 없음",
           "nudgeNote": "자신의 말로 설명해보세요.",
           "technique": "Lumi가 샷을 선택하게 하세요"
         },
