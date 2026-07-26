@@ -1,9 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
-import { ApiError } from "./client";
 import {
   importPollInterval,
-  isJobMissing,
   patchProductLists,
   qk,
   snapshotProductQueries,
@@ -70,14 +68,5 @@ describe("optimistic like flip + rollback", () => {
     const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
     expect(list[0].is_liked).toBe(true);
     expect(qc.getQueryData(qk.product("p1"))).toBeUndefined();
-  });
-});
-
-describe("isJobMissing", () => {
-  it("only calls a 404 definitive, so a blip never drops a live import handle", () => {
-    expect(isJobMissing(new ApiError(404, "Import job not found"))).toBe(true);
-    expect(isJobMissing(new ApiError(500, "boom"))).toBe(false);
-    expect(isJobMissing(new TypeError("Failed to fetch"))).toBe(false);
-    expect(isJobMissing(null)).toBe(false);
   });
 });

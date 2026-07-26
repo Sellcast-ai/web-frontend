@@ -1,53 +1,48 @@
-import type { ImportCandidate, ImportJob, ImportStatus } from "@/lib/api/types";
+import type { ImportCandidate, ImportJob } from "@/lib/api/types";
 
 /** Store-import review step: selection is stored as the *deselected* set, because
  * everything arrives selected. That also means a candidate the store adds between
  * a save and a restore defaults to selected, same as a first visit.
  *
- * This state outlives the visit *and the session*: sessionStorage survives a
- * logout in the same tab, so signing out clears it (see the logout handlers).
- * Anything added here has to answer three questions - what does it do on a
- * reload, on a logout, and when the job it names never resolves. */
+ * The pass is all that outlives the visit - no import handle, no pre-flight
+ * marker. Both were tried and both only ever produced stale-restore bugs, while
+ * the one thing they guarded (starting the same import twice) is already held
+ * server-side: `POST products/import` hands back the caller's existing active
+ * job instead of enqueueing a second. Don't re-add either.
+ *
+ * sessionStorage outlives a logout in the same tab, so the pass is keyed by the
+ * user it belongs to and discarded when the reader is someone else. That read-
+ * time guard is the single mechanism - it covers logout, an expired session, and
+ * every other exit, so no exit path needs its own `clearSelection()`. */
 
 const STORAGE_KEY = "lumi.import-selection";
 
 export type StoredSelection = {
-  /** Only ever used to match the opt-outs back to the store they belong to, and
-   * to offer a one-click resume - never to re-enter the (billed) catalog walk
-   * on its own. */
+  /** Whose pass this is. A different reader gets nothing back (see
+   * `loadSelection`), which is what keeps a shared tab from offering account B
+   * a resume of account A's store review. */
+  userId: string;
+  /** Only ever used to match the opt-outs back to the store they belong to -
+   * never to re-enter the (billed) catalog walk on its own. */
   storeUrl: string;
-  platform?: string;
-  /** Display name for that store, so a resume offer names the domain rather
-   * than the raw URL the user happened to paste. */
-  domain?: string;
   deselected: string[];
-  /** The import this selection was committed as, so a reload lands on the
-   * running job's progress instead of an armed "Import N products" button. */
-  jobId?: string | null;
-  /** How many products were actually sent as `source_urls`. */
-  requested?: number | null;
 };
-
-const finiteCount = (value: unknown): number | null =>
-  typeof value === "number" && Number.isFinite(value) ? value : null;
 
 /** sessionStorage so a reload doesn't throw away a long deselection pass.
  * Every access is guarded: no `window` on the server, and Safari private mode
- * throws on write. */
-export function loadSelection(): StoredSelection | null {
-  if (typeof window === "undefined") return null;
+ * throws on write. Read it at the point of use, where the current user is known. */
+export function loadSelection(userId: string | undefined): StoredSelection | null {
+  if (typeof window === "undefined" || !userId) return null;
   try {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as StoredSelection;
     if (typeof parsed?.storeUrl !== "string" || !Array.isArray(parsed.deselected)) return null;
+    if (parsed.userId !== userId) return null;
     return {
+      userId,
       storeUrl: parsed.storeUrl,
-      platform: typeof parsed.platform === "string" ? parsed.platform : undefined,
-      domain: typeof parsed.domain === "string" ? parsed.domain : undefined,
       deselected: parsed.deselected.filter((u) => typeof u === "string"),
-      jobId: typeof parsed.jobId === "string" ? parsed.jobId : null,
-      requested: finiteCount(parsed.requested),
     };
   } catch {
     return null;
@@ -73,17 +68,9 @@ export function clearSelection(): void {
 }
 
 /** What a review of `url` may carry over from a stored pass: the opt-outs, and
- * only for the store they were made against. Never an import handle - a review
- * is only ever entered with no job to report on. */
+ * only for the store they were made against. */
 export function resumeFor(saved: StoredSelection | null, url: string): string[] {
   return saved && saved.storeUrl === url ? saved.deselected : [];
-}
-
-/** A job handle worth nothing to this mount: already terminal, and nobody here
- * watched it run. Its outcome belongs to the visit that started it, so replaying
- * the toast (or the redirect) at whoever opens the page next is just noise. */
-export function isStaleJobHandle(status: ImportStatus | undefined, watched: boolean): boolean {
-  return !!status && !watched && status !== "queued" && status !== "running";
 }
 
 /** The chosen subset, in catalog order. Filtering the live candidate list means a
@@ -121,14 +108,14 @@ export function importRequested(job: OutcomeCounts, requested?: number | null): 
 export function importOutcome(job: OutcomeCounts, requestedCount?: number | null): ImportOutcome {
   const imported = job.products_upserted;
   const requested = importRequested(job, requestedCount);
-  // the backend's own count is authoritative when it is the larger one: a run
-  // that upserted everything asked for while failing a dozen other reads is not
-  // a clean success
-  const failed = Math.max(requested - imported, job.products_failed, 0);
+  const failed = Math.max(requested - imported, 0);
   if (imported === 0) return { key: "importNone", values: { requested } };
-  // more landed than was chosen: the import ignored `source_urls`, and the user
-  // is the one who has to hear about the products they didn't pick
-  if (imported > requested) return { key: "importOvershoot", values: { imported, requested } };
+  // the run touched more products than were chosen - it either upserted past the
+  // subset or failed reads the subset can't account for. Either way it ignored
+  // `source_urls`, and the user is the one who has to hear about it.
+  if (imported + job.products_failed > requested) {
+    return { key: "importOvershoot", values: { imported, requested } };
+  }
   if (failed > 0) return { key: "importPartial", values: { imported, requested, failed } };
   return { key: "importSucceeded", values: { count: imported } };
 }

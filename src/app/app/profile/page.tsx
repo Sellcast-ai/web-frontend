@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
-import { clearSelection } from "@/lib/import-selection";
 import { toast } from "@/lib/toast";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -56,9 +55,6 @@ export default function ProfilePage() {
   async function logout() {
     await api.logout().catch(() => undefined);
     qc.clear();
-    // sessionStorage outlives the session: without this the next account in this
-    // tab is offered a resume of someone else's store review
-    clearSelection();
     router.replace("/login");
   }
 

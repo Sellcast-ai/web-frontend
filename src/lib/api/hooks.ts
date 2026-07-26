@@ -6,7 +6,7 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { api, ApiError } from "./client";
+import { api } from "./client";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -104,24 +104,14 @@ export function importPollInterval(status: ImportStatus | undefined): number | f
   return status && IMPORT_ACTIVE.includes(status) ? 2500 : false;
 }
 
-/** Polls every 2.5s while the store import is queued/running (report §4.2).
- * A cheap read, so it rides out a blip rather than declaring a running import
- * lost after the global single retry: only a 404 ("Import job not found", i.e. a
- * row that is gone or belongs to someone else) is a definitive answer, and a
- * definitive answer is never worth retrying. */
+/** Polls every 2.5s while the store import is queued/running (report §4.2). */
 export function useImportJob(id: string) {
   return useQuery({
     queryKey: qk.import(id),
     queryFn: () => api.getImport(id),
     enabled: Boolean(id),
     refetchInterval: (query) => importPollInterval(query.state.data?.status),
-    retry: (count, error) => !isJobMissing(error) && count < 4,
   });
-}
-
-/** The one error that means the handle itself is dead rather than unreachable. */
-export function isJobMissing(error: unknown): boolean {
-  return error instanceof ApiError && error.status === 404;
 }
 
 /** The store catalog the review step chooses from. A *query*, not a mutation, so

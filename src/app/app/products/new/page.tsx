@@ -23,7 +23,7 @@ import {
   useImportCandidates,
   useStartImport,
   useImportJob,
-  isJobMissing,
+  useCurrentUser,
   qk,
 } from "@/lib/api/hooks";
 import type { ImportCandidate, ProductDraft, SourcePlatform } from "@/lib/api/types";
@@ -33,7 +33,6 @@ import {
   clearSelection,
   importOutcome,
   importRequested,
-  isStaleJobHandle,
   loadSelection,
   resumeFor,
   saveSelection,
@@ -595,81 +594,36 @@ function StoreImport() {
   const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
   const done = useRef(false);
+  const userId = useCurrentUser().data?.id;
 
-  /* A reload mid-review shouldn't cost the user their deselection pass, so the
-   * opt-outs (and any import they were already committed as) seed from
-   * sessionStorage. Read once, lazily: the restored value changes no markup
-   * until a query resolves, so it can't desync from the server-rendered HTML.
-   * What it deliberately does *not* restore is the review target: re-entering
-   * the catalog walk costs real money at the parser, so it only ever starts
-   * from a click (`reviewStore`), never from a mount. */
-  const [saved, setSaved] = useState(loadSelection);
   const [review, setReview] = useState<
     { storeUrl: string; platform?: string; domain?: string } | null
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
-  const [deselected, setDeselected] = useState<Set<string>>(
-    () => new Set(saved?.deselected ?? []),
-  );
-  const [jobId, setJobId] = useState<string | null>(() => saved?.jobId ?? null);
+  const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
+  const [jobId, setJobId] = useState<string | null>(null);
   /** Exactly how many `source_urls` the running import carries. */
-  const [requested, setRequested] = useState<number | null>(() => saved?.requested ?? null);
-  /** The import this mount started, or saw still working. Announcing a completion
-   * it never witnessed would re-toast - and re-redirect - on every later visit to
-   * this page in the same tab. */
-  const [watchedJob, setWatchedJob] = useState<string | null>(null);
-  const { data: job, error: jobError, refetch: refetchJob } = useImportJob(jobId ?? "");
-  // a restored job that is still running becomes ours to report on, the same as
-  // one started here (React's adjust-state-during-render, not an effect)
-  if (job && (job.status === "queued" || job.status === "running") && watchedJob !== job.job_id) {
-    setWatchedJob(job.job_id);
-  }
+  const [requested, setRequested] = useState<number | null>(null);
+  const { data: job } = useImportJob(jobId ?? "");
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
 
-  const ownedStoreUrl = review?.storeUrl ?? saved?.storeUrl ?? null;
-  const ownedPlatform = review?.platform ?? saved?.platform;
-  const ownedDomain = review?.domain ?? saved?.domain;
-
-  /** A handle with nothing left to report on: an import that already finished on
-   * an earlier visit, or one the backend says does not exist - the row is gone,
-   * or it belongs to whoever used the tab before. Without the second case a dead
-   * handle renders neither the progress card nor the resume offer, and the saved
-   * pass is stranded behind a bare paste form. Only a 404 counts: a 500 or a
-   * dropped connection says nothing about whether the import is still running,
-   * and throwing the handle away over one would cost a billed walk to get back
-   * (see `jobUnreadable`). */
-  const jobMissing = isJobMissing(jobError) && !job;
-  const staleJob = isStaleJobHandle(job?.status, watchedJob === job?.job_id) || jobMissing;
-
-  /** The handle is real but we can't read it right now. Keep it and let the user
-   * retry - the import is very likely still running. */
-  const jobUnreadable = !!jobId && !job && !!jobError && !jobMissing;
-
+  /* A reload mid-review shouldn't cost the user their deselection pass, so the
+   * opt-outs are persisted against the store (and the user) they were made for.
+   * Only the pass: re-entering the catalog walk costs real money at the parser,
+   * so a review only ever starts from a click (`reviewStore`), never a mount. */
+  const reviewedStore = review?.storeUrl;
   useEffect(() => {
-    if (!ownedStoreUrl) return;
-    saveSelection({
-      storeUrl: ownedStoreUrl,
-      platform: ownedPlatform,
-      domain: ownedDomain,
-      deselected: [...deselected],
-      // forget a handle nobody here watched: keeping it only buys another
-      // fetch, and another decision to ignore it, on every later visit
-      jobId: staleJob ? null : jobId,
-      requested: staleJob ? null : requested,
-    });
-  }, [ownedStoreUrl, ownedPlatform, ownedDomain, deselected, jobId, requested, staleJob]);
+    if (!reviewedStore || !userId) return;
+    saveSelection({ userId, storeUrl: reviewedStore, deselected: [...deselected] });
+  }, [userId, reviewedStore, deselected]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
     if (!job || done.current) return;
     if (job.status === "queued" || job.status === "running") return;
     done.current = true;
-    // a terminal job this mount never watched run: let it go without a word,
-    // rather than replaying an old outcome at someone who just opened the page
-    // to add a product
-    if (watchedJob !== job.job_id) return;
     if (job.status === "failed") {
       toast.error(job.error ?? tt("importFailed"));
       return;
@@ -683,12 +637,12 @@ function StoreImport() {
       return;
     }
     clearSelection();
-    // an import that landed more than was chosen isn't a success to celebrate:
+    // an import that went past the chosen subset isn't a success to celebrate:
     // the user still has to go find what they didn't pick
     const announce = outcome.key === "importOvershoot" ? toast.info : toast.success;
     announce(tt(outcome.key, outcome.values));
     router.push("/app/products");
-  }, [job, watchedJob, requested, qc, router, tt]);
+  }, [job, requested, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -703,29 +657,24 @@ function StoreImport() {
   }, []);
 
   /** The only way into the catalog walk, so it can never fire without a click.
-   * Opt-outs carry over only for the store they were made against; a different
-   * store starts all-selected. A review is never entered with a job in hand -
-   * anything still running holds the progress card, so whatever handle is left
-   * here is dead and would only replay an old outcome. */
+   * The stored pass is read here rather than at mount: by the time there is a
+   * click the current user is known, so a pass belonging to whoever used the tab
+   * before is discarded instead of restored. Opt-outs carry over only for the
+   * store they were made against; a different store starts all-selected. */
   function reviewStore(url: string, platform?: string, domain?: string) {
-    setDeselected(new Set(resumeFor(saved, url)));
+    setDeselected(new Set(resumeFor(loadSelection(userId), url)));
     setJobId(null);
     setRequested(null);
-    setWatchedJob(null);
     done.current = false;
     setReview({ storeUrl: url, platform, domain });
   }
 
   function leaveReview() {
     clearSelection();
-    setSaved(null);
     setReview(null);
     setDeselected(new Set());
-    // only reachable once the job has nothing left to show (`jobFellThrough`),
-    // so drop it rather than carrying a dead handle into the next store
     setJobId(null);
     setRequested(null);
-    setWatchedJob(null);
     done.current = false;
     preview.reset();
   }
@@ -739,9 +688,6 @@ function StoreImport() {
       {
         onSuccess: (created) => {
           done.current = false;
-          // this mount owns the import from here, even if it finishes before
-          // the first poll ever catches it running
-          setWatchedJob(created.job_id);
           setRequested(sourceUrls.length);
           setJobId(created.job_id);
         },
@@ -758,37 +704,8 @@ function StoreImport() {
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
 
-  // step 4 — the import is very likely still running, we just can't read it:
-  // hold the handle and offer an explicit retry rather than dropping a live job
-  if (jobUnreadable) {
-    return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
-        <p className="flex items-center gap-2 font-display font-semibold text-ink">
-          <Store className="h-4 w-4 shrink-0 text-brand-600" />
-          {t("importingTitle")}
-        </p>
-        <p className="mt-2 flex items-start gap-2 text-sm text-ink">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-          {t("importUnreadable")}
-        </p>
-        <div className="mt-4 flex items-center gap-3">
-          <Button size="lg" onClick={() => refetchJob()}>
-            {t("retryReview")}
-          </Button>
-          <button
-            type="button"
-            className="text-sm font-semibold text-muted-foreground hover:text-ink"
-            onClick={leaveReview}
-          >
-            {t("discardReview")}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   // step 4 — an import is running: live progress against the requested subset
-  if (jobId && job && !jobFellThrough && !staleJob) {
+  if (jobId && job && !jobFellThrough) {
     const active = job.status === "queued" || job.status === "running";
     // same helper the finished-import toast uses, so the bar and the toast can
     // never quote different totals — an import that overshoots the chosen subset
@@ -818,7 +735,7 @@ function StoreImport() {
     );
   }
 
-  // step 3 — walking the catalog for review (also the reload-restore path)
+  // step 3 — walking the catalog for review
   if (review && !candidateData) {
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
@@ -826,7 +743,11 @@ function StoreImport() {
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain ?? review.storeUrl })}
         </p>
-        {candidates.isError ? (
+        {/* `isError` stays true for the whole of a retry (only `fetchStatus`
+          * moves), so the card has to read the fetch itself — otherwise it sits
+          * unchanged with an armed button for up to the BFF's 180s and every
+          * impatient click buys another billed walk. */}
+        {candidates.isError && !candidates.isFetching ? (
           <>
             <p className="mt-2 flex items-start gap-2 text-sm text-ink">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
@@ -1040,31 +961,6 @@ function StoreImport() {
         <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
           <p className="text-ink">{(preview.error as Error)?.message}</p>
-        </div>
-      )}
-      {/* An unfinished deselection pass is one click from where it was - the
-        * click is the point, since the walk behind it is billed. */}
-      {saved && (!jobId || jobFellThrough || staleJob) && (
-        <div className="mt-3 rounded-xl border border-border bg-card p-3 text-sm">
-          <div className="flex flex-wrap items-center gap-3">
-            <p className="text-muted-foreground">
-              {t("resumeReview", { domain: saved.domain ?? saved.storeUrl })}
-            </p>
-            <button
-              type="button"
-              className="font-semibold text-brand-700"
-              onClick={() => reviewStore(saved.storeUrl, saved.platform, saved.domain)}
-            >
-              {t("resumeReviewAction")}
-            </button>
-            <button
-              type="button"
-              className="font-semibold text-muted-foreground hover:text-ink"
-              onClick={leaveReview}
-            >
-              {t("discardReview")}
-            </button>
-          </div>
         </div>
       )}
     </>

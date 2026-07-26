@@ -4,7 +4,6 @@ import {
   clearSelection,
   importOutcome,
   importRequested,
-  isStaleJobHandle,
   loadSelection,
   resumeFor,
   saveSelection,
@@ -81,7 +80,7 @@ describe("importOutcome", () => {
     ).toEqual({ key: "importNone", values: { requested: 5 } });
   });
 
-  it("says so when more landed than was chosen, instead of a clean success", () => {
+  it("says so when the run went past the chosen subset, instead of a clean success", () => {
     // the backend ignoring `source_urls`: products the user deselected are now
     // in their account, and a green "Imported 9 products" would hide that
     expect(
@@ -108,12 +107,19 @@ describe("importOutcome", () => {
     ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
   });
 
-  it("reports the backend's own failures even when every chosen product landed", () => {
-    // 5 chosen, 5 upserted, 12 read failures: the import didn't honour the
-    // selection, and a clean green toast would hide that
+  it("calls read failures the subset can't explain an overshoot, not a partial", () => {
+    // 5 chosen, 5 upserted, 12 read failures: the import read 17 products, so it
+    // didn't honour the selection. Reporting "5 of 5 - 12 couldn't be read"
+    // would be a partial whose own numbers contradict each other.
     expect(
       importOutcome({ products_found: 200, products_upserted: 5, products_failed: 12 }, 5),
-    ).toEqual({ key: "importPartial", values: { imported: 5, requested: 5, failed: 12 } });
+    ).toEqual({ key: "importOvershoot", values: { imported: 5, requested: 5 } });
+  });
+
+  it("keeps a partial a partial when the failures fit inside the subset", () => {
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 3, products_failed: 2 }, 5),
+    ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
   });
 });
 
@@ -146,16 +152,12 @@ describe("importRequested", () => {
 
 describe("resumeFor", () => {
   const saved = {
+    userId: "u1",
     storeUrl: "https://shop.example",
-    domain: "shop.example",
     deselected: ["/a"],
-    jobId: "job-1",
-    requested: 4,
   };
 
   it("carries the pass back into a review of the same store", () => {
-    // never the job: a review is entered with nothing to report on, so a dead
-    // handle can't be persisted under the store the user is reviewing next
     expect(resumeFor(saved, "https://shop.example")).toEqual(["/a"]);
   });
 
@@ -165,28 +167,6 @@ describe("resumeFor", () => {
 
   it("has nothing to carry when nothing was stored", () => {
     expect(resumeFor(null, "https://shop.example")).toEqual([]);
-  });
-});
-
-describe("isStaleJobHandle", () => {
-  it("drops a restored handle for an import that already finished", () => {
-    for (const status of ["succeeded", "partial", "failed"] as const) {
-      expect(isStaleJobHandle(status, false)).toBe(true);
-    }
-  });
-
-  it("keeps a restored handle for an import that is still working", () => {
-    expect(isStaleJobHandle("queued", false)).toBe(false);
-    expect(isStaleJobHandle("running", false)).toBe(false);
-  });
-
-  it("keeps a completion this mount watched, so it still gets announced", () => {
-    expect(isStaleJobHandle("succeeded", true)).toBe(false);
-    expect(isStaleJobHandle("failed", true)).toBe(false);
-  });
-
-  it("is nothing to decide before the job has been fetched", () => {
-    expect(isStaleJobHandle(undefined, false)).toBe(false);
   });
 });
 
@@ -206,58 +186,41 @@ describe("selection persistence", () => {
 
   beforeEach(() => clearSelection());
 
+  const pass = {
+    userId: "u1",
+    storeUrl: "https://shop.example",
+    deselected: ["/a", "/b"],
+  };
+
   it("round-trips a deselection pass", () => {
-    saveSelection({ storeUrl: "https://shop.example", deselected: ["/a", "/b"] });
-    expect(loadSelection()).toEqual({
-      storeUrl: "https://shop.example",
-      platform: undefined,
-      domain: undefined,
-      deselected: ["/a", "/b"],
-      jobId: null,
-      requested: null,
-    });
+    saveSelection(pass);
+    expect(loadSelection("u1")).toEqual(pass);
   });
 
-  it("round-trips the running import so a reload can't buy it twice", () => {
-    saveSelection({
-      storeUrl: "https://shop.example",
-      platform: "shopify",
-      domain: "shop.example",
-      deselected: ["/a"],
-      jobId: "job-1",
-      requested: 4,
-    });
-    expect(loadSelection()).toEqual({
-      storeUrl: "https://shop.example",
-      platform: "shopify",
-      domain: "shop.example",
-      deselected: ["/a"],
-      jobId: "job-1",
-      requested: 4,
-    });
+  it("hides a pass from the next account in the same tab", () => {
+    // sessionStorage outlives a logout, so the read is what has to be guarded -
+    // otherwise user B is offered a resume of user A's store review
+    saveSelection(pass);
+    expect(loadSelection("u2")).toBeNull();
+    expect(loadSelection(undefined)).toBeNull();
   });
 
-  it("drops a malformed job handle rather than restoring a bogus one", () => {
+  it("discards a pass stored without an owner", () => {
     window.sessionStorage.setItem(
       "lumi.import-selection",
-      JSON.stringify({
-        storeUrl: "https://shop.example",
-        deselected: [],
-        jobId: 7,
-        requested: "many",
-      }),
+      JSON.stringify({ storeUrl: "https://shop.example", deselected: ["/a"] }),
     );
-    expect(loadSelection()).toMatchObject({ jobId: null, requested: null });
+    expect(loadSelection("u1")).toBeNull();
   });
 
   it("returns null when nothing is stored", () => {
-    expect(loadSelection()).toBeNull();
+    expect(loadSelection("u1")).toBeNull();
   });
 
   it("returns null for a malformed payload instead of throwing", () => {
     window.sessionStorage.setItem("lumi.import-selection", "{not json");
-    expect(loadSelection()).toBeNull();
+    expect(loadSelection("u1")).toBeNull();
     window.sessionStorage.setItem("lumi.import-selection", JSON.stringify({ storeUrl: 1 }));
-    expect(loadSelection()).toBeNull();
+    expect(loadSelection("u1")).toBeNull();
   });
 });
