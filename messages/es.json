@@ -884,7 +884,10 @@
       "heroPrimary": "Crea tu primer video",
       "heroSecondary": "Ver cómo funciona",
       "heroFinePrint": "Primer video gratis · Sin tarjeta · 9:16 listo para publicar",
-      "heroStageNote": "Simulación del producto: el clip del teléfono es material de archivo con licencia, no una salida de Lumi.",
+      "sound": {
+        "unmute": "Activar el sonido del vídeo de muestra",
+        "mute": "Silenciar el vídeo de muestra"
+      },
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -912,7 +915,6 @@
         "approved": "Aprobado",
         "rendering": "Renderizando con Seedance 2.0",
         "rendered": "Renderizado",
-        "duration": "0:09",
         "caption": "Agotado tres veces este mes. Por esto.",
         "shopNow": "Comprar ahora"
       },
@@ -979,7 +981,6 @@
       "storyFact2": "1 crédito = 1 segundo de video",
       "wallTitle": "Cada categoría, <highlight>cada mercado</highlight>",
       "wallSubtitle": "Cada vídeo de Lumi se entrega en 9:16 con subtítulos incrustados, con guion y voz adaptados a cada mercado objetivo.",
-      "wallDisclaimer": "Ejemplos por categoría mostrados con material de archivo con licencia; no son salidas de Lumi.",
       "wallAudience": "Hecho para vendedores, creadores, marcas y agencias — cualquiera que venda con video.",
       "wall": {
         "beauty": {

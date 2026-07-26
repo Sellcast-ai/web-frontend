@@ -884,7 +884,10 @@
       "heroPrimary": "첫 영상 만들기",
       "heroSecondary": "작동 방식 보기",
       "heroFinePrint": "첫 영상 무료 · 카드 불필요 · 바로 게시 가능한 9:16",
-      "heroStageNote": "제품 시뮬레이션 - 화면 속 영상은 라이선스를 받은 스톡 영상이며 Lumi가 생성한 결과물이 아닙니다.",
+      "sound": {
+        "unmute": "샘플 영상 소리 켜기",
+        "mute": "샘플 영상 음소거"
+      },
       "pipeline": {
         "stageLabel": "Lumi Studio",
         "chipRatio": "9:16",
@@ -912,7 +915,6 @@
         "approved": "승인됨",
         "rendering": "Seedance 2.0으로 렌더링 중",
         "rendered": "렌더링 완료",
-        "duration": "0:09",
         "caption": "이번 달에만 세 번 재입고. 이게 그 이유.",
         "shopNow": "지금 구매"
       },
@@ -979,7 +981,6 @@
       "storyFact2": "1 크레딧 = 영상 1초",
       "wallTitle": "모든 카테고리, <highlight>모든 시장</highlight>",
       "wallSubtitle": "모든 Lumi 영상은 자막을 입힌 9:16으로 제공되며, 대본과 보이스는 각 목표 시장에 맞춰 조정됩니다.",
-      "wallDisclaimer": "카테고리 예시는 라이선스를 받은 스톡 영상이며 Lumi가 생성한 결과물이 아닙니다.",
       "wallAudience": "셀러, 크리에이터, 브랜드, 에이전시 — 영상으로 판매하는 모두를 위해.",
       "wall": {
         "beauty": {

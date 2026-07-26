@@ -10,7 +10,6 @@ import {
   ListChecks,
   MousePointer2,
   Package,
-  Play,
   Smartphone,
   Sparkles,
   Timer,
@@ -118,9 +117,6 @@ export default async function HomePage() {
 
           <div className="animate-rise mx-auto mt-16 max-w-4xl [animation-delay:150ms]">
             <PipelineHero />
-            <p className="mx-auto mt-4 max-w-md text-balance text-center text-xs leading-relaxed text-muted-foreground">
-              {t("heroStageNote")}
-            </p>
           </div>
         </div>
 
@@ -347,9 +343,6 @@ export default async function HomePage() {
           <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground">
             {t("wallSubtitle")}
           </p>
-          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
-            {t("wallDisclaimer")}
-          </p>
         </FadeIn>
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
@@ -374,9 +367,6 @@ export default async function HomePage() {
                       style={{ background: tile.art }}
                     >
                       <div className="absolute -left-12 top-1/3 h-64 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
-                      <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
-                        <Play className="ml-0.5 h-4 w-4 fill-white text-white" />
-                      </span>
                     </div>
                   )}
                   <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-3">
