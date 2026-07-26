@@ -30,6 +30,7 @@
       "retryJobFailed": "Tidak dapat mencoba kembali pekerjaan tersebut. Silakan coba lagi.",
       "saveDisplayNameFailed": "Tidak dapat menyimpan nama tampilan Anda. Silakan coba lagi.",
       "importPartial": "Mengimpor {imported} dari {requested} produk - {failed, plural, one {# tidak bisa dibaca} other {# tidak bisa dibaca}}. Anda bisa menambahkannya dengan menempelkan tiap tautan.",
+      "importOvershoot": "Mengimpor {imported} produk dari toko Anda - lebih banyak dari {requested, plural, one {# yang Anda pilih} other {# yang Anda pilih}}. Periksa Produk Saya untuk melihat yang tidak Anda pilih.",
       "importSucceeded": "Mengimpor {count, plural, one {# produk} other {# produk}} dari toko Anda.",
       "importFailed": "Impor belum selesai. Silakan coba lagi.",
       "storyboardSaved": "Papan cerita disimpan.",

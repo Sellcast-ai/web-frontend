@@ -30,6 +30,7 @@
       "retryJobFailed": "Couldn’t retry the job. Please try again.",
       "saveDisplayNameFailed": "Couldn’t save your display name. Please try again.",
       "importPartial": "Imported {imported} of {requested} products - {failed, plural, one {# couldn’t be read} other {# couldn’t be read}}. You can add those by pasting each link.",
+      "importOvershoot": "Imported {imported} products from your store - more than the {requested, plural, one {# you chose} other {# you chose}}. Check My Products for anything you didn’t pick.",
       "importSucceeded": "Imported {count, plural, one {# product} other {# products}} from your store.",
       "importFailed": "The import didn’t finish. Please try again.",
       "storyboardSaved": "Storyboard saved.",

@@ -81,6 +81,22 @@ describe("importOutcome", () => {
     ).toEqual({ key: "importNone", values: { requested: 5 } });
   });
 
+  it("says so when more landed than was chosen, instead of a clean success", () => {
+    // the backend ignoring `source_urls`: products the user deselected are now
+    // in their account, and a green "Imported 9 products" would hide that
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 9, products_failed: 0 }, 5),
+    ).toEqual({ key: "importOvershoot", values: { imported: 9, requested: 5 } });
+  });
+
+  it("cannot report an overshoot off the job counters alone", () => {
+    // without a client-known count the total is derived to be >= what landed,
+    // so the fallback path keeps its existing success/partial behaviour
+    expect(
+      importOutcome({ products_found: 0, products_upserted: 9, products_failed: 0 }),
+    ).toEqual({ key: "importSucceeded", values: { count: 9 } });
+  });
+
   it("counts against the requested subset, not the store catalog", () => {
     // the backend may keep reporting the whole catalog it walked; 5 of 5 chosen
     // products landing is a clean success, not "5 of 200"
@@ -110,10 +126,6 @@ describe("importRequested", () => {
     // the backend ignoring `source_urls` has to stay visible: rewriting the
     // total up to what landed would quietly read as a finished import
     expect(importRequested({ ...counters, products_upserted: 9 }, 5)).toBe(5);
-    expect(importOutcome({ ...counters, products_upserted: 9 }, 5)).toEqual({
-      key: "importSucceeded",
-      values: { count: 9 },
-    });
   });
 
   it("gives the toast and the progress bar the same total", () => {
@@ -134,27 +146,20 @@ describe("resumeFor", () => {
   };
 
   it("carries the pass back into a review of the same store", () => {
+    // never the job: a review is entered with nothing to report on, so a dead
+    // handle can't be persisted under the store the user is reviewing next
     expect(resumeFor(saved, "https://shop.example")).toEqual({
       deselected: ["/a"],
       domain: "shop.example",
-      keepJob: true,
     });
   });
 
-  it("starts a different store all-selected and without the old job", () => {
-    // a dead handle from store A must never be persisted under store B, where a
-    // reload would replay A's outcome
-    expect(resumeFor(saved, "https://other.example")).toEqual({
-      deselected: [],
-      keepJob: false,
-    });
+  it("starts a different store all-selected", () => {
+    expect(resumeFor(saved, "https://other.example")).toEqual({ deselected: [] });
   });
 
   it("has nothing to carry when nothing was stored", () => {
-    expect(resumeFor(null, "https://shop.example")).toEqual({
-      deselected: [],
-      keepJob: false,
-    });
+    expect(resumeFor(null, "https://shop.example")).toEqual({ deselected: [] });
   });
 });
 

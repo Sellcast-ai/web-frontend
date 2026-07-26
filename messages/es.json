@@ -30,6 +30,7 @@
       "retryJobFailed": "No se pudo volver a intentar el trabajo. Por favor inténtalo de nuevo.",
       "saveDisplayNameFailed": "No se pudo guardar su nombre para mostrar. Por favor inténtalo de nuevo.",
       "importPartial": "Importaste {imported} de {requested} productos - {failed, plural, one {# no se pudo leer} other {# no se pudieron leer}}. Puedes añadirlos pegando cada enlace.",
+      "importOvershoot": "Importaste {imported} productos de tu tienda - más de {requested, plural, one {# que elegiste} other {# que elegiste}}. Revisa Mis productos para ver lo que no elegiste.",
       "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
       "importFailed": "La importación no terminó. Por favor inténtalo de nuevo.",
       "storyboardSaved": "Guión gráfico guardado.",

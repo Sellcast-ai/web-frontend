@@ -671,7 +671,10 @@ function StoreImport() {
       return;
     }
     clearSelection();
-    toast.success(tt(outcome.key, outcome.values));
+    // an import that landed more than was chosen isn't a success to celebrate:
+    // the user still has to go find what they didn't pick
+    const announce = outcome.key === "importOvershoot" ? toast.info : toast.success;
+    announce(tt(outcome.key, outcome.values));
     router.push("/app/products");
   }, [job, watchedJob, requested, qc, router, tt]);
 
@@ -689,16 +692,16 @@ function StoreImport() {
 
   /** The only way into the catalog walk, so it can never fire without a click.
    * Opt-outs carry over only for the store they were made against; a different
-   * store starts all-selected, and never inherits the previous store's job. */
+   * store starts all-selected. A review is never entered with a job in hand -
+   * anything still running holds the progress card, so whatever handle is left
+   * here is dead and would only replay an old outcome. */
   function reviewStore(url: string, platform?: string, domain?: string) {
     const resume = resumeFor(saved, url);
     setDeselected(new Set(resume.deselected));
-    if (!resume.keepJob) {
-      setJobId(null);
-      setRequested(null);
-      setWatchedJob(null);
-      done.current = false;
-    }
+    setJobId(null);
+    setRequested(null);
+    setWatchedJob(null);
+    done.current = false;
     setReview({ storeUrl: url, platform, domain: domain ?? resume.domain });
   }
 
@@ -800,10 +803,21 @@ function StoreImport() {
             </div>
           </>
         ) : (
-          <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
-            <Loader2 className="h-4 w-4 animate-spin text-brand-600" />
-            {t("readingCatalog")}
-          </p>
+          <>
+            <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+              <Loader2 className="h-4 w-4 animate-spin text-brand-600" />
+              {t("readingCatalog")}
+            </p>
+            {/* the walk can run for the BFF's full 180s, so the wrong store is
+              * never a three-minute wait with no way out */}
+            <button
+              type="button"
+              className="mt-4 text-sm font-semibold text-muted-foreground hover:text-ink"
+              onClick={leaveReview}
+            >
+              {t("tryDifferentStore")}
+            </button>
+          </>
         )}
       </div>
     );

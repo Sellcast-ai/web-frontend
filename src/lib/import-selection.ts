@@ -67,16 +67,15 @@ export function clearSelection(): void {
   }
 }
 
-/** What a review of `url` may carry over from a stored pass. Opt-outs and the
- * display domain belong to the store they were made against, and an import
- * handle never follows the user to a different store - restoring one would
- * replay the old store's outcome under the new store's review. */
+/** What a review of `url` may carry over from a stored pass: the opt-outs and the
+ * display domain, and only for the store they were made against. Never an import
+ * handle - a review is only ever entered with no job to report on. */
 export function resumeFor(
   saved: StoredSelection | null,
   url: string,
-): { deselected: string[]; domain?: string; keepJob: boolean } {
-  if (!saved || saved.storeUrl !== url) return { deselected: [], keepJob: false };
-  return { deselected: saved.deselected, domain: saved.domain, keepJob: true };
+): { deselected: string[]; domain?: string } {
+  if (!saved || saved.storeUrl !== url) return { deselected: [] };
+  return { deselected: saved.deselected, domain: saved.domain };
 }
 
 /** A job handle worth nothing to this mount: already terminal, and nobody here
@@ -100,6 +99,7 @@ type OutcomeCounts = Pick<
 export type ImportOutcome =
   | { key: "importSucceeded"; values: { count: number } }
   | { key: "importPartial"; values: { imported: number; requested: number; failed: number } }
+  | { key: "importOvershoot"; values: { imported: number; requested: number } }
   | { key: "importNone"; values: { requested: number } };
 
 /** How many products the import was asked for. The client knows this exactly:
@@ -122,6 +122,9 @@ export function importOutcome(job: OutcomeCounts, requestedCount?: number | null
   const requested = importRequested(job, requestedCount);
   const failed = Math.max(requested - imported, 0);
   if (imported === 0) return { key: "importNone", values: { requested } };
+  // more landed than was chosen: the import ignored `source_urls`, and the user
+  // is the one who has to hear about the products they didn't pick
+  if (imported > requested) return { key: "importOvershoot", values: { imported, requested } };
   if (failed > 0) return { key: "importPartial", values: { imported, requested, failed } };
   return { key: "importSucceeded", values: { count: imported } };
 }
