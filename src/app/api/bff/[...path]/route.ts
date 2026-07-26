@@ -3,8 +3,9 @@ import { proxy } from "@/lib/api/server";
 
 export const dynamic = "force-dynamic";
 // /products/parse proxies a synchronous Apify scrape (30-120s on Amazon/
-// Shopee). Hosts clamp this to the plan's ceiling — without it, the default
-// (~10-15s) kills long parses mid-flight.
+// Shopee), and /products/import/candidates a whole-catalog walk. Hosts clamp
+// this to the plan's ceiling — without it, the default (~10-15s) kills long
+// parses mid-flight.
 export const maxDuration = 180;
 
 async function handle(
