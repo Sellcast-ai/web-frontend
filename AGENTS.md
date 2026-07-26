@@ -6,7 +6,8 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Lumi Web
 
-Next.js 16 (App Router) frontend for Lumi (lumi.sellcast.ai) - turns product listings into shoppable videos.
+Next.js 16 (App Router) frontend for Lumi - turns product listings into shoppable videos.
+No custom domain is attached yet; the site is served from its Vercel deployment URL, and every place that needs the site's own origin reads it from `src/lib/site-url.ts` (never hardcode a hostname).
 The browser never talks to the backend directly; all data flows through the BFF routes under `/api/bff/*`, which proxy to the Sellcast FastAPI backend (separate repo/dir: `../backend`, dev default `http://127.0.0.1:8000/api/v1`).
 
 ## Commands
@@ -96,6 +97,7 @@ See `.env.production.example` (Vercel) and `.env.local` (dev):
 - `SELLCAST_API_BASE` - server-only, backend base URL for the BFF
 - `NEXT_PUBLIC_MEDIA_ORIGIN` - origin prefixed onto relative media paths returned by the backend
 - `NEXT_PUBLIC_GOOGLE_CLIENT_ID` - enables the "Continue with Google" button
+- `NEXT_PUBLIC_SITE_URL` - the site's own public origin, consumed only through `SITE_URL` in `src/lib/site-url.ts` (`metadataBase`, `robots.ts`, `sitemap.ts`). Optional: unset it falls back to Vercel's `VERCEL_PROJECT_PRODUCTION_URL`, then to the current production deployment origin. Set it the day a real domain is attached; anything it resolves to is normalized to a scheme + host origin with no trailing slash.
 
 ## Deployment
 

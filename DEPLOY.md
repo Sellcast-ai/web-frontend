@@ -58,7 +58,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] Sign in with Google on the live site → lands in `/app/products`
 - [ ] Create a video → worker renders it → plays on the job page
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
-- [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` in `src/app/layout.tsx` must match the production domain for the card URL to resolve.
+- [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` resolves from `SITE_URL` (`src/lib/site-url.ts`), which defaults to the Vercel deployment origin - once a real domain is attached, set `NEXT_PUBLIC_SITE_URL` to it in Vercel (all environments) and redeploy, or the card URL keeps pointing at the old origin.
 
 ## Cost control (free beta)
 Each rendered video spends OpenAI + FAL credit. The guardrail is the per-user
