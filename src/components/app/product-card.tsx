@@ -44,7 +44,13 @@ const SOURCE_LABEL_KEYS: Record<SourcePlatform, SourceLabelKey> = {
   manual: "manual",
 };
 
-export function ProductCard({ product }: { product: ProductSummary }) {
+export function ProductCard({
+  product,
+  href,
+}: {
+  product: ProductSummary;
+  href?: string;
+}) {
   const t = useTranslations("app.productCard");
   const tt = useTranslations("app.toasts");
   const like = useToggleLike({ updateError: tt("updateLikeFailed") });
@@ -52,7 +58,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
 
   return (
     <Link
-      href={`/app/products/${product.id}`}
+      href={href ?? `/app/products/${product.id}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-card border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-card"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">

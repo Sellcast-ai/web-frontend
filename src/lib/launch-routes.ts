@@ -4,7 +4,8 @@
  * /app/marketplace route, restoring the removed catalog keys (app.nav.marketplace,
  * app.marketplace.*, app.productDetail.backToMarketplace/marketplace, the footer
  * link) in all 9 messages/*.json - next-intl throws at render on a missing key and
- * src/i18n/messages.test.ts enforces parity - and pointing APP_HOME_HREF back at it.
+ * src/i18n/messages.test.ts enforces parity - removing the /app/marketplace
+ * redirect in next.config.ts, and pointing APP_HOME_HREF back at it.
  */
 export const PRODUCTS_HREF = "/app/products";
 export const NEW_PRODUCT_HREF = "/app/products/new";
