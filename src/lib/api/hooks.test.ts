@@ -14,17 +14,12 @@ const product = (id: string, is_liked: boolean) =>
 function seed() {
   const qc = new QueryClient();
   qc.setQueryData(qk.product("p1"), product("p1", false));
-  qc.setQueryData(qk.products({ q: "" }), [
-    product("p1", false),
-    product("p2", true),
-  ]);
-  qc.setQueryData(qk.products({ q: "shoes" }), [product("p1", false)]);
-  qc.setQueryData(qk.myProducts, [product("p1", false)]);
+  qc.setQueryData(qk.myProducts, [product("p1", false), product("p2", true)]);
   return qc;
 }
 
 describe("optimistic like flip + rollback", () => {
-  it("flips the detail and every product list", () => {
+  it("flips the detail and my products list", () => {
     const qc = seed();
     qc.setQueryData<ProductSummary | undefined>(qk.product("p1"), (p) =>
       p ? { ...p, is_liked: true } : p,
@@ -32,16 +27,13 @@ describe("optimistic like flip + rollback", () => {
     patchProductLists(qc, "p1", true);
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(true);
-    for (const key of [qk.products({ q: "" }), qk.products({ q: "shoes" }), qk.myProducts]) {
-      const list = qc.getQueryData<ProductSummary[]>(key)!;
-      expect(list.find((p) => p.id === "p1")?.is_liked).toBe(true);
-    }
+    const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
+    expect(list.find((p) => p.id === "p1")?.is_liked).toBe(true);
     // untouched sibling stays as-is
-    const list = qc.getQueryData<ProductSummary[]>(qk.products({ q: "" }))!;
     expect(list.find((p) => p.id === "p2")?.is_liked).toBe(true);
   });
 
-  it("restores every affected query from the snapshot on rollback", () => {
+  it("restores affected queries from the snapshot on rollback", () => {
     const qc = seed();
     const snapshot = snapshotProductQueries(qc, "p1");
 
@@ -52,10 +44,8 @@ describe("optimistic like flip + rollback", () => {
     snapshot.forEach(([key, data]) => qc.setQueryData(key, data));
 
     expect(qc.getQueryData<ProductSummary>(qk.product("p1"))?.is_liked).toBe(false);
-    for (const key of [qk.products({ q: "" }), qk.products({ q: "shoes" }), qk.myProducts]) {
-      const list = qc.getQueryData<ProductSummary[]>(key)!;
-      expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
-    }
+    const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
+    expect(list.find((p) => p.id === "p1")?.is_liked).toBe(false);
   });
 
   it("polls while the import is active and stops on terminal status", () => {
@@ -67,15 +57,15 @@ describe("optimistic like flip + rollback", () => {
     expect(importPollInterval(undefined)).toBe(false);
   });
 
-  it("snapshots lists even when the detail query is not cached", () => {
+  it("snapshots my products even when the detail query is not cached", () => {
     const qc = new QueryClient();
-    qc.setQueryData(qk.products({}), [product("p1", true)]);
+    qc.setQueryData(qk.myProducts, [product("p1", true)]);
 
     const snapshot = snapshotProductQueries(qc, "p1");
     patchProductLists(qc, "p1", false);
     snapshot.forEach(([key, data]) => qc.setQueryData(key, data));
 
-    const list = qc.getQueryData<ProductSummary[]>(qk.products({}))!;
+    const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
     expect(list[0].is_liked).toBe(true);
     expect(qc.getQueryData(qk.product("p1"))).toBeUndefined();
   });

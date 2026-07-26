@@ -121,16 +121,6 @@ function putFileWithProgress(
 
 export const api = {
   /* --- products --- */
-  listProducts: (
-    params: { q?: string; category?: string; limit?: number; offset?: number } = {},
-  ) => {
-    const qs = new URLSearchParams();
-    if (params.q) qs.set("q", params.q);
-    if (params.category) qs.set("category", params.category);
-    qs.set("limit", String(params.limit ?? 24));
-    qs.set("offset", String(params.offset ?? 0));
-    return bff<ProductSummary[]>(`products?${qs.toString()}`);
-  },
   getProduct: (id: string) => bff<ProductDetail>(`products/${id}`),
   listMyProducts: () => bff<ProductSummary[]>(`products/mine`),
   parseProductUrl: (url: string) =>

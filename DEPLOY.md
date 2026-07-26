@@ -55,7 +55,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 
 ## 4. Verify before announcing
 - [ ] `curl -H 'X-User-Id: x' https://<api>/api/v1/products` → **401** (dev bypass is OFF)
-- [ ] Sign in with Google on the live site → lands in `/app/marketplace`
+- [ ] Sign in with Google on the live site → lands in `/app/products`
 - [ ] Create a video → worker renders it → plays on the job page
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
 - [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` in `src/app/layout.tsx` must match the production domain for the card URL to resolve.

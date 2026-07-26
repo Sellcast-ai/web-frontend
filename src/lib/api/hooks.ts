@@ -21,7 +21,6 @@ import type {
 
 export const qk = {
   me: ["me"] as const,
-  products: (p: Record<string, unknown>) => ["products", p] as const,
   myProducts: ["my-products"] as const,
   product: (id: string) => ["product", id] as const,
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
@@ -50,19 +49,6 @@ export function useCurrentUser() {
 
 export function useUsage() {
   return useQuery({ queryKey: ["usage"], queryFn: api.getUsage, staleTime: 15_000 });
-}
-
-export function useProducts(params: {
-  q?: string;
-  category?: string;
-  limit?: number;
-  offset?: number;
-}) {
-  return useQuery({
-    queryKey: qk.products(params),
-    queryFn: () => api.listProducts(params),
-    placeholderData: (prev) => prev,
-  });
 }
 
 export function useProduct(id: string) {
@@ -142,8 +128,6 @@ export function useVideoJob(id: string) {
 
 /* -------------------------------------------------------------- mutations */
 
-const productListKeys = [["products"], qk.myProducts] as const;
-
 export function useToggleLike(messages: { updateError: string }) {
   const qc = useQueryClient();
   return useMutation({
@@ -154,7 +138,7 @@ export function useToggleLike(messages: { updateError: string }) {
     onMutate: async ({ id, liked }) => {
       await Promise.all([
         qc.cancelQueries({ queryKey: qk.product(id) }),
-        ...productListKeys.map((queryKey) => qc.cancelQueries({ queryKey })),
+        qc.cancelQueries({ queryKey: qk.myProducts }),
       ]);
       const snapshot = snapshotProductQueries(qc, id);
       qc.setQueryData<ProductSummary | undefined>(qk.product(id), (p) =>
@@ -169,7 +153,7 @@ export function useToggleLike(messages: { updateError: string }) {
     },
     onSettled: (_data, _err, { id }) => {
       qc.invalidateQueries({ queryKey: qk.product(id) });
-      productListKeys.forEach((queryKey) => qc.invalidateQueries({ queryKey }));
+      qc.invalidateQueries({ queryKey: qk.myProducts });
     },
   });
 }
@@ -178,29 +162,17 @@ export function snapshotProductQueries(
   qc: QueryClient,
   id: string,
 ): [readonly unknown[], unknown][] {
-  const entries: [readonly unknown[], unknown][] = [
+  return [
     [qk.product(id), qc.getQueryData(qk.product(id))],
+    [qk.myProducts, qc.getQueryData(qk.myProducts)],
   ];
-  productListKeys.forEach((queryKey) =>
-    qc.getQueryCache()
-      .findAll({ queryKey })
-      .forEach((q) => entries.push([q.queryKey, q.state.data])),
-  );
-  return entries;
 }
 
 export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean) {
-  productListKeys.forEach((queryKey) =>
-    qc.getQueryCache()
-      .findAll({ queryKey })
-      .forEach((q) => {
-        const data = q.state.data as ProductSummary[] | undefined;
-        if (!Array.isArray(data)) return;
-        qc.setQueryData(
-          q.queryKey,
-          data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p)),
-        );
-      }),
+  qc.setQueryData<ProductSummary[] | undefined>(qk.myProducts, (data) =>
+    Array.isArray(data)
+      ? data.map((p) => (p.id === id ? { ...p, is_liked: isLiked } : p))
+      : data,
   );
 }
 

@@ -18,6 +18,7 @@ import { useProduct, useToggleLike } from "@/lib/api/hooks";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { DUR, EASE_OUT } from "@/components/ui/motion";
+import { PRODUCTS_HREF } from "@/lib/launch-routes";
 import {
   compact,
   commission,
@@ -58,13 +59,15 @@ export default function ProductDetailPage() {
     return (
       <div className="container-page py-16 text-center">
         <p className="text-muted-foreground">{t("notFound")}</p>
-        <Button href="/app/marketplace" variant="outline" size="md" className="mt-4">
-          {t("backToMarketplace")}
+        <Button href={PRODUCTS_HREF} variant="outline" size="md" className="mt-4">
+          {t("backToProducts")}
         </Button>
       </div>
     );
   }
 
+  // marketplace rows carry commission + sales analytics; user-created rows don't
+  const isMarketplaceRow = !product.owner_user_id;
   const metrics = [
     { label: t("metrics.monthlySales"), value: compact(product.monthly_sales) },
     { label: t("metrics.totalRevenue"), value: money(product.total_revenue) },
@@ -75,11 +78,11 @@ export default function ProductDetailPage() {
   return (
     <div className="container-page py-8">
       <Link
-        href="/app/marketplace"
+        href={PRODUCTS_HREF}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-ink"
       >
         <ArrowLeft className="h-4 w-4" />
-        {t("marketplace")}
+        {t("products")}
       </Link>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-2">
@@ -162,27 +165,31 @@ export default function ProductDetailPage() {
             <span className="font-display text-3xl font-bold text-ink">
               {priceRange(product.price_min, product.price_max, product.currency)}
             </span>
-            <Badge variant="success">
-              {t("commission", { rate: commission(product.commission_rate) })}
-            </Badge>
+            {isMarketplaceRow && (
+              <Badge variant="success">
+                {t("commission", { rate: commission(product.commission_rate) })}
+              </Badge>
+            )}
           </div>
 
           {/* metrics */}
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {metrics.map((m) => (
-              <div
-                key={m.label}
-                className="rounded-2xl border border-border bg-card p-3 shadow-soft"
-              >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                  {m.label}
-                </p>
-                <p className="mt-1 font-display text-lg font-bold text-brand-700">
-                  {m.value}
-                </p>
-              </div>
-            ))}
-          </div>
+          {isMarketplaceRow && (
+            <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {metrics.map((m) => (
+                <div
+                  key={m.label}
+                  className="rounded-2xl border border-border bg-card p-3 shadow-soft"
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                    {m.label}
+                  </p>
+                  <p className="mt-1 font-display text-lg font-bold text-brand-700">
+                    {m.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
 
           {product.creator_hook && (
             <div className="mt-6 rounded-2xl bg-accent p-4">
@@ -200,28 +207,30 @@ export default function ProductDetailPage() {
           )}
 
           {/* external links */}
-          <div className="mt-5 flex flex-wrap gap-3 text-sm">
-            {product.tiktok_product_url && (
-              <a
-                href={product.tiktok_product_url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
-              >
-                TikTok Shop <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            )}
-            {product.fastmoss_product_url && (
-              <a
-                href={product.fastmoss_product_url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
-              >
-                FastMoss <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            )}
-          </div>
+          {(product.tiktok_product_url || product.fastmoss_product_url) && (
+            <div className="mt-5 flex flex-wrap gap-3 text-sm">
+              {product.tiktok_product_url && (
+                <a
+                  href={product.tiktok_product_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
+                >
+                  TikTok Shop <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+              {product.fastmoss_product_url && (
+                <a
+                  href={product.fastmoss_product_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
+                >
+                  FastMoss <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+            </div>
+          )}
 
           {/* CTA */}
           <div className="mt-auto pt-8">

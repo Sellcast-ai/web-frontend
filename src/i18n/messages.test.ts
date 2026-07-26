@@ -61,7 +61,6 @@ describe("en catalog", () => {
     expect(Object.keys(en.app.nav).sort()).toEqual([
       "avatars",
       "logOut",
-      "marketplace",
       "new",
       "newVideo",
       "products",

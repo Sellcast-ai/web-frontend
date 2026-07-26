@@ -10,6 +10,7 @@ import { api, ApiError } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
 import { isDevDeliveryChannel } from "@/lib/phone-auth";
+import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { Button } from "@/components/ui/button";
 
 function normalizePhone(raw: string) {
@@ -69,7 +70,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     try {
       await api.verifyPhoneCode(normalizePhone(phone), code.trim(), authPurpose);
       await qc.invalidateQueries({ queryKey: qk.me });
-      router.replace("/app/marketplace");
+      router.replace(APP_HOME_HREF);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : t("verifyCodeFailed"));
       setBusy(false);
@@ -308,7 +309,7 @@ function GoogleButton({
           try {
             await api.googleLogin(resp.credential);
             await qc.invalidateQueries({ queryKey: qk.me });
-            router.replace("/app/marketplace");
+            router.replace(APP_HOME_HREF);
           } catch (err) {
             toast.error(
               err instanceof ApiError
