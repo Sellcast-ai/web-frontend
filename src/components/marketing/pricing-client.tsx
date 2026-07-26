@@ -64,7 +64,9 @@ export function PricingClient() {
               >
                 {t(`billing.${key}`)}
                 {isAnnual && (
-                  <span className="ml-1.5 text-xs font-bold text-success">−20%</span>
+                  <span className="ml-1.5 text-xs font-bold text-[#0b7a34] dark:text-live">
+                    −20%
+                  </span>
                 )}
               </button>
             );
@@ -99,8 +101,20 @@ export function PricingClient() {
                 <h3 className="font-display text-xl font-semibold text-ink">
                   {t(`tiers.${tier.key}.name`)}
                 </h3>
-                <p className="mt-3 flex items-baseline gap-1">
-                  <span className="font-display text-4xl font-bold text-ink">
+                <p
+                  className={cn(
+                    "mt-3 flex",
+                    tier.hasPriceLabel
+                      ? "min-h-[4rem] flex-col items-start gap-1"
+                      : "items-baseline gap-1",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "font-display font-bold text-ink",
+                      tier.hasPriceLabel ? "text-3xl leading-tight" : "text-4xl",
+                    )}
+                  >
                     {price}
                   </span>
                   <span className="text-sm text-muted-foreground">
@@ -111,12 +125,14 @@ export function PricingClient() {
                         : t(`tiers.${tier.key}.note`)}
                   </span>
                 </p>
-                <div className="mt-4 rounded-lg bg-brand-100/60 px-3 py-2">
-                  <p className="text-sm font-bold text-brand-800">
+                <div className="mt-4 rounded-lg bg-brand-100/60 px-3 py-2 dark:bg-[#0f3a42] dark:ring-1 dark:ring-brand-300/20">
+                  <p className="text-sm font-bold text-brand-800 dark:text-brand-100">
                     {t(`tiers.${tier.key}.allowance`)}
                   </p>
                   {credits && (
-                    <p className="text-xs text-muted-foreground">{credits}</p>
+                    <p className="text-xs text-muted-foreground dark:text-brand-200">
+                      {credits}
+                    </p>
                   )}
                 </div>
                 <ul className="mt-5 space-y-3">

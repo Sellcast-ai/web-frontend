@@ -168,19 +168,21 @@
 
 /* --- Custom utilities ------------------------------------------------- */
 
-/* dramatic dark→teal→aqua wash (iOS heroGradient) — for dark panels */
+/* dramatic dark -> teal wash for dark panels with white text */
 @utility bg-hero {
   background-image: linear-gradient(
     135deg,
     #111111 0%,
-    #2f4450 52%,
-    #8be5fc 100%
+    #263c46 52%,
+    #0f6c7a 100%
   );
 }
 
-/* teal → aqua (iOS primaryDeep → primary) — logo mark, feature icons */
+/* teal → lighter teal (iOS primaryDeep). Both stops stay dark enough for the
+   white text these surfaces carry (avatar initials, step badges): 6.1:1 and
+   4.8:1 against white. */
 @utility bg-brand-gradient {
-  background-image: linear-gradient(125deg, #0f6c7a 0%, #2fcbe6 100%);
+  background-image: linear-gradient(125deg, #0f6c7a 0%, #157e8f 100%);
 }
 
 /* one-phrase italic-serif accent inside marketing headings (arcads' Redaction

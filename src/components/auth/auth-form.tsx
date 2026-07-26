@@ -9,6 +9,7 @@ import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react"
 import { api, ApiError } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
+import { isDevDeliveryChannel } from "@/lib/phone-auth";
 import { Button } from "@/components/ui/button";
 
 function normalizePhone(raw: string) {
@@ -27,6 +28,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
   const [phone, setPhone] = useState("");
   const [code, setCode] = useState("");
   const [devCode, setDevCode] = useState<string | null>(null);
+  const [phoneUnavailable, setPhoneUnavailable] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const codeRef = useRef<HTMLInputElement>(null);
@@ -42,6 +44,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     setBusy(true);
     try {
       const res = await api.sendPhoneCode(number, authPurpose);
+      if (isDevDeliveryChannel(res.delivery_channel)) {
+        setPhoneUnavailable(true);
+        setError(t("phoneUnavailable"));
+        return;
+      }
       setStep("code");
       if (res.dev_code) {
         setDevCode(res.dev_code);
@@ -107,9 +114,22 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
             label={t("phoneLabel")}
           />
           {error && <ErrorText>{error}</ErrorText>}
-          <Button type="submit" size="lg" className="w-full" disabled={busy}>
+          {phoneUnavailable && (
+            <p className="rounded-xl border border-border bg-muted px-3 py-2 text-sm text-muted-foreground">
+              {t("phoneUnavailableHint")}
+            </p>
+          )}
+          <Button
+            type="submit"
+            variant={phoneUnavailable ? "outline" : "primary"}
+            size="lg"
+            className="w-full"
+            disabled={busy || phoneUnavailable}
+          >
             {busy ? (
               <Loader2 className="h-4 w-4 animate-spin" />
+            ) : phoneUnavailable ? (
+              t("phoneUnavailableLabel")
             ) : (
               <>
                 {t("sendCode")}
@@ -168,14 +188,14 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         {mode === "signup" ? (
           <>
             {t("alreadyHaveAccount")}{" "}
-            <Link href="/login" className="font-semibold text-brand-700">
+            <Link href="/login" className="font-semibold text-brand-700 dark:text-brand-300">
               {t("signInLink")}
             </Link>
           </>
         ) : (
           <>
             {t("newToLumi")}{" "}
-            <Link href="/signup" className="font-semibold text-brand-700">
+            <Link href="/signup" className="font-semibold text-brand-700 dark:text-brand-300">
               {t("createAccountLink")}
             </Link>
           </>
@@ -258,8 +278,30 @@ function GoogleButton({
 
   useEffect(() => {
     if (!clientId || !ref.current) return;
-    const onLoad = () => {
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+    let renderedWidth = 0;
+
+    function renderGoogleButton() {
       if (!window.google || !ref.current) return;
+      const width = Math.max(
+        240,
+        Math.min(320, Math.floor(ref.current.getBoundingClientRect().width)),
+      );
+      if (width === renderedWidth) return;
+      renderedWidth = width;
+      ref.current.replaceChildren();
+      window.google.accounts.id.renderButton(ref.current, {
+        theme: "outline",
+        size: "large",
+        width,
+        text: "continue_with",
+        shape: "pill",
+      });
+    }
+
+    const onLoad = () => {
+      if (cancelled || !window.google || !ref.current) return;
       window.google.accounts.id.initialize({
         client_id: clientId,
         callback: async (resp) => {
@@ -276,25 +318,27 @@ function GoogleButton({
           }
         },
       });
-      window.google.accounts.id.renderButton(ref.current, {
-        theme: "outline",
-        size: "large",
-        width: 320,
-        text: "continue_with",
-        shape: "pill",
-      });
+      const ro = new ResizeObserver(renderGoogleButton);
+      ro.observe(ref.current);
+      cleanup = () => ro.disconnect();
     };
     const existing = document.getElementById("gis-script");
     if (existing) {
-      onLoad();
-      return;
+      if (window.google) onLoad();
+      else existing.addEventListener("load", onLoad);
+    } else {
+      const s = document.createElement("script");
+      s.src = "https://accounts.google.com/gsi/client";
+      s.async = true;
+      s.id = "gis-script";
+      s.addEventListener("load", onLoad);
+      document.body.appendChild(s);
     }
-    const s = document.createElement("script");
-    s.src = "https://accounts.google.com/gsi/client";
-    s.async = true;
-    s.id = "gis-script";
-    s.onload = onLoad;
-    document.body.appendChild(s);
+    return () => {
+      cancelled = true;
+      document.getElementById("gis-script")?.removeEventListener("load", onLoad);
+      cleanup?.();
+    };
   }, [clientId, errorFallback, qc, router]);
 
   if (!clientId) {

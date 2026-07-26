@@ -110,7 +110,7 @@ export default async function HomePage() {
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <p className="mt-5 text-balance text-sm text-muted-foreground/80">
+            <p className="mt-5 text-balance text-sm text-muted-foreground">
               {t("heroFinePrint")}
             </p>
           </div>
