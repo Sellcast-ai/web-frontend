@@ -39,6 +39,10 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
    - `SELLCAST_API_BASE = https://<lumi-api>.onrender.com/api/v1`
    - `NEXT_PUBLIC_GOOGLE_CLIENT_ID = <google web client id>`
    - `NEXT_PUBLIC_MEDIA_ORIGIN = https://<lumi-api>.onrender.com`
+   - `NEXT_PUBLIC_SITE_URL` - **leave unset** while there's no custom domain; `SITE_URL`
+     (`src/lib/site-url.ts`) falls back to the Vercel deployment origin. Set it to the real
+     origin (e.g. `https://lumi.example.com`) the day a domain is attached - that one var
+     drives `metadataBase`, `/robots.txt` and `/sitemap.xml`.
 3. Deploy. (Next.js 16 is auto-detected; no extra config.)
 
 ## 3. Auth
