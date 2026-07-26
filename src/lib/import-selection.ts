@@ -11,9 +11,10 @@ import type { ImportCandidate, ImportJob } from "@/lib/api/types";
  * job instead of enqueueing a second. Don't re-add either.
  *
  * sessionStorage outlives a logout in the same tab, so the pass is keyed by the
- * user it belongs to and discarded when the reader is someone else. That read-
- * time guard is the single mechanism - it covers logout, an expired session, and
- * every other exit, so no exit path needs its own `clearSelection()`. */
+ * user it belongs to and discarded when the reader is someone else. The
+ * `parsed.userId !== userId` discard in `loadSelection` is that guard, and it is
+ * the only one - it covers logout, an expired session, and every other exit, so
+ * no exit path needs its own `clearSelection()`. */
 
 const STORAGE_KEY = "lumi.import-selection";
 
@@ -22,9 +23,11 @@ export type StoredSelection = {
    * `loadSelection`), which is what keeps a shared tab from offering account B
    * a resume of account A's store review. */
   userId: string;
-  /** Only ever used to match the opt-outs back to the store they belong to -
-   * never to re-enter the (billed) catalog walk on its own. */
-  storeUrl: string;
+  /** The store the opt-outs belong to, as the normalized domain the backend
+   * echoes back - never the raw pasted string, or `shop.example.com` and
+   * `https://shop.example.com` would be two different stores. Only ever used to
+   * match a pass back to its store, never to re-enter the (billed) walk. */
+  storeDomain: string;
   deselected: string[];
 };
 
@@ -37,11 +40,11 @@ export function loadSelection(userId: string | undefined): StoredSelection | nul
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as StoredSelection;
-    if (typeof parsed?.storeUrl !== "string" || !Array.isArray(parsed.deselected)) return null;
+    if (typeof parsed?.storeDomain !== "string" || !Array.isArray(parsed.deselected)) return null;
     if (parsed.userId !== userId) return null;
     return {
       userId,
-      storeUrl: parsed.storeUrl,
+      storeDomain: parsed.storeDomain,
       deselected: parsed.deselected.filter((u) => typeof u === "string"),
     };
   } catch {
@@ -67,20 +70,14 @@ export function clearSelection(): void {
   }
 }
 
-/** Opens a review of `url` for whoever is signed in: the opt-outs to start from
- * (carried over only for the store they were made against - a different store
- * starts all-selected) and the identity to write them back under.
- *
- * `null` when there is no reader yet, and that is the whole point: the caller
- * has nothing to write with until a read has succeeded, so an unresolved user
- * can't overwrite a long stored pass with an empty one. */
-export function beginSelection(
-  userId: string | undefined,
-  url: string,
-): { userId: string; deselected: string[] } | null {
-  if (!userId) return null;
+/** The opt-outs a review of `storeDomain` starts from - the stored pass when it
+ * was made for this store and this user, an empty set otherwise. It never
+ * writes: a pass is only ever persisted from a selection gesture, so a read that
+ * came back empty (wrong store, wrong reader, blocked storage) can't cost the
+ * user the pass it failed to find. */
+export function beginSelection(userId: string, storeDomain: string): string[] {
   const saved = loadSelection(userId);
-  return { userId, deselected: saved?.storeUrl === url ? saved.deselected : [] };
+  return saved?.storeDomain === storeDomain ? saved.deselected : [];
 }
 
 /** The chosen subset, in catalog order. Filtering the live candidate list means a

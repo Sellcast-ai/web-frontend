@@ -593,12 +593,13 @@ function StoreImport() {
   const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
   const done = useRef(false);
-  const userId = useCurrentUser().data?.id;
+  // `AppShell` holds a spinner until the session resolves, so this is never undefined here
+  const userId = useCurrentUser().data!.id;
 
-  /** The store under review, plus the user the stored pass was read for - the
-   * only identity it may be written back under (see `beginSelection`). */
+  /** The store under review: `storeUrl` is what the requests carry, `domain` is
+   * the normalized identity the pass and the catalog cache are keyed on. */
   const [review, setReview] = useState<
-    { storeUrl: string; platform: string; domain: string; userId: string } | null
+    { storeUrl: string; platform: string; domain: string } | null
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
@@ -610,21 +611,9 @@ function StoreImport() {
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
 
-  /* A reload mid-review shouldn't cost the user their deselection pass, so the
-   * opt-outs are persisted against the store (and the user) they were made for.
-   * Only the pass: re-entering the catalog walk costs real money at the parser,
-   * so a review only ever starts from a click (`reviewStore`), never a mount.
-   * The write goes under the identity `beginSelection` read with, never the live
-   * hook: a read that hasn't resolved yields no review, so it can't clobber a
-   * stored pass with the empty set it started from. */
-  useEffect(() => {
-    if (!review) return;
-    saveSelection({
-      userId: review.userId,
-      storeUrl: review.storeUrl,
-      deselected: [...deselected],
-    });
-  }, [review, deselected]);
+  /** Where a selection gesture writes the pass, or null outside a review. A ref
+   * so the memoized rows keep one stable `onToggle` across the whole catalog. */
+  const persistTo = useRef<{ userId: string; storeDomain: string } | null>(null);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -654,33 +643,48 @@ function StoreImport() {
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
 
-  // stable across renders so the memoized rows don't all invalidate on a toggle
-  const toggleCandidate = useCallback((sourceUrl: string) => {
+  /** A deliberate selection gesture, the *only* thing allowed to persist. The
+   * write sits in the updater because that is where the new pass exists; nothing
+   * on a mount, a restore or a render path can reach it, so however a read comes
+   * back empty it can't overwrite what's stored. */
+  const applySelection = useCallback((update: (prev: Set<string>) => Set<string>) => {
     setDeselected((prev) => {
-      const next = new Set(prev);
-      if (!next.delete(sourceUrl)) next.add(sourceUrl);
+      const next = update(prev);
+      const target = persistTo.current;
+      if (target) saveSelection({ ...target, deselected: [...next] });
       return next;
     });
   }, []);
+
+  // stable across renders so the memoized rows don't all invalidate on a toggle
+  const toggleCandidate = useCallback(
+    (sourceUrl: string) =>
+      applySelection((prev) => {
+        const next = new Set(prev);
+        if (!next.delete(sourceUrl)) next.add(sourceUrl);
+        return next;
+      }),
+    [applySelection],
+  );
 
   /** The only way into the catalog walk, so it can never fire without a click.
    * The stored pass is read here rather than at mount: by the time there is a
    * click the current user is known, so a pass belonging to whoever used the tab
    * before is discarded instead of restored. */
   function reviewStore(url: string, platform: string, domain: string) {
-    const opened = beginSelection(userId, url);
-    if (!opened) return;
-    setDeselected(new Set(opened.deselected));
+    setDeselected(new Set(beginSelection(userId, domain)));
+    persistTo.current = { userId, storeDomain: domain };
     setJobId(null);
     setRequested(null);
     done.current = false;
-    setReview({ storeUrl: url, platform, domain, userId: opened.userId });
+    setReview({ storeUrl: url, platform, domain });
   }
 
   /** Backing out of a walk that never landed. The user wanted out of the wait,
    * not out of their deselection pass, so the stored pass stays where it is. */
   function leaveWalk() {
     setReview(null);
+    persistTo.current = null;
     setDeselected(new Set());
     setJobId(null);
     setRequested(null);
@@ -846,7 +850,7 @@ function StoreImport() {
           <div className="flex items-center gap-3 text-sm font-semibold">
             <button
               type="button"
-              onClick={() => setDeselected(new Set())}
+              onClick={() => applySelection(() => new Set())}
               disabled={chosen.length === list.length}
               className="text-brand-700 disabled:text-muted-foreground disabled:opacity-50"
             >
@@ -854,7 +858,7 @@ function StoreImport() {
             </button>
             <button
               type="button"
-              onClick={() => setDeselected(new Set(list.map((c) => c.source_url)))}
+              onClick={() => applySelection(() => new Set(list.map((c) => c.source_url)))}
               disabled={chosen.length === 0}
               className="text-brand-700 disabled:text-muted-foreground disabled:opacity-50"
             >
@@ -933,8 +937,6 @@ function StoreImport() {
         <div className="mt-4 flex items-center gap-3">
           <Button
             size="lg"
-            // the review can't open before we know whose stored pass to read
-            disabled={!userId}
             onClick={() =>
               reviewStore(storeUrl.trim(), previewData.platform, previewData.store_domain)
             }

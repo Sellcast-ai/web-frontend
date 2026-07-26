@@ -168,7 +168,7 @@ describe("selection persistence", () => {
 
   const pass = {
     userId: "u1",
-    storeUrl: "https://shop.example",
+    storeDomain: "shop.example",
     deselected: ["/a", "/b"],
   };
 
@@ -188,7 +188,7 @@ describe("selection persistence", () => {
   it("discards a pass stored without an owner", () => {
     window.sessionStorage.setItem(
       "lumi.import-selection",
-      JSON.stringify({ storeUrl: "https://shop.example", deselected: ["/a"] }),
+      JSON.stringify({ storeDomain: "shop.example", deselected: ["/a"] }),
     );
     expect(loadSelection("u1")).toBeNull();
   });
@@ -200,41 +200,33 @@ describe("selection persistence", () => {
   it("returns null for a malformed payload instead of throwing", () => {
     window.sessionStorage.setItem("lumi.import-selection", "{not json");
     expect(loadSelection("u1")).toBeNull();
-    window.sessionStorage.setItem("lumi.import-selection", JSON.stringify({ storeUrl: 1 }));
+    window.sessionStorage.setItem("lumi.import-selection", JSON.stringify({ storeDomain: 1 }));
     expect(loadSelection("u1")).toBeNull();
   });
 
   describe("beginSelection", () => {
     it("carries the pass back into a review of the same store", () => {
       saveSelection(pass);
-      expect(beginSelection("u1", "https://shop.example")).toEqual({
-        userId: "u1",
-        deselected: ["/a", "/b"],
-      });
+      expect(beginSelection("u1", "shop.example")).toEqual(["/a", "/b"]);
     });
 
     it("starts a different store all-selected", () => {
       saveSelection(pass);
-      expect(beginSelection("u1", "https://other.example")).toEqual({
-        userId: "u1",
-        deselected: [],
-      });
-    });
-
-    it("opens nothing until the reader is known, so a write can never precede a read", () => {
-      // the caller has no identity to save under, so an unresolved user cannot
-      // overwrite a long stored pass with the empty set it would have started from
-      saveSelection(pass);
-      expect(beginSelection(undefined, "https://shop.example")).toBeNull();
-      expect(loadSelection("u1")).toEqual(pass);
+      expect(beginSelection("u1", "other.example")).toEqual([]);
     });
 
     it("gives the next account in the same tab a clean slate", () => {
       saveSelection(pass);
-      expect(beginSelection("u2", "https://shop.example")).toEqual({
-        userId: "u2",
-        deselected: [],
-      });
+      expect(beginSelection("u2", "shop.example")).toEqual([]);
+    });
+
+    it("never writes, so a read that finds nothing leaves the stored pass alone", () => {
+      // the pass is only ever persisted from a selection gesture: however a read
+      // misses (wrong store, wrong reader, blocked storage), it can't clobber it
+      saveSelection(pass);
+      expect(beginSelection("u1", "other.example")).toEqual([]);
+      expect(beginSelection("u2", "shop.example")).toEqual([]);
+      expect(loadSelection("u1")).toEqual(pass);
     });
   });
 });
