@@ -4,6 +4,7 @@ import type {
   ProductDraft,
   ProductCreate,
   ImportPreview,
+  ImportCandidates,
   ImportJob,
   Avatar,
   AvatarCreate,
@@ -130,10 +131,17 @@ export const api = {
       method: "POST",
       json: { store_url: storeUrl },
     }),
-  startImport: (storeUrl: string) =>
+  listImportCandidates: (storeUrl: string, platform?: string) =>
+    bff<ImportCandidates>(`products/import/candidates`, {
+      method: "POST",
+      json: { store_url: storeUrl, platform },
+    }),
+  /** `sourceUrls` is the reviewed subset; omitting it keeps the old
+   * import-the-whole-catalog behaviour. */
+  startImport: (storeUrl: string, sourceUrls?: string[], platform?: string) =>
     bff<ImportJob>(`products/import`, {
       method: "POST",
-      json: { store_url: storeUrl },
+      json: { store_url: storeUrl, platform, source_urls: sourceUrls },
     }),
   getImport: (jobId: string) => bff<ImportJob>(`products/import/${jobId}`),
   createProduct: (payload: ProductCreate, onProgress?: (fraction: number) => void) =>

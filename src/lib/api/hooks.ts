@@ -26,6 +26,7 @@ export const qk = {
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
   import: (id: string) => ["import", id] as const,
+  importCandidates: (storeUrl: string) => ["import-candidates", storeUrl] as const,
 };
 
 /** Backend error message when it's human-readable, else the fallback. */
@@ -113,6 +114,18 @@ export function useImportJob(id: string) {
   });
 }
 
+/** The store catalog the review step chooses from. A *query*, not a mutation, so
+ * the walk is cached under the store URL: the list survives a remount and a
+ * restored-from-storage selection can be re-hydrated on page load. */
+export function useImportCandidates(target: { storeUrl: string; platform?: string } | null) {
+  return useQuery({
+    queryKey: qk.importCandidates(target?.storeUrl ?? ""),
+    queryFn: () => api.listImportCandidates(target!.storeUrl, target?.platform),
+    enabled: Boolean(target?.storeUrl),
+    staleTime: 5 * 60_000,
+  });
+}
+
 /** Polls every 4s while the job is still working. */
 export function useVideoJob(id: string) {
   return useQuery({
@@ -187,7 +200,8 @@ export function usePreviewImport() {
 export function useStartImport(messages: { startError: string }) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (storeUrl: string) => api.startImport(storeUrl),
+    mutationFn: (vars: { storeUrl: string; sourceUrls?: string[]; platform?: string }) =>
+      api.startImport(vars.storeUrl, vars.sourceUrls, vars.platform),
     onSuccess: (job) => qc.setQueryData(qk.import(job.job_id), job),
     onError: (err) => toast.error(errMsg(err, messages.startError)),
   });

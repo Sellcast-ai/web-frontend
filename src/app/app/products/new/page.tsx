@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { memo, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -20,12 +20,21 @@ import {
   useParseProduct,
   useCreateProduct,
   usePreviewImport,
+  useImportCandidates,
   useStartImport,
   useImportJob,
   qk,
 } from "@/lib/api/hooks";
-import type { ProductDraft, SourcePlatform } from "@/lib/api/types";
+import type { ImportCandidate, ProductDraft, SourcePlatform } from "@/lib/api/types";
 import { CATEGORIES } from "@/lib/categories";
+import { priceRange } from "@/lib/format";
+import {
+  clearSelection,
+  importOutcome,
+  loadSelection,
+  saveSelection,
+  selectedUrls,
+} from "@/lib/import-selection";
 import { toast } from "@/lib/toast";
 import { Button } from "@/components/ui/button";
 import { UploadProgress } from "@/components/ui/upload-progress";
@@ -570,8 +579,9 @@ function NewProductInner() {
   );
 }
 
-/** "Import your whole store" — paste a store URL, preview the catalog, then
- * kick off a batch import and watch it fill up My Products (report §4). */
+/** "Import your whole store" — paste a store URL, preview the catalog, review
+ * which products to keep, then kick off a batch import of just those and watch
+ * it fill up My Products (report §4). */
 function StoreImport() {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
@@ -584,17 +594,41 @@ function StoreImport() {
   const { data: job } = useImportJob(jobId ?? "");
   const done = useRef(false);
 
+  /* A reload mid-review shouldn't cost the user their deselection pass, so both
+   * the catalog being reviewed and the opt-outs seed from sessionStorage. Read
+   * once, lazily: the restored value changes no markup until the catalog query
+   * resolves, so it can't desync from the server-rendered HTML. */
+  const [saved] = useState(loadSelection);
+  const [review, setReview] = useState<{ storeUrl: string; platform?: string } | null>(
+    saved ? { storeUrl: saved.storeUrl } : null,
+  );
+  /** Everything arrives selected, so the review step tracks the opt-*outs*. */
+  const [deselected, setDeselected] = useState<Set<string>>(
+    () => new Set(saved?.deselected ?? []),
+  );
+
+  const candidates = useImportCandidates(review);
+  const candidateData = candidates.data;
+
+  useEffect(() => {
+    if (review) saveSelection({ storeUrl: review.storeUrl, deselected: [...deselected] });
+  }, [review, deselected]);
+
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
     if (!job || done.current) return;
     if (job.status === "succeeded" || job.status === "partial") {
       done.current = true;
       qc.invalidateQueries({ queryKey: qk.myProducts });
-      toast.success(
-        job.status === "partial"
-          ? tt("importPartial", { count: job.products_upserted })
-          : tt("importSucceeded", { count: job.products_upserted }),
-      );
+      const outcome = importOutcome(job);
+      if (outcome.key === "importNone") {
+        // nothing landed: report it honestly and leave the user on the review
+        // step (see `jobFellThrough`) rather than on an unchanged product list
+        toast.error(tt(outcome.key, outcome.values));
+        return;
+      }
+      clearSelection();
+      toast.success(tt(outcome.key, outcome.values));
       router.push("/app/products");
     } else if (job.status === "failed") {
       toast.error(job.error ?? tt("importFailed"));
@@ -602,10 +636,52 @@ function StoreImport() {
   }, [job, qc, router, tt]);
 
   const previewData = preview.data;
+  const untitledLabel = t("untitledProduct");
 
-  // step 3 — an import is running: live progress from upserted / found
-  // (a failed job falls through to the preview step so the user can retry)
-  if (jobId && job && job.status !== "failed") {
+  // stable across renders so the memoized rows don't all invalidate on a toggle
+  const toggleCandidate = useCallback((sourceUrl: string) => {
+    setDeselected((prev) => {
+      const next = new Set(prev);
+      if (!next.delete(sourceUrl)) next.add(sourceUrl);
+      return next;
+    });
+  }, []);
+
+  function reviewStore(url: string, platform?: string) {
+    setDeselected(new Set());
+    setReview({ storeUrl: url, platform });
+  }
+
+  function leaveReview() {
+    clearSelection();
+    setReview(null);
+    setDeselected(new Set());
+    preview.reset();
+  }
+
+  function runImport(sourceUrls: string[], platform: string) {
+    start.mutate(
+      { storeUrl: review?.storeUrl ?? storeUrl, sourceUrls, platform },
+      {
+        onSuccess: (created) => {
+          done.current = false;
+          setJobId(created.job_id);
+        },
+      },
+    );
+  }
+
+  /** A job that failed outright, or finished without importing a single product,
+   * has nothing to show on the progress card — drop back to the review step with
+   * the selection intact so the user can retry it. */
+  const jobFellThrough =
+    !!job &&
+    (job.status === "failed" ||
+      ((job.status === "succeeded" || job.status === "partial") &&
+        job.products_upserted === 0));
+
+  // step 4 — an import is running: live progress from upserted / found
+  if (jobId && job && !jobFellThrough) {
     const active = job.status === "queued" || job.status === "running";
     const fraction = job.products_found > 0 ? job.products_upserted / job.products_found : 0;
     return (
@@ -631,7 +707,129 @@ function StoreImport() {
     );
   }
 
-  // step 2 — preview succeeded: confirm before pulling the whole catalog
+  // step 3 — walking the catalog for review (also the reload-restore path)
+  if (review && !candidateData) {
+    return (
+      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 shrink-0 text-brand-600" />
+          {t("reviewTitle", { domain: review.storeUrl })}
+        </p>
+        {candidates.isError ? (
+          <>
+            <p className="mt-2 flex items-start gap-2 text-sm text-ink">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+              {(candidates.error as Error)?.message || tt("listCandidatesFailed")}
+            </p>
+            <div className="mt-4 flex items-center gap-3">
+              <Button size="lg" onClick={() => candidates.refetch()}>
+                {t("retryReview")}
+              </Button>
+              <button
+                type="button"
+                className="text-sm font-semibold text-muted-foreground hover:text-ink"
+                onClick={leaveReview}
+              >
+                {t("tryDifferentStore")}
+              </button>
+            </div>
+          </>
+        ) : (
+          <p className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+            <Loader2 className="h-4 w-4 animate-spin text-brand-600" />
+            {t("readingCatalog")}
+          </p>
+        )}
+      </div>
+    );
+  }
+
+  // step 3 — review: everything the store has, all selected, user opts products out
+  if (candidateData) {
+    const list = candidateData.candidates;
+    const chosen = selectedUrls(list, deselected);
+    return (
+      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 shrink-0 text-brand-600" />
+          {t("reviewTitle", { domain: candidateData.store_domain })}
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("reviewSubtitle")}</p>
+        {candidateData.truncated && (
+          <p className="mt-2 flex items-start gap-2 text-sm text-ink">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+            {t("reviewTruncated", { count: list.length })}
+          </p>
+        )}
+
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+          <p aria-live="polite" className="text-sm font-semibold text-ink">
+            {t("selectedCount", { selected: chosen.length, total: list.length })}
+          </p>
+          <div className="flex items-center gap-3 text-sm font-semibold">
+            <button
+              type="button"
+              onClick={() => setDeselected(new Set())}
+              disabled={chosen.length === list.length}
+              className="text-brand-700 disabled:text-muted-foreground disabled:opacity-50"
+            >
+              {t("selectAll")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeselected(new Set(list.map((c) => c.source_url)))}
+              disabled={chosen.length === 0}
+              className="text-brand-700 disabled:text-muted-foreground disabled:opacity-50"
+            >
+              {t("deselectAll")}
+            </button>
+          </div>
+        </div>
+
+        {/* The whole catalog renders — no page cap, so select/deselect all can
+         * never mean "just the ones you can see". `content-visibility` plus lazy
+         * images keep the offscreen rows off the layout/network bill, and the row
+         * is memoized so one checkbox doesn't re-render the other 200. */}
+        <div className="mt-3 max-h-[26rem] overflow-y-auto rounded-xl border border-border">
+          {list.map((c) => (
+            <CandidateRow
+              key={c.source_url}
+              candidate={c}
+              selected={!deselected.has(c.source_url)}
+              untitledLabel={untitledLabel}
+              onToggle={toggleCandidate}
+            />
+          ))}
+        </div>
+
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button
+            size="lg"
+            disabled={start.isPending || chosen.length === 0}
+            onClick={() => runImport(chosen, candidateData.platform)}
+          >
+            {start.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <Store className="h-4 w-4" />
+                {t("importSelected", { count: chosen.length })}
+              </>
+            )}
+          </Button>
+          <button
+            type="button"
+            className="text-sm font-semibold text-muted-foreground hover:text-ink"
+            onClick={leaveReview}
+          >
+            {t("tryDifferentStore")}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // step 2 — preview succeeded: confirm before walking the catalog for review
   if (previewData) {
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
@@ -656,23 +854,9 @@ function StoreImport() {
           </div>
         )}
         <div className="mt-4 flex items-center gap-3">
-          <Button
-            size="lg"
-            disabled={start.isPending}
-            onClick={() =>
-              start.mutate(storeUrl.trim(), {
-                onSuccess: (created) => setJobId(created.job_id),
-              })
-            }
-          >
-            {start.isPending ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <>
-                <Store className="h-4 w-4" />
-                {t("importAllProducts")}
-              </>
-            )}
+          <Button size="lg" onClick={() => reviewStore(storeUrl.trim(), previewData.platform)}>
+            <Store className="h-4 w-4" />
+            {t("chooseProducts")}
           </Button>
           <button
             type="button"
@@ -716,6 +900,58 @@ function StoreImport() {
     </>
   );
 }
+
+/** One reviewable store product: enough to decide on without opening anything
+ * (image, title, price). Memoized because the review list renders the store's
+ * whole catalog, so an unmemoized row makes every checkbox O(catalog). */
+const CandidateRow = memo(function CandidateRow({
+  candidate,
+  selected,
+  untitledLabel,
+  onToggle,
+}: {
+  candidate: ImportCandidate;
+  selected: boolean;
+  untitledLabel: string;
+  onToggle: (sourceUrl: string) => void;
+}) {
+  return (
+    <label className="flex items-center gap-3 border-b border-border px-3 py-2 last:border-b-0 hover:bg-accent/40 [contain-intrinsic-size:auto_64px] [content-visibility:auto]">
+      <input
+        type="checkbox"
+        checked={selected}
+        onChange={() => onToggle(candidate.source_url)}
+        className="h-4 w-4 shrink-0 accent-brand-500"
+      />
+      <span className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-border bg-accent">
+        {candidate.image && (
+          <img
+            src={candidate.image}
+            alt=""
+            loading="lazy"
+            className={cn(
+              "h-full w-full object-cover",
+              !selected && "opacity-40 grayscale",
+            )}
+          />
+        )}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span
+          className={cn(
+            "block truncate text-sm font-medium text-ink",
+            !selected && "text-muted-foreground line-through",
+          )}
+        >
+          {candidate.title || untitledLabel}
+        </span>
+        <span className="block text-xs text-muted-foreground">
+          {priceRange(candidate.price_min, candidate.price_max, candidate.currency ?? "USD")}
+        </span>
+      </span>
+    </label>
+  );
+});
 
 function Field({
   label,
