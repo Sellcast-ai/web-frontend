@@ -1,11 +1,11 @@
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import type { ImportCandidate } from "@/lib/api/types";
 import {
+  beginSelection,
   clearSelection,
   importOutcome,
   importRequested,
   loadSelection,
-  resumeFor,
   saveSelection,
   selectedUrls,
 } from "./import-selection";
@@ -150,26 +150,6 @@ describe("importRequested", () => {
   });
 });
 
-describe("resumeFor", () => {
-  const saved = {
-    userId: "u1",
-    storeUrl: "https://shop.example",
-    deselected: ["/a"],
-  };
-
-  it("carries the pass back into a review of the same store", () => {
-    expect(resumeFor(saved, "https://shop.example")).toEqual(["/a"]);
-  });
-
-  it("starts a different store all-selected", () => {
-    expect(resumeFor(saved, "https://other.example")).toEqual([]);
-  });
-
-  it("has nothing to carry when nothing was stored", () => {
-    expect(resumeFor(null, "https://shop.example")).toEqual([]);
-  });
-});
-
 describe("selection persistence", () => {
   // vitest runs in the node environment, so stand up just enough of the
   // Storage surface these three functions touch.
@@ -222,5 +202,39 @@ describe("selection persistence", () => {
     expect(loadSelection("u1")).toBeNull();
     window.sessionStorage.setItem("lumi.import-selection", JSON.stringify({ storeUrl: 1 }));
     expect(loadSelection("u1")).toBeNull();
+  });
+
+  describe("beginSelection", () => {
+    it("carries the pass back into a review of the same store", () => {
+      saveSelection(pass);
+      expect(beginSelection("u1", "https://shop.example")).toEqual({
+        userId: "u1",
+        deselected: ["/a", "/b"],
+      });
+    });
+
+    it("starts a different store all-selected", () => {
+      saveSelection(pass);
+      expect(beginSelection("u1", "https://other.example")).toEqual({
+        userId: "u1",
+        deselected: [],
+      });
+    });
+
+    it("opens nothing until the reader is known, so a write can never precede a read", () => {
+      // the caller has no identity to save under, so an unresolved user cannot
+      // overwrite a long stored pass with the empty set it would have started from
+      saveSelection(pass);
+      expect(beginSelection(undefined, "https://shop.example")).toBeNull();
+      expect(loadSelection("u1")).toEqual(pass);
+    });
+
+    it("gives the next account in the same tab a clean slate", () => {
+      saveSelection(pass);
+      expect(beginSelection("u2", "https://shop.example")).toEqual({
+        userId: "u2",
+        deselected: [],
+      });
+    });
   });
 });

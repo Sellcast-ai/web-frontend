@@ -67,10 +67,20 @@ export function clearSelection(): void {
   }
 }
 
-/** What a review of `url` may carry over from a stored pass: the opt-outs, and
- * only for the store they were made against. */
-export function resumeFor(saved: StoredSelection | null, url: string): string[] {
-  return saved && saved.storeUrl === url ? saved.deselected : [];
+/** Opens a review of `url` for whoever is signed in: the opt-outs to start from
+ * (carried over only for the store they were made against - a different store
+ * starts all-selected) and the identity to write them back under.
+ *
+ * `null` when there is no reader yet, and that is the whole point: the caller
+ * has nothing to write with until a read has succeeded, so an unresolved user
+ * can't overwrite a long stored pass with an empty one. */
+export function beginSelection(
+  userId: string | undefined,
+  url: string,
+): { userId: string; deselected: string[] } | null {
+  if (!userId) return null;
+  const saved = loadSelection(userId);
+  return { userId, deselected: saved?.storeUrl === url ? saved.deselected : [] };
 }
 
 /** The chosen subset, in catalog order. Filtering the live candidate list means a

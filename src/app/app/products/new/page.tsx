@@ -30,11 +30,10 @@ import type { ImportCandidate, ProductDraft, SourcePlatform } from "@/lib/api/ty
 import { CATEGORIES } from "@/lib/categories";
 import { priceRange } from "@/lib/format";
 import {
+  beginSelection,
   clearSelection,
   importOutcome,
   importRequested,
-  loadSelection,
-  resumeFor,
   saveSelection,
   selectedUrls,
 } from "@/lib/import-selection";
@@ -596,8 +595,10 @@ function StoreImport() {
   const done = useRef(false);
   const userId = useCurrentUser().data?.id;
 
+  /** The store under review, plus the user the stored pass was read for - the
+   * only identity it may be written back under (see `beginSelection`). */
   const [review, setReview] = useState<
-    { storeUrl: string; platform?: string; domain?: string } | null
+    { storeUrl: string; platform: string; domain: string; userId: string } | null
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
@@ -612,12 +613,18 @@ function StoreImport() {
   /* A reload mid-review shouldn't cost the user their deselection pass, so the
    * opt-outs are persisted against the store (and the user) they were made for.
    * Only the pass: re-entering the catalog walk costs real money at the parser,
-   * so a review only ever starts from a click (`reviewStore`), never a mount. */
-  const reviewedStore = review?.storeUrl;
+   * so a review only ever starts from a click (`reviewStore`), never a mount.
+   * The write goes under the identity `beginSelection` read with, never the live
+   * hook: a read that hasn't resolved yields no review, so it can't clobber a
+   * stored pass with the empty set it started from. */
   useEffect(() => {
-    if (!reviewedStore || !userId) return;
-    saveSelection({ userId, storeUrl: reviewedStore, deselected: [...deselected] });
-  }, [userId, reviewedStore, deselected]);
+    if (!review) return;
+    saveSelection({
+      userId: review.userId,
+      storeUrl: review.storeUrl,
+      deselected: [...deselected],
+    });
+  }, [review, deselected]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -659,18 +666,20 @@ function StoreImport() {
   /** The only way into the catalog walk, so it can never fire without a click.
    * The stored pass is read here rather than at mount: by the time there is a
    * click the current user is known, so a pass belonging to whoever used the tab
-   * before is discarded instead of restored. Opt-outs carry over only for the
-   * store they were made against; a different store starts all-selected. */
-  function reviewStore(url: string, platform?: string, domain?: string) {
-    setDeselected(new Set(resumeFor(loadSelection(userId), url)));
+   * before is discarded instead of restored. */
+  function reviewStore(url: string, platform: string, domain: string) {
+    const opened = beginSelection(userId, url);
+    if (!opened) return;
+    setDeselected(new Set(opened.deselected));
     setJobId(null);
     setRequested(null);
     done.current = false;
-    setReview({ storeUrl: url, platform, domain });
+    setReview({ storeUrl: url, platform, domain, userId: opened.userId });
   }
 
-  function leaveReview() {
-    clearSelection();
+  /** Backing out of a walk that never landed. The user wanted out of the wait,
+   * not out of their deselection pass, so the stored pass stays where it is. */
+  function leaveWalk() {
     setReview(null);
     setDeselected(new Set());
     setJobId(null);
@@ -679,12 +688,19 @@ function StoreImport() {
     preview.reset();
   }
 
-  function runImport(sourceUrls: string[], platform: string) {
+  /** Leaving a review the user has actually seen: they're moving on, so the
+   * stored pass goes with it. */
+  function discardReview() {
+    clearSelection();
+    leaveWalk();
+  }
+
+  function runImport(store: string, sourceUrls: string[], platform: string) {
     // no client-side pre-flight guard against a double start: the backend hands
     // back the caller's existing active job instead of enqueueing a second, so a
     // reload-then-click can't buy the same import twice
     start.mutate(
-      { storeUrl: review?.storeUrl ?? storeUrl, sourceUrls, platform },
+      { storeUrl: store, sourceUrls, platform },
       {
         onSuccess: (created) => {
           done.current = false;
@@ -741,7 +757,7 @@ function StoreImport() {
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
-          {t("reviewTitle", { domain: review.domain ?? review.storeUrl })}
+          {t("reviewTitle", { domain: review.domain })}
         </p>
         {/* `isError` stays true for the whole of a retry (only `fetchStatus`
           * moves), so the card has to read the fetch itself — otherwise it sits
@@ -760,7 +776,7 @@ function StoreImport() {
               <button
                 type="button"
                 className="text-sm font-semibold text-muted-foreground hover:text-ink"
-                onClick={leaveReview}
+                onClick={leaveWalk}
               >
                 {t("tryDifferentStore")}
               </button>
@@ -777,7 +793,7 @@ function StoreImport() {
             <button
               type="button"
               className="mt-4 text-sm font-semibold text-muted-foreground hover:text-ink"
-              onClick={leaveReview}
+              onClick={leaveWalk}
             >
               {t("tryDifferentStore")}
             </button>
@@ -788,7 +804,7 @@ function StoreImport() {
   }
 
   // step 3 — review: everything the store has, all selected, user opts products out
-  if (candidateData) {
+  if (review && candidateData) {
     const list = candidateData.candidates;
     const chosen = selectedUrls(list, deselected);
     // a walk that succeeded but listed nothing: say so, don't render an empty
@@ -802,7 +818,7 @@ function StoreImport() {
           </p>
           <p className="mt-2 text-sm text-muted-foreground">{t("reviewEmpty")}</p>
           <div className="mt-4">
-            <Button size="lg" onClick={leaveReview}>
+            <Button size="lg" onClick={discardReview}>
               {t("tryDifferentStore")}
             </Button>
           </div>
@@ -867,7 +883,7 @@ function StoreImport() {
           <Button
             size="lg"
             disabled={start.isPending || chosen.length === 0}
-            onClick={() => runImport(chosen, candidateData.platform)}
+            onClick={() => runImport(review.storeUrl, chosen, candidateData.platform)}
           >
             {start.isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -881,7 +897,7 @@ function StoreImport() {
           <button
             type="button"
             className="text-sm font-semibold text-muted-foreground hover:text-ink"
-            onClick={leaveReview}
+            onClick={discardReview}
           >
             {t("tryDifferentStore")}
           </button>
@@ -917,6 +933,8 @@ function StoreImport() {
         <div className="mt-4 flex items-center gap-3">
           <Button
             size="lg"
+            // the review can't open before we know whose stored pass to read
+            disabled={!userId}
             onClick={() =>
               reviewStore(storeUrl.trim(), previewData.platform, previewData.store_domain)
             }
