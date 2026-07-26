@@ -234,6 +234,10 @@
         "deselectAll": "Bỏ chọn tất cả",
         "importSelected": "Nhập {count, plural, one {# sản phẩm} other {# sản phẩm}}",
         "untitledProduct": "Sản phẩm chưa có tên",
+        "reviewEmpty": "Chúng tôi không liệt kê được sản phẩm nào từ cửa hàng này. Hãy thử cửa hàng khác, hoặc thêm sản phẩm bằng cách dán từng liên kết.",
+        "resumeReview": "Bạn đang chọn sản phẩm từ {domain}.",
+        "resumeReviewAction": "Tiếp tục từ chỗ đang dở",
+        "discardReview": "Bắt đầu lại",
         "tryDifferentStore": "Hãy thử một cửa hàng khác",
         "placeholder": "your-store.myshopify.com — nhập toàn bộ cửa hàng của bạn",
         "preview": "Xem trước"

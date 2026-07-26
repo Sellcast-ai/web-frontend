@@ -234,6 +234,10 @@
         "deselectAll": "Desmarcar tudo",
         "importSelected": "Importar {count, plural, one {# produto} other {# produtos}}",
         "untitledProduct": "Produto sem título",
+        "reviewEmpty": "Não conseguimos listar nenhum produto desta loja. Experimente outra loja ou adicione produtos colando cada link.",
+        "resumeReview": "Você estava escolhendo produtos de {domain}.",
+        "resumeReviewAction": "Continue de onde parou",
+        "discardReview": "Começar de novo",
         "tryDifferentStore": "Experimente uma loja diferente",
         "placeholder": "your-store.myshopify.com – importe toda a sua loja",
         "preview": "Visualização"

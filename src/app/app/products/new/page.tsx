@@ -31,6 +31,7 @@ import { priceRange } from "@/lib/format";
 import {
   clearSelection,
   importOutcome,
+  importRequested,
   loadSelection,
   saveSelection,
   selectedUrls,
@@ -590,29 +591,42 @@ function StoreImport() {
   const preview = usePreviewImport();
   const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
-  const [jobId, setJobId] = useState<string | null>(null);
-  const { data: job } = useImportJob(jobId ?? "");
   const done = useRef(false);
 
-  /* A reload mid-review shouldn't cost the user their deselection pass, so both
-   * the catalog being reviewed and the opt-outs seed from sessionStorage. Read
-   * once, lazily: the restored value changes no markup until the catalog query
-   * resolves, so it can't desync from the server-rendered HTML. */
-  const [saved] = useState(loadSelection);
-  const [review, setReview] = useState<{ storeUrl: string; platform?: string } | null>(
-    saved ? { storeUrl: saved.storeUrl } : null,
-  );
+  /* A reload mid-review shouldn't cost the user their deselection pass, so the
+   * opt-outs (and any import they were already committed as) seed from
+   * sessionStorage. Read once, lazily: the restored value changes no markup
+   * until a query resolves, so it can't desync from the server-rendered HTML.
+   * What it deliberately does *not* restore is the review target: re-entering
+   * the catalog walk costs real money at the parser, so it only ever starts
+   * from a click (`reviewStore`), never from a mount. */
+  const [saved, setSaved] = useState(loadSelection);
+  const [review, setReview] = useState<{ storeUrl: string; platform?: string } | null>(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(
     () => new Set(saved?.deselected ?? []),
   );
+  const [jobId, setJobId] = useState<string | null>(() => saved?.jobId ?? null);
+  /** Exactly how many `source_urls` the running import carries. */
+  const [requested, setRequested] = useState<number | null>(() => saved?.requested ?? null);
+  const { data: job } = useImportJob(jobId ?? "");
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
 
+  const ownedStoreUrl = review?.storeUrl ?? saved?.storeUrl ?? null;
+  const ownedPlatform = review?.platform ?? saved?.platform;
+
   useEffect(() => {
-    if (review) saveSelection({ storeUrl: review.storeUrl, deselected: [...deselected] });
-  }, [review, deselected]);
+    if (!ownedStoreUrl) return;
+    saveSelection({
+      storeUrl: ownedStoreUrl,
+      platform: ownedPlatform,
+      deselected: [...deselected],
+      jobId,
+      requested,
+    });
+  }, [ownedStoreUrl, ownedPlatform, deselected, jobId, requested]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -620,7 +634,7 @@ function StoreImport() {
     if (job.status === "succeeded" || job.status === "partial") {
       done.current = true;
       qc.invalidateQueries({ queryKey: qk.myProducts });
-      const outcome = importOutcome(job);
+      const outcome = importOutcome(job, requested);
       if (outcome.key === "importNone") {
         // nothing landed: report it honestly and leave the user on the review
         // step (see `jobFellThrough`) rather than on an unchanged product list
@@ -633,7 +647,7 @@ function StoreImport() {
     } else if (job.status === "failed") {
       toast.error(job.error ?? tt("importFailed"));
     }
-  }, [job, qc, router, tt]);
+  }, [job, requested, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -647,15 +661,24 @@ function StoreImport() {
     });
   }, []);
 
+  /** The only way into the catalog walk, so it can never fire without a click.
+   * Opt-outs carry over only for the store they were made against; a different
+   * store starts all-selected. */
   function reviewStore(url: string, platform?: string) {
-    setDeselected(new Set());
+    setDeselected(new Set(saved?.storeUrl === url ? saved.deselected : []));
     setReview({ storeUrl: url, platform });
   }
 
   function leaveReview() {
     clearSelection();
+    setSaved(null);
     setReview(null);
     setDeselected(new Set());
+    // only reachable once the job has nothing left to show (`jobFellThrough`),
+    // so drop it rather than carrying a dead handle into the next store
+    setJobId(null);
+    setRequested(null);
+    done.current = false;
     preview.reset();
   }
 
@@ -665,6 +688,7 @@ function StoreImport() {
       {
         onSuccess: (created) => {
           done.current = false;
+          setRequested(sourceUrls.length);
           setJobId(created.job_id);
         },
       },
@@ -680,10 +704,13 @@ function StoreImport() {
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
 
-  // step 4 — an import is running: live progress from upserted / found
+  // step 4 — an import is running: live progress against the requested subset
   if (jobId && job && !jobFellThrough) {
     const active = job.status === "queued" || job.status === "running";
-    const fraction = job.products_found > 0 ? job.products_upserted / job.products_found : 0;
+    // same helper the finished-import toast uses, so the bar and the toast can
+    // never quote different totals
+    const total = importRequested(job, requested);
+    const fraction = total > 0 ? job.products_upserted / total : 0;
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
@@ -694,7 +721,7 @@ function StoreImport() {
           {active
             ? t("importingProgress", {
                 upserted: job.products_upserted,
-                found: job.products_found,
+                found: total,
               })
             : t("wrappingUp")}
         </p>
@@ -748,6 +775,24 @@ function StoreImport() {
   if (candidateData) {
     const list = candidateData.candidates;
     const chosen = selectedUrls(list, deselected);
+    // a walk that succeeded but listed nothing: say so, don't render an empty
+    // box over "0 of 0 selected"
+    if (list.length === 0) {
+      return (
+        <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+          <p className="flex items-center gap-2 font-display font-semibold text-ink">
+            <Store className="h-4 w-4 shrink-0 text-brand-600" />
+            {t("reviewTitle", { domain: candidateData.store_domain })}
+          </p>
+          <p className="mt-2 text-sm text-muted-foreground">{t("reviewEmpty")}</p>
+          <div className="mt-4">
+            <Button size="lg" onClick={leaveReview}>
+              {t("tryDifferentStore")}
+            </Button>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
@@ -895,6 +940,29 @@ function StoreImport() {
         <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
           <p className="text-ink">{(preview.error as Error)?.message}</p>
+        </div>
+      )}
+      {/* An unfinished deselection pass is one click from where it was - the
+        * click is the point, since the walk behind it is billed. */}
+      {saved && (!jobId || jobFellThrough) && (
+        <div className="mt-3 flex flex-wrap items-center gap-3 rounded-xl border border-border bg-card p-3 text-sm">
+          <p className="text-muted-foreground">
+            {t("resumeReview", { domain: saved.storeUrl })}
+          </p>
+          <button
+            type="button"
+            className="font-semibold text-brand-700"
+            onClick={() => reviewStore(saved.storeUrl, saved.platform)}
+          >
+            {t("resumeReviewAction")}
+          </button>
+          <button
+            type="button"
+            className="font-semibold text-muted-foreground hover:text-ink"
+            onClick={leaveReview}
+          >
+            {t("discardReview")}
+          </button>
         </div>
       )}
     </>

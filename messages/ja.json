@@ -234,6 +234,10 @@
         "deselectAll": "すべて解除",
         "importSelected": "{count, plural, one {# 個の商品} other {# 個の商品}} をインポート",
         "untitledProduct": "名称未設定の商品",
+        "reviewEmpty": "このストアからは商品を一件も取得できませんでした。別のストアを試すか、リンクを貼り付けて商品を追加してください。",
+        "resumeReview": "{domain} から商品を選んでいる途中でした。",
+        "resumeReviewAction": "続きから再開する",
+        "discardReview": "最初からやり直す",
         "tryDifferentStore": "別の店舗を試してみる",
         "placeholder": "your-store.myshopify.com — ストア全体をインポートします",
         "preview": "プレビュー"

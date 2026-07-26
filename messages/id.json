@@ -234,6 +234,10 @@
         "deselectAll": "Hapus semua pilihan",
         "importSelected": "Impor {count, plural, one {# produk} other {# produk}}",
         "untitledProduct": "Produk tanpa nama",
+        "reviewEmpty": "Kami tidak menemukan satu pun produk di toko ini. Coba toko lain, atau tambahkan produk dengan menempelkan tiap tautan.",
+        "resumeReview": "Anda sedang memilih produk dari {domain}.",
+        "resumeReviewAction": "Lanjutkan dari tempat terakhir",
+        "discardReview": "Mulai dari awal",
         "tryDifferentStore": "Coba toko lain",
         "placeholder": "toko-anda.myshopify.com — impor seluruh toko Anda",
         "preview": "Pratinjau"

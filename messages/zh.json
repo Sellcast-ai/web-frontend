@@ -234,6 +234,10 @@
         "deselectAll": "全部取消",
         "importSelected": "导入 {count, plural, one {# 件商品} other {# 件商品}}",
         "untitledProduct": "未命名商品",
+        "reviewEmpty": "我们没能从这家商店列出任何商品。请尝试其他商店，或逐个粘贴链接来添加商品。",
+        "resumeReview": "你之前在从 {domain} 选择商品。",
+        "resumeReviewAction": "从上次的地方继续",
+        "discardReview": "重新开始",
         "tryDifferentStore": "尝试不同的商店",
         "placeholder": "your-store.myshopify.com — 导入您的整个商店",
         "preview": "预览"

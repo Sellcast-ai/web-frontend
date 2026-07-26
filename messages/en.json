@@ -234,6 +234,10 @@
         "deselectAll": "Deselect all",
         "importSelected": "Import {count, plural, one {# product} other {# products}}",
         "untitledProduct": "Untitled product",
+        "reviewEmpty": "We couldn’t list any products from this store. Try a different store, or add products by pasting each link.",
+        "resumeReview": "You were choosing products from {domain}.",
+        "resumeReviewAction": "Pick up where you left off",
+        "discardReview": "Start over",
         "tryDifferentStore": "Try a different store",
         "placeholder": "your-store.myshopify.com — import your whole store",
         "preview": "Preview"

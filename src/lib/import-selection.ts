@@ -6,7 +6,19 @@ import type { ImportCandidate, ImportJob } from "@/lib/api/types";
 
 const STORAGE_KEY = "lumi.import-selection";
 
-export type StoredSelection = { storeUrl: string; deselected: string[] };
+export type StoredSelection = {
+  /** Only ever used to match the opt-outs back to the store they belong to, and
+   * to offer a one-click resume - never to re-enter the (billed) catalog walk
+   * on its own. */
+  storeUrl: string;
+  platform?: string;
+  deselected: string[];
+  /** The import this selection was committed as, so a reload lands on the
+   * running job's progress instead of an armed "Import N products" button. */
+  jobId?: string | null;
+  /** How many products were actually sent as `source_urls`. */
+  requested?: number | null;
+};
 
 /** sessionStorage so a reload doesn't throw away a long deselection pass.
  * Every access is guarded: no `window` on the server, and Safari private mode
@@ -18,7 +30,16 @@ export function loadSelection(): StoredSelection | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as StoredSelection;
     if (typeof parsed?.storeUrl !== "string" || !Array.isArray(parsed.deselected)) return null;
-    return { storeUrl: parsed.storeUrl, deselected: parsed.deselected.filter((u) => typeof u === "string") };
+    return {
+      storeUrl: parsed.storeUrl,
+      platform: typeof parsed.platform === "string" ? parsed.platform : undefined,
+      deselected: parsed.deselected.filter((u) => typeof u === "string"),
+      jobId: typeof parsed.jobId === "string" ? parsed.jobId : null,
+      requested:
+        typeof parsed.requested === "number" && Number.isFinite(parsed.requested)
+          ? parsed.requested
+          : null,
+    };
   } catch {
     return null;
   }
@@ -58,12 +79,24 @@ export type ImportOutcome =
   | { key: "importPartial"; values: { imported: number; requested: number; failed: number } }
   | { key: "importNone"; values: { requested: number } };
 
+/** How many products the import was asked for. The client knows this exactly:
+ * it is the length of the `source_urls` it sent, so prefer it over
+ * `products_found`, which counts the store's catalog, not the chosen subset.
+ * The single source for both the in-flight progress bar and the finished toast,
+ * so the two can never disagree. */
+export function importRequested(job: OutcomeCounts, requested?: number | null): number {
+  if (typeof requested === "number" && requested > 0) {
+    return Math.max(requested, job.products_upserted);
+  }
+  return Math.max(job.products_found, job.products_upserted + job.products_failed);
+}
+
 /** Which toast a finished import earns, from the counters rather than `status` —
  * a job can report `succeeded` while some of the selected products failed to
  * read, and calling that a clean success is a lie. */
-export function importOutcome(job: OutcomeCounts): ImportOutcome {
+export function importOutcome(job: OutcomeCounts, requestedCount?: number | null): ImportOutcome {
   const imported = job.products_upserted;
-  const requested = Math.max(job.products_found, imported + job.products_failed);
+  const requested = importRequested(job, requestedCount);
   const failed = Math.max(requested - imported, 0);
   if (imported === 0) return { key: "importNone", values: { requested } };
   if (failed > 0) return { key: "importPartial", values: { imported, requested, failed } };

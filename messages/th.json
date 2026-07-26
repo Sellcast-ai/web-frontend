@@ -234,6 +234,10 @@
         "deselectAll": "ยกเลิกการเลือกทั้งหมด",
         "importSelected": "นำเข้า {count, plural, one {สินค้า # รายการ} other {สินค้า # รายการ}}",
         "untitledProduct": "สินค้าที่ไม่มีชื่อ",
+        "reviewEmpty": "เราไม่พบสินค้าใดเลยจากร้านค้านี้ ลองร้านอื่น หรือเพิ่มสินค้าโดยวางลิงก์ของแต่ละรายการ",
+        "resumeReview": "คุณกำลังเลือกสินค้าจาก {domain} อยู่",
+        "resumeReviewAction": "ทำต่อจากที่ค้างไว้",
+        "discardReview": "เริ่มใหม่",
         "tryDifferentStore": "ลองร้านอื่น",
         "placeholder": "your-store.myshopify.com — นำเข้าร้านค้าทั้งหมดของคุณ",
         "preview": "ดูตัวอย่าง"

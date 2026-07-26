@@ -3,6 +3,7 @@ import type { ImportCandidate } from "@/lib/api/types";
 import {
   clearSelection,
   importOutcome,
+  importRequested,
   loadSelection,
   saveSelection,
   selectedUrls,
@@ -77,6 +78,42 @@ describe("importOutcome", () => {
       importOutcome({ products_found: 5, products_upserted: 0, products_failed: 5 }),
     ).toEqual({ key: "importNone", values: { requested: 5 } });
   });
+
+  it("counts against the requested subset, not the store catalog", () => {
+    // the backend may keep reporting the whole catalog it walked; 5 of 5 chosen
+    // products landing is a clean success, not "5 of 200"
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 5, products_failed: 0 }, 5),
+    ).toEqual({ key: "importSucceeded", values: { count: 5 } });
+    expect(
+      importOutcome({ products_found: 200, products_upserted: 3, products_failed: 2 }, 5),
+    ).toEqual({ key: "importPartial", values: { imported: 3, requested: 5, failed: 2 } });
+  });
+});
+
+describe("importRequested", () => {
+  const counters = { products_found: 200, products_upserted: 5, products_failed: 0 };
+
+  it("is the exact requested count when the client knows it", () => {
+    expect(importRequested(counters, 5)).toBe(5);
+  });
+
+  it("falls back to the job counters when it doesn't", () => {
+    expect(importRequested(counters, null)).toBe(200);
+    expect(importRequested(counters, undefined)).toBe(200);
+    expect(importRequested(counters, 0)).toBe(200);
+  });
+
+  it("never reads below what already landed, so a progress bar can't exceed 1", () => {
+    expect(importRequested({ ...counters, products_upserted: 9 }, 5)).toBe(9);
+  });
+
+  it("gives the toast and the progress bar the same total", () => {
+    const job = { products_found: 200, products_upserted: 3, products_failed: 2 };
+    const outcome = importOutcome(job, 5);
+    expect(outcome.key).toBe("importPartial");
+    expect(outcome.values).toMatchObject({ requested: importRequested(job, 5) });
+  });
 });
 
 describe("selection persistence", () => {
@@ -99,8 +136,41 @@ describe("selection persistence", () => {
     saveSelection({ storeUrl: "https://shop.example", deselected: ["/a", "/b"] });
     expect(loadSelection()).toEqual({
       storeUrl: "https://shop.example",
+      platform: undefined,
       deselected: ["/a", "/b"],
+      jobId: null,
+      requested: null,
     });
+  });
+
+  it("round-trips the running import so a reload can't buy it twice", () => {
+    saveSelection({
+      storeUrl: "https://shop.example",
+      platform: "shopify",
+      deselected: ["/a"],
+      jobId: "job-1",
+      requested: 4,
+    });
+    expect(loadSelection()).toEqual({
+      storeUrl: "https://shop.example",
+      platform: "shopify",
+      deselected: ["/a"],
+      jobId: "job-1",
+      requested: 4,
+    });
+  });
+
+  it("drops a malformed job handle rather than restoring a bogus one", () => {
+    window.sessionStorage.setItem(
+      "lumi.import-selection",
+      JSON.stringify({
+        storeUrl: "https://shop.example",
+        deselected: [],
+        jobId: 7,
+        requested: "many",
+      }),
+    );
+    expect(loadSelection()).toMatchObject({ jobId: null, requested: null });
   });
 
   it("returns null when nothing is stored", () => {
