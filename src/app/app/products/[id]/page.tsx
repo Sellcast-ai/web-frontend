@@ -207,28 +207,30 @@ export default function ProductDetailPage() {
           )}
 
           {/* external links */}
-          <div className="mt-5 flex flex-wrap gap-3 text-sm">
-            {product.tiktok_product_url && (
-              <a
-                href={product.tiktok_product_url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
-              >
-                TikTok Shop <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            )}
-            {product.fastmoss_product_url && (
-              <a
-                href={product.fastmoss_product_url}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
-              >
-                FastMoss <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            )}
-          </div>
+          {(product.tiktok_product_url || product.fastmoss_product_url) && (
+            <div className="mt-5 flex flex-wrap gap-3 text-sm">
+              {product.tiktok_product_url && (
+                <a
+                  href={product.tiktok_product_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
+                >
+                  TikTok Shop <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+              {product.fastmoss_product_url && (
+                <a
+                  href={product.fastmoss_product_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1 font-medium text-brand-700 hover:underline"
+                >
+                  FastMoss <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              )}
+            </div>
+          )}
 
           {/* CTA */}
           <div className="mt-auto pt-8">

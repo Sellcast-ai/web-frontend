@@ -39,7 +39,7 @@ import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
-import { APP_HOME_HREF } from "@/lib/launch-routes";
+import { STUDIO_HREF } from "@/lib/launch-routes";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
@@ -1063,7 +1063,7 @@ function FailedView({ job }: { job: VideoJob }) {
               </>
             )}
           </Button>
-          <Button href={APP_HOME_HREF} variant="outline" size="md">
+          <Button href={STUDIO_HREF} variant="outline" size="md">
             {t("startNewVideo")}
           </Button>
         </div>

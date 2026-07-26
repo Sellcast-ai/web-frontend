@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
 import { mediaUrl, relativeTime } from "@/lib/format";
-import { APP_HOME_HREF } from "@/lib/launch-routes";
+import { STUDIO_HREF } from "@/lib/launch-routes";
 import { VIDEO_STYLES, type VideoJob, type VideoStyle } from "@/lib/api/types";
 
 type StyleLabelKey =
@@ -46,7 +46,7 @@ export default function VideosPage() {
             {t("subtitle")}
           </p>
         </div>
-        <Button href={APP_HOME_HREF} size="md" className="hidden sm:inline-flex">
+        <Button href={STUDIO_HREF} size="md" className="hidden sm:inline-flex">
           <Sparkles className="h-4 w-4" />
           {t("newVideo")}
         </Button>
@@ -124,7 +124,7 @@ function Empty() {
       <p className="mt-1 max-w-sm text-muted-foreground">
         {t("description")}
       </p>
-      <Button href={APP_HOME_HREF} size="lg" className="mt-6">
+      <Button href={STUDIO_HREF} size="lg" className="mt-6">
         {t("startFirstVideo")}
       </Button>
     </div>
