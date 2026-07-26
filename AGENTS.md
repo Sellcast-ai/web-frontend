@@ -74,6 +74,17 @@ Only `HERO_OUTPUT_VIDEO` and the `beauty` tile are filled; the other five wall s
 The clips carry voice, so `showcase-video.tsx` plays them muted behind a corner sound toggle that is client-only (hydration-safe) and module-scoped, so unmuting one clip mutes any other.
 The marketing header is deliberately slim (logo, Pricing, language switcher, Sign in, one CTA; server component, no menu state); below `sm` the Pricing and Sign in links drop out so the row can't overflow at 320px, leaving logo + switcher + CTA (both links stay reachable from the footer, which also keeps its own sign-in link), and the theme toggle is app-only.
 
+## Claims the marketing copy must not make
+
+Marketing copy may only promise what production actually renders.
+Two capabilities are built but off, so every claim about them was stripped from all nine catalogs (July 2026) - do not reintroduce them without checking the backend first:
+
+- **Burned-in captions.** The backend's `burn_captions` setting defaults to false, its env var is unset in production, and `video_generation.py` returns early from the caption encode when it is false (the encode was OOM-ing the worker). The rendered video does carry spoken voice - that claim is true and stays; only the on-screen caption claim is false. Studio's shot cards still preview `on_screen_text`, which is a storyboard aid, not what ships.
+- **AI Avatar mode.** The `ai_avatar` mode, avatar library, and `avatar_*` styles are still in the app and the API, but the mode does not currently produce a working render, so marketing describes product-only output.
+
+To restore the copy when either ships, `git log -S "burned-in captions" -- messages/` finds the removed strings: the landing marquee chips (`landing.marquee.avatar`/`.captions`), `landing.wallSubtitle`, `landing.storySteps.render.body`, `landing.why.reach.*`, `landing.pipeline.caption`, the `pricing.included` / `pricing.tiers.creator.features` / `landing.pricingTiers.creator.features` rows, `faq.a2`, the `features.rows.modes` + `features.rows.publish` blocks, `models.cards.seedance`, and `metadata.features.description`.
+Restoring the caption claim also means putting back the caption overlay in `marketing/pipeline-hero.tsx`, the avatar chips in the landing reach card, and the `UserSquare2`/`Captions` icons in the two pages' import lists.
+
 ## Brand & share metadata
 
 Icons and share cards are file-convention based, so there is no hand-written `<link rel="icon">` anywhere.

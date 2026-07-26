@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   ArrowRight,
   AudioLines,
-  Captions,
   Check,
   Clapperboard,
   Languages,
@@ -13,7 +12,6 @@ import {
   Smartphone,
   Sparkles,
   Timer,
-  UserSquare2,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
@@ -23,6 +21,7 @@ import { Faq } from "@/components/marketing/faq";
 import { PipelineHero } from "@/components/marketing/pipeline-hero";
 import { OUTPUT_WALL_VIDEOS, type WallTileKey } from "@/components/marketing/showcase";
 import { ShowcaseVideo } from "@/components/marketing/showcase-video";
+import { VIDEO_LANGUAGES } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ data */
@@ -31,10 +30,8 @@ const MARQUEE = [
   { key: "seedance", icon: Clapperboard },
   { key: "review", icon: ListChecks },
   { key: "languages", icon: Languages },
-  { key: "avatar", icon: UserSquare2 },
   { key: "productOnly", icon: Package },
   { key: "qa", icon: AudioLines },
-  { key: "captions", icon: Captions },
   { key: "ratio", icon: Smartphone },
   { key: "vibes", icon: Sparkles },
   { key: "sources", icon: Link2 },
@@ -244,28 +241,18 @@ export default async function HomePage() {
             />
           </FadeIn>
 
-          {/* modes, vibes, languages */}
+          {/* vibes, languages */}
           <FadeIn delay={0.24}>
             <MediaCard>
-              <div className="flex rounded-full border border-white/10 bg-white/[0.05] p-1 text-[11px] font-medium">
-                <span className="flex-1 rounded-full bg-white/90 py-1.5 text-center font-semibold text-[#14171a]">
-                  {t("why.reach.uiAvatar")}
-                </span>
-                <span className="flex-1 py-1.5 text-center text-white/60">
-                  {t("why.reach.uiProductOnly")}
-                </span>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {["English", "Español", "简体中文", "日本語", "한국어", "+3"].map(
-                  (lang) => (
-                    <span
-                      key={lang}
-                      className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[10px] font-medium text-white/70"
-                    >
-                      {lang}
-                    </span>
-                  ),
-                )}
+              <div className="flex flex-wrap gap-1.5">
+                {VIDEO_LANGUAGES.map(({ label: lang }) => (
+                  <span
+                    key={lang}
+                    className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[10px] font-medium text-white/70"
+                  >
+                    {lang}
+                  </span>
+                ))}
               </div>
               <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5">
                 <Sparkles className="h-3.5 w-3.5 text-brand-300" />

@@ -755,7 +755,7 @@
       "q1": "Qual a diferença entre Lumi e ferramentas genéricas de vídeo de IA?",
       "a1": "Lumi não adivinha. Antes de escrever uma única linha, ele estuda uma grande amostra de produtos orgânicos reais de melhor desempenho na categoria do seu produto e extrai o padrão estrutural - gancho, prova e formas de CTA que realmente convertem. Seu script é baseado nesse padrão, não em uma página em branco.",
       "q2": "Preciso filmar alguma coisa ou estar na frente das câmeras?",
-      "a2": "Não. Escolha o modo AI Avatar para um vídeo conduzido pelo apresentador ou o modo Somente Produto para imagens de demonstração limpas. Lumi gera recursos visuais, voz e legendas de ponta a ponta do seu produto.",
+      "a2": "Não. A Lumi monta uma vitrine limpa só de produto — gera as imagens e a narração falada de ponta a ponta a partir do seu produto, então não há nada para filmar.",
       "q3": "Posso revisar o vídeo antes que ele seja totalmente renderizado?",
       "a3": "Sim – esse é o portão do Beat Review. Lumi gera primeiro uma imagem de referência para cada batida (disparo). Você aprova ou regenera cada um e só então gasta tempo de renderização. Prefere mãos livres? O Auto-QA aprova batidas para você.",
       "q4": "Qual modelo de vídeo Lumi usa?",
@@ -800,7 +800,6 @@
           "features": [
             "Sem marca d'água",
             "Revisão passo a passo",
-            "Avatar + modos de produto",
             "720p · 9:16 exportação"
           ],
           "cta": "Iniciar Criador"
@@ -849,8 +848,6 @@
       "included": [
         "Scripts baseados em padrões",
         "Revisão passo a passo",
-        "Avatar + modos de produto",
-        "Legendas queimadas",
         "9:16 para TikTok e carretéis",
         "Cole qualquer link de produto ou envie fotos do produto"
       ],
@@ -905,17 +902,14 @@
         "approved": "Aprovado",
         "rendering": "Renderizando com Seedance 2.0",
         "rendered": "Renderizado",
-        "caption": "Reposto três vezes este mês. É por isso.",
         "shopNow": "Comprar agora"
       },
       "marquee": {
         "seedance": "Renderização Seedance 2.0",
         "languages": "8 idiomas de narração",
-        "avatar": "Modo avatar de IA",
         "productOnly": "Modo só produto",
         "review": "Revisão beat a beat",
         "qa": "QA automático de fala",
-        "captions": "Legendas integradas",
         "ratio": "9:16 pronto para publicar",
         "vibes": "5 vibes de assinatura",
         "sources": "Amazon · Shopee · TikTok Shop",
@@ -941,10 +935,8 @@
           "uiRegenerate": "Regenerar"
         },
         "reach": {
-          "body": "Com apresentador ou só produto, cinco vibes, oito idiomas de narração. O mesmo link de produto viaja para todos os mercados onde você vende.",
+          "body": "Cinco vibes, oito idiomas de narração. O mesmo link de produto viaja para todos os mercados onde você vende.",
           "caption": "Venda em oito idiomas ao mesmo tempo.",
-          "uiAvatar": "Avatar de IA",
-          "uiProductOnly": "Só produto",
           "uiVibe": "Premium e clean"
         }
       },
@@ -964,13 +956,13 @@
         },
         "render": {
           "title": "A Seedance renderiza",
-          "body": "As legendas são integradas, o QA automático confere cada fala com o roteiro e o corte 9:16 sai pronto para postar."
+          "body": "O QA automático confere cada fala com o roteiro e o corte 9:16 sai pronto para postar."
         }
       },
       "storyFact1": "$0 de gasto em render até você aprovar",
       "storyFact2": "1 crédito = 1 segundo de vídeo",
       "wallTitle": "Cada categoria, <highlight>cada mercado</highlight>",
-      "wallSubtitle": "Todo vídeo da Lumi sai em 9:16 com legendas embutidas, com roteiro e voz adaptados para cada mercado-alvo.",
+      "wallSubtitle": "Todo vídeo da Lumi sai em 9:16 com narração falada, com roteiro e voz adaptados para cada mercado-alvo.",
       "wallAudience": "Feito para vendedores, criadores, marcas e agências — qualquer um que venda com vídeo.",
       "wall": {
         "beauty": {
@@ -1009,8 +1001,7 @@
           "features": [
             "75 créditos — cerca de 3 vídeos",
             "Sem marca d'água",
-            "Revisão passo a passo",
-            "Modos avatar e produto"
+            "Revisão passo a passo"
           ],
           "cta": "Iniciar Criador"
         },
@@ -1090,11 +1081,10 @@
         },
         "modes": {
           "kicker": "Formato",
-          "title": "Avatar e modos de produto",
-          "body": "Escolha um apresentador de IA falando para a câmera ou uma vitrine limpa apenas de produtos – oito estilos prontos que abrangem introduções faladas, demonstrações, depoimentos, unboxings e cortes focados em ofertas.",
+          "title": "Vitrine só de produto",
+          "body": "Um corte limpo focado no produto, sem apresentador para filmar — quatro estilos prontos que abrangem tomadas de vitrine nítidas, destaques de recursos, unboxings e cortes focados em ofertas.",
           "bullets": [
-            "Avatar AI ou somente produto",
-            "8 estilos voltados para o comércio",
+            "4 estilos voltados para o comércio",
             "Duração de 10 a 30 segundos, 9:16 nativo"
           ]
         },
@@ -1109,13 +1099,12 @@
           ]
         },
         "publish": {
-          "kicker": "Navio",
-          "title": "Legendas e publicação",
-          "body": "As legendas são gravadas e o corte tem tamanho 9:16 para TikTok e Momentos – prontos para download ou marcação de postagem, para que suas estatísticas permaneçam organizadas.",
+          "kicker": "Publicar",
+          "title": "Exportação pronta para publicar",
+          "body": "O corte tem tamanho 9:16 para TikTok e Reels — pronto para baixar ou marcar como postado, para que suas estatísticas permaneçam organizadas.",
           "bullets": [
-            "Legendas gravadas automaticamente",
             "Exportação 9:16 pronta para publicação",
-            "Acompanhar postado vs. rascunho em Meus Vídeos"
+            "Acompanhe postado vs. rascunho em Meus Vídeos"
           ]
         }
       }
@@ -1131,10 +1120,10 @@
         "seedance": {
           "name": "Seedance 2.0",
           "tag": "Ao vivo",
-          "desc": "Movimento rápido e realista para fotos de produtos e avatares — mecanismo de renderização do Lumi para cada batida, com áudio gerado por foto.",
+          "desc": "Movimento rápido e realista para fotos de produtos — mecanismo de renderização do Lumi para cada batida, com áudio gerado por tomada.",
           "bestFor": [
             "Movimento do produto",
-            "Avatar falando",
+            "Áudio por tomada",
             "Velocidade"
           ]
         },
@@ -1207,7 +1196,7 @@
     "metadata": {
       "features": {
         "title": "Recursos",
-        "description": "Tudo o que Lumi faz - link para vídeo, scripts baseados em padrões, revisão batida por batida, avatar e modos de produto, controle de qualidade de diálogo automático, legendas e publicação."
+        "description": "Tudo o que a Lumi faz — link para vídeo, roteiros baseados em padrões, revisão batida por batida, formatos só de produto, controle de qualidade de diálogo automático e exportação 9:16 pronta para publicar."
       },
       "models": {
         "title": "Modelos",

@@ -755,7 +755,7 @@
       "q1": "Lumi khác với các công cụ video AI thông thường như thế nào?",
       "a1": "Lumi không đoán được. Trước khi viết một dòng, nó sẽ nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và trích xuất mô hình cấu trúc - các hình dạng hook, proof và CTA thực sự chuyển đổi. Kịch bản của bạn được căn cứ theo khuôn mẫu đó chứ không phải một trang trống.",
       "q2": "Tôi có cần quay phim hay chụp ảnh gì không?",
-      "a2": "Không. Chọn chế độ Hình đại diện AI cho video do người thuyết trình dẫn dắt hoặc chế độ Chỉ dành cho sản phẩm để có cảnh giới thiệu rõ ràng. Lumi tạo hình ảnh, giọng nói và chú thích từ đầu đến cuối cho sản phẩm của bạn.",
+      "a2": "Không. Lumi dựng bản giới thiệu chỉ có sản phẩm — hình ảnh và lời lồng tiếng được tạo từ đầu đến cuối từ sản phẩm của bạn, nên không phải quay gì cả.",
       "q3": "Tôi có thể xem lại video trước khi video được hiển thị đầy đủ không?",
       "a3": "Vâng - đó là cổng Beat Review. Lumi tạo hình ảnh tham chiếu cho mỗi nhịp (cú đánh) trước tiên. Bạn phê duyệt hoặc tạo lại từng cái và chỉ khi đó nó mới dành thời gian hiển thị. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
       "q4": "Lumi sử dụng mô hình video nào?",
@@ -800,7 +800,6 @@
           "features": [
             "Không có hình mờ",
             "Đánh giá từng nhịp",
-            "Chế độ Avatar + sản phẩm",
             "720p · xuất 9:16"
           ],
           "cta": "Bắt đầu tạo"
@@ -849,8 +848,6 @@
       "included": [
         "Kịch bản dựa trên mẫu",
         "Đánh giá từng nhịp",
-        "Chế độ Avatar + sản phẩm",
-        "Chú thích được ghi vào",
         "9:16 cho TikTok & Cuộn phim",
         "Dán bất kỳ liên kết sản phẩm nào hoặc tải ảnh sản phẩm lên"
       ],
@@ -905,17 +902,14 @@
         "approved": "Đã duyệt",
         "rendering": "Đang render với Seedance 2.0",
         "rendered": "Đã render",
-        "caption": "Nhập hàng lại ba lần trong tháng. Đây là lý do.",
         "shopNow": "Mua ngay"
       },
       "marquee": {
         "seedance": "Render bằng Seedance 2.0",
         "languages": "8 ngôn ngữ lồng tiếng",
-        "avatar": "Chế độ avatar AI",
         "productOnly": "Chế độ chỉ sản phẩm",
         "review": "Duyệt từng beat",
         "qa": "QA lời thoại tự động",
-        "captions": "Phụ đề gắn sẵn",
         "ratio": "9:16 sẵn sàng đăng",
         "vibes": "5 vibe đặc trưng",
         "sources": "Amazon · Shopee · TikTok Shop",
@@ -941,10 +935,8 @@
           "uiRegenerate": "Tạo lại"
         },
         "reach": {
-          "body": "Có người dẫn hay chỉ sản phẩm, năm vibe, tám ngôn ngữ lồng tiếng. Cùng một liên kết sản phẩm đi tới mọi thị trường bạn bán.",
+          "body": "Năm vibe, tám ngôn ngữ lồng tiếng. Cùng một liên kết sản phẩm đi tới mọi thị trường bạn bán.",
           "caption": "Bán bằng tám ngôn ngữ cùng lúc.",
-          "uiAvatar": "Avatar AI",
-          "uiProductOnly": "Chỉ sản phẩm",
           "uiVibe": "Cao cấp & tinh gọn"
         }
       },
@@ -964,13 +956,13 @@
         },
         "render": {
           "title": "Seedance render",
-          "body": "Phụ đề được gắn vào, QA tự động đối chiếu từng câu thoại với kịch bản, và bản cắt 9:16 sẵn sàng để đăng."
+          "body": "QA tự động đối chiếu từng câu thoại với kịch bản, và bản cắt 9:16 sẵn sàng để đăng."
         }
       },
       "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
       "storyFact2": "1 credit = 1 giây video",
       "wallTitle": "Mọi ngành hàng, <highlight>mọi thị trường</highlight>",
-      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm phụ đề gắn sẵn, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
+      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm lời lồng tiếng, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
       "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
       "wall": {
         "beauty": {
@@ -1009,8 +1001,7 @@
           "features": [
             "75 credit — khoảng 3 video",
             "Không có hình mờ",
-            "Đánh giá từng nhịp",
-            "Chế độ avatar & sản phẩm"
+            "Đánh giá từng nhịp"
           ],
           "cta": "Bắt đầu tạo"
         },
@@ -1089,12 +1080,11 @@
           ]
         },
         "modes": {
-          "kicker": "định dạng",
-          "title": "Chế độ hình đại diện và sản phẩm",
-          "body": "Chọn một người thuyết trình AI nói chuyện với máy ảnh hoặc một buổi giới thiệu rõ ràng chỉ dành cho sản phẩm — tám kiểu được tạo sẵn bao gồm phần giới thiệu, trình diễn, lời chứng thực, mở hộp và các đoạn cắt tập trung vào ưu đãi.",
+          "kicker": "Định dạng",
+          "title": "Giới thiệu chỉ sản phẩm",
+          "body": "Bản cắt gọn gàng lấy sản phẩm làm trung tâm, không cần quay người dẫn — bốn phong cách dựng sẵn gồm cảnh giới thiệu sắc nét, làm nổi bật tính năng, mở hộp và các đoạn cắt tập trung vào ưu đãi.",
           "bullets": [
-            "Hình đại diện AI hoặc chỉ dành cho sản phẩm",
-            "8 phong cách được điều chỉnh cho thương mại",
+            "4 phong cách được điều chỉnh cho thương mại",
             "Độ dài 10–30 giây, 9:16 bản địa"
           ]
         },
@@ -1109,13 +1099,12 @@
           ]
         },
         "publish": {
-          "kicker": "tàu",
-          "title": "Chú thích & xuất bản",
-          "body": "Chú thích được ghi vào và phần cắt có kích thước 9:16 dành cho TikTok và Câu chuyện — sẵn sàng tải xuống hoặc đánh dấu là đã đăng để số liệu thống kê của bạn luôn gọn gàng.",
+          "kicker": "Xuất bản",
+          "title": "Bản xuất sẵn sàng đăng",
+          "body": "Bản cắt có kích thước 9:16 cho TikTok và Reels — sẵn sàng tải xuống hoặc đánh dấu đã đăng để số liệu của bạn luôn gọn gàng.",
           "bullets": [
-            "Chú thích tự động ghi",
-            "Xuất bản 9:16 sẵn sàng",
-            "Bản nhạc đã đăng so với bản nhạc nháp trong Video của tôi"
+            "Bản xuất 9:16 sẵn sàng đăng",
+            "Theo dõi đã đăng và bản nháp trong Video của tôi"
           ]
         }
       }
@@ -1131,10 +1120,10 @@
         "seedance": {
           "name": "Seedance 2.0",
           "tag": "Trực tiếp",
-          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm và hình đại diện — công cụ kết xuất của Lumi cho từng nhịp, với âm thanh được tạo ra trên mỗi lần chụp.",
+          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm — công cụ kết xuất của Lumi cho từng nhịp, với âm thanh được tạo ra trên mỗi lần chụp.",
           "bestFor": [
             "Chuyển động của sản phẩm",
-            "Avatar nói chuyện",
+            "Âm thanh theo từng cảnh",
             "Tốc độ"
           ]
         },
@@ -1207,7 +1196,7 @@
     "metadata": {
       "features": {
         "title": "Tính năng",
-        "description": "Mọi thứ Lumi thực hiện - liên kết tới video, tập lệnh dựa trên mẫu, đánh giá từng nhịp, chế độ hình đại diện và sản phẩm, QA đối thoại tự động, chú thích và xuất bản."
+        "description": "Mọi thứ Lumi thực hiện — liên kết tới video, kịch bản dựa trên mẫu, duyệt từng nhịp, định dạng chỉ sản phẩm, QA lời thoại tự động và bản xuất 9:16 sẵn sàng đăng."
       },
       "models": {
         "title": "Người mẫu",

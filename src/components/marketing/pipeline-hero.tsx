@@ -392,14 +392,6 @@ export function PipelineHero() {
                     transition={{ duration: 0.45, ease: EASE_OUT, delay: playing ? 0.5 : 0 }}
                     className="absolute inset-x-0 bottom-0 space-y-2.5 bg-gradient-to-t from-black/70 via-black/35 to-transparent p-3.5 pt-10"
                   >
-                    {/* the fake caption stands in only for the placeholder
-                        state - a real render burns in its own, and two caption
-                        layers collide on the narrow frame */}
-                    {!video && (
-                      <p className="text-center text-[13px] font-bold leading-snug text-white drop-shadow-sm">
-                        {t("caption")}
-                      </p>
-                    )}
                     <div className="flex items-center justify-center gap-2 rounded-full bg-white/14 px-3 py-1.5 backdrop-blur-sm">
                       <span className="h-4 w-4 rounded bg-white/80" />
                       <span className="text-[11px] font-semibold text-white">

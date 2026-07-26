@@ -593,8 +593,8 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
   );
 }
 
-/** Read-first shot card: a 9:16 caption preview + the spoken line as a quote,
- *  with director metadata tucked into the tap-to-edit drawer. */
+/** Read-first shot card: a 9:16 on-screen-text preview + the spoken line as a
+ *  quote, with director metadata tucked into the tap-to-edit drawer. */
 function ShotCard({
   shot,
   label,
@@ -616,7 +616,7 @@ function ShotCard({
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
       {/* 9:16 preview — no shots are generated pre-approval, so show the product
-          photo (it already exists) + burned-in caption; fall back to the soft
+          photo (it already exists) + the on-screen text; fall back to the soft
           placeholder when the job has no product image. Mirrors BeatCard. */}
       <div className="relative aspect-9/16 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10 sm:w-24">
         {imageUrl ? (
@@ -930,7 +930,9 @@ function BeatCard({
         >
           {ts(s.labelKey)}
         </span>
-        {/* caption preview — burned-in style, mirrors how it appears in the video */}
+        {/* on-screen-text preview — a storyboard aid only. Caption burn-in is
+            disabled in the backend (settings.burn_captions), so this text does
+            not appear in the rendered file. See AGENTS.md. */}
         {beat.on_screen_text && (
           <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-3 pb-3 pt-10">
             <p className="text-center text-sm font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">

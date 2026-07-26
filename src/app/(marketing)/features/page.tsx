@@ -3,7 +3,7 @@ import {
   Link2,
   Wand2,
   ListChecks,
-  UserSquare2,
+  Package,
   AudioLines,
   Send,
   Check,
@@ -26,7 +26,7 @@ const FEATURES = [
   { id: "link-to-video", key: "linkToVideo", icon: Link2 },
   { id: "scripts", key: "scripts", icon: Wand2 },
   { id: "review", key: "review", icon: ListChecks },
-  { id: "modes", key: "modes", icon: UserSquare2 },
+  { id: "modes", key: "modes", icon: Package },
   { id: "qa", key: "qa", icon: AudioLines },
   { id: "publish", key: "publish", icon: Send },
 ] as const;
