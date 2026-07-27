@@ -6,6 +6,7 @@ import { getLocale } from "next-intl/server";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { themeNoFlashScript } from "@/components/theme-provider";
+import { SITE_URL } from "@/lib/site-url";
 
 // SF Rounded is used by the iOS app for display text. On Apple devices the
 // `ui-rounded` CSS family maps to SF Rounded directly; Nunito is the rounded
@@ -35,7 +36,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lumi.sellcast.ai"),
+  metadataBase: new URL(SITE_URL),
   // Product images come from a CDN (s.500fd.com) that 403s any request
   // carrying a cross-origin Referer (hotlink protection). Omitting the
   // referer site-wide lets those <img> loads succeed (server-side fetches

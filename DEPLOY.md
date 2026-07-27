@@ -35,10 +35,14 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 
 ## 2. Web (Vercel)
 1. Vercel → **Import** the `Sellcast-ai/web-frontend` repo → **Root Directory = repo root** (leave default; the Next.js app is at the repo root, not under `web/`).
-2. Env vars (see `web/.env.production.example`):
+2. Env vars:
    - `SELLCAST_API_BASE = https://<lumi-api>.onrender.com/api/v1`
    - `NEXT_PUBLIC_GOOGLE_CLIENT_ID = <google web client id>`
    - `NEXT_PUBLIC_MEDIA_ORIGIN = https://<lumi-api>.onrender.com`
+   - `NEXT_PUBLIC_SITE_URL` - **leave unset** while there's no custom domain; `SITE_URL`
+     (`src/lib/site-url.ts`) falls back to the Vercel deployment origin. Set it to the real
+     origin (e.g. `https://lumi.example.com`) the day a domain is attached - that one var
+     drives `metadataBase`, `/robots.txt` and `/sitemap.xml`.
 3. Deploy. (Next.js 16 is auto-detected; no extra config.)
 
 ## 3. Auth
@@ -58,7 +62,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] Sign in with Google on the live site → lands in `/app/products`
 - [ ] Create a video → worker renders it → plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** is still selectable but does not currently produce a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
-- [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` in `src/app/layout.tsx` must match the production domain for the card URL to resolve.
+- [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` resolves from `SITE_URL` (`src/lib/site-url.ts`), which defaults to the Vercel deployment origin - once a real domain is attached, set `NEXT_PUBLIC_SITE_URL` to it in Vercel (all environments) and redeploy, or the card URL keeps pointing at the old origin.
 
 ## Cost control (free beta)
 Each rendered video spends OpenAI + FAL credit. The guardrail is the per-user

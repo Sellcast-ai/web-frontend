@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://lumi.sellcast.ai";
+import { SITE_URL } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -19,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/signup",
   ];
   return routes.map((path) => ({
-    url: `${SITE}${path}`,
+    url: `${SITE_URL}${path}`,
     lastModified: now,
     changeFrequency: "weekly",
     priority: path === "" ? 1 : 0.7,
