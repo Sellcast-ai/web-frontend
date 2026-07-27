@@ -56,7 +56,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 ## 4. Verify before announcing
 - [ ] `curl -H 'X-User-Id: x' https://<api>/api/v1/products` → **401** (dev bypass is OFF)
 - [ ] Sign in with Google on the live site → lands in `/app/products`
-- [ ] Create a video → worker renders it → plays on the job page
+- [ ] Create a video → worker renders it → plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** is still selectable but does not currently produce a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
 - [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` in `src/app/layout.tsx` must match the production domain for the card URL to resolve.
 

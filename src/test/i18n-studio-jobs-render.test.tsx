@@ -189,9 +189,6 @@ describe("Studio page renders extracted English copy", () => {
       "vibe &amp; energy only",
       "AI Avatar",
       "Product Only",
-      "Presenter",
-      "AI picks a creator",
-      "Manage avatars",
       "Seedance 2.0",
       "Generate video",
       "Storyboard",
@@ -202,6 +199,20 @@ describe("Studio page renders extracted English copy", () => {
     // picker still renders the raw endonyms from VIDEO_LANGUAGES.
     expect(text).toContain("Español");
     expect(text).toContain("简体中文");
+    // Default mode is product_only (avatar renders are not shipping), so the
+    // presenter picker stays collapsed until the user selects AI Avatar.
+    expect(text).not.toContain("Manage avatars");
+  });
+
+  // The presenter section only renders under the ai_avatar mode, which this
+  // static harness can't select, so assert its keys resolve in the catalog.
+  it("keeps the presenter section keys in the en catalog", () => {
+    expect(en.app.studio.sections.presenter).toBeTruthy();
+    expect(Object.keys(en.app.studio.presenter).sort()).toEqual([
+      "auto",
+      "autoSublabel",
+      "manageAvatars",
+    ]);
   });
 
   it("renders the Size (aspect ratio) picker below Resolution with all five options", () => {
@@ -235,8 +246,8 @@ describe("Studio page renders extracted English copy", () => {
     // (product decision: nothing greyed out in any mode).
     const sizeSection = html.slice(html.indexOf(">Size<"), html.indexOf("5 · Language"));
     expect(sizeSection).not.toContain("disabled");
-    // Default mode is ai_avatar, so the talking-head shape hint shows.
-    expect(text).toContain("Talking-head output may adapt its shape");
+    // Default mode is product_only, so the talking-head shape hint stays hidden.
+    expect(text).not.toContain("Talking-head output may adapt its shape");
     // Positioning: the Size picker renders after the Resolution picker.
     expect(html.indexOf("Resolution")).toBeGreaterThan(-1);
     expect(html.indexOf("Size")).toBeGreaterThan(html.indexOf("Resolution"));

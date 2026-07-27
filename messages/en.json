@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "View full script",
         "title": "Full script",
-        "caption": "Caption:"
+        "caption": "On-screen text:"
       },
       "shotLabels": {
         "hook": "Hook",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "No spoken line for this shot",
-          "onScreenText": "No caption",
+          "onScreenText": "No on-screen text",
           "nudgeNote": "Describe it in your own words",
           "technique": "Let Lumi choose the shot"
         },
@@ -755,7 +755,7 @@
       "q1": "How is Lumi different from generic AI video tools?",
       "a1": "Lumi doesn't guess. Before it writes a single line, it studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — hook, proof, and CTA shapes that actually convert. Your script is grounded in that pattern, not a blank page.",
       "q2": "Do I need to film anything or be on camera?",
-      "a2": "No. Choose AI Avatar mode for a presenter-led video, or Product-Only mode for clean showcase footage. Lumi generates the visuals, voice, and captions end-to-end from your product.",
+      "a2": "No. Lumi builds a clean product-only showcase — it generates the visuals and the spoken voiceover end-to-end from your product, so nothing needs filming.",
       "q3": "Can I review the video before it's fully rendered?",
       "a3": "Yes — that's the Beat Review gate. Lumi generates a reference image for every beat (shot) first. You approve or regenerate each one, and only then does it spend render time. Prefer hands-off? Auto-QA approves beats for you.",
       "q4": "Which video model does Lumi use?",
@@ -800,7 +800,6 @@
           "features": [
             "No watermark",
             "Beat-by-beat review",
-            "Avatar + product modes",
             "720p · 9:16 export"
           ],
           "cta": "Start Creator"
@@ -849,8 +848,6 @@
       "included": [
         "Pattern-grounded scripts",
         "Beat-by-beat review",
-        "Avatar + product modes",
-        "Captions burned in",
         "9:16 for TikTok & Reels",
         "Paste any product link or upload product photos"
       ],
@@ -905,17 +902,14 @@
         "approved": "Approved",
         "rendering": "Rendering with Seedance 2.0",
         "rendered": "Rendered",
-        "caption": "Restocked three times this month. This is why.",
         "shopNow": "Shop now"
       },
       "marquee": {
         "seedance": "Seedance 2.0 rendering",
         "languages": "8 voiceover languages",
-        "avatar": "AI avatar mode",
         "productOnly": "Product-only mode",
         "review": "Beat-by-beat review",
         "qa": "Automatic dialogue QA",
-        "captions": "Burned-in captions",
         "ratio": "Publish-ready 9:16",
         "vibes": "5 signature vibes",
         "sources": "Amazon · Shopee · TikTok Shop",
@@ -941,10 +935,8 @@
           "uiRegenerate": "Regenerate"
         },
         "reach": {
-          "body": "Presenter-led or product-only, five vibes, eight voiceover languages. The same product link travels everywhere you sell.",
+          "body": "Five vibes, eight voiceover languages. The same product link travels everywhere you sell.",
           "caption": "Sell in eight languages at once.",
-          "uiAvatar": "AI avatar",
-          "uiProductOnly": "Product only",
           "uiVibe": "Premium & clean"
         }
       },
@@ -964,13 +956,13 @@
         },
         "render": {
           "title": "Seedance renders it",
-          "body": "Captions burn in, automatic QA checks every spoken line against the script, and the 9:16 cut is ready to post."
+          "body": "Automatic QA checks every spoken line against the script, and the 9:16 cut is ready to post."
         }
       },
       "storyFact1": "$0 render spend until you approve",
       "storyFact2": "1 credit = 1 second of video",
       "wallTitle": "Every category, <highlight>every market</highlight>",
-      "wallSubtitle": "Every Lumi video ships 9:16 with burned-in captions, with script and voice adapted for each target market.",
+      "wallSubtitle": "Every Lumi video ships 9:16 with spoken voiceover, with script and voice adapted for each target market.",
       "wallAudience": "Built for sellers, creators, brands, and agencies — anyone who sells with video.",
       "wall": {
         "beauty": {
@@ -1009,8 +1001,7 @@
           "features": [
             "75 credits — about 3 videos",
             "No watermark",
-            "Beat-by-beat review",
-            "Avatar & product modes"
+            "Beat-by-beat review"
           ],
           "cta": "Start Creator"
         },
@@ -1090,11 +1081,10 @@
         },
         "modes": {
           "kicker": "Format",
-          "title": "Avatar & product modes",
-          "body": "Choose an AI presenter talking to camera, or a clean product-only showcase — eight ready-made styles spanning talking intros, demos, testimonials, unboxings, and offer-focused cuts.",
+          "title": "Product-only showcase",
+          "body": "A clean, product-led cut with no presenter to film — four ready-made styles spanning crisp showcase shots, feature callouts, unboxing reveals, and offer-focused edits.",
           "bullets": [
-            "AI Avatar or Product-Only",
-            "8 styles tuned for commerce",
+            "4 styles tuned for commerce",
             "10–30 second lengths, 9:16 native"
           ]
         },
@@ -1110,10 +1100,9 @@
         },
         "publish": {
           "kicker": "Ship",
-          "title": "Captions & publish",
-          "body": "Captions are burned in and the cut is sized 9:16 for TikTok and Reels — ready to download or mark posted, so your stats stay tidy.",
+          "title": "Publish-ready export",
+          "body": "The cut is sized 9:16 for TikTok and Reels — ready to download or mark posted, so your stats stay tidy.",
           "bullets": [
-            "Auto-burned captions",
             "Publish-ready 9:16 export",
             "Track posted vs. drafted in My Videos"
           ]
@@ -1131,10 +1120,10 @@
         "seedance": {
           "name": "Seedance 2.0",
           "tag": "Live",
-          "desc": "Fast, lifelike motion for product and avatar shots — Lumi's render engine for every beat, with audio generated per shot.",
+          "desc": "Fast, lifelike motion for product shots — Lumi's render engine for every beat, with audio generated per shot.",
           "bestFor": [
             "Product motion",
-            "Avatar talking",
+            "Per-shot audio",
             "Speed"
           ]
         },
@@ -1207,7 +1196,7 @@
     "metadata": {
       "features": {
         "title": "Features",
-        "description": "Everything Lumi does — link to video, pattern-grounded scripts, beat-by-beat review, avatar & product modes, auto dialogue QA, captions & publish."
+        "description": "Everything Lumi does — link to video, pattern-grounded scripts, beat-by-beat review, product-only formats, auto dialogue QA, and publish-ready 9:16 export."
       },
       "models": {
         "title": "Models",

@@ -8,7 +8,8 @@ This document stays out of `public/`, which Next.js serves verbatim - the render
 
 ## Files
 
-Each `.mp4` is the render as Lumi produced it - 9:16, 720x1280, H.264 + AAC audio, burned-in captions where the script has voice - never re-encoded (`hero.mp4` is trimmed with a stream copy, see below).
+Each `.mp4` is the render as Lumi produced it - 9:16, 720x1280, H.264 + AAC audio - never re-encoded (`hero.mp4` is trimmed with a stream copy, see below).
+Some older clips carry burned-in captions from when that encode step was enabled; it is off in production today, so do not read these files as a promise that new renders ship captions (see `AGENTS.md`).
 Each `.webp` is a frame from its clip downscaled to 480x853, used as the `poster` (posters are fetched eagerly, so they stay well under the clip weight).
 The clips carry voice, so `showcase-video.tsx` plays them muted behind a user-operated sound toggle.
 

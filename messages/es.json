@@ -374,7 +374,7 @@
       "fullScript": {
         "view": "Ver guión completo",
         "title": "guión completo",
-        "caption": "Título:"
+        "caption": "Texto en pantalla:"
       },
       "shotLabels": {
         "hook": "Gancho",
@@ -428,7 +428,7 @@
         },
         "placeholders": {
           "dialogue": "No hay línea hablada para esta toma.",
-          "onScreenText": "Sin título",
+          "onScreenText": "Sin texto en pantalla",
           "nudgeNote": "Descríbelo con tus propias palabras.",
           "technique": "Deja que Lumi elija la toma."
         },
@@ -755,7 +755,7 @@
       "q1": "¿En qué se diferencia Lumi de las herramientas genéricas de vídeo de IA?",
       "a1": "Lumi no adivina. Antes de escribir una sola línea, estudia una gran muestra de productos reales y orgánicos de alto rendimiento en la categoría de su producto y extrae el patrón estructural: formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en ese patrón, no en una página en blanco.",
       "q2": "¿Necesito filmar algo o estar frente a la cámara?",
-      "a2": "No. Elija el modo Avatar AI para un video dirigido por un presentador o el modo Solo producto para obtener imágenes de presentación limpias. Lumi genera imágenes, voz y subtítulos de un extremo a otro desde su producto.",
+      "a2": "No. Lumi crea una presentación limpia solo de producto: genera las imágenes y la voz en off de principio a fin a partir de tu producto, así que no tienes que grabar nada.",
       "q3": "¿Puedo revisar el vídeo antes de que esté completamente renderizado?",
       "a3": "Sí, esa es la puerta de Beat Review. Lumi genera primero una imagen de referencia para cada latido (toma). Usted aprueba o regenera cada uno, y solo entonces pasa tiempo de renderizado. ¿Prefieres no intervenir? Auto-QA aprueba los ritmos por ti.",
       "q4": "¿Qué modelo de vídeo utiliza Lumi?",
@@ -800,7 +800,6 @@
           "features": [
             "Sin marca de agua",
             "Revisión latido a latido",
-            "Avatar + modos de producto",
             "720p · 9:16 exportar"
           ],
           "cta": "Iniciar creador"
@@ -849,8 +848,6 @@
       "included": [
         "Guiones basados en patrones",
         "Revisión latido a latido",
-        "Avatar + modos de producto",
-        "Subtítulos quemados en",
         "9:16 para TikTok y carretes",
         "Pega cualquier enlace de producto o sube fotos de producto"
       ],
@@ -905,17 +902,14 @@
         "approved": "Aprobado",
         "rendering": "Renderizando con Seedance 2.0",
         "rendered": "Renderizado",
-        "caption": "Agotado tres veces este mes. Por esto.",
         "shopNow": "Comprar ahora"
       },
       "marquee": {
         "seedance": "Renderizado con Seedance 2.0",
         "languages": "8 idiomas de voz en off",
-        "avatar": "Modo avatar IA",
         "productOnly": "Modo solo producto",
         "review": "Revisión beat a beat",
         "qa": "QA automático de diálogo",
-        "captions": "Subtítulos integrados",
         "ratio": "9:16 listo para publicar",
         "vibes": "5 vibes de autor",
         "sources": "Amazon · Shopee · TikTok Shop",
@@ -941,10 +935,8 @@
           "uiRegenerate": "Regenerar"
         },
         "reach": {
-          "body": "Con presentador o solo producto, cinco vibes, ocho idiomas de voz. El mismo enlace de producto viaja a todos tus mercados.",
+          "body": "Cinco vibes, ocho idiomas de voz. El mismo enlace de producto viaja a todos tus mercados.",
           "caption": "Vende en ocho idiomas a la vez.",
-          "uiAvatar": "Avatar IA",
-          "uiProductOnly": "Solo producto",
           "uiVibe": "Premium y limpio"
         }
       },
@@ -964,13 +956,13 @@
         },
         "render": {
           "title": "Seedance lo renderiza",
-          "body": "Los subtítulos se integran, el QA automático compara cada línea hablada con el guion y el corte 9:16 queda listo para publicar."
+          "body": "El QA automático compara cada línea hablada con el guion y el corte 9:16 queda listo para publicar."
         }
       },
       "storyFact1": "$0 de gasto en render hasta que apruebes",
       "storyFact2": "1 crédito = 1 segundo de video",
       "wallTitle": "Cada categoría, <highlight>cada mercado</highlight>",
-      "wallSubtitle": "Cada vídeo de Lumi se entrega en 9:16 con subtítulos incrustados, con guion y voz adaptados a cada mercado objetivo.",
+      "wallSubtitle": "Cada vídeo de Lumi se entrega en 9:16 con voz en off, con guion y voz adaptados a cada mercado objetivo.",
       "wallAudience": "Hecho para vendedores, creadores, marcas y agencias — cualquiera que venda con video.",
       "wall": {
         "beauty": {
@@ -1009,8 +1001,7 @@
           "features": [
             "75 créditos — unos 3 videos",
             "Sin marca de agua",
-            "Revisión latido a latido",
-            "Modos avatar y producto"
+            "Revisión latido a latido"
           ],
           "cta": "Iniciar creador"
         },
@@ -1090,11 +1081,10 @@
         },
         "modes": {
           "kicker": "Formato",
-          "title": "Modos de avatar y producto",
-          "body": "Elija un presentador de inteligencia artificial que hable frente a la cámara o una presentación clara exclusiva del producto: ocho estilos listos para usar que abarcan introducciones habladas, demostraciones, testimonios, unboxings y cortes centrados en la oferta.",
+          "title": "Presentación solo de producto",
+          "body": "Un corte limpio centrado en el producto, sin presentador que grabar: cuatro estilos listos para usar que abarcan tomas de presentación nítidas, resaltado de características, unboxings y cortes centrados en la oferta.",
           "bullets": [
-            "Avatar de IA o solo producto",
-            "8 estilos adaptados al comercio",
+            "4 estilos adaptados al comercio",
             "Duración de 10 a 30 segundos, 9:16 nativo"
           ]
         },
@@ -1109,13 +1099,12 @@
           ]
         },
         "publish": {
-          "kicker": "barco",
-          "title": "Subtítulos y publicación",
-          "body": "Los subtítulos están grabados y el corte tiene un tamaño de 9:16 para TikTok y Reels, listo para descargar o marcar como publicado, para que sus estadísticas se mantengan ordenadas.",
+          "kicker": "Publicar",
+          "title": "Exportación lista para publicar",
+          "body": "El corte tiene un tamaño de 9:16 para TikTok y Reels, listo para descargar o marcar como publicado, para que tus estadísticas se mantengan ordenadas.",
           "bullets": [
-            "Subtítulos grabados automáticamente",
             "Exportación 9:16 lista para publicar",
-            "Seguimiento publicado versus borrador en Mis videos"
+            "Seguimiento de publicado y borrador en Mis vídeos"
           ]
         }
       }
@@ -1131,10 +1120,10 @@
         "seedance": {
           "name": "Seedance 2.0",
           "tag": "en vivo",
-          "desc": "Movimiento rápido y realista para tomas de productos y avatares: el motor de renderizado de Lumi para cada ritmo, con audio generado por toma.",
+          "desc": "Movimiento rápido y realista para tomas de producto: el motor de renderizado de Lumi para cada ritmo, con audio generado por toma.",
           "bestFor": [
             "Movimiento del producto",
-            "avatar hablando",
+            "Audio por toma",
             "Velocidad"
           ]
         },
@@ -1207,7 +1196,7 @@
     "metadata": {
       "features": {
         "title": "Características",
-        "description": "Todo lo que hace Lumi: enlace a vídeo, guiones basados en patrones, revisión paso a paso, modos de avatar y producto, control de calidad de diálogo automático, subtítulos y publicación."
+        "description": "Todo lo que hace Lumi: enlace a vídeo, guiones basados en patrones, revisión paso a paso, formatos solo de producto, control de calidad de diálogo automático y exportación 9:16 lista para publicar."
       },
       "models": {
         "title": "Modelos",
