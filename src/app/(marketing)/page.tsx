@@ -40,17 +40,15 @@ const MARQUEE = [
 
 const STORY_STEPS = ["link", "learn", "approve", "render"] as const;
 
-/* Muted duotone posters for the output wall — colour lives inside the media
-   frames (the arcads rule), never on the page canvas. Only drawn for a tile
-   whose slot in OUTPUT_WALL_VIDEOS (showcase.ts) is empty; a filled slot plays
-   its clip instead. */
-const WALL_TILES: { key: WallTileKey; art: string }[] = [
-  { key: "beauty", art: "linear-gradient(160deg,#8a6a5e 0%,#2e2320 72%)" },
-  { key: "gadgets", art: "linear-gradient(160deg,#5c6d78 0%,#1d2429 72%)" },
-  { key: "home", art: "linear-gradient(160deg,#8a7a5c 0%,#2a2419 72%)" },
-  { key: "pets", art: "linear-gradient(160deg,#6d7d62 0%,#20261c 72%)" },
-  { key: "fashion", art: "linear-gradient(160deg,#7d6273 0%,#241c22 72%)" },
-  { key: "fitness", art: "linear-gradient(160deg,#4f7069 0%,#18211f 72%)" },
+/* Wall order. A key with a clip in OUTPUT_WALL_VIDEOS (showcase.ts) plays it;
+   an unfilled key becomes the closing-statement card instead. */
+const WALL_TILES: { key: WallTileKey }[] = [
+  { key: "beauty" },
+  { key: "gadgets" },
+  { key: "home" },
+  { key: "pets" },
+  { key: "fashion" },
+  { key: "fitness" },
 ];
 
 const PRICING = [
@@ -67,23 +65,11 @@ export default async function HomePage() {
   return (
     <>
       {/* ============================================================ HERO */}
+      {/* The hero canvas is deliberately bare: the headline and the pipeline
+          stage carry it. It used to sit on three blurred colour blobs drifting
+          behind the h1 on a 46 s loop - decoration competing with the one thing
+          a visitor is trying to read. */}
       <section className="relative overflow-hidden">
-        {/* blurred product-still wallpaper, drifting slowly */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div
-            className="animate-drift absolute -top-24 left-[6%] h-96 w-72 rounded-[3rem] opacity-25 blur-3xl dark:opacity-[0.14]"
-            style={{ background: "linear-gradient(160deg,#8a6a5e 0%,transparent 75%)" }}
-          />
-          <div
-            className="animate-drift-slow absolute right-[4%] top-10 h-[26rem] w-80 rounded-[3rem] opacity-25 blur-3xl dark:opacity-[0.14]"
-            style={{ background: "linear-gradient(200deg,#5b8a94 0%,transparent 75%)" }}
-          />
-          <div
-            className="animate-drift absolute bottom-0 left-[38%] h-80 w-96 rounded-[3rem] opacity-20 blur-3xl dark:opacity-10"
-            style={{ background: "linear-gradient(180deg,#8a7a5c 0%,transparent 75%)" }}
-          />
-        </div>
-
         <div className="container-page pb-20 pt-20 sm:pt-24">
           <div className="animate-rise mx-auto max-w-3xl text-center">
             <h1 className="font-display text-[2.75rem] font-semibold leading-[1.04] tracking-tight text-ink sm:text-6xl lg:text-[4.25rem]">
@@ -285,7 +271,7 @@ export default async function HomePage() {
             </h2>
           </FadeIn>
 
-          <div className="mt-12 divide-y divide-white/[0.07]">
+          <div className="mt-14 divide-y divide-white/[0.07]">
             {STORY_STEPS.map((key, i) => (
               <FadeIn
                 key={key}
@@ -337,51 +323,60 @@ export default async function HomePage() {
           </p>
         </FadeIn>
 
+        {/* Straight grid, no per-tile offset: six vertical clips of the same
+            size read as a considered set, where the old zigzag read as drift. */}
         <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
           {WALL_TILES.map((tile, i) => {
             const video = OUTPUT_WALL_VIDEOS[tile.key];
             return (
-              <FadeIn
-                key={tile.key}
-                delay={(i % 3) * 0.1}
-                className={cn(i % 2 === 1 && "md:translate-y-8")}
-              >
-                <div className="group relative aspect-9/16 overflow-hidden rounded-3xl border border-border shadow-soft">
-                  {video ? (
+              <FadeIn key={tile.key} delay={(i % 3) * 0.1}>
+                {video ? (
+                  <div className="group relative aspect-9/16 overflow-hidden rounded-card border border-border shadow-soft">
                     <ShowcaseVideo
                       className="absolute inset-0 h-full w-full object-cover"
                       src={video.src}
                       poster={video.poster}
                     />
-                  ) : (
+                    {/* The footage runs from near-white kitchens to near-black
+                        product shots, so the label needs its own scrim rather
+                        than a pill per chip. */}
                     <div
-                      className="absolute inset-0"
-                      style={{ background: tile.art }}
-                    >
-                      <div className="absolute -left-12 top-1/3 h-64 w-24 rotate-[24deg] bg-white/[0.05] blur-2xl" />
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/65 via-black/25 to-transparent"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 p-4">
+                      <p className="text-[11px] font-medium leading-tight text-white">
+                        {t(`wall.${tile.key}.category`)}
+                      </p>
+                      <p className="mt-0.5 text-[11px] leading-tight text-white/60">
+                        {t(`wall.${tile.key}.vibe`)}
+                      </p>
                     </div>
-                  )}
-                  <div className="absolute inset-x-0 bottom-0 flex flex-wrap gap-1.5 p-3">
-                    {(["category", "vibe"] as const).map((chip) => (
-                      <span
-                        key={chip}
-                        className="rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-medium text-white/90 backdrop-blur-sm"
-                      >
-                        {t(`wall.${tile.key}.${chip}`)}
-                      </span>
-                    ))}
                   </div>
-                </div>
+                ) : (
+                  /* An unfilled slot carries the section's closing line instead
+                     of a labelled empty gradient, which now that its neighbours
+                     all play would just read as a tile that failed to load. */
+                  <div className="flex aspect-9/16 flex-col justify-end rounded-card border border-border bg-muted/40 p-4 sm:p-6">
+                    {/* A two-column phone leaves this card ~160px wide, where
+                        the desktop size wraps to eight lines. */}
+                    <p className="font-accent text-lg leading-snug text-ink sm:text-2xl">
+                      {t("wallAudience")}
+                    </p>
+                  </div>
+                )}
               </FadeIn>
             );
           })}
         </div>
 
-        <FadeIn>
-          <p className="mx-auto mt-16 max-w-md text-center text-sm leading-relaxed text-muted-foreground md:mt-24">
-            {t("wallAudience")}
-          </p>
-        </FadeIn>
+        {WALL_TILES.every((tile) => OUTPUT_WALL_VIDEOS[tile.key]) && (
+          <FadeIn>
+            <p className="mx-auto mt-16 max-w-md text-center text-sm leading-relaxed text-muted-foreground">
+              {t("wallAudience")}
+            </p>
+          </FadeIn>
+        )}
       </section>
 
       {/* ========================================================== PRICING */}
@@ -509,7 +504,7 @@ export default async function HomePage() {
             })}
           </h2>
         </FadeIn>
-        <FadeIn className="mt-12">
+        <FadeIn className="mt-14">
           <Faq />
         </FadeIn>
       </section>
@@ -524,18 +519,9 @@ export default async function HomePage() {
           >
             Lumi
           </span>
-          {/* output stills bleeding in from the edges */}
-          <div
-            aria-hidden
-            className="absolute -left-10 top-1/2 hidden h-72 w-40 -translate-y-1/2 rotate-[-9deg] rounded-2xl opacity-45 lg:block"
-            style={{ background: "linear-gradient(160deg,#5c6d78 0%,#1d2429 72%)" }}
-          />
-          <div
-            aria-hidden
-            className="absolute -right-12 top-1/2 hidden h-72 w-40 -translate-y-1/2 rotate-[8deg] rounded-2xl opacity-45 lg:block"
-            style={{ background: "linear-gradient(160deg,#8a6a5e 0%,#2e2320 72%)" }}
-          />
-
+          {/* The two rotated gradient rectangles that used to flank this
+              headline stood in for output stills. The wall above now shows the
+              real thing, so they only read as filler. */}
           <FadeIn className="relative">
             <h2 className="mx-auto max-w-2xl text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl">
               {t.rich("finalCtaTitle", {

@@ -15,6 +15,25 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  // Files under /public default to `max-age=0`, which forces a revalidation the
+  // media element can't satisfy from cache: the showcase player warms metadata
+  // and then plays, and each showcase clip was being downloaded twice per visit
+  // as a result. A day of freshness collapses that back to one fetch and makes
+  // repeat visits free; swapping a clip still propagates within 24h (and
+  // immediately for anyone past the stale window).
+  async headers() {
+    return [
+      {
+        source: "/marketing/videos/:file*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=86400, stale-while-revalidate=2592000",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
