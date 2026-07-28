@@ -69,10 +69,13 @@ The app never enters `.marketing`, so it keeps the SF-Rounded/Nunito cream syste
 Serif accent phrases in marketing headings use `<Accent>` (`src/components/marketing/accent.tsx`), one phrase per major heading (the `<highlight>` tag in catalog strings).
 Marketing palette is monochrome + one accent (the teal `brand` ramp for CTAs; green means live/approved only - `--color-live` on the fixed-dark panels); do not reintroduce decorative rose/gold/orange or gradient headline text.
 The landing (V4+V5) is banded: light hero with the simulated-pipeline stage (`marketing/pipeline-hero.tsx`, a client state machine replaying link -> pattern -> storyboard approval -> render while in view; static finished state under reduced motion), capability chip marquee, dark fake-UI media cards, one dark inset story panel, output wall, pricing, FAQ, dark CTA panel with ghost wordmark.
-Showcase footage is wired through `marketing/showcase.ts` (`HERO_OUTPUT_VIDEO`, `OUTPUT_WALL_VIDEOS`) and played by `marketing/showcase-video.tsx` (poster first, bytes only near the viewport, still under reduced motion); a null slot renders the designed placeholder instead.
+Showcase footage is wired through `marketing/showcase.ts` (`HERO_OUTPUT_VIDEO`, `OUTPUT_WALL_VIDEOS`) and played by `marketing/showcase-video.tsx` (the poster loads as the slot nears the viewport - the hero's is the page's one eager fetch - clip bytes only near the viewport, still under reduced motion); an unfilled slot renders the section's closing statement card instead of a video.
 Those slots hold real Lumi renders (provenance in `docs/marketing-showcase-sources.md`, deliberately outside the publicly served `public/` tree), so the page carries no stock-footage disclaimer; if a slot ever falls back to stock, that copy comes back with it - never let stock read as Lumi output, or Lumi output read as stock.
-Only `HERO_OUTPUT_VIDEO` and the `beauty` tile are filled; the other five wall slots are `null` on purpose until their own renders exist.
+`HERO_OUTPUT_VIDEO` and five of six wall tiles are filled; `fitness` is `null` because the only two candidate renders carry someone else's marketing burned in (a discount price splash, a third-party store URL), and an unfilled slot renders the section's closing statement card rather than a labelled empty gradient.
+Judge a candidate render by watching it, not by its filename or a single frame - the reject table in `docs/marketing-showcase-sources.md` exists because burned-in store watermarks and hard-sell overlays are only visible in the footage itself.
 The clips carry voice, so `showcase-video.tsx` plays them muted behind a corner sound toggle that is client-only (hydration-safe) and module-scoped, so unmuting one clip mutes any other.
+The toggle sits dimmed until the slot is hovered or the button focused (never dimmed on touch devices or while loud) - that recede is deliberate, not a contrast bug.
+`next.config.ts` long-caches `/marketing/videos/*`: files under `public/` default to `max-age=0`, which made every return visit re-download the whole wall.
 The marketing header is deliberately slim (logo, Pricing, language switcher, Sign in, one CTA; server component, no menu state); below `sm` the Pricing and Sign in links drop out so the row can't overflow at 320px, leaving logo + switcher + CTA (both links stay reachable from the footer, which also keeps its own sign-in link), and the theme toggle is app-only.
 
 ## Claims the marketing copy must not make
@@ -87,8 +90,10 @@ Two capabilities are built but off, so every claim about them was stripped from 
 To restore the copy when either ships, `git log -S "burned-in captions" -- messages/` finds the removed strings: the landing marquee chips (`landing.marquee.avatar`/`.captions`), `landing.wallSubtitle`, `landing.storySteps.render.body`, `landing.why.reach.*`, `landing.pipeline.caption`, the `pricing.included` / `pricing.tiers.creator.features` / `landing.pricingTiers.creator.features` rows, `faq.a2`, the `features.rows.modes` + `features.rows.publish` blocks, `models.cards.seedance`, and `metadata.features.description`.
 Restoring the caption claim also means putting back the caption overlay in `marketing/pipeline-hero.tsx`; restoring the avatar claim means putting back the avatar/product-only mode-toggle pills above the landing reach card's language chips (`landing.why.reach.uiAvatar`/`.uiProductOnly`).
 Both need the `UserSquare2`/`Captions` icons back in the two pages' import lists (the features `modes` row now uses `Package`).
-The hero clip (`public/marketing/videos/hero.mp4`) still visibly carries a burned-in caption because it was rendered while the encode was on - that is deliberate.
-It is evidence the capability exists; what was removed is the promise that every render ships with it, so do not swap or re-poster the hero slot to hide it.
+Some committed showcase clips still visibly carry burned-in captions because they were rendered while the encode was on - that is deliberate.
+They are evidence the capability exists; what was removed is the promise that every render ships with it, so do not swap or re-poster a slot to hide it.
+The hero used to be one of them (a presenter to camera, captioned), which asserted both off-capabilities in the page's most prominent frame; it is now a product-only render with no caption, and the captioned clip moved down to the `fashion` tile.
+That removes the contradiction at hero scale - it does not un-hedge anything, because neither capability shipped.
 
 ## Brand & share metadata
 

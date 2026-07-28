@@ -91,8 +91,6 @@
   --animate-glow: glowPulse 6s ease-in-out infinite;
   --animate-marquee: marquee 34s linear infinite;
   --animate-rise: rise 0.7s cubic-bezier(0.21, 1, 0.4, 1) both;
-  --animate-drift: drift 46s ease-in-out infinite alternate;
-  --animate-drift-slow: drift 64s ease-in-out infinite alternate-reverse;
 }
 
 /* Map semantic + next/font runtime vars into the token namespace */
@@ -154,16 +152,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* slow wallpaper drift for the hero's blurred product-still texture */
-@keyframes drift {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(4rem, -2.5rem, 0) scale(1.12);
   }
 }
 
@@ -295,9 +283,7 @@
   .animate-float-slow,
   .animate-glow,
   .animate-marquee,
-  .animate-rise,
-  .animate-drift,
-  .animate-drift-slow {
+  .animate-rise {
     animation: none;
   }
 }

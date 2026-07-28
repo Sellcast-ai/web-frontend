@@ -317,7 +317,7 @@ export function PipelineHero() {
 
         {/* ---------------------------------------------------- the output */}
         <div className="mx-auto w-44 shrink-0 sm:w-52">
-          <div className="relative aspect-9/16 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#0d1013]">
+          <div className="group relative aspect-9/16 overflow-hidden rounded-[1.4rem] border border-white/12 bg-[#0d1013]">
             <AnimatePresence initial={false}>
               {shownStep === DONE ? (
                 <motion.div
@@ -353,6 +353,7 @@ export function PipelineHero() {
             {video && (
               <ShowcaseVideo
                 active={shownStep === DONE}
+                eagerPoster
                 className={cn(
                   "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
                   shownStep === DONE ? "opacity-100" : "opacity-0",

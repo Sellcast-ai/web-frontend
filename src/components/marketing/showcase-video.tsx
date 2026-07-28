@@ -11,8 +11,10 @@ import {
 import { useReducedMotion } from "motion/react";
 import { Volume2, VolumeX } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 
-/* Shared player for the showcase slots. The poster carries first paint, only
+/* Shared player for the showcase slots. The poster carries the slot until the
+   clip plays (fetched as the slot nears the viewport unless `eagerPoster`), only
    the container metadata is warmed just before the tile reaches the viewport
    (the media itself streams on play, so the wall tiles entering view together
    can't burst-fetch every clip in full), and under reduced motion the clip
@@ -43,23 +45,33 @@ function claimSound(owner: string | null) {
 const refusedForSound = (err: unknown) =>
   err instanceof DOMException && err.name === "NotAllowedError";
 
+/** Fraction of a slot that must be on screen before its clip plays. */
+const PLAY_RATIO = 0.4;
+
 export function ShowcaseVideo({
   src,
   poster,
   className,
   active = true,
+  eagerPoster = false,
   onDuration,
 }: {
   src: string;
   poster?: string;
   className?: string;
   active?: boolean;
+  /** Fetch the poster with the page instead of waiting for the slot to come
+      near. Only the above-the-fold slot should: a `<video poster>` loads even
+      under `preload="none"`, so a wall of them is a burst of eager image
+      fetches and decodes competing with the first paint of the text above. */
+  eagerPoster?: boolean;
   onDuration?: (seconds: number) => void;
 }) {
   const t = useTranslations("marketing.landing.sound");
   const reduced = useReducedMotion();
   const ref = useRef<HTMLVideoElement>(null);
   const [onScreen, setOnScreen] = useState(false);
+  const [posterNear, setPosterNear] = useState(eagerPoster);
   const id = useId();
   /* The toggle is client-only: `reduced` is unknown while server-rendering, so
      deciding there would hydrate a different tree than the browser wants. */
@@ -84,6 +96,23 @@ export function ShowcaseVideo({
     () => false,
   );
 
+  /* Deliberately not gated on `reduced`: under reduced motion nothing plays, so
+     the poster is the only thing the slot ever shows and it still has to arrive. */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || posterNear) return;
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setPosterNear(true);
+        near.disconnect();
+      },
+      { rootMargin: "300px" },
+    );
+    near.observe(el);
+    return () => near.disconnect();
+  }, [posterNear]);
+
   useEffect(() => {
     const el = ref.current;
     if (!el || reduced) return;
@@ -96,8 +125,15 @@ export function ShowcaseVideo({
       },
       { rootMargin: "200px" },
     );
-    const visible = new IntersectionObserver(([entry]) =>
-      setOnScreen(entry.isIntersecting),
+    /* A real share of the tile has to be on screen before it plays, not the
+       single pixel `isIntersecting` accepts: the wall is five clips, and five
+       concurrent 720x1280 H.264 decodes can exceed iOS Safari's simultaneous
+       hardware-decode limit on older devices, where the overflow tiles hold a
+       black frame. Compare the ratio rather than `isIntersecting`, which stays
+       true all the way down to 0 and so would never pause a leaving tile. */
+    const visible = new IntersectionObserver(
+      ([entry]) => setOnScreen(entry.intersectionRatio >= PLAY_RATIO),
+      { threshold: [0, PLAY_RATIO] },
     );
     warm.observe(el);
     visible.observe(el);
@@ -139,7 +175,7 @@ export function ShowcaseVideo({
         ref={ref}
         className={className}
         src={src}
-        poster={poster}
+        poster={posterNear ? poster : undefined}
         muted
         loop
         playsInline
@@ -172,7 +208,19 @@ export function ShowcaseVideo({
           }}
           aria-label={loud ? t("mute") : t("unmute")}
           title={loud ? t("mute") : t("unmute")}
-          className="absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-black/45 text-white/90 backdrop-blur-sm transition-colors hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+          /* Sits back over the footage until the slot is hovered or the button
+             is focused, so a wall of clips isn't a wall of buttons. That recede
+             only applies where the device can hover: a touch device has neither
+             hover nor focus-visible before a tap, so a dimmed white glyph over
+             near-white footage would be its permanent state. It also stays
+             fully opaque while loud - that one must never be hard to find - and
+             it is never hidden or shrunk, so the hit target is constant.
+             The ::after box widens that target to ~48px for touch without
+             growing the 28px dot the design wants. */
+          className={cn(
+            "absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-opacity duration-300 after:absolute after:-inset-2.5 after:content-[''] hover:!opacity-100 focus-visible:!opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 group-hover:opacity-100",
+            loud ? "opacity-100" : "[@media(hover:hover)]:opacity-55",
+          )}
         >
           {loud ? (
             <Volume2 className="h-3.5 w-3.5" />
