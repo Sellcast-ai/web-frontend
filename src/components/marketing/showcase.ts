@@ -16,7 +16,8 @@
  * The clips carry voice; `showcase-video.tsx` plays them muted behind a
  * user-operated sound toggle.
  *
- * A null slot renders the designed placeholder state instead of a <video>.
+ * A slot without a clip renders the section's closing-statement card instead
+ * of a <video>.
  */
 
 /** Sits inside the hero phone frame; revealed and played only while the
@@ -29,12 +30,12 @@ export const HERO_OUTPUT_VIDEO: { src: string; poster?: string } | null = {
   poster: "/marketing/videos/hero.webp",
 };
 
-/** Keys match `marketing.landing.wall.*` in the catalog (category/vibe chips).
- * A tile with a src plays muted-loop; without one it renders the designed
- * gradient placeholder. `fitness` is the one deliberately empty slot: the only
+/** Keys match `marketing.landing.wall.*` in the catalog (category/vibe labels).
+ * A tile with a src plays muted-loop; without one it renders the section's
+ * closing-statement card. `fitness` is the one deliberately empty slot: the only
  * activewear render carries a burned-in discount-sale graphic and the only gym
  * render carries a third-party store URL, so neither can go on this page. It
- * stays on the placeholder until a clean fitness render exists - see
+ * stays empty until a clean fitness render exists - see
  * `docs/marketing-showcase-sources.md`. */
 export type WallTileKey =
   | "beauty"
