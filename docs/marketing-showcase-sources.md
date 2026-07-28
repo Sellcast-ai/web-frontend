@@ -10,7 +10,8 @@ This document stays out of `public/`, which Next.js serves verbatim - the render
 
 Each `.mp4` is 9:16 H.264 + AAC, and every one still carries the render's real voice track - `showcase-video.tsx` plays them muted behind a user-operated sound toggle, so the audio must never be stripped.
 Each `.webp` is a frame from its clip downscaled to 480 wide, used as the `poster`.
-Posters are the page's one eager fetch (a `<video poster>` loads even under `preload="none"`), so they stay in the tens of KB; the clips themselves stream only once their tile nears the viewport.
+The hero poster is the page's only eager fetch (a `<video poster>` loads even under `preload="none"`, so a wall of them would burst on first paint); wall posters load as their tile nears the viewport.
+Either way they stay in the tens of KB, and the clips themselves stream only once their tile nears the viewport.
 
 Clips already inside the ~1-3 MB budget are **stream copies** (`-c copy`): remuxed so the `moov` atom leads, but not re-encoded, so they lose no generation.
 Only clips over budget were re-encoded, at CRF 32 - a 29/31/33 sweep compared against the source at 100% showed no visible difference on this footage, so the extra bytes bought nothing.
@@ -51,7 +52,17 @@ There is no true silence in the source (continuous music bed), so the cut is on 
 Until this change the hero was `593af0e7` - a presenter talking to camera with a burned-in caption - which asserted visually the two capabilities `AGENTS.md` records as built-but-off (burned-in captions, avatar mode).
 The fragrance render has neither a presenter nor a caption, so the page's largest, most prominent video no longer makes a claim the product does not keep.
 `593af0e7` moved to the `fashion` tile, where it is one of six clips rather than the page's opening statement; its caption is still visible there, and that is deliberate - the capability exists, only the promise that every render ships with it was removed.
-Note it also carries a spelling slip in its own burned-in caption ("in coffey"), which is another reason it reads better small.
+
+### KNOWN FLAW: `fashion.mp4` carries a spelling slip
+
+Its burned-in caption misspells a word ("in coffey").
+This is noticed and accepted, not overlooked.
+The clip is the hero on the live site today, so the typo is already public at a far larger size than a 1/6 tile - moving it down the page is a strict improvement, not the acceptance of a new defect.
+Trimming past it is not an option: the caption is a running transcript across the whole clip, so there is no clean segment to cut to.
+
+**Follow-up: replace `fashion.mp4` when a clean fashion render exists.**
+That is a narrower reason than the `AGENTS.md` rule about not swapping captioned slots to hide the caption capability - which still stands.
+Replace this one file because of the typo; do not treat it as licence to de-caption the wall.
 
 ## Empty slots
 

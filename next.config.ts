@@ -19,8 +19,10 @@ const nextConfig: NextConfig = {
   // media element can't satisfy from cache: the showcase player warms metadata
   // and then plays, and each showcase clip was being downloaded twice per visit
   // as a result. A day of freshness collapses that back to one fetch and makes
-  // repeat visits free; swapping a clip still propagates within 24h (and
-  // immediately for anyone past the stale window).
+  // repeat visits free. The filenames are unversioned, so nothing longer than a
+  // day belongs here: a swapped clip - the realistic reason being a brand or
+  // legal pull - has to propagate within 24h, and `stale-while-revalidate`
+  // would have kept the pulled bytes playing well past that.
   async headers() {
     return [
       {
@@ -28,7 +30,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=86400, stale-while-revalidate=2592000",
+            value: "public, max-age=86400",
           },
         ],
       },

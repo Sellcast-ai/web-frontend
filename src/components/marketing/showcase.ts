@@ -3,10 +3,12 @@
  * `public/marketing/videos/` and referenced by absolute path - see
  * `docs/marketing-showcase-sources.md` (kept out of `public/`, which is served
  * verbatim) for which Lumi job produced each clip.
- * Spec: 9:16, 10 s or longer, ~1-3 MB each; posters are the one eager fetch on
- * the page (a <video poster> loads even under preload="none"), so they stay
- * 480 wide WebP, tens of KB. Clips already inside budget are stream copies;
- * only over-budget ones are re-encoded - the doc has the exact commands.
+ * Spec: 9:16, 10 s or longer, ~1-3 MB each; the hero poster is the page's only
+ * eager fetch (a <video poster> loads even under preload="none", so a wall of
+ * them would burst on first paint) and wall posters load as their tile nears
+ * the viewport - either way they stay 480 wide WebP, tens of KB. Clips already
+ * inside budget are stream copies; only over-budget ones are re-encoded - the
+ * doc has the exact commands.
  *
  * Everything wired up here is real Lumi output, so the page carries no
  * stock-footage disclaimer - never let stock read as generated output, and if a

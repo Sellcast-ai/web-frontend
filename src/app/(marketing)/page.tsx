@@ -51,6 +51,13 @@ const WALL_TILES: { key: WallTileKey }[] = [
   { key: "fitness" },
 ];
 
+/* The section's closing line goes in the first unfilled tile when there is one,
+   and below the grid when the wall is full, so it renders exactly once however
+   many slots are empty. */
+const FIRST_EMPTY_TILE = WALL_TILES.find(
+  (tile) => !OUTPUT_WALL_VIDEOS[tile.key],
+)?.key;
+
 const PRICING = [
   { key: "creator", href: "/signup?plan=creator", featured: false },
   { key: "pro", href: "/signup?plan=pro", featured: true },
@@ -331,7 +338,10 @@ export default async function HomePage() {
             return (
               <FadeIn key={tile.key} delay={(i % 3) * 0.1}>
                 {video ? (
-                  <div className="group relative aspect-9/16 overflow-hidden rounded-card border border-border shadow-soft">
+                  /* The frame carries its own surface: the poster is only
+                     fetched as the tile nears the viewport, so without one the
+                     slot paints as an empty bordered rectangle until then. */
+                  <div className="group relative aspect-9/16 overflow-hidden rounded-card border border-border bg-muted/40 shadow-soft">
                     <ShowcaseVideo
                       className="absolute inset-0 h-full w-full object-cover"
                       src={video.src}
@@ -348,7 +358,7 @@ export default async function HomePage() {
                       <p className="text-[11px] font-medium leading-tight text-white">
                         {t(`wall.${tile.key}.category`)}
                       </p>
-                      <p className="mt-0.5 text-[11px] leading-tight text-white/60">
+                      <p className="mt-0.5 text-[11px] leading-tight text-white/75">
                         {t(`wall.${tile.key}.vibe`)}
                       </p>
                     </div>
@@ -358,11 +368,13 @@ export default async function HomePage() {
                      of a labelled empty gradient, which now that its neighbours
                      all play would just read as a tile that failed to load. */
                   <div className="flex aspect-9/16 flex-col justify-end rounded-card border border-border bg-muted/40 p-4 sm:p-6">
-                    {/* A two-column phone leaves this card ~160px wide, where
-                        the desktop size wraps to eight lines. */}
-                    <p className="font-accent text-lg leading-snug text-ink sm:text-2xl">
-                      {t("wallAudience")}
-                    </p>
+                    {tile.key === FIRST_EMPTY_TILE && (
+                      /* A two-column phone leaves this card ~160px wide, where
+                          the desktop size wraps to eight lines. */
+                      <p className="font-accent text-lg leading-snug text-ink sm:text-2xl">
+                        {t("wallAudience")}
+                      </p>
+                    )}
                   </div>
                 )}
               </FadeIn>
@@ -370,7 +382,7 @@ export default async function HomePage() {
           })}
         </div>
 
-        {WALL_TILES.every((tile) => OUTPUT_WALL_VIDEOS[tile.key]) && (
+        {!FIRST_EMPTY_TILE && (
           <FadeIn>
             <p className="mx-auto mt-16 max-w-md text-center text-sm leading-relaxed text-muted-foreground">
               {t("wallAudience")}

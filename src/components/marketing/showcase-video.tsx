@@ -199,14 +199,17 @@ export function ShowcaseVideo({
           aria-label={loud ? t("mute") : t("unmute")}
           title={loud ? t("mute") : t("unmute")}
           /* Sits back over the footage until the slot is hovered or the button
-             is focused, so a wall of clips isn't a wall of buttons. It stays
+             is focused, so a wall of clips isn't a wall of buttons. That recede
+             only applies where the device can hover: a touch device has neither
+             hover nor focus-visible before a tap, so a dimmed white glyph over
+             near-white footage would be its permanent state. It also stays
              fully opaque while loud - that one must never be hard to find - and
              it is never hidden or shrunk, so the hit target is constant.
              The ::after box widens that target to ~48px for touch without
              growing the 28px dot the design wants. */
           className={cn(
             "absolute right-3 top-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm transition-opacity duration-300 after:absolute after:-inset-2.5 after:content-[''] hover:!opacity-100 focus-visible:!opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 group-hover:opacity-100",
-            loud ? "opacity-100" : "opacity-55",
+            loud ? "opacity-100" : "[@media(hover:hover)]:opacity-55",
           )}
         >
           {loud ? (
