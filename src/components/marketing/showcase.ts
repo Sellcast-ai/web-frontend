@@ -3,7 +3,9 @@
  * `public/marketing/videos/` and referenced by absolute path - see
  * `docs/marketing-showcase-sources.md` (kept out of `public/`, which is served
  * verbatim) for which Lumi job produced each clip.
- * Spec: 9:16, 10 s or longer, ~1-3 MB each; the hero poster is the page's only
+ * Spec: vertical (9:16, give or take - `beauty.mp4` is 672x1280 and the tile
+ * crops it slightly), longer than 10 s bar the one approved exception
+ * (`pets.mp4` at 6.1 s), ~1-3 MB each; the hero poster is the page's only
  * eager fetch (a <video poster> loads even under preload="none", so a wall of
  * them would burst on first paint) and wall posters load as their tile nears
  * the viewport - either way they stay 480 wide WebP, tens of KB. Clips already

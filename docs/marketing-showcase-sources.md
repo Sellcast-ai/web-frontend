@@ -8,7 +8,9 @@ This document stays out of `public/`, which Next.js serves verbatim - the render
 
 ## Files
 
-Each `.mp4` is 9:16 H.264 + AAC, and every one still carries the render's real voice track - `showcase-video.tsx` plays them muted behind a user-operated sound toggle, so the audio must never be stripped.
+Each `.mp4` is a vertical H.264 + AAC render, and every one still carries the render's real voice track - `showcase-video.tsx` plays them muted behind a user-operated sound toggle, so the audio must never be stripped.
+Most are exactly 9:16; `beauty.mp4` is 672x1280 (0.525), so the `aspect-9/16` tile's `object-cover` crops about 3.4% off its top and bottom.
+That is deliberate - the commands below carry no `scale` filter, because a render's own geometry is what Lumi actually produced, and padding it would add bars while scaling it would distort it.
 Each `.webp` is a frame from its clip downscaled to 480 wide, used as the `poster`.
 The hero poster is the page's only eager fetch (a `<video poster>` loads even under `preload="none"`, so a wall of them would burst on first paint); wall posters load as their tile nears the viewport.
 Either way they stay in the tens of KB, and the clips themselves stream only once their tile nears the viewport.

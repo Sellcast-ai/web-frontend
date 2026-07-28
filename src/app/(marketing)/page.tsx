@@ -42,21 +42,25 @@ const STORY_STEPS = ["link", "learn", "approve", "render"] as const;
 
 /* Wall order. A key with a clip in OUTPUT_WALL_VIDEOS (showcase.ts) plays it;
    an unfilled key becomes the closing-statement card instead. */
-const WALL_TILES: { key: WallTileKey }[] = [
-  { key: "beauty" },
-  { key: "gadgets" },
-  { key: "home" },
-  { key: "pets" },
-  { key: "fashion" },
-  { key: "fitness" },
+const WALL_TILES: WallTileKey[] = [
+  "beauty",
+  "gadgets",
+  "home",
+  "pets",
+  "fashion",
+  "fitness",
 ];
 
 /* The section's closing line goes in the first unfilled tile when there is one,
    and below the grid when the wall is full, so it renders exactly once however
-   many slots are empty. */
-const FIRST_EMPTY_TILE = WALL_TILES.find(
-  (tile) => !OUTPUT_WALL_VIDEOS[tile.key],
-)?.key;
+   many slots are empty. Any further unfilled key is dropped from the grid
+   rather than drawn as a second, wordless card - the wall shrinks instead of
+   showing a hole, which is the "tile that failed to load" look this section
+   exists to avoid. */
+const FIRST_EMPTY_TILE = WALL_TILES.find((key) => !OUTPUT_WALL_VIDEOS[key]);
+const SHOWN_TILES = WALL_TILES.filter(
+  (key) => OUTPUT_WALL_VIDEOS[key] || key === FIRST_EMPTY_TILE,
+);
 
 const PRICING = [
   { key: "creator", href: "/signup?plan=creator", featured: false },
@@ -333,10 +337,10 @@ export default async function HomePage() {
         {/* Straight grid, no per-tile offset: six vertical clips of the same
             size read as a considered set, where the old zigzag read as drift. */}
         <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
-          {WALL_TILES.map((tile, i) => {
-            const video = OUTPUT_WALL_VIDEOS[tile.key];
+          {SHOWN_TILES.map((key, i) => {
+            const video = OUTPUT_WALL_VIDEOS[key];
             return (
-              <FadeIn key={tile.key} delay={(i % 3) * 0.1}>
+              <FadeIn key={key} delay={(i % 3) * 0.1}>
                 {video ? (
                   /* The frame carries its own surface: the poster is only
                      fetched as the tile nears the viewport, so without one the
@@ -356,25 +360,25 @@ export default async function HomePage() {
                     />
                     <div className="absolute inset-x-0 bottom-0 p-4">
                       <p className="text-[11px] font-medium leading-tight text-white">
-                        {t(`wall.${tile.key}.category`)}
+                        {t(`wall.${key}.category`)}
                       </p>
                       <p className="mt-0.5 text-[11px] leading-tight text-white/75">
-                        {t(`wall.${tile.key}.vibe`)}
+                        {t(`wall.${key}.vibe`)}
                       </p>
                     </div>
                   </div>
                 ) : (
                   /* An unfilled slot carries the section's closing line instead
                      of a labelled empty gradient, which now that its neighbours
-                     all play would just read as a tile that failed to load. */
+                     all play would just read as a tile that failed to load.
+                     Only the first one reaches here - SHOWN_TILES drops the
+                     rest, so this card is never wordless. */
                   <div className="flex aspect-9/16 flex-col justify-end rounded-card border border-border bg-muted/40 p-4 sm:p-6">
-                    {tile.key === FIRST_EMPTY_TILE && (
-                      /* A two-column phone leaves this card ~160px wide, where
-                          the desktop size wraps to eight lines. */
-                      <p className="font-accent text-lg leading-snug text-ink sm:text-2xl">
-                        {t("wallAudience")}
-                      </p>
-                    )}
+                    {/* A two-column phone leaves this card ~160px wide, where
+                        the desktop size wraps to eight lines. */}
+                    <p className="font-accent text-lg leading-snug text-ink sm:text-2xl">
+                      {t("wallAudience")}
+                    </p>
                   </div>
                 )}
               </FadeIn>

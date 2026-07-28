@@ -45,6 +45,9 @@ function claimSound(owner: string | null) {
 const refusedForSound = (err: unknown) =>
   err instanceof DOMException && err.name === "NotAllowedError";
 
+/** Fraction of a slot that must be on screen before its clip plays. */
+const PLAY_RATIO = 0.4;
+
 export function ShowcaseVideo({
   src,
   poster,
@@ -122,8 +125,15 @@ export function ShowcaseVideo({
       },
       { rootMargin: "200px" },
     );
-    const visible = new IntersectionObserver(([entry]) =>
-      setOnScreen(entry.isIntersecting),
+    /* A real share of the tile has to be on screen before it plays, not the
+       single pixel `isIntersecting` accepts: the wall is five clips, and five
+       concurrent 720x1280 H.264 decodes can exceed iOS Safari's simultaneous
+       hardware-decode limit on older devices, where the overflow tiles hold a
+       black frame. Compare the ratio rather than `isIntersecting`, which stays
+       true all the way down to 0 and so would never pause a leaving tile. */
+    const visible = new IntersectionObserver(
+      ([entry]) => setOnScreen(entry.intersectionRatio >= PLAY_RATIO),
+      { threshold: [0, PLAY_RATIO] },
     );
     warm.observe(el);
     visible.observe(el);
