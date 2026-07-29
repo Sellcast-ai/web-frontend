@@ -576,7 +576,7 @@
       "invalidPhone": "Insira um número de telefone válido.",
       "sendCode": "Enviar código",
       "sendCodeFailed": "Não foi possível enviar o código.",
-      "phoneUnavailable": "O login por código de telefone está temporariamente indisponível. Continue com o Google para começar.",
+      "phoneUnavailable": "O login por telefone não está disponível neste site. Continue com o Google para começar.",
       "phoneUnavailableHint": "O envio por SMS ainda não está configurado. O login com Google está disponível agora.",
       "phoneUnavailableLabel": "Telefone indisponível",
       "codePlaceholder": "Código de 6 dígitos",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "Faça login",
-      "startFree": "Comece gratuitamente"
+      "startFree": "Comece gratuitamente",
+      "openStudio": "Abrir o Studio"
     },
     "footer": {
       "tagline": "Entra um link de produto. Sai um vídeo pronto para publicar. Tudo com base nos padrões que já vendem.",
@@ -878,6 +879,13 @@
         "a4": "A qualquer hora. As atualizações são aplicadas imediatamente; os downgrades entrarão em vigor no próximo ciclo. Anual economiza cerca de 20% em relação ao mês.",
         "q5": "Qual modelo de renderização Lumi usa?",
         "a5": "Lumi é renderizado com Seedance 2.0, com mais modelos sendo lançados. Ele escolhe as melhores configurações por foto."
+      },
+      "upgrade": {
+        "cta": "Fazer upgrade",
+        "title": "A cobrança ainda não é self-service",
+        "body": "O checkout online ainda está em construção, por isso os planos ainda não podem ser comprados no site. Para mudar para o {plan}, envie-nos um e-mail e nós configuramos para você.",
+        "contact": "Enviar e-mail para billing@sellcast.ai",
+        "subject": "Upgrade para o {plan}"
       }
     },
     "landing": {

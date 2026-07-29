@@ -576,7 +576,7 @@
       "invalidPhone": "Enter a valid phone number.",
       "sendCode": "Send code",
       "sendCodeFailed": "Could not send code.",
-      "phoneUnavailable": "Phone code sign-in is temporarily unavailable. Continue with Google to get started.",
+      "phoneUnavailable": "Phone sign-in isn't available on this site. Continue with Google to get started.",
       "phoneUnavailableHint": "SMS delivery is not configured yet. Google sign-in is available now.",
       "phoneUnavailableLabel": "Phone unavailable",
       "codePlaceholder": "6-digit code",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "Sign in",
-      "startFree": "Start free"
+      "startFree": "Start free",
+      "openStudio": "Open Studio"
     },
     "footer": {
       "tagline": "Product links in. Publish-ready video out. Grounded in the patterns that already sell.",
@@ -878,6 +879,13 @@
         "a4": "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
         "q5": "Which render model does Lumi use?",
         "a5": "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot."
+      },
+      "upgrade": {
+        "cta": "Upgrade",
+        "title": "Billing isn't self-serve yet",
+        "body": "Online checkout is still being built, so plans can't be purchased on the site yet. To move to {plan}, email us and we'll set it up for you.",
+        "contact": "Email billing@sellcast.ai",
+        "subject": "Upgrade to {plan}"
       }
     },
     "landing": {

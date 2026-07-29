@@ -576,7 +576,7 @@
       "invalidPhone": "Masukkan nomor telepon yang valid.",
       "sendCode": "Kirim kode",
       "sendCodeFailed": "Tidak dapat mengirim kode.",
-      "phoneUnavailable": "Masuk dengan kode telepon untuk sementara tidak tersedia. Lanjutkan dengan Google untuk memulai.",
+      "phoneUnavailable": "Login dengan nomor telepon tidak tersedia di situs ini. Lanjutkan dengan Google untuk memulai.",
       "phoneUnavailableHint": "Pengiriman SMS belum dikonfigurasi. Masuk dengan Google tersedia sekarang.",
       "phoneUnavailableLabel": "Telepon tidak tersedia",
       "codePlaceholder": "kode 6 digit",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "Masuk",
-      "startFree": "Mulai gratis"
+      "startFree": "Mulai gratis",
+      "openStudio": "Buka Studio"
     },
     "footer": {
       "tagline": "Tautan produk masuk. Video siap terbit keluar. Berlandaskan pola yang sudah terbukti menjual.",
@@ -878,6 +879,13 @@
         "a4": "Kapan saja. Peningkatan segera berlaku; penurunan peringkat akan berlaku pada siklus berikutnya. Penghematan tahunan ~20% dibandingkan bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
         "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
+      },
+      "upgrade": {
+        "cta": "Upgrade",
+        "title": "Penagihan belum bisa dilayani mandiri",
+        "body": "Checkout online masih dalam pengembangan, jadi paket belum bisa dibeli di situs. Untuk beralih ke {plan}, kirim email kepada kami dan kami akan menyiapkannya untuk Anda.",
+        "contact": "Email billing@sellcast.ai",
+        "subject": "Upgrade ke {plan}"
       }
     },
     "landing": {

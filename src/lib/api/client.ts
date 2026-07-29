@@ -24,6 +24,9 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
+    /** Structured machine-readable error code from the backend body
+     * (`error_type`), when present - match on this, never on message prose. */
+    public errorType?: string,
   ) {
     super(message);
     this.name = "ApiError";
@@ -48,7 +51,13 @@ async function bff<T>(
   if (!res.ok) {
     const msg =
       (data && (data.detail || data.error || data.message)) || res.statusText;
-    throw new ApiError(res.status, typeof msg === "string" ? msg : "Request failed");
+    const errorType =
+      data && typeof data.error_type === "string" ? data.error_type : undefined;
+    throw new ApiError(
+      res.status,
+      typeof msg === "string" ? msg : "Request failed",
+      errorType,
+    );
   }
   return data as T;
 }

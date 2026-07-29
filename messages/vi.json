@@ -576,7 +576,7 @@
       "invalidPhone": "Nhập số điện thoại hợp lệ.",
       "sendCode": "Gửi mã",
       "sendCodeFailed": "Không thể gửi mã.",
-      "phoneUnavailable": "Đăng nhập bằng mã điện thoại tạm thời không khả dụng. Hãy tiếp tục bằng Google để bắt đầu.",
+      "phoneUnavailable": "Đăng nhập bằng số điện thoại không khả dụng trên trang này. Hãy tiếp tục bằng Google để bắt đầu.",
       "phoneUnavailableHint": "Chưa cấu hình gửi SMS. Hiện có thể đăng nhập bằng Google.",
       "phoneUnavailableLabel": "Điện thoại không khả dụng",
       "codePlaceholder": "mã 6 chữ số",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "Đăng nhập",
-      "startFree": "Bắt đầu miễn phí"
+      "startFree": "Bắt đầu miễn phí",
+      "openStudio": "Mở Studio"
     },
     "footer": {
       "tagline": "Liên kết sản phẩm đi vào. Video sẵn sàng đăng đi ra. Dựa trên những mẫu hình đã chứng minh là bán được.",
@@ -878,6 +879,13 @@
         "a4": "Bất cứ lúc nào. Việc nâng cấp được áp dụng ngay lập tức; việc hạ cấp sẽ có hiệu lực ở chu kỳ tiếp theo. Tiết kiệm hàng năm ~ 20% so với hàng tháng.",
         "q5": "Lumi sử dụng mô hình kết xuất nào?",
         "a5": "Lumi hiển thị với Seedance 2.0 và sắp ra mắt nhiều mẫu hơn. Nó chọn các cài đặt tốt nhất cho mỗi lần chụp."
+      },
+      "upgrade": {
+        "cta": "Nâng cấp",
+        "title": "Thanh toán chưa hỗ trợ tự phục vụ",
+        "body": "Thanh toán trực tuyến vẫn đang được xây dựng nên chưa thể mua gói trên trang web. Để chuyển sang {plan}, hãy gửi email cho chúng tôi và chúng tôi sẽ thiết lập cho bạn.",
+        "contact": "Gửi email tới billing@sellcast.ai",
+        "subject": "Nâng cấp lên {plan}"
       }
     },
     "landing": {

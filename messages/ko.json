@@ -576,7 +576,7 @@
       "invalidPhone": "유효한 전화번호를 입력하세요.",
       "sendCode": "코드 보내기",
       "sendCodeFailed": "코드를 보낼 수 없습니다.",
-      "phoneUnavailable": "전화 코드 로그인은 일시적으로 사용할 수 없습니다. Google로 계속 진행하세요.",
+      "phoneUnavailable": "이 사이트에서는 전화번호 로그인을 사용할 수 없습니다. Google로 계속하세요.",
       "phoneUnavailableHint": "SMS 전송이 아직 구성되지 않았습니다. Google 로그인은 지금 사용할 수 있습니다.",
       "phoneUnavailableLabel": "전화를 사용할 수 없음",
       "codePlaceholder": "6자리 코드",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "로그인",
-      "startFree": "무료로 시작하세요"
+      "startFree": "무료로 시작하세요",
+      "openStudio": "Studio 열기"
     },
     "footer": {
       "tagline": "제품 링크가 들어가면, 게시할 수 있는 영상이 나옵니다. 이미 팔리고 있는 패턴 위에서.",
@@ -878,6 +879,13 @@
         "a4": "언제든지. 업그레이드는 즉시 적용됩니다. 다운그레이드는 다음 주기에 적용됩니다. 연간 비용은 월별 비용의 약 20%를 절약합니다.",
         "q5": "Lumi는 어떤 렌더링 모델을 사용합니까?",
         "a5": "Lumi는 Seedance 2.0으로 렌더링되며 더 많은 모델이 출시됩니다. 샷당 최상의 설정을 선택합니다."
+      },
+      "upgrade": {
+        "cta": "업그레이드",
+        "title": "아직 셀프 결제를 지원하지 않습니다",
+        "body": "온라인 결제 기능이 아직 준비 중이라 사이트에서 요금제를 구매할 수 없습니다. {plan}(으)로 변경하시려면 이메일을 보내 주시면 설정해 드리겠습니다.",
+        "contact": "billing@sellcast.ai에 이메일 보내기",
+        "subject": "{plan}(으)로 업그레이드"
       }
     },
     "landing": {

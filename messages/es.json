@@ -576,7 +576,7 @@
       "invalidPhone": "Ingrese un número de teléfono válido.",
       "sendCode": "Enviar código",
       "sendCodeFailed": "No se pudo enviar el código.",
-      "phoneUnavailable": "El inicio de sesión con código por teléfono no está disponible temporalmente. Continúa con Google para empezar.",
+      "phoneUnavailable": "El inicio de sesión por teléfono no está disponible en este sitio. Continúa con Google para empezar.",
       "phoneUnavailableHint": "La entrega por SMS aún no está configurada. El inicio de sesión con Google está disponible ahora.",
       "phoneUnavailableLabel": "Teléfono no disponible",
       "codePlaceholder": "código de 6 dígitos",
@@ -724,7 +724,8 @@
     },
     "header": {
       "signIn": "Iniciar sesión",
-      "startFree": "Empieza gratis"
+      "startFree": "Empieza gratis",
+      "openStudio": "Abrir Studio"
     },
     "footer": {
       "tagline": "Entra un enlace de producto. Sale un video listo para publicar. Basado en los patrones que ya venden.",
@@ -878,6 +879,13 @@
         "a4": "En cualquier momento. Las actualizaciones se aplican de inmediato; las rebajas entrarán en vigor el próximo ciclo. Ahorro anual ~20% respecto al mes.",
         "q5": "¿Qué modelo de renderizado utiliza Lumi?",
         "a5": "Lumi se renderiza con Seedance 2.0, y se implementarán más modelos. Elige la mejor configuración por toma."
+      },
+      "upgrade": {
+        "cta": "Mejorar plan",
+        "title": "La facturación aún no es autoservicio",
+        "body": "El pago en línea aún está en construcción, por lo que los planes todavía no se pueden comprar en el sitio. Para pasar a {plan}, escríbenos y lo configuramos por ti.",
+        "contact": "Enviar correo a billing@sellcast.ai",
+        "subject": "Mejora a {plan}"
       }
     },
     "landing": {

@@ -4,8 +4,10 @@ import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Modal } from "@/components/ui/overlay";
 import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
+import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
 type Tier = {
@@ -32,9 +34,11 @@ const BILLING = [
 
 const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"] as const;
 
-export function PricingClient() {
+export function PricingClient({ signedIn }: { signedIn: boolean }) {
   const [annual, setAnnual] = useState(false);
+  const [upgradePlan, setUpgradePlan] = useState<string | null>(null);
   const t = useTranslations("marketing.pricing");
+  const th = useTranslations("marketing.header");
 
   return (
     <>
@@ -148,14 +152,41 @@ export function PricingClient() {
                     </li>
                   ))}
                 </ul>
-                <Button
-                  href={tier.href}
-                  variant={tier.featured ? "primary" : "outline"}
-                  size="md"
-                  className="mt-8 w-full"
-                >
-                  {t(`tiers.${tier.key}.cta`)}
-                </Button>
+                {/* Signed-in visitors never go to /signup: Free becomes the
+                    way back into the app, and paid tiers open an honest
+                    "billing isn't self-serve yet" dialog (no checkout route
+                    exists yet). Enterprise keeps its contact link either way. */}
+                {signedIn && tier.key === "free" ? (
+                  <Button
+                    href={APP_HOME_HREF}
+                    variant="outline"
+                    size="md"
+                    className="mt-8 w-full"
+                  >
+                    {th("openStudio")}
+                  </Button>
+                ) : signedIn && tier.monthly !== null ? (
+                  <Button
+                    type="button"
+                    variant={tier.featured ? "primary" : "outline"}
+                    size="md"
+                    className="mt-8 w-full"
+                    onClick={() =>
+                      setUpgradePlan(t(`tiers.${tier.key}.name`))
+                    }
+                  >
+                    {t("upgrade.cta")}
+                  </Button>
+                ) : (
+                  <Button
+                    href={tier.href}
+                    variant={tier.featured ? "primary" : "outline"}
+                    size="md"
+                    className="mt-8 w-full"
+                  >
+                    {t(`tiers.${tier.key}.cta`)}
+                  </Button>
+                )}
               </div>
             );
           })}
@@ -207,6 +238,27 @@ export function PricingClient() {
       </section>
 
       <CtaBand />
+
+      <Modal
+        open={upgradePlan !== null}
+        onClose={() => setUpgradePlan(null)}
+        title={t("upgrade.title")}
+      >
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {t("upgrade.body", { plan: upgradePlan ?? "" })}
+        </p>
+        <a
+          href={`mailto:billing@sellcast.ai?subject=${encodeURIComponent(
+            t("upgrade.subject", { plan: upgradePlan ?? "" }),
+          )}`}
+          className={cn(
+            buttonVariants({ variant: "primary", size: "md" }),
+            "mt-6 w-full",
+          )}
+        >
+          {t("upgrade.contact")}
+        </a>
+      </Modal>
     </>
   );
 }
