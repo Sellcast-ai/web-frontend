@@ -41,7 +41,7 @@ export default function MyProductsPage() {
         </Button>
       </div>
 
-      {/* paste omnibox — anything droppable in: Amazon, Shopee, TikTok Shop, any store */}
+      {/* Single-product paste box; whole-store imports use the prompt below. */}
       <form
         className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
         onSubmit={(e) => {

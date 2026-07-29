@@ -598,9 +598,8 @@ function NewProductInner() {
   );
 }
 
-/** "Import your whole store" — paste a store URL, preview the catalog, review
- * which products to keep, then kick off a batch import of just those and watch
- * it fill up My Products (report §4). */
+/** Paste a store URL, preview the catalog, review which products to keep, then
+ * kick off a batch import of just those and watch it fill up My Products. */
 function StoreImport({ className = "mt-6" }: { className?: string }) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
