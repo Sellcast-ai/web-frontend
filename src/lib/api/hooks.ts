@@ -26,6 +26,7 @@ export const qk = {
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
   import: (id: string) => ["import", id] as const,
+  importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
 };
 
 /** Backend error message when it's human-readable, else the fallback. */
@@ -113,6 +114,27 @@ export function useImportJob(id: string) {
   });
 }
 
+/** The store catalog the review step chooses from. A *query*, not a mutation, so
+ * the walk is cached and the list survives a remount. It is cached under the
+ * normalized `domain`, not the pasted `storeUrl`: keyed on the raw string,
+ * `shop.example.com` and `https://shop.example.com` are two cache entries, and
+ * the second spelling buys a second billed walk for a catalog already in hand.
+ * Every automatic trigger is off: the walk runs a billed third-party parser, so
+ * it may only ever start from a click (entering the review step, or the explicit
+ * "Try again" button) - never from a retry, a reconnect, or a refocus. */
+export function useImportCandidates(
+  target: { storeUrl: string; domain: string; platform?: string } | null,
+) {
+  return useQuery({
+    queryKey: qk.importCandidates(target?.domain ?? ""),
+    queryFn: () => api.listImportCandidates(target!.storeUrl, target?.platform),
+    enabled: Boolean(target?.storeUrl),
+    staleTime: 5 * 60_000,
+    retry: false,
+    refetchOnReconnect: false,
+  });
+}
+
 /** Polls every 4s while the job is still working. */
 export function useVideoJob(id: string) {
   return useQuery({
@@ -187,7 +209,8 @@ export function usePreviewImport() {
 export function useStartImport(messages: { startError: string }) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (storeUrl: string) => api.startImport(storeUrl),
+    mutationFn: (vars: { storeUrl: string; sourceUrls?: string[]; platform?: string }) =>
+      api.startImport(vars.storeUrl, vars.sourceUrls, vars.platform),
     onSuccess: (job) => qc.setQueryData(qk.import(job.job_id), job),
     onError: (err) => toast.error(errMsg(err, messages.startError)),
   });

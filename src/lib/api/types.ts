@@ -79,6 +79,28 @@ export interface ImportPreview {
   sample: ImportSampleItem[];
 }
 
+/** One reviewable product from the store's catalog walk. `source_url` is the
+ * stable identity the review step keys selection on (and what the import call
+ * echoes back as the chosen subset). */
+export interface ImportCandidate {
+  source_url: string;
+  title: string;
+  image: string | null;
+  price_min: number | null;
+  price_max: number | null;
+  currency: string | null;
+}
+
+/** The full reviewable catalog listing (a real page walk, unlike the sample-only
+ * preview). `truncated` is true when the walk hit the backend's page cap, so the
+ * review step can say the listing isn't the whole store. */
+export interface ImportCandidates {
+  platform: string;
+  store_domain: string;
+  truncated: boolean;
+  candidates: ImportCandidate[];
+}
+
 export type ImportStatus =
   | "queued"
   | "running"
