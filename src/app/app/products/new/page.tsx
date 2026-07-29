@@ -341,7 +341,6 @@ function NewProductInner() {
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder={t("productLinkPlaceholder")}
                 className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-                autoFocus
               />
               <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
                 {parse.isPending ? (
