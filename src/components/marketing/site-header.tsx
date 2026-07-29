@@ -31,7 +31,7 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
           <LanguageSwitcher compactOnSmall />
           <ThemeToggle />
           {signedIn ? (
-            <Button href={APP_HOME_HREF} variant="primary" size="sm">
+            <Button href={APP_HOME_HREF} variant="primary" size="sm" className="px-3 sm:px-4">
               {tc("openStudio")}
             </Button>
           ) : (
@@ -42,8 +42,9 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
               >
                 {tc("signIn")}
               </Link>
-              <Button href="/signup" variant="primary" size="sm">
-                {tc("startFree")}
+              <Button href="/signup" variant="primary" size="sm" className="px-3 sm:px-4">
+                <span className="sm:hidden">{tc("startFreeMobile")}</span>
+                <span className="hidden sm:inline">{tc("startFree")}</span>
               </Button>
             </>
           )}

@@ -727,7 +727,8 @@
     "header": {
       "signIn": "로그인",
       "startFree": "무료로 시작하세요",
-      "openStudio": "Studio 열기"
+      "openStudio": "Studio 열기",
+      "startFreeMobile": "시작"
     },
     "footer": {
       "tagline": "제품 링크가 들어가면, 게시할 수 있는 영상이 나옵니다. 이미 팔리고 있는 패턴 위에서.",

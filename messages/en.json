@@ -727,7 +727,8 @@
     "header": {
       "signIn": "Sign in",
       "startFree": "Start free",
-      "openStudio": "Open Studio"
+      "openStudio": "Open Studio",
+      "startFreeMobile": "Start"
     },
     "footer": {
       "tagline": "Product links in. Publish-ready video out. Grounded in the patterns that already sell.",

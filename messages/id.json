@@ -727,7 +727,8 @@
     "header": {
       "signIn": "Masuk",
       "startFree": "Mulai gratis",
-      "openStudio": "Buka Studio"
+      "openStudio": "Buka Studio",
+      "startFreeMobile": "Mulai"
     },
     "footer": {
       "tagline": "Tautan produk masuk. Video siap terbit keluar. Berlandaskan pola yang sudah terbukti menjual.",

@@ -727,7 +727,8 @@
     "header": {
       "signIn": "Iniciar sesión",
       "startFree": "Empieza gratis",
-      "openStudio": "Abrir Studio"
+      "openStudio": "Abrir Studio",
+      "startFreeMobile": "Crear"
     },
     "footer": {
       "tagline": "Entra un enlace de producto. Sale un video listo para publicar. Basado en los patrones que ya venden.",

@@ -727,7 +727,8 @@
     "header": {
       "signIn": "เข้าสู่ระบบ",
       "startFree": "เริ่มฟรี",
-      "openStudio": "เปิด Studio"
+      "openStudio": "เปิด Studio",
+      "startFreeMobile": "เริ่ม"
     },
     "footer": {
       "tagline": "ลิงก์สินค้าเข้า วิดีโอพร้อมโพสต์ออก ทั้งหมดอิงจากแพตเทิร์นที่พิสูจน์แล้วว่าขายได้",

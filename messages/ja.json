@@ -727,7 +727,8 @@
     "header": {
       "signIn": "サインイン",
       "startFree": "無料で始める",
-      "openStudio": "Studio を開く"
+      "openStudio": "Studio を開く",
+      "startFreeMobile": "開始"
     },
     "footer": {
       "tagline": "商品リンクを入れると、公開できる動画が出てくる。すでに売れているパターンだけを土台に。",

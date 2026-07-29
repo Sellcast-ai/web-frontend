@@ -727,7 +727,8 @@
     "header": {
       "signIn": "登录",
       "startFree": "免费开始",
-      "openStudio": "打开 Studio"
+      "openStudio": "打开 Studio",
+      "startFreeMobile": "开始"
     },
     "footer": {
       "tagline": "商品链接进，成片视频出。一切都基于已经被验证能卖货的模式。",
