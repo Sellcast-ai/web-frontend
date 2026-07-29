@@ -110,12 +110,15 @@
     },
     "products": {
       "title": "Sản phẩm của tôi",
-      "subtitle": "Sản phẩm của riêng bạn — được dán từ một liên kết hoặc được tải lên. Chỉ có bạn mới có thể nhìn thấy những điều này.",
+      "subtitle": "Danh mục riêng của bạn: nhập cửa hàng, dán liên kết sản phẩm hoặc thêm thủ công.",
       "addProduct": "Thêm sản phẩm",
       "pastePlaceholder": "Dán liên kết sản phẩm — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify hoặc bất kỳ cửa hàng nào",
       "readLink": "Đọc liên kết",
+      "storeImportTitle": "Đưa toàn bộ cửa hàng của bạn vào",
+      "storeImportDescription": "Dán URL cửa hàng để xem trước danh mục, chọn sản phẩm bạn muốn và nhập chúng vào Sản phẩm của tôi.",
+      "storeImportCta": "Nhập cửa hàng",
       "emptyTitle": "Chưa có sản phẩm nào",
-      "emptyDescription": "Dán liên kết sản phẩm ở trên hoặc thêm liên kết từ ảnh — sau đó chuyển liên kết đó thành video trong Studio."
+      "emptyDescription": "Nhập cửa hàng của bạn, dán liên kết sản phẩm ở trên hoặc thêm thủ công - rồi biến sản phẩm đó thành video trong Studio."
     },
     "productDetail": {
       "notFound": "Không tìm thấy sản phẩm.",
@@ -192,11 +195,19 @@
     },
     "productsNew": {
       "startTitle": "Thêm một sản phẩm",
-      "startSubtitle": "Dán bất kỳ liên kết sản phẩm nào — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay hoặc cửa hàng của riêng bạn — hoặc bắt đầu từ ảnh. Lumi đọc trang; bạn xác nhận trước khi bất cứ điều gì hiển thị.",
+      "startSubtitle": "Nhập danh mục cửa hàng, dán một liên kết sản phẩm hoặc thêm sản phẩm thủ công. Lumi đọc những gì có thể; bạn xác nhận trước khi bất cứ thứ gì được dựng.",
+      "storePathTitle": "Nhập sản phẩm từ cửa hàng của bạn",
+      "storePathDescription": "Dán URL cửa hàng, xem trước danh mục và chọn sản phẩm muốn giữ.",
+      "singleProductTitle": "Đọc một liên kết sản phẩm",
+      "singleProductDescription": "Dán trang sản phẩm từ Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay hoặc cửa hàng khác.",
+      "manualPathTitle": "Thêm một sản phẩm thủ công",
+      "manualPathDescription": "Mở trình chỉnh sửa trống, rồi tự thêm ảnh và chi tiết sản phẩm. Bạn cũng có thể thả ảnh vào thẻ bên dưới để bắt đầu với ảnh đã đính kèm.",
       "productLinkPlaceholder": "https://… liên kết sản phẩm",
       "readLink": "Đọc liên kết",
       "addManuallyInstead": "Thay vào đó hãy thêm nó theo cách thủ công →",
       "or": "hoặc",
+      "startManualEditor": "Mở trình chỉnh sửa thủ công",
+      "startManualEditorDescription": "Tự nhập chi tiết và thêm ảnh trong trình chỉnh sửa, hoặc thả ảnh sản phẩm vào đây.",
       "startFromPhotos": "Bắt đầu từ những bức ảnh",
       "startFromPhotosDescription": "Thả ảnh sản phẩm vào đây hoặc nhấp để duyệt; mô tả nó ở bước tiếp theo.",
       "startFromScratch": "Bắt đầu lại từ đầu",

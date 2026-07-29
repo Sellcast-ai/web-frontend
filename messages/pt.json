@@ -110,12 +110,15 @@
     },
     "products": {
       "title": "Meus produtos",
-      "subtitle": "Seus próprios produtos – colados de um link ou carregados. Só você pode ver isso.",
+      "subtitle": "Seu catálogo privado: importe uma loja, cole um link de produto ou adicione um manualmente.",
       "addProduct": "Adicionar produto",
       "pastePlaceholder": "Cole o link de um produto – Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify ou qualquer loja",
       "readLink": "Ler link",
+      "storeImportTitle": "Traga sua loja inteira",
+      "storeImportDescription": "Cole a URL da sua loja para pré-visualizar o catálogo, escolher os produtos desejados e importá-los para Meus produtos.",
+      "storeImportCta": "Importar loja",
       "emptyTitle": "Nenhum produto ainda",
-      "emptyDescription": "Cole o link de um produto acima ou adicione um das fotos e transforme-o em um vídeo no Studio."
+      "emptyDescription": "Importe sua loja, cole um link de produto acima ou adicione um manualmente; depois transforme-o em um vídeo no Studio."
     },
     "productDetail": {
       "notFound": "Produto não encontrado.",
@@ -192,11 +195,19 @@
     },
     "productsNew": {
       "startTitle": "Adicionar um produto",
-      "startSubtitle": "Cole qualquer link de produto – Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay ou sua própria loja – ou comece pelas fotos. Lumi lê a página; você confirma antes de qualquer coisa ser renderizada.",
+      "startSubtitle": "Importe o catálogo de uma loja, cole um link de produto ou adicione um produto manualmente. A Lumi lê o que consegue; você confirma antes de qualquer renderização.",
+      "storePathTitle": "Importar produtos da sua loja",
+      "storePathDescription": "Cole a URL da sua loja, pré-visualize o catálogo e escolha quais produtos manter.",
+      "singleProductTitle": "Ler um link de produto",
+      "singleProductDescription": "Cole uma página de produto da Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay ou outra loja.",
+      "manualPathTitle": "Adicionar um produto manualmente",
+      "manualPathDescription": "Abra o editor em branco e adicione fotos e detalhes do produto você mesmo. Você também pode soltar fotos no cartão abaixo para começar com elas anexadas.",
       "productLinkPlaceholder": "https://… link do produto",
       "readLink": "Ler link",
       "addManuallyInstead": "Adicione-o manualmente →",
       "or": "ou",
+      "startManualEditor": "Abrir editor manual",
+      "startManualEditorDescription": "Digite os detalhes e adicione fotos dentro do editor, ou solte fotos do produto aqui.",
       "startFromPhotos": "Comece pelas fotos",
       "startFromPhotosDescription": "Deixe fotos do produto aqui ou clique para navegar; descreva-o na próxima etapa.",
       "startFromScratch": "Comece do zero",

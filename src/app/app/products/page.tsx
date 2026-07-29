@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Link2, Loader2, PackagePlus, Plus } from "lucide-react";
+import { Link2, Loader2, Plus, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMyProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
@@ -15,6 +15,7 @@ export default function MyProductsPage() {
   const { data, isLoading } = useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
+  const showStoreImportPrompt = !isLoading && products.length <= 3;
 
   function goCreate() {
     const trimmed = url.trim();
@@ -60,22 +61,34 @@ export default function MyProductsPage() {
         </Button>
       </form>
 
+      {showStoreImportPrompt && (
+        <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-5 shadow-soft sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <div className="flex gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white">
+              <Store className="h-5 w-5" />
+            </span>
+            <div>
+              <h2 className="font-display text-lg font-semibold text-ink">
+                {t("storeImportTitle")}
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("storeImportDescription")}
+              </p>
+            </div>
+          </div>
+          <Button href="/app/products/new" size="md" className="mt-4 w-full sm:mt-0 sm:w-auto">
+            <Store className="h-4 w-4" />
+            {t("storeImportCta")}
+          </Button>
+        </section>
+      )}
+
       {isLoading ? (
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>
       ) : products.length === 0 ? (
-        <div className="mt-16 flex flex-col items-center text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
-            <PackagePlus className="h-7 w-7" />
-          </div>
-          <p className="mt-4 font-display text-lg font-semibold text-ink">
-            {t("emptyTitle")}
-          </p>
-          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-            {t("emptyDescription")}
-          </p>
-        </div>
+        null
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {products.map((p, i) => (

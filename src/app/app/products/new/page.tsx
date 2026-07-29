@@ -287,7 +287,7 @@ function NewProductInner() {
     !!draft && draft.title.trim().length >= 2 && selectedCount > 0 && !create.isPending;
 
   return (
-    <div className="container-page max-w-3xl py-8">
+    <div className="container-page max-w-3xl py-6 sm:py-8">
       {draft === null ? (
         <>
           <h1 className="font-display text-3xl font-bold text-ink">{t("startTitle")}</h1>
@@ -295,30 +295,63 @@ function NewProductInner() {
             {t("startSubtitle")}
           </p>
 
-          {/* URL omnibox */}
-          <form
-            className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
-            onSubmit={(e) => {
-              e.preventDefault();
-              runParse(url);
-            }}
-          >
-            <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <input
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder={t("productLinkPlaceholder")}
-              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-              autoFocus
-            />
-            <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
-              {parse.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                t("readLink")
-              )}
-            </Button>
-          </form>
+          <section className="mt-5 sm:mt-7">
+            <div className="flex gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white">
+                <Store className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-display text-lg font-semibold text-ink">
+                  {t("storePathTitle")}
+                </h2>
+                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                  {t("storePathDescription")}
+                </p>
+              </div>
+            </div>
+            <StoreImport className="mt-3 sm:mt-4" />
+          </section>
+
+          <section className="mt-6 sm:mt-8">
+            <div className="flex gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-700">
+                <Link2 className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-display text-lg font-semibold text-ink">
+                  {t("singleProductTitle")}
+                </h2>
+                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                  {t("singleProductDescription")}
+                </p>
+              </div>
+            </div>
+
+            {/* URL omnibox */}
+            <form
+              className="mt-3 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300 sm:mt-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                runParse(url);
+              }}
+            >
+              <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
+              <input
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder={t("productLinkPlaceholder")}
+                className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                autoFocus
+              />
+              <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
+                {parse.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  t("readLink")
+                )}
+              </Button>
+            </form>
+          </section>
           {parse.isError && (
             <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
@@ -337,23 +370,27 @@ function NewProductInner() {
             </div>
           )}
 
-          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
-            {t("or")}
-            <span className="h-px flex-1 bg-border" />
-          </div>
-
-          {/* manual / photo start */}
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {/* manual/photo start: one blank editor destination, with drag-start still supported */}
+          <section className="mt-6 sm:mt-8">
+            <div className="flex gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-700">
+                <PencilLine className="h-5 w-5" />
+              </span>
+              <div>
+                <h2 className="font-display text-lg font-semibold text-ink">
+                  {t("manualPathTitle")}
+                </h2>
+                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                  {t("manualPathDescription")}
+                </p>
+              </div>
+            </div>
             <button
               type="button"
               {...drop.props}
-              onClick={() => {
-                setDraft(emptyDraft(null));
-                setTimeout(() => fileInput.current?.click(), 0);
-              }}
+              onClick={() => setDraft(emptyDraft(null))}
               className={cn(
-                "rounded-2xl border-2 border-dashed bg-card p-6 text-left transition-colors",
+                "mt-3 w-full rounded-2xl border-2 border-dashed bg-card p-6 text-left transition-colors sm:mt-4",
                 drop.over
                   ? "border-brand-400 bg-accent/50"
                   : "border-border hover:border-brand-400",
@@ -365,35 +402,14 @@ function NewProductInner() {
                 <ImagePlus className="h-6 w-6 text-brand-600" />
               )}
               <p className="mt-2 font-display font-semibold text-ink">
-                {t("startFromPhotos")}
+                {t("startManualEditor")}
               </p>
               <p className="text-xs text-muted-foreground">
-                {t("startFromPhotosDescription")}
+                {t("startManualEditorDescription")}
               </p>
             </button>
-            <button
-              type="button"
-              onClick={() => setDraft(emptyDraft(null))}
-              className="rounded-2xl border-2 border-dashed border-border bg-card p-6 text-left transition-colors hover:border-brand-400"
-            >
-              <PencilLine className="h-6 w-6 text-brand-600" />
-              <p className="mt-2 font-display font-semibold text-ink">
-                {t("startFromScratch")}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("startFromScratchDescription")}
-              </p>
-            </button>
-          </div>
-          {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
-
-          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
-            {t("or")}
-            <span className="h-px flex-1 bg-border" />
-          </div>
-
-          <StoreImport />
+            {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+          </section>
         </>
       ) : (
         <>
@@ -586,7 +602,7 @@ function NewProductInner() {
 /** "Import your whole store" — paste a store URL, preview the catalog, review
  * which products to keep, then kick off a batch import of just those and watch
  * it fill up My Products (report §4). */
-function StoreImport() {
+function StoreImport({ className = "mt-6" }: { className?: string }) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
@@ -734,7 +750,7 @@ function StoreImport() {
     const total = running.requested;
     const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 text-brand-600" />
           {t("importingTitle")}
@@ -759,7 +775,7 @@ function StoreImport() {
   // step 3 — walking the catalog for review
   if (review && !candidateData) {
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -816,7 +832,7 @@ function StoreImport() {
     // box over "0 of 0 selected"
     if (list.length === 0) {
       return (
-        <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
           <p className="flex items-center gap-2 font-display font-semibold text-ink">
             <Store className="h-4 w-4 shrink-0 text-brand-600" />
             {t("reviewTitle", { domain: review.domain })}
@@ -831,7 +847,7 @@ function StoreImport() {
       );
     }
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -914,7 +930,7 @@ function StoreImport() {
   // step 2 — preview succeeded: confirm before walking the catalog for review
   if (previewData) {
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
         <p className="font-display font-semibold text-ink">
           {t("previewFound", {
             count: previewData.product_count_estimate,
@@ -961,7 +977,10 @@ function StoreImport() {
   return (
     <>
       <form
-        className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
+        className={cn(
+          className,
+          "flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300",
+        )}
         onSubmit={(e) => {
           e.preventDefault();
           if (storeUrl.trim()) preview.mutate(storeUrl.trim());

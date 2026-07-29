@@ -110,12 +110,15 @@
     },
     "products": {
       "title": "My Products",
-      "subtitle": "Your own products — pasted from a link or uploaded. Only you can see these.",
+      "subtitle": "Your private catalog - import a store, paste a product link, or add one manually.",
       "addProduct": "Add product",
       "pastePlaceholder": "Paste a product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, or any store",
       "readLink": "Read link",
+      "storeImportTitle": "Bring in your whole store",
+      "storeImportDescription": "Paste your storefront URL to preview the catalog, choose the products you want, and import them into My Products.",
+      "storeImportCta": "Import store",
       "emptyTitle": "No products yet",
-      "emptyDescription": "Paste a product link above, or add one from photos — then turn it into a video in the Studio."
+      "emptyDescription": "Import your store, paste a product link above, or add one manually - then turn it into a video in the Studio."
     },
     "productDetail": {
       "notFound": "Product not found.",
@@ -192,11 +195,19 @@
     },
     "productsNew": {
       "startTitle": "Add a product",
-      "startSubtitle": "Paste any product link — Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, eBay, or your own store — or start from photos. Lumi reads the page; you confirm before anything renders.",
+      "startSubtitle": "Import a store catalog, paste one product link, or add a product manually. Lumi reads what it can; you confirm before anything renders.",
+      "storePathTitle": "Import products from your store",
+      "storePathDescription": "Paste your storefront URL, preview the catalog, and choose which products to keep.",
+      "singleProductTitle": "Read one product link",
+      "singleProductDescription": "Paste a product page from Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay, or another store.",
+      "manualPathTitle": "Add one product manually",
+      "manualPathDescription": "Open the blank editor, then add photos and product details yourself. You can also drop photos onto the tile below to start with them attached.",
       "productLinkPlaceholder": "https://… product link",
       "readLink": "Read link",
       "addManuallyInstead": "Add it manually instead →",
       "or": "or",
+      "startManualEditor": "Open manual editor",
+      "startManualEditorDescription": "Type the details yourself and add photos inside the editor, or drop product photos here.",
       "startFromPhotos": "Start from photos",
       "startFromPhotosDescription": "Drop product shots here or click to browse; describe it on the next step.",
       "startFromScratch": "Start from scratch",

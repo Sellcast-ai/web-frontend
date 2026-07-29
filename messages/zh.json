@@ -110,12 +110,15 @@
     },
     "products": {
       "title": "我的产品",
-      "subtitle": "您自己的产品 - 从链接粘贴或上传。只有你能看到这些。",
+      "subtitle": "你的私有商品目录：导入店铺、粘贴商品链接，或手动添加商品。",
       "addProduct": "添加产品",
       "pastePlaceholder": "粘贴产品链接 - Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify 或任何商店",
       "readLink": "阅读链接",
+      "storeImportTitle": "导入整个店铺",
+      "storeImportDescription": "粘贴你的店铺网址，预览目录，选择想要的商品，并导入到“我的产品”。",
+      "storeImportCta": "导入店铺",
       "emptyTitle": "还没有产品",
-      "emptyDescription": "粘贴上面的产品链接，或添加照片中的链接 - 然后在 Studio 中将其转换为视频。"
+      "emptyDescription": "导入你的店铺、粘贴上方的商品链接，或手动添加商品，然后在 Studio 中将其转换为视频。"
     },
     "productDetail": {
       "notFound": "未找到产品。",
@@ -192,11 +195,19 @@
     },
     "productsNew": {
       "startTitle": "添加产品",
-      "startSubtitle": "粘贴任何产品链接 - Amazon、沃尔玛、Shopee、Lazada、TikTok Shop、Etsy、eBay 或您自己的商店 - 或从照片开始。 Lumi 读取页面；您在渲染任何内容之前确认。",
+      "startSubtitle": "导入店铺目录、粘贴一个商品链接，或手动添加商品。Lumi 会读取可用内容；任何内容渲染前都由你确认。",
+      "storePathTitle": "从你的店铺导入商品",
+      "storePathDescription": "粘贴店铺网址，预览目录，然后选择要保留的商品。",
+      "singleProductTitle": "读取一个商品链接",
+      "singleProductDescription": "粘贴 Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay 或其他店铺的商品页面。",
+      "manualPathTitle": "手动添加一个商品",
+      "manualPathDescription": "打开空白编辑器，自行添加商品照片和详情。你也可以将照片拖放到下方卡片，从已附加照片开始。",
       "productLinkPlaceholder": "https://... 产品链接",
       "readLink": "阅读链接",
       "addManuallyInstead": "改为手动添加 →",
       "or": "或",
+      "startManualEditor": "打开手动编辑器",
+      "startManualEditorDescription": "在编辑器中输入详情并添加照片，或将商品照片拖放到这里。",
       "startFromPhotos": "从照片开始",
       "startFromPhotosDescription": "将产品图片放在此处或点击浏览；在下一步中描述它。",
       "startFromScratch": "从头开始",
