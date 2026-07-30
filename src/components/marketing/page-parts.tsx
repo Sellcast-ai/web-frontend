@@ -39,7 +39,9 @@ export function PageHeader({
   );
 }
 
-/** Reusable bottom call-to-action band (hero gradient). */
+/** Reusable bottom call-to-action band (hero gradient). Its primary CTA goes
+ * through `AuthCta`, so the destination is not a caller's choice: a signed-in
+ * visitor is sent into the app, never to signup. */
 export function CtaBand({
   title,
   subtitle,
