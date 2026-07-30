@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react";
-import { api, ApiError } from "@/lib/api/client";
+import { api, apiErrorMessage } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
 import { isDevDeliveryChannel, isSmsUnavailableError } from "@/lib/phone-auth";
@@ -66,7 +66,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
         setError(t("phoneUnavailable"));
         return;
       }
-      setError(err instanceof ApiError ? err.message : t("sendCodeFailed"));
+      setError(apiErrorMessage(err, t("sendCodeFailed")));
     } finally {
       setBusy(false);
     }
@@ -81,7 +81,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       await qc.invalidateQueries({ queryKey: qk.me });
       router.replace(APP_HOME_HREF);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : t("verifyCodeFailed"));
+      setError(apiErrorMessage(err, t("verifyCodeFailed")));
       setBusy(false);
     }
   }
@@ -320,11 +320,7 @@ function GoogleButton({
             await qc.invalidateQueries({ queryKey: qk.me });
             router.replace(APP_HOME_HREF);
           } catch (err) {
-            toast.error(
-              err instanceof ApiError
-                ? err.message
-                : errorFallback,
-            );
+            toast.error(apiErrorMessage(err, errorFallback));
           }
         },
       });

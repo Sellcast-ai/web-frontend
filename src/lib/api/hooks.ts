@@ -6,7 +6,7 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { api } from "./client";
+import { api, apiErrorMessage } from "./client";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -28,11 +28,6 @@ export const qk = {
   import: (id: string) => ["import", id] as const,
   importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
 };
-
-/** Backend error message when it's human-readable, else the fallback. */
-function errMsg(err: unknown, fallback: string): string {
-  return (err instanceof Error && err.message) || fallback;
-}
 
 const ACTIVE: VideoJobStatus[] = [
   "queued",
@@ -76,7 +71,7 @@ export function useCreateAvatar(
   return useMutation({
     mutationFn: (payload: AvatarCreate) => api.createAvatar(payload, onProgress),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
-    onError: (err) => toast.error(errMsg(err, messages.saveError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.saveError)),
   });
 }
 
@@ -85,7 +80,7 @@ export function useDeleteAvatar(messages: { deleteError: string }) {
   return useMutation({
     mutationFn: (id: string) => api.deleteAvatar(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["avatars"] }),
-    onError: (err) => toast.error(errMsg(err, messages.deleteError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.deleteError)),
   });
 }
 
@@ -212,7 +207,7 @@ export function useStartImport(messages: { startError: string }) {
     mutationFn: (vars: { storeUrl: string; sourceUrls?: string[]; platform?: string }) =>
       api.startImport(vars.storeUrl, vars.sourceUrls, vars.platform),
     onSuccess: (job) => qc.setQueryData(qk.import(job.job_id), job),
-    onError: (err) => toast.error(errMsg(err, messages.startError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.startError)),
   });
 }
 
@@ -227,7 +222,7 @@ export function useCreateProduct(
       qc.setQueryData(qk.product(product.id), product);
       qc.invalidateQueries({ queryKey: qk.myProducts });
     },
-    onError: (err) => toast.error(errMsg(err, messages.saveError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.saveError)),
   });
 }
 
@@ -240,7 +235,7 @@ export function useCreateJob(messages: { startError: string }) {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) => toast.error(errMsg(err, messages.startError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.startError)),
   });
 }
 
@@ -263,7 +258,7 @@ export function useBeatAction(
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
     onError: (err, { action }) =>
       toast.error(
-        errMsg(
+        apiErrorMessage(
           err,
           action === "approve" ? messages.approveError : messages.regenerateError,
         ),
@@ -279,7 +274,7 @@ export function useApproveStoryboard(
   return useMutation({
     mutationFn: () => api.approveStoryboard(jobId),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
-    onError: (err) => toast.error(errMsg(err, messages.approveError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.approveError)),
   });
 }
 
@@ -288,7 +283,7 @@ export function usePatchStoryboard(jobId: string, messages: { saveError: string 
   return useMutation({
     mutationFn: (storyboard: Storyboard) => api.patchStoryboard(jobId, storyboard),
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
-    onError: (err) => toast.error(errMsg(err, messages.saveError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.saveError)),
   });
 }
 
@@ -301,7 +296,7 @@ export function useRetryJob(messages: { retryError: string }) {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) => toast.error(errMsg(err, messages.retryError)),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.retryError)),
   });
 }
 

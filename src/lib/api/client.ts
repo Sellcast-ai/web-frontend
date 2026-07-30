@@ -27,10 +27,21 @@ export class ApiError extends Error {
     /** Structured machine-readable error code from the backend body
      * (`error_type`), when present - match on this, never on message prose. */
     public errorType?: string,
+    /** The human-readable message the response body itself carried, when it
+     * carried one. `message` may instead be a client-side English generic (a
+     * status phrase, a parse failure, a dead socket), which must never reach a
+     * user in any of the nine locales - render through `apiErrorMessage`. */
+    public serverMessage?: string,
   ) {
     super(message);
     this.name = "ApiError";
   }
+}
+
+/** The string to show a user for a failed call: the server's own message when
+ * it sent one, else the caller's already-localized fallback. */
+export function apiErrorMessage(err: unknown, fallback: string): string {
+  return (err instanceof ApiError && err.serverMessage) || fallback;
 }
 
 type ErrorBody = {
@@ -57,16 +68,20 @@ function parseErrorBody(text: string): ErrorBody {
 /** The one place a failed response becomes an `ApiError`, so every transport
  * (fetch and XHR alike) carries the same message chain and `error_type`.
  * The message is never empty: `statusText` is "" over HTTP/2, and call sites
- * that render `err.message` verbatim would otherwise show nothing at all. */
+ * that render `err.message` verbatim would otherwise show nothing at all.
+ * Only a message the *body* carried is marked displayable - a status phrase
+ * ("Bad Gateway") and the generic are untranslated English. */
 function errorFrom(status: number, statusText: string, text: string): ApiError {
   const data = parseErrorBody(text);
-  const msg = (data && (data.detail || data.error || data.message)) || statusText;
+  const fromBody = data && (data.detail || data.error || data.message);
+  const serverMessage = typeof fromBody === "string" && fromBody ? fromBody : undefined;
   const errorType =
     data && typeof data.error_type === "string" ? data.error_type : undefined;
   return new ApiError(
     status,
-    (typeof msg === "string" && msg) || "Request failed",
+    serverMessage || statusText || "Request failed",
     errorType,
+    serverMessage,
   );
 }
 

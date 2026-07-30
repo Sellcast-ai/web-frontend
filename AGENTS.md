@@ -147,6 +147,7 @@ Vercel (this app) -> Render (FastAPI API + video worker) -> Postgres + Cloudflar
 - Never import `src/lib/api/config.ts` or `server.ts` into client components (server-only).
 - Add new backend calls to `src/lib/api/client.ts` + a hook in `hooks.ts`; the generic BFF proxy means most endpoints need no new route handler (only auth flows that touch cookies do).
 - Keep types in `src/lib/api/types.ts` in sync with backend Pydantic schemas.
+- Never render `ApiError.message` to a user: it may be a client-side English generic (a status phrase, a parse failure, a dead socket) that would ship untranslated to all nine locales. Show failures via `apiErrorMessage(err, localizedFallback)`, which displays only a message the response body itself carried.
 - Reuse the shared UI primitives instead of one-offs: mutations surface success/failure via `toast.*`, overlays go through `Modal`/`Drawer` in `ui/overlay.tsx`, animations use the tokens/primitives in `ui/motion.tsx`.
 
 ## Maintaining this file

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { api, ApiError, bffUpload } from "./client";
+import { api, ApiError, apiErrorMessage, bffUpload } from "./client";
 
 function mockFetch(status: number, body: unknown = null) {
   const fn = vi.fn(async () =>
@@ -72,6 +72,37 @@ describe("api (BFF client)", () => {
       status: 504,
       message: "Request failed",
     });
+  });
+
+  it("only marks a body-supplied message as displayable", async () => {
+    mockFetch(422, { detail: "invalid url" });
+    const detail = await api.parseProductUrl("nope").catch((e) => e);
+    expect(apiErrorMessage(detail, "localized fallback")).toBe("invalid url");
+
+    // Status phrase, client generic, malformed 2xx body and a non-ApiError all
+    // carry untranslated English, so the call site's own locale string wins.
+    mockFetch(502);
+    const gateway = await api.getUsage().catch((e) => e);
+    expect(gateway.message).toBe("Bad Gateway");
+    expect(apiErrorMessage(gateway, "localized fallback")).toBe("localized fallback");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway timeout</html>", { status: 504 })),
+    );
+    const timeout = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(timeout, "localized fallback")).toBe("localized fallback");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>not json</html>", { status: 200 })),
+    );
+    const malformed = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(malformed, "localized fallback")).toBe("localized fallback");
+
+    expect(apiErrorMessage(new TypeError("boom"), "localized fallback")).toBe(
+      "localized fallback",
+    );
   });
 
   it("approveStoryboard POSTs to the approve endpoint", async () => {
