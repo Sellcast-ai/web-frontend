@@ -87,16 +87,16 @@ export default function MyProductsPage() {
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>
-      ) : products.length === 0 ? (
-        null
       ) : (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.map((p, i) => (
-            <StaggerItem key={p.id} index={i} className="h-full">
-              <ProductCard product={p} />
-            </StaggerItem>
-          ))}
-        </div>
+        products.length > 0 && (
+          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {products.map((p, i) => (
+              <StaggerItem key={p.id} index={i} className="h-full">
+                <ProductCard product={p} />
+              </StaggerItem>
+            ))}
+          </div>
+        )
       )}
     </div>
   );
