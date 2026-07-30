@@ -885,12 +885,12 @@ function StoreImport({
             {t("importingLeave")}
           </button>
           {/* the handle can be unreadable (record purged, GET failing for
-            * keeps), so the way out shows once a read has actually failed —
-            * never on the first poll, which has no job either. Nothing infers
-            * the job is dead: the user says so, and only this page's handle
-            * goes. `isError` survives the retries, so the exit stays put
-            * between them. */}
-          {jobQuery.isError && !jobQuery.isFetching && (
+            * keeps), so the way out shows once a read has actually failed -
+            * never on the first poll, whose status is still `pending`. Nothing
+            * infers the job is dead: the user says so, and only this page's
+            * handle goes. `isError` stays true across the retries and between
+            * the 2.5s polls, so the exit never blinks out from under a click. */}
+          {jobQuery.isError && (
             <button
               type="button"
               className="text-sm font-semibold text-muted-foreground hover:text-ink"
