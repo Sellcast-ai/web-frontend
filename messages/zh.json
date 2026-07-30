@@ -121,6 +121,8 @@
       "emptyDescription": "导入你的店铺、粘贴上方的商品链接，或手动添加商品，然后在 Studio 中将其转换为视频。",
       "loadErrorTitle": "无法加载你的产品",
       "loadErrorDescription": "这不是空的商品目录，只是列表加载失败。你的产品仍在，请稍后重试。",
+      "offlineTitle": "你当前处于离线状态",
+      "offlineDescription": "这不是空目录，我们暂时无法获取你的商品。请重新联网后再试。",
       "refreshError": "无法刷新你的产品 - 正在显示上一次加载的列表。",
       "retry": "重试"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "总结一下……",
         "importingLabel": "导入",
         "importingLeave": "在导入进行时添加其他商品",
+        "alreadyImportingTitle": "已有一个店铺导入正在进行",
+        "alreadyImportingDescription": "同一时间只能导入一个店铺。请等待当前导入完成，然后再导入其他店铺。",
+        "showProgress": "查看导入进度",
         "previewFound": "我们从 {domain} 找到了 {count} 产品",
         "chooseProducts": "选择商品",
         "reviewTitle": "选择要从 {domain} 导入的商品",

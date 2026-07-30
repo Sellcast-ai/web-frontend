@@ -14,7 +14,7 @@ import { StaggerItem } from "@/components/ui/motion";
 export default function MyProductsPage() {
   const t = useTranslations("app.products");
   const router = useRouter();
-  const { data, isError, isFetching, refetch, errorUpdatedAt } = useMyProducts();
+  const { data, isError, isFetching, fetchStatus, refetch, errorUpdatedAt } = useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
   // a list we've never received is the only "not loaded" state: `isLoading` is
@@ -22,10 +22,15 @@ export default function MyProductsPage() {
   const loaded = data !== undefined;
   const showEmptyState = loaded && products.length === 0;
   const showStoreImportPrompt = loaded && products.length > 0 && products.length <= 3;
-  // the error card only speaks for a list that never arrived; a refetch that
-  // fails over cached products is a toast, not a banner above those products
-  const showLoadError = isError && !loaded;
-  const toastedErrorAt = useRef(0);
+  // offline pauses the query with no error and no data: same dead end as a
+  // failed load, so it gets the same explain-and-retry card instead of a spinner
+  const paused = fetchStatus === "paused";
+  // the card only speaks for a list that never arrived; a refetch that fails
+  // over cached products is a toast, not a banner above those products
+  const showLoadError = (isError || paused) && !loaded;
+  // seeded at mount so a failure already sitting in the cache doesn't toast
+  // again on every remount inside the query's `staleTime`
+  const toastedErrorAt = useRef(errorUpdatedAt);
 
   useEffect(() => {
     if (!isError || !loaded || errorUpdatedAt === toastedErrorAt.current) return;
@@ -84,9 +89,11 @@ export default function MyProductsPage() {
         >
           <p className="flex items-start gap-2 font-display font-semibold text-ink">
             <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-            {t("loadErrorTitle")}
+            {t(paused ? "offlineTitle" : "loadErrorTitle")}
           </p>
-          <p className="mt-1 text-sm text-muted-foreground">{t("loadErrorDescription")}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t(paused ? "offlineDescription" : "loadErrorDescription")}
+          </p>
           <Button size="md" className="mt-4" onClick={() => refetch()} disabled={isFetching}>
             {isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : t("retry")}
           </Button>
@@ -123,7 +130,7 @@ export default function MyProductsPage() {
         </section>
       )}
 
-      {!loaded && !isError && (
+      {!loaded && !showLoadError && (
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>

@@ -121,6 +121,8 @@
       "emptyDescription": "ストアを取り込むか、上に商品リンクを貼り付けるか、手動で追加してから、Studioでビデオに変換します。",
       "loadErrorTitle": "製品を読み込めませんでした",
       "loadErrorDescription": "カタログが空なのではなく、リストの読み込みに失敗しました。製品はそのまま残っています。少し待ってからもう一度お試しください。",
+      "offlineTitle": "オフラインです",
+      "offlineDescription": "商品がないわけではありません。いま商品リストを取得できていません。接続を確認してからもう一度お試しください。",
       "refreshError": "製品を更新できませんでした — 最後に読み込んだリストを表示しています。",
       "retry": "再試行"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "まとめ…",
         "importingLabel": "インポート中",
         "importingLeave": "実行中に別の商品を追加する",
+        "alreadyImportingTitle": "ストアのインポートがすでに実行中です",
+        "alreadyImportingDescription": "ストアのインポートは同時に1件しか実行できません。今のインポートが終わってから、次のストアをインポートしてください。",
+        "showProgress": "インポートの進捗を表示",
         "previewFound": "{domain} の {count} 製品が見つかりました",
         "chooseProducts": "商品を選ぶ",
         "reviewTitle": "{domain} からインポートする商品を選択",

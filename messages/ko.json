@@ -121,6 +121,8 @@
       "emptyDescription": "스토어를 가져오거나, 위에 제품 링크를 붙여넣거나, 수동으로 추가한 다음 Studio에서 비디오로 만드세요.",
       "loadErrorTitle": "제품을 불러올 수 없습니다",
       "loadErrorDescription": "카탈로그가 비어 있는 것이 아니라 목록을 불러오지 못했습니다. 제품은 그대로 있으니 잠시 후 다시 시도해 주세요.",
+      "offlineTitle": "오프라인 상태입니다",
+      "offlineDescription": "카탈로그가 비어 있는 것이 아닙니다. 지금은 상품을 불러올 수 없습니다. 다시 연결한 뒤 시도해 주세요.",
       "refreshError": "제품을 새로 불러올 수 없습니다. 마지막으로 불러온 목록을 보여줍니다.",
       "retry": "다시 시도"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "마무리하는 중…",
         "importingLabel": "가져오기",
         "importingLeave": "진행하는 동안 다른 상품 추가하기",
+        "alreadyImportingTitle": "이미 스토어 가져오기가 진행 중입니다",
+        "alreadyImportingDescription": "스토어 가져오기는 한 번에 하나만 실행할 수 있습니다. 지금 작업이 끝난 뒤에 다른 스토어를 가져올 수 있습니다.",
+        "showProgress": "가져오기 진행 상황 보기",
         "previewFound": "{domain}에서 {count} 제품을 찾았습니다.",
         "chooseProducts": "상품 선택",
         "reviewTitle": "{domain}에서 가져올 상품 선택",

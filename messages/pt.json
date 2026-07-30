@@ -121,6 +121,8 @@
       "emptyDescription": "Importe sua loja, cole um link de produto acima ou adicione um manualmente; depois transforme-o em um vídeo no Studio.",
       "loadErrorTitle": "Não foi possível carregar seus produtos",
       "loadErrorDescription": "Este catálogo não está vazio: a lista não carregou. Seus produtos continuam lá; tente novamente em instantes.",
+      "offlineTitle": "Você está sem conexão",
+      "offlineDescription": "O catálogo não está vazio: não conseguimos acessar seus produtos agora. Reconecte-se e tente de novo.",
       "refreshError": "Não foi possível atualizar seus produtos - mostrando a última lista que carregamos.",
       "retry": "Tentar de novo"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "Concluindo…",
         "importingLabel": "Importando",
         "importingLeave": "Adicione outra coisa enquanto isso roda",
+        "alreadyImportingTitle": "Já há uma importação de loja em andamento",
+        "alreadyImportingDescription": "Só é possível importar uma loja por vez. Espere esta terminar para poder importar outra.",
+        "showProgress": "Ver o progresso da importação",
         "previewFound": "Encontramos produtos {count} de {domain}",
         "chooseProducts": "Escolher produtos",
         "reviewTitle": "Escolha o que importar de {domain}",

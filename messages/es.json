@@ -121,6 +121,8 @@
       "emptyDescription": "Importa tu tienda, pega un enlace de producto arriba o añade uno manualmente; luego conviértelo en un video en Studio.",
       "loadErrorTitle": "No pudimos cargar tus productos",
       "loadErrorDescription": "Este catálogo no está vacío: la lista no se pudo cargar. Tus productos siguen ahí; vuelve a intentarlo en un momento.",
+      "offlineTitle": "Estás sin conexión",
+      "offlineDescription": "No es un catálogo vacío: ahora mismo no podemos acceder a tus productos. Vuelve a conectarte e inténtalo de nuevo.",
       "refreshError": "No pudimos actualizar tus productos: mostramos la última lista que cargamos.",
       "retry": "Intentar de nuevo"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "Concluyendo…",
         "importingLabel": "Importando",
         "importingLeave": "Añade algo más mientras esto se ejecuta",
+        "alreadyImportingTitle": "Ya hay una importación de tienda en curso",
+        "alreadyImportingDescription": "Solo se puede importar una tienda a la vez. Espera a que esta termine y entonces podrás importar otra.",
+        "showProgress": "Ver el progreso de la importación",
         "previewFound": "Encontramos {count} productos de {domain}",
         "chooseProducts": "Elegir productos",
         "reviewTitle": "Elige qué importar de {domain}",

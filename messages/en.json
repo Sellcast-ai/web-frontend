@@ -121,6 +121,8 @@
       "emptyDescription": "Import your store, paste a product link above, or add one manually - then turn it into a video in the Studio.",
       "loadErrorTitle": "Couldn’t load your products",
       "loadErrorDescription": "This isn’t an empty catalog - the list failed to load. Your products are still there; try again in a moment.",
+      "offlineTitle": "You’re offline",
+      "offlineDescription": "This isn’t an empty catalog - we can’t reach your products right now. Reconnect, then try again.",
       "refreshError": "Couldn’t refresh your products - showing the list we loaded last.",
       "retry": "Try again"
     },
@@ -237,6 +239,9 @@
         "wrappingUp": "Wrapping up…",
         "importingLabel": "Importing",
         "importingLeave": "Add something else while this runs",
+        "alreadyImportingTitle": "A store import is already running",
+        "alreadyImportingDescription": "Only one store import can run at a time. Wait for this one to finish, then you can import another store.",
+        "showProgress": "Show import progress",
         "previewFound": "We found {count} products from {domain}",
         "chooseProducts": "Choose products",
         "reviewTitle": "Choose what to import from {domain}",

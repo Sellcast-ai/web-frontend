@@ -617,6 +617,11 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
   /** The running import: its handle and exactly how many `source_urls` it
    * carries, as one value so a job can never be watched without its total. */
   const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
+  /** The live progress card was dismissed ("add something else while this
+   * runs"). The handle stays: the backend hands the caller's active job back
+   * instead of enqueueing a second, so a start now would silently re-label this
+   * import as another store's. It is released when the job lands. */
+  const [dismissed, setDismissed] = useState(false);
   const { data: job } = useImportJob(running?.jobId ?? "");
 
   const candidates = useImportCandidates(review);
@@ -625,9 +630,9 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
   /** Tell the page when the store flow owns it. The cleanup covers the unmount,
    * so a remount can't leave the single-product paths hidden for a frame. */
   useEffect(() => {
-    onActiveChange(review !== null || running !== null);
+    onActiveChange(review !== null || (running !== null && !dismissed));
     return () => onActiveChange(false);
-  }, [review, running, onActiveChange]);
+  }, [review, running, dismissed, onActiveChange]);
 
   /** Where a selection gesture writes the pass, or null outside a review. A ref
    * so the memoized rows keep one stable `onToggle` across the whole catalog. */
@@ -657,8 +662,10 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
       outcome.key === "importOvershoot" || outcome.key === "importIgnoredSelection";
     const announce = ignoredSelection ? toast.info : toast.success;
     announce(tt(outcome.key, outcome.values));
-    router.push("/app/products");
-  }, [job, running, qc, router, tt]);
+    // the user dropped the progress card and moved on: the toast tells them it
+    // landed, routing them off what they're now doing would not
+    if (!dismissed) router.push("/app/products");
+  }, [job, running, dismissed, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -699,9 +706,20 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
     setReview({ storeUrl: url, platform, domain });
   }
 
-  /** Backing out of a wait — a catalog walk that never landed, or an import that
-   * carries on server-side without this card. The user wanted out of the wait,
-   * not out of their deselection pass, so the stored pass stays where it is. */
+  /** Dropping the live progress card so the rest of the page comes back. Only
+   * the card goes: the import carries on server-side, and its handle (and the
+   * store its pass belongs to) is kept so the store path can say it's busy
+   * instead of offering a second import the backend would answer with this
+   * very job. */
+  function dismissProgress() {
+    setReview(null);
+    setDeselected(new Set());
+    setDismissed(true);
+    preview.reset();
+  }
+
+  /** Backing out of a catalog walk that never landed. The user wanted out of
+   * the wait, not out of their deselection pass, so the stored pass stays. */
   function leaveWalk() {
     setReview(null);
     persistTo.current = null;
@@ -727,6 +745,7 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
       {
         onSuccess: (created) => {
           done.current = false;
+          setDismissed(false);
           setRunning({ jobId: created.job_id, requested: sourceUrls.length });
         },
       },
@@ -742,8 +761,31 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
 
+  /** Still in flight, so a start now would come back as this very job. Once it
+   * lands the handle stops meaning anything and the store path opens again. */
+  const importInFlight =
+    !!running && (!job || job.status === "queued" || job.status === "running");
+
+  // in flight with the progress card dismissed: a second import can't work, so
+  // the store path says so and points back at the progress it came from rather
+  // than offering a paste form whose result would be mislabelled
+  if (importInFlight && dismissed) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 shrink-0 text-brand-600" />
+          {t("alreadyImportingTitle")}
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("alreadyImportingDescription")}</p>
+        <Button size="lg" className="mt-4" onClick={() => setDismissed(false)}>
+          {t("showProgress")}
+        </Button>
+      </div>
+    );
+  }
+
   // step 4 — an import is running: live progress against the requested subset
-  if (running && job && !jobFellThrough) {
+  if (running && job && !jobFellThrough && !dismissed) {
     const active = job.status === "queued" || job.status === "running";
     // the same `running.requested` the finished-import toast reads, so the bar
     // and the toast can never quote different totals — an import that overshoots
@@ -773,7 +815,7 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
           <button
             type="button"
             className="text-sm font-semibold text-muted-foreground hover:text-ink"
-            onClick={leaveWalk}
+            onClick={dismissProgress}
           >
             {t("importingLeave")}
           </button>
