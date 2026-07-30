@@ -27,6 +27,7 @@ export const qk = {
   job: (id: string) => ["job", id] as const,
   import: (id: string) => ["import", id] as const,
   importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
+  shopifyAvailability: ["shopify-availability"] as const,
 };
 
 const ACTIVE: VideoJobStatus[] = [
@@ -61,6 +62,18 @@ export function useMyProducts() {
 
 export function useAvatars() {
   return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
+}
+
+/** Probes whether the Shopify connect flow works end to end on the deployed
+ * backend. Cheap (one backend round trip, no side effects), but still a
+ * click-derived surface: no retry storm if the backend is down. */
+export function useShopifyAvailability() {
+  return useQuery({
+    queryKey: qk.shopifyAvailability,
+    queryFn: api.getShopifyAvailability,
+    staleTime: 60_000,
+    retry: 1,
+  });
 }
 
 export function useCreateAvatar(

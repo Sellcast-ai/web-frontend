@@ -8,6 +8,7 @@
   "app": {
     "nav": {
       "products": "Sản phẩm của tôi",
+      "stores": "Cửa hàng",
       "avatars": "Hình đại diện",
       "videos": "Video của tôi",
       "profile": "Hồ sơ",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "Cửa hàng trực tuyến",
       "manual": "Hướng dẫn sử dụng"
+    },
+    "connections": {
+      "title": "Cửa hàng",
+      "subtitle": "Kết nối cửa hàng để Lumi nhập sản phẩm của bạn.",
+      "connectHeading": "Kết nối cửa hàng",
+      "yourStores": "Cửa hàng của bạn",
+      "listUnavailable": "Chưa thể xem hay gỡ các kết nối hiện có — API kết nối cửa hàng hiện chỉ hỗ trợ kết nối. Cửa hàng bạn kết nối vẫn hoạt động dù chưa hiển thị ở đây.",
+      "notAvailableYet": "Chưa khả dụng",
+      "checkingAvailability": "Đang kiểm tra tình trạng khả dụng…",
+      "shopifyUnavailable": "Kết nối Shopify hiện không khả dụng. Vui lòng thử lại sau.",
+      "shopDomainLabel": "Tên miền cửa hàng",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "Kết nối",
+      "dismiss": "Đóng",
+      "connectedBanner": "{shop} hiện đã kết nối với Lumi.",
+      "connectedBannerGeneric": "Cửa hàng của bạn hiện đã kết nối với Lumi.",
+      "errors": {
+        "invalid-shop": "Nhập tên miền .myshopify.com của cửa hàng (ví dụ: cua-hang-cua-ban.myshopify.com).",
+        "unavailable": "Kết nối Shopify hiện không khả dụng. Vui lòng thử lại sau.",
+        "failed": "Kết nối chưa hoàn tất. Vui lòng thử lại."
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "Kết nối cửa hàng Shopify bằng đăng nhập an toàn — Lumi sau đó có thể nhập sản phẩm của bạn."
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "Kết nối cửa hàng WooCommerce để nhập sản phẩm."
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "Kết nối TikTok Shop của bạn để nhập sản phẩm."
+        }
+      }
     },
     "productCard": {
       "save": "Lưu",

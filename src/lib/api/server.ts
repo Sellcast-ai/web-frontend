@@ -38,6 +38,7 @@ type CallInit = {
   accessToken?: string | null;
   headers?: Record<string, string>;
   search?: string;
+  redirect?: RequestRedirect;
 };
 
 /** Low-level fetch to the FastAPI backend. */
@@ -51,6 +52,7 @@ export async function callBackend(path: string, init: CallInit = {}): Promise<Re
     headers,
     body: init.body !== undefined && init.body !== null ? JSON.stringify(init.body) : undefined,
     cache: "no-store",
+    redirect: init.redirect ?? "follow",
   });
 }
 
@@ -61,6 +63,33 @@ async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
   });
   if (!res.ok) return null;
   return (await res.json()) as AuthSuccess;
+}
+
+/**
+ * Authenticated backend call for the OAuth-style BFF routes (Shopify connect),
+ * where the *browser* navigates and the route must inspect redirects itself
+ * rather than stream a proxied body. Same refresh-on-401 semantics as `proxy`;
+ * `res` is null when there is no session at all.
+ */
+export async function callBackendAuthed(
+  req: NextRequest,
+  path: string,
+  init: CallInit = {},
+): Promise<{ res: Response | null; refreshed: AuthSuccess | null }> {
+  const access = req.cookies.get(COOKIE.access)?.value;
+  const refresh = req.cookies.get(COOKIE.refresh)?.value;
+  if (!access && !refresh) return { res: null, refreshed: null };
+
+  const doCall = (token?: string | null) =>
+    callBackend(path, { ...init, accessToken: token });
+
+  let res = await doCall(access);
+  let refreshed: AuthSuccess | null = null;
+  if (res.status === 401 && refresh) {
+    refreshed = await tryRefresh(refresh);
+    if (refreshed) res = await doCall(refreshed.session.access_token);
+  }
+  return { res, refreshed };
 }
 
 /** Generic authenticated proxy used by the BFF catch-all route. */

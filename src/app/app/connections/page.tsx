@@ -1,0 +1,205 @@
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { CheckCircle2, Loader2, Plug, Store, X, XCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useShopifyAvailability } from "@/lib/api/hooks";
+
+/**
+ * The platform grid is data-driven: adding a platform later is a new entry
+ * here plus its catalog keys (app.connections.platforms.<id>.*), not a page
+ * rewrite. `connectable` marks the platforms with a real end-to-end connect
+ * flow - everything else renders an honest "not available yet" badge and no
+ * action, so no card ever offers something the product can't do.
+ */
+const PLATFORMS = [
+  { id: "shopify", connectable: true },
+  { id: "woocommerce", connectable: false },
+  { id: "tiktokShop", connectable: false },
+] as const;
+
+const ERROR_KEYS = ["invalid-shop", "unavailable", "failed"] as const;
+type ErrorCode = (typeof ERROR_KEYS)[number];
+
+function isErrorCode(value: string | null): value is ErrorCode {
+  return ERROR_KEYS.includes(value as ErrorCode);
+}
+
+export default function ConnectionsPage() {
+  const t = useTranslations("app.connections");
+
+  return (
+    <div className="container-page max-w-4xl py-8">
+      <div className="flex flex-col gap-1">
+        <h1 className="font-display text-3xl font-bold text-ink">{t("title")}</h1>
+        <p className="text-muted-foreground">{t("subtitle")}</p>
+      </div>
+
+      <Suspense fallback={null}>
+        <OutcomeBanner />
+      </Suspense>
+
+      <section className="mt-8">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
+          {t("connectHeading")}
+        </h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {PLATFORMS.map((platform) => (
+            <PlatformCard key={platform.id} platform={platform} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
+          {t("yourStores")}
+        </h2>
+        <div className="mt-3 flex items-start gap-3 rounded-card border border-dashed border-border bg-card p-5">
+          <Store className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
+          <p className="text-sm text-muted-foreground">{t("listUnavailable")}</p>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/** Success/error landing after the Shopify OAuth round trip: the BFF callback
+ * redirects here with ?connected=<shop> or ?error=<code>. Read once into
+ * state, then scrub the URL so a reload doesn't replay the banner. */
+function OutcomeBanner() {
+  const t = useTranslations("app.connections");
+  const sp = useSearchParams();
+  const router = useRouter();
+  const [outcome] = useState(() => ({
+    // null = no banner; "" = connected but shop unknown (generic copy)
+    connected: sp.has("connected") ? (sp.get("connected") ?? "") : null,
+    error: isErrorCode(sp.get("error")) ? (sp.get("error") as ErrorCode) : null,
+  }));
+  const [dismissed, setDismissed] = useState(false);
+
+  useEffect(() => {
+    if (outcome.connected !== null || outcome.error) {
+      router.replace("/app/connections", { scroll: false });
+    }
+  }, [outcome, router]);
+
+  if (dismissed || (outcome.connected === null && !outcome.error)) return null;
+
+  const ok = outcome.connected !== null;
+  return (
+    <div
+      role="status"
+      className={
+        ok
+          ? "mt-6 flex items-start gap-3 rounded-card border border-brand-300 bg-accent p-4"
+          : "mt-6 flex items-start gap-3 rounded-card border border-rose/40 bg-rose/10 p-4"
+      }
+    >
+      {ok ? (
+        <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-600" />
+      ) : (
+        <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose" />
+      )}
+      <p className="flex-1 text-sm text-ink">
+        {ok
+          ? outcome.connected
+            ? t("connectedBanner", { shop: outcome.connected })
+            : t("connectedBannerGeneric")
+          : t(`errors.${outcome.error}`)}
+      </p>
+      <button
+        type="button"
+        onClick={() => setDismissed(true)}
+        aria-label={t("dismiss")}
+        className="rounded-lg p-1 text-muted-foreground hover:bg-muted"
+      >
+        <X className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+function PlatformCard({ platform }: { platform: (typeof PLATFORMS)[number] }) {
+  const t = useTranslations("app.connections");
+  const name = t(`platforms.${platform.id}.name`);
+
+  return (
+    <div className="flex flex-col gap-3 rounded-card border border-border bg-card p-5">
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-base font-bold text-white">
+          {name.trim()[0]?.toUpperCase()}
+        </span>
+        <p className="font-semibold text-ink">{name}</p>
+        {!platform.connectable && (
+          <span className="ml-auto rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground">
+            {t("notAvailableYet")}
+          </span>
+        )}
+      </div>
+      <p className="text-sm text-muted-foreground">
+        {t(`platforms.${platform.id}.description`)}
+      </p>
+      {platform.connectable && <ShopifyConnect />}
+    </div>
+  );
+}
+
+/** The only live connect action. Gated on the availability probe: the button
+ * renders only when the backend confirms the OAuth round trip can start, so
+ * the merchant never clicks into a flow that 404s or isn't configured. */
+function ShopifyConnect() {
+  const t = useTranslations("app.connections");
+  const { data, isLoading } = useShopifyAvailability();
+  const [shop, setShop] = useState("");
+
+  if (isLoading) {
+    return (
+      <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <Loader2 className="h-4 w-4 animate-spin text-brand-500" />
+        {t("checkingAvailability")}
+      </p>
+    );
+  }
+
+  if (!data?.available) {
+    return (
+      <p className="rounded-xl border border-dashed border-border bg-muted/40 px-3 py-2.5 text-sm text-muted-foreground">
+        {t("shopifyUnavailable")}
+      </p>
+    );
+  }
+
+  const domain = shop.trim();
+  return (
+    <form
+      className="flex flex-col gap-2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!domain) return;
+        window.location.assign(
+          `/api/bff/auth/shopify/start?shop=${encodeURIComponent(domain)}`,
+        );
+      }}
+    >
+      <label htmlFor="shopify-shop" className="text-xs font-semibold text-ink-soft">
+        {t("shopDomainLabel")}
+      </label>
+      <input
+        id="shopify-shop"
+        type="text"
+        value={shop}
+        onChange={(e) => setShop(e.target.value)}
+        placeholder={t("shopDomainPlaceholder")}
+        autoComplete="off"
+        spellCheck={false}
+        className="h-10 rounded-xl border border-border bg-background px-3 text-sm text-ink placeholder:text-muted-foreground focus:border-brand-400 focus:outline-none"
+      />
+      <Button type="submit" size="sm" disabled={!domain} className="mt-1 self-start">
+        <Plug className="h-4 w-4" />
+        {t("connect")}
+      </Button>
+    </form>
+  );
+}
