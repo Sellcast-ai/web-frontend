@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Não conseguimos ler a lista de produtos dessa loja. Tente novamente.",
       "readLinkFailed": "Não conseguimos ler esse link de produto. Tente novamente.",
       "previewStoreFailed": "Não conseguimos ler essa loja. Verifique o endereço e tente novamente.",
-      "importNone": "Não foi possível importar {requested, plural, one {# produto} other {# produtos}}. Tente novamente."
+      "importNone": "Não foi possível importar {requested, plural, one {# produto} other {# produtos}}. Tente novamente.",
+      "videoDeleted": "Vídeo excluído.",
+      "deleteVideoFailed": "Não foi possível excluir o vídeo. Tente de novo."
     },
     "categories": {
       "beautyPersonalCare": "Beleza e cuidados pessoais",
@@ -191,6 +193,31 @@
         "title": "Ainda não há vídeos",
         "description": "Escolha um dos seus produtos e a Lumi o transformará no seu primeiro vídeo que prende a rolagem.",
         "startFirstVideo": "Criar primeiro vídeo"
+      },
+      "tabsLabel": "Filtrar vídeos por status",
+      "tabs": {
+        "needsYou": "Precisam de você",
+        "onTheWay": "A caminho",
+        "failed": "Com falha",
+        "success": "Prontos"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "Nada precisa de você",
+          "description": "Quando um vídeo pausar à espera da sua aprovação do roteiro ou das cenas, ele espera por você aqui."
+        },
+        "onTheWay": {
+          "title": "Nada a caminho",
+          "description": "Vídeos na fila ou em renderização aparecem aqui."
+        },
+        "failed": {
+          "title": "Nenhum vídeo com falha",
+          "description": "Um vídeo que não pôde ser concluído aparece aqui, com a opção de tentar de novo."
+        },
+        "success": {
+          "title": "Nenhum vídeo pronto ainda",
+          "description": "Os vídeos concluídos aparecem aqui, prontos para baixar e publicar."
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "Algo deu errado. Tente criá-lo novamente.",
         "retry": "Tentar novamente",
         "startNewVideo": "Iniciar um novo vídeo"
+      },
+      "product": {
+        "view": "Ver produto",
+        "deleted": "Produto excluído"
+      },
+      "delete": {
+        "button": "Excluir vídeo",
+        "title": "Excluir este vídeo?",
+        "description": "Isso exclui o vídeo permanentemente. Ele não pode ser recuperado e os créditos já usados não são reembolsados.",
+        "cancel": "Cancelar",
+        "confirm": "Excluir permanentemente"
       }
     }
   },

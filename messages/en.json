@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Couldn’t read that store’s product list. Please try again.",
       "readLinkFailed": "Couldn’t read that product link. Please try again.",
       "previewStoreFailed": "Couldn’t read that store. Please check the address and try again.",
-      "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again."
+      "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again.",
+      "videoDeleted": "Video deleted.",
+      "deleteVideoFailed": "Couldn't delete the video. Please try again."
     },
     "categories": {
       "beautyPersonalCare": "Beauty & Personal Care",
@@ -191,6 +193,31 @@
         "title": "No videos yet",
         "description": "Choose one of your products and Lumi will turn it into your first scroll-stopping video.",
         "startFirstVideo": "Start first video"
+      },
+      "tabsLabel": "Filter videos by status",
+      "tabs": {
+        "needsYou": "Needs you",
+        "onTheWay": "On the way",
+        "failed": "Failed",
+        "success": "Success"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "Nothing needs you",
+          "description": "When a video pauses for your storyboard or shot approval, it waits for you here."
+        },
+        "onTheWay": {
+          "title": "Nothing on the way",
+          "description": "Videos that are queued or rendering show up here."
+        },
+        "failed": {
+          "title": "No failed videos",
+          "description": "A video that couldn't be finished lands here, with a retry."
+        },
+        "success": {
+          "title": "No finished videos yet",
+          "description": "Completed videos appear here, ready to download and post."
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "Something went wrong. Try creating it again.",
         "retry": "Retry",
         "startNewVideo": "Start a new video"
+      },
+      "product": {
+        "view": "View product",
+        "deleted": "Product deleted"
+      },
+      "delete": {
+        "button": "Delete video",
+        "title": "Delete this video?",
+        "description": "This permanently deletes the video. It cannot be recovered, and credits already spent are not refunded.",
+        "cancel": "Cancel",
+        "confirm": "Delete permanently"
       }
     }
   },

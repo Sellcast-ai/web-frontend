@@ -41,7 +41,9 @@
       "listCandidatesFailed": "そのストアの商品リストを読み取れませんでした。もう一度お試しください。",
       "readLinkFailed": "その商品リンクを読み取れませんでした。もう一度お試しください。",
       "previewStoreFailed": "そのストアを読み取れませんでした。アドレスを確認してもう一度お試しください。",
-      "importNone": "{requested, plural, one {# 個の商品} other {# 個の商品}} のいずれもインポートできませんでした。もう一度お試しください。"
+      "importNone": "{requested, plural, one {# 個の商品} other {# 個の商品}} のいずれもインポートできませんでした。もう一度お試しください。",
+      "videoDeleted": "動画を削除しました。",
+      "deleteVideoFailed": "動画を削除できませんでした。もう一度お試しください。"
     },
     "categories": {
       "beautyPersonalCare": "美容とパーソナルケア",
@@ -191,6 +193,31 @@
         "title": "まだビデオはありません",
         "description": "商品を選択すると、Lumi が最初のスクロールを止める動画に変換します。",
         "startFirstVideo": "最初の動画を作成"
+      },
+      "tabsLabel": "ステータスで動画を絞り込む",
+      "tabs": {
+        "needsYou": "要対応",
+        "onTheWay": "進行中",
+        "failed": "失敗",
+        "success": "完了"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "対応が必要なものはありません",
+          "description": "ストーリーボードやショットの承認待ちで停止した動画は、ここであなたを待ちます。"
+        },
+        "onTheWay": {
+          "title": "進行中のものはありません",
+          "description": "キュー待ちやレンダリング中の動画がここに表示されます。"
+        },
+        "failed": {
+          "title": "失敗した動画はありません",
+          "description": "完成できなかった動画は、再試行とともにここに表示されます。"
+        },
+        "success": {
+          "title": "完成した動画はまだありません",
+          "description": "完成した動画はここに表示され、ダウンロードや投稿ができます。"
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "何か問題が発生しました。もう一度作成してみてください。",
         "retry": "再試行",
         "startNewVideo": "新しいビデオを開始する"
+      },
+      "product": {
+        "view": "商品を見る",
+        "deleted": "削除された商品"
+      },
+      "delete": {
+        "button": "動画を削除",
+        "title": "この動画を削除しますか？",
+        "description": "この操作は動画を完全に削除します。元に戻すことはできず、使用済みのクレジットは返金されません。",
+        "cancel": "キャンセル",
+        "confirm": "完全に削除"
       }
     }
   },

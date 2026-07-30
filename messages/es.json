@@ -41,7 +41,9 @@
       "listCandidatesFailed": "No pudimos leer la lista de productos de esa tienda. Inténtalo de nuevo.",
       "readLinkFailed": "No pudimos leer ese enlace de producto. Inténtalo de nuevo.",
       "previewStoreFailed": "No pudimos leer esa tienda. Revisa la dirección e inténtalo de nuevo.",
-      "importNone": "No se pudo importar {requested, plural, one {# producto} other {# productos}}. Inténtalo de nuevo."
+      "importNone": "No se pudo importar {requested, plural, one {# producto} other {# productos}}. Inténtalo de nuevo.",
+      "videoDeleted": "Video eliminado.",
+      "deleteVideoFailed": "No se pudo eliminar el video. Inténtalo de nuevo."
     },
     "categories": {
       "beautyPersonalCare": "Belleza y cuidado personal",
@@ -191,6 +193,31 @@
         "title": "Aún no hay vídeos",
         "description": "Elige uno de tus productos y Lumi lo convertirá en tu primer video que detiene el desplazamiento.",
         "startFirstVideo": "Crear primer video"
+      },
+      "tabsLabel": "Filtrar videos por estado",
+      "tabs": {
+        "needsYou": "Tu turno",
+        "onTheWay": "En camino",
+        "failed": "Fallidos",
+        "success": "Listos"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "Nada te necesita",
+          "description": "Cuando un video se pausa a la espera de tu aprobación del guion o de las tomas, te espera aquí."
+        },
+        "onTheWay": {
+          "title": "Nada en camino",
+          "description": "Los videos en cola o en renderizado aparecen aquí."
+        },
+        "failed": {
+          "title": "Ningún video fallido",
+          "description": "Un video que no pudo terminarse aparece aquí, con la opción de reintentar."
+        },
+        "success": {
+          "title": "Aún no hay videos terminados",
+          "description": "Los videos completados aparecen aquí, listos para descargar y publicar."
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "Algo salió mal. Intente crearlo nuevamente.",
         "retry": "Reintentar",
         "startNewVideo": "Iniciar un nuevo vídeo"
+      },
+      "product": {
+        "view": "Ver producto",
+        "deleted": "Producto eliminado"
+      },
+      "delete": {
+        "button": "Eliminar video",
+        "title": "¿Eliminar este video?",
+        "description": "Esto elimina el video de forma permanente. No se puede recuperar y los créditos ya gastados no se reembolsan.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar permanentemente"
       }
     }
   },

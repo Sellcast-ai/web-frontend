@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -21,6 +21,7 @@ import {
   Film,
   ChevronDown,
   Lock,
+  Trash2,
   Image as ImageIcon,
 } from "lucide-react";
 import { motion } from "motion/react";
@@ -30,10 +31,12 @@ import {
   useRetryJob,
   useApproveStoryboard,
   usePatchStoryboard,
+  useProduct,
+  useDeleteJob,
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
-import { Drawer } from "@/components/ui/overlay";
-import { api } from "@/lib/api/client";
+import { Drawer, Modal } from "@/components/ui/overlay";
+import { ApiError, api } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
@@ -126,7 +129,7 @@ export default function JobDetailPage() {
           )}
           <div>
             <h1 className="font-display text-xl font-bold text-ink">
-              {job.product_name ?? t("videoFallback")}
+              <ProductLink job={job} />
             </h1>
             <p className="text-sm text-muted-foreground">
               {styleLabel} · {job.duration_seconds}s · {job.aspect_ratio} ·{" "}
@@ -195,6 +198,95 @@ export default function JobDetailPage() {
           </Drawer>
         </>
       )}
+
+      {/* danger zone — at the very bottom, away from every routine action */}
+      <DeleteVideoSection job={job} />
+    </div>
+  );
+}
+
+/** The job's source product, linked through to My Products. A video outlives
+ *  its product (the backend keeps name + thumbnail on the job), so when the
+ *  product is gone — the only 404 the owner's own product can produce here —
+ *  the link degrades to a labelled, non-navigating span instead of a dead
+ *  route. Other failures (network) leave the link in place. */
+function ProductLink({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs");
+  const { isError, error } = useProduct(job.product_id);
+  const name = job.product_name ?? t("videoFallback");
+  if (isError && error instanceof ApiError && error.status === 404) {
+    return (
+      <span className="inline-flex flex-wrap items-center gap-2">
+        {name}
+        <Badge variant="outline" size="sm" className="font-sans">
+          {t("product.deleted")}
+        </Badge>
+      </span>
+    );
+  }
+  return (
+    <Link
+      href={`/app/products/${job.product_id}`}
+      title={t("product.view")}
+      className="underline-offset-4 hover:text-brand-700 hover:underline"
+    >
+      {name}
+    </Link>
+  );
+}
+
+/** Permanent delete, no refund (captain's decision, settled). The modal says
+ *  plainly the video cannot be recovered. Deleting an unfinished job is still
+ *  a delete — this never touches the backend's cancel/refund path. */
+function DeleteVideoSection({ job }: { job: VideoJob }) {
+  const t = useTranslations("app.jobs.delete");
+  const tt = useTranslations("app.toasts");
+  const router = useRouter();
+  const del = useDeleteJob({ deleteError: tt("deleteVideoFailed") });
+  const [confirming, setConfirming] = useState(false);
+  return (
+    <div className="mt-12 border-t border-border pt-6">
+      <Button
+        variant="outline"
+        size="sm"
+        className="border-rose/40 text-rose hover:bg-rose/5 hover:text-rose"
+        onClick={() => setConfirming(true)}
+      >
+        <Trash2 className="h-4 w-4" />
+        {t("button")}
+      </Button>
+      <Modal
+        open={confirming}
+        onClose={() => setConfirming(false)}
+        title={t("title")}
+      >
+        <p className="text-sm text-muted-foreground">{t("description")}</p>
+        <div className="mt-5 flex justify-end gap-3">
+          <Button variant="outline" size="sm" onClick={() => setConfirming(false)}>
+            {t("cancel")}
+          </Button>
+          <Button
+            size="sm"
+            className="bg-rose shadow-none hover:bg-rose/90"
+            disabled={del.isPending}
+            onClick={() =>
+              del.mutate(job.id, {
+                onSuccess: () => {
+                  toast.success(tt("videoDeleted"));
+                  router.push("/app/videos");
+                },
+              })
+            }
+          >
+            {del.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
+            {t("confirm")}
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }

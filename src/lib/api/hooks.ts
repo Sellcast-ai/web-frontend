@@ -318,11 +318,12 @@ export function useRetryJob(messages: { retryError: string }) {
   });
 }
 
-export function useDeleteJob() {
+export function useDeleteJob(messages: { deleteError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.deleteVideoJob(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["jobs"] }),
+    onError: (err) => toast.error(apiErrorMessage(err, messages.deleteError)),
   });
 }
 

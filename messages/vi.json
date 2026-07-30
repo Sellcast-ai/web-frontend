@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Không đọc được danh sách sản phẩm của cửa hàng đó. Vui lòng thử lại.",
       "readLinkFailed": "Không đọc được liên kết sản phẩm đó. Vui lòng thử lại.",
       "previewStoreFailed": "Không đọc được cửa hàng đó. Vui lòng kiểm tra địa chỉ và thử lại.",
-      "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại."
+      "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại.",
+      "videoDeleted": "Đã xóa video.",
+      "deleteVideoFailed": "Không thể xóa video. Vui lòng thử lại."
     },
     "categories": {
       "beautyPersonalCare": "Chăm sóc sắc đẹp & cá nhân",
@@ -191,6 +193,31 @@
         "title": "Chưa có video nào",
         "description": "Chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video đầu tiên khiến người xem dừng cuộn.",
         "startFirstVideo": "Tạo video đầu tiên"
+      },
+      "tabsLabel": "Lọc video theo trạng thái",
+      "tabs": {
+        "needsYou": "Cần bạn xử lý",
+        "onTheWay": "Đang thực hiện",
+        "failed": "Thất bại",
+        "success": "Hoàn tất"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "Không có gì cần bạn xử lý",
+          "description": "Khi video tạm dừng để chờ bạn duyệt kịch bản hoặc cảnh quay, nó sẽ chờ bạn ở đây."
+        },
+        "onTheWay": {
+          "title": "Không có video nào đang thực hiện",
+          "description": "Các video đang xếp hàng hoặc đang dựng sẽ hiện ở đây."
+        },
+        "failed": {
+          "title": "Không có video thất bại",
+          "description": "Video không hoàn thành sẽ xuất hiện ở đây, kèm tùy chọn thử lại."
+        },
+        "success": {
+          "title": "Chưa có video nào hoàn tất",
+          "description": "Các video hoàn tất sẽ xuất hiện ở đây, sẵn sàng để tải xuống và đăng."
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "Đã xảy ra lỗi. Hãy thử tạo lại.",
         "retry": "Thử lại",
         "startNewVideo": "Bắt đầu một video mới"
+      },
+      "product": {
+        "view": "Xem sản phẩm",
+        "deleted": "Sản phẩm đã bị xóa"
+      },
+      "delete": {
+        "button": "Xóa video",
+        "title": "Xóa video này?",
+        "description": "Thao tác này xóa video vĩnh viễn. Không thể khôi phục và số tín dụng đã dùng sẽ không được hoàn lại.",
+        "cancel": "Hủy",
+        "confirm": "Xóa vĩnh viễn"
       }
     }
   },

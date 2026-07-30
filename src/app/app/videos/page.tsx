@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Loader2, Clapperboard, Play, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -10,7 +11,14 @@ import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
+import {
+  TAB_FOR_STATUS,
+  VIDEO_TAB_ORDER,
+  defaultTab,
+  type VideoTab,
+} from "@/lib/video-tabs";
 import { VIDEO_STYLES, type VideoJob, type VideoStyle } from "@/lib/api/types";
+import { cn } from "@/lib/utils";
 
 type StyleLabelKey =
   | "avatarTalkingIntro"
@@ -36,6 +44,12 @@ const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
 export default function VideosPage() {
   const t = useTranslations("app.videos");
   const { data: jobs, isLoading } = useVideoJobs();
+  // null = the user hasn't picked a tab yet, so follow defaultTab(jobs)
+  const [selected, setSelected] = useState<VideoTab | null>(null);
+
+  const counts = countByTab(jobs ?? []);
+  const activeTab = selected ?? defaultTab(jobs ?? []);
+  const visible = (jobs ?? []).filter((j) => TAB_FOR_STATUS[j.status] === activeTab);
 
   return (
     <div className="container-page py-8">
@@ -59,15 +73,84 @@ export default function VideosPage() {
       ) : !jobs || jobs.length === 0 ? (
         <Empty />
       ) : (
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {jobs.map((job, i) => (
-            <StaggerItem key={job.id} index={i} className="h-full">
-              <JobCard job={job} />
-            </StaggerItem>
-          ))}
-        </div>
+        <>
+          <div
+            role="tablist"
+            aria-label={t("tabsLabel")}
+            className="mt-6 flex gap-1 overflow-x-auto border-b border-border"
+          >
+            {VIDEO_TAB_ORDER.map((tab) => (
+              <TabButton
+                key={tab}
+                label={t(`tabs.${tab}`)}
+                count={counts[tab]}
+                active={tab === activeTab}
+                onSelect={() => setSelected(tab)}
+              />
+            ))}
+          </div>
+          {visible.length === 0 ? (
+            <TabEmpty tab={activeTab} />
+          ) : (
+            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {visible.map((job, i) => (
+                <StaggerItem key={job.id} index={i} className="h-full">
+                  <JobCard job={job} />
+                </StaggerItem>
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
+  );
+}
+
+function countByTab(jobs: VideoJob[]): Record<VideoTab, number> {
+  const counts: Record<VideoTab, number> = {
+    needsYou: 0,
+    onTheWay: 0,
+    failed: 0,
+    success: 0,
+  };
+  for (const job of jobs) counts[TAB_FOR_STATUS[job.status]] += 1;
+  return counts;
+}
+
+function TabButton({
+  label,
+  count,
+  active,
+  onSelect,
+}: {
+  label: string;
+  count: number;
+  active: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="tab"
+      aria-selected={active}
+      onClick={onSelect}
+      className={cn(
+        "flex shrink-0 items-center gap-1.5 border-b-2 px-1.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors sm:px-3 sm:py-2.5 sm:text-sm",
+        active
+          ? "border-brand-500 text-ink"
+          : "border-transparent text-muted-foreground hover:text-ink",
+      )}
+    >
+      {label}
+      <span
+        className={cn(
+          "hidden rounded-full px-1.5 py-0.5 text-[11px] font-bold tabular-nums sm:inline-block",
+          active ? "bg-brand-100 text-brand-800" : "bg-muted text-muted-foreground",
+        )}
+      >
+        {count}
+      </span>
+    </button>
   );
 }
 
@@ -110,6 +193,19 @@ function JobCard({ job }: { job: VideoJob }) {
         </p>
       </div>
     </Link>
+  );
+}
+
+/** An empty *tab* is not an empty library: say plainly that nothing sits in
+ *  this bucket right now and what would land here. No CTA — the whole-page
+ *  Empty below owns that. */
+function TabEmpty({ tab }: { tab: VideoTab }) {
+  const t = useTranslations("app.videos.tabEmpty");
+  return (
+    <div className="mt-16 flex flex-col items-center text-center">
+      <p className="font-display text-lg font-bold text-ink">{t(`${tab}.title`)}</p>
+      <p className="mt-1 max-w-sm text-muted-foreground">{t(`${tab}.description`)}</p>
+    </div>
   );
 }
 

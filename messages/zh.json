@@ -41,7 +41,9 @@
       "listCandidatesFailed": "无法读取该商店的商品列表。请重试。",
       "readLinkFailed": "无法读取该商品链接。请重试。",
       "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
-      "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。"
+      "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。",
+      "videoDeleted": "视频已删除。",
+      "deleteVideoFailed": "删除视频失败，请重试。"
     },
     "categories": {
       "beautyPersonalCare": "美容及个人护理",
@@ -191,6 +193,31 @@
         "title": "还没有视频",
         "description": "选择你的一个产品，Lumi 会将其变成你的第一条让人停下滑动的视频。",
         "startFirstVideo": "开始第一个视频"
+      },
+      "tabsLabel": "按状态筛选视频",
+      "tabs": {
+        "needsYou": "待你处理",
+        "onTheWay": "进行中",
+        "failed": "失败",
+        "success": "已完成"
+      },
+      "tabEmpty": {
+        "needsYou": {
+          "title": "暂无待处理事项",
+          "description": "当视频暂停、等待你确认脚本或镜头时，会出现在这里。"
+        },
+        "onTheWay": {
+          "title": "暂无进行中的视频",
+          "description": "排队或渲染中的视频会显示在这里。"
+        },
+        "failed": {
+          "title": "没有失败的视频",
+          "description": "无法完成的视频会出现在这里，并可重试。"
+        },
+        "success": {
+          "title": "还没有完成的视频",
+          "description": "完成的视频会显示在这里，可下载和发布。"
+        }
       }
     },
     "avatars": {
@@ -551,6 +578,17 @@
         "fallbackMessage": "出了点问题。尝试再次创建它。",
         "retry": "重试",
         "startNewVideo": "开始一个新视频"
+      },
+      "product": {
+        "view": "查看商品",
+        "deleted": "商品已删除"
+      },
+      "delete": {
+        "button": "删除视频",
+        "title": "删除此视频？",
+        "description": "此操作将永久删除该视频，无法恢复，已消耗的额度不予退还。",
+        "cancel": "取消",
+        "confirm": "永久删除"
       }
     }
   },
