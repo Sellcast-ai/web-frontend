@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants, type ButtonProps } from "@/components/ui/button";
 import { Modal } from "@/components/ui/overlay";
 import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
@@ -19,11 +19,14 @@ type Tier = {
   featured?: boolean;
 };
 
+/* Visitor hrefs only - a signed-in visitor never reaches them (see the CTA
+   derivation below). The `?plan=` param is gone: nothing consumes it, and no
+   checkout exists to carry it into. */
 const TIERS: Tier[] = [
   { key: "free", monthly: 0, annual: 0, href: "/signup" },
-  { key: "creator", monthly: 29, annual: 23, href: "/signup?plan=creator" },
-  { key: "pro", monthly: 79, annual: 63, href: "/signup?plan=pro", featured: true },
-  { key: "scale", monthly: 199, annual: 159, href: "/signup?plan=scale" },
+  { key: "creator", monthly: 29, annual: 23, href: "/signup" },
+  { key: "pro", monthly: 79, annual: 63, href: "/signup", featured: true },
+  { key: "scale", monthly: 199, annual: 159, href: "/signup" },
   { key: "enterprise", monthly: null, annual: null, hasPriceLabel: true, href: "/about" },
 ];
 
@@ -87,6 +90,31 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
               : `$${annual ? tier.annual : tier.monthly}`;
             const credits = t(`tiers.${tier.key}.credits`);
             const features = t.raw(`tiers.${tier.key}.features`) as string[];
+            /* Signed-in visitors never go to /signup: Free becomes the way back
+               into the app, and paid tiers open an honest "billing isn't
+               self-serve yet" dialog (no checkout route exists yet). Enterprise
+               (monthly === null) keeps its contact link either way. */
+            const variant = tier.featured ? "primary" : "outline";
+            const cta: ButtonProps =
+              signedIn && tier.key === "free"
+                ? {
+                    href: APP_HOME_HREF,
+                    variant: "outline",
+                    children: th("openStudio"),
+                  }
+                : signedIn && tier.monthly !== null
+                  ? {
+                      type: "button",
+                      variant,
+                      onClick: () =>
+                        setUpgradePlan(t(`tiers.${tier.key}.name`)),
+                      children: t("upgrade.cta"),
+                    }
+                  : {
+                      href: tier.href,
+                      variant,
+                      children: t(`tiers.${tier.key}.cta`),
+                    };
             return (
               <div
                 key={tier.key}
@@ -152,41 +180,7 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
                     </li>
                   ))}
                 </ul>
-                {/* Signed-in visitors never go to /signup: Free becomes the
-                    way back into the app, and paid tiers open an honest
-                    "billing isn't self-serve yet" dialog (no checkout route
-                    exists yet). Enterprise keeps its contact link either way. */}
-                {signedIn && tier.key === "free" ? (
-                  <Button
-                    href={APP_HOME_HREF}
-                    variant="outline"
-                    size="md"
-                    className="mt-8 w-full"
-                  >
-                    {th("openStudio")}
-                  </Button>
-                ) : signedIn && tier.monthly !== null ? (
-                  <Button
-                    type="button"
-                    variant={tier.featured ? "primary" : "outline"}
-                    size="md"
-                    className="mt-8 w-full"
-                    onClick={() =>
-                      setUpgradePlan(t(`tiers.${tier.key}.name`))
-                    }
-                  >
-                    {t("upgrade.cta")}
-                  </Button>
-                ) : (
-                  <Button
-                    href={tier.href}
-                    variant={tier.featured ? "primary" : "outline"}
-                    size="md"
-                    className="mt-8 w-full"
-                  >
-                    {t(`tiers.${tier.key}.cta`)}
-                  </Button>
-                )}
+                <Button {...cta} size="md" className="mt-8 w-full" />
               </div>
             );
           })}

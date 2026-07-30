@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { AppShell } from "@/components/app/app-shell";
-import { COOKIE } from "@/lib/api/config";
+import { hasSession } from "@/lib/auth-redirect";
 import { TITLE_TEMPLATE } from "@/lib/metadata";
 
 export const metadata: Metadata = {
@@ -17,9 +16,7 @@ export default async function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const store = await cookies();
-  const hasSession = store.get(COOKIE.access) || store.get(COOKIE.refresh);
-  if (!hasSession) redirect("/login");
+  if (!(await hasSession())) redirect("/login");
 
   return <AppShell>{children}</AppShell>;
 }

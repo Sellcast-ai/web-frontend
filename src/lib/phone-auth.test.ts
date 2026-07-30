@@ -3,7 +3,7 @@ import { ApiError } from "./api/client";
 import {
   DEV_DELIVERY_CHANNEL,
   isDevDeliveryChannel,
-  isSmsNotConfiguredError,
+  isSmsUnavailableError,
   SMS_NOT_CONFIGURED_ERROR_TYPE,
 } from "./phone-auth";
 
@@ -16,29 +16,43 @@ describe("isDevDeliveryChannel", () => {
   });
 });
 
-describe("isSmsNotConfiguredError", () => {
-  it("matches an ApiError carrying the structured error_type", () => {
+describe("isSmsUnavailableError", () => {
+  it("matches the structured error_type", () => {
     const err = new ApiError(
       503,
       "SMS verification is not available right now. Please sign in another way.",
       SMS_NOT_CONFIGURED_ERROR_TYPE,
     );
-    expect(isSmsNotConfiguredError(err)).toBe(true);
+    expect(isSmsUnavailableError(err)).toBe(true);
   });
 
-  it("does not match on message prose without the structured type", () => {
-    const err = new ApiError(
-      503,
-      "SMS verification is not available right now. Please sign in another way.",
+  it("matches a bare 503 with no error_type, so a backend rename can't unlatch it", () => {
+    expect(isSmsUnavailableError(new ApiError(503, "Service Unavailable"))).toBe(
+      true,
     );
-    expect(isSmsNotConfiguredError(err)).toBe(false);
+    expect(
+      isSmsUnavailableError(new ApiError(503, "nope", "RenamedSmsError")),
+    ).toBe(true);
   });
 
-  it("rejects other errors and non-errors", () => {
+  it("still matches the error_type on a non-503 status", () => {
     expect(
-      isSmsNotConfiguredError(new ApiError(500, "boom", "OtherError")),
+      isSmsUnavailableError(
+        new ApiError(500, "boom", SMS_NOT_CONFIGURED_ERROR_TYPE),
+      ),
+    ).toBe(true);
+  });
+
+  it("rejects other failures, prose lookalikes and non-errors", () => {
+    expect(isSmsUnavailableError(new ApiError(500, "boom", "OtherError"))).toBe(
+      false,
+    );
+    expect(isSmsUnavailableError(new ApiError(429, "Too many requests"))).toBe(
+      false,
+    );
+    expect(
+      isSmsUnavailableError(new Error("SMS verification is not available")),
     ).toBe(false);
-    expect(isSmsNotConfiguredError(new Error("nope"))).toBe(false);
-    expect(isSmsNotConfiguredError(null)).toBe(false);
+    expect(isSmsUnavailableError(null)).toBe(false);
   });
 });

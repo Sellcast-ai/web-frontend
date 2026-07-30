@@ -6,9 +6,8 @@ import { COOKIE } from "@/lib/api/config";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 
 /**
- * Presence of a session cookie, checked the same way `app/layout.tsx` does
- * (existence only; the BFF proxy owns validity/refresh). Server components
- * only.
+ * Presence of a session cookie - the single session predicate for server
+ * components (existence only; the BFF proxy owns validity/refresh).
  */
 export async function hasSession() {
   const store = await cookies();

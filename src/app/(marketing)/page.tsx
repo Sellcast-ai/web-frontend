@@ -62,10 +62,14 @@ const SHOWN_TILES = WALL_TILES.filter(
   (key) => OUTPUT_WALL_VIDEOS[key] || key === FIRST_EMPTY_TILE,
 );
 
+/* Paid-tier CTAs go to /pricing, never straight to signup: /pricing is the one
+   place that knows whether the visitor is signed in, and so the only place that
+   can answer a paid click honestly (upgrade dialog vs. sign up). Sending a
+   signed-in visitor to /signup would just bounce them into the app. */
 const PRICING = [
-  { key: "creator", href: "/signup?plan=creator", featured: false },
-  { key: "pro", href: "/signup?plan=pro", featured: true },
-  { key: "scale", href: "/signup?plan=scale", featured: false },
+  { key: "creator", href: "/pricing", featured: false },
+  { key: "pro", href: "/pricing", featured: true },
+  { key: "scale", href: "/pricing", featured: false },
 ] as const;
 
 /* ------------------------------------------------------------------ page */

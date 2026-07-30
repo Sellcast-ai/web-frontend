@@ -9,7 +9,7 @@ import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react"
 import { api, ApiError } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
-import { isDevDeliveryChannel, isSmsNotConfiguredError } from "@/lib/phone-auth";
+import { isDevDeliveryChannel, isSmsUnavailableError } from "@/lib/phone-auth";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { Button } from "@/components/ui/button";
 
@@ -57,11 +57,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       }
       setTimeout(() => codeRef.current?.focus(), 50);
     } catch (err) {
-      // SMS not configured on this deployment (structured error_type, not
-      // prose): latch into the same final, disabled state as the dev delivery
-      // channel - the phone field keeps its value and the form points at
-      // Google instead of looking retryable.
-      if (isSmsNotConfiguredError(err)) {
+      // SMS not configured on this deployment (structured error_type or a bare
+      // 503, never prose): latch into the same final, disabled state as the dev
+      // delivery channel - the phone field keeps its value and the form points
+      // at Google instead of looking retryable.
+      if (isSmsUnavailableError(err)) {
         setPhoneUnavailable(true);
         setError(t("phoneUnavailable"));
         return;
