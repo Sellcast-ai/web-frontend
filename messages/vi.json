@@ -121,6 +121,7 @@
       "emptyDescription": "Nhập cửa hàng của bạn, dán liên kết sản phẩm ở trên hoặc thêm thủ công - rồi biến sản phẩm đó thành video trong Studio.",
       "loadErrorTitle": "Không tải được sản phẩm của bạn",
       "loadErrorDescription": "Danh mục này không trống - danh sách đã không tải được. Sản phẩm của bạn vẫn còn đó; hãy thử lại sau một lát.",
+      "refreshError": "Không làm mới được sản phẩm của bạn - đang hiển thị danh sách tải gần nhất.",
       "retry": "Thử lại"
     },
     "productDetail": {
@@ -235,6 +236,7 @@
         "importingProgress": "Cho đến nay, đã nhập {upserted} trong số {found} sản phẩm - việc này vẫn tiếp tục diễn ra trong nền.",
         "wrappingUp": "Kết thúc…",
         "importingLabel": "Nhập khẩu",
+        "importingLeave": "Thêm sản phẩm khác trong khi chờ",
         "previewFound": "Chúng tôi đã tìm thấy các sản phẩm {count} từ {domain}",
         "chooseProducts": "Chọn sản phẩm",
         "reviewTitle": "Chọn sản phẩm cần nhập từ {domain}",

@@ -121,6 +121,7 @@
       "emptyDescription": "Impor toko Anda, tempel tautan produk di atas, atau tambahkan secara manual - lalu ubah menjadi video di Studio.",
       "loadErrorTitle": "Tidak bisa memuat produk Anda",
       "loadErrorDescription": "Katalog ini tidak kosong - daftarnya gagal dimuat. Produk Anda masih ada; coba lagi sebentar.",
+      "refreshError": "Tidak bisa menyegarkan produk Anda - menampilkan daftar yang terakhir kami muat.",
       "retry": "Coba lagi"
     },
     "productDetail": {
@@ -235,6 +236,7 @@
         "importingProgress": "Produk {upserted} dari {found} yang diimpor sejauh ini — hal ini terus terjadi di latar belakang.",
         "wrappingUp": "Mengakhiri…",
         "importingLabel": "Mengimpor",
+        "importingLeave": "Tambahkan yang lain sambil ini berjalan",
         "previewFound": "Kami menemukan produk {count} dari {domain}",
         "chooseProducts": "Pilih produk",
         "reviewTitle": "Pilih yang ingin diimpor dari {domain}",

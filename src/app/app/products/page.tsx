@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertTriangle, Link2, Loader2, Plus, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMyProducts } from "@/lib/api/hooks";
+import { toast } from "@/lib/toast";
+import { PathHeader } from "@/components/app/path-header";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
@@ -12,14 +14,24 @@ import { StaggerItem } from "@/components/ui/motion";
 export default function MyProductsPage() {
   const t = useTranslations("app.products");
   const router = useRouter();
-  const { data, isLoading, isError, isFetching, refetch } = useMyProducts();
+  const { data, isError, isFetching, refetch, errorUpdatedAt } = useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
-  // a failed fetch must never read as an empty catalog, so both the empty state
-  // and the near-empty prompt stay out of the way until the list actually loaded
-  const loaded = !isLoading && !isError;
+  // a list we've never received is the only "not loaded" state: `isLoading` is
+  // false for a query paused offline, which would read as an empty catalog
+  const loaded = data !== undefined;
   const showEmptyState = loaded && products.length === 0;
   const showStoreImportPrompt = loaded && products.length > 0 && products.length <= 3;
+  // the error card only speaks for a list that never arrived; a refetch that
+  // fails over cached products is a toast, not a banner above those products
+  const showLoadError = isError && !loaded;
+  const toastedErrorAt = useRef(0);
+
+  useEffect(() => {
+    if (!isError || !loaded || errorUpdatedAt === toastedErrorAt.current) return;
+    toastedErrorAt.current = errorUpdatedAt;
+    toast.error(t("refreshError"));
+  }, [isError, loaded, errorUpdatedAt, t]);
 
   function goCreate() {
     const trimmed = url.trim();
@@ -65,7 +77,7 @@ export default function MyProductsPage() {
         </Button>
       </form>
 
-      {isError && (
+      {showLoadError && (
         <section
           role="alert"
           className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft"
@@ -84,15 +96,12 @@ export default function MyProductsPage() {
       {/* one empty state, whose primary action is bringing the whole store in */}
       {showEmptyState && (
         <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-6 text-center shadow-soft">
-          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500 text-white">
-            <Store className="h-6 w-6" />
-          </span>
-          <h2 className="mt-3 font-display text-xl font-semibold text-ink">
-            {t("emptyTitle")}
-          </h2>
-          <p className="mx-auto mt-1 max-w-xl text-sm text-muted-foreground">
-            {t("emptyDescription")}
-          </p>
+          <PathHeader
+            icon={Store}
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
+            centered
+          />
           <Button href="/app/products/new" size="md" className="mt-4">
             <Store className="h-4 w-4" />
             {t("storeImportCta")}
@@ -102,19 +111,11 @@ export default function MyProductsPage() {
 
       {showStoreImportPrompt && (
         <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-5 shadow-soft sm:flex sm:items-center sm:justify-between sm:gap-6">
-          <div className="flex gap-3">
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white">
-              <Store className="h-5 w-5" />
-            </span>
-            <div>
-              <h2 className="font-display text-lg font-semibold text-ink">
-                {t("storeImportTitle")}
-              </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {t("storeImportDescription")}
-              </p>
-            </div>
-          </div>
+          <PathHeader
+            icon={Store}
+            title={t("storeImportTitle")}
+            description={t("storeImportDescription")}
+          />
           <Button href="/app/products/new" size="md" className="mt-4 w-full sm:mt-0 sm:w-auto">
             <Store className="h-4 w-4" />
             {t("storeImportCta")}
@@ -122,7 +123,7 @@ export default function MyProductsPage() {
         </section>
       )}
 
-      {isLoading && (
+      {!loaded && !isError && (
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>

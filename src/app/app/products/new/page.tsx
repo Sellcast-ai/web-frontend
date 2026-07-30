@@ -38,6 +38,7 @@ import {
   selectedUrls,
 } from "@/lib/import-selection";
 import { toast } from "@/lib/toast";
+import { PathHeader } from "@/components/app/path-header";
 import { Button } from "@/components/ui/button";
 import { UploadProgress } from "@/components/ui/upload-progress";
 import { useDropzone } from "@/lib/use-dropzone";
@@ -299,19 +300,11 @@ function NewProductInner() {
           </p>
 
           <section className="mt-5 sm:mt-7">
-            <div className="flex gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-500 text-white">
-                <Store className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="font-display text-lg font-semibold text-ink">
-                  {t("storePathTitle")}
-                </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {t("storePathDescription")}
-                </p>
-              </div>
-            </div>
+            <PathHeader
+              icon={Store}
+              title={t("storePathTitle")}
+              description={t("storePathDescription")}
+            />
             <div className="mt-3 sm:mt-4">
               <StoreImport onActiveChange={setStoreFlowActive} />
             </div>
@@ -320,19 +313,13 @@ function NewProductInner() {
           {!storeFlowActive && (
             <>
               <section className="mt-6 sm:mt-8">
-                <div className="flex gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
-                    <Link2 className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-ink">
-                      {t("singleProductTitle")}
-                    </h2>
-                    <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
-                      {t("singleProductDescription")}
-                    </p>
-                  </div>
-                </div>
+                <PathHeader
+                  icon={Link2}
+                  tone="accent"
+                  title={t("singleProductTitle")}
+                  description={t("singleProductDescription")}
+                  descriptionClassName="hidden sm:block"
+                />
 
                 {/* URL omnibox */}
                 <form
@@ -379,16 +366,11 @@ function NewProductInner() {
               {/* manual/photo start: one blank editor destination, with drag-start still
                 * supported and photos reachable in one click for keyboard/touch */}
               <section className="mt-6 sm:mt-8">
-                <div className="flex gap-3">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
-                    <PencilLine className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h2 className="font-display text-lg font-semibold text-ink">
-                      {t("manualPathTitle")}
-                    </h2>
-                  </div>
-                </div>
+                <PathHeader
+                  icon={PencilLine}
+                  tone="accent"
+                  title={t("manualPathTitle")}
+                />
                 <div
                   {...drop.props}
                   className={cn(
@@ -717,7 +699,8 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
     setReview({ storeUrl: url, platform, domain });
   }
 
-  /** Backing out of a walk that never landed. The user wanted out of the wait,
+  /** Backing out of a wait — a catalog walk that never landed, or an import that
+   * carries on server-side without this card. The user wanted out of the wait,
    * not out of their deselection pass, so the stored pass stays where it is. */
   function leaveWalk() {
     setReview(null);
@@ -781,10 +764,19 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
               })
             : t("wrappingUp")}
         </p>
-        <div className="mt-4">
+        {/* the import runs server-side for as long as it takes, so the card that
+          * suppresses every other path on the page carries its own way out */}
+        <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button size="lg" disabled className="w-full sm:w-auto">
             <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
           </Button>
+          <button
+            type="button"
+            className="text-sm font-semibold text-muted-foreground hover:text-ink"
+            onClick={leaveWalk}
+          >
+            {t("importingLeave")}
+          </button>
         </div>
       </div>
     );

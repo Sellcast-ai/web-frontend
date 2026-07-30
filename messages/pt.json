@@ -121,6 +121,7 @@
       "emptyDescription": "Importe sua loja, cole um link de produto acima ou adicione um manualmente; depois transforme-o em um vídeo no Studio.",
       "loadErrorTitle": "Não foi possível carregar seus produtos",
       "loadErrorDescription": "Este catálogo não está vazio: a lista não carregou. Seus produtos continuam lá; tente novamente em instantes.",
+      "refreshError": "Não foi possível atualizar seus produtos - mostrando a última lista que carregamos.",
       "retry": "Tentar de novo"
     },
     "productDetail": {
@@ -235,6 +236,7 @@
         "importingProgress": "{upserted} importado de {found} produtos até agora - isso continua em segundo plano.",
         "wrappingUp": "Concluindo…",
         "importingLabel": "Importando",
+        "importingLeave": "Adicione outra coisa enquanto isso roda",
         "previewFound": "Encontramos produtos {count} de {domain}",
         "chooseProducts": "Escolher produtos",
         "reviewTitle": "Escolha o que importar de {domain}",

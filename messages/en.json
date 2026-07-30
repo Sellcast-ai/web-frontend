@@ -121,6 +121,7 @@
       "emptyDescription": "Import your store, paste a product link above, or add one manually - then turn it into a video in the Studio.",
       "loadErrorTitle": "Couldn’t load your products",
       "loadErrorDescription": "This isn’t an empty catalog - the list failed to load. Your products are still there; try again in a moment.",
+      "refreshError": "Couldn’t refresh your products - showing the list we loaded last.",
       "retry": "Try again"
     },
     "productDetail": {
@@ -235,6 +236,7 @@
         "importingProgress": "Imported {upserted} of {found} products so far — this keeps going in the background.",
         "wrappingUp": "Wrapping up…",
         "importingLabel": "Importing",
+        "importingLeave": "Add something else while this runs",
         "previewFound": "We found {count} products from {domain}",
         "chooseProducts": "Choose products",
         "reviewTitle": "Choose what to import from {domain}",
