@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "Mengimpor toko Anda",
         "importingProgress": "Produk {upserted} dari {found} yang diimpor sejauh ini — hal ini terus terjadi di latar belakang.",
+        "importingUnknown": "Impor Anda sedang berjalan - kami akan menampilkan jumlahnya begitu ada kabar. Prosesnya terus berjalan di latar belakang.",
         "wrappingUp": "Mengakhiri…",
         "importingLabel": "Mengimpor",
         "importingLeave": "Tambahkan yang lain sambil ini berjalan",

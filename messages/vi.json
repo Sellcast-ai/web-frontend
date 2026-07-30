@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "Nhập cửa hàng của bạn",
         "importingProgress": "Cho đến nay, đã nhập {upserted} trong số {found} sản phẩm - việc này vẫn tiếp tục diễn ra trong nền.",
+        "importingUnknown": "Quá trình nhập của bạn đang chạy - chúng tôi sẽ hiển thị số lượng ngay khi có phản hồi. Việc này vẫn tiếp tục chạy trong nền.",
         "wrappingUp": "Kết thúc…",
         "importingLabel": "Nhập khẩu",
         "importingLeave": "Thêm sản phẩm khác trong khi chờ",

@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "Importing your store",
         "importingProgress": "Imported {upserted} of {found} products so far — this keeps going in the background.",
+        "importingUnknown": "Your import is running - we'll show the count as soon as we hear back from it. It keeps going in the background.",
         "wrappingUp": "Wrapping up…",
         "importingLabel": "Importing",
         "importingLeave": "Add something else while this runs",

@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "ストアをインポートする",
         "importingProgress": "これまでに {found} 件中 {upserted} 件をインポートしました — これはバックグラウンドで継続的に行われます。",
+        "importingUnknown": "インポートを実行中です。件数がわかり次第表示します。処理はバックグラウンドで続きます。",
         "wrappingUp": "まとめ…",
         "importingLabel": "インポート中",
         "importingLeave": "実行中に別の商品を追加する",

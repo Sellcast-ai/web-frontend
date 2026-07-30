@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "Importando tu tienda",
         "importingProgress": "{upserted} importado de {found} productos hasta ahora; esto continúa en segundo plano.",
+        "importingUnknown": "Tu importación está en marcha: mostraremos el recuento en cuanto tengamos respuesta. Continúa en segundo plano.",
         "wrappingUp": "Concluyendo…",
         "importingLabel": "Importando",
         "importingLeave": "Añade algo más mientras esto se ejecuta",

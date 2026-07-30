@@ -237,6 +237,7 @@
       "storeImport": {
         "importingTitle": "导入您的商店",
         "importingProgress": "到目前为止，已导入 {found} 件商品中的 {upserted} 件 - 这一直在后台进行。",
+        "importingUnknown": "导入正在进行中，我们会在收到结果后立即显示数量。该过程会继续在后台运行。",
         "wrappingUp": "总结一下……",
         "importingLabel": "导入",
         "importingLeave": "在导入进行时添加其他商品",

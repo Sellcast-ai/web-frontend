@@ -227,10 +227,16 @@ function NewProductInner() {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [reading, setReading] = useState(false);
+  /** A catalog walk or review is the one part of the store flow this page can't
+   * see: it belongs to `StoreImport`, which has to keep it (a remount holding a
+   * review would re-run the billed catalog walk the moment its cache goes
+   * stale), so it is reported up. The running import is already ours. */
+  const [reviewing, setReviewing] = useState(false);
+  const importSlot = useImportSlot();
   /** A catalog walk, review or running import owns the start screen: the two
    * single-product paths step aside so nothing adjacent can drop a review. */
-  const [storeFlowActive, setStoreFlowActive] = useState(false);
-  const importSlot = useImportSlot();
+  const storeFlowActive =
+    reviewing || (importSlot.running !== null && !importSlot.dismissed);
   const fileInput = useRef<HTMLInputElement>(null);
   const autoParsed = useRef(false);
   // only one screen renders at a time, so both drop targets share this
@@ -333,7 +339,7 @@ function NewProductInner() {
               description={t("storePathDescription")}
             />
             <div className="mt-3 sm:mt-4">
-              <StoreImport slot={importSlot} onActiveChange={setStoreFlowActive} />
+              <StoreImport slot={importSlot} onReviewingChange={setReviewing} />
             </div>
           </section>
 
@@ -624,10 +630,10 @@ function NewProductInner() {
  * kick off a batch import of just those and watch it fill up My Products. */
 function StoreImport({
   slot,
-  onActiveChange,
+  onReviewingChange,
 }: {
   slot: ImportSlot;
-  onActiveChange: (active: boolean) => void;
+  onReviewingChange: (reviewing: boolean) => void;
 }) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
@@ -654,12 +660,14 @@ function StoreImport({
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
 
-  /** Tell the page when the store flow owns it. The cleanup covers the unmount,
-   * so a remount can't leave the single-product paths hidden for a frame. */
+  /** The walk/review half of "the store flow owns the page" — the running half
+   * is the page's own. The cleanup covers the unmount, which drops the review
+   * here, so a remount can't leave the single-product paths hidden for a flow
+   * nothing is running. */
   useEffect(() => {
-    onActiveChange(review !== null || (running !== null && !dismissed));
-    return () => onActiveChange(false);
-  }, [review, running, dismissed, onActiveChange]);
+    onReviewingChange(review !== null);
+    return () => onReviewingChange(false);
+  }, [review, onReviewingChange]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
@@ -673,8 +681,8 @@ function StoreImport({
     qc.invalidateQueries({ queryKey: qk.myProducts });
     const outcome = importOutcome(job, running.requested);
     if (outcome.key === "importNone") {
-      // nothing landed: report it honestly and leave the user on the review
-      // step (see `jobFellThrough`) rather than on an unchanged product list
+      // nothing landed: report it honestly and keep the stored pass, rather
+      // than routing to an unchanged product list (see `jobFellThrough`)
       toast.error(tt(outcome.key, outcome.values));
       return;
     }
@@ -776,8 +784,11 @@ function StoreImport({
   }
 
   /** A job that failed outright, or finished without importing a single product,
-   * has nothing to show on the progress card — drop back to the review step with
-   * the selection intact so the user can retry it. */
+   * has nothing to show on the progress card. With the card still up, that drops
+   * back to the review step it was started from, selection intact, ready to
+   * retry. Once the card has been dismissed the review is gone with it, so the
+   * store path returns to the paste form — the pass itself survives in
+   * sessionStorage and `beginSelection` carries it into the next review. */
   const jobFellThrough =
     !!job &&
     (job.status === "failed" ||
@@ -807,14 +818,19 @@ function StoreImport({
     );
   }
 
-  // step 4 — an import is running: live progress against the requested subset
-  if (running && job && !jobFellThrough && !dismissed) {
-    const active = job.status === "queued" || job.status === "running";
+  // step 4 — an import is running: live progress against the requested subset.
+  // The job handle can be missing while it resolves (the first poll, a cache
+  // garbage-collected while the manual editor held the screen, a failing GET),
+  // and a start would still come back as this very job — so the card renders
+  // without counts rather than falling through to a paste form whose result
+  // would be mislabelled.
+  if (running && !jobFellThrough && !dismissed) {
+    const active = !job || job.status === "queued" || job.status === "running";
     // the same `running.requested` the finished-import toast reads, so the bar
     // and the toast can never quote different totals — an import that overshoots
     // the chosen subset still reads its real total, only the bar stops at full
     const total = running.requested;
-    const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
+    const fraction = job && total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
       <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
@@ -822,18 +838,27 @@ function StoreImport({
           {t("importingTitle")}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {active
-            ? t("importingProgress", {
-                upserted: job.products_upserted,
-                found: total,
-              })
-            : t("wrappingUp")}
+          {!job
+            ? t("importingUnknown")
+            : active
+              ? t("importingProgress", {
+                  upserted: job.products_upserted,
+                  found: total,
+                })
+              : t("wrappingUp")}
         </p>
         {/* the import runs server-side for as long as it takes, so the card that
           * suppresses every other path on the page carries its own way out */}
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button size="lg" disabled className="w-full sm:w-auto">
-            <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
+            {job ? (
+              <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
+            ) : (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                {t("importingLabel")}
+              </>
+            )}
           </Button>
           <button
             type="button"
