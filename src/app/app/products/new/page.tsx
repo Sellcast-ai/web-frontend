@@ -886,11 +886,12 @@ function StoreImport({
           </button>
           {/* the handle can be unreadable (record purged, GET failing for
             * keeps), so the way out shows once a read has actually failed -
-            * never on the first poll, whose status is still `pending`. Nothing
+            * never on the first poll, which has failed nothing yet. Nothing
             * infers the job is dead: the user says so, and only this page's
-            * handle goes. `isError` stays true across the retries and between
-            * the 2.5s polls, so the exit never blinks out from under a click. */}
-          {jobQuery.isError && (
+            * handle goes. Each 2.5s poll clears `isError` again while it has no
+            * data, so the gate is the count, which only ever grows - the exit
+            * can't blink out from under a click. */}
+          {!job && jobQuery.errorUpdateCount > 0 && (
             <button
               type="button"
               className="text-sm font-semibold text-muted-foreground hover:text-ink"

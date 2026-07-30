@@ -14,7 +14,8 @@ import { StaggerItem } from "@/components/ui/motion";
 export default function MyProductsPage() {
   const t = useTranslations("app.products");
   const router = useRouter();
-  const { data, isError, isFetching, fetchStatus, refetch, errorUpdatedAt } = useMyProducts();
+  const { data, isError, isFetching, fetchStatus, refetch, errorUpdatedAt, errorUpdateCount } =
+    useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
   // a list we've never received is the only "not loaded" state: `isLoading` is
@@ -26,8 +27,10 @@ export default function MyProductsPage() {
   // failed load, so it gets the same explain-and-retry card instead of a spinner
   const paused = fetchStatus === "paused";
   // the card only speaks for a list that never arrived; a refetch that fails
-  // over cached products is a toast, not a banner above those products
-  const showLoadError = (isError || paused) && !loaded;
+  // over cached products is a toast, not a banner above those products.
+  // With no data a fetch resets `status` to pending, so `isError` would drop the
+  // whole card mid-retry; `errorUpdateCount` only ever grows, so it stays up.
+  const showLoadError = !loaded && (paused || errorUpdateCount > 0);
   // seeded at mount so a failure already sitting in the cache doesn't toast
   // again on every remount inside the query's `staleTime`
   const toastedErrorAt = useRef(errorUpdatedAt);
