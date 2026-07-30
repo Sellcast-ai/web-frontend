@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { callBackendAuthed, clearSessionCookies, setSessionCookies } from "@/lib/api/server";
 import type { ShopifyAvailability } from "@/lib/api/types";
+import { shopifyAuthorizeUrl } from "@/lib/shopify-shop";
 
 export const dynamic = "force-dynamic";
 
@@ -26,13 +27,12 @@ export async function GET(req: NextRequest) {
   );
   if (!res) {
     const out = NextResponse.json({ error: "unauthenticated" }, { status: 401 });
-    clearSessionCookies(out);
+    if (refreshed) setSessionCookies(out, refreshed.session);
+    else clearSessionCookies(out);
     return out;
   }
 
-  const body: ShopifyAvailability = {
-    available: res.status >= 300 && res.status < 400 && !!res.headers.get("location"),
-  };
+  const body: ShopifyAvailability = { available: !!shopifyAuthorizeUrl(res) };
   const out = NextResponse.json(body, { status: 200 });
   if (refreshed) setSessionCookies(out, refreshed.session);
   return out;

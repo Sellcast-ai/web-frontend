@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { isShopDomain, shopifyRedirect } from "./shopify-shop";
+import {
+  SHOPIFY_STATE_COOKIE,
+  isShopDomain,
+  shopifyAuthorizeUrl,
+  shopifyRedirect,
+  stateCookieValue,
+} from "./shopify-shop";
 
 describe("isShopDomain", () => {
   it("accepts canonical shop domains", () => {
@@ -44,5 +50,43 @@ describe("shopifyRedirect", () => {
     ]) {
       expect(shopifyRedirect(location), String(location)).toBeNull();
     }
+  });
+});
+
+describe("shopifyAuthorizeUrl", () => {
+  const res = (status: number, location?: string) =>
+    new Response(null, { status, headers: location ? { location } : {} });
+
+  it("accepts any 3xx that lands on Shopify", () => {
+    for (const status of [301, 302, 303, 307, 308]) {
+      expect(
+        shopifyAuthorizeUrl(res(status, "https://my-store.myshopify.com/admin/oauth/authorize")),
+        String(status),
+      ).toBe("https://my-store.myshopify.com/admin/oauth/authorize");
+    }
+  });
+
+  it("refuses a 3xx that goes anywhere else, so the probe can't green-light a bounce", () => {
+    expect(shopifyAuthorizeUrl(res(301, "https://api.example.com/connections/shopify/start/"))).toBeNull();
+    expect(shopifyAuthorizeUrl(res(302))).toBeNull();
+    expect(shopifyAuthorizeUrl(res(200))).toBeNull();
+    expect(shopifyAuthorizeUrl(res(503))).toBeNull();
+  });
+});
+
+describe("stateCookieValue", () => {
+  it("takes only the state cookie's value, never the backend's attributes", () => {
+    expect(
+      stateCookieValue([
+        "other=zzz; Path=/",
+        `${SHOPIFY_STATE_COOKIE}=abc.def; Domain=api.example.com; Path=/api/v1; HttpOnly; SameSite=Lax`,
+      ]),
+    ).toBe("abc.def");
+  });
+
+  it("is null when the backend sent no usable state", () => {
+    expect(stateCookieValue([])).toBeNull();
+    expect(stateCookieValue(["session=abc; Path=/"])).toBeNull();
+    expect(stateCookieValue([`${SHOPIFY_STATE_COOKIE}=; Path=/; Max-Age=0`])).toBeNull();
   });
 });

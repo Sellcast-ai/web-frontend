@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { callBackendAuthed, clearSessionCookies, setSessionCookies } from "@/lib/api/server";
-import { isShopDomain, shopifyRedirect } from "@/lib/shopify-shop";
+import {
+  callBackendAuthed,
+  clearSessionCookies,
+  setSessionCookies,
+  setShopifyStateCookie,
+} from "@/lib/api/server";
+import { isShopDomain, shopifyAuthorizeUrl, stateCookieValue } from "@/lib/shopify-shop";
 
 export const dynamic = "force-dynamic";
 
@@ -33,23 +38,18 @@ export async function GET(req: NextRequest) {
   );
   if (!res) {
     const out = NextResponse.redirect(new URL("/login", req.url), 302);
-    clearSessionCookies(out);
+    if (refreshed) setSessionCookies(out, refreshed.session);
+    else clearSessionCookies(out);
     return out;
   }
 
-  if (res.status >= 300 && res.status < 400) {
-    const location = shopifyRedirect(res.headers.get("location"));
-    if (location) {
-      const out = NextResponse.redirect(location, 302);
-      // Session cookies first: `NextResponse.cookies.set` rewrites the whole
-      // set-cookie header list from the bag it parsed at construction, so any
-      // raw append made before it would be dropped.
-      if (refreshed) setSessionCookies(out, refreshed.session);
-      for (const cookie of res.headers.getSetCookie()) {
-        out.headers.append("set-cookie", cookie);
-      }
-      return out;
-    }
+  const location = shopifyAuthorizeUrl(res);
+  if (location) {
+    const out = NextResponse.redirect(location, 302);
+    if (refreshed) setSessionCookies(out, refreshed.session);
+    const state = stateCookieValue(res.headers.getSetCookie());
+    if (state) setShopifyStateCookie(out, state);
+    return out;
   }
 
   const code =

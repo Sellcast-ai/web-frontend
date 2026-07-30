@@ -1,5 +1,6 @@
 import "server-only";
 import { NextRequest, NextResponse } from "next/server";
+import { SHOPIFY_STATE_COOKIE } from "../shopify-shop";
 import { API_BASE, COOKIE, COOKIE_MAX_AGE } from "./config";
 import type { AuthSuccess } from "./types";
 
@@ -30,6 +31,26 @@ export function clearSessionCookies(res: NextResponse) {
   for (const name of [COOKIE.access, COOKIE.refresh]) {
     res.cookies.set({ name, value: "", path: "/", maxAge: 0 });
   }
+}
+
+/**
+ * The backend's Shopify OAuth state, re-issued on *this* origin with our own
+ * attributes. Shopify returns the merchant to our callback, so the cookie has
+ * to be readable there - the backend's own attributes are scoped to its origin.
+ */
+export function setShopifyStateCookie(res: NextResponse, value: string) {
+  res.cookies.set({
+    name: SHOPIFY_STATE_COOKIE,
+    value,
+    httpOnly: true,
+    secure: isProd,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+export function clearShopifyStateCookie(res: NextResponse) {
+  res.cookies.set({ name: SHOPIFY_STATE_COOKIE, value: "", path: "/", maxAge: 0 });
 }
 
 type CallInit = {
@@ -70,8 +91,11 @@ async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
  * where the *browser* navigates and the route must inspect redirects itself
  * rather than stream a proxied body. Same refresh-on-401 semantics as `proxy`;
  * `res` is null when there is no usable session - no cookies at all, or a 401
- * no refresh could rescue. Callers must clear the session cookies in that
- * case, or stale cookies keep the app shell from redirecting to /login.
+ * no refresh could rescue. `refreshed` still carries a session in that second
+ * case, and callers must write it: the refresh already rotated (and so
+ * invalidated) the old token. Callers clear the session cookies only when
+ * there is no `refreshed`, or stale cookies keep the app shell from
+ * redirecting to /login.
  */
 export async function callBackendAuthed(
   req: NextRequest,
@@ -91,7 +115,7 @@ export async function callBackendAuthed(
     refreshed = await tryRefresh(refresh);
     if (refreshed) res = await doCall(refreshed.session.access_token);
   }
-  if (res.status === 401) return { res: null, refreshed: null };
+  if (res.status === 401) return { res: null, refreshed };
   return { res, refreshed };
 }
 
