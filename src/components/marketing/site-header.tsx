@@ -19,7 +19,7 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center justify-between gap-2 sm:gap-4">
+      <div className="container-page flex h-16 items-center justify-between gap-1 sm:gap-4">
         <Logo wordmarkClassName="hidden sm:inline" />
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
@@ -31,7 +31,7 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
           <LanguageSwitcher compactOnSmall />
           <ThemeToggle />
           {signedIn ? (
-            <Button href={APP_HOME_HREF} variant="primary" size="sm" className="px-3 sm:px-4">
+            <Button href={APP_HOME_HREF} variant="primary" size="sm" className="px-2.5 sm:px-4">
               {tc("openStudio")}
             </Button>
           ) : (
@@ -42,7 +42,7 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
               >
                 {tc("signIn")}
               </Link>
-              <Button href="/signup" variant="primary" size="sm" className="px-3 sm:px-4">
+              <Button href="/signup" variant="primary" size="sm" className="px-2.5 sm:px-4">
                 <span className="sm:hidden">{tc("startFreeMobile")}</span>
                 <span className="hidden sm:inline">{tc("startFree")}</span>
               </Button>

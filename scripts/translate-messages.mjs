@@ -29,8 +29,13 @@ const MANUAL_OVERRIDES = {
   },
   "marketing.header.startFreeMobile": {
     es: "Empieza",
+    zh: "开始",
+    ja: "開始",
+    ko: "시작",
     pt: "Comece",
+    id: "Mulai",
     vi: "Bắt đầu",
+    th: "เริ่ม",
   },
 };
 

@@ -133,7 +133,10 @@ export function LanguageSwitcher({
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink"
+        className={cn(
+          "inline-flex h-9 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-sm font-medium text-ink-soft transition-colors hover:bg-muted hover:text-ink",
+          compactOnSmall && "px-2.5 sm:px-3",
+        )}
       >
         <Globe className="h-4 w-4" />
         <span className="sr-only">{t("label")}</span>
