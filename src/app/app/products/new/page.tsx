@@ -199,7 +199,9 @@ function useImportSlot() {
   /** The live progress card was dismissed ("add something else while this
    * runs"). The handle stays: the backend hands the caller's active job back
    * instead of enqueueing a second, so a start now would silently re-label this
-   * import as another store's. It is released when the job lands. */
+   * import as another store's. Nothing resets this on completion - only a fresh
+   * start does; what reopens the store path is the handle ceasing to be in
+   * flight (`importInFlight`), whatever this flag still says. */
   const [dismissed, setDismissed] = useState(false);
   /** Guards the finish effect, so a remount can't re-announce a landed job. */
   const doneRef = useRef(false);
@@ -784,11 +786,13 @@ function StoreImport({
   }
 
   /** A job that failed outright, or finished without importing a single product,
-   * has nothing to show on the progress card. With the card still up, that drops
-   * back to the review step it was started from, selection intact, ready to
-   * retry. Once the card has been dismissed the review is gone with it, so the
-   * store path returns to the paste form — the pass itself survives in
-   * sessionStorage and `beginSelection` carries it into the next review. */
+   * has nothing to show on the progress card, so it stops rendering. Where that
+   * lands depends on whether the review is still around: straight through from a
+   * review it drops back onto it, selection intact, ready to retry. Anything that
+   * cleared the review first - a dismiss, including a dismiss the user then
+   * undid with "show progress" - lands on the paste form instead; the pass
+   * survives in sessionStorage and `beginSelection` carries it into the next
+   * review of that store. */
   const jobFellThrough =
     !!job &&
     (job.status === "failed" ||
