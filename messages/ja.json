@@ -7,13 +7,13 @@
   },
   "app": {
     "nav": {
-      "products": "私の製品",
+      "products": "製品",
       "stores": "ストア",
       "avatars": "アバター",
-      "videos": "私のビデオ",
+      "videos": "ビデオ",
       "profile": "プロフィール",
       "newVideo": "新しいビデオ",
-      "new": "新しい",
+      "new": "新規",
       "signedIn": "サインインしました",
       "logOut": "ログアウト"
     },

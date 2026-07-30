@@ -7,10 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "Sản phẩm của tôi",
+      "products": "Sản phẩm",
       "stores": "Cửa hàng",
-      "avatars": "Hình đại diện",
-      "videos": "Video của tôi",
+      "avatars": "Avatar",
+      "videos": "Video",
       "profile": "Hồ sơ",
       "newVideo": "Video mới",
       "new": "Mới",

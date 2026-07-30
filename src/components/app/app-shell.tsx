@@ -128,29 +128,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="min-w-0 pb-24 md:pb-0">{children}</main>
 
       {/* ---- mobile bottom tab bar (echoes the iOS tab bar) ---- */}
-      {/* justify-start + overflow-x-auto: six entries no longer fit at 320px,
-          so the bar scrolls horizontally instead of clipping the ends. */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-start gap-1 overflow-x-auto border-t border-border glass px-2 py-2 md:hidden">
+      {/* All six entries fit at 320px: content-sized items (flex-auto) share the
+          slack, min-w-11 keeps every tap target at 44px, truncate is the guard. */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch border-t border-border glass px-1 py-2 md:hidden">
         <Link
           href={STUDIO_HREF}
-          className="flex shrink-0 flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[11px] font-semibold text-brand-700"
+          className="flex min-w-11 flex-auto flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1 text-[11px] font-semibold text-brand-700"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-gradient text-white">
             <Sparkles className="h-4 w-4" />
           </span>
-          {t("new")}
+          <span className="max-w-full truncate">{t("new")}</span>
         </Link>
         {NAV.map(({ href, key, Icon }) => (
           <Link
             key={href}
             href={href}
             className={cn(
-              "flex shrink-0 flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[11px] font-medium",
+              "flex min-w-11 flex-auto flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1 text-[11px] font-medium",
               isActive(href) ? "text-brand-700" : "text-muted-foreground",
             )}
           >
             <Icon className="h-5 w-5" />
-            {t(key)}
+            <span className="max-w-full truncate">{t(key)}</span>
           </Link>
         ))}
       </nav>

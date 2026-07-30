@@ -7,10 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "Meus produtos",
+      "products": "Produtos",
       "stores": "Lojas",
       "avatars": "Avatares",
-      "videos": "Meus vídeos",
+      "videos": "Vídeos",
       "profile": "Perfil",
       "newVideo": "Novo vídeo",
       "new": "Novo",
