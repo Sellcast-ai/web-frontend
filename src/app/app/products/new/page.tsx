@@ -657,7 +657,8 @@ function StoreImport({
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
-  const { data: job } = useImportJob(running?.jobId ?? "");
+  const jobQuery = useImportJob(running?.jobId ?? "");
+  const job = jobQuery.data;
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
@@ -883,10 +884,13 @@ function StoreImport({
           >
             {t("importingLeave")}
           </button>
-          {/* the handle can be unreadable for good (record purged, GET failing
-            * for keeps), and nothing infers that - the user says so, and only
-            * this page's handle goes */}
-          {!job && (
+          {/* the handle can be unreadable (record purged, GET failing for
+            * keeps), so the way out shows once a read has actually failed —
+            * never on the first poll, which has no job either. Nothing infers
+            * the job is dead: the user says so, and only this page's handle
+            * goes. `isError` survives the retries, so the exit stays put
+            * between them. */}
+          {jobQuery.isError && !jobQuery.isFetching && (
             <button
               type="button"
               className="text-sm font-semibold text-muted-foreground hover:text-ink"
