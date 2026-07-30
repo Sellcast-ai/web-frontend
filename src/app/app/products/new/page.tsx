@@ -309,7 +309,9 @@ function NewProductInner() {
                 </p>
               </div>
             </div>
-            <StoreImport className="mt-3 sm:mt-4" />
+            <div className="mt-3 sm:mt-4">
+              <StoreImport />
+            </div>
           </section>
 
           <section className="mt-6 sm:mt-8">
@@ -600,7 +602,7 @@ function NewProductInner() {
 
 /** Paste a store URL, preview the catalog, review which products to keep, then
  * kick off a batch import of just those and watch it fill up My Products. */
-function StoreImport({ className = "mt-6" }: { className?: string }) {
+function StoreImport() {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
@@ -748,7 +750,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
     const total = running.requested;
     const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
-      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 text-brand-600" />
           {t("importingTitle")}
@@ -773,7 +775,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
   // step 3 — walking the catalog for review
   if (review && !candidateData) {
     return (
-      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -830,7 +832,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
     // box over "0 of 0 selected"
     if (list.length === 0) {
       return (
-        <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
           <p className="flex items-center gap-2 font-display font-semibold text-ink">
             <Store className="h-4 w-4 shrink-0 text-brand-600" />
             {t("reviewTitle", { domain: review.domain })}
@@ -845,7 +847,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
       );
     }
     return (
-      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -928,7 +930,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
   // step 2 — preview succeeded: confirm before walking the catalog for review
   if (previewData) {
     return (
-      <div className={cn(className, "rounded-2xl border border-border bg-card p-5 shadow-soft")}>
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="font-display font-semibold text-ink">
           {t("previewFound", {
             count: previewData.product_count_estimate,
@@ -975,10 +977,7 @@ function StoreImport({ className = "mt-6" }: { className?: string }) {
   return (
     <>
       <form
-        className={cn(
-          className,
-          "flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300",
-        )}
+        className="flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
         onSubmit={(e) => {
           e.preventDefault();
           if (storeUrl.trim()) preview.mutate(storeUrl.trim());
