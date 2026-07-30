@@ -36,13 +36,9 @@ export function ThemeToggle({ className }: { className?: string }) {
             aria-checked={theme === value}
             aria-label={label}
             title={label}
+            data-theme-option={value}
             onClick={() => setTheme(value)}
-            className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors",
-              theme === value
-                ? "bg-accent text-accent-foreground"
-                : "text-muted-foreground hover:text-ink",
-            )}
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-ink"
           >
             <Icon className="h-3.5 w-3.5" />
           </button>

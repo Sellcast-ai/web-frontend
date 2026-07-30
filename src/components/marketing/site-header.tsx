@@ -29,9 +29,9 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
             {t("pricing")}
           </Link>
           <LanguageSwitcher compactOnSmall />
-          <ThemeToggle />
+          <ThemeToggle className="shrink-0" />
           {signedIn ? (
-            <Button href={APP_HOME_HREF} variant="primary" size="sm" className="px-2.5 sm:px-4">
+            <Button href={APP_HOME_HREF} variant="primary" size="sm" className="shrink-0 px-2.5 sm:px-4">
               {tc("openStudio")}
             </Button>
           ) : (
@@ -42,7 +42,7 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
               >
                 {tc("signIn")}
               </Link>
-              <Button href="/signup" variant="primary" size="sm" className="px-2.5 sm:px-4">
+              <Button href="/signup" variant="primary" size="sm" className="shrink-0 px-2.5 sm:px-4">
                 <span className="sm:hidden">{tc("startFreeMobile")}</span>
                 <span className="hidden sm:inline">{tc("startFree")}</span>
               </Button>
