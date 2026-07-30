@@ -2,8 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Accent } from "@/components/marketing/accent";
+import { AuthCta } from "@/components/marketing/auth-cta";
 
 /** Centered page hero used across marketing sub-pages. */
 export function PageHeader({
@@ -39,16 +39,16 @@ export function PageHeader({
   );
 }
 
-/** Reusable bottom call-to-action band (hero gradient). */
+/** Reusable bottom call-to-action band (hero gradient). Its primary CTA goes
+ * through `AuthCta`, so the destination is not a caller's choice: a signed-in
+ * visitor is sent into the app, never to signup. */
 export function CtaBand({
   title,
   subtitle,
-  primaryHref = "/signup",
   primaryLabel,
 }: {
   title?: string;
   subtitle?: string;
-  primaryHref?: string;
   primaryLabel?: string;
 }) {
   const t = useTranslations("marketing.cta");
@@ -64,15 +64,14 @@ export function CtaBand({
         </h2>
         <p className="relative mx-auto mt-4 max-w-xl text-white/85">{resolvedSubtitle}</p>
         <div className="relative mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Button
-            href={primaryHref}
+          <AuthCta
+            label={resolvedPrimaryLabel}
             variant="solid"
             size="lg"
             className="bg-white text-brand-700 hover:bg-white/90"
           >
-            {resolvedPrimaryLabel}
             <ArrowRight className="h-4 w-4" />
-          </Button>
+          </AuthCta>
           <Link
             href="/pricing"
             className="inline-flex h-13 items-center justify-center rounded-full px-8 text-base font-semibold text-white underline-offset-4 hover:underline"

@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowRight, Loader2, Phone, KeyRound, ChevronLeft } from "lucide-react";
-import { api, ApiError } from "@/lib/api/client";
+import { api, apiErrorMessage } from "@/lib/api/client";
 import { qk } from "@/lib/api/hooks";
 import { toast } from "@/lib/toast";
-import { isDevDeliveryChannel } from "@/lib/phone-auth";
+import { isDevDeliveryChannel, isSmsUnavailableError } from "@/lib/phone-auth";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { Button } from "@/components/ui/button";
 
@@ -57,7 +57,16 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       }
       setTimeout(() => codeRef.current?.focus(), 50);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : t("sendCodeFailed"));
+      // SMS not configured on this deployment (structured error_type or a bare
+      // 503, never prose): latch into the same final, disabled state as the dev
+      // delivery channel - the phone field keeps its value and the form points
+      // at Google instead of looking retryable.
+      if (isSmsUnavailableError(err)) {
+        setPhoneUnavailable(true);
+        setError(t("phoneUnavailable"));
+        return;
+      }
+      setError(apiErrorMessage(err, t("sendCodeFailed")));
     } finally {
       setBusy(false);
     }
@@ -72,7 +81,7 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
       await qc.invalidateQueries({ queryKey: qk.me });
       router.replace(APP_HOME_HREF);
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : t("verifyCodeFailed"));
+      setError(apiErrorMessage(err, t("verifyCodeFailed")));
       setBusy(false);
     }
   }
@@ -311,11 +320,7 @@ function GoogleButton({
             await qc.invalidateQueries({ queryKey: qk.me });
             router.replace(APP_HOME_HREF);
           } catch (err) {
-            toast.error(
-              err instanceof ApiError
-                ? err.message
-                : errorFallback,
-            );
+            toast.error(apiErrorMessage(err, errorFallback));
           }
         },
       });

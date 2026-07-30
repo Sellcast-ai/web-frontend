@@ -38,6 +38,8 @@
       "markedPosted": "标记为已发布。",
       "recordPostedFailed": "无法记录下来。请再试一次。",
       "listCandidatesFailed": "无法读取该商店的商品列表。请重试。",
+      "readLinkFailed": "无法读取该商品链接。请重试。",
+      "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
       "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。"
     },
     "categories": {
@@ -576,7 +578,7 @@
       "invalidPhone": "输入有效的电话号码。",
       "sendCode": "发送代码",
       "sendCodeFailed": "无法发送代码。",
-      "phoneUnavailable": "手机验证码登录暂时不可用。请使用 Google 继续开始使用。",
+      "phoneUnavailable": "本站不支持手机号登录。请使用 Google 继续。",
       "phoneUnavailableHint": "短信发送尚未配置。现在可以使用 Google 登录。",
       "phoneUnavailableLabel": "手机不可用",
       "codePlaceholder": "6位数字代码",
@@ -718,13 +720,14 @@
         },
         "request": {
           "heading": "如何申请退款",
-          "body": "从您的帐户电子邮件向 <email>billing@sellcast.ai</email> 发送电子邮件，并附上您的帐户详细信息。我们通常会在两个工作日内回复。"
+          "body": "从您的帐户电子邮件向 <email>{address}</email> 发送电子邮件，并附上您的帐户详细信息。我们通常会在两个工作日内回复。"
         }
       }
     },
     "header": {
       "signIn": "登录",
-      "startFree": "免费开始"
+      "startFree": "免费开始",
+      "openStudio": "打开 Studio"
     },
     "footer": {
       "tagline": "商品链接进，成片视频出。一切都基于已经被验证能卖货的模式。",
@@ -873,11 +876,18 @@
         "q2": "再生需要积分吗？",
         "a2": "不会。在审阅时重新生成节拍并不需要额外费用 - 积分仅计入最终渲染的视频。",
         "q3": "如果我的积分用完了怎么办？",
-        "a3": "随时升级以获得更大的每月津贴 - 立即生效。积分在每个计费周期开始时重置。",
+        "a3": "积分在每个计费周期开始时重置。目前还不支持在线自助付费 - 如需提升每月额度，请发送邮件至 {address}，我们会为你开通。",
         "q4": "我可以随时更改计划吗？",
-        "a4": "任何时候。升级立即生效；降级将在下一个周期生效。每年比每月节省约 20%。",
+        "a4": "可以。在自助付费功能建设期间，套餐变更通过邮件处理 - 请发送邮件至 {address}。年付比月付节省约 20%。",
         "q5": "Lumi 使用哪种渲染模型？",
         "a5": "Lumi 使用 Seedance 2.0 进行渲染，并推出更多模型。它会为每次拍摄选择最佳设置。"
+      },
+      "upgrade": {
+        "cta": "升级",
+        "title": "暂不支持自助付费",
+        "body": "在线支付功能仍在建设中，暂时无法在网站上购买套餐。如需升级到 {plan}，请发送邮件给我们，我们会为您开通。",
+        "contact": "发送邮件至 {address}",
+        "subject": "升级到 {plan}"
       }
     },
     "landing": {
@@ -1017,8 +1027,7 @@
             "75 积分——约 3 支视频",
             "无水印",
             "逐个节拍回顾"
-          ],
-          "cta": "启动创作者"
+          ]
         },
         "pro": {
           "name": "专业版",
@@ -1029,8 +1038,7 @@
             "一切尽在造物主",
             "渲染优先",
             "720p · 9:16 导出"
-          ],
-          "cta": "开始专业版"
+          ]
         },
         "scale": {
           "name": "规模",
@@ -1040,10 +1048,10 @@
             "500 积分——约 25 支视频",
             "专业版中的一切",
             "为持续发布而生"
-          ],
-          "cta": "开始规模"
+          ]
         }
       },
+      "seePlans": "查看套餐",
       "pricingFooter": "你的<signup>首支视频免费</signup>——无需信用卡。<plans>对比全部方案 →</plans>",
       "faqTitle": "你想问的，<highlight>都在这里</highlight>",
       "finalCtaTitle": "你的下一个爆款，<highlight>只差一个链接。</highlight>",

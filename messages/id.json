@@ -38,6 +38,8 @@
       "markedPosted": "Ditandai sebagai diposting.",
       "recordPostedFailed": "Tidak dapat merekamnya. Silakan coba lagi.",
       "listCandidatesFailed": "Tidak bisa membaca daftar produk toko itu. Silakan coba lagi.",
+      "readLinkFailed": "Tidak bisa membaca tautan produk itu. Silakan coba lagi.",
+      "previewStoreFailed": "Tidak bisa membaca toko itu. Periksa alamatnya dan coba lagi.",
       "importNone": "Tidak ada dari {requested, plural, one {# produk} other {# produk}} yang bisa diimpor. Silakan coba lagi."
     },
     "categories": {
@@ -576,7 +578,7 @@
       "invalidPhone": "Masukkan nomor telepon yang valid.",
       "sendCode": "Kirim kode",
       "sendCodeFailed": "Tidak dapat mengirim kode.",
-      "phoneUnavailable": "Masuk dengan kode telepon untuk sementara tidak tersedia. Lanjutkan dengan Google untuk memulai.",
+      "phoneUnavailable": "Login dengan nomor telepon tidak tersedia di situs ini. Lanjutkan dengan Google untuk memulai.",
       "phoneUnavailableHint": "Pengiriman SMS belum dikonfigurasi. Masuk dengan Google tersedia sekarang.",
       "phoneUnavailableLabel": "Telepon tidak tersedia",
       "codePlaceholder": "kode 6 digit",
@@ -718,13 +720,14 @@
         },
         "request": {
           "heading": "Bagaimana cara meminta pengembalian dana",
-          "body": "Email <email>billing@sellcast.ai</email> dari email akun Anda dengan detail akun Anda. Kami biasanya merespons dalam dua hari kerja."
+          "body": "Email <email>{address}</email> dari email akun Anda dengan detail akun Anda. Kami biasanya merespons dalam dua hari kerja."
         }
       }
     },
     "header": {
       "signIn": "Masuk",
-      "startFree": "Mulai gratis"
+      "startFree": "Mulai gratis",
+      "openStudio": "Buka Studio"
     },
     "footer": {
       "tagline": "Tautan produk masuk. Video siap terbit keluar. Berlandaskan pola yang sudah terbukti menjual.",
@@ -873,11 +876,18 @@
         "q2": "Apakah regenerasi memerlukan kredit?",
         "a2": "Tidak. Membuat ulang irama saat Anda meninjau tidak memerlukan biaya tambahan — kredit hanya menghitung video akhir yang dirender.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
-        "a3": "Tingkatkan versi kapan saja untuk mendapatkan tunjangan bulanan yang lebih besar — ini akan langsung berlaku. Kredit disetel ulang pada awal setiap siklus penagihan.",
+        "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke {address} dan kami akan menyiapkannya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
-        "a4": "Kapan saja. Peningkatan segera berlaku; penurunan peringkat akan berlaku pada siklus berikutnya. Penghematan tahunan ~20% dibandingkan bulanan.",
+        "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke {address}. Tahunan hemat ~20% dibanding bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
         "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
+      },
+      "upgrade": {
+        "cta": "Upgrade",
+        "title": "Penagihan belum bisa dilayani mandiri",
+        "body": "Checkout online masih dalam pengembangan, jadi paket belum bisa dibeli di situs. Untuk beralih ke {plan}, kirim email kepada kami dan kami akan menyiapkannya untuk Anda.",
+        "contact": "Email {address}",
+        "subject": "Upgrade ke {plan}"
       }
     },
     "landing": {
@@ -1017,8 +1027,7 @@
             "75 kredit — sekitar 3 video",
             "Tidak ada tanda air",
             "Ulasan detak demi detak"
-          ],
-          "cta": "Mulai Pencipta"
+          ]
         },
         "pro": {
           "name": "Pro",
@@ -1029,8 +1038,7 @@
             "Segalanya ada pada Sang Pencipta",
             "Render prioritas",
             "720p · 9:16 ekspor"
-          ],
-          "cta": "Mulai Pro"
+          ]
         },
         "scale": {
           "name": "Skala",
@@ -1040,10 +1048,10 @@
             "500 kredit — sekitar 25 video",
             "Semuanya di Pro",
             "Untuk posting tanpa henti"
-          ],
-          "cta": "Mulai Skala"
+          ]
         }
       },
+      "seePlans": "Lihat paket",
       "pricingFooter": "<signup>Video pertama Anda gratis</signup> — tanpa kartu. <plans>Bandingkan semua paket →</plans>",
       "faqTitle": "Pertanyaan, <highlight>terjawab</highlight>",
       "finalCtaTitle": "Produk terlaris Anda berikutnya <highlight>tinggal satu tautan.</highlight>",

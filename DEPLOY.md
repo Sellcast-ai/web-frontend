@@ -50,18 +50,22 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
   **Web** client; Authorized JavaScript origins = your Vercel URL. Put the client
   id in BOTH `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (web) and `SELLCAST_GOOGLE_IOS_CLIENT_ID`
   (backend — it's the `aud` we verify).
-- **Phone OTP:** works once Twilio creds are set. Until then the backend answers
-  `send-code` with `delivery_channel: "development"` (codes logged, never sent),
-  and the web form disables the phone step with a "Phone unavailable" message
-  pointing at Google, so an unconfigured phone path never looks broken, it just
-  looks closed. Note the form only learns this from the first send response, so
-  the user spends one attempt before seeing it.
+- **Phone OTP:** works once Twilio creds are set. Until then the web form disables
+  the phone step with a "Phone unavailable" message pointing at Google, so an
+  unconfigured phone path never looks broken, it just looks closed. Two backend
+  answers latch that same state: `delivery_channel: "development"` (codes logged,
+  never sent, dev/staging), and a `503` carrying `error_type: "SmsNotConfiguredError"`
+  from a production API with no SMS provider - see `src/lib/phone-auth.ts`, which
+  matches the structured `error_type` *or* any 503 from `send-code`, never message
+  prose. Note the form only learns this from the first send response, so the user
+  spends one attempt before seeing it.
 
 ## 4. Verify before announcing
 - [ ] `curl -H 'X-User-Id: x' https://<api>/api/v1/products` → **401** (dev bypass is OFF)
 - [ ] Sign in with Google on the live site → lands in `/app/products`
 - [ ] Create a video → worker renders it → plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** is still selectable but does not currently produce a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
-- [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans"
+- [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
+- [ ] While signed in, browse the marketing pages → header and every CTA read "Open Studio"; opening `/signup` or `/login` directly redirects into the app
 - [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` resolves from `SITE_URL` (`src/lib/site-url.ts`), which defaults to the Vercel deployment origin - once a real domain is attached, set `NEXT_PUBLIC_SITE_URL` to it in Vercel (all environments) and redeploy, or the card URL keeps pointing at the old origin.
 
 ## Cost control (free beta)
@@ -73,4 +77,8 @@ on the OpenAI + FAL accounts as a backstop.
 ## When you're ready to charge (later)
 Add Stripe: a `plan` column on `users`, a checkout + webhook that sets the plan,
 and the quota map in `app/services/quota.py` already keys off `plan` → just set
-it. The pricing page + tiers are already built.
+it. The pricing page + tiers are already built; until checkout exists a signed-in
+visitor clicking a paid tier gets the "Billing isn't self-serve yet" dialog
+(`marketing.pricing.upgrade.*`) mailing `BILLING_EMAIL`, and the pricing FAQ
+(`faq.a3`/`.a4`) says the same. Point those at the checkout when it lands, in all
+nine catalogs, and keep dialog and FAQ telling the same story.

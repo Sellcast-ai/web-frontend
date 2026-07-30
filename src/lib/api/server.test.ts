@@ -51,7 +51,7 @@ describe("proxy", () => {
 
     const res = await proxy(req("/api/bff/products"), "products");
     expect(res.status).toBe(401);
-    await expect(res.json()).resolves.toEqual({ error: "unauthenticated" });
+    await expect(res.json()).resolves.toEqual({ error_type: "Unauthenticated" });
     expect(fetchMock).not.toHaveBeenCalled();
   });
 

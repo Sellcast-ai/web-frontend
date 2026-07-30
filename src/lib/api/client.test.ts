@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { api, ApiError, bffUpload } from "./client";
+import { api, ApiError, apiErrorMessage, bffUpload } from "./client";
 
 function mockFetch(status: number, body: unknown = null) {
   const fn = vi.fn(async () =>
@@ -32,6 +32,15 @@ describe("api (BFF client)", () => {
     await expect(api.deleteAvatar("a1")).resolves.toBeNull();
   });
 
+  it("throws an ApiError, not a raw SyntaxError, on a malformed 2xx body", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway</html>", { status: 200 })),
+    );
+    await expect(api.getUsage()).rejects.toBeInstanceOf(ApiError);
+    await expect(api.getUsage()).rejects.toMatchObject({ status: 200 });
+  });
+
   it("throws ApiError with the backend detail message", async () => {
     mockFetch(422, { detail: "invalid url" });
     const err = await api.parseProductUrl("nope").catch((e) => e);
@@ -52,6 +61,48 @@ describe("api (BFF client)", () => {
       status: 400,
       message: "Request failed",
     });
+  });
+
+  it("never yields an empty message when statusText is blank (HTTP/2)", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway timeout</html>", { status: 504 })),
+    );
+    await expect(api.getUsage()).rejects.toMatchObject({
+      status: 504,
+      message: "Request failed",
+    });
+  });
+
+  it("only marks a body-supplied message as displayable", async () => {
+    mockFetch(422, { detail: "invalid url" });
+    const detail = await api.parseProductUrl("nope").catch((e) => e);
+    expect(apiErrorMessage(detail, "localized fallback")).toBe("invalid url");
+
+    // Status phrase, client generic, malformed 2xx body and a non-ApiError all
+    // carry untranslated English, so the call site's own locale string wins.
+    mockFetch(502);
+    const gateway = await api.getUsage().catch((e) => e);
+    expect(gateway.message).toBe("Bad Gateway");
+    expect(apiErrorMessage(gateway, "localized fallback")).toBe("localized fallback");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway timeout</html>", { status: 504 })),
+    );
+    const timeout = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(timeout, "localized fallback")).toBe("localized fallback");
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>not json</html>", { status: 200 })),
+    );
+    const malformed = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(malformed, "localized fallback")).toBe("localized fallback");
+
+    expect(apiErrorMessage(new TypeError("boom"), "localized fallback")).toBe(
+      "localized fallback",
+    );
   });
 
   it("approveStoryboard POSTs to the approve endpoint", async () => {
@@ -210,6 +261,36 @@ describe("bffUpload", () => {
       status: 502,
       message: "Bad Gateway",
     });
+  });
+
+  it("carries the structured error_type through, like the fetch path", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 503;
+    xhr.responseText = JSON.stringify({
+      detail: "SMS verification is not available right now.",
+      error_type: "SmsNotConfiguredError",
+    });
+    xhr.onload?.();
+
+    await expect(promise).rejects.toMatchObject({
+      status: 503,
+      errorType: "SmsNotConfiguredError",
+    });
+  });
+
+  it("rejects rather than throwing out of the XHR callback on a malformed 2xx body", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 200;
+    xhr.responseText = "<html>not json</html>";
+    expect(() => xhr.onload?.()).not.toThrow();
+
+    await expect(promise).rejects.toBeInstanceOf(ApiError);
   });
 
   it("rejects with an ApiError on network failure", async () => {

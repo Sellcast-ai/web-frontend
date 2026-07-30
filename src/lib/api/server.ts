@@ -69,7 +69,9 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   const refresh = req.cookies.get(COOKIE.refresh)?.value;
 
   if (!access && !refresh) {
-    return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
+    // Machine-readable only: a `detail`/`error`/`message` string here would be
+    // treated as the server's own human message and rendered untranslated.
+    return NextResponse.json({ error_type: "Unauthenticated" }, { status: 401 });
   }
 
   const method = req.method;

@@ -24,9 +24,75 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
+    /** Structured machine-readable error code from the backend body
+     * (`error_type`), when present - match on this, never on message prose. */
+    public errorType?: string,
+    /** The human-readable message the response body itself carried, when it
+     * carried one. `message` may instead be a client-side English generic (a
+     * status phrase, a parse failure, a dead socket), which must never reach a
+     * user in any of the nine locales - render through `apiErrorMessage`. */
+    public serverMessage?: string,
   ) {
     super(message);
     this.name = "ApiError";
+  }
+}
+
+/** The string to show a user for a failed call: the server's own message when
+ * it sent one, else the caller's already-localized fallback. */
+export function apiErrorMessage(err: unknown, fallback: string): string {
+  return (err instanceof ApiError && err.serverMessage) || fallback;
+}
+
+type ErrorBody = {
+  detail?: unknown;
+  error?: unknown;
+  message?: unknown;
+  error_type?: unknown;
+} | null;
+
+/**
+ * Error bodies are not always JSON - a gateway or edge error page answers with
+ * HTML - and `res.status` still has to reach `ApiError` for the status-keyed
+ * branches (e.g. the send-code 503 phone latch), so an unparseable body is
+ * simply "no structured fields".
+ */
+function parseErrorBody(text: string): ErrorBody {
+  try {
+    return text ? JSON.parse(text) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The one place a failed response becomes an `ApiError`, so every transport
+ * (fetch and XHR alike) carries the same message chain and `error_type`.
+ * The message is never empty: `statusText` is "" over HTTP/2, and call sites
+ * that render `err.message` verbatim would otherwise show nothing at all.
+ * Only a message the *body* carried is marked displayable - a status phrase
+ * ("Bad Gateway") and the generic are untranslated English. */
+function errorFrom(status: number, statusText: string, text: string): ApiError {
+  const data = parseErrorBody(text);
+  const fromBody = data && (data.detail || data.error || data.message);
+  const serverMessage = typeof fromBody === "string" && fromBody ? fromBody : undefined;
+  const errorType =
+    data && typeof data.error_type === "string" ? data.error_type : undefined;
+  return new ApiError(
+    status,
+    serverMessage || statusText || "Request failed",
+    errorType,
+    serverMessage,
+  );
+}
+
+/** Mirror of `errorFrom` for the success path: a 2xx whose body isn't the JSON
+ * the caller expects still has to surface as an `ApiError`, so every call site
+ * branching on `err instanceof ApiError` keeps the status and message. */
+function parseSuccessBody<T>(status: number, text: string): T {
+  try {
+    return (text ? JSON.parse(text) : null) as T;
+  } catch {
+    throw new ApiError(status, "Malformed response from the server.");
   }
 }
 
@@ -44,13 +110,8 @@ async function bff<T>(
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
   const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
-  if (!res.ok) {
-    const msg =
-      (data && (data.detail || data.error || data.message)) || res.statusText;
-    throw new ApiError(res.status, typeof msg === "string" ? msg : "Request failed");
-  }
-  return data as T;
+  if (!res.ok) throw errorFrom(res.status, res.statusText, text);
+  return parseSuccessBody<T>(res.status, text);
 }
 
 /**
@@ -71,19 +132,15 @@ export function bffUpload<T>(
       if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
     };
     xhr.onload = () => {
-      let data: unknown = null;
-      try {
-        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-      } catch {
-        // non-JSON body; fall through to statusText
-      }
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(data as T);
+        try {
+          resolve(parseSuccessBody<T>(xhr.status, xhr.responseText));
+        } catch (e) {
+          reject(e);
+        }
         return;
       }
-      const d = data as { detail?: unknown; error?: unknown; message?: unknown } | null;
-      const msg = (d && (d.detail || d.error || d.message)) || xhr.statusText;
-      reject(new ApiError(xhr.status, typeof msg === "string" ? msg : "Request failed"));
+      reject(errorFrom(xhr.status, xhr.statusText, xhr.responseText));
     };
     xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
     xhr.send(JSON.stringify(json));

@@ -17,6 +17,7 @@ import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/ui/motion";
 import { Accent } from "@/components/marketing/accent";
+import { AuthCta, AuthCtaLink } from "@/components/marketing/auth-cta";
 import { Faq } from "@/components/marketing/faq";
 import { PipelineHero } from "@/components/marketing/pipeline-hero";
 import { OUTPUT_WALL_VIDEOS, type WallTileKey } from "@/components/marketing/showcase";
@@ -62,10 +63,14 @@ const SHOWN_TILES = WALL_TILES.filter(
   (key) => OUTPUT_WALL_VIDEOS[key] || key === FIRST_EMPTY_TILE,
 );
 
+/* Paid-tier CTAs go to /pricing, never straight to signup: /pricing is the one
+   place that knows whether the visitor is signed in, and so the only place that
+   can answer a paid click honestly (upgrade dialog vs. sign up). Sending a
+   signed-in visitor to /signup would just bounce them into the app. */
 const PRICING = [
-  { key: "creator", href: "/signup?plan=creator", featured: false },
-  { key: "pro", href: "/signup?plan=pro", featured: true },
-  { key: "scale", href: "/signup?plan=scale", featured: false },
+  { key: "creator", featured: false },
+  { key: "pro", featured: true },
+  { key: "scale", featured: false },
 ] as const;
 
 /* ------------------------------------------------------------------ page */
@@ -92,10 +97,9 @@ export default async function HomePage() {
               {t("heroSubtitle")}
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button href="/signup" size="lg">
-                {t("heroPrimary")}
+              <AuthCta label={t("heroPrimary")} size="lg">
                 <ArrowRight className="h-4 w-4" />
-              </Button>
+              </AuthCta>
               <Link
                 href="/#how"
                 className="inline-flex h-13 items-center gap-1.5 rounded-full px-6 text-base font-medium text-ink-soft transition-colors hover:text-ink"
@@ -474,12 +478,12 @@ export default async function HomePage() {
                     ))}
                   </ul>
                   <Button
-                    href={p.href}
+                    href="/pricing"
                     variant={p.featured ? "primary" : "outline"}
                     size="md"
                     className="mt-8 w-full"
                   >
-                    {t(`pricingTiers.${p.key}.cta`)}
+                    {t("seePlans")}
                   </Button>
                 </FadeIn>
               );
@@ -490,12 +494,9 @@ export default async function HomePage() {
             <p className="mt-10 text-center text-sm text-muted-foreground">
               {t.rich("pricingFooter", {
                 signup: (chunks) => (
-                  <Link
-                    href="/signup"
-                    className="font-semibold text-ink underline-offset-4 hover:underline"
-                  >
+                  <AuthCtaLink className="font-semibold text-ink underline-offset-4 hover:underline">
                     {chunks}
-                  </Link>
+                  </AuthCtaLink>
                 ),
                 plans: (chunks) => (
                   <Link
@@ -548,15 +549,14 @@ export default async function HomePage() {
               {t("finalCtaSubtitle")}
             </p>
             <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button
-                href="/signup"
+              <AuthCta
+                label={t("finalCtaPrimary")}
                 variant="solid"
                 size="lg"
                 className="bg-white text-neutral-900 shadow-button hover:bg-white/90"
               >
-                {t("finalCtaPrimary")}
                 <ArrowRight className="h-4 w-4" />
-              </Button>
+              </AuthCta>
               <Link
                 href="/pricing"
                 className="inline-flex h-13 items-center justify-center rounded-full px-6 text-base font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline"

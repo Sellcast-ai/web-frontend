@@ -38,6 +38,8 @@
       "markedPosted": "Marked as posted.",
       "recordPostedFailed": "Couldn’t record that. Please try again.",
       "listCandidatesFailed": "Couldn’t read that store’s product list. Please try again.",
+      "readLinkFailed": "Couldn’t read that product link. Please try again.",
+      "previewStoreFailed": "Couldn’t read that store. Please check the address and try again.",
       "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again."
     },
     "categories": {
@@ -576,7 +578,7 @@
       "invalidPhone": "Enter a valid phone number.",
       "sendCode": "Send code",
       "sendCodeFailed": "Could not send code.",
-      "phoneUnavailable": "Phone code sign-in is temporarily unavailable. Continue with Google to get started.",
+      "phoneUnavailable": "Phone sign-in isn't available on this site. Continue with Google to get started.",
       "phoneUnavailableHint": "SMS delivery is not configured yet. Google sign-in is available now.",
       "phoneUnavailableLabel": "Phone unavailable",
       "codePlaceholder": "6-digit code",
@@ -718,13 +720,14 @@
         },
         "request": {
           "heading": "How to request a refund",
-          "body": "Email <email>billing@sellcast.ai</email> from your account email with your account details. We typically respond within two business days."
+          "body": "Email <email>{address}</email> from your account email with your account details. We typically respond within two business days."
         }
       }
     },
     "header": {
       "signIn": "Sign in",
-      "startFree": "Start free"
+      "startFree": "Start free",
+      "openStudio": "Open Studio"
     },
     "footer": {
       "tagline": "Product links in. Publish-ready video out. Grounded in the patterns that already sell.",
@@ -873,11 +876,18 @@
         "q2": "Do regenerations cost credits?",
         "a2": "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
         "q3": "What if I run out of credits?",
-        "a3": "Upgrade anytime for a bigger monthly allowance — it applies immediately. Credits reset at the start of each billing cycle.",
+        "a3": "Credits reset at the start of each billing cycle. Self-serve checkout is not available yet - to upgrade for a bigger monthly allowance, email {address} and we will set it up.",
         "q4": "Can I change plans anytime?",
-        "a4": "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
+        "a4": "Yes. While self-serve checkout is being built, plan changes are handled by email - write to {address}. Annual saves ~20% over monthly.",
         "q5": "Which render model does Lumi use?",
         "a5": "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot."
+      },
+      "upgrade": {
+        "cta": "Upgrade",
+        "title": "Billing isn't self-serve yet",
+        "body": "Online checkout is still being built, so plans can't be purchased on the site yet. To move to {plan}, email us and we'll set it up for you.",
+        "contact": "Email {address}",
+        "subject": "Upgrade to {plan}"
       }
     },
     "landing": {
@@ -1017,8 +1027,7 @@
             "75 credits — about 3 videos",
             "No watermark",
             "Beat-by-beat review"
-          ],
-          "cta": "Start Creator"
+          ]
         },
         "pro": {
           "name": "Pro",
@@ -1029,8 +1038,7 @@
             "Everything in Creator",
             "Priority rendering",
             "720p · 9:16 export"
-          ],
-          "cta": "Start Pro"
+          ]
         },
         "scale": {
           "name": "Scale",
@@ -1040,10 +1048,10 @@
             "500 credits — about 25 videos",
             "Everything in Pro",
             "Built for always-on posting"
-          ],
-          "cta": "Start Scale"
+          ]
         }
       },
+      "seePlans": "See plans",
       "pricingFooter": "Your <signup>first video is free</signup> — no card required. <plans>Compare all plans →</plans>",
       "faqTitle": "Questions, <highlight>answered</highlight>",
       "finalCtaTitle": "Your next best‑seller is <highlight>one link away.</highlight>",

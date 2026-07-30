@@ -26,6 +26,7 @@ import {
   useCurrentUser,
   qk,
 } from "@/lib/api/hooks";
+import { apiErrorMessage } from "@/lib/api/client";
 import type { ImportCandidate, ProductDraft, SourcePlatform } from "@/lib/api/types";
 import { CATEGORIES } from "@/lib/categories";
 import { priceRange } from "@/lib/format";
@@ -322,7 +323,9 @@ function NewProductInner() {
             <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
               <div>
-                <p className="text-ink">{(parse.error as Error)?.message}</p>
+                <p className="text-ink">
+                  {apiErrorMessage(parse.error, tt("readLinkFailed"))}
+                </p>
                 <button
                   type="button"
                   className="mt-1 font-semibold text-brand-700"
@@ -769,7 +772,7 @@ function StoreImport() {
           <>
             <p className="mt-2 flex items-start gap-2 text-sm text-ink">
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-              {(candidates.error as Error)?.message || tt("listCandidatesFailed")}
+              {apiErrorMessage(candidates.error, tt("listCandidatesFailed"))}
             </p>
             <div className="mt-4 flex items-center gap-3">
               <Button size="lg" onClick={() => candidates.refetch()}>
@@ -978,7 +981,9 @@ function StoreImport() {
       {preview.isError && (
         <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-          <p className="text-ink">{(preview.error as Error)?.message}</p>
+          <p className="text-ink">
+            {apiErrorMessage(preview.error, tt("previewStoreFailed"))}
+          </p>
         </div>
       )}
     </>

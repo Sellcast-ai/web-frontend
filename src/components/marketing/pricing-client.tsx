@@ -4,8 +4,12 @@ import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants, type ButtonProps } from "@/components/ui/button";
+import { Modal } from "@/components/ui/overlay";
+import { useMarketingSession } from "@/components/marketing/auth-cta";
 import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
+import { BILLING_EMAIL } from "@/lib/contact";
+import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
 type Tier = {
@@ -17,11 +21,14 @@ type Tier = {
   featured?: boolean;
 };
 
+/* Visitor hrefs only - a signed-in visitor never reaches them (see the CTA
+   derivation below). The `?plan=` param is gone: nothing consumes it, and no
+   checkout exists to carry it into. */
 const TIERS: Tier[] = [
   { key: "free", monthly: 0, annual: 0, href: "/signup" },
-  { key: "creator", monthly: 29, annual: 23, href: "/signup?plan=creator" },
-  { key: "pro", monthly: 79, annual: 63, href: "/signup?plan=pro", featured: true },
-  { key: "scale", monthly: 199, annual: 159, href: "/signup?plan=scale" },
+  { key: "creator", monthly: 29, annual: 23, href: "/signup" },
+  { key: "pro", monthly: 79, annual: 63, href: "/signup", featured: true },
+  { key: "scale", monthly: 199, annual: 159, href: "/signup" },
   { key: "enterprise", monthly: null, annual: null, hasPriceLabel: true, href: "/about" },
 ];
 
@@ -33,8 +40,15 @@ const BILLING = [
 const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"] as const;
 
 export function PricingClient() {
+  const signedIn = useMarketingSession();
   const [annual, setAnnual] = useState(false);
+  /* The plan name outlives `upgradeOpen` on purpose: the modal keeps rendering
+     through its exit animation, and clearing the name would blank the
+     interpolated body and mailto subject for the length of the fade-out. */
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [upgradePlan, setUpgradePlan] = useState("");
   const t = useTranslations("marketing.pricing");
+  const th = useTranslations("marketing.header");
 
   return (
     <>
@@ -83,6 +97,33 @@ export function PricingClient() {
               : `$${annual ? tier.annual : tier.monthly}`;
             const credits = t(`tiers.${tier.key}.credits`);
             const features = t.raw(`tiers.${tier.key}.features`) as string[];
+            /* Signed-in visitors never go to /signup: Free becomes the way back
+               into the app, and paid tiers open an honest "billing isn't
+               self-serve yet" dialog (no checkout route exists yet). Enterprise
+               (monthly === null) keeps its contact link either way. */
+            const variant = tier.featured ? "primary" : "outline";
+            const cta: ButtonProps =
+              signedIn && tier.key === "free"
+                ? {
+                    href: APP_HOME_HREF,
+                    variant: "outline",
+                    children: th("openStudio"),
+                  }
+                : signedIn && tier.monthly !== null
+                  ? {
+                      type: "button",
+                      variant,
+                      onClick: () => {
+                        setUpgradePlan(t(`tiers.${tier.key}.name`));
+                        setUpgradeOpen(true);
+                      },
+                      children: t("upgrade.cta"),
+                    }
+                  : {
+                      href: tier.href,
+                      variant,
+                      children: t(`tiers.${tier.key}.cta`),
+                    };
             return (
               <div
                 key={tier.key}
@@ -148,14 +189,7 @@ export function PricingClient() {
                     </li>
                   ))}
                 </ul>
-                <Button
-                  href={tier.href}
-                  variant={tier.featured ? "primary" : "outline"}
-                  size="md"
-                  className="mt-8 w-full"
-                >
-                  {t(`tiers.${tier.key}.cta`)}
-                </Button>
+                <Button {...cta} size="md" className="mt-8 w-full" />
               </div>
             );
           })}
@@ -199,7 +233,7 @@ export function PricingClient() {
                 {t(`faq.${key}`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {t(`faq.${key.replace("q", "a")}`)}
+                {t(`faq.${key.replace("q", "a")}`, { address: BILLING_EMAIL })}
               </p>
             </div>
           ))}
@@ -207,6 +241,27 @@ export function PricingClient() {
       </section>
 
       <CtaBand />
+
+      <Modal
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        title={t("upgrade.title")}
+      >
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {t("upgrade.body", { plan: upgradePlan })}
+        </p>
+        <a
+          href={`mailto:${BILLING_EMAIL}?subject=${encodeURIComponent(
+            t("upgrade.subject", { plan: upgradePlan }),
+          )}`}
+          className={cn(
+            buttonVariants({ variant: "primary", size: "md" }),
+            "mt-6 w-full",
+          )}
+        >
+          {t("upgrade.contact", { address: BILLING_EMAIL })}
+        </a>
+      </Modal>
     </>
   );
 }
