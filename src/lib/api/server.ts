@@ -69,7 +69,9 @@ async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
  * Authenticated backend call for the OAuth-style BFF routes (Shopify connect),
  * where the *browser* navigates and the route must inspect redirects itself
  * rather than stream a proxied body. Same refresh-on-401 semantics as `proxy`;
- * `res` is null when there is no session at all.
+ * `res` is null when there is no usable session - no cookies at all, or a 401
+ * no refresh could rescue. Callers must clear the session cookies in that
+ * case, or stale cookies keep the app shell from redirecting to /login.
  */
 export async function callBackendAuthed(
   req: NextRequest,
@@ -89,6 +91,7 @@ export async function callBackendAuthed(
     refreshed = await tryRefresh(refresh);
     if (refreshed) res = await doCall(refreshed.session.access_token);
   }
+  if (res.status === 401) return { res: null, refreshed: null };
   return { res, refreshed };
 }
 

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { callBackendAuthed, setSessionCookies } from "@/lib/api/server";
+import { callBackendAuthed, clearSessionCookies, setSessionCookies } from "@/lib/api/server";
 import type { PlatformConnection } from "@/lib/api/types";
 
 export const dynamic = "force-dynamic";
@@ -24,9 +24,16 @@ export async function GET(req: NextRequest) {
     {
       search: req.nextUrl.search,
       headers: stateCookie ? { cookie: `${STATE_COOKIE}=${stateCookie}` } : {},
+      // A 3xx here is not a success: `follow` would land on some final 200
+      // (possibly HTML) and report a store as connected when it isn't.
+      redirect: "manual",
     },
   );
-  if (!res) return NextResponse.redirect(new URL("/login", req.url), 302);
+  if (!res) {
+    const out = NextResponse.redirect(new URL("/login", req.url), 302);
+    clearSessionCookies(out);
+    return out;
+  }
 
   let target: string;
   if (res.ok) {

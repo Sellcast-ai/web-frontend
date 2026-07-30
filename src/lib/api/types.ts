@@ -561,7 +561,6 @@ export interface PlatformConnection {
  * gate the connect button on a real end-to-end signal. */
 export interface ShopifyAvailability {
   available: boolean;
-  reason: "not-deployed" | "not-configured" | "error" | null;
 }
 
 /* ----------------------------------------------------------------- presets */
