@@ -244,6 +244,7 @@
         "alreadyImportingTitle": "Ya hay una importación de tienda en curso",
         "alreadyImportingDescription": "Solo se puede importar una tienda a la vez. Espera a que esta termine y entonces podrás importar otra.",
         "showProgress": "Ver el progreso de la importación",
+        "stopTracking": "Dejar de seguir esta importación: sigue en curso",
         "previewFound": "Encontramos {count} productos de {domain}",
         "chooseProducts": "Elegir productos",
         "reviewTitle": "Elige qué importar de {domain}",

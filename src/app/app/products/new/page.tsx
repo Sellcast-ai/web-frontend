@@ -758,8 +758,11 @@ function StoreImport({
     preview.reset();
   }
 
-  /** Backing out of a catalog walk that never landed. The user wanted out of
-   * the wait, not out of their deselection pass, so the stored pass stays. */
+  /** Backing out of a catalog walk that never landed, or of an import handle the
+   * page can no longer read. The user wanted out of the wait, not out of their
+   * deselection pass, so the stored pass stays. Releasing the handle only stops
+   * this page watching: the import itself carries on server-side, exactly as a
+   * reload leaves it. */
   function leaveWalk() {
     setReview(null);
     persistToRef.current = null;
@@ -880,6 +883,18 @@ function StoreImport({
           >
             {t("importingLeave")}
           </button>
+          {/* the handle can be unreadable for good (record purged, GET failing
+            * for keeps), and nothing infers that - the user says so, and only
+            * this page's handle goes */}
+          {!job && (
+            <button
+              type="button"
+              className="text-sm font-semibold text-muted-foreground hover:text-ink"
+              onClick={leaveWalk}
+            >
+              {t("stopTracking")}
+            </button>
+          )}
         </div>
       </div>
     );
@@ -1016,7 +1031,7 @@ function StoreImport({
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            disabled={start.isPending || (running !== null && !jobFellThrough) || chosen.length === 0}
+            disabled={start.isPending || importInFlight || chosen.length === 0}
             onClick={() => runImport(review.storeUrl, chosen, candidateData.platform)}
           >
             {start.isPending ? (

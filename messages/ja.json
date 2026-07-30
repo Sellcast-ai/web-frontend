@@ -244,6 +244,7 @@
         "alreadyImportingTitle": "ストアのインポートがすでに実行中です",
         "alreadyImportingDescription": "ストアのインポートは同時に1件しか実行できません。今のインポートが終わってから、次のストアをインポートしてください。",
         "showProgress": "インポートの進捗を表示",
+        "stopTracking": "このインポートの追跡をやめる（インポートは続行されます）",
         "previewFound": "{domain} の {count} 製品が見つかりました",
         "chooseProducts": "商品を選ぶ",
         "reviewTitle": "{domain} からインポートする商品を選択",

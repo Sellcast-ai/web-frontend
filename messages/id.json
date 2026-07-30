@@ -244,6 +244,7 @@
         "alreadyImportingTitle": "Impor toko sedang berjalan",
         "alreadyImportingDescription": "Hanya satu impor toko yang bisa berjalan dalam satu waktu. Tunggu sampai selesai, lalu kamu bisa mengimpor toko lain.",
         "showProgress": "Lihat progres impor",
+        "stopTracking": "Berhenti melacak impor ini - impornya tetap berjalan",
         "previewFound": "Kami menemukan produk {count} dari {domain}",
         "chooseProducts": "Pilih produk",
         "reviewTitle": "Pilih yang ingin diimpor dari {domain}",

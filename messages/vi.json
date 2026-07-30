@@ -244,6 +244,7 @@
         "alreadyImportingTitle": "Đã có một lượt nhập cửa hàng đang chạy",
         "alreadyImportingDescription": "Mỗi lần chỉ chạy được một lượt nhập cửa hàng. Hãy đợi lượt này xong rồi mới nhập cửa hàng khác.",
         "showProgress": "Xem tiến trình nhập",
+        "stopTracking": "Ngừng theo dõi lần nhập này - quá trình nhập vẫn tiếp tục",
         "previewFound": "Chúng tôi đã tìm thấy các sản phẩm {count} từ {domain}",
         "chooseProducts": "Chọn sản phẩm",
         "reviewTitle": "Chọn sản phẩm cần nhập từ {domain}",

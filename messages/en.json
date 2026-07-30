@@ -244,6 +244,7 @@
         "alreadyImportingTitle": "A store import is already running",
         "alreadyImportingDescription": "Only one store import can run at a time. Wait for this one to finish, then you can import another store.",
         "showProgress": "Show import progress",
+        "stopTracking": "Stop tracking this import - it keeps running",
         "previewFound": "We found {count} products from {domain}",
         "chooseProducts": "Choose products",
         "reviewTitle": "Choose what to import from {domain}",
