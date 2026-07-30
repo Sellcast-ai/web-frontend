@@ -35,7 +35,8 @@ export function LanguageSwitcher({
   compactOnSmall = false,
 }: {
   className?: string;
-  /** Hide the current locale label below the sm breakpoint. */
+  /** Below the sm breakpoint, hide the current locale label and tighten the
+      trigger's padding, for rows that have to survive a 320px screen. */
   compactOnSmall?: boolean;
 }) {
   const t = useTranslations("languageSwitcher");
