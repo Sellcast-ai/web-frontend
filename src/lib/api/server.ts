@@ -96,27 +96,38 @@ async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
  * invalidated) the old token. Callers clear the session cookies only when
  * there is no `refreshed`, or stale cookies keep the app shell from
  * redirecting to /login.
+ *
+ * A backend that cannot be reached at all (DNS, refused connection, TLS, cold
+ * start) makes `fetch` throw rather than answer. That is not an auth outcome,
+ * so it is caught here and reported as `unreachable` with a null `res`: these
+ * routes are top-level browser navigations, and neither a Next 500 page nor a
+ * bogus logout is an honest answer to "the backend is down".
  */
 export async function callBackendAuthed(
   req: NextRequest,
   path: string,
   init: CallInit = {},
-): Promise<{ res: Response | null; refreshed: AuthSuccess | null }> {
+): Promise<{ res: Response | null; refreshed: AuthSuccess | null; unreachable: boolean }> {
   const access = req.cookies.get(COOKIE.access)?.value;
   const refresh = req.cookies.get(COOKIE.refresh)?.value;
-  if (!access && !refresh) return { res: null, refreshed: null };
+  if (!access && !refresh) return { res: null, refreshed: null, unreachable: false };
 
   const doCall = (token?: string | null) =>
     callBackend(path, { ...init, accessToken: token });
 
-  let res = await doCall(access);
+  let res: Response;
   let refreshed: AuthSuccess | null = null;
-  if (res.status === 401 && refresh) {
-    refreshed = await tryRefresh(refresh);
-    if (refreshed) res = await doCall(refreshed.session.access_token);
+  try {
+    res = await doCall(access);
+    if (res.status === 401 && refresh) {
+      refreshed = await tryRefresh(refresh);
+      if (refreshed) res = await doCall(refreshed.session.access_token);
+    }
+  } catch {
+    return { res: null, refreshed, unreachable: true };
   }
-  if (res.status === 401) return { res: null, refreshed };
-  return { res, refreshed };
+  if (res.status === 401) return { res: null, refreshed, unreachable: false };
+  return { res, refreshed, unreachable: false };
 }
 
 /** Generic authenticated proxy used by the BFF catch-all route. */

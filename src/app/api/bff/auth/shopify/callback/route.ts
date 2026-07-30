@@ -21,7 +21,7 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   const stateCookie = req.cookies.get(SHOPIFY_STATE_COOKIE)?.value;
 
-  const { res, refreshed } = await callBackendAuthed(
+  const { res, refreshed, unreachable } = await callBackendAuthed(
     req,
     "connections/shopify/callback",
     {
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
       redirect: "manual",
     },
   );
-  if (!res) {
+  if (!res && !unreachable) {
     const out = NextResponse.redirect(new URL("/login", req.url), 302);
     if (refreshed) setSessionCookies(out, refreshed.session);
     else clearSessionCookies(out);
@@ -41,7 +41,9 @@ export async function GET(req: NextRequest) {
   }
 
   let target: string;
-  if (res.ok) {
+  if (!res) {
+    target = "/app/connections?error=failed";
+  } else if (res.ok) {
     const connection = (await res.json().catch(() => null)) as PlatformConnection | null;
     target = connection?.shop_domain
       ? `/app/connections?connected=${encodeURIComponent(connection.shop_domain)}`

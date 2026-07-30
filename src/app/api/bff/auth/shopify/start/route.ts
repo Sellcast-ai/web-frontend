@@ -31,11 +31,12 @@ export async function GET(req: NextRequest) {
 
   if (!isShopDomain(shop)) return fail("invalid-shop");
 
-  const { res, refreshed } = await callBackendAuthed(
+  const { res, refreshed, unreachable } = await callBackendAuthed(
     req,
     "connections/shopify/start",
     { search: `?shop=${encodeURIComponent(shop)}`, redirect: "manual" },
   );
+  if (unreachable) return fail("failed", refreshed?.session);
   if (!res) {
     const out = NextResponse.redirect(new URL("/login", req.url), 302);
     if (refreshed) setSessionCookies(out, refreshed.session);
@@ -45,10 +46,13 @@ export async function GET(req: NextRequest) {
 
   const location = shopifyAuthorizeUrl(res);
   if (location) {
+    // Without the state the callback cannot verify the round trip, so the
+    // merchant would authorize the app on their store for nothing.
+    const state = stateCookieValue(res.headers.getSetCookie());
+    if (!state) return fail("failed", refreshed?.session);
     const out = NextResponse.redirect(location, 302);
     if (refreshed) setSessionCookies(out, refreshed.session);
-    const state = stateCookieValue(res.headers.getSetCookie());
-    if (state) setShopifyStateCookie(out, state);
+    setShopifyStateCookie(out, state);
     return out;
   }
 

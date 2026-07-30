@@ -20,19 +20,19 @@ const PROBE_SHOP = "lumi-connect-probe.myshopify.com";
  * unavailable.
  */
 export async function GET(req: NextRequest) {
-  const { res, refreshed } = await callBackendAuthed(
+  const { res, refreshed, unreachable } = await callBackendAuthed(
     req,
     "connections/shopify/start",
     { search: `?shop=${PROBE_SHOP}`, redirect: "manual" },
   );
-  if (!res) {
+  if (!res && !unreachable) {
     const out = NextResponse.json({ error: "unauthenticated" }, { status: 401 });
     if (refreshed) setSessionCookies(out, refreshed.session);
     else clearSessionCookies(out);
     return out;
   }
 
-  const body: ShopifyAvailability = { available: !!shopifyAuthorizeUrl(res) };
+  const body: ShopifyAvailability = { available: !!res && !!shopifyAuthorizeUrl(res) };
   const out = NextResponse.json(body, { status: 200 });
   if (refreshed) setSessionCookies(out, refreshed.session);
   return out;
