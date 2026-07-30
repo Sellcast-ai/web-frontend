@@ -1025,8 +1025,7 @@
             "75 créditos — cerca de 3 vídeos",
             "Sem marca d'água",
             "Revisão passo a passo"
-          ],
-          "cta": "Iniciar Criador"
+          ]
         },
         "pro": {
           "name": "Pró",
@@ -1037,8 +1036,7 @@
             "Tudo no Criador",
             "Renderização prioritária",
             "720p · 9:16 exportação"
-          ],
-          "cta": "Comece profissional"
+          ]
         },
         "scale": {
           "name": "Escala",
@@ -1048,8 +1046,7 @@
             "500 créditos — cerca de 25 vídeos",
             "Tudo em Pró",
             "Para postar sem parar"
-          ],
-          "cta": "Escala inicial"
+          ]
         }
       },
       "pricingFooter": "Seu <signup>primeiro vídeo é grátis</signup> — sem cartão. <plans>Compare todos os planos →</plans>",

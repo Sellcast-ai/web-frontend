@@ -1025,8 +1025,7 @@
             "75 credits — about 3 videos",
             "No watermark",
             "Beat-by-beat review"
-          ],
-          "cta": "Start Creator"
+          ]
         },
         "pro": {
           "name": "Pro",
@@ -1037,8 +1036,7 @@
             "Everything in Creator",
             "Priority rendering",
             "720p · 9:16 export"
-          ],
-          "cta": "Start Pro"
+          ]
         },
         "scale": {
           "name": "Scale",
@@ -1048,8 +1046,7 @@
             "500 credits — about 25 videos",
             "Everything in Pro",
             "Built for always-on posting"
-          ],
-          "cta": "Start Scale"
+          ]
         }
       },
       "pricingFooter": "Your <signup>first video is free</signup> — no card required. <plans>Compare all plans →</plans>",

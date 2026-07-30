@@ -1025,8 +1025,7 @@
             "75 kredit — sekitar 3 video",
             "Tidak ada tanda air",
             "Ulasan detak demi detak"
-          ],
-          "cta": "Mulai Pencipta"
+          ]
         },
         "pro": {
           "name": "Pro",
@@ -1037,8 +1036,7 @@
             "Segalanya ada pada Sang Pencipta",
             "Render prioritas",
             "720p · 9:16 ekspor"
-          ],
-          "cta": "Mulai Pro"
+          ]
         },
         "scale": {
           "name": "Skala",
@@ -1048,8 +1046,7 @@
             "500 kredit — sekitar 25 video",
             "Semuanya di Pro",
             "Untuk posting tanpa henti"
-          ],
-          "cta": "Mulai Skala"
+          ]
         }
       },
       "pricingFooter": "<signup>Video pertama Anda gratis</signup> — tanpa kartu. <plans>Bandingkan semua paket →</plans>",

@@ -1025,8 +1025,7 @@
             "75 credit — khoảng 3 video",
             "Không có hình mờ",
             "Đánh giá từng nhịp"
-          ],
-          "cta": "Bắt đầu tạo"
+          ]
         },
         "pro": {
           "name": "chuyên nghiệp",
@@ -1037,8 +1036,7 @@
             "Mọi thứ trong Creator",
             "Render ưu tiên",
             "720p · xuất 9:16"
-          ],
-          "cta": "Bắt đầu chuyên nghiệp"
+          ]
         },
         "scale": {
           "name": "quy mô",
@@ -1048,8 +1046,7 @@
             "500 credit — khoảng 25 video",
             "Mọi thứ trong Pro",
             "Cho việc đăng đều đặn không ngừng"
-          ],
-          "cta": "Bắt đầu thang âm"
+          ]
         }
       },
       "pricingFooter": "<signup>Video đầu tiên miễn phí</signup> — không cần thẻ. <plans>So sánh tất cả các gói →</plans>",

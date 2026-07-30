@@ -67,15 +67,16 @@ const SHOWN_TILES = WALL_TILES.filter(
    can answer a paid click honestly (upgrade dialog vs. sign up). Sending a
    signed-in visitor to /signup would just bounce them into the app. */
 const PRICING = [
-  { key: "creator", href: "/pricing", featured: false },
-  { key: "pro", href: "/pricing", featured: true },
-  { key: "scale", href: "/pricing", featured: false },
+  { key: "creator", featured: false },
+  { key: "pro", featured: true },
+  { key: "scale", featured: false },
 ] as const;
 
 /* ------------------------------------------------------------------ page */
 
 export default async function HomePage() {
   const t = await getTranslations("marketing.landing");
+  const ts = await getTranslations("app.studio");
 
   return (
     <>
@@ -478,12 +479,12 @@ export default async function HomePage() {
                     ))}
                   </ul>
                   <Button
-                    href={p.href}
+                    href="/pricing"
                     variant={p.featured ? "primary" : "outline"}
                     size="md"
                     className="mt-8 w-full"
                   >
-                    {t(`pricingTiers.${p.key}.cta`)}
+                    {ts("seePlans")}
                   </Button>
                 </FadeIn>
               );

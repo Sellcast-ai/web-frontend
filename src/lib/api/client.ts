@@ -33,6 +33,27 @@ export class ApiError extends Error {
   }
 }
 
+type ErrorBody = {
+  detail?: unknown;
+  error?: unknown;
+  message?: unknown;
+  error_type?: unknown;
+} | null;
+
+/**
+ * Error bodies are not always JSON - a gateway or edge error page answers with
+ * HTML - and `res.status` still has to reach `ApiError` for the status-keyed
+ * branches (e.g. the send-code 503 phone latch), so an unparseable body is
+ * simply "no structured fields".
+ */
+function parseErrorBody(text: string): ErrorBody {
+  try {
+    return text ? JSON.parse(text) : null;
+  } catch {
+    return null;
+  }
+}
+
 async function bff<T>(
   path: string,
   init: (RequestInit & { json?: unknown }) = {},
@@ -47,8 +68,8 @@ async function bff<T>(
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
   const text = await res.text();
-  const data = text ? JSON.parse(text) : null;
   if (!res.ok) {
+    const data = parseErrorBody(text);
     const msg =
       (data && (data.detail || data.error || data.message)) || res.statusText;
     const errorType =
@@ -59,7 +80,7 @@ async function bff<T>(
       errorType,
     );
   }
-  return data as T;
+  return (text ? JSON.parse(text) : null) as T;
 }
 
 /**

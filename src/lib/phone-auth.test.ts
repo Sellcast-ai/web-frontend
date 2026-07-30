@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
-import { ApiError } from "./api/client";
+import { describe, expect, it, vi } from "vitest";
+import { api, ApiError } from "./api/client";
 import {
   DEV_DELIVERY_CHANNEL,
   isDevDeliveryChannel,
@@ -33,6 +33,23 @@ describe("isSmsUnavailableError", () => {
     expect(
       isSmsUnavailableError(new ApiError(503, "nope", "RenamedSmsError")),
     ).toBe(true);
+  });
+
+  it("latches on a real send-code 503 whose body is gateway HTML, not JSON", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response("<html>Service Unavailable</html>", {
+            status: 503,
+            statusText: "Service Unavailable",
+          }),
+      ),
+    );
+    const err = await api.sendPhoneCode("+15550100", "signup").catch((e) => e);
+    vi.unstubAllGlobals();
+    expect(err).toBeInstanceOf(ApiError);
+    expect(isSmsUnavailableError(err)).toBe(true);
   });
 
   it("still matches the error_type on a non-503 status", () => {
