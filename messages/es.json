@@ -549,9 +549,9 @@
     },
     "theme": {
       "label": "Tema",
-      "light": "Luz",
+      "light": "Claro",
       "system": "Sistema",
-      "dark": "oscuro"
+      "dark": "Oscuro"
     }
   },
   "auth": {

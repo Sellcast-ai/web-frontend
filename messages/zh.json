@@ -549,9 +549,9 @@
     },
     "theme": {
       "label": "主题",
-      "light": "光",
+      "light": "浅色",
       "system": "系统",
-      "dark": "黑暗"
+      "dark": "深色"
     }
   },
   "auth": {

@@ -549,9 +549,9 @@
     },
     "theme": {
       "label": "테마",
-      "light": "빛",
+      "light": "라이트",
       "system": "시스템",
-      "dark": "어둠"
+      "dark": "다크"
     }
   },
   "auth": {
