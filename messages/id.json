@@ -38,6 +38,8 @@
       "markedPosted": "Ditandai sebagai diposting.",
       "recordPostedFailed": "Tidak dapat merekamnya. Silakan coba lagi.",
       "listCandidatesFailed": "Tidak bisa membaca daftar produk toko itu. Silakan coba lagi.",
+      "readLinkFailed": "Tidak bisa membaca tautan produk itu. Silakan coba lagi.",
+      "previewStoreFailed": "Tidak bisa membaca toko itu. Periksa alamatnya dan coba lagi.",
       "importNone": "Tidak ada dari {requested, plural, one {# produk} other {# produk}} yang bisa diimpor. Silakan coba lagi."
     },
     "categories": {

@@ -38,6 +38,8 @@
       "markedPosted": "Marcado como publicado.",
       "recordPostedFailed": "No pude grabar eso. Por favor inténtalo de nuevo.",
       "listCandidatesFailed": "No pudimos leer la lista de productos de esa tienda. Inténtalo de nuevo.",
+      "readLinkFailed": "No pudimos leer ese enlace de producto. Inténtalo de nuevo.",
+      "previewStoreFailed": "No pudimos leer esa tienda. Revisa la dirección e inténtalo de nuevo.",
       "importNone": "No se pudo importar {requested, plural, one {# producto} other {# productos}}. Inténtalo de nuevo."
     },
     "categories": {

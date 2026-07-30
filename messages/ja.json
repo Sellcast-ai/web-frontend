@@ -38,6 +38,8 @@
       "markedPosted": "投稿済みとしてマークされます。",
       "recordPostedFailed": "それを記録できませんでした。もう一度試してください。",
       "listCandidatesFailed": "そのストアの商品リストを読み取れませんでした。もう一度お試しください。",
+      "readLinkFailed": "その商品リンクを読み取れませんでした。もう一度お試しください。",
+      "previewStoreFailed": "そのストアを読み取れませんでした。アドレスを確認してもう一度お試しください。",
       "importNone": "{requested, plural, one {# 個の商品} other {# 個の商品}} のいずれもインポートできませんでした。もう一度お試しください。"
     },
     "categories": {

@@ -38,6 +38,8 @@
       "markedPosted": "Marked as posted.",
       "recordPostedFailed": "Couldn’t record that. Please try again.",
       "listCandidatesFailed": "Couldn’t read that store’s product list. Please try again.",
+      "readLinkFailed": "Couldn’t read that product link. Please try again.",
+      "previewStoreFailed": "Couldn’t read that store. Please check the address and try again.",
       "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again."
     },
     "categories": {

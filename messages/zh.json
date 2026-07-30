@@ -38,6 +38,8 @@
       "markedPosted": "标记为已发布。",
       "recordPostedFailed": "无法记录下来。请再试一次。",
       "listCandidatesFailed": "无法读取该商店的商品列表。请重试。",
+      "readLinkFailed": "无法读取该商品链接。请重试。",
+      "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
       "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。"
     },
     "categories": {

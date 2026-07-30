@@ -38,6 +38,8 @@
       "markedPosted": "Đánh dấu là đã đăng.",
       "recordPostedFailed": "Không thể ghi lại điều đó. Vui lòng thử lại.",
       "listCandidatesFailed": "Không đọc được danh sách sản phẩm của cửa hàng đó. Vui lòng thử lại.",
+      "readLinkFailed": "Không đọc được liên kết sản phẩm đó. Vui lòng thử lại.",
+      "previewStoreFailed": "Không đọc được cửa hàng đó. Vui lòng kiểm tra địa chỉ và thử lại.",
       "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại."
     },
     "categories": {
