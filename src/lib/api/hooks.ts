@@ -104,7 +104,8 @@ export function importPollInterval(status: ImportStatus | undefined): number | f
   return !status || IMPORT_ACTIVE.includes(status) ? IMPORT_POLL_MS : false;
 }
 
-/** Polls every 2.5s while the store import is queued/running (report §4.2). */
+/** Polls every 2.5s while the store import is queued/running, or while it has
+ * no status to read at all (report §4.2) - see `importPollInterval`. */
 export function useImportJob(id: string) {
   return useQuery({
     queryKey: qk.import(id),
