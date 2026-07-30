@@ -118,7 +118,10 @@
       "storeImportDescription": "Paste your storefront URL to preview the catalog, choose the products you want, and import them into My Products.",
       "storeImportCta": "Import store",
       "emptyTitle": "No products yet",
-      "emptyDescription": "Import your store, paste a product link above, or add one manually - then turn it into a video in the Studio."
+      "emptyDescription": "Import your store, paste a product link above, or add one manually - then turn it into a video in the Studio.",
+      "loadErrorTitle": "Couldn’t load your products",
+      "loadErrorDescription": "This isn’t an empty catalog - the list failed to load. Your products are still there; try again in a moment.",
+      "retry": "Try again"
     },
     "productDetail": {
       "notFound": "Product not found.",
@@ -201,12 +204,12 @@
       "singleProductTitle": "Read one product link",
       "singleProductDescription": "Paste a product page from Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay, or another store.",
       "manualPathTitle": "Add one product manually",
-      "manualPathDescription": "Open the blank editor, then add photos and product details yourself. You can also drop photos onto the tile below to start with them attached.",
       "productLinkPlaceholder": "https://… product link",
       "readLink": "Read link",
       "addManuallyInstead": "Add it manually instead →",
       "startManualEditor": "Open manual editor",
-      "startManualEditorDescription": "Type the details yourself and add photos inside the editor, or drop product photos here.",
+      "startManualEditorDescription": "Type the details yourself and add photos inside the editor, or start with photos - drop them here or choose them below.",
+      "startWithPhotos": "Start with photos",
       "startOver": "Start over",
       "detailsTitle": "Check the details",
       "detailsSubtitle": "This is what the video will be based on — 10 seconds here saves a bad render.",

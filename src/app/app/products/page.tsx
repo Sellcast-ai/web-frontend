@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Link2, Loader2, Plus, Store } from "lucide-react";
+import { AlertTriangle, Link2, Loader2, Plus, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMyProducts } from "@/lib/api/hooks";
 import { ProductCard } from "@/components/app/product-card";
@@ -12,10 +12,14 @@ import { StaggerItem } from "@/components/ui/motion";
 export default function MyProductsPage() {
   const t = useTranslations("app.products");
   const router = useRouter();
-  const { data, isLoading } = useMyProducts();
+  const { data, isLoading, isError, isFetching, refetch } = useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
-  const showStoreImportPrompt = !isLoading && products.length <= 3;
+  // a failed fetch must never read as an empty catalog, so both the empty state
+  // and the near-empty prompt stay out of the way until the list actually loaded
+  const loaded = !isLoading && !isError;
+  const showEmptyState = loaded && products.length === 0;
+  const showStoreImportPrompt = loaded && products.length > 0 && products.length <= 3;
 
   function goCreate() {
     const trimmed = url.trim();
@@ -61,6 +65,41 @@ export default function MyProductsPage() {
         </Button>
       </form>
 
+      {isError && (
+        <section
+          role="alert"
+          className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft"
+        >
+          <p className="flex items-start gap-2 font-display font-semibold text-ink">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+            {t("loadErrorTitle")}
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">{t("loadErrorDescription")}</p>
+          <Button size="md" className="mt-4" onClick={() => refetch()} disabled={isFetching}>
+            {isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : t("retry")}
+          </Button>
+        </section>
+      )}
+
+      {/* one empty state, whose primary action is bringing the whole store in */}
+      {showEmptyState && (
+        <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-6 text-center shadow-soft">
+          <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-500 text-white">
+            <Store className="h-6 w-6" />
+          </span>
+          <h2 className="mt-3 font-display text-xl font-semibold text-ink">
+            {t("emptyTitle")}
+          </h2>
+          <p className="mx-auto mt-1 max-w-xl text-sm text-muted-foreground">
+            {t("emptyDescription")}
+          </p>
+          <Button href="/app/products/new" size="md" className="mt-4">
+            <Store className="h-4 w-4" />
+            {t("storeImportCta")}
+          </Button>
+        </section>
+      )}
+
       {showStoreImportPrompt && (
         <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-5 shadow-soft sm:flex sm:items-center sm:justify-between sm:gap-6">
           <div className="flex gap-3">
@@ -83,20 +122,20 @@ export default function MyProductsPage() {
         </section>
       )}
 
-      {isLoading ? (
+      {isLoading && (
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>
-      ) : (
-        products.length > 0 && (
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {products.map((p, i) => (
-              <StaggerItem key={p.id} index={i} className="h-full">
-                <ProductCard product={p} />
-              </StaggerItem>
-            ))}
-          </div>
-        )
+      )}
+
+      {products.length > 0 && (
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {products.map((p, i) => (
+            <StaggerItem key={p.id} index={i} className="h-full">
+              <ProductCard product={p} />
+            </StaggerItem>
+          ))}
+        </div>
       )}
     </div>
   );

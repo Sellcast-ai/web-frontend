@@ -118,7 +118,10 @@
       "storeImportDescription": "Tempel URL toko Anda untuk meninjau katalog, memilih produk yang Anda inginkan, dan mengimpornya ke Produk Saya.",
       "storeImportCta": "Impor toko",
       "emptyTitle": "Belum ada produk",
-      "emptyDescription": "Impor toko Anda, tempel tautan produk di atas, atau tambahkan secara manual - lalu ubah menjadi video di Studio."
+      "emptyDescription": "Impor toko Anda, tempel tautan produk di atas, atau tambahkan secara manual - lalu ubah menjadi video di Studio.",
+      "loadErrorTitle": "Tidak bisa memuat produk Anda",
+      "loadErrorDescription": "Katalog ini tidak kosong - daftarnya gagal dimuat. Produk Anda masih ada; coba lagi sebentar.",
+      "retry": "Coba lagi"
     },
     "productDetail": {
       "notFound": "Produk tidak ditemukan.",
@@ -201,12 +204,12 @@
       "singleProductTitle": "Baca satu tautan produk",
       "singleProductDescription": "Tempel halaman produk dari Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay, atau toko lain.",
       "manualPathTitle": "Tambahkan satu produk secara manual",
-      "manualPathDescription": "Buka editor kosong, lalu tambahkan foto dan detail produk sendiri. Anda juga bisa menjatuhkan foto ke kartu di bawah untuk memulai dengan foto terlampir.",
       "productLinkPlaceholder": "https://… tautan produk",
       "readLink": "Baca tautan",
       "addManuallyInstead": "Tambahkan secara manual →",
       "startManualEditor": "Buka editor manual",
-      "startManualEditorDescription": "Ketik detailnya dan tambahkan foto di dalam editor, atau jatuhkan foto produk di sini.",
+      "startManualEditorDescription": "Ketik detailnya dan tambahkan foto di dalam editor, atau mulai dari foto - jatuhkan di sini atau pilih di bawah.",
+      "startWithPhotos": "Mulai dari foto",
       "startOver": "Mulai dari awal",
       "detailsTitle": "Periksa detailnya",
       "detailsSubtitle": "Ini adalah dasar videonya — 10 detik di sini menyimpan render yang buruk.",

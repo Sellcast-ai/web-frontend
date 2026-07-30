@@ -118,7 +118,10 @@
       "storeImportDescription": "ストアのURLを貼り付けてカタログをプレビューし、必要な商品を選んでマイ商品に取り込みます。",
       "storeImportCta": "ストアを取り込む",
       "emptyTitle": "まだ製品はありません",
-      "emptyDescription": "ストアを取り込むか、上に商品リンクを貼り付けるか、手動で追加してから、Studioでビデオに変換します。"
+      "emptyDescription": "ストアを取り込むか、上に商品リンクを貼り付けるか、手動で追加してから、Studioでビデオに変換します。",
+      "loadErrorTitle": "製品を読み込めませんでした",
+      "loadErrorDescription": "カタログが空なのではなく、リストの読み込みに失敗しました。製品はそのまま残っています。少し待ってからもう一度お試しください。",
+      "retry": "再試行"
     },
     "productDetail": {
       "notFound": "製品が見つかりません。",
@@ -201,12 +204,12 @@
       "singleProductTitle": "商品リンクを1つ読み取る",
       "singleProductDescription": "Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay、または別のストアの商品ページを貼り付けます。",
       "manualPathTitle": "商品を1つ手動で追加",
-      "manualPathDescription": "空のエディターを開き、写真と商品詳細を自分で追加します。下のカードに写真をドロップして、写真付きで始めることもできます。",
       "productLinkPlaceholder": "https://…製品リンク",
       "readLink": "リンクを読む",
       "addManuallyInstead": "代わりに手動で追加します→",
       "startManualEditor": "手動エディターを開く",
-      "startManualEditorDescription": "エディター内で詳細を入力して写真を追加するか、ここに商品写真をドロップします。",
+      "startManualEditorDescription": "エディター内で詳細を入力して写真を追加するか、写真から始めます - ここにドロップするか、下から選んでください。",
+      "startWithPhotos": "写真から始める",
       "startOver": "やり直す",
       "detailsTitle": "詳細を確認する",
       "detailsSubtitle": "これがビデオのベースとなるものです。ここで 10 秒間使用することで、悪いレンダリングを回避できます。",

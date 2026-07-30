@@ -118,7 +118,10 @@
       "storeImportDescription": "粘贴你的店铺网址，预览目录，选择想要的商品，并导入到“我的产品”。",
       "storeImportCta": "导入店铺",
       "emptyTitle": "还没有产品",
-      "emptyDescription": "导入你的店铺、粘贴上方的商品链接，或手动添加商品，然后在 Studio 中将其转换为视频。"
+      "emptyDescription": "导入你的店铺、粘贴上方的商品链接，或手动添加商品，然后在 Studio 中将其转换为视频。",
+      "loadErrorTitle": "无法加载你的产品",
+      "loadErrorDescription": "这不是空的商品目录，只是列表加载失败。你的产品仍在，请稍后重试。",
+      "retry": "重试"
     },
     "productDetail": {
       "notFound": "未找到产品。",
@@ -201,12 +204,12 @@
       "singleProductTitle": "读取一个商品链接",
       "singleProductDescription": "粘贴 Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay 或其他店铺的商品页面。",
       "manualPathTitle": "手动添加一个商品",
-      "manualPathDescription": "打开空白编辑器，自行添加商品照片和详情。你也可以将照片拖放到下方卡片，从已附加照片开始。",
       "productLinkPlaceholder": "https://... 产品链接",
       "readLink": "阅读链接",
       "addManuallyInstead": "改为手动添加 →",
       "startManualEditor": "打开手动编辑器",
-      "startManualEditorDescription": "在编辑器中输入详情并添加照片，或将商品照片拖放到这里。",
+      "startManualEditorDescription": "在编辑器中输入详情并添加照片，或从照片开始 - 将照片拖放到这里，或在下方选择。",
+      "startWithPhotos": "从照片开始",
       "startOver": "重新开始",
       "detailsTitle": "查看详情",
       "detailsSubtitle": "这就是视频的基础——这里 10 秒可以避免糟糕的渲染。",

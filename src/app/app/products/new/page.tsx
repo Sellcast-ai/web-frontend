@@ -200,6 +200,9 @@ function NewProductInner() {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [reading, setReading] = useState(false);
+  /** A catalog walk, review or running import owns the start screen: the two
+   * single-product paths step aside so nothing adjacent can drop a review. */
+  const [storeFlowActive, setStoreFlowActive] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const autoParsed = useRef(false);
   // only one screen renders at a time, so both drop targets share this
@@ -304,113 +307,121 @@ function NewProductInner() {
                 <h2 className="font-display text-lg font-semibold text-ink">
                   {t("storePathTitle")}
                 </h2>
-                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {t("storePathDescription")}
                 </p>
               </div>
             </div>
             <div className="mt-3 sm:mt-4">
-              <StoreImport />
+              <StoreImport onActiveChange={setStoreFlowActive} />
             </div>
           </section>
 
-          <section className="mt-6 sm:mt-8">
-            <div className="flex gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-700">
-                <Link2 className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="font-display text-lg font-semibold text-ink">
-                  {t("singleProductTitle")}
-                </h2>
-                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
-                  {t("singleProductDescription")}
-                </p>
-              </div>
-            </div>
+          {!storeFlowActive && (
+            <>
+              <section className="mt-6 sm:mt-8">
+                <div className="flex gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+                    <Link2 className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg font-semibold text-ink">
+                      {t("singleProductTitle")}
+                    </h2>
+                    <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                      {t("singleProductDescription")}
+                    </p>
+                  </div>
+                </div>
 
-            {/* URL omnibox */}
-            <form
-              className="mt-3 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300 sm:mt-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                runParse(url);
-              }}
-            >
-              <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-              <input
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder={t("productLinkPlaceholder")}
-                className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-              />
-              <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
-                {parse.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  t("readLink")
-                )}
-              </Button>
-            </form>
-          </section>
-          {parse.isError && (
-            <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-              <div>
-                <p className="text-ink">
-                  {apiErrorMessage(parse.error, tt("readLinkFailed"))}
-                </p>
-                <button
-                  type="button"
-                  className="mt-1 font-semibold text-brand-700"
-                  onClick={() => setDraft(emptyDraft(url.trim() || null))}
+                {/* URL omnibox */}
+                <form
+                  className="mt-3 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300 sm:mt-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    runParse(url);
+                  }}
                 >
-                  {t("addManuallyInstead")}
-                </button>
-              </div>
-            </div>
-          )}
+                  <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <input
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder={t("productLinkPlaceholder")}
+                    className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                  />
+                  <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
+                    {parse.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      t("readLink")
+                    )}
+                  </Button>
+                </form>
+              </section>
+              {parse.isError && (
+                <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+                  <div>
+                    <p className="text-ink">
+                      {apiErrorMessage(parse.error, tt("readLinkFailed"))}
+                    </p>
+                    <button
+                      type="button"
+                      className="mt-1 font-semibold text-brand-700"
+                      onClick={() => setDraft(emptyDraft(url.trim() || null))}
+                    >
+                      {t("addManuallyInstead")}
+                    </button>
+                  </div>
+                </div>
+              )}
 
-          {/* manual/photo start: one blank editor destination, with drag-start still supported */}
-          <section className="mt-6 sm:mt-8">
-            <div className="flex gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-700">
-                <PencilLine className="h-5 w-5" />
-              </span>
-              <div>
-                <h2 className="font-display text-lg font-semibold text-ink">
-                  {t("manualPathTitle")}
-                </h2>
-                <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
-                  {t("manualPathDescription")}
-                </p>
-              </div>
-            </div>
-            <button
-              type="button"
-              {...drop.props}
-              onClick={() => setDraft(emptyDraft(null))}
-              className={cn(
-                "mt-3 w-full rounded-2xl border-2 border-dashed bg-card p-6 text-left transition-colors sm:mt-4",
-                drop.over
-                  ? "border-brand-400 bg-accent/50"
-                  : "border-border hover:border-brand-400",
-              )}
-            >
-              {reading ? (
-                <Loader2 className="h-6 w-6 animate-spin text-brand-600" />
-              ) : (
-                <ImagePlus className="h-6 w-6 text-brand-600" />
-              )}
-              <p className="mt-2 font-display font-semibold text-ink">
-                {t("startManualEditor")}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("startManualEditorDescription")}
-              </p>
-            </button>
-            {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
-          </section>
+              {/* manual/photo start: one blank editor destination, with drag-start still
+                * supported and photos reachable in one click for keyboard/touch */}
+              <section className="mt-6 sm:mt-8">
+                <div className="flex gap-3">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-accent-foreground">
+                    <PencilLine className="h-5 w-5" />
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg font-semibold text-ink">
+                      {t("manualPathTitle")}
+                    </h2>
+                  </div>
+                </div>
+                <div
+                  {...drop.props}
+                  className={cn(
+                    "mt-3 rounded-2xl border-2 border-dashed bg-card p-6 transition-colors sm:mt-4",
+                    drop.over ? "border-brand-400 bg-accent/50" : "border-border",
+                  )}
+                >
+                  <p className="text-sm text-muted-foreground">
+                    {t("startManualEditorDescription")}
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-4">
+                    <Button size="md" onClick={() => setDraft(emptyDraft(null))}>
+                      <PencilLine className="h-4 w-4" />
+                      {t("startManualEditor")}
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={() => fileInput.current?.click()}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
+                    >
+                      {reading ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <ImagePlus className="h-4 w-4" />
+                      )}
+                      {t("startWithPhotos")}
+                    </button>
+                  </div>
+                </div>
+                {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+              </section>
+            </>
+          )}
         </>
       ) : (
         <>
@@ -602,7 +613,7 @@ function NewProductInner() {
 
 /** Paste a store URL, preview the catalog, review which products to keep, then
  * kick off a batch import of just those and watch it fill up My Products. */
-function StoreImport() {
+function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => void }) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
@@ -628,6 +639,13 @@ function StoreImport() {
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
+
+  /** Tell the page when the store flow owns it. The cleanup covers the unmount,
+   * so a remount can't leave the single-product paths hidden for a frame. */
+  useEffect(() => {
+    onActiveChange(review !== null || running !== null);
+    return () => onActiveChange(false);
+  }, [review, running, onActiveChange]);
 
   /** Where a selection gesture writes the pass, or null outside a review. A ref
    * so the memoized rows keep one stable `onToggle` across the whole catalog. */

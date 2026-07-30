@@ -118,7 +118,10 @@
       "storeImportDescription": "Pega la URL de tu tienda para previsualizar el catálogo, elegir los productos que quieres e importarlos a Mis productos.",
       "storeImportCta": "Importar tienda",
       "emptyTitle": "Aún no hay productos",
-      "emptyDescription": "Importa tu tienda, pega un enlace de producto arriba o añade uno manualmente; luego conviértelo en un video en Studio."
+      "emptyDescription": "Importa tu tienda, pega un enlace de producto arriba o añade uno manualmente; luego conviértelo en un video en Studio.",
+      "loadErrorTitle": "No pudimos cargar tus productos",
+      "loadErrorDescription": "Este catálogo no está vacío: la lista no se pudo cargar. Tus productos siguen ahí; vuelve a intentarlo en un momento.",
+      "retry": "Intentar de nuevo"
     },
     "productDetail": {
       "notFound": "Producto no encontrado.",
@@ -201,12 +204,12 @@
       "singleProductTitle": "Leer un enlace de producto",
       "singleProductDescription": "Pega una página de producto de Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay u otra tienda.",
       "manualPathTitle": "Añadir un producto manualmente",
-      "manualPathDescription": "Abre el editor en blanco y añade tú mismo las fotos y los detalles del producto. También puedes soltar fotos en la tarjeta de abajo para empezar con ellas adjuntas.",
       "productLinkPlaceholder": "https://… enlace del producto",
       "readLink": "Leer enlace",
       "addManuallyInstead": "Agréguelo manualmente en su lugar →",
       "startManualEditor": "Abrir editor manual",
-      "startManualEditorDescription": "Escribe los detalles y añade fotos dentro del editor, o suelta fotos del producto aquí.",
+      "startManualEditorDescription": "Escribe los detalles y añade fotos dentro del editor, o empieza con fotos: suéltalas aquí o elígelas abajo.",
+      "startWithPhotos": "Empezar con fotos",
       "startOver": "Empezar de nuevo",
       "detailsTitle": "Comprueba los detalles",
       "detailsSubtitle": "En esto se basará el vídeo: 10 segundos aquí ahorran un mal renderizado.",
