@@ -124,7 +124,8 @@
       "offlineTitle": "Estás sin conexión",
       "offlineDescription": "No es un catálogo vacío: ahora mismo no podemos acceder a tus productos. Vuelve a conectarte e inténtalo de nuevo.",
       "refreshError": "No pudimos actualizar tus productos: mostramos la última lista que cargamos.",
-      "retry": "Intentar de nuevo"
+      "retry": "Intentar de nuevo",
+      "waitingForConnection": "Esperando conexión"
     },
     "productDetail": {
       "notFound": "Producto no encontrado.",

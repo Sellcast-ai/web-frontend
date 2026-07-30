@@ -124,7 +124,8 @@
       "offlineTitle": "オフラインです",
       "offlineDescription": "商品がないわけではありません。いま商品リストを取得できていません。接続を確認してからもう一度お試しください。",
       "refreshError": "製品を更新できませんでした — 最後に読み込んだリストを表示しています。",
-      "retry": "再試行"
+      "retry": "再試行",
+      "waitingForConnection": "接続を待っています"
     },
     "productDetail": {
       "notFound": "製品が見つかりません。",

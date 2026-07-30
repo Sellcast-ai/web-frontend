@@ -94,8 +94,20 @@ export default function MyProductsPage() {
           <p className="mt-1 text-sm text-muted-foreground">
             {t(paused ? "offlineDescription" : "loadErrorDescription")}
           </p>
-          <Button size="md" className="mt-4" onClick={() => refetch()} disabled={isFetching}>
-            {isFetching ? <Loader2 className="h-4 w-4 animate-spin" /> : t("retry")}
+          {/* offline, a refetch stays paused (networkMode "online"): the click
+            * would be silently inert, and React Query resumes on its own the
+            * moment the browser is back, so the button waits with the user */}
+          <Button
+            size="md"
+            className="mt-4"
+            onClick={() => refetch()}
+            disabled={isFetching || paused}
+          >
+            {isFetching ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              t(paused ? "waitingForConnection" : "retry")
+            )}
           </Button>
         </section>
       )}

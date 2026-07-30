@@ -124,7 +124,8 @@
       "offlineTitle": "Kamu sedang offline",
       "offlineDescription": "Ini bukan katalog kosong - kami belum bisa mengambil produkmu sekarang. Sambungkan kembali, lalu coba lagi.",
       "refreshError": "Tidak bisa menyegarkan produk Anda - menampilkan daftar yang terakhir kami muat.",
-      "retry": "Coba lagi"
+      "retry": "Coba lagi",
+      "waitingForConnection": "Menunggu koneksi"
     },
     "productDetail": {
       "notFound": "Produk tidak ditemukan.",

@@ -124,7 +124,8 @@
       "offlineTitle": "You’re offline",
       "offlineDescription": "This isn’t an empty catalog - we can’t reach your products right now. Reconnect, then try again.",
       "refreshError": "Couldn’t refresh your products - showing the list we loaded last.",
-      "retry": "Try again"
+      "retry": "Try again",
+      "waitingForConnection": "Waiting for connection"
     },
     "productDetail": {
       "notFound": "Product not found.",

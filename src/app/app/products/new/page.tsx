@@ -186,6 +186,32 @@ export default function NewProductPage() {
   );
 }
 
+/** Everything about a store import that has to outlive `StoreImport`, which is
+ * unmounted the moment the manual editor takes the screen: without this the
+ * guard against a second import would reset on the way back, and the backend
+ * would answer that second start with the job already running. Component
+ * lifetime only - a reload still drops the card, and the import still finishes
+ * server-side, which is what the "keeps going in the background" copy says. */
+function useImportSlot() {
+  /** The running import: its handle and exactly how many `source_urls` it
+   * carries, as one value so a job can never be watched without its total. */
+  const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
+  /** The live progress card was dismissed ("add something else while this
+   * runs"). The handle stays: the backend hands the caller's active job back
+   * instead of enqueueing a second, so a start now would silently re-label this
+   * import as another store's. It is released when the job lands. */
+  const [dismissed, setDismissed] = useState(false);
+  /** Guards the finish effect, so a remount can't re-announce a landed job. */
+  const doneRef = useRef(false);
+  /** Where a selection gesture writes the pass, and which store's pass a
+   * finished import clears. A ref so the memoized rows keep one stable
+   * `onToggle` across the whole catalog. */
+  const persistToRef = useRef<{ userId: string; storeDomain: string } | null>(null);
+  return { running, setRunning, dismissed, setDismissed, doneRef, persistToRef };
+}
+
+type ImportSlot = ReturnType<typeof useImportSlot>;
+
 function NewProductInner() {
   const t = useTranslations("app.productsNew");
   const tc = useTranslations("app.categories");
@@ -204,6 +230,7 @@ function NewProductInner() {
   /** A catalog walk, review or running import owns the start screen: the two
    * single-product paths step aside so nothing adjacent can drop a review. */
   const [storeFlowActive, setStoreFlowActive] = useState(false);
+  const importSlot = useImportSlot();
   const fileInput = useRef<HTMLInputElement>(null);
   const autoParsed = useRef(false);
   // only one screen renders at a time, so both drop targets share this
@@ -306,7 +333,7 @@ function NewProductInner() {
               description={t("storePathDescription")}
             />
             <div className="mt-3 sm:mt-4">
-              <StoreImport onActiveChange={setStoreFlowActive} />
+              <StoreImport slot={importSlot} onActiveChange={setStoreFlowActive} />
             </div>
           </section>
 
@@ -595,7 +622,13 @@ function NewProductInner() {
 
 /** Paste a store URL, preview the catalog, review which products to keep, then
  * kick off a batch import of just those and watch it fill up My Products. */
-function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => void }) {
+function StoreImport({
+  slot,
+  onActiveChange,
+}: {
+  slot: ImportSlot;
+  onActiveChange: (active: boolean) => void;
+}) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
@@ -603,7 +636,9 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
   const preview = usePreviewImport();
   const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
-  const done = useRef(false);
+  // held by the page, so opening the manual editor and coming back can't forget
+  // an import that is still running (see `useImportSlot`)
+  const { running, setRunning, dismissed, setDismissed, doneRef, persistToRef } = slot;
   // `AppShell` holds a spinner until the session resolves, so this is never undefined here
   const userId = useCurrentUser().data!.id;
 
@@ -614,14 +649,6 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
-  /** The running import: its handle and exactly how many `source_urls` it
-   * carries, as one value so a job can never be watched without its total. */
-  const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
-  /** The live progress card was dismissed ("add something else while this
-   * runs"). The handle stays: the backend hands the caller's active job back
-   * instead of enqueueing a second, so a start now would silently re-label this
-   * import as another store's. It is released when the job lands. */
-  const [dismissed, setDismissed] = useState(false);
   const { data: job } = useImportJob(running?.jobId ?? "");
 
   const candidates = useImportCandidates(review);
@@ -634,15 +661,11 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
     return () => onActiveChange(false);
   }, [review, running, dismissed, onActiveChange]);
 
-  /** Where a selection gesture writes the pass, or null outside a review. A ref
-   * so the memoized rows keep one stable `onToggle` across the whole catalog. */
-  const persistTo = useRef<{ userId: string; storeDomain: string } | null>(null);
-
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
-    if (!job || !running || done.current) return;
+    if (!job || !running || doneRef.current) return;
     if (job.status === "queued" || job.status === "running") return;
-    done.current = true;
+    doneRef.current = true;
     if (job.status === "failed") {
       toast.error(job.error ?? tt("importFailed"));
       return;
@@ -655,7 +678,7 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
       toast.error(tt(outcome.key, outcome.values));
       return;
     }
-    clearSelection(persistTo.current);
+    clearSelection(persistToRef.current);
     // an import that didn't stick to the chosen subset isn't a success to
     // celebrate: the user still has to go find what they didn't pick
     const ignoredSelection =
@@ -665,7 +688,7 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
     // the user dropped the progress card and moved on: the toast tells them it
     // landed, routing them off what they're now doing would not
     if (!dismissed) router.push("/app/products");
-  }, [job, running, dismissed, qc, router, tt]);
+  }, [job, running, dismissed, doneRef, persistToRef, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -677,11 +700,11 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
   const applySelection = useCallback((update: (prev: Set<string>) => Set<string>) => {
     setDeselected((prev) => {
       const next = update(prev);
-      const target = persistTo.current;
+      const target = persistToRef.current;
       if (target) saveSelection({ ...target, deselected: [...next] });
       return next;
     });
-  }, []);
+  }, [persistToRef]);
 
   // stable across renders so the memoized rows don't all invalidate on a toggle
   const toggleCandidate = useCallback(
@@ -700,9 +723,9 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
    * before is discarded instead of restored. */
   function reviewStore(url: string, platform: string, domain: string) {
     setDeselected(new Set(beginSelection(userId, domain)));
-    persistTo.current = { userId, storeDomain: domain };
+    persistToRef.current = { userId, storeDomain: domain };
     setRunning(null);
-    done.current = false;
+    doneRef.current = false;
     setReview({ storeUrl: url, platform, domain });
   }
 
@@ -722,17 +745,17 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
    * the wait, not out of their deselection pass, so the stored pass stays. */
   function leaveWalk() {
     setReview(null);
-    persistTo.current = null;
+    persistToRef.current = null;
     setDeselected(new Set());
     setRunning(null);
-    done.current = false;
+    doneRef.current = false;
     preview.reset();
   }
 
   /** Leaving a review the user has actually seen: they're moving on, so the
    * stored pass goes with it. */
   function discardReview() {
-    clearSelection(persistTo.current);
+    clearSelection(persistToRef.current);
     leaveWalk();
   }
 
@@ -744,7 +767,7 @@ function StoreImport({ onActiveChange }: { onActiveChange: (active: boolean) => 
       { storeUrl: store, sourceUrls, platform },
       {
         onSuccess: (created) => {
-          done.current = false;
+          doneRef.current = false;
           setDismissed(false);
           setRunning({ jobId: created.job_id, requested: sourceUrls.length });
         },

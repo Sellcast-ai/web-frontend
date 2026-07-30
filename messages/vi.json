@@ -124,7 +124,8 @@
       "offlineTitle": "Bạn đang ngoại tuyến",
       "offlineDescription": "Đây không phải là danh mục trống - hiện chúng tôi không tải được sản phẩm của bạn. Hãy kết nối lại rồi thử lại.",
       "refreshError": "Không làm mới được sản phẩm của bạn - đang hiển thị danh sách tải gần nhất.",
-      "retry": "Thử lại"
+      "retry": "Thử lại",
+      "waitingForConnection": "Đang chờ kết nối"
     },
     "productDetail": {
       "notFound": "Không tìm thấy sản phẩm.",

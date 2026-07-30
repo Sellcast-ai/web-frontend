@@ -124,7 +124,8 @@
       "offlineTitle": "你当前处于离线状态",
       "offlineDescription": "这不是空目录，我们暂时无法获取你的商品。请重新联网后再试。",
       "refreshError": "无法刷新你的产品 - 正在显示上一次加载的列表。",
-      "retry": "重试"
+      "retry": "重试",
+      "waitingForConnection": "等待网络连接"
     },
     "productDetail": {
       "notFound": "未找到产品。",

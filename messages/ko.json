@@ -124,7 +124,8 @@
       "offlineTitle": "오프라인 상태입니다",
       "offlineDescription": "카탈로그가 비어 있는 것이 아닙니다. 지금은 상품을 불러올 수 없습니다. 다시 연결한 뒤 시도해 주세요.",
       "refreshError": "제품을 새로 불러올 수 없습니다. 마지막으로 불러온 목록을 보여줍니다.",
-      "retry": "다시 시도"
+      "retry": "다시 시도",
+      "waitingForConnection": "연결을 기다리는 중"
     },
     "productDetail": {
       "notFound": "제품을 찾을 수 없습니다.",
