@@ -65,14 +65,13 @@ export function useAvatars() {
 }
 
 /** Probes whether the Shopify connect flow works end to end on the deployed
- * backend. Cheap (one backend round trip, no side effects), but still a
- * click-derived surface: no retry storm if the backend is down. */
+ * backend. Each probe costs a backend round trip, so it stays fresh longer
+ * than the global default. */
 export function useShopifyAvailability() {
   return useQuery({
     queryKey: qk.shopifyAvailability,
     queryFn: api.getShopifyAvailability,
     staleTime: 60_000,
-    retry: 1,
   });
 }
 
