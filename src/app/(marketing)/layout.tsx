@@ -8,12 +8,14 @@ export default async function MarketingLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const signedIn = await hasSession();
+
   return (
-    <MarketingSessionProvider signedIn={await hasSession()}>
+    <MarketingSessionProvider signedIn={signedIn}>
       <div className="marketing flex min-h-screen flex-col">
-        <SiteHeader />
+        <SiteHeader signedIn={signedIn} />
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <SiteFooter signedIn={signedIn} />
       </div>
     </MarketingSessionProvider>
   );

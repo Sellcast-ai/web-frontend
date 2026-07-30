@@ -63,6 +63,17 @@ describe("api (BFF client)", () => {
     });
   });
 
+  it("never yields an empty message when statusText is blank (HTTP/2)", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway timeout</html>", { status: 504 })),
+    );
+    await expect(api.getUsage()).rejects.toMatchObject({
+      status: 504,
+      message: "Request failed",
+    });
+  });
+
   it("approveStoryboard POSTs to the approve endpoint", async () => {
     const fetchMock = mockFetch(200, { id: "j1" });
     await api.approveStoryboard("j1");

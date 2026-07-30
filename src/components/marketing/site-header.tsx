@@ -3,7 +3,6 @@ import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
-import { hasSession } from "@/lib/auth-redirect";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 
 /* Slim, zero-state marketing chrome: logo, Pricing, language, Sign in, one
@@ -12,10 +11,9 @@ import { APP_HOME_HREF } from "@/lib/launch-routes";
    live in the footer or the app; the page itself does the talking. Server
    component; no menu state. A signed-in visitor gets a single "Open Studio"
    CTA instead of Sign in / Start free. */
-export async function SiteHeader() {
+export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
   const t = await getTranslations("nav");
   const tc = await getTranslations("marketing.header");
-  const signedIn = await hasSession();
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">

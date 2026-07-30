@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
-import { hasSession } from "@/lib/auth-redirect";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 
 const COLUMNS: { key: string; links: { key: string; href: string }[] }[] = [
@@ -41,10 +40,9 @@ const COLUMNS: { key: string; links: { key: string; href: string }[] }[] = [
   },
 ];
 
-export async function SiteFooter() {
+export async function SiteFooter({ signedIn }: { signedIn: boolean }) {
   const t = await getTranslations("marketing.footer");
   const tc = await getTranslations("marketing.header");
-  const signedIn = await hasSession();
 
   return (
     <footer className="overflow-hidden border-t border-border bg-muted/40">

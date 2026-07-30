@@ -55,7 +55,9 @@ function parseErrorBody(text: string): ErrorBody {
 }
 
 /** The one place a failed response becomes an `ApiError`, so every transport
- * (fetch and XHR alike) carries the same message chain and `error_type`. */
+ * (fetch and XHR alike) carries the same message chain and `error_type`.
+ * The message is never empty: `statusText` is "" over HTTP/2, and call sites
+ * that render `err.message` verbatim would otherwise show nothing at all. */
 function errorFrom(status: number, statusText: string, text: string): ApiError {
   const data = parseErrorBody(text);
   const msg = (data && (data.detail || data.error || data.message)) || statusText;
@@ -63,7 +65,7 @@ function errorFrom(status: number, statusText: string, text: string): ApiError {
     data && typeof data.error_type === "string" ? data.error_type : undefined;
   return new ApiError(
     status,
-    typeof msg === "string" ? msg : "Request failed",
+    (typeof msg === "string" && msg) || "Request failed",
     errorType,
   );
 }
