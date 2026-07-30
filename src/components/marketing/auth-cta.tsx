@@ -32,10 +32,11 @@ export function useMarketingSession() {
   return useContext(MarketingSessionContext);
 }
 
+const SIGNUP_HREF = "/signup";
+
 type AuthCtaProps = {
   /** Label shown to a visitor without a session. */
   label: string;
-  href?: string;
   variant?: React.ComponentProps<typeof Button>["variant"];
   size?: React.ComponentProps<typeof Button>["size"];
   className?: string;
@@ -48,16 +49,11 @@ type AuthCtaProps = {
  * cookie is present, the signup label/href otherwise. No marketing surface may
  * offer a signed-in user a link the auth pages would just redirect away.
  */
-export function AuthCta({
-  label,
-  href = "/signup",
-  children,
-  ...rest
-}: AuthCtaProps) {
+export function AuthCta({ label, children, ...rest }: AuthCtaProps) {
   const signedIn = useMarketingSession();
   const t = useTranslations("marketing.header");
   return (
-    <Button href={signedIn ? APP_HOME_HREF : href} {...rest}>
+    <Button href={signedIn ? APP_HOME_HREF : SIGNUP_HREF} {...rest}>
       {signedIn ? t("openStudio") : label}
       {children}
     </Button>
@@ -69,17 +65,15 @@ export function AuthCta({
  * text is prose the surrounding copy depends on: only the href swaps.
  */
 export function AuthCtaLink({
-  href = "/signup",
   className,
   children,
 }: {
-  href?: string;
   className?: string;
   children: React.ReactNode;
 }) {
   const signedIn = useMarketingSession();
   return (
-    <Link href={signedIn ? APP_HOME_HREF : href} className={className}>
+    <Link href={signedIn ? APP_HOME_HREF : SIGNUP_HREF} className={className}>
       {children}
     </Link>
   );
