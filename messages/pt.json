@@ -718,7 +718,7 @@
         },
         "request": {
           "heading": "Como solicitar um reembolso",
-          "body": "Envie um e-mail para <email>billing@sellcast.ai</email> do e-mail da sua conta com os detalhes da sua conta. Normalmente respondemos dentro de dois dias úteis."
+          "body": "Envie um e-mail para <email>{address}</email> do e-mail da sua conta com os detalhes da sua conta. Normalmente respondemos dentro de dois dias úteis."
         }
       }
     },
@@ -874,9 +874,9 @@
         "q2": "As regenerações custam créditos?",
         "a2": "Não. Regenerar uma batida enquanto você revisa não tem custo extra — os créditos contam apenas o vídeo final renderizado.",
         "q3": "E se eu ficar sem créditos?",
-        "a3": "Os créditos são redefinidos no início de cada ciclo de faturamento. O checkout self-service ainda não está disponível - para aumentar sua franquia mensal, envie um e-mail para billing@sellcast.ai e nós configuramos.",
+        "a3": "Os créditos são redefinidos no início de cada ciclo de faturamento. O checkout self-service ainda não está disponível - para aumentar sua franquia mensal, envie um e-mail para {address} e nós configuramos.",
         "q4": "Posso mudar de plano a qualquer momento?",
-        "a4": "Sim. Enquanto o checkout self-service está em construção, as mudanças de plano são feitas por e-mail - escreva para billing@sellcast.ai. O anual economiza cerca de 20% em relação ao mensal.",
+        "a4": "Sim. Enquanto o checkout self-service está em construção, as mudanças de plano são feitas por e-mail - escreva para {address}. O anual economiza cerca de 20% em relação ao mensal.",
         "q5": "Qual modelo de renderização Lumi usa?",
         "a5": "Lumi é renderizado com Seedance 2.0, com mais modelos sendo lançados. Ele escolhe as melhores configurações por foto."
       },
@@ -884,7 +884,7 @@
         "cta": "Fazer upgrade",
         "title": "A cobrança ainda não é self-service",
         "body": "O checkout online ainda está em construção, por isso os planos ainda não podem ser comprados no site. Para mudar para o {plan}, envie-nos um e-mail e nós configuramos para você.",
-        "contact": "Enviar e-mail para billing@sellcast.ai",
+        "contact": "Enviar e-mail para {address}",
         "subject": "Upgrade para o {plan}"
       }
     },

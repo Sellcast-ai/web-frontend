@@ -718,7 +718,7 @@
         },
         "request": {
           "heading": "Cómo solicitar un reembolso",
-          "body": "Envíe un correo electrónico a <email>billing@sellcast.ai</email> desde el correo electrónico de su cuenta con los detalles de su cuenta. Normalmente respondemos dentro de dos días hábiles."
+          "body": "Envíe un correo electrónico a <email>{address}</email> desde el correo electrónico de su cuenta con los detalles de su cuenta. Normalmente respondemos dentro de dos días hábiles."
         }
       }
     },
@@ -874,9 +874,9 @@
         "q2": "¿Las regeneraciones cuestan créditos?",
         "a2": "No. Regenerar un ritmo mientras revisas no tiene costo adicional: los créditos solo cuentan el video final renderizado.",
         "q3": "¿Qué pasa si me quedo sin créditos?",
-        "a3": "Los créditos se restablecen al inicio de cada ciclo de facturación. El pago en línea de autoservicio todavía no está disponible - para ampliar tu asignación mensual, escribe a billing@sellcast.ai y lo configuramos.",
+        "a3": "Los créditos se restablecen al inicio de cada ciclo de facturación. El pago en línea de autoservicio todavía no está disponible - para ampliar tu asignación mensual, escribe a {address} y lo configuramos.",
         "q4": "¿Puedo cambiar de plan en cualquier momento?",
-        "a4": "Sí. Mientras se desarrolla el pago en línea de autoservicio, los cambios de plan se gestionan por correo - escribe a billing@sellcast.ai. El plan anual ahorra ~20% frente al mensual.",
+        "a4": "Sí. Mientras se desarrolla el pago en línea de autoservicio, los cambios de plan se gestionan por correo - escribe a {address}. El plan anual ahorra ~20% frente al mensual.",
         "q5": "¿Qué modelo de renderizado utiliza Lumi?",
         "a5": "Lumi se renderiza con Seedance 2.0, y se implementarán más modelos. Elige la mejor configuración por toma."
       },
@@ -884,7 +884,7 @@
         "cta": "Mejorar plan",
         "title": "La facturación aún no es autoservicio",
         "body": "El pago en línea aún está en construcción, por lo que los planes todavía no se pueden comprar en el sitio. Para pasar a {plan}, escríbenos y lo configuramos por ti.",
-        "contact": "Enviar correo a billing@sellcast.ai",
+        "contact": "Enviar correo a {address}",
         "subject": "Mejora a {plan}"
       }
     },

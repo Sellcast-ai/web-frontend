@@ -68,6 +68,17 @@ function errorFrom(status: number, statusText: string, text: string): ApiError {
   );
 }
 
+/** Mirror of `errorFrom` for the success path: a 2xx whose body isn't the JSON
+ * the caller expects still has to surface as an `ApiError`, so every call site
+ * branching on `err instanceof ApiError` keeps the status and message. */
+function parseSuccessBody<T>(status: number, text: string): T {
+  try {
+    return (text ? JSON.parse(text) : null) as T;
+  } catch {
+    throw new ApiError(status, "Malformed response from the server.");
+  }
+}
+
 async function bff<T>(
   path: string,
   init: (RequestInit & { json?: unknown }) = {},
@@ -83,7 +94,7 @@ async function bff<T>(
   });
   const text = await res.text();
   if (!res.ok) throw errorFrom(res.status, res.statusText, text);
-  return (text ? JSON.parse(text) : null) as T;
+  return parseSuccessBody<T>(res.status, text);
 }
 
 /**
@@ -106,9 +117,9 @@ export function bffUpload<T>(
     xhr.onload = () => {
       if (xhr.status >= 200 && xhr.status < 300) {
         try {
-          resolve((xhr.responseText ? JSON.parse(xhr.responseText) : null) as T);
-        } catch {
-          reject(new ApiError(xhr.status, "Malformed response from the server."));
+          resolve(parseSuccessBody<T>(xhr.status, xhr.responseText));
+        } catch (e) {
+          reject(e);
         }
         return;
       }

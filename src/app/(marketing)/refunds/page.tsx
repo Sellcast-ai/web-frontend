@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Prose } from "@/components/marketing/page-parts";
+import { BILLING_EMAIL } from "@/lib/contact";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("marketing.legal.refunds");
@@ -43,8 +44,9 @@ export default async function RefundsPage() {
           <h2>{t("refunds.request.heading")}</h2>
           <p>
             {t.rich("refunds.request.body", {
+              address: BILLING_EMAIL,
               email: (chunks) => (
-                <a href="mailto:billing@sellcast.ai">{chunks}</a>
+                <a href={`mailto:${BILLING_EMAIL}`}>{chunks}</a>
               ),
             })}
           </p>

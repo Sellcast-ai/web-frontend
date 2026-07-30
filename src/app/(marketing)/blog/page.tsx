@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Newspaper } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
+import { AuthCta } from "@/components/marketing/auth-cta";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("marketing.metadata.blog");
@@ -23,9 +24,7 @@ export default async function BlogPage() {
         {t("body")}
       </p>
       <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-        <Button href="/signup" size="lg">
-          {t("startFree")}
-        </Button>
+        <AuthCta label={t("startFree")} size="lg" />
         <Button href="/features" variant="outline" size="lg">
           {t("explore")}
         </Button>

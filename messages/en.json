@@ -718,7 +718,7 @@
         },
         "request": {
           "heading": "How to request a refund",
-          "body": "Email <email>billing@sellcast.ai</email> from your account email with your account details. We typically respond within two business days."
+          "body": "Email <email>{address}</email> from your account email with your account details. We typically respond within two business days."
         }
       }
     },
@@ -874,9 +874,9 @@
         "q2": "Do regenerations cost credits?",
         "a2": "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
         "q3": "What if I run out of credits?",
-        "a3": "Credits reset at the start of each billing cycle. Self-serve checkout is not available yet - to upgrade for a bigger monthly allowance, email billing@sellcast.ai and we will set it up.",
+        "a3": "Credits reset at the start of each billing cycle. Self-serve checkout is not available yet - to upgrade for a bigger monthly allowance, email {address} and we will set it up.",
         "q4": "Can I change plans anytime?",
-        "a4": "Yes. While self-serve checkout is being built, plan changes are handled by email - write to billing@sellcast.ai. Annual saves ~20% over monthly.",
+        "a4": "Yes. While self-serve checkout is being built, plan changes are handled by email - write to {address}. Annual saves ~20% over monthly.",
         "q5": "Which render model does Lumi use?",
         "a5": "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot."
       },
@@ -884,7 +884,7 @@
         "cta": "Upgrade",
         "title": "Billing isn't self-serve yet",
         "body": "Online checkout is still being built, so plans can't be purchased on the site yet. To move to {plan}, email us and we'll set it up for you.",
-        "contact": "Email billing@sellcast.ai",
+        "contact": "Email {address}",
         "subject": "Upgrade to {plan}"
       }
     },

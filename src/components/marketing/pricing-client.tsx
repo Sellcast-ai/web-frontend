@@ -6,7 +6,9 @@ import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants, type ButtonProps } from "@/components/ui/button";
 import { Modal } from "@/components/ui/overlay";
+import { useMarketingSession } from "@/components/marketing/auth-cta";
 import { PageHeader, CtaBand } from "@/components/marketing/page-parts";
+import { BILLING_EMAIL } from "@/lib/contact";
 import { APP_HOME_HREF } from "@/lib/launch-routes";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +39,8 @@ const BILLING = [
 
 const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"] as const;
 
-export function PricingClient({ signedIn }: { signedIn: boolean }) {
+export function PricingClient() {
+  const signedIn = useMarketingSession();
   const [annual, setAnnual] = useState(false);
   /* The plan name outlives `upgradeOpen` on purpose: the modal keeps rendering
      through its exit animation, and clearing the name would blank the
@@ -230,7 +233,7 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
                 {t(`faq.${key}`)}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {t(`faq.${key.replace("q", "a")}`)}
+                {t(`faq.${key.replace("q", "a")}`, { address: BILLING_EMAIL })}
               </p>
             </div>
           ))}
@@ -248,7 +251,7 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
           {t("upgrade.body", { plan: upgradePlan })}
         </p>
         <a
-          href={`mailto:billing@sellcast.ai?subject=${encodeURIComponent(
+          href={`mailto:${BILLING_EMAIL}?subject=${encodeURIComponent(
             t("upgrade.subject", { plan: upgradePlan }),
           )}`}
           className={cn(
@@ -256,7 +259,7 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
             "mt-6 w-full",
           )}
         >
-          {t("upgrade.contact")}
+          {t("upgrade.contact", { address: BILLING_EMAIL })}
         </a>
       </Modal>
     </>

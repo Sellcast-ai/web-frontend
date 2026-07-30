@@ -718,7 +718,7 @@
         },
         "request": {
           "heading": "Bagaimana cara meminta pengembalian dana",
-          "body": "Email <email>billing@sellcast.ai</email> dari email akun Anda dengan detail akun Anda. Kami biasanya merespons dalam dua hari kerja."
+          "body": "Email <email>{address}</email> dari email akun Anda dengan detail akun Anda. Kami biasanya merespons dalam dua hari kerja."
         }
       }
     },
@@ -874,9 +874,9 @@
         "q2": "Apakah regenerasi memerlukan kredit?",
         "a2": "Tidak. Membuat ulang irama saat Anda meninjau tidak memerlukan biaya tambahan — kredit hanya menghitung video akhir yang dirender.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
-        "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke billing@sellcast.ai dan kami akan menyiapkannya.",
+        "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke {address} dan kami akan menyiapkannya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
-        "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke billing@sellcast.ai. Tahunan hemat ~20% dibanding bulanan.",
+        "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke {address}. Tahunan hemat ~20% dibanding bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
         "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
       },
@@ -884,7 +884,7 @@
         "cta": "Upgrade",
         "title": "Penagihan belum bisa dilayani mandiri",
         "body": "Checkout online masih dalam pengembangan, jadi paket belum bisa dibeli di situs. Untuk beralih ke {plan}, kirim email kepada kami dan kami akan menyiapkannya untuk Anda.",
-        "contact": "Email billing@sellcast.ai",
+        "contact": "Email {address}",
         "subject": "Upgrade ke {plan}"
       }
     },

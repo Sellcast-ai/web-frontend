@@ -32,6 +32,15 @@ describe("api (BFF client)", () => {
     await expect(api.deleteAvatar("a1")).resolves.toBeNull();
   });
 
+  it("throws an ApiError, not a raw SyntaxError, on a malformed 2xx body", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("<html>gateway</html>", { status: 200 })),
+    );
+    await expect(api.getUsage()).rejects.toBeInstanceOf(ApiError);
+    await expect(api.getUsage()).rejects.toMatchObject({ status: 200 });
+  });
+
   it("throws ApiError with the backend detail message", async () => {
     mockFetch(422, { detail: "invalid url" });
     const err = await api.parseProductUrl("nope").catch((e) => e);

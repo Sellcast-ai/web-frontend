@@ -718,7 +718,7 @@
         },
         "request": {
           "heading": "Cách yêu cầu hoàn lại tiền",
-          "body": "Gửi email <email>billing@sellcast.ai</email> từ email tài khoản của bạn kèm theo chi tiết tài khoản của bạn. Chúng tôi thường trả lời trong vòng hai ngày làm việc."
+          "body": "Gửi email <email>{address}</email> từ email tài khoản của bạn kèm theo chi tiết tài khoản của bạn. Chúng tôi thường trả lời trong vòng hai ngày làm việc."
         }
       }
     },
@@ -874,9 +874,9 @@
         "q2": "Việc tái tạo có tốn tín dụng không?",
         "a2": "Không. Việc tạo lại nhịp trong khi bạn xem lại không mất thêm chi phí — tín dụng chỉ tính cho video được hiển thị cuối cùng.",
         "q3": "Nếu tôi hết tín dụng thì sao?",
-        "a3": "Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán. Thanh toán trực tuyến tự phục vụ chưa khả dụng - để tăng hạn mức hằng tháng, hãy gửi email tới billing@sellcast.ai và chúng tôi sẽ thiết lập cho bạn.",
+        "a3": "Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán. Thanh toán trực tuyến tự phục vụ chưa khả dụng - để tăng hạn mức hằng tháng, hãy gửi email tới {address} và chúng tôi sẽ thiết lập cho bạn.",
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
-        "a4": "Được. Trong khi thanh toán tự phục vụ đang được xây dựng, việc đổi gói được xử lý qua email - hãy gửi thư tới billing@sellcast.ai. Gói năm tiết kiệm khoảng 20% so với gói tháng.",
+        "a4": "Được. Trong khi thanh toán tự phục vụ đang được xây dựng, việc đổi gói được xử lý qua email - hãy gửi thư tới {address}. Gói năm tiết kiệm khoảng 20% so với gói tháng.",
         "q5": "Lumi sử dụng mô hình kết xuất nào?",
         "a5": "Lumi hiển thị với Seedance 2.0 và sắp ra mắt nhiều mẫu hơn. Nó chọn các cài đặt tốt nhất cho mỗi lần chụp."
       },
@@ -884,7 +884,7 @@
         "cta": "Nâng cấp",
         "title": "Thanh toán chưa hỗ trợ tự phục vụ",
         "body": "Thanh toán trực tuyến vẫn đang được xây dựng nên chưa thể mua gói trên trang web. Để chuyển sang {plan}, hãy gửi email cho chúng tôi và chúng tôi sẽ thiết lập cho bạn.",
-        "contact": "Gửi email tới billing@sellcast.ai",
+        "contact": "Gửi email tới {address}",
         "subject": "Nâng cấp lên {plan}"
       }
     },
