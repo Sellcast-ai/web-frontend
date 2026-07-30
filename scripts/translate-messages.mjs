@@ -27,6 +27,11 @@ const MANUAL_OVERRIDES = {
     vi: "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
     th: "นำเข้า {count, plural, one {สินค้า # รายการ} other {สินค้า # รายการ}} จากร้านค้าของคุณแล้ว",
   },
+  "marketing.header.startFreeMobile": {
+    es: "Empieza",
+    pt: "Comece",
+    vi: "Bắt đầu",
+  },
 };
 
 const PROTECT_PATTERNS = [

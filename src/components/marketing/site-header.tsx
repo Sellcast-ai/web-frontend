@@ -19,8 +19,8 @@ export async function SiteHeader({ signedIn }: { signedIn: boolean }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6">
-        <Logo className="[&>span:last-child]:hidden sm:[&>span:last-child]:inline" />
+      <div className="container-page flex h-16 items-center justify-between gap-2 sm:gap-4">
+        <Logo wordmarkClassName="hidden sm:inline" />
         <div className="flex items-center gap-1 sm:gap-2">
           <Link
             href="/pricing"
