@@ -874,9 +874,9 @@
         "q2": "As regenerações custam créditos?",
         "a2": "Não. Regenerar uma batida enquanto você revisa não tem custo extra — os créditos contam apenas o vídeo final renderizado.",
         "q3": "E se eu ficar sem créditos?",
-        "a3": "Faça upgrade a qualquer momento para obter um subsídio mensal maior – aplica-se imediatamente. Os créditos são redefinidos no início de cada ciclo de faturamento.",
+        "a3": "Os créditos são redefinidos no início de cada ciclo de faturamento. O checkout self-service ainda não está disponível - para aumentar sua franquia mensal, envie um e-mail para billing@sellcast.ai e nós configuramos.",
         "q4": "Posso mudar de plano a qualquer momento?",
-        "a4": "A qualquer hora. As atualizações são aplicadas imediatamente; os downgrades entrarão em vigor no próximo ciclo. Anual economiza cerca de 20% em relação ao mês.",
+        "a4": "Sim. Enquanto o checkout self-service está em construção, as mudanças de plano são feitas por e-mail - escreva para billing@sellcast.ai. O anual economiza cerca de 20% em relação ao mensal.",
         "q5": "Qual modelo de renderização Lumi usa?",
         "a5": "Lumi é renderizado com Seedance 2.0, com mais modelos sendo lançados. Ele escolhe as melhores configurações por foto."
       },
@@ -1049,6 +1049,7 @@
           ]
         }
       },
+      "seePlans": "Ver planos",
       "pricingFooter": "Seu <signup>primeiro vídeo é grátis</signup> — sem cartão. <plans>Compare todos os planos →</plans>",
       "faqTitle": "Perguntas, <highlight>respondidas</highlight>",
       "finalCtaTitle": "Seu próximo best-seller está a <highlight>um link de distância.</highlight>",

@@ -212,6 +212,36 @@ describe("bffUpload", () => {
     });
   });
 
+  it("carries the structured error_type through, like the fetch path", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 503;
+    xhr.responseText = JSON.stringify({
+      detail: "SMS verification is not available right now.",
+      error_type: "SmsNotConfiguredError",
+    });
+    xhr.onload?.();
+
+    await expect(promise).rejects.toMatchObject({
+      status: 503,
+      errorType: "SmsNotConfiguredError",
+    });
+  });
+
+  it("rejects rather than throwing out of the XHR callback on a malformed 2xx body", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeXHR);
+    const promise = bffUpload("products", {});
+    const xhr = FakeXHR.last;
+
+    xhr.status = 200;
+    xhr.responseText = "<html>not json</html>";
+    expect(() => xhr.onload?.()).not.toThrow();
+
+    await expect(promise).rejects.toBeInstanceOf(ApiError);
+  });
+
   it("rejects with an ApiError on network failure", async () => {
     vi.stubGlobal("XMLHttpRequest", FakeXHR);
     const promise = bffUpload("products", {});

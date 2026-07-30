@@ -874,9 +874,9 @@
         "q2": "Do regenerations cost credits?",
         "a2": "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
         "q3": "What if I run out of credits?",
-        "a3": "Upgrade anytime for a bigger monthly allowance — it applies immediately. Credits reset at the start of each billing cycle.",
+        "a3": "Credits reset at the start of each billing cycle. Self-serve checkout is not available yet - to upgrade for a bigger monthly allowance, email billing@sellcast.ai and we will set it up.",
         "q4": "Can I change plans anytime?",
-        "a4": "Anytime. Upgrades apply immediately; downgrades take effect next cycle. Annual saves ~20% over monthly.",
+        "a4": "Yes. While self-serve checkout is being built, plan changes are handled by email - write to billing@sellcast.ai. Annual saves ~20% over monthly.",
         "q5": "Which render model does Lumi use?",
         "a5": "Lumi renders with Seedance 2.0, with more models rolling out. It picks the best settings per shot."
       },
@@ -1049,6 +1049,7 @@
           ]
         }
       },
+      "seePlans": "See plans",
       "pricingFooter": "Your <signup>first video is free</signup> — no card required. <plans>Compare all plans →</plans>",
       "faqTitle": "Questions, <highlight>answered</highlight>",
       "finalCtaTitle": "Your next best‑seller is <highlight>one link away.</highlight>",

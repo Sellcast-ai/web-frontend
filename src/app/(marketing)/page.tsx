@@ -76,7 +76,6 @@ const PRICING = [
 
 export default async function HomePage() {
   const t = await getTranslations("marketing.landing");
-  const ts = await getTranslations("app.studio");
 
   return (
     <>
@@ -484,7 +483,7 @@ export default async function HomePage() {
                     size="md"
                     className="mt-8 w-full"
                   >
-                    {ts("seePlans")}
+                    {t("seePlans")}
                   </Button>
                 </FadeIn>
               );

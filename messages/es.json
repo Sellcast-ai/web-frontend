@@ -874,9 +874,9 @@
         "q2": "¿Las regeneraciones cuestan créditos?",
         "a2": "No. Regenerar un ritmo mientras revisas no tiene costo adicional: los créditos solo cuentan el video final renderizado.",
         "q3": "¿Qué pasa si me quedo sin créditos?",
-        "a3": "Actualice en cualquier momento para obtener una asignación mensual mayor; se aplica de inmediato. Los créditos se restablecen al inicio de cada ciclo de facturación.",
+        "a3": "Los créditos se restablecen al inicio de cada ciclo de facturación. El pago en línea de autoservicio todavía no está disponible - para ampliar tu asignación mensual, escribe a billing@sellcast.ai y lo configuramos.",
         "q4": "¿Puedo cambiar de plan en cualquier momento?",
-        "a4": "En cualquier momento. Las actualizaciones se aplican de inmediato; las rebajas entrarán en vigor el próximo ciclo. Ahorro anual ~20% respecto al mes.",
+        "a4": "Sí. Mientras se desarrolla el pago en línea de autoservicio, los cambios de plan se gestionan por correo - escribe a billing@sellcast.ai. El plan anual ahorra ~20% frente al mensual.",
         "q5": "¿Qué modelo de renderizado utiliza Lumi?",
         "a5": "Lumi se renderiza con Seedance 2.0, y se implementarán más modelos. Elige la mejor configuración por toma."
       },
@@ -1049,6 +1049,7 @@
           ]
         }
       },
+      "seePlans": "Ver planes",
       "pricingFooter": "Tu <signup>primer video es gratis</signup> — sin tarjeta. <plans>Compara todos los planes →</plans>",
       "faqTitle": "Preguntas, <highlight>respondidas</highlight>",
       "finalCtaTitle": "Tu próximo superventas está a <highlight>un enlace de distancia.</highlight>",

@@ -54,6 +54,20 @@ function parseErrorBody(text: string): ErrorBody {
   }
 }
 
+/** The one place a failed response becomes an `ApiError`, so every transport
+ * (fetch and XHR alike) carries the same message chain and `error_type`. */
+function errorFrom(status: number, statusText: string, text: string): ApiError {
+  const data = parseErrorBody(text);
+  const msg = (data && (data.detail || data.error || data.message)) || statusText;
+  const errorType =
+    data && typeof data.error_type === "string" ? data.error_type : undefined;
+  return new ApiError(
+    status,
+    typeof msg === "string" ? msg : "Request failed",
+    errorType,
+  );
+}
+
 async function bff<T>(
   path: string,
   init: (RequestInit & { json?: unknown }) = {},
@@ -68,18 +82,7 @@ async function bff<T>(
     body: json !== undefined ? JSON.stringify(json) : rest.body,
   });
   const text = await res.text();
-  if (!res.ok) {
-    const data = parseErrorBody(text);
-    const msg =
-      (data && (data.detail || data.error || data.message)) || res.statusText;
-    const errorType =
-      data && typeof data.error_type === "string" ? data.error_type : undefined;
-    throw new ApiError(
-      res.status,
-      typeof msg === "string" ? msg : "Request failed",
-      errorType,
-    );
-  }
+  if (!res.ok) throw errorFrom(res.status, res.statusText, text);
   return (text ? JSON.parse(text) : null) as T;
 }
 
@@ -101,19 +104,15 @@ export function bffUpload<T>(
       if (e.lengthComputable && e.total > 0) onProgress?.(e.loaded / e.total);
     };
     xhr.onload = () => {
-      let data: unknown = null;
-      try {
-        data = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-      } catch {
-        // non-JSON body; fall through to statusText
-      }
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(data as T);
+        try {
+          resolve((xhr.responseText ? JSON.parse(xhr.responseText) : null) as T);
+        } catch {
+          reject(new ApiError(xhr.status, "Malformed response from the server."));
+        }
         return;
       }
-      const d = data as { detail?: unknown; error?: unknown; message?: unknown } | null;
-      const msg = (d && (d.detail || d.error || d.message)) || xhr.statusText;
-      reject(new ApiError(xhr.status, typeof msg === "string" ? msg : "Request failed"));
+      reject(errorFrom(xhr.status, xhr.statusText, xhr.responseText));
     };
     xhr.onerror = () => reject(new ApiError(0, "Network error — please try again."));
     xhr.send(JSON.stringify(json));

@@ -39,7 +39,11 @@ const FAQ_KEYS = ["q1", "q2", "q3", "q4", "q5"] as const;
 
 export function PricingClient({ signedIn }: { signedIn: boolean }) {
   const [annual, setAnnual] = useState(false);
-  const [upgradePlan, setUpgradePlan] = useState<string | null>(null);
+  /* The plan name outlives `upgradeOpen` on purpose: the modal keeps rendering
+     through its exit animation, and clearing the name would blank the
+     interpolated body and mailto subject for the length of the fade-out. */
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [upgradePlan, setUpgradePlan] = useState("");
   const t = useTranslations("marketing.pricing");
   const th = useTranslations("marketing.header");
 
@@ -106,8 +110,10 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
                   ? {
                       type: "button",
                       variant,
-                      onClick: () =>
-                        setUpgradePlan(t(`tiers.${tier.key}.name`)),
+                      onClick: () => {
+                        setUpgradePlan(t(`tiers.${tier.key}.name`));
+                        setUpgradeOpen(true);
+                      },
                       children: t("upgrade.cta"),
                     }
                   : {
@@ -234,16 +240,16 @@ export function PricingClient({ signedIn }: { signedIn: boolean }) {
       <CtaBand />
 
       <Modal
-        open={upgradePlan !== null}
-        onClose={() => setUpgradePlan(null)}
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
         title={t("upgrade.title")}
       >
         <p className="text-sm leading-relaxed text-muted-foreground">
-          {t("upgrade.body", { plan: upgradePlan ?? "" })}
+          {t("upgrade.body", { plan: upgradePlan })}
         </p>
         <a
           href={`mailto:billing@sellcast.ai?subject=${encodeURIComponent(
-            t("upgrade.subject", { plan: upgradePlan ?? "" }),
+            t("upgrade.subject", { plan: upgradePlan }),
           )}`}
           className={cn(
             buttonVariants({ variant: "primary", size: "md" }),

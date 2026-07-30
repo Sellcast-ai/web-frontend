@@ -874,9 +874,9 @@
         "q2": "Apakah regenerasi memerlukan kredit?",
         "a2": "Tidak. Membuat ulang irama saat Anda meninjau tidak memerlukan biaya tambahan — kredit hanya menghitung video akhir yang dirender.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
-        "a3": "Tingkatkan versi kapan saja untuk mendapatkan tunjangan bulanan yang lebih besar — ini akan langsung berlaku. Kredit disetel ulang pada awal setiap siklus penagihan.",
+        "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke billing@sellcast.ai dan kami akan menyiapkannya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
-        "a4": "Kapan saja. Peningkatan segera berlaku; penurunan peringkat akan berlaku pada siklus berikutnya. Penghematan tahunan ~20% dibandingkan bulanan.",
+        "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke billing@sellcast.ai. Tahunan hemat ~20% dibanding bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
         "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
       },
@@ -1049,6 +1049,7 @@
           ]
         }
       },
+      "seePlans": "Lihat paket",
       "pricingFooter": "<signup>Video pertama Anda gratis</signup> — tanpa kartu. <plans>Bandingkan semua paket →</plans>",
       "faqTitle": "Pertanyaan, <highlight>terjawab</highlight>",
       "finalCtaTitle": "Produk terlaris Anda berikutnya <highlight>tinggal satu tautan.</highlight>",

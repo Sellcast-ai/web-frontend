@@ -874,9 +874,9 @@
         "q2": "Việc tái tạo có tốn tín dụng không?",
         "a2": "Không. Việc tạo lại nhịp trong khi bạn xem lại không mất thêm chi phí — tín dụng chỉ tính cho video được hiển thị cuối cùng.",
         "q3": "Nếu tôi hết tín dụng thì sao?",
-        "a3": "Nâng cấp bất cứ lúc nào để nhận được trợ cấp hàng tháng lớn hơn — áp dụng ngay lập tức. Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán.",
+        "a3": "Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán. Thanh toán trực tuyến tự phục vụ chưa khả dụng - để tăng hạn mức hằng tháng, hãy gửi email tới billing@sellcast.ai và chúng tôi sẽ thiết lập cho bạn.",
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
-        "a4": "Bất cứ lúc nào. Việc nâng cấp được áp dụng ngay lập tức; việc hạ cấp sẽ có hiệu lực ở chu kỳ tiếp theo. Tiết kiệm hàng năm ~ 20% so với hàng tháng.",
+        "a4": "Được. Trong khi thanh toán tự phục vụ đang được xây dựng, việc đổi gói được xử lý qua email - hãy gửi thư tới billing@sellcast.ai. Gói năm tiết kiệm khoảng 20% so với gói tháng.",
         "q5": "Lumi sử dụng mô hình kết xuất nào?",
         "a5": "Lumi hiển thị với Seedance 2.0 và sắp ra mắt nhiều mẫu hơn. Nó chọn các cài đặt tốt nhất cho mỗi lần chụp."
       },
@@ -1049,6 +1049,7 @@
           ]
         }
       },
+      "seePlans": "Xem các gói",
       "pricingFooter": "<signup>Video đầu tiên miễn phí</signup> — không cần thẻ. <plans>So sánh tất cả các gói →</plans>",
       "faqTitle": "Thắc mắc, <highlight>đã có lời đáp</highlight>",
       "finalCtaTitle": "Sản phẩm bán chạy tiếp theo của bạn <highlight>chỉ cách một liên kết.</highlight>",

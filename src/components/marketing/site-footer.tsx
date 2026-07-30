@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "./logo";
+import { hasSession } from "@/lib/auth-redirect";
+import { APP_HOME_HREF } from "@/lib/launch-routes";
 
 const COLUMNS: { key: string; links: { key: string; href: string }[] }[] = [
   {
@@ -41,6 +43,8 @@ const COLUMNS: { key: string; links: { key: string; href: string }[] }[] = [
 
 export async function SiteFooter() {
   const t = await getTranslations("marketing.footer");
+  const tc = await getTranslations("marketing.header");
+  const signedIn = await hasSession();
 
   return (
     <footer className="overflow-hidden border-t border-border bg-muted/40">
@@ -78,10 +82,10 @@ export async function SiteFooter() {
           <div className="flex items-center gap-5">
             <p className="hidden md:block">{t("madeFor")}</p>
             <Link
-              href="/login"
+              href={signedIn ? APP_HOME_HREF : "/login"}
               className="font-medium text-ink-soft transition-colors hover:text-ink"
             >
-              {t("signIn")}
+              {signedIn ? tc("openStudio") : t("signIn")}
             </Link>
           </div>
         </div>
