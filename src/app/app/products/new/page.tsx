@@ -676,15 +676,20 @@ function StoreImport({
     if (!job || !running || doneRef.current) return;
     if (job.status === "queued" || job.status === "running") return;
     doneRef.current = true;
+    const { requested } = running;
     if (job.status === "failed") {
+      // a terminal job is nothing to watch: let the handle go, or the store
+      // flow keeps owning the page with no card left to render
+      setRunning(null);
       toast.error(job.error ?? tt("importFailed"));
       return;
     }
     qc.invalidateQueries({ queryKey: qk.myProducts });
-    const outcome = importOutcome(job, running.requested);
+    const outcome = importOutcome(job, requested);
     if (outcome.key === "importNone") {
       // nothing landed: report it honestly and keep the stored pass, rather
       // than routing to an unchanged product list (see `jobFellThrough`)
+      setRunning(null);
       toast.error(tt(outcome.key, outcome.values));
       return;
     }
@@ -696,9 +701,11 @@ function StoreImport({
     const announce = ignoredSelection ? toast.info : toast.success;
     announce(tt(outcome.key, outcome.values));
     // the user dropped the progress card and moved on: the toast tells them it
-    // landed, routing them off what they're now doing would not
-    if (!dismissed) router.push("/app/products");
-  }, [job, running, dismissed, doneRef, persistToRef, qc, router, tt]);
+    // landed, routing them off what they're now doing would not - the handle
+    // goes instead, so a remount can't announce this finished job as running
+    if (dismissed) setRunning(null);
+    else router.push("/app/products");
+  }, [job, running, setRunning, dismissed, doneRef, persistToRef, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -799,10 +806,15 @@ function StoreImport({
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
 
+  /** No job yet is not a finished job: the handle can be missing while it
+   * resolves (the first poll, a cache garbage-collected while the manual editor
+   * held the screen, a failing GET), and a start would still come back as this
+   * very job. */
+  const jobActive = !job || job.status === "queued" || job.status === "running";
+
   /** Still in flight, so a start now would come back as this very job. Once it
    * lands the handle stops meaning anything and the store path opens again. */
-  const importInFlight =
-    !!running && (!job || job.status === "queued" || job.status === "running");
+  const importInFlight = !!running && jobActive;
 
   // in flight with the progress card dismissed: a second import can't work, so
   // the store path says so and points back at the progress it came from rather
@@ -823,13 +835,10 @@ function StoreImport({
   }
 
   // step 4 — an import is running: live progress against the requested subset.
-  // The job handle can be missing while it resolves (the first poll, a cache
-  // garbage-collected while the manual editor held the screen, a failing GET),
-  // and a start would still come back as this very job — so the card renders
-  // without counts rather than falling through to a paste form whose result
-  // would be mislabelled.
+  // While the job handle is still resolving (`jobActive` with no job) the card
+  // renders without counts rather than falling through to a paste form whose
+  // result would be mislabelled.
   if (running && !jobFellThrough && !dismissed) {
-    const active = !job || job.status === "queued" || job.status === "running";
     // the same `running.requested` the finished-import toast reads, so the bar
     // and the toast can never quote different totals — an import that overshoots
     // the chosen subset still reads its real total, only the bar stops at full
@@ -844,7 +853,7 @@ function StoreImport({
         <p className="mt-1 text-sm text-muted-foreground">
           {!job
             ? t("importingUnknown")
-            : active
+            : jobActive
               ? t("importingProgress", {
                   upserted: job.products_upserted,
                   found: total,
@@ -856,7 +865,7 @@ function StoreImport({
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button size="lg" disabled className="w-full sm:w-auto">
             {job ? (
-              <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
+              <UploadProgress progress={jobActive ? fraction : 1} label={t("importingLabel")} />
             ) : (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
