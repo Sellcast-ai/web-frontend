@@ -643,6 +643,12 @@
         "description": "이 동영상을 불러오지 못했습니다. 다시 시도하세요.",
         "action": "다시 시도"
       }
+    },
+    "format": {
+      "justNow": "방금",
+      "minutesAgo": "{n}분 전",
+      "hoursAgo": "{n}시간 전",
+      "daysAgo": "{n}일 전"
     }
   },
   "languageSwitcher": {

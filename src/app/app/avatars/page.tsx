@@ -206,7 +206,7 @@ function UploadCard() {
               </button>
             )}
           </div>
-          {error && <p className="text-sm text-rose">{error}</p>}
+          {error && <p className="text-sm text-danger">{error}</p>}
         </div>
       </div>
 

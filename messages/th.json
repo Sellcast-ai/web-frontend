@@ -643,6 +643,12 @@
         "description": "เราโหลดวิดีโอนี้ไม่ได้ โปรดลองอีกครั้ง",
         "action": "ลองอีกครั้ง"
       }
+    },
+    "format": {
+      "justNow": "เมื่อกี้",
+      "minutesAgo": "{n} นาทีที่แล้ว",
+      "hoursAgo": "{n} ชั่วโมงที่แล้ว",
+      "daysAgo": "{n} วันที่แล้ว"
     }
   },
   "languageSwitcher": {

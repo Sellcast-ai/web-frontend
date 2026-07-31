@@ -643,6 +643,12 @@
         "description": "We couldn’t load this video. Try again.",
         "action": "Try again"
       }
+    },
+    "format": {
+      "justNow": "just now",
+      "minutesAgo": "{n}m ago",
+      "hoursAgo": "{n}h ago",
+      "daysAgo": "{n}d ago"
     }
   },
   "languageSwitcher": {

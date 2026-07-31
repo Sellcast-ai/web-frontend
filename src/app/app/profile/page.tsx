@@ -219,7 +219,7 @@ export default function ProfilePage() {
       <button
         type="button"
         onClick={logout}
-        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rose hover:underline"
+        className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-danger hover:underline"
       >
         <LogOut className="h-4 w-4" />
         {t("logOut")}

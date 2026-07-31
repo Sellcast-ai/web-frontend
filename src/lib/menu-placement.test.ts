@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MIN_MENU_HEIGHT, menuPlacement } from "./menu-placement";
+import { MIN_MENU_HEIGHT, menuPlacement, menuShiftX } from "./menu-placement";
 
 const header = { triggerTop: 24, triggerBottom: 60, menuHeight: 332 };
 
@@ -39,5 +39,21 @@ describe("menuPlacement", () => {
         menuHeight: 332,
       }).maxHeight,
     ).toBe(MIN_MENU_HEIGHT);
+  });
+});
+
+describe("menuShiftX", () => {
+  it("leaves a menu alone when its left edge already clears the viewport edge", () => {
+    // AppShell: trigger at the right edge of a 320px viewport.
+    expect(menuShiftX({ triggerRight: 312, menuWidth: 176 })).toBe(0);
+  });
+
+  it("shifts a left-sliver trigger's menu back on-screen (the 320px marketing header)", () => {
+    // measured live pre-fix: menu rendered at left -37.7
+    expect(menuShiftX({ triggerRight: 138.3, menuWidth: 176 })).toBeCloseTo(45.7);
+  });
+
+  it("never shifts left", () => {
+    expect(menuShiftX({ triggerRight: 500, menuWidth: 44 })).toBe(0);
   });
 });

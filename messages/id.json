@@ -643,6 +643,12 @@
         "description": "Kami tidak dapat memuat video ini. Coba lagi.",
         "action": "Coba lagi"
       }
+    },
+    "format": {
+      "justNow": "baru saja",
+      "minutesAgo": "{n} mnt lalu",
+      "hoursAgo": "{n} jam lalu",
+      "daysAgo": "{n} hari lalu"
     }
   },
   "languageSwitcher": {

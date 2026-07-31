@@ -4,7 +4,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   UserSquare2,
   Package,
@@ -104,6 +104,7 @@ const RESOLUTION_KEYS: Record<VideoResolution, StudioOptionKeys> = {
 function StudioInner() {
   const t = useTranslations("app.studio");
   const tt = useTranslations("app.toasts");
+  const locale = useLocale();
   const router = useRouter();
   const sp = useSearchParams();
   const productId = sp.get("product") ?? "";
@@ -267,7 +268,7 @@ function StudioInner() {
                     )}
                   </div>
                   {linkInvalid && (
-                    <p className="mt-2 text-xs font-semibold text-rose">
+                    <p className="mt-2 text-xs font-semibold text-danger">
                       {t("reference.invalidUrl")}
                     </p>
                   )}
@@ -512,7 +513,7 @@ function StudioInner() {
                 </p>
                 {product && (
                   <p className="text-xs text-muted-foreground">
-                    {priceRange(product.price_min, product.price_max, product.currency)}
+                    {priceRange(product.price_min, product.price_max, locale, product.currency)}
                   </p>
                 )}
               </div>
@@ -851,7 +852,7 @@ function ReferenceUpload({
       )}
       <p className="mt-2 text-xs text-muted-foreground">{t("reference.uploadHelper")}</p>
       {error && (
-        <p className="mt-2 text-xs font-semibold text-rose">{error}</p>
+        <p className="mt-2 text-xs font-semibold text-danger">{error}</p>
       )}
     </div>
   );

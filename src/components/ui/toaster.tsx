@@ -15,7 +15,7 @@ import { DUR, EASE_OUT } from "./motion";
 const ICONS = { success: CheckCircle2, error: AlertCircle, info: Info } as const;
 const ICON_COLOR: Record<ToastVariant, string> = {
   success: "text-success",
-  error: "text-rose",
+  error: "text-danger",
   info: "text-brand-600",
 };
 
