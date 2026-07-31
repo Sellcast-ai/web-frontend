@@ -189,6 +189,12 @@
       "subtitle": "Todo lo que has generado con Lumi.",
       "newVideo": "Nuevo vídeo",
       "videoFallback": "Vídeo",
+      "loadMore": "Cargar videos más antiguos",
+      "loadError": {
+        "title": "No se pudieron cargar los videos",
+        "description": "No pudimos cargar tus videos. Inténtalo de nuevo.",
+        "action": "Intentar de nuevo"
+      },
       "empty": {
         "title": "Aún no hay vídeos",
         "description": "Elige uno de tus productos y Lumi lo convertirá en tu primer video que detiene el desplazamiento.",
@@ -202,20 +208,29 @@
         "success": "Listos"
       },
       "tabEmpty": {
+        "loadMore": "Cargar videos más antiguos",
         "needsYou": {
           "title": "Nada te necesita",
+          "loadedTitle": "Nada cargado necesita tu atención",
+          "loadedDescription": "Puede que haya videos más antiguos que aún necesiten tu atención. Carga más para seguir revisando.",
           "description": "Cuando un video se pausa a la espera de tu aprobación del guion o de las tomas, te espera aquí."
         },
         "onTheWay": {
           "title": "Nada en camino",
+          "loadedTitle": "Nada cargado está en camino",
+          "loadedDescription": "Puede que haya videos más antiguos en cola o renderizándose. Carga más para seguir revisando.",
           "description": "Los videos en cola o en renderizado aparecen aquí."
         },
         "failed": {
           "title": "Ningún video fallido",
+          "loadedTitle": "Ningún video fallido cargado",
+          "loadedDescription": "Puede que haya videos más antiguos que fallaron. Carga más para seguir revisando.",
           "description": "Un video que no pudo terminarse aparece aquí, con la opción de reintentar."
         },
         "success": {
           "title": "Aún no hay videos terminados",
+          "loadedTitle": "Ningún video terminado cargado",
+          "loadedDescription": "Puede que haya videos más antiguos ya terminados. Carga más para seguir revisando.",
           "description": "Los videos completados aparecen aquí, listos para descargar y publicar."
         }
       }
@@ -594,6 +609,11 @@
         "title": "Este vídeo ya no existe",
         "description": "Se eliminó, o el enlace apunta a un vídeo que no es tuyo. Todo lo que conservas está en Mis vídeos.",
         "action": "Volver a Mis vídeos"
+      },
+      "loadError": {
+        "title": "No se pudo cargar el video",
+        "description": "No pudimos cargar este video. Inténtalo de nuevo.",
+        "action": "Intentar de nuevo"
       }
     }
   },

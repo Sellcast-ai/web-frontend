@@ -189,6 +189,12 @@
       "subtitle": "Everything you’ve generated with Lumi.",
       "newVideo": "New video",
       "videoFallback": "Video",
+      "loadMore": "Load older videos",
+      "loadError": {
+        "title": "Videos couldn’t load",
+        "description": "We couldn’t load your videos. Try again.",
+        "action": "Try again"
+      },
       "empty": {
         "title": "No videos yet",
         "description": "Choose one of your products and Lumi will turn it into your first scroll-stopping video.",
@@ -202,20 +208,29 @@
         "success": "Success"
       },
       "tabEmpty": {
+        "loadMore": "Load older videos",
         "needsYou": {
           "title": "Nothing needs you",
+          "loadedTitle": "Nothing loaded needs you",
+          "loadedDescription": "Older videos may still need you. Load more to keep checking.",
           "description": "When a video pauses for your storyboard or shot approval, it waits for you here."
         },
         "onTheWay": {
           "title": "Nothing on the way",
+          "loadedTitle": "Nothing loaded is on the way",
+          "loadedDescription": "Older videos may still be queued or rendering. Load more to keep checking.",
           "description": "Videos that are queued or rendering show up here."
         },
         "failed": {
           "title": "No failed videos",
+          "loadedTitle": "No loaded failed videos",
+          "loadedDescription": "Older videos may still have failed. Load more to keep checking.",
           "description": "A video that couldn't be finished lands here, with a retry."
         },
         "success": {
           "title": "No finished videos yet",
+          "loadedTitle": "No loaded finished videos",
+          "loadedDescription": "Older videos may still be finished. Load more to keep checking.",
           "description": "Completed videos appear here, ready to download and post."
         }
       }
@@ -594,6 +609,11 @@
         "title": "This video no longer exists",
         "description": "It was deleted, or the link points to a video that isn’t yours. Everything you still have is in My Videos.",
         "action": "Back to My Videos"
+      },
+      "loadError": {
+        "title": "Video couldn’t load",
+        "description": "We couldn’t load this video. Try again.",
+        "action": "Try again"
       }
     }
   },

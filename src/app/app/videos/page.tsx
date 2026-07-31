@@ -3,12 +3,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2, Clapperboard, Play, Sparkles } from "lucide-react";
+import { AlertTriangle, Loader2, Clapperboard, Play, RefreshCw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useVideoJobs } from "@/lib/api/hooks";
+import { usePagedVideoJobs } from "@/lib/api/hooks";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
+import { apiErrorMessage } from "@/lib/api/client";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
 import {
@@ -44,13 +45,29 @@ const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
 
 export default function VideosPage() {
   const t = useTranslations("app.videos");
-  const { data: jobs, isLoading } = useVideoJobs();
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isError,
+    isFetching,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+  } = usePagedVideoJobs();
   // null = the user hasn't picked a tab yet, so follow defaultTab(jobs)
   const [selected, setSelected] = useState<VideoTab | null>(null);
 
+  const jobs = data?.pages.flat() ?? [];
   const counts = countByTab(jobs ?? []);
   const activeTab = selected ?? defaultTab(jobs ?? []);
   const visible = jobsForTab(jobs ?? [], activeTab);
+  const countOpen = Boolean(hasNextPage);
+  const loadMore = () => {
+    setSelected(activeTab);
+    void fetchNextPage();
+  };
 
   return (
     <div className="container-page py-8">
@@ -71,7 +88,13 @@ export default function VideosPage() {
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>
-      ) : !jobs || jobs.length === 0 ? (
+      ) : isError && jobs.length === 0 ? (
+        <LoadError
+          message={apiErrorMessage(error, t("loadError.description"))}
+          retrying={isFetching}
+          onRetry={() => void refetch()}
+        />
+      ) : jobs.length === 0 && !hasNextPage ? (
         <Empty />
       ) : (
         <>
@@ -85,21 +108,46 @@ export default function VideosPage() {
                 key={tab}
                 label={t(`tabs.${tab}`)}
                 count={counts[tab]}
+                open={countOpen}
                 active={tab === activeTab}
                 onSelect={() => setSelected(tab)}
               />
             ))}
           </div>
           {visible.length === 0 ? (
-            <TabEmpty tab={activeTab} />
+            <TabEmpty
+              tab={activeTab}
+              hasMore={Boolean(hasNextPage)}
+              loading={isFetchingNextPage}
+              onLoadMore={loadMore}
+            />
           ) : (
-            <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {visible.map((job, i) => (
-                <StaggerItem key={job.id} index={i} className="h-full">
-                  <JobCard job={job} />
-                </StaggerItem>
-              ))}
-            </div>
+            <>
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                {visible.map((job, i) => (
+                  <StaggerItem key={job.id} index={i} className="h-full">
+                    <JobCard job={job} />
+                  </StaggerItem>
+                ))}
+              </div>
+              {hasNextPage && (
+                <div className="mt-8 flex justify-center">
+                  <Button
+                    variant="outline"
+                    size="md"
+                    onClick={loadMore}
+                    disabled={isFetchingNextPage}
+                  >
+                    {isFetchingNextPage ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <RefreshCw className="h-4 w-4" />
+                    )}
+                    {t("loadMore")}
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
@@ -110,14 +158,17 @@ export default function VideosPage() {
 function TabButton({
   label,
   count,
+  open,
   active,
   onSelect,
 }: {
   label: string;
   count: number;
+  open: boolean;
   active: boolean;
   onSelect: () => void;
 }) {
+  const countText = open ? `${count}+` : String(count);
   return (
     <button
       type="button"
@@ -137,7 +188,7 @@ function TabButton({
           active ? "bg-brand-100 text-brand-800" : "bg-muted text-muted-foreground",
         )}
       >
-        {count}
+        {countText}
       </span>
     </button>
   );
@@ -185,15 +236,71 @@ function JobCard({ job }: { job: VideoJob }) {
   );
 }
 
-/** An empty *tab* is not an empty library: say plainly that nothing sits in
- *  this bucket right now and what would land here. No CTA — the whole-page
- *  Empty below owns that. */
-function TabEmpty({ tab }: { tab: VideoTab }) {
+function TabEmpty({
+  tab,
+  hasMore,
+  loading,
+  onLoadMore,
+}: {
+  tab: VideoTab;
+  hasMore: boolean;
+  loading: boolean;
+  onLoadMore: () => void;
+}) {
   const t = useTranslations("app.videos.tabEmpty");
   return (
     <div className="mt-16 flex flex-col items-center text-center">
-      <p className="font-display text-lg font-bold text-ink">{t(`${tab}.title`)}</p>
-      <p className="mt-1 max-w-sm text-muted-foreground">{t(`${tab}.description`)}</p>
+      <p className="font-display text-lg font-bold text-ink">
+        {t(`${tab}.${hasMore ? "loadedTitle" : "title"}`)}
+      </p>
+      <p className="mt-1 max-w-sm text-muted-foreground">
+        {t(`${tab}.${hasMore ? "loadedDescription" : "description"}`)}
+      </p>
+      {hasMore && (
+        <Button
+          variant="outline"
+          size="md"
+          className="mt-5"
+          onClick={onLoadMore}
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCw className="h-4 w-4" />
+          )}
+          {t("loadMore")}
+        </Button>
+      )}
+    </div>
+  );
+}
+
+function LoadError({
+  message,
+  retrying,
+  onRetry,
+}: {
+  message: string;
+  retrying: boolean;
+  onRetry: () => void;
+}) {
+  const t = useTranslations("app.videos.loadError");
+  return (
+    <div className="mt-16 flex flex-col items-center text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+        <AlertTriangle className="h-8 w-8" />
+      </div>
+      <p className="mt-5 font-display text-xl font-bold text-ink">{t("title")}</p>
+      <p className="mt-1 max-w-sm text-muted-foreground">{message}</p>
+      <Button variant="outline" size="lg" className="mt-6" onClick={onRetry} disabled={retrying}>
+        {retrying ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <RefreshCw className="h-4 w-4" />
+        )}
+        {t("action")}
+      </Button>
     </div>
   );
 }

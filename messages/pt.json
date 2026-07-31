@@ -189,6 +189,12 @@
       "subtitle": "Tudo o que você gerou com Lumi.",
       "newVideo": "Novo vídeo",
       "videoFallback": "Vídeo",
+      "loadMore": "Carregar vídeos mais antigos",
+      "loadError": {
+        "title": "Não foi possível carregar os vídeos",
+        "description": "Não conseguimos carregar seus vídeos. Tente de novo.",
+        "action": "Tentar de novo"
+      },
       "empty": {
         "title": "Ainda não há vídeos",
         "description": "Escolha um dos seus produtos e a Lumi o transformará no seu primeiro vídeo que prende a rolagem.",
@@ -202,20 +208,29 @@
         "success": "Prontos"
       },
       "tabEmpty": {
+        "loadMore": "Carregar vídeos mais antigos",
         "needsYou": {
           "title": "Nada precisa de você",
+          "loadedTitle": "Nada carregado precisa de você",
+          "loadedDescription": "Vídeos mais antigos ainda podem precisar de você. Carregue mais para continuar verificando.",
           "description": "Quando um vídeo pausar à espera da sua aprovação do roteiro ou das cenas, ele espera por você aqui."
         },
         "onTheWay": {
           "title": "Nada a caminho",
+          "loadedTitle": "Nada carregado está a caminho",
+          "loadedDescription": "Vídeos mais antigos ainda podem estar na fila ou renderizando. Carregue mais para continuar verificando.",
           "description": "Vídeos na fila ou em renderização aparecem aqui."
         },
         "failed": {
           "title": "Nenhum vídeo com falha",
+          "loadedTitle": "Nenhum vídeo com falha carregado",
+          "loadedDescription": "Vídeos mais antigos ainda podem ter falhado. Carregue mais para continuar verificando.",
           "description": "Um vídeo que não pôde ser concluído aparece aqui, com a opção de tentar de novo."
         },
         "success": {
           "title": "Nenhum vídeo pronto ainda",
+          "loadedTitle": "Nenhum vídeo pronto carregado",
+          "loadedDescription": "Vídeos mais antigos ainda podem estar prontos. Carregue mais para continuar verificando.",
           "description": "Os vídeos concluídos aparecem aqui, prontos para baixar e publicar."
         }
       }
@@ -594,6 +609,11 @@
         "title": "Este vídeo não existe mais",
         "description": "Ele foi excluído ou o link aponta para um vídeo que não é seu. Tudo o que você ainda tem está em Meus vídeos.",
         "action": "Voltar para Meus vídeos"
+      },
+      "loadError": {
+        "title": "Não foi possível carregar o vídeo",
+        "description": "Não conseguimos carregar este vídeo. Tente de novo.",
+        "action": "Tentar de novo"
       }
     }
   },

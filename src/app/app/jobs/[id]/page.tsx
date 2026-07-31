@@ -36,7 +36,7 @@ import {
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
-import { ApiError, api } from "@/lib/api/client";
+import { ApiError, api, apiErrorMessage } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
@@ -84,13 +84,19 @@ const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
 export default function JobDetailPage() {
   const t = useTranslations("app.jobs");
   const { id } = useParams<{ id: string }>();
-  const { data: job, isLoading, isError, dataUpdatedAt } = useVideoJob(id);
+  const { data: job, error, isFetching, isLoading, isError, dataUpdatedAt, refetch } =
+    useVideoJob(id);
   const [scriptOpen, setScriptOpen] = useState(false);
 
-  // Permanent delete makes a dead job id a normal arrival here (Back after a
-  // delete, a bookmark, a bad id). Never spin forever on it.
   if (isError && !job) {
-    return <JobNotFound />;
+    if (error instanceof ApiError && error.status === 404) return <JobNotFound />;
+    return (
+      <JobLoadError
+        message={apiErrorMessage(error, t("loadError.description"))}
+        retrying={isFetching}
+        onRetry={() => void refetch()}
+      />
+    );
   }
 
   if (isLoading || !job) {
@@ -221,6 +227,35 @@ function JobNotFound() {
       <p className="mt-5 font-display text-xl font-bold text-ink">{t("title")}</p>
       <p className="mt-1 max-w-sm text-muted-foreground">{t("description")}</p>
       <Button href="/app/videos" size="lg" className="mt-6">
+        {t("action")}
+      </Button>
+    </div>
+  );
+}
+
+function JobLoadError({
+  message,
+  retrying,
+  onRetry,
+}: {
+  message: string;
+  retrying: boolean;
+  onRetry: () => void;
+}) {
+  const t = useTranslations("app.jobs.loadError");
+  return (
+    <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+        <AlertTriangle className="h-8 w-8" />
+      </div>
+      <p className="mt-5 font-display text-xl font-bold text-ink">{t("title")}</p>
+      <p className="mt-1 max-w-sm text-muted-foreground">{message}</p>
+      <Button variant="outline" size="lg" className="mt-6" onClick={onRetry} disabled={retrying}>
+        {retrying ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <RefreshCw className="h-4 w-4" />
+        )}
         {t("action")}
       </Button>
     </div>

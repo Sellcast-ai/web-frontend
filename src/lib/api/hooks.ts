@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
@@ -37,6 +38,8 @@ const ACTIVE: VideoJobStatus[] = [
   "awaiting_storyboard",
   "awaiting_review",
 ];
+
+const VIDEO_JOBS_PAGE_SIZE = 50;
 
 /* ------------------------------------------------------------------ reads */
 
@@ -100,6 +103,23 @@ export function useVideoJobs(params: { product_id?: string } = {}) {
   return useQuery({
     queryKey: qk.jobs(params),
     queryFn: () => api.listVideoJobs(params),
+  });
+}
+
+export function usePagedVideoJobs(params: { product_id?: string } = {}) {
+  return useInfiniteQuery({
+    queryKey: qk.jobs({ ...params, limit: VIDEO_JOBS_PAGE_SIZE }),
+    queryFn: ({ pageParam }) =>
+      api.listVideoJobs({
+        ...params,
+        limit: VIDEO_JOBS_PAGE_SIZE,
+        offset: pageParam,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length === VIDEO_JOBS_PAGE_SIZE
+        ? allPages.length * VIDEO_JOBS_PAGE_SIZE
+        : undefined,
   });
 }
 
