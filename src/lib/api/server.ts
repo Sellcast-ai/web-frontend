@@ -275,11 +275,11 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
     },
   });
 
-  if (refreshed) setSessionCookies(out, refreshed.session);
+  if (refreshed && backendRes.status !== 401) setSessionCookies(out, refreshed.session);
   // Safe to clear: refreshSession only reports failure for a token whose
   // lineage this instance never rotated, so no sibling's fresh Set-Cookie can
   // be in flight for it (see the rotation-lineage note above).
-  else if (backendRes.status === 401) clearSessionCookies(out);
+  else if (!refreshed && backendRes.status === 401) clearSessionCookies(out);
 
   return out;
 }

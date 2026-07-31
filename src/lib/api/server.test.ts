@@ -253,6 +253,38 @@ describe("proxy", () => {
     expect(refreshCalls).toHaveLength(1);
   });
 
+  it("does not resurrect cookies when a cached refreshed session is revoked", async () => {
+    let revoked = false;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        return Promise.resolve(json(200, { user: {}, session }));
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return Promise.resolve(
+        auth === "Bearer new-at" && !revoked
+          ? json(200, { ok: true })
+          : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const cookies = { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-revoked-lineage" };
+    const first = await proxy(req("/api/bff/products", { cookies }), "products");
+    expect(first.status).toBe(200);
+    expect(first.cookies.get(COOKIE.access)?.value).toBe("new-at");
+
+    revoked = true;
+    const second = await proxy(req("/api/bff/products", { cookies }), "products");
+    expect(second.status).toBe(401);
+    expect(second.cookies.get(COOKIE.access)).toBeUndefined();
+    expect(second.cookies.get(COOKIE.refresh)).toBeUndefined();
+
+    const refreshCalls = fetchMock.mock.calls.filter(([url]) =>
+      String(url).includes("/auth/refresh"),
+    );
+    expect(refreshCalls).toHaveLength(1);
+  });
+
   it("points older token generations at the latest session", async () => {
     const session2 = {
       ...session,
