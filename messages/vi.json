@@ -484,6 +484,11 @@
         "description": "Sản phẩm có thể đã bị xóa hoặc liên kết không đúng. Hãy chọn một sản phẩm của bạn để bắt đầu tạo video.",
         "action": "Chọn sản phẩm"
       },
+      "productLoadError": {
+        "title": "Không thể tải sản phẩm",
+        "description": "Chúng tôi không thể tải sản phẩm này. Hãy thử lại sau giây lát.",
+        "action": "Thử lại"
+      },
       "pickProduct": {
         "title": "Chọn một sản phẩm đầu tiên",
         "description": "Thêm hoặc chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video khiến người xem dừng cuộn.",

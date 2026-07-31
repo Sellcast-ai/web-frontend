@@ -484,6 +484,11 @@
         "description": "Produk mungkin sudah dihapus atau tautannya salah. Pilih salah satu produkmu untuk mulai membuat video.",
         "action": "Pilih produk"
       },
+      "productLoadError": {
+        "title": "Produk tidak dapat dimuat",
+        "description": "Kami tidak dapat memuat produk ini. Coba lagi sebentar lagi.",
+        "action": "Coba lagi"
+      },
       "pickProduct": {
         "title": "Pilih produk terlebih dahulu",
         "description": "Tambahkan atau pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video yang menghentikan scroll.",

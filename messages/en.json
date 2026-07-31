@@ -484,6 +484,11 @@
         "description": "It may have been deleted, or the link is wrong. Pick one of your products to start a video.",
         "action": "Choose a product"
       },
+      "productLoadError": {
+        "title": "Product couldn’t load",
+        "description": "We couldn’t load this product. Try again in a moment.",
+        "action": "Try again"
+      },
       "pickProduct": {
         "title": "Pick a product first",
         "description": "Add or choose one of your products and Lumi will turn it into a scroll-stopping video.",

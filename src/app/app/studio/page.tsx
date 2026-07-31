@@ -25,7 +25,7 @@ import {
   useVideoJobs,
   ACTIVE_JOB_STATUSES,
 } from "@/lib/api/hooks";
-import { api } from "@/lib/api/client";
+import { ApiError, api } from "@/lib/api/client";
 import {
   VIDEO_ASPECT_RATIOS,
   VIDEO_DURATIONS,
@@ -119,7 +119,14 @@ function StudioInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const productId = sp.get("product") ?? "";
-  const { data: product, isLoading, isError } = useProduct(productId);
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error: productError,
+    refetch: refetchProduct,
+    isFetching: isFetchingProduct,
+  } = useProduct(productId);
   const { data: usage } = useUsage();
   const { data: jobs } = useVideoJobs();
   const create = useCreateJob({ startError: tt("startVideoFailed") });
@@ -179,27 +186,29 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
+    let releaseGuard = true;
     try {
       // failure is surfaced as a toast by useCreateJob
-      const job = await create
-        .mutateAsync({
-          product_id: productId,
-          mode,
-          style,
-          vibe,
-          ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
-          duration_seconds: duration,
-          review_mode: reviewMode,
-          language,
-          video_model: videoModel,
-          resolution,
-          aspect_ratio: aspectRatio,
-          avatar_id: mode === "ai_avatar" ? avatarId : null,
-        })
-        .catch(() => null);
-      if (job) router.push(`/app/jobs/${job.id}`);
+      const job = await create.mutateAsync({
+        product_id: productId,
+        mode,
+        style,
+        vibe,
+        ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
+        duration_seconds: duration,
+        review_mode: reviewMode,
+        language,
+        video_model: videoModel,
+        resolution,
+        aspect_ratio: aspectRatio,
+        avatar_id: mode === "ai_avatar" ? avatarId : null,
+      });
+      router.push(`/app/jobs/${job.id}`);
+      releaseGuard = false;
+    } catch {
+      releaseGuard = true;
     } finally {
-      generateGuard.end();
+      if (releaseGuard) generateGuard.end();
     }
   }
 
@@ -207,10 +216,11 @@ function StudioInner() {
     return <PickProduct />;
   }
 
-  // A bogus or foreign `?product=` id 404s on the backend (ownership enforced).
-  // Render a way back instead of the perpetual "Loading…" with a silently dead
-  // Generate that used to greet it (audit L4 P2-2).
-  if (isError) {
+  const productUnavailable =
+    productError instanceof ApiError &&
+    (productError.status === 404 || productError.status === 403);
+
+  if (isError && productUnavailable) {
     return (
       <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
@@ -224,6 +234,32 @@ function StudioInner() {
         </p>
         <Button href={STUDIO_HREF} size="lg" className="mt-6">
           {t("productError.action")}
+        </Button>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+          <AlertTriangle className="h-8 w-8" />
+        </div>
+        <h1 className="mt-5 font-display text-2xl font-bold text-ink">
+          {t("productLoadError.title")}
+        </h1>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          {t("productLoadError.description")}
+        </p>
+        <Button
+          type="button"
+          size="lg"
+          className="mt-6"
+          onClick={() => refetchProduct()}
+          disabled={isFetchingProduct}
+        >
+          {isFetchingProduct && <Loader2 className="h-4 w-4 animate-spin" />}
+          {t("productLoadError.action")}
         </Button>
       </div>
     );

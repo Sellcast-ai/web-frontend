@@ -484,6 +484,11 @@
         "description": "该商品可能已被删除，或链接有误。请选择你的商品来开始制作视频。",
         "action": "选择商品"
       },
+      "productLoadError": {
+        "title": "无法加载商品",
+        "description": "我们无法加载此商品。请稍后重试。",
+        "action": "重试"
+      },
       "pickProduct": {
         "title": "首先选择产品",
         "description": "添加或选择你的一个产品，Lumi 会将其变成让人停下滑动的视频。",

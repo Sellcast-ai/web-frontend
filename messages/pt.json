@@ -484,6 +484,11 @@
         "description": "Ele pode ter sido excluído ou o link está errado. Escolha um dos seus produtos para começar um vídeo.",
         "action": "Escolher um produto"
       },
+      "productLoadError": {
+        "title": "Não foi possível carregar o produto",
+        "description": "Não conseguimos carregar este produto. Tente novamente em instantes.",
+        "action": "Tentar novamente"
+      },
       "pickProduct": {
         "title": "Escolha um produto primeiro",
         "description": "Adicione ou escolha um dos seus produtos e a Lumi o transformará em um vídeo que prende a rolagem.",

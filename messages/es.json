@@ -484,6 +484,11 @@
         "description": "Puede que se haya eliminado o que el enlace sea incorrecto. Elige uno de tus productos para empezar un video.",
         "action": "Elegir un producto"
       },
+      "productLoadError": {
+        "title": "No se pudo cargar el producto",
+        "description": "No pudimos cargar este producto. Inténtalo de nuevo en un momento.",
+        "action": "Intentar de nuevo"
+      },
       "pickProduct": {
         "title": "Elige un producto primero",
         "description": "Agrega o elige uno de tus productos y Lumi lo convertirá en un video que detiene el desplazamiento.",
