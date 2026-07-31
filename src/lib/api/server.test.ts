@@ -40,6 +40,10 @@ function json(status: number, body: unknown) {
   });
 }
 
+// NOTE: the rotation-lineage cache in server.ts is module-level and outlives
+// individual tests, so every test below must use its own refresh token -
+// reusing one lets an earlier test's rotation answer a later test's refresh.
+
 afterEach(() => {
   vi.unstubAllGlobals();
 });
@@ -73,7 +77,7 @@ describe("callBackendAuthed", () => {
 
     const out = await callBackendAuthed(
       req("/api/bff/auth/shopify/start", {
-        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt1" },
+        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-authed" },
       }),
       "connections/shopify/start",
     );
@@ -182,5 +186,135 @@ describe("proxy", () => {
 
     expect(res.status).toBe(204);
     expect(res.body).toBeNull();
+  });
+
+  it("coalesces a burst of parallel 401s into one refresh and never clears cookies", async () => {
+    const refreshBodies: unknown[] = [];
+    let releaseRefresh!: (res: Response) => void;
+    const gate = new Promise<Response>((resolve) => {
+      releaseRefresh = resolve;
+    });
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        refreshBodies.push(init?.body);
+        return gate;
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return Promise.resolve(
+        auth === "Bearer new-at" ? json(200, { ok: true }) : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const cookies = { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-burst" };
+    const burst = Array.from({ length: 10 }, () =>
+      proxy(req("/api/bff/products", { cookies }), "products"),
+    );
+    // Hold the refresh until every request in the burst is waiting on it.
+    await new Promise((resolve) => setImmediate(resolve));
+    releaseRefresh(json(200, { user: {}, session }));
+    const responses = await Promise.all(burst);
+
+    expect(refreshBodies).toEqual([JSON.stringify({ refresh_token: "rt-burst" })]);
+    for (const res of responses) {
+      expect(res.status).toBe(200);
+      expect(res.cookies.get(COOKIE.access)?.value).toBe("new-at");
+      expect(res.cookies.get(COOKIE.refresh)?.value).toBe("new-rt");
+    }
+  });
+
+  it("reuses the winning session for a request holding the just-rotated token", async () => {
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        return Promise.resolve(json(200, { user: {}, session }));
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return Promise.resolve(
+        auth === "Bearer new-at" ? json(200, { ok: true }) : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const cookies = { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-lineage" };
+    const first = await proxy(req("/api/bff/products", { cookies }), "products");
+    expect(first.status).toBe(200);
+
+    // A request that read its cookies before the winner's Set-Cookie landed
+    // still presents the rotated-away token: it must ride the lineage to the
+    // same session, not refresh (and so never reach the 401-and-clear path).
+    const second = await proxy(req("/api/bff/products", { cookies }), "products");
+    expect(second.status).toBe(200);
+    expect(second.cookies.get(COOKIE.access)?.value).toBe("new-at");
+    expect(second.cookies.get(COOKIE.refresh)?.value).toBe("new-rt");
+
+    const refreshCalls = fetchMock.mock.calls.filter(([url]) =>
+      String(url).includes("/auth/refresh"),
+    );
+    expect(refreshCalls).toHaveLength(1);
+  });
+
+  it("points older token generations at the latest session", async () => {
+    const session2 = {
+      ...session,
+      access_token: "at-2",
+      refresh_token: "rt-gen3",
+    };
+    let validAccess: string | null = null;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        const body = JSON.parse(String(init?.body)) as { refresh_token: string };
+        const next =
+          body.refresh_token === "rt-gen1"
+            ? { ...session, access_token: "at-1", refresh_token: "rt-gen2" }
+            : session2;
+        validAccess = next.access_token;
+        return Promise.resolve(json(200, { user: {}, session: next }));
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return Promise.resolve(
+        auth === `Bearer ${validAccess}` && validAccess !== null
+          ? json(200, { ok: true })
+          : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    // Generation 1 -> 2.
+    const first = await proxy(
+      req("/api/bff/products", {
+        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-gen1" },
+      }),
+      "products",
+    );
+    expect(first.status).toBe(200);
+    expect(first.cookies.get(COOKIE.refresh)?.value).toBe("rt-gen2");
+
+    // Generation 2 -> 3 (at-1 expires first so this request must refresh).
+    validAccess = null;
+    const second = await proxy(
+      req("/api/bff/products", {
+        cookies: { [COOKIE.access]: "at-1", [COOKIE.refresh]: "rt-gen2" },
+      }),
+      "products",
+    );
+    expect(second.status).toBe(200);
+    expect(second.cookies.get(COOKIE.refresh)?.value).toBe("rt-gen3");
+
+    // A request two generations stale (still holding rt-gen1) resolves to the
+    // latest session through the lineage, with no third backend refresh.
+    const third = await proxy(
+      req("/api/bff/products", {
+        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-gen1" },
+      }),
+      "products",
+    );
+    expect(third.status).toBe(200);
+    expect(third.cookies.get(COOKIE.access)?.value).toBe("at-2");
+    expect(third.cookies.get(COOKIE.refresh)?.value).toBe("rt-gen3");
+
+    const refreshCalls = fetchMock.mock.calls.filter(([url]) =>
+      String(url).includes("/auth/refresh"),
+    );
+    expect(refreshCalls).toHaveLength(2);
   });
 });

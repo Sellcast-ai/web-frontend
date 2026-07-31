@@ -99,6 +99,92 @@ async function tryRefresh(refreshToken: string): Promise<AuthSuccess | null> {
 }
 
 /**
+ * Refresh coalescing (single-flight) + short-lived rotation lineage.
+ *
+ * The backend rotates the refresh token on every refresh, so a burst of
+ * parallel requests that all 401 at the access-token boundary must not each
+ * refresh on its own: the first rotation invalidates the token every sibling
+ * is about to present, and a sibling whose refresh then 401s must never clear
+ * the session cookies - its response can land after the winner's
+ * `setSessionCookies` and wipe the fresh session (a silent mid-session
+ * logout, reproduced in the pre-launch audit: 10 parallel BFF fetches with an
+ * expired access token -> one refresh 200, nine 401s, session destroyed).
+ *
+ * `inFlightRefreshes` makes concurrent refreshes of the same token share one
+ * backend call. `rotationLineage` remembers, for `REFRESH_ROTATION_TTL_MS`,
+ * which session succeeded a rotated-away token (ancestors of the current
+ * token included), so a request that read its cookies before the winner's
+ * Set-Cookie landed reuses the winning session instead of refreshing - and
+ * therefore never reaches the 401-and-clear path at all. A refresh failure is
+ * then authoritative for the presented token: this instance rotated nothing
+ * in its lineage, so clearing its cookies is safe. A rotation that happened
+ * on ANOTHER instance stays invisible here; the backend's previous-token
+ * grace window is what closes that race on serverless, and this logic is
+ * unchanged (simply never triggered) once it lands.
+ */
+const REFRESH_ROTATION_TTL_MS = 60_000;
+const REFRESH_ROTATION_MAX_ENTRIES = 200;
+
+type RotationRecord = { auth: AuthSuccess; expiresAt: number };
+
+const inFlightRefreshes = new Map<string, Promise<AuthSuccess | null>>();
+const rotationLineage = new Map<string, RotationRecord>();
+
+function recordRotation(rotatedToken: string, auth: AuthSuccess) {
+  const now = Date.now();
+  const record: RotationRecord = { auth, expiresAt: now + REFRESH_ROTATION_TTL_MS };
+  for (const [token, existing] of rotationLineage) {
+    if (existing.expiresAt <= now) {
+      rotationLineage.delete(token);
+    } else if (existing.auth.session.refresh_token === rotatedToken) {
+      // The rotated token was itself a successor: point every known ancestor
+      // at the new session, so a request holding a token two generations
+      // stale still finds it.
+      rotationLineage.set(token, record);
+    }
+  }
+  if (rotationLineage.size >= REFRESH_ROTATION_MAX_ENTRIES) {
+    const oldest = rotationLineage.keys().next().value;
+    if (oldest !== undefined) rotationLineage.delete(oldest);
+  }
+  rotationLineage.set(rotatedToken, record);
+}
+
+function sessionForRotatedToken(refreshToken: string): AuthSuccess | null {
+  const record = rotationLineage.get(refreshToken);
+  if (!record) return null;
+  if (record.expiresAt <= Date.now()) {
+    rotationLineage.delete(refreshToken);
+    return null;
+  }
+  return record.auth;
+}
+
+/**
+ * Refresh through the single-flight map: concurrent callers with the same
+ * refresh token share one backend refresh, and a token this instance already
+ * rotated away (within the TTL) resolves to its successor session without a
+ * backend call at all.
+ */
+async function refreshSession(refreshToken: string): Promise<AuthSuccess | null> {
+  const rotated = sessionForRotatedToken(refreshToken);
+  if (rotated) return rotated;
+  let inFlight = inFlightRefreshes.get(refreshToken);
+  if (!inFlight) {
+    inFlight = tryRefresh(refreshToken).then((auth) => {
+      if (auth) recordRotation(refreshToken, auth);
+      return auth;
+    });
+    inFlightRefreshes.set(refreshToken, inFlight);
+    const cleanup = () => {
+      inFlightRefreshes.delete(refreshToken);
+    };
+    inFlight.then(cleanup, cleanup);
+  }
+  return inFlight;
+}
+
+/**
  * Authenticated backend call for the OAuth-style BFF routes (Shopify connect),
  * where the *browser* navigates and the route must inspect redirects itself
  * rather than stream a proxied body. Same refresh-on-401 semantics as `proxy`;
@@ -132,7 +218,7 @@ export async function callBackendAuthed(
   try {
     res = await doCall(access);
     if (res.status === 401 && refresh) {
-      refreshed = await tryRefresh(refresh);
+      refreshed = await refreshSession(refresh);
       if (refreshed) res = await doCall(refreshed.session.access_token);
     }
   } catch {
@@ -174,7 +260,7 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   let refreshed: AuthSuccess | null = null;
 
   if (backendRes.status === 401 && refresh) {
-    refreshed = await tryRefresh(refresh);
+    refreshed = await refreshSession(refresh);
     if (refreshed) backendRes = await doCall(refreshed.session.access_token);
   }
 
@@ -190,6 +276,9 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   });
 
   if (refreshed) setSessionCookies(out, refreshed.session);
+  // Safe to clear: refreshSession only reports failure for a token whose
+  // lineage this instance never rotated, so no sibling's fresh Set-Cookie can
+  // be in flight for it (see the rotation-lineage note above).
   else if (backendRes.status === 401) clearSessionCookies(out);
 
   return out;
