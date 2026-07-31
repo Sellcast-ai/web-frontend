@@ -13,6 +13,10 @@ const OPTIONS: { value: Theme; Icon: typeof Sun; labelKey: ThemeLabelKey }[] = [
   { value: "dark", Icon: Moon, labelKey: "dark" },
 ];
 
+/* The selected option's pill is styled in globals.css off the `data-theme`
+   attribute the no-flash script stamps on <html> before paint, keyed to the
+   `data-theme-option` below — never from `theme` state here, which would paint
+   "System" on the server snapshot and flip after hydration. */
 export function ThemeToggle({ className }: { className?: string }) {
   const t = useTranslations("shared.theme");
   const { theme, setTheme } = useTheme();
@@ -36,13 +40,9 @@ export function ThemeToggle({ className }: { className?: string }) {
             aria-checked={theme === value}
             aria-label={label}
             title={label}
+            data-theme-option={value}
             onClick={() => setTheme(value)}
-            className={cn(
-              "inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors",
-              theme === value
-                ? "bg-accent text-accent-foreground"
-                : "text-muted-foreground hover:text-ink",
-            )}
+            className="inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground transition-colors hover:text-ink"
           >
             <Icon className="h-3.5 w-3.5" />
           </button>

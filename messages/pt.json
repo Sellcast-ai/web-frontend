@@ -549,7 +549,7 @@
     },
     "theme": {
       "label": "Tema",
-      "light": "Luz",
+      "light": "Claro",
       "system": "Sistema",
       "dark": "Escuro"
     }
@@ -727,7 +727,8 @@
     "header": {
       "signIn": "Faça login",
       "startFree": "Comece gratuitamente",
-      "openStudio": "Abrir o Studio"
+      "openStudio": "Abrir o Studio",
+      "startFreeMobile": "Comece"
     },
     "footer": {
       "tagline": "Entra um link de produto. Sai um vídeo pronto para publicar. Tudo com base nos padrões que já vendem.",

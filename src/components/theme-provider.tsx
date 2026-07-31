@@ -48,10 +48,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const theme = useSyncExternalStore(subscribe, getTheme, () => "system" as const);
   const resolved = useSyncExternalStore(subscribe, getResolved, () => "light" as const);
 
-  // sync the html class (the no-flash script handles first paint)
+  // sync the html class + saved choice (the no-flash script handles first paint)
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", resolved === "dark");
-  }, [resolved]);
+    const el = document.documentElement;
+    el.classList.toggle("dark", resolved === "dark");
+    el.dataset.theme = theme;
+  }, [resolved, theme]);
 
   const setTheme = useCallback((t: Theme) => {
     localStorage.setItem(THEME_KEY, t);
@@ -71,5 +73,9 @@ export function useTheme() {
   return ctx;
 }
 
-/** Inline script for the document head — sets the theme class before paint. */
-export const themeNoFlashScript = `(function(){try{var t=localStorage.getItem('${THEME_KEY}')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d);}catch(e){}})();`;
+/* Inline script for the document head — sets the theme class and stamps the
+   saved choice on <html data-theme> before paint. React can't paint the
+   ThemeToggle's selected pill correctly on its own (the server snapshot has no
+   localStorage), so globals.css reads that same attribute: one mechanism owns
+   first paint for both the background and the toggle. */
+export const themeNoFlashScript = `(function(){try{var t=localStorage.getItem('${THEME_KEY}')||'system';var d=t==='dark'||(t==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);var el=document.documentElement;el.classList.toggle('dark',d);el.dataset.theme=t;}catch(e){}})();`;

@@ -249,6 +249,17 @@
   }
 }
 
+/* ThemeToggle's selected pill, driven off the `data-theme` the no-flash script
+   stamps on <html> before paint (see themeNoFlashScript) rather than off React
+   state, which would paint "System" and then flip after hydration. Unlayered on
+   purpose so it beats the button's own Tailwind text utilities. */
+[data-theme="light"] [data-theme-option="light"],
+[data-theme="system"] [data-theme-option="system"],
+[data-theme="dark"] [data-theme-option="dark"] {
+  background-color: var(--accent);
+  color: var(--accent-fg);
+}
+
 /* --- Marketing editorial surface (SCOPED) ----------------------------
    The `.marketing` wrapper (marketing/layout.tsx) swaps the rounded display
    voice for a tight free grotesk (Geist) + italic-serif accent (Instrument
