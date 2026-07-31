@@ -5,6 +5,7 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
+  type InfiniteData,
   type QueryClient,
 } from "@tanstack/react-query";
 import { api, apiErrorMessage } from "./client";
@@ -231,6 +232,37 @@ export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean)
   );
 }
 
+type VideoJobsQueryData = VideoJob[] | InfiniteData<VideoJob[], number>;
+
+function isPagedVideoJobsData(
+  data: VideoJobsQueryData | undefined,
+): data is InfiniteData<VideoJob[], number> {
+  return Boolean(
+    data &&
+      typeof data === "object" &&
+      "pages" in data &&
+      Array.isArray(data.pages),
+  );
+}
+
+export function removeJobFromCachedLists(qc: QueryClient, id: string) {
+  qc.setQueriesData<VideoJobsQueryData | undefined>(
+    { queryKey: ["jobs"] },
+    (data) => {
+      if (Array.isArray(data)) {
+        return data.filter((job) => job.id !== id);
+      }
+      if (isPagedVideoJobsData(data)) {
+        return {
+          ...data,
+          pages: data.pages.map((page) => page.filter((job) => job.id !== id)),
+        };
+      }
+      return data;
+    },
+  );
+}
+
 export function useParseProduct() {
   return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
 }
@@ -347,6 +379,7 @@ export function useDeleteJob(messages: { deleteError: string }) {
     // permanently deleted video from cache as if it were live.
     onSuccess: (_, id) => {
       qc.removeQueries({ queryKey: qk.job(id) });
+      removeJobFromCachedLists(qc, id);
       qc.invalidateQueries({ queryKey: ["jobs"] });
     },
     onError: (err) => toast.error(apiErrorMessage(err, messages.deleteError)),

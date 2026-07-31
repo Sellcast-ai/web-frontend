@@ -4,12 +4,15 @@ import {
   importPollInterval,
   patchProductLists,
   qk,
+  removeJobFromCachedLists,
   snapshotProductQueries,
 } from "./hooks";
-import type { ProductSummary } from "./types";
+import type { ProductSummary, VideoJob } from "./types";
 
 const product = (id: string, is_liked: boolean) =>
   ({ id, is_liked }) as ProductSummary;
+
+const job = (id: string) => ({ id }) as VideoJob;
 
 function seed() {
   const qc = new QueryClient();
@@ -70,5 +73,38 @@ describe("optimistic like flip + rollback", () => {
     const list = qc.getQueryData<ProductSummary[]>(qk.myProducts)!;
     expect(list[0].is_liked).toBe(true);
     expect(qc.getQueryData(qk.product("p1"))).toBeUndefined();
+  });
+});
+
+describe("video job list cache pruning", () => {
+  it("removes a deleted job from cached list queries", () => {
+    const qc = new QueryClient();
+    qc.setQueryData(qk.jobs({ product_id: "p1" }), [
+      job("j1"),
+      job("deleted"),
+      job("j2"),
+    ]);
+
+    removeJobFromCachedLists(qc, "deleted");
+
+    expect(qc.getQueryData<VideoJob[]>(qk.jobs({ product_id: "p1" }))).toEqual([
+      job("j1"),
+      job("j2"),
+    ]);
+  });
+
+  it("removes a deleted job from cached paged list queries", () => {
+    const qc = new QueryClient();
+    qc.setQueryData(qk.jobs({ limit: 50 }), {
+      pageParams: [0, 50],
+      pages: [[job("j1"), job("deleted")], [job("j2"), job("deleted")]],
+    });
+
+    removeJobFromCachedLists(qc, "deleted");
+
+    expect(qc.getQueryData(qk.jobs({ limit: 50 }))).toEqual({
+      pageParams: [0, 50],
+      pages: [[job("j1")], [job("j2")]],
+    });
   });
 });
