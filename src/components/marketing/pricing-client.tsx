@@ -210,7 +210,7 @@ export function PricingClient() {
                 key={f}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-ink"
               >
-                <Check className="h-4 w-4 text-success" />
+                <Check className="h-4 w-4 text-success dark:text-live" />
                 {f}
               </span>
             ))}

@@ -46,7 +46,7 @@ const MAP: Record<
   completed: {
     labelKey: "ready",
     className: "bg-success-soft text-success dark:bg-[#123524] dark:text-live",
-    dot: "bg-success",
+    dot: "bg-success dark:bg-live",
   },
   failed: {
     labelKey: "failed",
