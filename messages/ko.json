@@ -7,10 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "내 제품",
+      "products": "제품",
       "stores": "스토어",
       "avatars": "아바타",
-      "videos": "내 동영상",
+      "videos": "동영상",
       "profile": "프로필",
       "newVideo": "새 영상",
       "new": "새로운",

@@ -7,10 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "我的产品",
+      "products": "产品",
       "stores": "店铺",
       "avatars": "头像",
-      "videos": "我的视频",
+      "videos": "视频",
       "profile": "个人资料",
       "newVideo": "新视频",
       "new": "新",
