@@ -31,13 +31,18 @@ export const qk = {
   shopifyAvailability: ["shopify-availability"] as const,
 };
 
-const ACTIVE: VideoJobStatus[] = [
+/** Statuses where the worker still owns the job (or is parked on the user).
+ *  Exported so surfaces that count "videos in progress" (Studio's active-jobs
+ *  cap pre-flight) use the same definition as the polling logic. */
+export const ACTIVE_JOB_STATUSES: VideoJobStatus[] = [
   "queued",
   "submitted",
   "in_progress",
   "awaiting_storyboard",
   "awaiting_review",
 ];
+
+const ACTIVE = ACTIVE_JOB_STATUSES;
 
 const VIDEO_JOBS_PAGE_SIZE = 50;
 
@@ -56,6 +61,9 @@ export function useProduct(id: string) {
     queryKey: qk.product(id),
     queryFn: () => api.getProduct(id),
     enabled: Boolean(id),
+    // a 404 (bogus or foreign id) never recovers — fail fast so Studio can
+    // show its error branch instead of burning a retry on "Loading…" (P2-2).
+    retry: retryUnlessNotFound,
   });
 }
 
@@ -317,7 +325,13 @@ export function useCreateJob(messages: { startError: string }) {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) => toast.error(apiErrorMessage(err, messages.startError)),
+    onError: (err) => {
+      // A rejected create (429 out of credits, 409 at the active-jobs cap) means
+      // the meter the user just read was wrong — refresh it, or Studio keeps
+      // offering a Generate that re-429s every click (audit L4 P2-3).
+      qc.invalidateQueries({ queryKey: ["usage"] });
+      toast.error(apiErrorMessage(err, messages.startError));
+    },
   });
 }
 
@@ -382,10 +396,25 @@ export function useRetryJob(messages: { retryError: string }) {
   });
 }
 
+/** DELETE /video-jobs/{id}, treating a 404 as success: the job is already
+ *  gone (deleted from another tab, or a repeat request landing after the first
+ *  one won), which is exactly the end state the user asked for. Without this,
+ *  the repeat 404 leaves the user stranded on the deleted video's page with
+ *  live-looking controls (audit L4 P1-1). The backend is making the delete
+ *  idempotent on its side too; this client handling stands alone. */
+export async function deleteVideoJobOrGone(id: string): Promise<void> {
+  try {
+    await api.deleteVideoJob(id);
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) return;
+    throw err;
+  }
+}
+
 export function useDeleteJob(messages: { deleteError: string }) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => api.deleteVideoJob(id),
+    mutationFn: (id: string) => deleteVideoJobOrGone(id),
     // qk.job(id) is ["job", id] — the ["jobs"] invalidation never reaches it,
     // so the deleted job's own entry has to be dropped or Back re-renders a
     // permanently deleted video from cache as if it were live.

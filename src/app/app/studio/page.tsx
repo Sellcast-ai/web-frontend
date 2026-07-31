@@ -14,6 +14,7 @@ import {
   PackagePlus,
   Link2,
   Upload,
+  AlertTriangle,
 } from "lucide-react";
 import {
   useProduct,
@@ -21,6 +22,8 @@ import {
   useUsage,
   useAvatars,
   useMyProducts,
+  useVideoJobs,
+  ACTIVE_JOB_STATUSES,
 } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
 import {
@@ -45,7 +48,15 @@ import { ProductCard } from "@/components/app/product-card";
 import { StaggerItem } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
+import { useMutationGuard } from "@/lib/mutation-guard";
 import { cn } from "@/lib/utils";
+
+/** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
+ *  usage endpoint doesn't expose the cap, so Studio derives it from the jobs
+ *  list and pre-flights it before the user configures and clicks (P2-1). The
+ *  first jobs page is enough: jobs come newest-first, so anything active is on
+ *  it, and the backend cap check stays the authoritative gate regardless. */
+const MAX_ACTIVE_JOBS = 3;
 
 export default function StudioPage() {
   return (
@@ -108,9 +119,11 @@ function StudioInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const productId = sp.get("product") ?? "";
-  const { data: product, isLoading } = useProduct(productId);
+  const { data: product, isLoading, isError } = useProduct(productId);
   const { data: usage } = useUsage();
+  const { data: jobs } = useVideoJobs();
   const create = useCreateJob({ startError: tt("startVideoFailed") });
+  const generateGuard = useMutationGuard();
 
   // default is product_only, not ai_avatar: avatar mode is selectable but does
   // not currently render, and a first attempt must not land on it. See AGENTS.md.
@@ -139,6 +152,12 @@ function StudioInner() {
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
+  // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
+  // learns about it before configuring, not from a raw 409 after the click.
+  const activeCount = (jobs ?? []).filter((j) =>
+    ACTIVE_JOB_STATUSES.includes(j.status),
+  ).length;
+  const atActiveCap = activeCount >= MAX_ACTIVE_JOBS;
   const trimmedReferenceUrl = referenceUrl.trim();
   const linkInvalid =
     referenceMode === "link" &&
@@ -156,28 +175,58 @@ function StudioInner() {
 
   async function generate() {
     if (!productId || linkInvalid || referenceUploading) return;
-    // failure is surfaced as a toast by useCreateJob
-    const job = await create
-      .mutateAsync({
-        product_id: productId,
-        mode,
-        style,
-        vibe,
-        ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
-        duration_seconds: duration,
-        review_mode: reviewMode,
-        language,
-        video_model: videoModel,
-        resolution,
-        aspect_ratio: aspectRatio,
-        avatar_id: mode === "ai_avatar" ? avatarId : null,
-      })
-      .catch(() => null);
-    if (job) router.push(`/app/jobs/${job.id}`);
+    // Synchronous latch: `disabled={create.isPending}` cannot catch two clicks
+    // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
+    // charged 45 credits). This rejects the second click before any await.
+    if (!generateGuard.tryBegin()) return;
+    try {
+      // failure is surfaced as a toast by useCreateJob
+      const job = await create
+        .mutateAsync({
+          product_id: productId,
+          mode,
+          style,
+          vibe,
+          ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
+          duration_seconds: duration,
+          review_mode: reviewMode,
+          language,
+          video_model: videoModel,
+          resolution,
+          aspect_ratio: aspectRatio,
+          avatar_id: mode === "ai_avatar" ? avatarId : null,
+        })
+        .catch(() => null);
+      if (job) router.push(`/app/jobs/${job.id}`);
+    } finally {
+      generateGuard.end();
+    }
   }
 
   if (!productId) {
     return <PickProduct />;
+  }
+
+  // A bogus or foreign `?product=` id 404s on the backend (ownership enforced).
+  // Render a way back instead of the perpetual "Loading…" with a silently dead
+  // Generate that used to greet it (audit L4 P2-2).
+  if (isError) {
+    return (
+      <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+          <AlertTriangle className="h-8 w-8" />
+        </div>
+        <h1 className="mt-5 font-display text-2xl font-bold text-ink">
+          {t("productError.title")}
+        </h1>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          {t("productError.description")}
+        </p>
+        <Button href={STUDIO_HREF} size="lg" className="mt-6">
+          {t("productError.action")}
+        </Button>
+      </div>
+    );
   }
 
   const cover = product?.cover_image_url || product?.hero_image_urls?.[0];
@@ -572,6 +621,7 @@ function StudioInner() {
                 create.isPending ||
                 !product ||
                 outOfQuota ||
+                atActiveCap ||
                 linkInvalid ||
                 referenceUploading
               }
@@ -590,6 +640,14 @@ function StudioInner() {
                 </>
               )}
             </Button>
+            {atActiveCap && (
+              <p className="mt-2 text-center text-xs text-muted-foreground">
+                {t("cap.reached", { count: activeCount, limit: MAX_ACTIVE_JOBS })}{" "}
+                <Link href="/app/videos" className="font-semibold text-brand-700">
+                  {t("cap.viewVideos")}
+                </Link>
+              </p>
+            )}
             {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {

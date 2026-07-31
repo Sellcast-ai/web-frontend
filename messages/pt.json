@@ -475,6 +475,15 @@
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
       "seePlans": "Ver planos",
+      "cap": {
+        "reached": "Você já tem {count} vídeos em andamento (limite de {limit}). Assim que um deles terminar, você poderá gerar um novo.",
+        "viewVideos": "Meus vídeos"
+      },
+      "productError": {
+        "title": "Não foi possível carregar esse produto",
+        "description": "Ele pode ter sido excluído ou o link está errado. Escolha um dos seus produtos para começar um vídeo.",
+        "action": "Escolher um produto"
+      },
       "pickProduct": {
         "title": "Escolha um produto primeiro",
         "description": "Adicione ou escolha um dos seus produtos e a Lumi o transformará em um vídeo que prende a rolagem.",

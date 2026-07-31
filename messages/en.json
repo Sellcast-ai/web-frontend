@@ -475,6 +475,15 @@
       "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for a {duration}s video ({remaining} of {limit} left).",
       "seePlans": "See plans",
+      "cap": {
+        "reached": "You already have {count} videos in progress (limit {limit}). You can generate a new one as soon as one of them finishes.",
+        "viewVideos": "My Videos"
+      },
+      "productError": {
+        "title": "That product can't be loaded",
+        "description": "It may have been deleted, or the link is wrong. Pick one of your products to start a video.",
+        "action": "Choose a product"
+      },
       "pickProduct": {
         "title": "Pick a product first",
         "description": "Add or choose one of your products and Lumi will turn it into a scroll-stopping video.",

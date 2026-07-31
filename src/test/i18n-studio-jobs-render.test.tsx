@@ -176,6 +176,7 @@ describe("Studio page renders extracted English copy", () => {
       c.setQueryData(qk.product("prod-1"), product);
       c.setQueryData(["usage"], usage);
       c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
     });
     const html = render(qc, React.createElement(StudioPage));
     save("studio-config", html);
@@ -220,6 +221,7 @@ describe("Studio page renders extracted English copy", () => {
       c.setQueryData(qk.product("prod-1"), product);
       c.setQueryData(["usage"], usage);
       c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
     });
     const html = render(qc, React.createElement(StudioPage));
     save("studio-size-picker", html);

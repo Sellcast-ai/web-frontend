@@ -475,6 +475,15 @@
       "generateUploading": "正在上传参考…",
       "outOfQuota": "{duration} 视频的学分不足（剩余 {limit} 的 {remaining}）。",
       "seePlans": "查看计划",
+      "cap": {
+        "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
+        "viewVideos": "我的视频"
+      },
+      "productError": {
+        "title": "无法加载该商品",
+        "description": "该商品可能已被删除，或链接有误。请选择你的商品来开始制作视频。",
+        "action": "选择商品"
+      },
       "pickProduct": {
         "title": "首先选择产品",
         "description": "添加或选择你的一个产品，Lumi 会将其变成让人停下滑动的视频。",

@@ -46,6 +46,7 @@ import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
+import { useMutationGuard } from "@/lib/mutation-guard";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -304,6 +305,11 @@ function DeleteVideoSection({ job }: { job: VideoJob }) {
   const router = useRouter();
   const del = useDeleteJob({ deleteError: tt("deleteVideoFailed") });
   const [confirming, setConfirming] = useState(false);
+  // Synchronous latch: `disabled={del.isPending}` only engages after React
+  // re-renders, so a same-tick double-click fires DELETE twice — the second
+  // one detached the observer, swallowed the success toast + navigation, and
+  // stranded the user on the deleted video's page (audit L4 P1-1).
+  const deleteGuard = useMutationGuard();
   return (
     <div className="mt-12 border-t border-border pt-6">
       <Button
@@ -329,14 +335,16 @@ function DeleteVideoSection({ job }: { job: VideoJob }) {
             size="sm"
             className="bg-rose shadow-none hover:bg-rose/90"
             disabled={del.isPending}
-            onClick={() =>
+            onClick={() => {
+              if (!deleteGuard.tryBegin()) return;
               del.mutate(job.id, {
                 onSuccess: () => {
                   toast.success(tt("videoDeleted"));
                   router.push("/app/videos");
                 },
-              })
-            }
+                onSettled: deleteGuard.end,
+              });
+            }}
           >
             {del.isPending ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -562,6 +570,10 @@ function StoryboardView({ job }: { job: VideoJob }) {
   });
   const [draft, setDraft] = useState<Storyboard | null>(job.storyboard);
   const [editing, setEditing] = useState<number | null>(null);
+  // Synchronous latch on approve: a same-tick double-click fired PATCH ×2 +
+  // approve ×2, and the second approve's 409 toasted a raw English error over
+  // an action that had actually succeeded (audit L4 P1-1 sister symptom).
+  const approveGuard = useMutationGuard();
 
   // storyboard is present once the worker has written the script; seed draft
   // when a later poll carries it, without clobbering in-progress edits.
@@ -604,10 +616,15 @@ function StoryboardView({ job }: { job: VideoJob }) {
   }
 
   async function approveAndGenerate() {
-    // Persist pending edits (re-validated) before the render kicks off; bail if
-    // validation fails so the user can fix the offending shot.
-    if (dirty && !(await save())) return;
-    await approve.mutateAsync().catch(() => null);
+    if (!approveGuard.tryBegin()) return;
+    try {
+      // Persist pending edits (re-validated) before the render kicks off; bail if
+      // validation fails so the user can fix the offending shot.
+      if (dirty && !(await save())) return;
+      await approve.mutateAsync().catch(() => null);
+    } finally {
+      approveGuard.end();
+    }
   }
 
   return (
@@ -1067,6 +1084,18 @@ function BeatCard({
   const pendingThis =
     action?.isPending && action.variables?.beatIndex === beat.beat_index;
   const s = BEAT_STATUS[beat.review_status];
+  // Synchronous latch per card — `pendingThis` needs a re-render to engage, so
+  // a same-tick double-click on Approve/Regenerate would fire the beat action
+  // twice (regenerates are billed work).
+  const actionGuard = useMutationGuard();
+
+  function runBeatAction(kind: "approve" | "regenerate") {
+    if (!action || !actionGuard.tryBegin()) return;
+    action.mutate(
+      { beatIndex: beat.beat_index, action: kind },
+      { onSettled: actionGuard.end },
+    );
+  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
@@ -1107,9 +1136,7 @@ function BeatCard({
           <button
             type="button"
             disabled={pendingThis || approved}
-            onClick={() =>
-              action.mutate({ beatIndex: beat.beat_index, action: "approve" })
-            }
+            onClick={() => runBeatAction("approve")}
             className={cn(
               "flex flex-1 items-center justify-center gap-1 rounded-lg py-1.5 text-xs font-semibold transition-colors",
               approved
@@ -1123,9 +1150,7 @@ function BeatCard({
           <button
             type="button"
             disabled={pendingThis}
-            onClick={() =>
-              action.mutate({ beatIndex: beat.beat_index, action: "regenerate" })
-            }
+            onClick={() => runBeatAction("regenerate")}
             aria-label={t("regenerate")}
             className="inline-flex items-center justify-center rounded-lg border border-border px-2.5 py-1.5 text-muted-foreground hover:text-ink"
           >
@@ -1147,12 +1172,16 @@ function CompletedView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.completed");
   const tt = useTranslations("app.toasts");
   const src = mediaUrl(job.video_url);
+  const postedGuard = useMutationGuard();
   async function markPosted() {
+    if (!postedGuard.tryBegin()) return;
     try {
       await api.recordEvent(job.id, { event_type: "posted" });
       toast.success(tt("markedPosted"));
     } catch {
       toast.error(tt("recordPostedFailed"));
+    } finally {
+      postedGuard.end();
     }
   }
   return (
@@ -1201,6 +1230,9 @@ function FailedView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.failed");
   const tt = useTranslations("app.toasts");
   const retry = useRetryJob({ retryError: tt("retryJobFailed") });
+  // Synchronous latch — retry resumes billed work, so a same-tick double-click
+  // must not fire it twice before `retry.isPending` can engage.
+  const retryGuard = useMutationGuard();
   return (
     <div className="mt-8 flex items-start gap-3 rounded-card border border-rose/30 bg-rose/5 p-5">
       <AlertTriangle className="mt-0.5 h-5 w-5 text-rose" />
@@ -1216,7 +1248,10 @@ function FailedView({ job }: { job: VideoJob }) {
           {/* resumes already-paid work (rendered shots, reference images) */}
           <Button
             size="md"
-            onClick={() => retry.mutate(job.id)}
+            onClick={() => {
+              if (!retryGuard.tryBegin()) return;
+              retry.mutate(job.id, { onSettled: retryGuard.end });
+            }}
             disabled={retry.isPending}
           >
             {retry.isPending ? (

@@ -475,6 +475,15 @@
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
       "seePlans": "Xem kế hoạch",
+      "cap": {
+        "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
+        "viewVideos": "Video của tôi"
+      },
+      "productError": {
+        "title": "Không thể tải sản phẩm đó",
+        "description": "Sản phẩm có thể đã bị xóa hoặc liên kết không đúng. Hãy chọn một sản phẩm của bạn để bắt đầu tạo video.",
+        "action": "Chọn sản phẩm"
+      },
       "pickProduct": {
         "title": "Chọn một sản phẩm đầu tiên",
         "description": "Thêm hoặc chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video khiến người xem dừng cuộn.",

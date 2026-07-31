@@ -475,6 +475,15 @@
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
       "seePlans": "Lihat rencana",
+      "cap": {
+        "reached": "Kamu sudah punya {count} video yang sedang diproses (batas {limit}). Kamu bisa membuat video baru setelah salah satunya selesai.",
+        "viewVideos": "Video Saya"
+      },
+      "productError": {
+        "title": "Produk itu tidak bisa dimuat",
+        "description": "Produk mungkin sudah dihapus atau tautannya salah. Pilih salah satu produkmu untuk mulai membuat video.",
+        "action": "Pilih produk"
+      },
       "pickProduct": {
         "title": "Pilih produk terlebih dahulu",
         "description": "Tambahkan atau pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video yang menghentikan scroll.",

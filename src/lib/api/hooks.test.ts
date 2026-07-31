@@ -1,6 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
 import {
+  deleteVideoJobOrGone,
   importPollInterval,
   patchProductLists,
   qk,
@@ -10,6 +11,19 @@ import {
 } from "./hooks";
 import { ApiError } from "./client";
 import type { ProductSummary, VideoJob } from "./types";
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+function mockFetch(status: number, body: unknown = null) {
+  const fn = vi.fn(
+    async () =>
+      new Response(body === null ? null : JSON.stringify(body), { status }),
+  );
+  vi.stubGlobal("fetch", fn);
+  return fn;
+}
 
 const product = (id: string, is_liked: boolean) =>
   ({ id, is_liked }) as ProductSummary;
@@ -105,6 +119,24 @@ describe("video job list cache pruning", () => {
     removeJobFromCachedLists(qc, "deleted");
 
     expect(qc.getQueryData(qk.jobs({ limit: 50 }))).toBeUndefined();
+  });
+});
+
+describe("deleteVideoJobOrGone", () => {
+  it("resolves on a plain 204 delete", async () => {
+    mockFetch(204);
+    await expect(deleteVideoJobOrGone("j1")).resolves.toBeUndefined();
+  });
+
+  it("treats a 404 as success — the job is already gone, which was the goal", async () => {
+    mockFetch(404, { detail: "Video job not found" });
+    await expect(deleteVideoJobOrGone("j1")).resolves.toBeUndefined();
+  });
+
+  it("still surfaces real failures", async () => {
+    mockFetch(500, { detail: "boom" });
+    await expect(deleteVideoJobOrGone("j1")).rejects.toBeInstanceOf(ApiError);
+    await expect(deleteVideoJobOrGone("j1")).rejects.toMatchObject({ status: 500 });
   });
 });
 
