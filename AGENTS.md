@@ -140,7 +140,7 @@ The teal gradients in `globals.css` (`bg-hero`, `bg-brand-gradient`) carry white
 ## Auth model
 
 JWTs from the FastAPI backend are stored as httpOnly cookies (`lumi_at` access ~30m, `lumi_rt` refresh ~30d) by the BFF auth routes; tokens never reach client JS.
-The catch-all proxy transparently refreshes on 401 and re-issues cookies, clearing them if refresh fails.
+The catch-all proxy transparently refreshes on 401 and re-issues cookies. Refresh failures clear cookies only when this instance has no remembered rotation lineage for that refresh token, so a losing request in a same-instance burst cannot wipe the winner's fresh session.
 Google is the only path guaranteed to work in every environment: `send-code` returning `delivery_channel: "development"` means the backend only logs codes, so `AuthForm` latches the phone step into a disabled "Phone unavailable" state (`auth.phoneUnavailable*` catalog keys) instead of advancing to code entry. The same latch happens when `send-code` fails with the structured `error_type: "SmsNotConfiguredError"` (503, SMS unconfigured in production) - that failure is non-destructive (the phone field keeps its value) and clearly final, not retryable.
 That check is post-submit - availability is only known from the first send response, so the user spends one attempt before seeing it; a pre-flight availability endpoint would remove that.
 
