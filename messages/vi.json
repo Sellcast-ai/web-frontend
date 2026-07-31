@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Không đọc được danh sách sản phẩm của cửa hàng đó. Vui lòng thử lại.",
       "readLinkFailed": "Không đọc được liên kết sản phẩm đó. Vui lòng thử lại.",
       "previewStoreFailed": "Không đọc được cửa hàng đó. Vui lòng kiểm tra địa chỉ và thử lại.",
-      "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại."
+      "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại.",
+      "videoDeleted": "Đã xóa video.",
+      "deleteVideoFailed": "Không thể xóa video. Vui lòng thử lại."
     },
     "categories": {
       "beautyPersonalCare": "Chăm sóc sắc đẹp & cá nhân",
@@ -187,10 +189,55 @@
       "subtitle": "Mọi thứ bạn đã tạo bằng Lumi.",
       "newVideo": "Video mới",
       "videoFallback": "Video",
+      "loadMore": "Tải thêm video cũ hơn",
+      "loadError": {
+        "title": "Không thể tải video",
+        "description": "Chúng tôi không thể tải video của bạn. Hãy thử lại.",
+        "action": "Thử lại"
+      },
+      "pageLoadError": {
+        "title": "Không thể tải video cũ hơn",
+        "description": "Chúng tôi không thể tải thêm video. Hãy thử lại.",
+        "action": "Thử lại"
+      },
       "empty": {
         "title": "Chưa có video nào",
         "description": "Chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video đầu tiên khiến người xem dừng cuộn.",
         "startFirstVideo": "Tạo video đầu tiên"
+      },
+      "tabsLabel": "Lọc video theo trạng thái",
+      "tabs": {
+        "needsYou": "Cần bạn xử lý",
+        "onTheWay": "Đang thực hiện",
+        "failed": "Thất bại",
+        "success": "Hoàn tất"
+      },
+      "tabEmpty": {
+        "loadMore": "Tải thêm video cũ hơn",
+        "needsYou": {
+          "title": "Không có gì cần bạn xử lý",
+          "loadedTitle": "Không có video đã tải nào cần bạn xử lý",
+          "loadedDescription": "Video cũ hơn có thể vẫn cần bạn xử lý. Tải thêm để tiếp tục kiểm tra.",
+          "description": "Khi video tạm dừng để chờ bạn duyệt kịch bản hoặc cảnh quay, nó sẽ chờ bạn ở đây."
+        },
+        "onTheWay": {
+          "title": "Không có video nào đang thực hiện",
+          "loadedTitle": "Không có video đã tải nào đang thực hiện",
+          "loadedDescription": "Video cũ hơn có thể vẫn đang xếp hàng hoặc đang dựng. Tải thêm để tiếp tục kiểm tra.",
+          "description": "Các video đang xếp hàng hoặc đang dựng sẽ hiện ở đây."
+        },
+        "failed": {
+          "title": "Không có video thất bại",
+          "loadedTitle": "Không có video thất bại nào đã tải",
+          "loadedDescription": "Video cũ hơn có thể đã thất bại. Tải thêm để tiếp tục kiểm tra.",
+          "description": "Video không hoàn thành sẽ xuất hiện ở đây, kèm tùy chọn thử lại."
+        },
+        "success": {
+          "title": "Chưa có video nào hoàn tất",
+          "loadedTitle": "Không có video hoàn tất nào đã tải",
+          "loadedDescription": "Video cũ hơn có thể đã hoàn tất. Tải thêm để tiếp tục kiểm tra.",
+          "description": "Các video hoàn tất sẽ xuất hiện ở đây, sẵn sàng để tải xuống và đăng."
+        }
       }
     },
     "avatars": {
@@ -551,6 +598,27 @@
         "fallbackMessage": "Đã xảy ra lỗi. Hãy thử tạo lại.",
         "retry": "Thử lại",
         "startNewVideo": "Bắt đầu một video mới"
+      },
+      "product": {
+        "view": "Xem sản phẩm",
+        "deleted": "Sản phẩm đã bị xóa"
+      },
+      "delete": {
+        "button": "Xóa video",
+        "title": "Xóa video này?",
+        "description": "Thao tác này xóa video vĩnh viễn. Không thể khôi phục và số tín dụng đã dùng sẽ không được hoàn lại.",
+        "cancel": "Hủy",
+        "confirm": "Xóa vĩnh viễn"
+      },
+      "notFound": {
+        "title": "Video này không còn nữa",
+        "description": "Video đã bị xóa, hoặc liên kết trỏ đến một video không phải của bạn. Những video bạn còn giữ đều nằm trong Video của tôi.",
+        "action": "Quay lại Video của tôi"
+      },
+      "loadError": {
+        "title": "Không thể tải video",
+        "description": "Chúng tôi không thể tải video này. Hãy thử lại.",
+        "action": "Thử lại"
       }
     }
   },

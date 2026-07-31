@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Tidak bisa membaca daftar produk toko itu. Silakan coba lagi.",
       "readLinkFailed": "Tidak bisa membaca tautan produk itu. Silakan coba lagi.",
       "previewStoreFailed": "Tidak bisa membaca toko itu. Periksa alamatnya dan coba lagi.",
-      "importNone": "Tidak ada dari {requested, plural, one {# produk} other {# produk}} yang bisa diimpor. Silakan coba lagi."
+      "importNone": "Tidak ada dari {requested, plural, one {# produk} other {# produk}} yang bisa diimpor. Silakan coba lagi.",
+      "videoDeleted": "Video dihapus.",
+      "deleteVideoFailed": "Tidak bisa menghapus video. Coba lagi."
     },
     "categories": {
       "beautyPersonalCare": "Kecantikan & Perawatan Pribadi",
@@ -187,10 +189,55 @@
       "subtitle": "Segala sesuatu yang Anda hasilkan dengan Lumi.",
       "newVideo": "Video baru",
       "videoFallback": "Video",
+      "loadMore": "Muat video yang lebih lama",
+      "loadError": {
+        "title": "Video tidak dapat dimuat",
+        "description": "Kami tidak dapat memuat video Anda. Coba lagi.",
+        "action": "Coba lagi"
+      },
+      "pageLoadError": {
+        "title": "Video lama tidak dapat dimuat",
+        "description": "Kami tidak dapat memuat video lainnya. Coba lagi.",
+        "action": "Coba lagi"
+      },
       "empty": {
         "title": "Belum ada video",
         "description": "Pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video pertama yang menghentikan scroll.",
         "startFirstVideo": "Buat video pertama"
+      },
+      "tabsLabel": "Filter video menurut status",
+      "tabs": {
+        "needsYou": "Perlu tindakanmu",
+        "onTheWay": "Dalam proses",
+        "failed": "Gagal",
+        "success": "Selesai"
+      },
+      "tabEmpty": {
+        "loadMore": "Muat video yang lebih lama",
+        "needsYou": {
+          "title": "Tidak ada yang menunggumu",
+          "loadedTitle": "Tidak ada video termuat yang perlu tindakanmu",
+          "loadedDescription": "Video yang lebih lama mungkin masih perlu tindakanmu. Muat lagi untuk terus memeriksa.",
+          "description": "Saat video berhenti menunggu persetujuan storyboard atau shot darimu, video itu menunggu di sini."
+        },
+        "onTheWay": {
+          "title": "Tidak ada yang sedang diproses",
+          "loadedTitle": "Tidak ada video termuat yang sedang diproses",
+          "loadedDescription": "Video yang lebih lama mungkin masih mengantre atau sedang dirender. Muat lagi untuk terus memeriksa.",
+          "description": "Video yang mengantre atau sedang dirender muncul di sini."
+        },
+        "failed": {
+          "title": "Tidak ada video yang gagal",
+          "loadedTitle": "Tidak ada video gagal yang termuat",
+          "loadedDescription": "Video yang lebih lama mungkin gagal. Muat lagi untuk terus memeriksa.",
+          "description": "Video yang tidak bisa diselesaikan muncul di sini, dengan opsi coba lagi."
+        },
+        "success": {
+          "title": "Belum ada video yang selesai",
+          "loadedTitle": "Tidak ada video selesai yang termuat",
+          "loadedDescription": "Video yang lebih lama mungkin sudah selesai. Muat lagi untuk terus memeriksa.",
+          "description": "Video yang selesai muncul di sini, siap diunduh dan diposting."
+        }
       }
     },
     "avatars": {
@@ -551,6 +598,27 @@
         "fallbackMessage": "Ada yang tidak beres. Coba buat lagi.",
         "retry": "Coba lagi",
         "startNewVideo": "Mulai video baru"
+      },
+      "product": {
+        "view": "Lihat produk",
+        "deleted": "Produk dihapus"
+      },
+      "delete": {
+        "button": "Hapus video",
+        "title": "Hapus video ini?",
+        "description": "Tindakan ini menghapus video secara permanen. Video tidak dapat dipulihkan dan kredit yang sudah terpakai tidak dikembalikan.",
+        "cancel": "Batal",
+        "confirm": "Hapus permanen"
+      },
+      "notFound": {
+        "title": "Video ini sudah tidak ada",
+        "description": "Video ini telah dihapus, atau tautannya menuju video yang bukan milik Anda. Semua yang masih Anda miliki ada di Video Saya.",
+        "action": "Kembali ke Video Saya"
+      },
+      "loadError": {
+        "title": "Video tidak dapat dimuat",
+        "description": "Kami tidak dapat memuat video ini. Coba lagi.",
+        "action": "Coba lagi"
       }
     }
   },

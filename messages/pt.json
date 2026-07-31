@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Não conseguimos ler a lista de produtos dessa loja. Tente novamente.",
       "readLinkFailed": "Não conseguimos ler esse link de produto. Tente novamente.",
       "previewStoreFailed": "Não conseguimos ler essa loja. Verifique o endereço e tente novamente.",
-      "importNone": "Não foi possível importar {requested, plural, one {# produto} other {# produtos}}. Tente novamente."
+      "importNone": "Não foi possível importar {requested, plural, one {# produto} other {# produtos}}. Tente novamente.",
+      "videoDeleted": "Vídeo excluído.",
+      "deleteVideoFailed": "Não foi possível excluir o vídeo. Tente de novo."
     },
     "categories": {
       "beautyPersonalCare": "Beleza e cuidados pessoais",
@@ -187,10 +189,55 @@
       "subtitle": "Tudo o que você gerou com Lumi.",
       "newVideo": "Novo vídeo",
       "videoFallback": "Vídeo",
+      "loadMore": "Carregar vídeos mais antigos",
+      "loadError": {
+        "title": "Não foi possível carregar os vídeos",
+        "description": "Não conseguimos carregar seus vídeos. Tente de novo.",
+        "action": "Tentar de novo"
+      },
+      "pageLoadError": {
+        "title": "Não foi possível carregar vídeos mais antigos",
+        "description": "Não conseguimos carregar mais vídeos. Tente de novo.",
+        "action": "Tentar de novo"
+      },
       "empty": {
         "title": "Ainda não há vídeos",
         "description": "Escolha um dos seus produtos e a Lumi o transformará no seu primeiro vídeo que prende a rolagem.",
         "startFirstVideo": "Criar primeiro vídeo"
+      },
+      "tabsLabel": "Filtrar vídeos por status",
+      "tabs": {
+        "needsYou": "Precisam de você",
+        "onTheWay": "A caminho",
+        "failed": "Com falha",
+        "success": "Prontos"
+      },
+      "tabEmpty": {
+        "loadMore": "Carregar vídeos mais antigos",
+        "needsYou": {
+          "title": "Nada precisa de você",
+          "loadedTitle": "Nada carregado precisa de você",
+          "loadedDescription": "Vídeos mais antigos ainda podem precisar de você. Carregue mais para continuar verificando.",
+          "description": "Quando um vídeo pausar à espera da sua aprovação do roteiro ou das cenas, ele espera por você aqui."
+        },
+        "onTheWay": {
+          "title": "Nada a caminho",
+          "loadedTitle": "Nada carregado está a caminho",
+          "loadedDescription": "Vídeos mais antigos ainda podem estar na fila ou renderizando. Carregue mais para continuar verificando.",
+          "description": "Vídeos na fila ou em renderização aparecem aqui."
+        },
+        "failed": {
+          "title": "Nenhum vídeo com falha",
+          "loadedTitle": "Nenhum vídeo com falha carregado",
+          "loadedDescription": "Vídeos mais antigos ainda podem ter falhado. Carregue mais para continuar verificando.",
+          "description": "Um vídeo que não pôde ser concluído aparece aqui, com a opção de tentar de novo."
+        },
+        "success": {
+          "title": "Nenhum vídeo pronto ainda",
+          "loadedTitle": "Nenhum vídeo pronto carregado",
+          "loadedDescription": "Vídeos mais antigos ainda podem estar prontos. Carregue mais para continuar verificando.",
+          "description": "Os vídeos concluídos aparecem aqui, prontos para baixar e publicar."
+        }
       }
     },
     "avatars": {
@@ -551,6 +598,27 @@
         "fallbackMessage": "Algo deu errado. Tente criá-lo novamente.",
         "retry": "Tentar novamente",
         "startNewVideo": "Iniciar um novo vídeo"
+      },
+      "product": {
+        "view": "Ver produto",
+        "deleted": "Produto excluído"
+      },
+      "delete": {
+        "button": "Excluir vídeo",
+        "title": "Excluir este vídeo?",
+        "description": "Isso exclui o vídeo permanentemente. Ele não pode ser recuperado e os créditos já usados não são reembolsados.",
+        "cancel": "Cancelar",
+        "confirm": "Excluir permanentemente"
+      },
+      "notFound": {
+        "title": "Este vídeo não existe mais",
+        "description": "Ele foi excluído ou o link aponta para um vídeo que não é seu. Tudo o que você ainda tem está em Meus vídeos.",
+        "action": "Voltar para Meus vídeos"
+      },
+      "loadError": {
+        "title": "Não foi possível carregar o vídeo",
+        "description": "Não conseguimos carregar este vídeo. Tente de novo.",
+        "action": "Tentar de novo"
       }
     }
   },

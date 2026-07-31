@@ -41,7 +41,9 @@
       "listCandidatesFailed": "无法读取该商店的商品列表。请重试。",
       "readLinkFailed": "无法读取该商品链接。请重试。",
       "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
-      "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。"
+      "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。",
+      "videoDeleted": "视频已删除。",
+      "deleteVideoFailed": "删除视频失败，请重试。"
     },
     "categories": {
       "beautyPersonalCare": "美容及个人护理",
@@ -187,10 +189,55 @@
       "subtitle": "您使用 Lumi 生成的所有内容。",
       "newVideo": "新视频",
       "videoFallback": "视频",
+      "loadMore": "加载更早的视频",
+      "loadError": {
+        "title": "无法加载视频",
+        "description": "我们无法加载你的视频。请重试。",
+        "action": "重试"
+      },
+      "pageLoadError": {
+        "title": "无法加载更早的视频",
+        "description": "我们无法加载更多视频。请重试。",
+        "action": "重试"
+      },
       "empty": {
         "title": "还没有视频",
         "description": "选择你的一个产品，Lumi 会将其变成你的第一条让人停下滑动的视频。",
         "startFirstVideo": "开始第一个视频"
+      },
+      "tabsLabel": "按状态筛选视频",
+      "tabs": {
+        "needsYou": "待你处理",
+        "onTheWay": "进行中",
+        "failed": "失败",
+        "success": "已完成"
+      },
+      "tabEmpty": {
+        "loadMore": "加载更早的视频",
+        "needsYou": {
+          "title": "暂无待处理事项",
+          "loadedTitle": "已加载的视频中没有待处理事项",
+          "loadedDescription": "更早的视频可能仍需要你处理。加载更多以继续检查。",
+          "description": "当视频暂停、等待你确认脚本或镜头时，会出现在这里。"
+        },
+        "onTheWay": {
+          "title": "暂无进行中的视频",
+          "loadedTitle": "已加载的视频中没有进行中的视频",
+          "loadedDescription": "更早的视频可能仍在排队或渲染。加载更多以继续检查。",
+          "description": "排队或渲染中的视频会显示在这里。"
+        },
+        "failed": {
+          "title": "没有失败的视频",
+          "loadedTitle": "已加载的视频中没有失败的视频",
+          "loadedDescription": "更早的视频可能有失败项。加载更多以继续检查。",
+          "description": "无法完成的视频会出现在这里，并可重试。"
+        },
+        "success": {
+          "title": "还没有完成的视频",
+          "loadedTitle": "已加载的视频中没有已完成的视频",
+          "loadedDescription": "更早的视频可能已经完成。加载更多以继续检查。",
+          "description": "完成的视频会显示在这里，可下载和发布。"
+        }
       }
     },
     "avatars": {
@@ -551,6 +598,27 @@
         "fallbackMessage": "出了点问题。尝试再次创建它。",
         "retry": "重试",
         "startNewVideo": "开始一个新视频"
+      },
+      "product": {
+        "view": "查看商品",
+        "deleted": "商品已删除"
+      },
+      "delete": {
+        "button": "删除视频",
+        "title": "删除此视频？",
+        "description": "此操作将永久删除该视频，无法恢复，已消耗的额度不予退还。",
+        "cancel": "取消",
+        "confirm": "永久删除"
+      },
+      "notFound": {
+        "title": "该视频已不存在",
+        "description": "它已被删除，或者这个链接指向的视频不属于你。你现有的视频都在“我的视频”中。",
+        "action": "返回我的视频"
+      },
+      "loadError": {
+        "title": "无法加载视频",
+        "description": "我们无法加载这个视频。请重试。",
+        "action": "重试"
       }
     }
   },

@@ -1,12 +1,13 @@
 "use client";
 
 import {
+  useInfiniteQuery,
   useMutation,
   useQuery,
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { api, apiErrorMessage } from "./client";
+import { ApiError, api, apiErrorMessage } from "./client";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -38,6 +39,8 @@ const ACTIVE: VideoJobStatus[] = [
   "awaiting_review",
 ];
 
+const VIDEO_JOBS_PAGE_SIZE = 50;
+
 /* ------------------------------------------------------------------ reads */
 
 export function useCurrentUser() {
@@ -53,6 +56,19 @@ export function useProduct(id: string) {
     queryKey: qk.product(id),
     queryFn: () => api.getProduct(id),
     enabled: Boolean(id),
+  });
+}
+
+export function retryUnlessNotFound(failureCount: number, err: unknown) {
+  return !(err instanceof ApiError && err.status === 404) && failureCount < 1;
+}
+
+export function useProductExistenceProbe(id: string) {
+  return useQuery({
+    queryKey: qk.product(id),
+    queryFn: () => api.getProduct(id),
+    enabled: Boolean(id),
+    retry: retryUnlessNotFound,
   });
 }
 
@@ -100,6 +116,23 @@ export function useVideoJobs(params: { product_id?: string } = {}) {
   return useQuery({
     queryKey: qk.jobs(params),
     queryFn: () => api.listVideoJobs(params),
+  });
+}
+
+export function usePagedVideoJobs(params: { product_id?: string } = {}) {
+  return useInfiniteQuery({
+    queryKey: qk.jobs({ ...params, limit: VIDEO_JOBS_PAGE_SIZE }),
+    queryFn: ({ pageParam }) =>
+      api.listVideoJobs({
+        ...params,
+        limit: VIDEO_JOBS_PAGE_SIZE,
+        offset: pageParam,
+      }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) =>
+      lastPage.length === VIDEO_JOBS_PAGE_SIZE
+        ? allPages.length * VIDEO_JOBS_PAGE_SIZE
+        : undefined,
   });
 }
 
@@ -211,6 +244,37 @@ export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean)
   );
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
+
+function isPagedVideoJobsKey(queryKey: readonly unknown[]) {
+  return (
+    queryKey[0] === "jobs" &&
+    isRecord(queryKey[1]) &&
+    queryKey[1].limit === VIDEO_JOBS_PAGE_SIZE
+  );
+}
+
+export function removeJobFromCachedLists(qc: QueryClient, id: string) {
+  qc.setQueriesData<VideoJob[] | undefined>(
+    {
+      queryKey: ["jobs"],
+      predicate: (query) => !isPagedVideoJobsKey(query.queryKey),
+    },
+    (data) => {
+      if (Array.isArray(data)) {
+        return data.filter((job) => job.id !== id);
+      }
+      return data;
+    },
+  );
+  qc.removeQueries({
+    queryKey: ["jobs"],
+    predicate: (query) => isPagedVideoJobsKey(query.queryKey),
+  });
+}
+
 export function useParseProduct() {
   return useMutation({ mutationFn: (url: string) => api.parseProductUrl(url) });
 }
@@ -318,11 +382,19 @@ export function useRetryJob(messages: { retryError: string }) {
   });
 }
 
-export function useDeleteJob() {
+export function useDeleteJob(messages: { deleteError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.deleteVideoJob(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["jobs"] }),
+    // qk.job(id) is ["job", id] — the ["jobs"] invalidation never reaches it,
+    // so the deleted job's own entry has to be dropped or Back re-renders a
+    // permanently deleted video from cache as if it were live.
+    onSuccess: (_, id) => {
+      qc.removeQueries({ queryKey: qk.job(id) });
+      removeJobFromCachedLists(qc, id);
+      qc.invalidateQueries({ queryKey: ["jobs"] });
+    },
+    onError: (err) => toast.error(apiErrorMessage(err, messages.deleteError)),
   });
 }
 

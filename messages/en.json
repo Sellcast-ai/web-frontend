@@ -41,7 +41,9 @@
       "listCandidatesFailed": "Couldn’t read that store’s product list. Please try again.",
       "readLinkFailed": "Couldn’t read that product link. Please try again.",
       "previewStoreFailed": "Couldn’t read that store. Please check the address and try again.",
-      "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again."
+      "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again.",
+      "videoDeleted": "Video deleted.",
+      "deleteVideoFailed": "Couldn't delete the video. Please try again."
     },
     "categories": {
       "beautyPersonalCare": "Beauty & Personal Care",
@@ -187,10 +189,55 @@
       "subtitle": "Everything you’ve generated with Lumi.",
       "newVideo": "New video",
       "videoFallback": "Video",
+      "loadMore": "Load older videos",
+      "loadError": {
+        "title": "Videos couldn’t load",
+        "description": "We couldn’t load your videos. Try again.",
+        "action": "Try again"
+      },
+      "pageLoadError": {
+        "title": "Older videos couldn’t load",
+        "description": "We couldn’t load more videos. Try again.",
+        "action": "Try again"
+      },
       "empty": {
         "title": "No videos yet",
         "description": "Choose one of your products and Lumi will turn it into your first scroll-stopping video.",
         "startFirstVideo": "Start first video"
+      },
+      "tabsLabel": "Filter videos by status",
+      "tabs": {
+        "needsYou": "Needs you",
+        "onTheWay": "On the way",
+        "failed": "Failed",
+        "success": "Success"
+      },
+      "tabEmpty": {
+        "loadMore": "Load older videos",
+        "needsYou": {
+          "title": "Nothing needs you",
+          "loadedTitle": "Nothing loaded needs you",
+          "loadedDescription": "Older videos may still need you. Load more to keep checking.",
+          "description": "When a video pauses for your storyboard or shot approval, it waits for you here."
+        },
+        "onTheWay": {
+          "title": "Nothing on the way",
+          "loadedTitle": "Nothing loaded is on the way",
+          "loadedDescription": "Older videos may still be queued or rendering. Load more to keep checking.",
+          "description": "Videos that are queued or rendering show up here."
+        },
+        "failed": {
+          "title": "No failed videos",
+          "loadedTitle": "No loaded failed videos",
+          "loadedDescription": "Older videos may still have failed. Load more to keep checking.",
+          "description": "A video that couldn't be finished lands here, with a retry."
+        },
+        "success": {
+          "title": "No finished videos yet",
+          "loadedTitle": "No loaded finished videos",
+          "loadedDescription": "Older videos may still be finished. Load more to keep checking.",
+          "description": "Completed videos appear here, ready to download and post."
+        }
       }
     },
     "avatars": {
@@ -551,6 +598,27 @@
         "fallbackMessage": "Something went wrong. Try creating it again.",
         "retry": "Retry",
         "startNewVideo": "Start a new video"
+      },
+      "product": {
+        "view": "View product",
+        "deleted": "Product deleted"
+      },
+      "delete": {
+        "button": "Delete video",
+        "title": "Delete this video?",
+        "description": "This permanently deletes the video. It cannot be recovered, and credits already spent are not refunded.",
+        "cancel": "Cancel",
+        "confirm": "Delete permanently"
+      },
+      "notFound": {
+        "title": "This video no longer exists",
+        "description": "It was deleted, or the link points to a video that isn’t yours. Everything you still have is in My Videos.",
+        "action": "Back to My Videos"
+      },
+      "loadError": {
+        "title": "Video couldn’t load",
+        "description": "We couldn’t load this video. Try again.",
+        "action": "Try again"
       }
     }
   },
