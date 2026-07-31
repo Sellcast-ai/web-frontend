@@ -126,6 +126,7 @@ const REFRESH_ROTATION_TTL_MS = 60_000;
 const REFRESH_ROTATION_MAX_ENTRIES = 200;
 
 type RotationRecord = { auth: AuthSuccess; expiresAt: number };
+type RefreshResult = { auth: AuthSuccess; fromLineage: boolean };
 
 const inFlightRefreshes = new Map<string, Promise<AuthSuccess | null>>();
 const rotationLineage = new Map<string, RotationRecord>();
@@ -166,9 +167,9 @@ function sessionForRotatedToken(refreshToken: string): AuthSuccess | null {
  * rotated away (within the TTL) resolves to its successor session without a
  * backend call at all.
  */
-async function refreshSession(refreshToken: string): Promise<AuthSuccess | null> {
+async function refreshSession(refreshToken: string): Promise<RefreshResult | null> {
   const rotated = sessionForRotatedToken(refreshToken);
-  if (rotated) return rotated;
+  if (rotated) return { auth: rotated, fromLineage: true };
   let inFlight = inFlightRefreshes.get(refreshToken);
   if (!inFlight) {
     inFlight = tryRefresh(refreshToken).then((auth) => {
@@ -181,7 +182,8 @@ async function refreshSession(refreshToken: string): Promise<AuthSuccess | null>
     };
     inFlight.then(cleanup, cleanup);
   }
-  return inFlight;
+  const auth = await inFlight;
+  return auth ? { auth, fromLineage: false } : null;
 }
 
 /**
@@ -189,11 +191,10 @@ async function refreshSession(refreshToken: string): Promise<AuthSuccess | null>
  * where the *browser* navigates and the route must inspect redirects itself
  * rather than stream a proxied body. Same refresh-on-401 semantics as `proxy`;
  * `res` is null when there is no usable session - no cookies at all, or a 401
- * no refresh could rescue. `refreshed` still carries a session in that second
- * case, and callers must write it: the refresh already rotated (and so
- * invalidated) the old token. Callers clear the session cookies only when
- * there is no `refreshed`, or stale cookies keep the app shell from
- * redirecting to /login.
+ * no refresh could rescue. `refreshed` still carries a session when a real
+ * backend refresh rotated (and so invalidated) the old token before the retry
+ * failed. Callers clear the session cookies only when there is no `refreshed`,
+ * or stale cookies keep the app shell from redirecting to /login.
  *
  * A backend that cannot be reached at all (DNS, refused connection, TLS, cold
  * start) makes `fetch` throw rather than answer. That is not an auth outcome,
@@ -215,15 +216,21 @@ export async function callBackendAuthed(
 
   let res: Response;
   let refreshed: AuthSuccess | null = null;
+  let refreshedFromLineage = false;
   try {
     res = await doCall(access);
     if (res.status === 401 && refresh) {
-      refreshed = await refreshSession(refresh);
-      if (refreshed) res = await doCall(refreshed.session.access_token);
+      const refreshResult = await refreshSession(refresh);
+      if (refreshResult) {
+        refreshed = refreshResult.auth;
+        refreshedFromLineage = refreshResult.fromLineage;
+        res = await doCall(refreshed.session.access_token);
+      }
     }
   } catch {
     return { res: null, refreshed, unreachable: true };
   }
+  if (res.status === 401 && refreshedFromLineage) refreshed = null;
   if (res.status === 401) return { res: null, refreshed, unreachable: false };
   return { res, refreshed, unreachable: false };
 }
@@ -260,8 +267,11 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   let refreshed: AuthSuccess | null = null;
 
   if (backendRes.status === 401 && refresh) {
-    refreshed = await refreshSession(refresh);
-    if (refreshed) backendRes = await doCall(refreshed.session.access_token);
+    const refreshResult = await refreshSession(refresh);
+    if (refreshResult) {
+      refreshed = refreshResult.auth;
+      backendRes = await doCall(refreshed.session.access_token);
+    }
   }
 
   const payload = await backendRes.text();

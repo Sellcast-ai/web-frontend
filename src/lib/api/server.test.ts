@@ -86,6 +86,47 @@ describe("callBackendAuthed", () => {
     expect(out.unreachable).toBe(false);
     expect(out.refreshed?.session.access_token).toBe("new-at");
   });
+
+  it("does not expose a cached refreshed session when the retry proves revoked", async () => {
+    let revoked = false;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        return Promise.resolve(json(200, { user: {}, session }));
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      return Promise.resolve(
+        auth === "Bearer new-at" && !revoked
+          ? json(200, { shop: "test.myshopify.com" })
+          : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const cookies = {
+      [COOKIE.access]: "stale-at",
+      [COOKIE.refresh]: "rt-authed-revoked-lineage",
+    };
+    const first = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies }),
+      "connections/shopify/start",
+    );
+    expect(first.res?.status).toBe(200);
+    expect(first.refreshed?.session.access_token).toBe("new-at");
+
+    revoked = true;
+    const second = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies }),
+      "connections/shopify/start",
+    );
+    expect(second.res).toBeNull();
+    expect(second.refreshed).toBeNull();
+    expect(second.unreachable).toBe(false);
+
+    const refreshCalls = fetchMock.mock.calls.filter(([url]) =>
+      String(url).includes("/auth/refresh"),
+    );
+    expect(refreshCalls).toHaveLength(1);
+  });
 });
 
 describe("proxy", () => {
