@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AlertTriangle, Loader2, Clapperboard, Play, RefreshCw, Sparkles } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePagedVideoJobs } from "@/lib/api/hooks";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
@@ -210,6 +210,8 @@ function TabButton({
 function JobCard({ job }: { job: VideoJob }) {
   const t = useTranslations("app.videos");
   const tp = useTranslations("app.videoPresets.styles");
+  const tf = useTranslations("app.format");
+  const locale = useLocale();
   const thumb = mediaUrl(job.thumbnail_url) || mediaUrl(job.product_image_url);
   const style = VIDEO_STYLES[job.mode]?.find((s) => s.value === job.style);
   const styleKey = STYLE_LABEL_KEYS[style?.value ?? job.style];
@@ -242,7 +244,7 @@ function JobCard({ job }: { job: VideoJob }) {
           {job.product_name ?? t("videoFallback")}
         </p>
         <p className="mt-0.5 text-xs text-muted-foreground">
-          {styleLabel} · {relativeTime(job.created_at)}
+          {styleLabel} · {relativeTime(job.created_at, tf, locale)}
         </p>
       </div>
     </Link>

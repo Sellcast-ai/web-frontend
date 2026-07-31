@@ -643,6 +643,12 @@
         "description": "Chúng tôi không thể tải video này. Hãy thử lại.",
         "action": "Thử lại"
       }
+    },
+    "format": {
+      "justNow": "vừa xong",
+      "minutesAgo": "{n} phút trước",
+      "hoursAgo": "{n} giờ trước",
+      "daysAgo": "{n} ngày trước"
     }
   },
   "languageSwitcher": {

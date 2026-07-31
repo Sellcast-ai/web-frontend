@@ -643,6 +643,12 @@
         "description": "Não conseguimos carregar este vídeo. Tente de novo.",
         "action": "Tentar de novo"
       }
+    },
+    "format": {
+      "justNow": "agora mesmo",
+      "minutesAgo": "há {n} min",
+      "hoursAgo": "há {n} h",
+      "daysAgo": "há {n} d"
     }
   },
   "languageSwitcher": {

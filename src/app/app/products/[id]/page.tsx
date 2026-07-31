@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowLeft,
   Heart,
@@ -31,6 +31,7 @@ import { cn } from "@/lib/utils";
 export default function ProductDetailPage() {
   const t = useTranslations("app.productDetail");
   const tt = useTranslations("app.toasts");
+  const locale = useLocale();
   const params = useParams<{ id: string }>();
   const id = params.id;
   const { data: product, isLoading, isError } = useProduct(id);
@@ -69,10 +70,10 @@ export default function ProductDetailPage() {
   // marketplace rows carry commission + sales analytics; user-created rows don't
   const isMarketplaceRow = !product.owner_user_id;
   const metrics = [
-    { label: t("metrics.monthlySales"), value: compact(product.monthly_sales) },
-    { label: t("metrics.totalRevenue"), value: money(product.total_revenue) },
-    { label: t("metrics.activeCreators"), value: compact(product.creator_count_active) },
-    { label: t("metrics.totalViews"), value: compact(product.total_views) },
+    { label: t("metrics.monthlySales"), value: compact(product.monthly_sales, locale) },
+    { label: t("metrics.totalRevenue"), value: money(product.total_revenue, locale) },
+    { label: t("metrics.activeCreators"), value: compact(product.creator_count_active, locale) },
+    { label: t("metrics.totalViews"), value: compact(product.total_views, locale) },
   ];
 
   return (
@@ -106,7 +107,7 @@ export default function ProductDetailPage() {
               <div className="bg-brand-gradient h-full w-full" />
             )}
             {product.sales_mom_pct != null && product.sales_mom_pct > 0 && (
-              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-xs font-bold text-success">
+              <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-1 text-xs font-bold text-success dark:bg-[#123524] dark:text-live">
                 <TrendingUp className="h-3.5 w-3.5" />
                 {t("mom", { percent: percent(product.sales_mom_pct) })}
               </span>
@@ -163,7 +164,7 @@ export default function ProductDetailPage() {
 
           <div className="mt-5 flex items-baseline gap-3">
             <span className="font-display text-3xl font-bold text-ink">
-              {priceRange(product.price_min, product.price_max, product.currency)}
+              {priceRange(product.price_min, product.price_max, locale, product.currency)}
             </span>
             {isMarketplaceRow && (
               <Badge variant="success">

@@ -251,7 +251,7 @@ const Field = function Field({
 };
 
 function ErrorText({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm font-medium text-rose">{children}</p>;
+  return <p className="text-sm font-medium text-danger">{children}</p>;
 }
 
 /* ------------------------------------------------------------- Google SSO */

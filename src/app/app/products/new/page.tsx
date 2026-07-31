@@ -4,7 +4,7 @@
 import { memo, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Link2,
   Loader2,
@@ -436,7 +436,7 @@ function NewProductInner() {
                     </button>
                   </div>
                 </div>
-                {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+                {uploadError && <p className="mt-2 text-xs text-danger">{uploadError}</p>}
               </section>
             </>
           )}
@@ -571,7 +571,7 @@ function NewProductInner() {
                           uploads: draft.uploads.filter((_, i) => i !== index),
                         })
                       }
-                      className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-ink/70 text-xs text-white"
+                      className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-xs text-white"
                     >
                       ×
                     </button>
@@ -590,7 +590,7 @@ function NewProductInner() {
                   <span className="text-xs font-semibold">{t("addPhoto")}</span>
                 </button>
               </div>
-              {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+              {uploadError && <p className="mt-2 text-xs text-danger">{uploadError}</p>}
             </Field>
           </div>
 
@@ -1156,6 +1156,7 @@ const CandidateRow = memo(function CandidateRow({
   untitledLabel: string;
   onToggle: (sourceUrl: string) => void;
 }) {
+  const locale = useLocale();
   return (
     <label className="flex items-center gap-3 border-b border-border px-3 py-2 last:border-b-0 hover:bg-accent/40 [contain-intrinsic-size:auto_64px] [content-visibility:auto]">
       <input
@@ -1187,7 +1188,7 @@ const CandidateRow = memo(function CandidateRow({
           {candidate.title || untitledLabel}
         </span>
         <span className="block text-xs text-muted-foreground">
-          {priceRange(candidate.price_min, candidate.price_max, candidate.currency ?? "USD")}
+          {priceRange(candidate.price_min, candidate.price_max, locale, candidate.currency ?? "USD")}
         </span>
       </span>
     </label>

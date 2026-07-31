@@ -643,6 +643,12 @@
         "description": "この動画を読み込めませんでした。もう一度お試しください。",
         "action": "再試行"
       }
+    },
+    "format": {
+      "justNow": "たった今",
+      "minutesAgo": "{n}分前",
+      "hoursAgo": "{n}時間前",
+      "daysAgo": "{n}日前"
     }
   },
   "languageSwitcher": {

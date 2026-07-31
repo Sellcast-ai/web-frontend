@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Check, Globe } from "lucide-react";
-import { menuPlacement } from "@/lib/menu-placement";
+import { menuPlacement, menuShiftX } from "@/lib/menu-placement";
 import { cn } from "@/lib/utils";
 
 // The 9 target UI locales, listed by endonym.
@@ -46,7 +46,8 @@ export function LanguageSwitcher({
   const [placement, setPlacement] = useState<{
     up: boolean;
     maxHeight: number | null;
-  }>({ up: false, maxHeight: null });
+    shiftX: number;
+  }>({ up: false, maxHeight: null, shiftX: 0 });
   const ref = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const scrolledRef = useRef(false);
@@ -84,8 +85,18 @@ export function LanguageSwitcher({
         viewportHeight: window.innerHeight,
         menuHeight: menu.scrollHeight,
       });
+      // the menu anchors to the trigger's right edge; clamp its left edge back
+      // into the viewport (320px marketing header would clip it off-screen)
+      const shiftX = menuShiftX({
+        triggerRight: rect.right,
+        menuWidth: menu.offsetWidth,
+      });
       setPlacement((prev) =>
-        prev.up === next.up && prev.maxHeight === next.maxHeight ? prev : next,
+        prev.up === next.up &&
+        prev.maxHeight === next.maxHeight &&
+        prev.shiftX === shiftX
+          ? prev
+          : { ...next, shiftX },
       );
     }
     update();
@@ -94,7 +105,7 @@ export function LanguageSwitcher({
     return () => {
       window.removeEventListener("resize", update);
       window.removeEventListener("scroll", update, true);
-      setPlacement({ up: false, maxHeight: null });
+      setPlacement({ up: false, maxHeight: null, shiftX: 0 });
     };
   }, [open]);
 
@@ -156,11 +167,14 @@ export function LanguageSwitcher({
           ref={menuRef}
           role="menu"
           aria-label={t("label")}
-          style={
-            placement.maxHeight === null
-              ? undefined
-              : { maxHeight: placement.maxHeight }
-          }
+          style={{
+            ...(placement.maxHeight === null
+              ? {}
+              : { maxHeight: placement.maxHeight }),
+            ...(placement.shiftX === 0
+              ? {}
+              : { transform: `translateX(${placement.shiftX}px)` }),
+          }}
           className={cn(
             "absolute right-0 z-50 min-w-44 overflow-y-auto overscroll-contain rounded-xl border border-border bg-card p-1 shadow-lg",
             placement.up ? "bottom-full mb-2" : "mt-2",
