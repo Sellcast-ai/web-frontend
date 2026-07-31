@@ -161,6 +161,15 @@ function sessionForRotatedToken(refreshToken: string): AuthSuccess | null {
   return record.auth;
 }
 
+function tombstoneLineage(refreshToken: string, auth: AuthSuccess) {
+  const successor = auth.session.refresh_token;
+  for (const [token, record] of rotationLineage) {
+    if (token === refreshToken || record.auth.session.refresh_token === successor) {
+      rotationLineage.delete(token);
+    }
+  }
+}
+
 /**
  * Refresh through the single-flight map: concurrent callers with the same
  * refresh token share one backend refresh, and a token this instance already
@@ -228,9 +237,16 @@ export async function callBackendAuthed(
       }
     }
   } catch {
+    if (refresh && refreshed && refreshedFromLineage) {
+      tombstoneLineage(refresh, refreshed);
+      refreshed = null;
+    }
     return { res: null, refreshed, unreachable: true };
   }
-  if (res.status === 401 && refreshedFromLineage) refreshed = null;
+  if (res.status === 401 && refresh && refreshed && refreshedFromLineage) {
+    tombstoneLineage(refresh, refreshed);
+    refreshed = null;
+  }
   if (res.status === 401) return { res: null, refreshed, unreachable: false };
   return { res, refreshed, unreachable: false };
 }
@@ -265,11 +281,13 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
 
   let backendRes = await doCall(access);
   let refreshed: AuthSuccess | null = null;
+  let refreshedFromLineage = false;
 
   if (backendRes.status === 401 && refresh) {
     const refreshResult = await refreshSession(refresh);
     if (refreshResult) {
       refreshed = refreshResult.auth;
+      refreshedFromLineage = refreshResult.fromLineage;
       backendRes = await doCall(refreshed.session.access_token);
     }
   }
@@ -286,6 +304,7 @@ export async function proxy(req: NextRequest, path: string): Promise<NextRespons
   });
 
   if (refreshed && backendRes.status !== 401) setSessionCookies(out, refreshed.session);
+  else if (refresh && refreshed && refreshedFromLineage) tombstoneLineage(refresh, refreshed);
   // Safe to clear: refreshSession only reports failure for a token whose
   // lineage this instance never rotated, so no sibling's fresh Set-Cookie can
   // be in flight for it (see the rotation-lineage note above).

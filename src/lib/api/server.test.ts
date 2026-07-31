@@ -127,6 +127,64 @@ describe("callBackendAuthed", () => {
     );
     expect(refreshCalls).toHaveLength(1);
   });
+
+  it("does not expose a cached refreshed session when the retry is unreachable", async () => {
+    let unreachable = false;
+    let refreshCount = 0;
+    const fetchMock = vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes("/auth/refresh")) {
+        refreshCount += 1;
+        return Promise.resolve(
+          refreshCount === 1
+            ? json(200, { user: {}, session })
+            : json(401, { detail: "refresh expired" }),
+        );
+      }
+      const auth = (init?.headers as Record<string, string>).Authorization;
+      if (auth === "Bearer new-at" && unreachable) {
+        return Promise.reject(new TypeError("fetch failed"));
+      }
+      return Promise.resolve(
+        auth === "Bearer new-at"
+          ? json(200, { shop: "test.myshopify.com" })
+          : json(401, { detail: "expired" }),
+      );
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const cookies = {
+      [COOKIE.access]: "stale-at",
+      [COOKIE.refresh]: "rt-authed-unreachable-lineage",
+    };
+    const first = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies }),
+      "connections/shopify/start",
+    );
+    expect(first.res?.status).toBe(200);
+    expect(first.refreshed?.session.access_token).toBe("new-at");
+
+    unreachable = true;
+    const second = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies }),
+      "connections/shopify/start",
+    );
+    expect(second.res).toBeNull();
+    expect(second.refreshed).toBeNull();
+    expect(second.unreachable).toBe(true);
+
+    const third = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies }),
+      "connections/shopify/start",
+    );
+    expect(third.res).toBeNull();
+    expect(third.refreshed).toBeNull();
+    expect(third.unreachable).toBe(false);
+
+    const refreshCalls = fetchMock.mock.calls.filter(([url]) =>
+      String(url).includes("/auth/refresh"),
+    );
+    expect(refreshCalls).toHaveLength(2);
+  });
 });
 
 describe("proxy", () => {
