@@ -73,6 +73,14 @@ Message catalogs live in `messages/*.json`; `messages/en.json` is the source of
 truth and all nine catalogs must keep the same key and placeholder structure.
 Run the message parity tests after changing catalog keys.
 
+Backend failure fields are not localized user copy. Failed video reasons and
+store-import failure toasts must go through `src/lib/failure-messages.ts`, which
+maps known backend strings to catalog keys and falls back to translated generic
+messages for anything unknown. API call failures should render through
+`apiErrorMessage(err, localizedFallback)`, not `ApiError.message`; bare 5xx body
+messages are treated as operator prose unless a structured `error_type` is
+present.
+
 ## Deployment
 
 Deploy the app on Vercel and point `SELLCAST_API_BASE` at the deployed backend.

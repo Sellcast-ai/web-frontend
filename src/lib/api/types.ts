@@ -116,6 +116,7 @@ export interface ImportJob {
   products_found: number;
   products_upserted: number;
   products_failed: number;
+  /** Free-form backend English; render through `importFailureKey`, never raw. */
   error: string | null;
   started_at: string | null;
   finished_at: string | null;
@@ -441,6 +442,7 @@ export interface VideoJob {
   /** Same video presigned with attachment disposition — forces save-as. */
   download_url: string | null;
   thumbnail_url: string | null;
+  /** Free-form backend English; render through `videoJobFailureKey`, never raw. */
   error_message: string | null;
   created_at: string;
   updated_at: string;
