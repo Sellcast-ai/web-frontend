@@ -7,9 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "Produk Saya",
+      "products": "Produk",
+      "stores": "Toko",
       "avatars": "Avatar",
-      "videos": "Video Saya",
+      "videos": "Video",
       "profile": "Profil",
       "newVideo": "Video baru",
       "new": "Baru",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "Toko web",
       "manual": "petunjuk"
+    },
+    "connections": {
+      "title": "Toko",
+      "subtitle": "Hubungkan toko Anda agar Lumi dapat mengimpor produk Anda.",
+      "connectHeading": "Hubungkan toko",
+      "yourStores": "Toko Anda",
+      "listUnavailable": "Melihat dan menghapus koneksi yang sudah ada belum tersedia — API koneksi toko saat ini hanya mendukung menghubungkan. Toko yang Anda hubungkan tetap aktif meskipun belum bisa ditampilkan di sini.",
+      "notAvailableYet": "Belum tersedia",
+      "checkingAvailability": "Memeriksa ketersediaan…",
+      "shopifyUnavailable": "Koneksi Shopify sedang tidak tersedia. Coba lagi nanti.",
+      "shopDomainLabel": "Domain toko",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "Hubungkan",
+      "dismiss": "Tutup",
+      "connectedBanner": "{shop} kini terhubung ke Lumi.",
+      "connectedBannerGeneric": "Toko Anda kini terhubung ke Lumi.",
+      "errors": {
+        "invalid-shop": "Masukkan domain .myshopify.com toko Anda (misalnya toko-anda.myshopify.com).",
+        "unavailable": "Koneksi Shopify sedang tidak tersedia. Coba lagi nanti.",
+        "failed": "Koneksi tidak selesai. Silakan coba lagi."
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "Hubungkan toko Shopify Anda dengan login aman — Lumi lalu dapat mengimpor produk Anda."
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "Hubungkan toko WooCommerce untuk mengimpor produknya."
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "Hubungkan TikTok Shop Anda untuk mengimpor produknya."
+        }
+      }
     },
     "productCard": {
       "save": "Simpan",

@@ -27,6 +27,7 @@ export const qk = {
   job: (id: string) => ["job", id] as const,
   import: (id: string) => ["import", id] as const,
   importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
+  shopifyAvailability: ["shopify-availability"] as const,
 };
 
 const ACTIVE: VideoJobStatus[] = [
@@ -61,6 +62,17 @@ export function useMyProducts() {
 
 export function useAvatars() {
   return useQuery({ queryKey: ["avatars"], queryFn: api.listAvatars });
+}
+
+/** Probes whether the Shopify connect flow works end to end on the deployed
+ * backend. Each probe costs a backend round trip, so it stays fresh longer
+ * than the global default. */
+export function useShopifyAvailability() {
+  return useQuery({
+    queryKey: qk.shopifyAvailability,
+    queryFn: api.getShopifyAvailability,
+    staleTime: 60_000,
+  });
 }
 
 export function useCreateAvatar(

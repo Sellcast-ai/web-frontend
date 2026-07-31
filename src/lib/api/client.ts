@@ -18,6 +18,7 @@ import type {
   UserProfileUpdate,
   Usage,
   ReferencePresign,
+  ShopifyAvailability,
 } from "./types";
 
 export class ApiError extends Error {
@@ -268,6 +269,12 @@ export const api = {
   updateProfile: (payload: UserProfileUpdate) =>
     bff<CurrentUser>(`users/me`, { method: "PATCH", json: payload }),
   getUsage: () => bff<Usage>(`users/me/usage`),
+
+  /* --- store connections --- */
+  /** Availability probe for the Shopify connect flow - the page gates its
+   * connect button on this, so a card never offers an action the backend
+   * can't actually perform. */
+  getShopifyAvailability: () => bff<ShopifyAvailability>(`auth/shopify/status`),
 
   /* --- auth --- */
   me: async (): Promise<CurrentUser | null> => {

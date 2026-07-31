@@ -7,9 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "Mis productos",
-      "avatars": "avatares",
-      "videos": "Mis vídeos",
+      "products": "Productos",
+      "stores": "Tiendas",
+      "avatars": "Avatares",
+      "videos": "Vídeos",
       "profile": "Perfil",
       "newVideo": "Nuevo vídeo",
       "new": "Nuevo",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "tienda web",
       "manual": "manuales"
+    },
+    "connections": {
+      "title": "Tiendas",
+      "subtitle": "Conecta tu tienda para que Lumi pueda importar tus productos.",
+      "connectHeading": "Conectar una tienda",
+      "yourStores": "Tus tiendas",
+      "listUnavailable": "Todavía no es posible ver ni eliminar las conexiones existentes: la API de conexión de tiendas solo permite conectar por ahora. Una tienda que conectes queda activa aunque aún no pueda mostrarse aquí.",
+      "notAvailableYet": "Aún no disponible",
+      "checkingAvailability": "Comprobando disponibilidad…",
+      "shopifyUnavailable": "La conexión con Shopify no está disponible ahora mismo. Inténtalo de nuevo más tarde.",
+      "shopDomainLabel": "Dominio de la tienda",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "Conectar",
+      "dismiss": "Cerrar",
+      "connectedBanner": "{shop} ahora está conectada con Lumi.",
+      "connectedBannerGeneric": "Tu tienda ahora está conectada con Lumi.",
+      "errors": {
+        "invalid-shop": "Introduce el dominio .myshopify.com de tu tienda (por ejemplo, tu-tienda.myshopify.com).",
+        "unavailable": "La conexión con Shopify no está disponible ahora mismo. Inténtalo de nuevo más tarde.",
+        "failed": "La conexión no se completó. Inténtalo de nuevo."
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "Conecta tu tienda Shopify con un inicio de sesión seguro; Lumi podrá importar tus productos."
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "Conecta una tienda WooCommerce para importar sus productos."
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "Conecta tu TikTok Shop para importar sus productos."
+        }
+      }
     },
     "productCard": {
       "save": "Guardar",

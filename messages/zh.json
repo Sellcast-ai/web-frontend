@@ -7,10 +7,11 @@
   },
   "app": {
     "nav": {
-      "products": "我的产品",
+      "products": "产品",
+      "stores": "店铺",
       "avatars": "头像",
-      "videos": "我的视频",
-      "profile": "公司简介",
+      "videos": "视频",
+      "profile": "个人资料",
       "newVideo": "新视频",
       "new": "新",
       "signedIn": "已登录",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "网上商店",
       "manual": "手册"
+    },
+    "connections": {
+      "title": "店铺",
+      "subtitle": "连接你的商店，让 Lumi 导入你的商品。",
+      "connectHeading": "连接店铺",
+      "yourStores": "我的店铺",
+      "listUnavailable": "暂时还无法查看和移除已有的连接——店铺连接 API 目前仅支持连接操作。你已连接的店铺会保持生效，只是暂时无法显示在这里。",
+      "notAvailableYet": "暂未开放",
+      "checkingAvailability": "正在检查可用性…",
+      "shopifyUnavailable": "Shopify 连接暂时不可用，请稍后再试。",
+      "shopDomainLabel": "店铺域名",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "连接",
+      "dismiss": "关闭",
+      "connectedBanner": "{shop} 已连接到 Lumi。",
+      "connectedBannerGeneric": "你的店铺已连接到 Lumi。",
+      "errors": {
+        "invalid-shop": "请输入店铺的 .myshopify.com 域名（例如 your-store.myshopify.com）。",
+        "unavailable": "Shopify 连接暂时不可用，请稍后再试。",
+        "failed": "连接未完成，请重试。"
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "通过安全登录连接你的 Shopify 商店，Lumi 即可导入你的商品。"
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "连接 WooCommerce 商店以导入其商品。"
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "连接你的 TikTok Shop 以导入其商品。"
+        }
+      }
     },
     "productCard": {
       "save": "保存",

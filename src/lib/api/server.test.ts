@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { COOKIE } from "./config";
-import { proxy } from "./server";
+import { callBackendAuthed, proxy } from "./server";
 import type { AuthSuccess } from "./types";
 
 const session: AuthSuccess["session"] = {
@@ -42,6 +42,46 @@ function json(status: number, body: unknown) {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+});
+
+describe("callBackendAuthed", () => {
+  it("reports a transport failure as unreachable instead of throwing", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => {
+        throw new TypeError("fetch failed");
+      }),
+    );
+
+    const out = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", { cookies: { [COOKIE.access]: "at1" } }),
+      "connections/shopify/start",
+    );
+
+    expect(out).toEqual({ res: null, refreshed: null, unreachable: true });
+  });
+
+  it("keeps a successful refresh when the retry still 401s", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(json(401, { detail: "expired" }))
+        .mockResolvedValueOnce(json(200, { user: {}, session }))
+        .mockResolvedValueOnce(json(401, { detail: "still expired" })),
+    );
+
+    const out = await callBackendAuthed(
+      req("/api/bff/auth/shopify/start", {
+        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt1" },
+      }),
+      "connections/shopify/start",
+    );
+
+    expect(out.res).toBeNull();
+    expect(out.unreachable).toBe(false);
+    expect(out.refreshed?.session.access_token).toBe("new-at");
+  });
 });
 
 describe("proxy", () => {

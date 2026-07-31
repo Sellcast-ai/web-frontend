@@ -7,9 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "สินค้าของฉัน",
+      "products": "สินค้า",
+      "stores": "ร้านค้า",
       "avatars": "อวตาร",
-      "videos": "วิดีโอของฉัน",
+      "videos": "วิดีโอ",
       "profile": "โปรไฟล์",
       "newVideo": "วิดีโอใหม่",
       "new": "ใหม่",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "เว็บสโตร์",
       "manual": "คู่มือ"
+    },
+    "connections": {
+      "title": "ร้านค้า",
+      "subtitle": "เชื่อมต่อร้านค้าของคุณเพื่อให้ Lumi นำเข้าสินค้าของคุณได้",
+      "connectHeading": "เชื่อมต่อร้านค้า",
+      "yourStores": "ร้านค้าของคุณ",
+      "listUnavailable": "ยังไม่สามารถดูหรือลบการเชื่อมต่อที่มีอยู่ได้ — API การเชื่อมต่อร้านค้ารองรับเฉพาะการเชื่อมต่อในตอนนี้ ร้านค้าที่คุณเชื่อมต่อจะยังใช้งานได้ แม้จะยังแสดงที่นี่ไม่ได้",
+      "notAvailableYet": "ยังไม่พร้อมใช้งาน",
+      "checkingAvailability": "กำลังตรวจสอบความพร้อมใช้งาน…",
+      "shopifyUnavailable": "การเชื่อมต่อ Shopify ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้งในภายหลัง",
+      "shopDomainLabel": "โดเมนร้านค้า",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "เชื่อมต่อ",
+      "dismiss": "ปิด",
+      "connectedBanner": "{shop} เชื่อมต่อกับ Lumi แล้ว",
+      "connectedBannerGeneric": "ร้านค้าของคุณเชื่อมต่อกับ Lumi แล้ว",
+      "errors": {
+        "invalid-shop": "กรอกโดเมน .myshopify.com ของร้านค้าของคุณ (เช่น your-store.myshopify.com)",
+        "unavailable": "การเชื่อมต่อ Shopify ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้งในภายหลัง",
+        "failed": "การเชื่อมต่อไม่สำเร็จ โปรดลองอีกครั้ง"
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "เชื่อมต่อร้านค้า Shopify ของคุณด้วยการลงชื่อเข้าใช้ที่ปลอดภัย จากนั้น Lumi จะนำเข้าสินค้าของคุณได้"
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "เชื่อมต่อร้านค้า WooCommerce เพื่อนำเข้าสินค้า"
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "เชื่อมต่อ TikTok Shop ของคุณเพื่อนำเข้าสินค้า"
+        }
+      }
     },
     "productCard": {
       "save": "บันทึก",

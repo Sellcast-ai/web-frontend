@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
-import { Package, UserSquare2, Clapperboard, User, Sparkles, LogOut, Loader2 } from "lucide-react";
+import { Package, Store, UserSquare2, Clapperboard, User, Sparkles, LogOut, Loader2 } from "lucide-react";
 import { Logo } from "@/components/marketing/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { href: "/app/products", key: "products", Icon: Package },
+  { href: "/app/connections", key: "stores", Icon: Store },
   { href: "/app/avatars", key: "avatars", Icon: UserSquare2 },
   { href: "/app/videos", key: "videos", Icon: Clapperboard },
   { href: "/app/profile", key: "profile", Icon: User },
@@ -127,27 +128,29 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <main className="min-w-0 pb-24 md:pb-0">{children}</main>
 
       {/* ---- mobile bottom tab bar (echoes the iOS tab bar) ---- */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-around border-t border-border glass px-2 py-2 md:hidden">
+      {/* All six entries fit at 320px: content-sized items (flex-auto) share the
+          slack, min-w-11 keeps every tap target at 44px, truncate is the guard. */}
+      <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch border-t border-border glass px-1 py-2 md:hidden">
         <Link
           href={STUDIO_HREF}
-          className="flex flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[11px] font-semibold text-brand-700"
+          className="flex min-w-11 flex-auto flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1 text-[11px] font-semibold text-brand-700"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-gradient text-white">
             <Sparkles className="h-4 w-4" />
           </span>
-          {t("new")}
+          <span className="max-w-full truncate">{t("new")}</span>
         </Link>
         {NAV.map(({ href, key, Icon }) => (
           <Link
             key={href}
             href={href}
             className={cn(
-              "flex flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[11px] font-medium",
+              "flex min-w-11 flex-auto flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1 text-[11px] font-medium",
               isActive(href) ? "text-brand-700" : "text-muted-foreground",
             )}
           >
             <Icon className="h-5 w-5" />
-            {t(key)}
+            <span className="max-w-full truncate">{t(key)}</span>
           </Link>
         ))}
       </nav>

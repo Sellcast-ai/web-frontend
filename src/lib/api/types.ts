@@ -533,6 +533,36 @@ export interface Usage {
   unit?: string;
 }
 
+/* ------------------------------------------------------------ connections */
+
+/** Mirrors the backend's PlatformConnectionResponse
+ * (backend app/schemas/platform_connection.py) - keep in sync. The backend
+ * currently has no list/disconnect endpoint; this shape comes back from the
+ * Shopify OAuth callback. */
+export interface PlatformConnection {
+  id: string;
+  owner_user_id: string;
+  platform: string;
+  shop_domain: string;
+  status: string;
+  scopes: string;
+  api_version: string;
+  access_token_expires_at: string | null;
+  refresh_token_expires_at: string | null;
+  last_sync_at: string | null;
+  last_webhook_at: string | null;
+  install_error: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+/** Result of the BFF's Shopify availability probe. `available` is true only
+ * when the backend route exists AND OAuth is configured there, so the UI can
+ * gate the connect button on a real end-to-end signal. */
+export interface ShopifyAvailability {
+  available: boolean;
+}
+
 /* ----------------------------------------------------------------- presets */
 
 export const VIDEO_DURATIONS: VideoDuration[] = [10, 15, 20, 25, 30];

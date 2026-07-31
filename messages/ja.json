@@ -7,12 +7,13 @@
   },
   "app": {
     "nav": {
-      "products": "私の製品",
+      "products": "製品",
+      "stores": "ストア",
       "avatars": "アバター",
-      "videos": "私のビデオ",
+      "videos": "ビデオ",
       "profile": "プロフィール",
       "newVideo": "新しいビデオ",
-      "new": "新しい",
+      "new": "新規",
       "signedIn": "サインインしました",
       "logOut": "ログアウト"
     },
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "ウェブストア",
       "manual": "マニュアル"
+    },
+    "connections": {
+      "title": "ストア",
+      "subtitle": "ショップを連携して、Lumi で商品を取り込みましょう。",
+      "connectHeading": "ストアを連携",
+      "yourStores": "連携済みストア",
+      "listUnavailable": "既存の連携の表示や削除はまだ利用できません。ストア連携 API は現在「連携」のみに対応しています。連携したストアは有効なままですが、ここにはまだ表示されません。",
+      "notAvailableYet": "まだ利用できません",
+      "checkingAvailability": "利用可否を確認中…",
+      "shopifyUnavailable": "Shopify 連携は現在利用できません。しばらくしてからもう一度お試しください。",
+      "shopDomainLabel": "ショップドメイン",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "連携する",
+      "dismiss": "閉じる",
+      "connectedBanner": "{shop} が Lumi に連携されました。",
+      "connectedBannerGeneric": "ストアが Lumi に連携されました。",
+      "errors": {
+        "invalid-shop": "ストアの .myshopify.com ドメインを入力してください（例: your-store.myshopify.com）。",
+        "unavailable": "Shopify 連携は現在利用できません。しばらくしてからもう一度お試しください。",
+        "failed": "連携を完了できませんでした。もう一度お試しください。"
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "安全なログインで Shopify ストアを連携すると、Lumi が商品を取り込めるようになります。"
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "WooCommerce ストアを連携して商品を取り込みます。"
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "TikTok Shop を連携して商品を取り込みます。"
+        }
+      }
     },
     "productCard": {
       "save": "保存",

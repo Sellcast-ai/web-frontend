@@ -14,6 +14,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] **Prod Postgres** — a new Neon project/branch (NOT the dev one), or Render Postgres
 - [ ] **Google Cloud OAuth** — a **Web** OAuth client (free) → enables Google login
 - [ ] **Twilio** *(optional for beta)* — only if you want phone-OTP SMS; Google login alone is enough to launch (without it the web signup form shows phone as unavailable, see §3)
+- [ ] **Shopify Partner app** *(optional for beta)* — only if Stores should offer Shopify connect; without deployed backend routes and OAuth config the web card shows "not available yet" instead of a failing button
 - [ ] **Cloudflare R2** — already configured (reuse the dev bucket or make a prod one)
 - [ ] A **domain** (optional; Vercel/Render give free subdomains)
 
@@ -50,6 +51,12 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
   **Web** client; Authorized JavaScript origins = your Vercel URL. Put the client
   id in BOTH `NEXT_PUBLIC_GOOGLE_CLIENT_ID` (web) and `SELLCAST_GOOGLE_IOS_CLIENT_ID`
   (backend — it's the `aud` we verify).
+- **Shopify Stores:** the web BFF exposes `/api/bff/auth/shopify/start`,
+  `/callback`, and `/status`, but it only enables the Stores connect form when
+  the backend `connections/shopify/start` route returns a real Shopify authorize
+  redirect. Configure the backend Shopify OAuth secrets and set the Shopify app
+  callback URL to the web origin's `/api/bff/auth/shopify/callback`; otherwise
+  `/app/connections` intentionally shows Shopify as unavailable.
 - **Phone OTP:** works once Twilio creds are set. Until then the web form disables
   the phone step with a "Phone unavailable" message pointing at Google, so an
   unconfigured phone path never looks broken, it just looks closed. Two backend
@@ -63,6 +70,10 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 ## 4. Verify before announcing
 - [ ] `curl -H 'X-User-Id: x' https://<api>/api/v1/products` → **401** (dev bypass is OFF)
 - [ ] Sign in with Google on the live site → lands in `/app/products`
+- [ ] Open `/app/connections` while signed in. If Shopify OAuth is configured on
+  the backend, the Shopify card accepts `your-shop.myshopify.com` and returns
+  with a success banner only after the backend reports an active connection; if
+  it is not configured, the card honestly reads unavailable.
 - [ ] Create a video → worker renders it → plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** is still selectable but does not currently produce a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
 - [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
 - [ ] While signed in, browse the marketing pages → header and every CTA read "Open Studio"; opening `/signup` or `/login` directly redirects into the app

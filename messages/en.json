@@ -7,9 +7,10 @@
   },
   "app": {
     "nav": {
-      "products": "My Products",
+      "products": "Products",
+      "stores": "Stores",
       "avatars": "Avatars",
-      "videos": "My Videos",
+      "videos": "Videos",
       "profile": "Profile",
       "newVideo": "New video",
       "new": "New",
@@ -70,6 +71,41 @@
       "shopify": "Shopify",
       "generic": "Web store",
       "manual": "Manual"
+    },
+    "connections": {
+      "title": "Stores",
+      "subtitle": "Connect your shop so Lumi can pull in your products.",
+      "connectHeading": "Connect a store",
+      "yourStores": "Your stores",
+      "listUnavailable": "Viewing and removing existing connections isn’t available yet — the store connection API only supports connecting for now. A store you connect is active even though it can’t be shown here yet.",
+      "notAvailableYet": "Not available yet",
+      "checkingAvailability": "Checking availability…",
+      "shopifyUnavailable": "Shopify connection isn’t available right now. Please try again later.",
+      "shopDomainLabel": "Shop domain",
+      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "connect": "Connect",
+      "dismiss": "Dismiss",
+      "connectedBanner": "{shop} is now connected to Lumi.",
+      "connectedBannerGeneric": "Your store is now connected to Lumi.",
+      "errors": {
+        "invalid-shop": "Enter your store’s .myshopify.com domain (for example your-store.myshopify.com).",
+        "unavailable": "Shopify connection is unavailable right now. Please try again later.",
+        "failed": "The connection didn’t complete. Please try again."
+      },
+      "platforms": {
+        "shopify": {
+          "name": "Shopify",
+          "description": "Connect your Shopify store with a secure sign-in — Lumi can then import your products."
+        },
+        "woocommerce": {
+          "name": "WooCommerce",
+          "description": "Connect a WooCommerce store to import its products."
+        },
+        "tiktokShop": {
+          "name": "TikTok Shop",
+          "description": "Connect your TikTok Shop to import its products."
+        }
+      }
     },
     "productCard": {
       "save": "Save",

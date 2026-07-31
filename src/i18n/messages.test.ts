@@ -66,6 +66,7 @@ describe("en catalog", () => {
       "products",
       "profile",
       "signedIn",
+      "stores",
       "videos",
     ]);
   });
