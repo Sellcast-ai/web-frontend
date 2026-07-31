@@ -4,9 +4,9 @@ import {
   clearSessionCookies,
   clearShopifyStateCookie,
   setSessionCookies,
+  setShopifyConnectedCookie,
 } from "@/lib/api/server";
-import type { PlatformConnection } from "@/lib/api/types";
-import { SHOPIFY_STATE_COOKIE } from "@/lib/shopify-shop";
+import { SHOPIFY_STATE_COOKIE, activeShopifyConnection } from "@/lib/shopify-shop";
 
 export const dynamic = "force-dynamic";
 
@@ -41,13 +41,17 @@ export async function GET(req: NextRequest) {
   }
 
   let target: string;
+  let connectedShop: string | null = null;
   if (!res) {
     target = "/app/connections?error=failed";
   } else if (res.ok) {
-    const connection = (await res.json().catch(() => null)) as PlatformConnection | null;
-    target = connection?.shop_domain
-      ? `/app/connections?connected=${encodeURIComponent(connection.shop_domain)}`
-      : "/app/connections?connected";
+    const connection = activeShopifyConnection(await res.json().catch(() => null));
+    if (connection) {
+      connectedShop = connection.shop_domain.trim();
+      target = `/app/connections?connected=${encodeURIComponent(connectedShop)}`;
+    } else {
+      target = "/app/connections?error=failed";
+    }
   } else {
     const code = res.status === 503 ? "unavailable" : "failed";
     target = `/app/connections?error=${code}`;
@@ -57,6 +61,7 @@ export async function GET(req: NextRequest) {
   // The state cookie lives on this origin; the backend's own delete-cookie
   // never reaches the browser, so clear it here either way.
   clearShopifyStateCookie(out);
+  if (connectedShop) setShopifyConnectedCookie(out, connectedShop);
   if (refreshed) setSessionCookies(out, refreshed.session);
   return out;
 }

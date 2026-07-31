@@ -5,7 +5,12 @@ import {
   setSessionCookies,
   setShopifyStateCookie,
 } from "@/lib/api/server";
-import { isShopDomain, shopifyAuthorizeUrl, stateCookieValue } from "@/lib/shopify-shop";
+import {
+  isShopDomain,
+  normalizeShopDomain,
+  shopifyAuthorizeUrl,
+  stateCookieValue,
+} from "@/lib/shopify-shop";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +23,7 @@ export const dynamic = "force-dynamic";
  * page with an honest error instead of a dead end.
  */
 export async function GET(req: NextRequest) {
-  const shop = (req.nextUrl.searchParams.get("shop") ?? "").trim();
+  const shop = normalizeShopDomain(req.nextUrl.searchParams.get("shop") ?? "");
 
   const fail = (code: string, refreshed?: Parameters<typeof setSessionCookies>[1]) => {
     const out = NextResponse.redirect(

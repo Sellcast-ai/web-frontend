@@ -1,6 +1,6 @@
 import "server-only";
 import { NextRequest, NextResponse } from "next/server";
-import { SHOPIFY_STATE_COOKIE } from "../shopify-shop";
+import { SHOPIFY_CONNECTED_COOKIE, SHOPIFY_STATE_COOKIE } from "../shopify-shop";
 import { API_BASE, COOKIE, COOKIE_MAX_AGE } from "./config";
 import type { AuthSuccess } from "./types";
 
@@ -51,6 +51,18 @@ export function setShopifyStateCookie(res: NextResponse, value: string) {
 
 export function clearShopifyStateCookie(res: NextResponse) {
   res.cookies.set({ name: SHOPIFY_STATE_COOKIE, value: "", path: "/", maxAge: 0 });
+}
+
+export function setShopifyConnectedCookie(res: NextResponse, shopDomain: string) {
+  res.cookies.set({
+    name: SHOPIFY_CONNECTED_COOKIE,
+    value: shopDomain,
+    httpOnly: false,
+    secure: isProd,
+    sameSite: "lax",
+    path: "/app/connections",
+    maxAge: 60,
+  });
 }
 
 type CallInit = {

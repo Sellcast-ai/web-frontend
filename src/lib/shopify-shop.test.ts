@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   SHOPIFY_STATE_COOKIE,
+  activeShopifyConnection,
   isShopDomain,
+  normalizeShopDomain,
   shopifyAuthorizeUrl,
   shopifyRedirect,
   stateCookieValue,
@@ -27,6 +29,52 @@ describe("isShopDomain", () => {
     ]) {
       expect(isShopDomain(shop), shop).toBe(false);
     }
+  });
+});
+
+describe("normalizeShopDomain", () => {
+  it("normalizes pasted Shopify URLs to the canonical host", () => {
+    expect(normalizeShopDomain(" https://my-store.myshopify.com/admin ")).toBe(
+      "my-store.myshopify.com",
+    );
+    expect(normalizeShopDomain("my-store.myshopify.com/products/foo")).toBe(
+      "my-store.myshopify.com",
+    );
+    expect(normalizeShopDomain("my-store.myshopify.com/")).toBe("my-store.myshopify.com");
+  });
+
+  it("leaves unparseable values for the server-side validator to reject", () => {
+    expect(normalizeShopDomain("not a shop")).toBe("not a shop");
+  });
+});
+
+describe("activeShopifyConnection", () => {
+  const active = {
+    id: "conn_1",
+    owner_user_id: "user_1",
+    platform: "shopify",
+    shop_domain: "my-store.myshopify.com",
+    status: "active",
+    scopes: "read_products",
+    api_version: "2026-01",
+    access_token_expires_at: null,
+    refresh_token_expires_at: null,
+    last_sync_at: null,
+    last_webhook_at: null,
+    install_error: null,
+    created_at: "2026-07-31T00:00:00Z",
+    updated_at: "2026-07-31T00:00:00Z",
+  };
+
+  it("accepts only active connections without install errors", () => {
+    expect(activeShopifyConnection(active)).toBe(active);
+  });
+
+  it("rejects malformed and non-active callback responses", () => {
+    expect(activeShopifyConnection(null)).toBeNull();
+    expect(activeShopifyConnection({ ...active, shop_domain: "" })).toBeNull();
+    expect(activeShopifyConnection({ ...active, status: "error" })).toBeNull();
+    expect(activeShopifyConnection({ ...active, install_error: "missing_scope" })).toBeNull();
   });
 });
 

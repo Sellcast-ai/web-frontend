@@ -1,11 +1,12 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, Plug, Store, X, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShopifyAvailability } from "@/lib/api/hooks";
+import { SHOPIFY_CONNECTED_COOKIE, normalizeShopDomain } from "@/lib/shopify-shop";
 
 /**
  * The platform grid is data-driven: adding a platform later is a new entry
@@ -25,6 +26,24 @@ type ErrorCode = (typeof ERROR_KEYS)[number];
 
 function isErrorCode(value: string | null): value is ErrorCode {
   return ERROR_KEYS.includes(value as ErrorCode);
+}
+
+function cookieValue(name: string): string | null {
+  const prefix = `${name}=`;
+  const raw = document.cookie
+    .split("; ")
+    .find((part) => part.startsWith(prefix))
+    ?.slice(prefix.length);
+  if (!raw) return null;
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
+function clearCookie(name: string) {
+  document.cookie = `${name}=; Max-Age=0; Path=/app/connections; SameSite=Lax`;
 }
 
 export default function ConnectionsPage() {
@@ -72,22 +91,32 @@ function OutcomeBanner() {
   const t = useTranslations("app.connections");
   const sp = useSearchParams();
   const router = useRouter();
-  const [outcome] = useState(() => ({
-    // null = no banner; "" = connected but shop unknown (generic copy)
-    connected: sp.has("connected") ? (sp.get("connected") ?? "") : null,
-    error: isErrorCode(sp.get("error")) ? (sp.get("error") as ErrorCode) : null,
-  }));
+  const consumed = useRef(false);
+  const [outcome, setOutcome] = useState<{
+    connected: string | null;
+    error: ErrorCode | null;
+  }>({ connected: null, error: null });
   const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (outcome.connected !== null || outcome.error) {
+    if (consumed.current) return;
+    consumed.current = true;
+    const error = isErrorCode(sp.get("error")) ? (sp.get("error") as ErrorCode) : null;
+    const connected = sp.has("connected") ? cookieValue(SHOPIFY_CONNECTED_COOKIE) : null;
+    if (connected) clearCookie(SHOPIFY_CONNECTED_COOKIE);
+    setOutcome({ connected, error });
+    if (sp.has("connected") || error) {
       router.replace("/app/connections", { scroll: false });
     }
-  }, [outcome, router]);
+  }, [router, sp]);
 
   if (dismissed || (outcome.connected === null && !outcome.error)) return null;
 
   const ok = outcome.connected !== null;
+  const message =
+    outcome.connected !== null
+      ? t("connectedBanner", { shop: outcome.connected })
+      : t(`errors.${outcome.error ?? "failed"}`);
   return (
     <div
       role="status"
@@ -102,13 +131,7 @@ function OutcomeBanner() {
       ) : (
         <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-rose" />
       )}
-      <p className="flex-1 text-sm text-ink">
-        {ok
-          ? outcome.connected
-            ? t("connectedBanner", { shop: outcome.connected })
-            : t("connectedBannerGeneric")
-          : t(`errors.${outcome.error}`)}
-      </p>
+      <p className="flex-1 text-sm text-ink">{message}</p>
       <button
         type="button"
         onClick={() => setDismissed(true)}
@@ -171,7 +194,7 @@ function ShopifyConnect() {
     );
   }
 
-  const domain = shop.trim();
+  const domain = normalizeShopDomain(shop);
   return (
     <form
       className="flex flex-col gap-2"
