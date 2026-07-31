@@ -84,9 +84,10 @@ export default function ConnectionsPage() {
   );
 }
 
-/** Success/error landing after the Shopify OAuth round trip: the BFF callback
- * redirects here with ?connected=<shop> or ?error=<code>. Read once into
- * state, then scrub the URL so a reload doesn't replay the banner. */
+/** Success/error landing after the Shopify OAuth round trip. The success query
+ * only arms the banner when paired with the callback's short-lived cookie, so a
+ * bare URL param cannot claim a store connected. Read once into state, then
+ * scrub the URL so a reload doesn't replay the banner. */
 function OutcomeBanner() {
   const t = useTranslations("app.connections");
   const sp = useSearchParams();
