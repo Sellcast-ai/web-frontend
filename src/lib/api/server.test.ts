@@ -384,6 +384,26 @@ describe("proxy", () => {
     expect(refreshCalls).toHaveLength(1);
   });
 
+  it("keeps a real refreshed session when the retry still 401s", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(json(401, { detail: "expired" }))
+      .mockResolvedValueOnce(json(200, { user: {}, session }))
+      .mockResolvedValueOnce(json(401, { detail: "still expired" }));
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await proxy(
+      req("/api/bff/products", {
+        cookies: { [COOKIE.access]: "stale-at", [COOKIE.refresh]: "rt-proxy-retry-401" },
+      }),
+      "products",
+    );
+
+    expect(res.status).toBe(401);
+    expect(res.cookies.get(COOKIE.access)?.value).toBe("new-at");
+    expect(res.cookies.get(COOKIE.refresh)?.value).toBe("new-rt");
+  });
+
   it("points older token generations at the latest session", async () => {
     const session2 = {
       ...session,
