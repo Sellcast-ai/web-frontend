@@ -5,7 +5,6 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-  type InfiniteData,
   type QueryClient,
 } from "@tanstack/react-query";
 import { api, apiErrorMessage } from "./client";
@@ -232,35 +231,35 @@ export function patchProductLists(qc: QueryClient, id: string, isLiked: boolean)
   );
 }
 
-type VideoJobsQueryData = VideoJob[] | InfiniteData<VideoJob[], number>;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === "object" && !Array.isArray(value));
+}
 
-function isPagedVideoJobsData(
-  data: VideoJobsQueryData | undefined,
-): data is InfiniteData<VideoJob[], number> {
-  return Boolean(
-    data &&
-      typeof data === "object" &&
-      "pages" in data &&
-      Array.isArray(data.pages),
+function isPagedVideoJobsKey(queryKey: readonly unknown[]) {
+  return (
+    queryKey[0] === "jobs" &&
+    isRecord(queryKey[1]) &&
+    queryKey[1].limit === VIDEO_JOBS_PAGE_SIZE
   );
 }
 
 export function removeJobFromCachedLists(qc: QueryClient, id: string) {
-  qc.setQueriesData<VideoJobsQueryData | undefined>(
-    { queryKey: ["jobs"] },
+  qc.setQueriesData<VideoJob[] | undefined>(
+    {
+      queryKey: ["jobs"],
+      predicate: (query) => !isPagedVideoJobsKey(query.queryKey),
+    },
     (data) => {
       if (Array.isArray(data)) {
         return data.filter((job) => job.id !== id);
       }
-      if (isPagedVideoJobsData(data)) {
-        return {
-          ...data,
-          pages: data.pages.map((page) => page.filter((job) => job.id !== id)),
-        };
-      }
       return data;
     },
   );
+  qc.removeQueries({
+    queryKey: ["jobs"],
+    predicate: (query) => isPagedVideoJobsKey(query.queryKey),
+  });
 }
 
 export function useParseProduct() {

@@ -93,7 +93,7 @@ describe("video job list cache pruning", () => {
     ]);
   });
 
-  it("removes a deleted job from cached paged list queries", () => {
+  it("removes cached paged list queries instead of shortening offset pages", () => {
     const qc = new QueryClient();
     qc.setQueryData(qk.jobs({ limit: 50 }), {
       pageParams: [0, 50],
@@ -102,9 +102,6 @@ describe("video job list cache pruning", () => {
 
     removeJobFromCachedLists(qc, "deleted");
 
-    expect(qc.getQueryData(qk.jobs({ limit: 50 }))).toEqual({
-      pageParams: [0, 50],
-      pages: [[job("j1")], [job("j2")]],
-    });
+    expect(qc.getQueryData(qk.jobs({ limit: 50 }))).toBeUndefined();
   });
 });
