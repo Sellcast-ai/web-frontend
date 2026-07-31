@@ -96,16 +96,13 @@
       },
       "platforms": {
         "shopify": {
-          "name": "Shopify",
-          "description": "安全なログインで Shopify ストアを連携すると、Lumi が商品を取り込めるようになります。"
+          "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce",
-          "description": "WooCommerce ストアを連携して商品を取り込みます。"
+          "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop",
-          "description": "TikTok Shop を連携して商品を取り込みます。"
+          "name": "TikTok Shop"
         }
       }
     },

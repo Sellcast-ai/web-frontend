@@ -96,16 +96,13 @@
       },
       "platforms": {
         "shopify": {
-          "name": "Shopify",
-          "description": "Kết nối cửa hàng Shopify bằng đăng nhập an toàn — Lumi sau đó có thể nhập sản phẩm của bạn."
+          "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce",
-          "description": "Kết nối cửa hàng WooCommerce để nhập sản phẩm."
+          "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop",
-          "description": "Kết nối TikTok Shop của bạn để nhập sản phẩm."
+          "name": "TikTok Shop"
         }
       }
     },

@@ -96,16 +96,13 @@
       },
       "platforms": {
         "shopify": {
-          "name": "Shopify",
-          "description": "Conecte sua loja Shopify com um login seguro — a Lumi poderá importar seus produtos."
+          "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce",
-          "description": "Conecte uma loja WooCommerce para importar os produtos dela."
+          "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop",
-          "description": "Conecte sua TikTok Shop para importar os produtos dela."
+          "name": "TikTok Shop"
         }
       }
     },

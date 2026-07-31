@@ -96,16 +96,13 @@
       },
       "platforms": {
         "shopify": {
-          "name": "Shopify",
-          "description": "Hubungkan toko Shopify Anda dengan login aman — Lumi lalu dapat mengimpor produk Anda."
+          "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce",
-          "description": "Hubungkan toko WooCommerce untuk mengimpor produknya."
+          "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop",
-          "description": "Hubungkan TikTok Shop Anda untuk mengimpor produknya."
+          "name": "TikTok Shop"
         }
       }
     },
