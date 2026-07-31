@@ -195,6 +195,11 @@
         "description": "Não conseguimos carregar seus vídeos. Tente de novo.",
         "action": "Tentar de novo"
       },
+      "pageLoadError": {
+        "title": "Não foi possível carregar vídeos mais antigos",
+        "description": "Não conseguimos carregar mais vídeos. Tente de novo.",
+        "action": "Tentar de novo"
+      },
       "empty": {
         "title": "Ainda não há vídeos",
         "description": "Escolha um dos seus produtos e a Lumi o transformará no seu primeiro vídeo que prende a rolagem.",

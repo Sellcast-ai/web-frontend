@@ -195,6 +195,11 @@
         "description": "Chúng tôi không thể tải video của bạn. Hãy thử lại.",
         "action": "Thử lại"
       },
+      "pageLoadError": {
+        "title": "Không thể tải video cũ hơn",
+        "description": "Chúng tôi không thể tải thêm video. Hãy thử lại.",
+        "action": "Thử lại"
+      },
       "empty": {
         "title": "Chưa có video nào",
         "description": "Chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video đầu tiên khiến người xem dừng cuộn.",

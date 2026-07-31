@@ -195,6 +195,11 @@
         "description": "Kami tidak dapat memuat video Anda. Coba lagi.",
         "action": "Coba lagi"
       },
+      "pageLoadError": {
+        "title": "Video lama tidak dapat dimuat",
+        "description": "Kami tidak dapat memuat video lainnya. Coba lagi.",
+        "action": "Coba lagi"
+      },
       "empty": {
         "title": "Belum ada video",
         "description": "Pilih salah satu produk Anda dan Lumi akan mengubahnya menjadi video pertama yang menghentikan scroll.",

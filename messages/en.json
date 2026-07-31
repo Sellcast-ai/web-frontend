@@ -195,6 +195,11 @@
         "description": "We couldn’t load your videos. Try again.",
         "action": "Try again"
       },
+      "pageLoadError": {
+        "title": "Older videos couldn’t load",
+        "description": "We couldn’t load more videos. Try again.",
+        "action": "Try again"
+      },
       "empty": {
         "title": "No videos yet",
         "description": "Choose one of your products and Lumi will turn it into your first scroll-stopping video.",

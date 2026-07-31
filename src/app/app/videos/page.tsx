@@ -51,6 +51,7 @@ export default function VideosPage() {
     fetchNextPage,
     hasNextPage,
     isError,
+    isFetchNextPageError,
     isFetching,
     isFetchingNextPage,
     isLoading,
@@ -64,6 +65,10 @@ export default function VideosPage() {
   const activeTab = selected ?? defaultTab(jobs ?? []);
   const visible = jobsForTab(jobs ?? [], activeTab);
   const countOpen = Boolean(hasNextPage);
+  const pageLoadError = isFetchNextPageError && jobs.length > 0;
+  const pageLoadErrorMessage = pageLoadError
+    ? apiErrorMessage(error, t("pageLoadError.description"))
+    : null;
   const loadMore = () => {
     setSelected(activeTab);
     void fetchNextPage();
@@ -120,6 +125,7 @@ export default function VideosPage() {
               hasMore={Boolean(hasNextPage)}
               loading={isFetchingNextPage}
               onLoadMore={loadMore}
+              errorMessage={pageLoadErrorMessage}
             />
           ) : (
             <>
@@ -130,7 +136,7 @@ export default function VideosPage() {
                   </StaggerItem>
                 ))}
               </div>
-              {hasNextPage && (
+              {hasNextPage && !pageLoadErrorMessage && (
                 <div className="mt-8 flex justify-center">
                   <Button
                     variant="outline"
@@ -146,6 +152,13 @@ export default function VideosPage() {
                     {t("loadMore")}
                   </Button>
                 </div>
+              )}
+              {pageLoadErrorMessage && (
+                <PageLoadError
+                  message={pageLoadErrorMessage}
+                  retrying={isFetchingNextPage}
+                  onRetry={loadMore}
+                />
               )}
             </>
           )}
@@ -241,11 +254,13 @@ function TabEmpty({
   hasMore,
   loading,
   onLoadMore,
+  errorMessage,
 }: {
   tab: VideoTab;
   hasMore: boolean;
   loading: boolean;
   onLoadMore: () => void;
+  errorMessage: string | null;
 }) {
   const t = useTranslations("app.videos.tabEmpty");
   return (
@@ -256,7 +271,7 @@ function TabEmpty({
       <p className="mt-1 max-w-sm text-muted-foreground">
         {t(`${tab}.${hasMore ? "loadedDescription" : "description"}`)}
       </p>
-      {hasMore && (
+      {hasMore && !errorMessage && (
         <Button
           variant="outline"
           size="md"
@@ -272,6 +287,41 @@ function TabEmpty({
           {t("loadMore")}
         </Button>
       )}
+      {errorMessage && (
+        <PageLoadError message={errorMessage} retrying={loading} onRetry={onLoadMore} />
+      )}
+    </div>
+  );
+}
+
+function PageLoadError({
+  message,
+  retrying,
+  onRetry,
+}: {
+  message: string;
+  retrying: boolean;
+  onRetry: () => void;
+}) {
+  const t = useTranslations("app.videos.pageLoadError");
+  return (
+    <div className="mt-5 flex flex-col items-center rounded-card border border-destructive/20 bg-destructive/5 p-4 text-center">
+      <p className="text-sm font-semibold text-ink">{t("title")}</p>
+      <p className="mt-1 max-w-md text-sm text-muted-foreground">{message}</p>
+      <Button
+        variant="outline"
+        size="sm"
+        className="mt-3"
+        onClick={onRetry}
+        disabled={retrying}
+      >
+        {retrying ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <RefreshCw className="h-4 w-4" />
+        )}
+        {t("action")}
+      </Button>
     </div>
   );
 }

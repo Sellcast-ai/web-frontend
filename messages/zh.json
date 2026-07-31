@@ -195,6 +195,11 @@
         "description": "我们无法加载你的视频。请重试。",
         "action": "重试"
       },
+      "pageLoadError": {
+        "title": "无法加载更早的视频",
+        "description": "我们无法加载更多视频。请重试。",
+        "action": "重试"
+      },
       "empty": {
         "title": "还没有视频",
         "description": "选择你的一个产品，Lumi 会将其变成你的第一条让人停下滑动的视频。",

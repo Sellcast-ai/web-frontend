@@ -195,6 +195,11 @@
         "description": "No pudimos cargar tus videos. Inténtalo de nuevo.",
         "action": "Intentar de nuevo"
       },
+      "pageLoadError": {
+        "title": "No se pudieron cargar videos más antiguos",
+        "description": "No pudimos cargar más videos. Inténtalo de nuevo.",
+        "action": "Intentar de nuevo"
+      },
       "empty": {
         "title": "Aún no hay vídeos",
         "description": "Elige uno de tus productos y Lumi lo convertirá en tu primer video que detiene el desplazamiento.",
