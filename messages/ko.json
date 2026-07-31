@@ -278,6 +278,10 @@
       "title": "프로필",
       "videosCreated": "제작된 동영상",
       "readyToPublish": "게시 준비 완료",
+      "statsError": {
+        "description": "동영상 통계를 불러오지 못했습니다.",
+        "action": "다시 시도"
+      },
       "thisMonth": "이번 달",
       "usageSummary": "사용된 {limit} 크레딧 중 {used} · {plan} 계획 · {date} 재설정",
       "creditNote": "1크레딧 = 동영상 1초",

@@ -278,6 +278,10 @@
       "title": "โปรไฟล์",
       "videosCreated": "สร้างวิดีโอแล้ว",
       "readyToPublish": "พร้อมเผยแพร่",
+      "statsError": {
+        "description": "เราไม่สามารถโหลดสถิติวิดีโอของคุณได้",
+        "action": "ลองอีกครั้ง"
+      },
       "thisMonth": "เดือนนี้",
       "usageSummary": "{used} ของเครดิต {limit} ที่ใช้ · แผน {plan} · รีเซ็ต {date}",
       "creditNote": "1 เครดิต = 1 วินาทีของวิดีโอ",

@@ -31,9 +31,11 @@ export const qk = {
   shopifyAvailability: ["shopify-availability"] as const,
 };
 
-/** Statuses where the worker still owns the job (or is parked on the user).
- *  Exported so surfaces that count "videos in progress" (Studio's active-jobs
- *  cap pre-flight) use the same definition as the polling logic. */
+/** Statuses where the job is still live: the worker owns it, or it is parked
+ *  on the user at a review gate. This is the polling definition - Studio's
+ *  active-jobs cap pre-flight deliberately counts a narrower set
+ *  (CAP_ACTIVE_JOB_STATUSES there), because the backend's cap excludes the
+ *  parked gates. */
 export const ACTIVE_JOB_STATUSES: VideoJobStatus[] = [
   "queued",
   "submitted",

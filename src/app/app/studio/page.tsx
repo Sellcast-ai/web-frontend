@@ -23,7 +23,6 @@ import {
   useAvatars,
   useMyProducts,
   useVideoJobs,
-  ACTIVE_JOB_STATUSES,
 } from "@/lib/api/hooks";
 import { ApiError, api } from "@/lib/api/client";
 import {
@@ -40,6 +39,7 @@ import {
   type VideoMode,
   type VideoVibe,
   type VideoDuration,
+  type VideoJobStatus,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
@@ -57,6 +57,18 @@ import { cn } from "@/lib/utils";
  *  first jobs page is enough: jobs come newest-first, so anything active is on
  *  it, and the backend cap check stays the authoritative gate regardless. */
 const MAX_ACTIVE_JOBS = 3;
+
+/** The statuses the backend's cap counts (`_ACTIVE_STATUSES` in
+ *  video_job_repository.py): only jobs the worker still owns. The
+ *  awaiting_storyboard/awaiting_review gates are parked on the user and
+ *  excluded there, so counting them here would disable Generate over a cap
+ *  the backend would not enforce. Kept apart from ACTIVE_JOB_STATUSES, the
+ *  polling definition, which does include both gates. */
+const CAP_ACTIVE_JOB_STATUSES: VideoJobStatus[] = [
+  "queued",
+  "submitted",
+  "in_progress",
+];
 
 export default function StudioPage() {
   return (
@@ -162,7 +174,7 @@ function StudioInner() {
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = (jobs ?? []).filter((j) =>
-    ACTIVE_JOB_STATUSES.includes(j.status),
+    CAP_ACTIVE_JOB_STATUSES.includes(j.status),
   ).length;
   const atActiveCap = activeCount >= MAX_ACTIVE_JOBS;
   const trimmedReferenceUrl = referenceUrl.trim();
@@ -186,7 +198,6 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
-    let releaseGuard = true;
     try {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
@@ -203,12 +214,10 @@ function StudioInner() {
         aspect_ratio: aspectRatio,
         avatar_id: mode === "ai_avatar" ? avatarId : null,
       });
+      // Success keeps the latch held until navigation unmounts the page.
       router.push(`/app/jobs/${job.id}`);
-      releaseGuard = false;
     } catch {
-      releaseGuard = true;
-    } finally {
-      if (releaseGuard) generateGuard.end();
+      generateGuard.end();
     }
   }
 

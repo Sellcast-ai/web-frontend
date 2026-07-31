@@ -278,6 +278,10 @@
       "title": "プロフィール",
       "videosCreated": "作成されたビデオ",
       "readyToPublish": "公開する準備ができました",
+      "statsError": {
+        "description": "動画の統計を読み込めませんでした。",
+        "action": "もう一度試す"
+      },
       "thisMonth": "今月",
       "usageSummary": "{limit} クレジットのうち {used} が使用されました · {plan} プラン · {date} をリセット",
       "creditNote": "1 クレジット = 1 秒のビデオ",

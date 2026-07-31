@@ -278,6 +278,10 @@
       "title": "公司简介",
       "videosCreated": "已创建视频",
       "readyToPublish": "准备发布",
+      "statsError": {
+        "description": "无法加载你的视频统计。",
+        "action": "重试"
+      },
       "thisMonth": "这个月",
       "usageSummary": "{used} 已使用 {limit} 积分 · {plan} 计划 · 重置 {date}",
       "creditNote": "1 学分 = 1 秒视频",

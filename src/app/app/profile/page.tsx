@@ -33,6 +33,11 @@ export default function ProfilePage() {
   }, [hasNextPage, isFetchNextPageError, isFetchingNextPage, fetchNextPage]);
   const jobsData = jobsQuery.data;
   const statsReady = jobsData !== undefined && !hasNextPage;
+  // A failed first page (isError) or a failed mid-drain page
+  // (isFetchNextPageError) stops the drain for good - the stats get an error
+  // card with a retry instead of sitting on "…" for the rest of the session.
+  const statsFailed = jobsQuery.isError || isFetchNextPageError;
+  const statsRetrying = jobsQuery.isRefetching || isFetchingNextPage;
   const { data: usage } = useUsage();
   const update = useUpdateProfile();
   const saveGuard = useMutationGuard();
@@ -52,6 +57,11 @@ export default function ProfilePage() {
   const allJobs = jobsData?.pages.flat() ?? [];
   const completed = allJobs.filter((j) => j.status === "completed").length;
   const total = allJobs.length;
+
+  function retryStats() {
+    if (jobsQuery.isError) void jobsQuery.refetch();
+    else void fetchNextPage();
+  }
 
   async function save() {
     if (!user || name.trim() === user.display_name) return;
@@ -116,10 +126,27 @@ export default function ProfilePage() {
 
       {/* stats — shown once every jobs page has landed, never a partial count
           presented as the lifetime total */}
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <Stat label={t("videosCreated")} value={statsReady ? total : null} />
-        <Stat label={t("readyToPublish")} value={statsReady ? completed : null} />
-      </div>
+      {statsFailed ? (
+        <div className="mt-4 flex items-center justify-between gap-4 rounded-card border border-border bg-card p-5 shadow-soft">
+          <p className="text-sm text-muted-foreground">
+            {t("statsError.description")}
+          </p>
+          <Button
+            size="md"
+            variant="outline"
+            onClick={retryStats}
+            disabled={statsRetrying}
+          >
+            {statsRetrying && <Loader2 className="h-4 w-4 animate-spin" />}
+            {t("statsError.action")}
+          </Button>
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <Stat label={t("videosCreated")} value={statsReady ? total : null} />
+          <Stat label={t("readyToPublish")} value={statsReady ? completed : null} />
+        </div>
+      )}
 
       {/* monthly quota */}
       {usage && (

@@ -278,6 +278,10 @@
       "title": "Hồ sơ",
       "videosCreated": "Video đã được tạo",
       "readyToPublish": "Sẵn sàng xuất bản",
+      "statsError": {
+        "description": "Chúng tôi không thể tải số liệu video của bạn.",
+        "action": "Thử lại"
+      },
       "thisMonth": "Tháng này",
       "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
       "creditNote": "1 tín dụng = 1 giây của video",

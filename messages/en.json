@@ -278,6 +278,10 @@
       "title": "Profile",
       "videosCreated": "Videos created",
       "readyToPublish": "Ready to publish",
+      "statsError": {
+        "description": "We couldn’t load your video stats.",
+        "action": "Try again"
+      },
       "thisMonth": "This month",
       "usageSummary": "{used} of {limit} credits used · {plan} plan · resets {date}",
       "creditNote": "1 credit = 1 second of video",

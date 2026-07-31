@@ -278,6 +278,10 @@
       "title": "Perfil",
       "videosCreated": "Vídeos criados",
       "readyToPublish": "Pronto para publicar",
+      "statsError": {
+        "description": "Não conseguimos carregar as estatísticas dos seus vídeos.",
+        "action": "Tentar novamente"
+      },
       "thisMonth": "Este mês",
       "usageSummary": "{used} de créditos {limit} usados · Plano {plan} · redefine {date}",
       "creditNote": "1 crédito = 1 segundo de vídeo",

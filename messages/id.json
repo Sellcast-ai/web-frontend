@@ -278,6 +278,10 @@
       "title": "Profil",
       "videosCreated": "Video dibuat",
       "readyToPublish": "Siap dipublikasikan",
+      "statsError": {
+        "description": "Kami tidak dapat memuat statistik videomu.",
+        "action": "Coba lagi"
+      },
       "thisMonth": "Bulan ini",
       "usageSummary": "{used} dari kredit {limit} digunakan · Paket {plan} · menyetel ulang {date}",
       "creditNote": "1 kredit = 1 detik video",
