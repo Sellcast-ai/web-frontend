@@ -62,7 +62,7 @@ const MANUAL_OVERRIDES = {
     th: "1 เครดิต = วิดีโอสำเร็จ 1 วินาที วิดีโอ 20 วินาทีใช้ 20 เครดิต ส่วน 30 วินาทีใช้ 30 เครดิต คุณเลือกความยาวเอง จึงรู้ต้นทุนของการเรนเดอร์แต่ละครั้งก่อนเริ่มเสมอ",
   },
   "marketing.pricing.faq.a2": {
-    es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensal que tu render final.",
+    es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensual que tu render final.",
     zh: "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份月度额度。",
     ja: "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じ月間クレジットから消費されます。",
     ko: "네, 재생성 1회당 1크레딧이 사용됩니다. 검토 중 숏을 다시 생성하면 최종 렌더링과 같은 월간 크레딧에서 차감됩니다.",

@@ -995,7 +995,7 @@
         "q1": "¿Qué es un crédito?",
         "a1": "1 crédito = 1 segundo de video terminado. Un video de 20 segundos usa 20 créditos; uno de 30 segundos usa 30. Tú eliges la duración, así que el costo de cada render está claro antes de empezar.",
         "q2": "¿Las regeneraciones cuestan créditos?",
-        "a2": "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensal que tu render final.",
+        "a2": "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensual que tu render final.",
         "q3": "¿Qué pasa si me quedo sin créditos?",
         "a3": "Los créditos se restablecen al inicio de cada ciclo de facturación. El pago en línea de autoservicio todavía no está disponible - para ampliar tu asignación mensual, escribe a {address} y lo configuramos.",
         "q4": "¿Puedo cambiar de plan en cualquier momento?",
