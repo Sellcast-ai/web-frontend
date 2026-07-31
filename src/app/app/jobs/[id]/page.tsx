@@ -309,7 +309,7 @@ function DeleteVideoSection({ job }: { job: VideoJob }) {
       <Button
         variant="outline"
         size="sm"
-        className="border-rose/40 text-rose hover:bg-rose/5 hover:text-rose"
+        className="border-danger/40 text-danger hover:bg-rose/5 hover:text-danger"
         onClick={() => setConfirming(true)}
       >
         <Trash2 className="h-4 w-4" />
@@ -422,7 +422,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
             {i < STEP_LABEL_KEYS.length - 1 && (
               <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
                 <motion.span
-                  className="absolute inset-0 origin-left rounded-full bg-success"
+                  className="absolute inset-0 origin-left rounded-full bg-success dark:bg-live"
                   initial={false}
                   animate={{ scaleX: done ? 1 : 0 }}
                   transition={{ duration: DUR.slow, ease: EASE_OUT }}
@@ -735,7 +735,7 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
           {subject.label}
         </span>
         {subject.locked && (
-          <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success">
+          <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success dark:text-live">
             <Lock className="h-3 w-3" />
             {tj("locked")}
           </span>
