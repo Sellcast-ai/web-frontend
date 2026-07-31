@@ -38,6 +38,7 @@ import {
   selectedUrls,
 } from "@/lib/import-selection";
 import { toast } from "@/lib/toast";
+import { PathHeader } from "@/components/app/path-header";
 import { Button } from "@/components/ui/button";
 import { UploadProgress } from "@/components/ui/upload-progress";
 import { useDropzone } from "@/lib/use-dropzone";
@@ -185,6 +186,34 @@ export default function NewProductPage() {
   );
 }
 
+/** Everything about a store import that has to outlive `StoreImport`, which is
+ * unmounted the moment the manual editor takes the screen: without this the
+ * guard against a second import would reset on the way back, and the backend
+ * would answer that second start with the job already running. Component
+ * lifetime only - a reload still drops the card, and the import still finishes
+ * server-side, which is what the "keeps going in the background" copy says. */
+function useImportSlot() {
+  /** The running import: its handle and exactly how many `source_urls` it
+   * carries, as one value so a job can never be watched without its total. */
+  const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
+  /** The live progress card was dismissed ("add something else while this
+   * runs"). The handle stays: the backend hands the caller's active job back
+   * instead of enqueueing a second, so a start now would silently re-label this
+   * import as another store's. Nothing resets this on completion - only a fresh
+   * start does; what reopens the store path is the handle ceasing to be in
+   * flight (`importInFlight`), whatever this flag still says. */
+  const [dismissed, setDismissed] = useState(false);
+  /** Guards the finish effect, so a remount can't re-announce a landed job. */
+  const doneRef = useRef(false);
+  /** Where a selection gesture writes the pass, and which store's pass a
+   * finished import clears. A ref so the memoized rows keep one stable
+   * `onToggle` across the whole catalog. */
+  const persistToRef = useRef<{ userId: string; storeDomain: string } | null>(null);
+  return { running, setRunning, dismissed, setDismissed, doneRef, persistToRef };
+}
+
+type ImportSlot = ReturnType<typeof useImportSlot>;
+
 function NewProductInner() {
   const t = useTranslations("app.productsNew");
   const tc = useTranslations("app.categories");
@@ -200,6 +229,16 @@ function NewProductInner() {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [reading, setReading] = useState(false);
+  /** A catalog walk or review is the one part of the store flow this page can't
+   * see: it belongs to `StoreImport`, which has to keep it (a remount holding a
+   * review would re-run the billed catalog walk the moment its cache goes
+   * stale), so it is reported up. The running import is already ours. */
+  const [reviewing, setReviewing] = useState(false);
+  const importSlot = useImportSlot();
+  /** A catalog walk, review or running import owns the start screen: the two
+   * single-product paths step aside so nothing adjacent can drop a review. */
+  const storeFlowActive =
+    reviewing || (importSlot.running !== null && !importSlot.dismissed);
   const fileInput = useRef<HTMLInputElement>(null);
   const autoParsed = useRef(false);
   // only one screen renders at a time, so both drop targets share this
@@ -287,7 +326,7 @@ function NewProductInner() {
     !!draft && draft.title.trim().length >= 2 && selectedCount > 0 && !create.isPending;
 
   return (
-    <div className="container-page max-w-3xl py-8">
+    <div className="container-page max-w-3xl py-6 sm:py-8">
       {draft === null ? (
         <>
           <h1 className="font-display text-3xl font-bold text-ink">{t("startTitle")}</h1>
@@ -295,105 +334,111 @@ function NewProductInner() {
             {t("startSubtitle")}
           </p>
 
-          {/* URL omnibox */}
-          <form
-            className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
-            onSubmit={(e) => {
-              e.preventDefault();
-              runParse(url);
-            }}
-          >
-            <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
-            <input
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder={t("productLinkPlaceholder")}
-              className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-              autoFocus
+          <section className="mt-5 sm:mt-7">
+            <PathHeader
+              icon={Store}
+              title={t("storePathTitle")}
+              description={t("storePathDescription")}
             />
-            <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
-              {parse.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                t("readLink")
-              )}
-            </Button>
-          </form>
-          {parse.isError && (
-            <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
-              <div>
-                <p className="text-ink">
-                  {apiErrorMessage(parse.error, tt("readLinkFailed"))}
-                </p>
-                <button
-                  type="button"
-                  className="mt-1 font-semibold text-brand-700"
-                  onClick={() => setDraft(emptyDraft(url.trim() || null))}
-                >
-                  {t("addManuallyInstead")}
-                </button>
-              </div>
+            <div className="mt-3 sm:mt-4">
+              <StoreImport slot={importSlot} onReviewingChange={setReviewing} />
             </div>
+          </section>
+
+          {!storeFlowActive && (
+            <>
+              <section className="mt-6 sm:mt-8">
+                <PathHeader
+                  icon={Link2}
+                  tone="accent"
+                  title={t("singleProductTitle")}
+                  description={t("singleProductDescription")}
+                  descriptionClassName="hidden sm:block"
+                />
+
+                {/* URL omnibox */}
+                <form
+                  className="mt-3 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300 sm:mt-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    runParse(url);
+                  }}
+                >
+                  <Link2 className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <input
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    placeholder={t("productLinkPlaceholder")}
+                    className="w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                  />
+                  <Button size="sm" type="submit" disabled={parse.isPending || !url.trim()}>
+                    {parse.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      t("readLink")
+                    )}
+                  </Button>
+                </form>
+              </section>
+              {parse.isError && (
+                <div className="mt-3 flex items-start gap-2 rounded-xl border border-border bg-card p-3 text-sm">
+                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+                  <div>
+                    <p className="text-ink">
+                      {apiErrorMessage(parse.error, tt("readLinkFailed"))}
+                    </p>
+                    <button
+                      type="button"
+                      className="mt-1 font-semibold text-brand-700"
+                      onClick={() => setDraft(emptyDraft(url.trim() || null))}
+                    >
+                      {t("addManuallyInstead")}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* manual/photo start: one blank editor destination, with drag-start still
+                * supported and photos reachable in one click for keyboard/touch */}
+              <section className="mt-6 sm:mt-8">
+                <PathHeader
+                  icon={PencilLine}
+                  tone="accent"
+                  title={t("manualPathTitle")}
+                />
+                <div
+                  {...drop.props}
+                  className={cn(
+                    "mt-3 rounded-2xl border-2 border-dashed bg-card p-6 transition-colors sm:mt-4",
+                    drop.over ? "border-brand-400 bg-accent/50" : "border-border",
+                  )}
+                >
+                  <p className="text-sm text-muted-foreground">
+                    {t("startManualEditorDescription")}
+                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-4">
+                    <Button size="md" onClick={() => setDraft(emptyDraft(null))}>
+                      <PencilLine className="h-4 w-4" />
+                      {t("startManualEditor")}
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={() => fileInput.current?.click()}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-800"
+                    >
+                      {reading ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <ImagePlus className="h-4 w-4" />
+                      )}
+                      {t("startWithPhotos")}
+                    </button>
+                  </div>
+                </div>
+                {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
+              </section>
+            </>
           )}
-
-          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
-            {t("or")}
-            <span className="h-px flex-1 bg-border" />
-          </div>
-
-          {/* manual / photo start */}
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <button
-              type="button"
-              {...drop.props}
-              onClick={() => {
-                setDraft(emptyDraft(null));
-                setTimeout(() => fileInput.current?.click(), 0);
-              }}
-              className={cn(
-                "rounded-2xl border-2 border-dashed bg-card p-6 text-left transition-colors",
-                drop.over
-                  ? "border-brand-400 bg-accent/50"
-                  : "border-border hover:border-brand-400",
-              )}
-            >
-              {reading ? (
-                <Loader2 className="h-6 w-6 animate-spin text-brand-600" />
-              ) : (
-                <ImagePlus className="h-6 w-6 text-brand-600" />
-              )}
-              <p className="mt-2 font-display font-semibold text-ink">
-                {t("startFromPhotos")}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("startFromPhotosDescription")}
-              </p>
-            </button>
-            <button
-              type="button"
-              onClick={() => setDraft(emptyDraft(null))}
-              className="rounded-2xl border-2 border-dashed border-border bg-card p-6 text-left transition-colors hover:border-brand-400"
-            >
-              <PencilLine className="h-6 w-6 text-brand-600" />
-              <p className="mt-2 font-display font-semibold text-ink">
-                {t("startFromScratch")}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("startFromScratchDescription")}
-              </p>
-            </button>
-          </div>
-          {uploadError && <p className="mt-2 text-xs text-rose">{uploadError}</p>}
-
-          <div className="mt-6 flex items-center gap-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span className="h-px flex-1 bg-border" />
-            {t("or")}
-            <span className="h-px flex-1 bg-border" />
-          </div>
-
-          <StoreImport />
         </>
       ) : (
         <>
@@ -583,10 +628,15 @@ function NewProductInner() {
   );
 }
 
-/** "Import your whole store" — paste a store URL, preview the catalog, review
- * which products to keep, then kick off a batch import of just those and watch
- * it fill up My Products (report §4). */
-function StoreImport() {
+/** Paste a store URL, preview the catalog, review which products to keep, then
+ * kick off a batch import of just those and watch it fill up My Products. */
+function StoreImport({
+  slot,
+  onReviewingChange,
+}: {
+  slot: ImportSlot;
+  onReviewingChange: (reviewing: boolean) => void;
+}) {
   const t = useTranslations("app.productsNew.storeImport");
   const tt = useTranslations("app.toasts");
   const router = useRouter();
@@ -594,7 +644,9 @@ function StoreImport() {
   const preview = usePreviewImport();
   const start = useStartImport({ startError: tt("startImportFailed") });
   const [storeUrl, setStoreUrl] = useState("");
-  const done = useRef(false);
+  // held by the page, so opening the manual editor and coming back can't forget
+  // an import that is still running (see `useImportSlot`)
+  const { running, setRunning, dismissed, setDismissed, doneRef, persistToRef } = slot;
   // `AppShell` holds a spinner until the session resolves, so this is never undefined here
   const userId = useCurrentUser().data!.id;
 
@@ -605,44 +657,56 @@ function StoreImport() {
   >(null);
   /** Everything arrives selected, so the review step tracks the opt-*outs*. */
   const [deselected, setDeselected] = useState<Set<string>>(() => new Set());
-  /** The running import: its handle and exactly how many `source_urls` it
-   * carries, as one value so a job can never be watched without its total. */
-  const [running, setRunning] = useState<{ jobId: string; requested: number } | null>(null);
-  const { data: job } = useImportJob(running?.jobId ?? "");
+  const jobQuery = useImportJob(running?.jobId ?? "");
+  const job = jobQuery.data;
 
   const candidates = useImportCandidates(review);
   const candidateData = candidates.data;
 
-  /** Where a selection gesture writes the pass, or null outside a review. A ref
-   * so the memoized rows keep one stable `onToggle` across the whole catalog. */
-  const persistTo = useRef<{ userId: string; storeDomain: string } | null>(null);
+  /** The walk/review half of "the store flow owns the page" — the running half
+   * is the page's own. The cleanup covers the unmount, which drops the review
+   * here, so a remount can't leave the single-product paths hidden for a flow
+   * nothing is running. */
+  useEffect(() => {
+    onReviewingChange(review !== null);
+    return () => onReviewingChange(false);
+  }, [review, onReviewingChange]);
 
   // route to My Products (and refresh it) the moment the import finishes
   useEffect(() => {
-    if (!job || !running || done.current) return;
+    if (!job || !running || doneRef.current) return;
     if (job.status === "queued" || job.status === "running") return;
-    done.current = true;
+    doneRef.current = true;
+    const { requested } = running;
     if (job.status === "failed") {
+      // a terminal job is nothing to watch: let the handle go, or the store
+      // flow keeps owning the page with no card left to render
+      setRunning(null);
       toast.error(job.error ?? tt("importFailed"));
       return;
     }
     qc.invalidateQueries({ queryKey: qk.myProducts });
-    const outcome = importOutcome(job, running.requested);
+    const outcome = importOutcome(job, requested);
     if (outcome.key === "importNone") {
-      // nothing landed: report it honestly and leave the user on the review
-      // step (see `jobFellThrough`) rather than on an unchanged product list
+      // nothing landed: report it honestly and keep the stored pass, rather
+      // than routing to an unchanged product list (see `jobFellThrough`)
+      setRunning(null);
       toast.error(tt(outcome.key, outcome.values));
       return;
     }
-    clearSelection(persistTo.current);
+    clearSelection(persistToRef.current);
     // an import that didn't stick to the chosen subset isn't a success to
     // celebrate: the user still has to go find what they didn't pick
     const ignoredSelection =
       outcome.key === "importOvershoot" || outcome.key === "importIgnoredSelection";
     const announce = ignoredSelection ? toast.info : toast.success;
     announce(tt(outcome.key, outcome.values));
-    router.push("/app/products");
-  }, [job, running, qc, router, tt]);
+    // the user dropped the progress card and moved on: the toast tells them it
+    // landed, routing them off what they're now doing would not - the handle
+    // goes instead, so a remount can't announce this finished job as running
+    if (dismissed) setRunning(null);
+    else router.push("/app/products");
+  }, [job, running, setRunning, dismissed, doneRef, persistToRef, qc, router, tt]);
 
   const previewData = preview.data;
   const untitledLabel = t("untitledProduct");
@@ -654,11 +718,11 @@ function StoreImport() {
   const applySelection = useCallback((update: (prev: Set<string>) => Set<string>) => {
     setDeselected((prev) => {
       const next = update(prev);
-      const target = persistTo.current;
+      const target = persistToRef.current;
       if (target) saveSelection({ ...target, deselected: [...next] });
       return next;
     });
-  }, []);
+  }, [persistToRef]);
 
   // stable across renders so the memoized rows don't all invalidate on a toggle
   const toggleCandidate = useCallback(
@@ -677,27 +741,42 @@ function StoreImport() {
    * before is discarded instead of restored. */
   function reviewStore(url: string, platform: string, domain: string) {
     setDeselected(new Set(beginSelection(userId, domain)));
-    persistTo.current = { userId, storeDomain: domain };
+    persistToRef.current = { userId, storeDomain: domain };
     setRunning(null);
-    done.current = false;
+    doneRef.current = false;
     setReview({ storeUrl: url, platform, domain });
   }
 
-  /** Backing out of a walk that never landed. The user wanted out of the wait,
-   * not out of their deselection pass, so the stored pass stays where it is. */
+  /** Dropping the live progress card so the rest of the page comes back. Only
+   * the card goes: the import carries on server-side, and its handle (and the
+   * store its pass belongs to) is kept so the store path can say it's busy
+   * instead of offering a second import the backend would answer with this
+   * very job. */
+  function dismissProgress() {
+    setReview(null);
+    setDeselected(new Set());
+    setDismissed(true);
+    preview.reset();
+  }
+
+  /** Backing out of a catalog walk that never landed, or of an import handle the
+   * page can no longer read. The user wanted out of the wait, not out of their
+   * deselection pass, so the stored pass stays. Releasing the handle only stops
+   * this page watching: the import itself carries on server-side, exactly as a
+   * reload leaves it. */
   function leaveWalk() {
     setReview(null);
-    persistTo.current = null;
+    persistToRef.current = null;
     setDeselected(new Set());
     setRunning(null);
-    done.current = false;
+    doneRef.current = false;
     preview.reset();
   }
 
   /** Leaving a review the user has actually seen: they're moving on, so the
    * stored pass goes with it. */
   function discardReview() {
-    clearSelection(persistTo.current);
+    clearSelection(persistToRef.current);
     leaveWalk();
   }
 
@@ -709,7 +788,8 @@ function StoreImport() {
       { storeUrl: store, sourceUrls, platform },
       {
         onSuccess: (created) => {
-          done.current = false;
+          doneRef.current = false;
+          setDismissed(false);
           setRunning({ jobId: created.job_id, requested: sourceUrls.length });
         },
       },
@@ -717,40 +797,109 @@ function StoreImport() {
   }
 
   /** A job that failed outright, or finished without importing a single product,
-   * has nothing to show on the progress card — drop back to the review step with
-   * the selection intact so the user can retry it. */
+   * has nothing to show on the progress card, so it stops rendering. Where that
+   * lands depends on whether the review is still around: straight through from a
+   * review it drops back onto it, selection intact, ready to retry. Anything that
+   * cleared the review first - a dismiss, including a dismiss the user then
+   * undid with "show progress" - lands on the paste form instead; the pass
+   * survives in sessionStorage and `beginSelection` carries it into the next
+   * review of that store. */
   const jobFellThrough =
     !!job &&
     (job.status === "failed" ||
       ((job.status === "succeeded" || job.status === "partial") &&
         job.products_upserted === 0));
 
-  // step 4 — an import is running: live progress against the requested subset
-  if (running && job && !jobFellThrough) {
-    const active = job.status === "queued" || job.status === "running";
+  /** No job yet is not a finished job: the handle can be missing while it
+   * resolves (the first poll, a cache garbage-collected while the manual editor
+   * held the screen, a failing GET), and a start would still come back as this
+   * very job. */
+  const jobActive = !job || job.status === "queued" || job.status === "running";
+
+  /** Still in flight, so a start now would come back as this very job. Once it
+   * lands the handle stops meaning anything and the store path opens again. */
+  const importInFlight = !!running && jobActive;
+
+  // in flight with the progress card dismissed: a second import can't work, so
+  // the store path says so and points back at the progress it came from rather
+  // than offering a paste form whose result would be mislabelled
+  if (importInFlight && dismissed) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <p className="flex items-center gap-2 font-display font-semibold text-ink">
+          <Store className="h-4 w-4 shrink-0 text-brand-600" />
+          {t("alreadyImportingTitle")}
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{t("alreadyImportingDescription")}</p>
+        <Button size="lg" className="mt-4" onClick={() => setDismissed(false)}>
+          {t("showProgress")}
+        </Button>
+      </div>
+    );
+  }
+
+  // step 4 — an import is running: live progress against the requested subset.
+  // While the job handle is still resolving (`jobActive` with no job) the card
+  // renders without counts rather than falling through to a paste form whose
+  // result would be mislabelled.
+  if (running && !jobFellThrough && !dismissed) {
     // the same `running.requested` the finished-import toast reads, so the bar
     // and the toast can never quote different totals — an import that overshoots
     // the chosen subset still reads its real total, only the bar stops at full
     const total = running.requested;
-    const fraction = total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
+    const fraction = job && total > 0 ? Math.min(job.products_upserted / total, 1) : 0;
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 text-brand-600" />
           {t("importingTitle")}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {active
-            ? t("importingProgress", {
-                upserted: job.products_upserted,
-                found: total,
-              })
-            : t("wrappingUp")}
+          {!job
+            ? t("importingUnknown")
+            : jobActive
+              ? t("importingProgress", {
+                  upserted: job.products_upserted,
+                  found: total,
+                })
+              : t("wrappingUp")}
         </p>
-        <div className="mt-4">
+        {/* the import runs server-side for as long as it takes, so the card that
+          * suppresses every other path on the page carries its own way out */}
+        <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button size="lg" disabled className="w-full sm:w-auto">
-            <UploadProgress progress={active ? fraction : 1} label={t("importingLabel")} />
+            {job ? (
+              <UploadProgress progress={jobActive ? fraction : 1} label={t("importingLabel")} />
+            ) : (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                {t("importingLabel")}
+              </>
+            )}
           </Button>
+          <button
+            type="button"
+            className="text-sm font-semibold text-muted-foreground hover:text-ink"
+            onClick={dismissProgress}
+          >
+            {t("importingLeave")}
+          </button>
+          {/* the handle can be unreadable (record purged, GET failing for
+            * keeps), so the way out shows once a read has actually failed -
+            * never on the first poll, which has failed nothing yet. Nothing
+            * infers the job is dead: the user says so, and only this page's
+            * handle goes. Each 2.5s poll clears `isError` again while it has no
+            * data, so the gate is the count, which only ever grows - the exit
+            * can't blink out from under a click. */}
+          {!job && jobQuery.errorUpdateCount > 0 && (
+            <button
+              type="button"
+              className="text-sm font-semibold text-muted-foreground hover:text-ink"
+              onClick={leaveWalk}
+            >
+              {t("stopTracking")}
+            </button>
+          )}
         </div>
       </div>
     );
@@ -759,7 +908,7 @@ function StoreImport() {
   // step 3 — walking the catalog for review
   if (review && !candidateData) {
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -816,7 +965,7 @@ function StoreImport() {
     // box over "0 of 0 selected"
     if (list.length === 0) {
       return (
-        <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+        <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
           <p className="flex items-center gap-2 font-display font-semibold text-ink">
             <Store className="h-4 w-4 shrink-0 text-brand-600" />
             {t("reviewTitle", { domain: review.domain })}
@@ -831,7 +980,7 @@ function StoreImport() {
       );
     }
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="flex items-center gap-2 font-display font-semibold text-ink">
           <Store className="h-4 w-4 shrink-0 text-brand-600" />
           {t("reviewTitle", { domain: review.domain })}
@@ -887,7 +1036,7 @@ function StoreImport() {
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Button
             size="lg"
-            disabled={start.isPending || (running !== null && !jobFellThrough) || chosen.length === 0}
+            disabled={start.isPending || importInFlight || chosen.length === 0}
             onClick={() => runImport(review.storeUrl, chosen, candidateData.platform)}
           >
             {start.isPending ? (
@@ -914,7 +1063,7 @@ function StoreImport() {
   // step 2 — preview succeeded: confirm before walking the catalog for review
   if (previewData) {
     return (
-      <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft">
+      <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
         <p className="font-display font-semibold text-ink">
           {t("previewFound", {
             count: previewData.product_count_estimate,
@@ -961,7 +1110,7 @@ function StoreImport() {
   return (
     <>
       <form
-        className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
+        className="flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
         onSubmit={(e) => {
           e.preventDefault();
           if (storeUrl.trim()) preview.mutate(storeUrl.trim());

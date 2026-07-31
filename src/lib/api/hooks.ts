@@ -92,14 +92,20 @@ export function useVideoJobs(params: { product_id?: string } = {}) {
 }
 
 /** Import-job poll interval: keep polling while the catalog pull is in
- * flight, stop the moment it reaches a terminal status. */
+ * flight, stop the moment it reaches a terminal status. No status at all is
+ * not terminal - it's the first poll, a cache garbage-collected while the
+ * caller was unmounted, or a failing GET - so it keeps polling too, or one
+ * failed request strands the progress card (which suppresses the rest of the
+ * page) on a spinner for the page's lifetime. */
 const IMPORT_ACTIVE: ImportStatus[] = ["queued", "running"];
+const IMPORT_POLL_MS = 2500;
 
 export function importPollInterval(status: ImportStatus | undefined): number | false {
-  return status && IMPORT_ACTIVE.includes(status) ? 2500 : false;
+  return !status || IMPORT_ACTIVE.includes(status) ? IMPORT_POLL_MS : false;
 }
 
-/** Polls every 2.5s while the store import is queued/running (report §4.2). */
+/** Polls every 2.5s while the store import is queued/running, or while it has
+ * no status to read at all (report §4.2) - see `importPollInterval`. */
 export function useImportJob(id: string) {
   return useQuery({
     queryKey: qk.import(id),

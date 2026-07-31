@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Link2, Loader2, PackagePlus, Plus } from "lucide-react";
+import { AlertTriangle, Link2, Loader2, Plus, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useMyProducts } from "@/lib/api/hooks";
+import { toast } from "@/lib/toast";
+import { PathHeader } from "@/components/app/path-header";
 import { ProductCard } from "@/components/app/product-card";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
@@ -12,9 +14,32 @@ import { StaggerItem } from "@/components/ui/motion";
 export default function MyProductsPage() {
   const t = useTranslations("app.products");
   const router = useRouter();
-  const { data, isLoading } = useMyProducts();
+  const { data, isError, isFetching, fetchStatus, refetch, errorUpdatedAt, errorUpdateCount } =
+    useMyProducts();
   const [url, setUrl] = useState("");
   const products = data ?? [];
+  // a list we've never received is the only "not loaded" state: `isLoading` is
+  // false for a query paused offline, which would read as an empty catalog
+  const loaded = data !== undefined;
+  const showEmptyState = loaded && products.length === 0;
+  const showStoreImportPrompt = loaded && products.length > 0 && products.length <= 3;
+  // offline pauses the query with no error and no data: same dead end as a
+  // failed load, so it gets the same explain-and-retry card instead of a spinner
+  const paused = fetchStatus === "paused";
+  // the card only speaks for a list that never arrived; a refetch that fails
+  // over cached products is a toast, not a banner above those products.
+  // With no data a fetch resets `status` to pending, so `isError` would drop the
+  // whole card mid-retry; `errorUpdateCount` only ever grows, so it stays up.
+  const showLoadError = !loaded && (paused || errorUpdateCount > 0);
+  // seeded at mount so a failure already sitting in the cache doesn't toast
+  // again on every remount inside the query's `staleTime`
+  const toastedErrorAt = useRef(errorUpdatedAt);
+
+  useEffect(() => {
+    if (!isError || !loaded || errorUpdatedAt === toastedErrorAt.current) return;
+    toastedErrorAt.current = errorUpdatedAt;
+    toast.error(t("refreshError"));
+  }, [isError, loaded, errorUpdatedAt, t]);
 
   function goCreate() {
     const trimmed = url.trim();
@@ -40,7 +65,7 @@ export default function MyProductsPage() {
         </Button>
       </div>
 
-      {/* paste omnibox — anything droppable in: Amazon, Shopee, TikTok Shop, any store */}
+      {/* Single-product paste box; whole-store imports use the prompt below. */}
       <form
         className="mt-6 flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft focus-within:border-brand-300"
         onSubmit={(e) => {
@@ -60,23 +85,73 @@ export default function MyProductsPage() {
         </Button>
       </form>
 
-      {isLoading ? (
+      {showLoadError && (
+        <section
+          role="alert"
+          className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-soft"
+        >
+          <p className="flex items-start gap-2 font-display font-semibold text-ink">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-rose" />
+            {t(paused ? "offlineTitle" : "loadErrorTitle")}
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t(paused ? "offlineDescription" : "loadErrorDescription")}
+          </p>
+          {/* offline, a refetch stays paused (networkMode "online"): the click
+            * would be silently inert, and React Query resumes on its own the
+            * moment the browser is back, so the button waits with the user */}
+          <Button
+            size="md"
+            className="mt-4"
+            onClick={() => refetch()}
+            disabled={isFetching || paused}
+          >
+            {isFetching ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              t(paused ? "waitingForConnection" : "retry")
+            )}
+          </Button>
+        </section>
+      )}
+
+      {/* one empty state, whose primary action is bringing the whole store in */}
+      {showEmptyState && (
+        <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-6 text-center shadow-soft">
+          <PathHeader
+            icon={Store}
+            title={t("emptyTitle")}
+            description={t("emptyDescription")}
+            centered
+          />
+          <Button href="/app/products/new" size="md" className="mt-4">
+            <Store className="h-4 w-4" />
+            {t("storeImportCta")}
+          </Button>
+        </section>
+      )}
+
+      {showStoreImportPrompt && (
+        <section className="mt-6 rounded-2xl border border-brand-200 bg-accent/70 p-5 shadow-soft sm:flex sm:items-center sm:justify-between sm:gap-6">
+          <PathHeader
+            icon={Store}
+            title={t("storeImportTitle")}
+            description={t("storeImportDescription")}
+          />
+          <Button href="/app/products/new" size="md" className="mt-4 w-full sm:mt-0 sm:w-auto">
+            <Store className="h-4 w-4" />
+            {t("storeImportCta")}
+          </Button>
+        </section>
+      )}
+
+      {!loaded && !showLoadError && (
         <div className="mt-16 flex justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-brand-500" />
         </div>
-      ) : products.length === 0 ? (
-        <div className="mt-16 flex flex-col items-center text-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
-            <PackagePlus className="h-7 w-7" />
-          </div>
-          <p className="mt-4 font-display text-lg font-semibold text-ink">
-            {t("emptyTitle")}
-          </p>
-          <p className="mt-1 max-w-sm text-sm text-muted-foreground">
-            {t("emptyDescription")}
-          </p>
-        </div>
-      ) : (
+      )}
+
+      {products.length > 0 && (
         <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {products.map((p, i) => (
             <StaggerItem key={p.id} index={i} className="h-full">

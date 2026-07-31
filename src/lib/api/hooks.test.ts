@@ -54,7 +54,9 @@ describe("optimistic like flip + rollback", () => {
     for (const terminal of ["succeeded", "partial", "failed"] as const) {
       expect(importPollInterval(terminal)).toBe(false);
     }
-    expect(importPollInterval(undefined)).toBe(false);
+    // no status yet is not terminal: a first poll, a garbage-collected cache or
+    // a failing GET has to keep asking, or the progress card never recovers
+    expect(importPollInterval(undefined)).toBe(2500);
   });
 
   it("snapshots my products even when the detail query is not cached", () => {
