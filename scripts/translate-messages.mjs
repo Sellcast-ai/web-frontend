@@ -27,6 +27,61 @@ const MANUAL_OVERRIDES = {
     vi: "Đã nhập {count, plural, one {# sản phẩm} other {# sản phẩm}} từ cửa hàng của bạn.",
     th: "นำเข้า {count, plural, one {สินค้า # รายการ} other {สินค้า # รายการ}} จากร้านค้าของคุณแล้ว",
   },
+  // Machine reads "comm." as communication and "MoM" as "Mom" (same bug class
+  // as the "Ship -> boat" incident) - these money-surface keys are hand-set.
+  "app.productCard.commissionShort": {
+    es: "{rate} com.",
+    zh: "佣金 {rate}",
+    ja: "手数料 {rate}",
+    ko: "수수료 {rate}",
+    pt: "{rate} com.",
+    id: "Komisi {rate}",
+    vi: "Hoa hồng {rate}",
+    th: "ค่าคอม {rate}",
+  },
+  "app.productDetail.mom": {
+    es: "{percent} intermensual",
+    zh: "环比 {percent}",
+    ja: "前月比 {percent}",
+    ko: "전월 대비 {percent}",
+    pt: "{percent} intermensal",
+    id: "{percent} vs bulan lalu",
+    vi: "{percent} so với tháng trước",
+    th: "{percent} เทียบกับเดือนก่อน",
+  },
+  // Regenerations are metered (1 credit each, same monthly allowance) - the
+  // machine seed promised them free. Hand-set so a regen never reopens the lie.
+  "marketing.pricing.faq.a1": {
+    es: "1 crédito = 1 segundo de video terminado. Un video de 20 segundos usa 20 créditos; uno de 30 segundos usa 30. Tú eliges la duración, así que el costo de cada render está claro antes de empezar.",
+    zh: "1 积分 = 1 秒成品视频。20 秒的视频消耗 20 积分，30 秒的消耗 30 积分。时长由你决定，每次渲染的花费在开始前就一目了然。",
+    ja: "1クレジット = 完成ビデオ1秒分。20秒のビデオなら20クレジット、30秒なら30クレジットです。長さは自分で選べるので、レンダリングの費用は開始前に常に明確です。",
+    ko: "1크레딧 = 완성된 영상 1초. 20초 영상은 20크레딧, 30초 영상은 30크레딧을 사용합니다. 길이를 직접 선택하므로 렌더링 비용은 시작하기 전에 항상 명확합니다.",
+    pt: "1 crédito = 1 segundo de vídeo finalizado. Um vídeo de 20 segundos usa 20 créditos; um de 30 segundos usa 30. Você escolhe a duração, então o custo de cada render fica claro antes de começar.",
+    id: "1 kredit = 1 detik video jadi. Video 20 detik memakai 20 kredit; yang 30 detik memakai 30. Anda memilih durasinya, jadi biaya setiap render selalu jelas sebelum dimulai.",
+    vi: "1 tín dụng = 1 giây video hoàn chỉnh. Video 20 giây tốn 20 tín dụng; video 30 giây tốn 30. Bạn tự chọn độ dài, nên chi phí mỗi lần render luôn rõ ràng trước khi bắt đầu.",
+    th: "1 เครดิต = วิดีโอสำเร็จ 1 วินาที วิดีโอ 20 วินาทีใช้ 20 เครดิต ส่วน 30 วินาทีใช้ 30 เครดิต คุณเลือกความยาวเอง จึงรู้ต้นทุนของการเรนเดอร์แต่ละครั้งก่อนเริ่มเสมอ",
+  },
+  "marketing.pricing.faq.a2": {
+    es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensal que tu render final.",
+    zh: "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份月度额度。",
+    ja: "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じ月間クレジットから消費されます。",
+    ko: "네, 재생성 1회당 1크레딧이 사용됩니다. 검토 중 숏을 다시 생성하면 최종 렌더링과 같은 월간 크레딧에서 차감됩니다.",
+    pt: "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo mensal do seu render final.",
+    id: "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong jatah bulanan yang sama dengan render final Anda.",
+    vi: "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
+    th: "มี การสร้างใหม่แต่ละครั้งใช้ 1 เครดิต การสร้างช็อตใหม่ระหว่างรีวิวจะหักจากเครดิตรายเดือนก้อนเดียวกับการเรนเดอร์ขั้นสุดท้ายของคุณ",
+  },
+  // zh machine seed used 学分 (academic course credits) with garbled word order.
+  "app.studio.usageSummary": {
+    zh: "本月剩余 {remaining}/{limit} 积分 · 此视频将消耗 {duration} 积分",
+  },
+  // ja machine seed left these two in English while the other locales translated.
+  "app.productCard.source.amazon": {
+    ja: "Amazonから",
+  },
+  "app.productCard.source.shopify": {
+    ja: "Shopifyから",
+  },
   "marketing.header.startFreeMobile": {
     es: "Empieza",
     zh: "开始",
