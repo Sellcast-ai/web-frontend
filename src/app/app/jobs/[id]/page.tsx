@@ -31,7 +31,7 @@ import {
   useRetryJob,
   useApproveStoryboard,
   usePatchStoryboard,
-  useProduct,
+  useProductExistenceProbe,
   useDeleteJob,
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
@@ -269,7 +269,7 @@ function JobLoadError({
  *  route. Other failures (network) leave the link in place. */
 function ProductLink({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs");
-  const { isError, error } = useProduct(job.product_id);
+  const { isError, error } = useProductExistenceProbe(job.product_id);
   const name = job.product_name ?? t("videoFallback");
   if (isError && error instanceof ApiError && error.status === 404) {
     return (

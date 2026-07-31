@@ -5,8 +5,10 @@ import {
   patchProductLists,
   qk,
   removeJobFromCachedLists,
+  retryUnlessNotFound,
   snapshotProductQueries,
 } from "./hooks";
+import { ApiError } from "./client";
 import type { ProductSummary, VideoJob } from "./types";
 
 const product = (id: string, is_liked: boolean) =>
@@ -103,5 +105,16 @@ describe("video job list cache pruning", () => {
     removeJobFromCachedLists(qc, "deleted");
 
     expect(qc.getQueryData(qk.jobs({ limit: 50 }))).toBeUndefined();
+  });
+});
+
+describe("status-aware product probes", () => {
+  it("does not retry deleted products", () => {
+    expect(retryUnlessNotFound(0, new ApiError(404, "Not found"))).toBe(false);
+  });
+
+  it("retries transient product probe failures once", () => {
+    expect(retryUnlessNotFound(0, new ApiError(502, "Bad gateway"))).toBe(true);
+    expect(retryUnlessNotFound(1, new ApiError(502, "Bad gateway"))).toBe(false);
   });
 });

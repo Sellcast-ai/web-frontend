@@ -7,7 +7,7 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { api, apiErrorMessage } from "./client";
+import { ApiError, api, apiErrorMessage } from "./client";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -56,6 +56,19 @@ export function useProduct(id: string) {
     queryKey: qk.product(id),
     queryFn: () => api.getProduct(id),
     enabled: Boolean(id),
+  });
+}
+
+export function retryUnlessNotFound(failureCount: number, err: unknown) {
+  return !(err instanceof ApiError && err.status === 404) && failureCount < 1;
+}
+
+export function useProductExistenceProbe(id: string) {
+  return useQuery({
+    queryKey: qk.product(id),
+    queryFn: () => api.getProduct(id),
+    enabled: Boolean(id),
+    retry: retryUnlessNotFound,
   });
 }
 
