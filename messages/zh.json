@@ -94,16 +94,13 @@
       },
       "platforms": {
         "shopify": {
-          "name": "Shopify",
-          "description": "通过安全登录连接你的 Shopify 商店，Lumi 即可导入你的商品。"
+          "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce",
-          "description": "连接 WooCommerce 商店以导入其商品。"
+          "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop",
-          "description": "连接你的 TikTok Shop 以导入其商品。"
+          "name": "TikTok Shop"
         }
       }
     },

@@ -10,15 +10,15 @@ import { SHOPIFY_CONNECTED_COOKIE, normalizeShopDomain } from "@/lib/shopify-sho
 
 /**
  * The platform grid is data-driven: adding a platform later is a new entry
- * here plus its catalog keys (app.connections.platforms.<id>.*), not a page
- * rewrite. `connectable` marks the platforms with a real end-to-end connect
+ * here (with its brand mark vendored under public/platforms/) plus a catalog
+ * name key (app.connections.platforms.<id>.name), not a page rewrite. `connectable` marks the platforms with a real end-to-end connect
  * flow - everything else renders an honest "not available yet" badge and no
  * action, so no card ever offers something the product can't do.
  */
 const PLATFORMS = [
-  { id: "shopify", connectable: true },
-  { id: "woocommerce", connectable: false },
-  { id: "tiktokShop", connectable: false },
+  { id: "shopify", connectable: true, logo: "/platforms/shopify.svg" },
+  { id: "woocommerce", connectable: false, logo: "/platforms/woocommerce.svg" },
+  { id: "tiktokShop", connectable: false, logo: "/platforms/tiktok-shop.svg" },
 ] as const;
 
 const ERROR_KEYS = ["invalid-shop", "unavailable", "failed"] as const;
@@ -152,8 +152,12 @@ function PlatformCard({ platform }: { platform: (typeof PLATFORMS)[number] }) {
   return (
     <div className="flex flex-col gap-3 rounded-card border border-border bg-card p-5">
       <div className="flex items-center gap-3">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-base font-bold text-white">
-          {name.trim()[0]?.toUpperCase()}
+        {/* White tile (not a theme token) so the brand marks read in both
+          * themes - the TikTok glyph is near-black and would vanish on a
+          * dark card. */}
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-white">
+          {/* eslint-disable-next-line @next/next/no-img-element -- static brand mark, no optimization needed */}
+          <img src={platform.logo} alt="" aria-hidden className="h-6 w-6" />
         </span>
         <p className="font-semibold text-ink">{name}</p>
         {!platform.connectable && (
@@ -162,9 +166,6 @@ function PlatformCard({ platform }: { platform: (typeof PLATFORMS)[number] }) {
           </span>
         )}
       </div>
-      <p className="text-sm text-muted-foreground">
-        {t(`platforms.${platform.id}.description`)}
-      </p>
       {platform.connectable && <ShopifyConnect />}
     </div>
   );
