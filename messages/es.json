@@ -1074,7 +1074,7 @@
           "uiOffer": "Oferta — petición clara"
         },
         "review": {
-          "body": "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera cuantas veces quieras — los créditos solo se gastan cuando das el visto bueno.",
+          "body": "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera hasta que te convenza — cada regeneración cuesta 1 crédito, y el render completo solo gasta créditos cuando das el visto bueno.",
           "caption": "Tú decides, antes del render.",
           "uiHeading": "Revisión del storyboard",
           "uiSpend": "$0 gastados",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Tú apruebas el storyboard",
-          "body": "Cada beat recibe primero un fotograma de referencia. Nada se renderiza — ni se cobra — hasta que des tu visto bueno."
+          "body": "Cada beat recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno."
         },
         "render": {
           "title": "Seedance lo renderiza",

@@ -1074,7 +1074,7 @@
           "uiOffer": "Offer — clear ask"
         },
         "review": {
-          "body": "Every shot gets a reference frame first. Approve, tweak, or regenerate as many times as you like — credits only burn after you say go.",
+          "body": "Every shot gets a reference frame first. Approve, tweak, or regenerate until it looks right — regens cost 1 credit each, and the full render only burns credits when you say go.",
           "caption": "Your call, before the render.",
           "uiHeading": "Storyboard review",
           "uiSpend": "$0 spent so far",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "You approve the storyboard",
-          "body": "Every beat gets a reference frame first. Nothing renders — and nothing is charged — until you sign off."
+          "body": "Every beat gets a reference frame first. Regens cost 1 credit each — the full render, and its full charge, waits until you sign off."
         },
         "render": {
           "title": "Seedance renders it",

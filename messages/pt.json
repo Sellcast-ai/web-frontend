@@ -457,7 +457,7 @@
       "size": {
         "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
-      "usageSummary": "{remaining} dos créditos {limit} restantes este mês · este vídeo usa {duration}",
+      "usageSummary": "{remaining} de {limit} créditos restantes este mês · este vídeo usa {duration} créditos",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Oferta — pedido claro"
         },
         "review": {
-          "body": "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere quantas vezes quiser — os créditos só queimam depois do seu ok.",
+          "body": "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere até ficar do jeito certo — cada regeneração custa 1 crédito, e o render completo só queima créditos depois do seu ok.",
           "caption": "Você decide, antes do render.",
           "uiHeading": "Revisão do storyboard",
           "uiSpend": "$0 gastos",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Você aprova o storyboard",
-          "body": "Cada beat recebe antes um frame de referência. Nada renderiza — e nada é cobrado — até você dar o ok."
+          "body": "Cada beat recebe antes um frame de referência. Regenerar custa 1 crédito — o render completo, e a cobrança, só acontece depois do seu ok."
         },
         "render": {
           "title": "A Seedance renderiza",

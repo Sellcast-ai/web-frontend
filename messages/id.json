@@ -457,7 +457,7 @@
       "size": {
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
-      "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
+      "usageSummary": "{remaining} dari {limit} kredit tersisa bulan ini · video ini menggunakan {duration} kredit",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Penawaran — ajakan jelas"
         },
         "review": {
-          "body": "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sesuka Anda — kredit baru terpakai setelah Anda bilang jalan.",
+          "body": "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sampai pas — setiap pembuatan ulang memakai 1 kredit, dan render penuh baru memakai kredit setelah Anda bilang jalan.",
           "caption": "Anda yang putuskan, sebelum render.",
           "uiHeading": "Tinjauan storyboard",
           "uiSpend": "$0 terpakai",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Anda menyetujui storyboard",
-          "body": "Setiap beat mendapat frame acuan lebih dulu. Tidak ada yang dirender — dan tidak ada tagihan — sebelum Anda setuju."
+          "body": "Setiap beat mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
         },
         "render": {
           "title": "Seedance merendernya",

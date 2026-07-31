@@ -71,9 +71,37 @@ const MANUAL_OVERRIDES = {
     vi: "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
     th: "มี การสร้างใหม่แต่ละครั้งใช้ 1 เครดิต การสร้างช็อตใหม่ระหว่างรีวิวจะหักจากเครดิตรายเดือนก้อนเดียวกับการเรนเดอร์ขั้นสุดท้ายของคุณ",
   },
-  // zh machine seed used 学分 (academic course credits) with garbled word order.
+  // Same metered-regen lie lived in the hand-translated landing copy - these
+  // two keys now state the 1-credit regen charge instead of "nothing is
+  // charged until you sign off".
+  "marketing.landing.why.review.body": {
+    es: "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera hasta que te convenza — cada regeneración cuesta 1 crédito, y el render completo solo gasta créditos cuando das el visto bueno.",
+    zh: "每个镜头都会先生成一张参考图。通过、微调或重新生成，直到满意为止——重新生成一次扣 1 积分，完整渲染只有在你点头之后才消耗积分。",
+    ja: "すべてのショットに、まず参考フレームが付きます。納得いくまで承認・微調整・再生成できます。再生成は1回1クレジット、本番レンダリングのクレジットが減るのは、あなたがGOを出してからです。",
+    ko: "모든 숏에 참조 프레임이 먼저 생성됩니다. 마음에 들 때까지 승인하고, 다듬고, 다시 생성하세요. 재생성은 1회 1크레딧이며, 전체 렌더링 크레딧은 당신이 승인한 뒤에만 소모됩니다.",
+    pt: "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere até ficar do jeito certo — cada regeneração custa 1 crédito, e o render completo só queima créditos depois do seu ok.",
+    id: "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sampai pas — setiap pembuatan ulang memakai 1 kredit, dan render penuh baru memakai kredit setelah Anda bilang jalan.",
+    vi: "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 credit, và bản render đầy đủ chỉ bị trừ credit sau khi bạn bấm chạy.",
+    th: "ทุกช็อตจะได้เฟรมอ้างอิงก่อน อนุมัติ ปรับ หรือสร้างใหม่ได้จนกว่าจะถูกใจ — สร้างใหม่ครั้งละ 1 เครดิต ส่วนการเรนเดอร์เต็มจะใช้เครดิตก็ต่อเมื่อคุณสั่งลุย",
+  },
+  "marketing.landing.storySteps.approve.body": {
+    es: "Cada beat recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno.",
+    zh: "每个分镜先出参考图。重新生成一次扣 1 积分；完整渲染和相应的扣费，都等你确认后才开始。",
+    ja: "各ビートには先に参考フレームが付きます。再生成は1回1クレジット。本番レンダリングとその課金は、あなたが承認するまで始まりません。",
+    ko: "모든 비트에 참조 프레임이 먼저 생성됩니다. 재생성은 1회 1크레딧이며, 전체 렌더링과 과금은 당신이 사인하기 전까지 시작되지 않습니다.",
+    pt: "Cada beat recebe antes um frame de referência. Regenerar custa 1 crédito — o render completo, e a cobrança, só acontece depois do seu ok.",
+    id: "Setiap beat mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju.",
+    vi: "Mỗi beat có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt.",
+    th: "ทุกบีตจะได้เฟรมอ้างอิงก่อน สร้างใหม่ครั้งละ 1 เครดิต ส่วนการเรนเดอร์เต็มและการเก็บเงินจะเริ่มก็ต่อเมื่อคุณเซ็นผ่าน",
+  },
+  // zh machine seed used 学分 (academic course credits) with garbled word order;
+  // ko/pt/vi/id had milder word-order drift on the same money-surface string.
   "app.studio.usageSummary": {
     zh: "本月剩余 {remaining}/{limit} 积分 · 此视频将消耗 {duration} 积分",
+    ko: "이번 달에는 {limit} 크레딧 중 {remaining} 크레딧이 남아 있습니다 · 이 영상은 {duration} 크레딧을 사용합니다",
+    pt: "{remaining} de {limit} créditos restantes este mês · este vídeo usa {duration} créditos",
+    id: "{remaining} dari {limit} kredit tersisa bulan ini · video ini menggunakan {duration} kredit",
+    vi: "Còn {remaining}/{limit} tín dụng trong tháng này · video này dùng {duration} tín dụng",
   },
   // ja machine seed left these two in English while the other locales translated.
   "app.productCard.source.amazon": {
