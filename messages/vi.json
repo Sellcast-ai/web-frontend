@@ -589,6 +589,11 @@
         "description": "Thao tác này xóa video vĩnh viễn. Không thể khôi phục và số tín dụng đã dùng sẽ không được hoàn lại.",
         "cancel": "Hủy",
         "confirm": "Xóa vĩnh viễn"
+      },
+      "notFound": {
+        "title": "Video này không còn nữa",
+        "description": "Video đã bị xóa, hoặc liên kết trỏ đến một video không phải của bạn. Những video bạn còn giữ đều nằm trong Video của tôi.",
+        "action": "Quay lại Video của tôi"
       }
     }
   },

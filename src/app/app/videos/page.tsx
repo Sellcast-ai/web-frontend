@@ -12,9 +12,10 @@ import { StaggerItem } from "@/components/ui/motion";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
 import {
-  TAB_FOR_STATUS,
   VIDEO_TAB_ORDER,
+  countByTab,
   defaultTab,
+  jobsForTab,
   type VideoTab,
 } from "@/lib/video-tabs";
 import { VIDEO_STYLES, type VideoJob, type VideoStyle } from "@/lib/api/types";
@@ -49,7 +50,7 @@ export default function VideosPage() {
 
   const counts = countByTab(jobs ?? []);
   const activeTab = selected ?? defaultTab(jobs ?? []);
-  const visible = (jobs ?? []).filter((j) => TAB_FOR_STATUS[j.status] === activeTab);
+  const visible = jobsForTab(jobs ?? [], activeTab);
 
   return (
     <div className="container-page py-8">
@@ -75,7 +76,7 @@ export default function VideosPage() {
       ) : (
         <>
           <div
-            role="tablist"
+            role="group"
             aria-label={t("tabsLabel")}
             className="mt-6 flex gap-1 overflow-x-auto border-b border-border"
           >
@@ -106,17 +107,6 @@ export default function VideosPage() {
   );
 }
 
-function countByTab(jobs: VideoJob[]): Record<VideoTab, number> {
-  const counts: Record<VideoTab, number> = {
-    needsYou: 0,
-    onTheWay: 0,
-    failed: 0,
-    success: 0,
-  };
-  for (const job of jobs) counts[TAB_FOR_STATUS[job.status]] += 1;
-  return counts;
-}
-
 function TabButton({
   label,
   count,
@@ -131,8 +121,7 @@ function TabButton({
   return (
     <button
       type="button"
-      role="tab"
-      aria-selected={active}
+      aria-current={active ? "true" : undefined}
       onClick={onSelect}
       className={cn(
         "flex shrink-0 items-center gap-1.5 border-b-2 px-1.5 py-2 text-xs font-semibold whitespace-nowrap transition-colors sm:px-3 sm:py-2.5 sm:text-sm",

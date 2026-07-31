@@ -589,6 +589,11 @@
         "description": "Isso exclui o vídeo permanentemente. Ele não pode ser recuperado e os créditos já usados não são reembolsados.",
         "cancel": "Cancelar",
         "confirm": "Excluir permanentemente"
+      },
+      "notFound": {
+        "title": "Este vídeo não existe mais",
+        "description": "Ele foi excluído ou o link aponta para um vídeo que não é seu. Tudo o que você ainda tem está em Meus vídeos.",
+        "action": "Voltar para Meus vídeos"
       }
     }
   },

@@ -3,6 +3,7 @@ import type { VideoJob, VideoJobStatus } from "./api/types";
 import {
   TAB_FOR_STATUS,
   VIDEO_TAB_ORDER,
+  countByTab,
   defaultTab,
   jobsForTab,
 } from "./video-tabs";
@@ -56,6 +57,30 @@ describe("jobsForTab", () => {
     ]);
     expect(jobsForTab(jobs, "failed")).toHaveLength(1);
     expect(jobsForTab(jobs, "success")).toHaveLength(1);
+  });
+});
+
+describe("unknown runtime statuses", () => {
+  // The backend can ship a status before types.ts knows about it; such a job
+  // must stay listed and counted somewhere rather than vanish.
+  const unknown = job("rendering_audio" as VideoJobStatus);
+
+  it("keeps an unmapped job visible in On the way", () => {
+    expect(jobsForTab([unknown], "onTheWay")).toEqual([unknown]);
+    expect(countByTab([unknown])).toEqual({
+      needsYou: 0,
+      onTheWay: 1,
+      failed: 0,
+      success: 0,
+    });
+    expect(defaultTab([unknown])).toBe("onTheWay");
+  });
+});
+
+describe("countByTab", () => {
+  it("counts every job exactly once", () => {
+    const counts = countByTab(ALL_STATUSES.map(job));
+    expect(counts).toEqual({ needsYou: 2, onTheWay: 3, failed: 1, success: 1 });
   });
 });
 

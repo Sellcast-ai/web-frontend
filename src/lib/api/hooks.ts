@@ -322,7 +322,13 @@ export function useDeleteJob(messages: { deleteError: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.deleteVideoJob(id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["jobs"] }),
+    // qk.job(id) is ["job", id] — the ["jobs"] invalidation never reaches it,
+    // so the deleted job's own entry has to be dropped or Back re-renders a
+    // permanently deleted video from cache as if it were live.
+    onSuccess: (_, id) => {
+      qc.removeQueries({ queryKey: qk.job(id) });
+      qc.invalidateQueries({ queryKey: ["jobs"] });
+    },
     onError: (err) => toast.error(apiErrorMessage(err, messages.deleteError)),
   });
 }

@@ -589,6 +589,11 @@
         "description": "This permanently deletes the video. It cannot be recovered, and credits already spent are not refunded.",
         "cancel": "Cancel",
         "confirm": "Delete permanently"
+      },
+      "notFound": {
+        "title": "This video no longer exists",
+        "description": "It was deleted, or the link points to a video that isn’t yours. Everything you still have is in My Videos.",
+        "action": "Back to My Videos"
       }
     }
   },

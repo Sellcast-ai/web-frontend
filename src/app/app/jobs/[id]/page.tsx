@@ -84,8 +84,14 @@ const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
 export default function JobDetailPage() {
   const t = useTranslations("app.jobs");
   const { id } = useParams<{ id: string }>();
-  const { data: job, isLoading, dataUpdatedAt } = useVideoJob(id);
+  const { data: job, isLoading, isError, dataUpdatedAt } = useVideoJob(id);
   const [scriptOpen, setScriptOpen] = useState(false);
+
+  // Permanent delete makes a dead job id a normal arrival here (Back after a
+  // delete, a bookmark, a bad id). Never spin forever on it.
+  if (isError && !job) {
+    return <JobNotFound />;
+  }
 
   if (isLoading || !job) {
     return (
@@ -201,6 +207,22 @@ export default function JobDetailPage() {
 
       {/* danger zone — at the very bottom, away from every routine action */}
       <DeleteVideoSection job={job} />
+    </div>
+  );
+}
+
+function JobNotFound() {
+  const t = useTranslations("app.jobs.notFound");
+  return (
+    <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-accent text-accent-foreground">
+        <Film className="h-8 w-8" />
+      </div>
+      <p className="mt-5 font-display text-xl font-bold text-ink">{t("title")}</p>
+      <p className="mt-1 max-w-sm text-muted-foreground">{t("description")}</p>
+      <Button href="/app/videos" size="lg" className="mt-6">
+        {t("action")}
+      </Button>
     </div>
   );
 }

@@ -25,16 +25,34 @@ export const TAB_FOR_STATUS: Record<VideoJobStatus, VideoTab> = {
   completed: "success",
 };
 
+/** The one place a job's tab is decided. The table is total at compile time,
+ *  but statuses arrive as runtime JSON: a status the backend adds before
+ *  `types.ts` catches up must still land somewhere, or the job disappears from
+ *  My Videos entirely. Unknown means "the system still owes work". */
+export function tabForJob(job: VideoJob): VideoTab {
+  return TAB_FOR_STATUS[job.status] ?? "onTheWay";
+}
+
 export function jobsForTab(jobs: VideoJob[], tab: VideoTab): VideoJob[] {
-  return jobs.filter((j) => TAB_FOR_STATUS[j.status] === tab);
+  return jobs.filter((j) => tabForJob(j) === tab);
+}
+
+export function countByTab(jobs: VideoJob[]): Record<VideoTab, number> {
+  const counts: Record<VideoTab, number> = {
+    needsYou: 0,
+    onTheWay: 0,
+    failed: 0,
+    success: 0,
+  };
+  for (const job of jobs) counts[tabForJob(job)] += 1;
+  return counts;
 }
 
 /** Landing tab: the first tab (in attention order) with jobs in it, so a user
  *  with a parked approval lands on the tab that needs them. */
 export function defaultTab(jobs: VideoJob[]): VideoTab {
   return (
-    VIDEO_TAB_ORDER.find((tab) =>
-      jobs.some((j) => TAB_FOR_STATUS[j.status] === tab),
-    ) ?? "success"
+    VIDEO_TAB_ORDER.find((tab) => jobs.some((j) => tabForJob(j) === tab)) ??
+    "success"
   );
 }

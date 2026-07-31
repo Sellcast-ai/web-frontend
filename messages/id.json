@@ -589,6 +589,11 @@
         "description": "Tindakan ini menghapus video secara permanen. Video tidak dapat dipulihkan dan kredit yang sudah terpakai tidak dikembalikan.",
         "cancel": "Batal",
         "confirm": "Hapus permanen"
+      },
+      "notFound": {
+        "title": "Video ini sudah tidak ada",
+        "description": "Video ini telah dihapus, atau tautannya menuju video yang bukan milik Anda. Semua yang masih Anda miliki ada di Video Saya.",
+        "action": "Kembali ke Video Saya"
       }
     }
   },
