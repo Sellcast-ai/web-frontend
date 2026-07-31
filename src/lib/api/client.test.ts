@@ -105,6 +105,36 @@ describe("api (BFF client)", () => {
     );
   });
 
+  it("never treats a bare 5xx detail as user copy, only an error_type-backed one", async () => {
+    // Operator prose on a 500 is untranslated English never written for users.
+    mockFetch(500, { detail: "Unexpected server error" });
+    const unexpected = await api.getUsage().catch((e) => e);
+    expect(unexpected.message).toBe("Request failed");
+    expect(apiErrorMessage(unexpected, "localized fallback")).toBe("localized fallback");
+
+    mockFetch(500, { detail: "Database operation failed" });
+    const db = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(db, "localized fallback")).toBe("localized fallback");
+
+    // A structured error_type is how the backend marks a deliberate
+    // user-facing 5xx message (the SMS-unconfigured 503), so it stays.
+    mockFetch(503, {
+      detail: "SMS verification is not available right now.",
+      error_type: "SmsNotConfiguredError",
+    });
+    const sms = await api.sendPhoneCode("+15551234567").catch((e) => e);
+    expect(apiErrorMessage(sms, "localized fallback")).toBe(
+      "SMS verification is not available right now.",
+    );
+
+    // 4xx prose keeps winning: curated backend messages are deliberate there.
+    mockFetch(429, { detail: "Too many failed verification attempts." });
+    const quota = await api.getUsage().catch((e) => e);
+    expect(apiErrorMessage(quota, "localized fallback")).toBe(
+      "Too many failed verification attempts.",
+    );
+  });
+
   it("approveStoryboard POSTs to the approve endpoint", async () => {
     const fetchMock = mockFetch(200, { id: "j1" });
     await api.approveStoryboard("j1");

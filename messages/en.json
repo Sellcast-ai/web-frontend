@@ -42,6 +42,19 @@
       "readLinkFailed": "Couldn’t read that product link. Please try again.",
       "previewStoreFailed": "Couldn’t read that store. Please check the address and try again.",
       "importNone": "None of the {requested, plural, one {# product} other {# products}} could be imported. Please try again.",
+      "importFailedReasons": {
+        "workerRestart": "The import was interrupted by a restart on our side. Everything imported so far was saved - please try again.",
+        "rateLimitedSaved": "That store isn’t allowing automated catalog reads right now. We saved everything imported so far - please try re-importing in a few minutes.",
+        "rateLimited": "That store is rate-limiting catalog reads right now. Please try again in a few minutes.",
+        "botWall": "That store is blocking automated catalog reads right now. Please try again later.",
+        "catalogUnreachable": "We couldn’t reach that store’s catalog right now. Please try again later.",
+        "storeUnsupported": "We couldn’t read a public product catalog from that store. This works for Shopify and WooCommerce stores with public product data. You can still add products one at a time by pasting each product link.",
+        "notShopify": "We couldn’t read a public product catalog from that store. This works for Shopify stores with public product data. You can still add products one at a time by pasting each product link.",
+        "notWoocommerce": "We couldn’t read a public WooCommerce product catalog from that store. You can still add products one at a time by pasting each product link.",
+        "selectionMissing": "We couldn’t import some of the products you chose - they may no longer be in this store.",
+        "catalogCap": "Only part of the catalog was imported because this store is over the catalog cap. Contact us to import larger catalogs.",
+        "productsUnreadable": "Some products we found couldn’t be imported. You can add those by pasting each link."
+      },
       "videoDeleted": "Video deleted.",
       "deleteVideoFailed": "Couldn't delete the video. Please try again."
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "Generation failed",
         "fallbackMessage": "Something went wrong. Try creating it again.",
+        "reasons": {
+          "workerRestart": "Our rendering system restarted and lost track of this video. Your credits have been refunded - tap Retry to make it again.",
+          "resumeInvalidScript": "This video couldn’t pick up where it left off. Your credits have been refunded - please try again.",
+          "productNotFound": "The product this video was for no longer exists. Your credits have been refunded.",
+          "providerUnavailable": "Video generation is temporarily unavailable because of a problem on our side. Your credits have been refunded - please try again later.",
+          "renderStart": "We couldn’t start the video renders. Your credits have been refunded - please try again.",
+          "renderIncomplete": "One or more of the video renders didn’t finish. Your credits have been refunded - please try again.",
+          "assembling": "Something went wrong on our side while assembling this video. Your credits have been refunded - please try again.",
+          "finishing": "Something went wrong on our side while finishing this video. Your credits have been refunded - please try again.",
+          "making": "Something went wrong on our side while making this video. Your credits have been refunded - please try again.",
+          "categoryUnsupported": "We can’t make videos for this product’s category yet. Your credits have been refunded.",
+          "scriptQuality": "We couldn’t write a good enough script for this product. Try again, or adjust the product details."
+        },
         "retry": "Retry",
         "startNewVideo": "Start a new video"
       },
