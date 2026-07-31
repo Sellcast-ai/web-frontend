@@ -27,10 +27,10 @@ export default function ProfilePage() {
   // via the shared paged query — the pages it loads are the same cache the My
   // Videos list reads.
   const jobsQuery = usePagedVideoJobs();
-  const { hasNextPage, isFetchingNextPage, fetchNextPage } = jobsQuery;
+  const { hasNextPage, isFetchNextPageError, isFetchingNextPage, fetchNextPage } = jobsQuery;
   useEffect(() => {
-    if (hasNextPage && !isFetchingNextPage) void fetchNextPage();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+    if (hasNextPage && !isFetchNextPageError && !isFetchingNextPage) void fetchNextPage();
+  }, [hasNextPage, isFetchNextPageError, isFetchingNextPage, fetchNextPage]);
   const jobsData = jobsQuery.data;
   const statsReady = jobsData !== undefined && !hasNextPage;
   const { data: usage } = useUsage();

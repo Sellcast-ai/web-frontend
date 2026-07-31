@@ -329,6 +329,7 @@ export function useCreateJob(messages: { startError: string }) {
       // A rejected create (429 out of credits, 409 at the active-jobs cap) means
       // the meter the user just read was wrong — refresh it, or Studio keeps
       // offering a Generate that re-429s every click (audit L4 P2-3).
+      qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
       toast.error(apiErrorMessage(err, messages.startError));
     },
