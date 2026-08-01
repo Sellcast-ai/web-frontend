@@ -39,6 +39,7 @@ import {
   type VideoMode,
   type VideoVibe,
   type VideoDuration,
+  type VideoJob,
   type VideoJobStatus,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
@@ -69,6 +70,17 @@ const CAP_ACTIVE_JOB_STATUSES: VideoJobStatus[] = [
   "submitted",
   "in_progress",
 ];
+
+/** While the cap note is showing, nothing else refreshes the jobs list
+ *  (no polling default, no focus refetch, and mutations can't fire with
+ *  Generate disabled), so the note polls for the finish it promises. */
+const CAP_POLL_MS = 4000;
+
+function capActiveCount(jobs: VideoJob[] | undefined): number {
+  return (jobs ?? []).filter((j) =>
+    CAP_ACTIVE_JOB_STATUSES.includes(j.status),
+  ).length;
+}
 
 export default function StudioPage() {
   return (
@@ -140,7 +152,9 @@ function StudioInner() {
     isFetching: isFetchingProduct,
   } = useProduct(productId);
   const { data: usage } = useUsage();
-  const { data: jobs } = useVideoJobs();
+  const { data: jobs } = useVideoJobs({}, (list) =>
+    capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
+  );
   const create = useCreateJob({ startError: tt("startVideoFailed") });
   const generateGuard = useMutationGuard();
 
@@ -173,9 +187,7 @@ function StudioInner() {
   const outOfQuota = !!usage && usage.remaining < duration;
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
-  const activeCount = (jobs ?? []).filter((j) =>
-    CAP_ACTIVE_JOB_STATUSES.includes(j.status),
-  ).length;
+  const activeCount = capActiveCount(jobs);
   const atActiveCap = activeCount >= MAX_ACTIVE_JOBS;
   const trimmedReferenceUrl = referenceUrl.trim();
   const linkInvalid =

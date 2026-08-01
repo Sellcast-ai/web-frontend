@@ -122,10 +122,16 @@ export function useDeleteAvatar(messages: { deleteError: string }) {
   });
 }
 
-export function useVideoJobs(params: { product_id?: string } = {}) {
+export function useVideoJobs(
+  params: { product_id?: string } = {},
+  refetchInterval?: (jobs: VideoJob[] | undefined) => number | false,
+) {
   return useQuery({
     queryKey: qk.jobs(params),
     queryFn: () => api.listVideoJobs(params),
+    refetchInterval: refetchInterval
+      ? (query) => refetchInterval(query.state.data)
+      : undefined,
   });
 }
 

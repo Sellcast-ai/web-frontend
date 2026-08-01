@@ -59,8 +59,8 @@ export default function ProfilePage() {
   const total = allJobs.length;
 
   function retryStats() {
-    if (jobsQuery.isError) void jobsQuery.refetch();
-    else void fetchNextPage();
+    if (isFetchNextPageError) void fetchNextPage();
+    else void jobsQuery.refetch();
   }
 
   async function save() {
