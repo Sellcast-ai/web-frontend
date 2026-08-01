@@ -64,22 +64,14 @@ export function useProduct(id: string) {
     queryFn: () => api.getProduct(id),
     enabled: Boolean(id),
     // a 404 (bogus or foreign id) never recovers — fail fast so Studio can
-    // show its error branch instead of burning a retry on "Loading…" (P2-2).
+    // show its error branch and the job page its deleted-product badge
+    // instead of burning a retry on "Loading…" (P2-2).
     retry: retryUnlessNotFound,
   });
 }
 
 export function retryUnlessNotFound(failureCount: number, err: unknown) {
   return !(err instanceof ApiError && err.status === 404) && failureCount < 1;
-}
-
-export function useProductExistenceProbe(id: string) {
-  return useQuery({
-    queryKey: qk.product(id),
-    queryFn: () => api.getProduct(id),
-    enabled: Boolean(id),
-    retry: retryUnlessNotFound,
-  });
 }
 
 export function useMyProducts() {

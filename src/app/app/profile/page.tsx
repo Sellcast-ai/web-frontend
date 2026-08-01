@@ -36,6 +36,9 @@ export default function ProfilePage() {
   // A failed first page (isError) or a failed mid-drain page
   // (isFetchNextPageError) stops the drain for good - the stats get an error
   // card with a retry instead of sitting on "…" for the rest of the session.
+  // The card only replaces the stats when there is nothing true to show: a
+  // refetch failing over already-drained totals keeps the totals (same rule
+  // as My Products - a failed refetch never replaces good data).
   const statsFailed = jobsQuery.isError || isFetchNextPageError;
   const statsRetrying = jobsQuery.isRefetching || isFetchingNextPage;
   const { data: usage } = useUsage();
@@ -126,7 +129,7 @@ export default function ProfilePage() {
 
       {/* stats — shown once every jobs page has landed, never a partial count
           presented as the lifetime total */}
-      {statsFailed ? (
+      {statsFailed && !statsReady ? (
         <div className="mt-4 flex items-center justify-between gap-4 rounded-card border border-border bg-card p-5 shadow-soft">
           <p className="text-sm text-muted-foreground">
             {t("statsError.description")}
