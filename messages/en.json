@@ -993,9 +993,9 @@
       "billingQuestions": "Billing questions",
       "faq": {
         "q1": "What's a credit?",
-        "a1": "1 credit = 1 second of finished video. A 20-second video uses 20 credits; a 30-second one uses 30. You pick the length, and you're only charged for what you render.",
+        "a1": "1 credit = 1 second of finished video. A 20-second video uses 20 credits; a 30-second one uses 30. You pick the length, so the cost of every render is clear before you start.",
         "q2": "Do regenerations cost credits?",
-        "a2": "No. Regenerating a beat while you review doesn't cost extra — credits only count the final rendered video.",
+        "a2": "Yes — 1 credit each. Regenerating a shot while you review draws from the same monthly allowance as your final render.",
         "q3": "What if I run out of credits?",
         "a3": "Credits reset at the start of each billing cycle. Self-serve checkout is not available yet - to upgrade for a bigger monthly allowance, email {address} and we will set it up.",
         "q4": "Can I change plans anytime?",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Offer — clear ask"
         },
         "review": {
-          "body": "Every shot gets a reference frame first. Approve, tweak, or regenerate as many times as you like — credits only burn after you say go.",
+          "body": "Every shot gets a reference frame first. Approve, tweak, or regenerate until it looks right — regens cost 1 credit each, and the full render only burns credits when you say go.",
           "caption": "Your call, before the render.",
           "uiHeading": "Storyboard review",
           "uiSpend": "$0 spent so far",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "You approve the storyboard",
-          "body": "Every beat gets a reference frame first. Nothing renders — and nothing is charged — until you sign off."
+          "body": "Every beat gets a reference frame first. Regens cost 1 credit each — the full render, and its full charge, waits until you sign off."
         },
         "render": {
           "title": "Seedance renders it",

@@ -110,7 +110,7 @@
       "save": "Lưu",
       "unsave": "Bỏ lưu",
       "productFallback": "sản phẩm",
-      "commissionShort": "{rate} comm.",
+      "commissionShort": "Hoa hồng {rate}",
       "soldPerMonth": "{count} đã bán/tháng",
       "creators": "Người sáng tạo {count}",
       "source": {
@@ -167,7 +167,7 @@
       "productFallback": "sản phẩm",
       "save": "Lưu",
       "unsave": "Bỏ lưu",
-      "mom": "{percent} Mẹ",
+      "mom": "{percent} so với tháng trước",
       "byShop": "bởi {shop}",
       "commission": "Hoa hồng {rate}",
       "creatorHook": "Móc của người sáng tạo",
@@ -457,7 +457,7 @@
       "size": {
         "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
-      "usageSummary": "{remaining} trong số tín dụng {limit} còn lại trong tháng này · video này sử dụng {duration}",
+      "usageSummary": "Còn {remaining}/{limit} tín dụng trong tháng này · video này dùng {duration} tín dụng",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
@@ -993,9 +993,9 @@
       "billingQuestions": "Câu hỏi thanh toán",
       "faq": {
         "q1": "Tín dụng là gì?",
-        "a1": "1 tín dụng = 1 giây của video hoàn thành. Video dài 20 giây sử dụng 20 tín dụng; thời lượng 30 giây sử dụng 30. Bạn chọn độ dài và bạn chỉ bị tính phí cho những gì bạn hiển thị.",
+        "a1": "1 tín dụng = 1 giây video hoàn chỉnh. Video 20 giây tốn 20 tín dụng; video 30 giây tốn 30. Bạn tự chọn độ dài, nên chi phí mỗi lần render luôn rõ ràng trước khi bắt đầu.",
         "q2": "Việc tái tạo có tốn tín dụng không?",
-        "a2": "Không. Việc tạo lại nhịp trong khi bạn xem lại không mất thêm chi phí — tín dụng chỉ tính cho video được hiển thị cuối cùng.",
+        "a2": "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
         "q3": "Nếu tôi hết tín dụng thì sao?",
         "a3": "Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán. Thanh toán trực tuyến tự phục vụ chưa khả dụng - để tăng hạn mức hằng tháng, hãy gửi email tới {address} và chúng tôi sẽ thiết lập cho bạn.",
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Ưu đãi — lời mời rõ ràng"
         },
         "review": {
-          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại bao nhiêu lần tùy thích — credit chỉ bị trừ sau khi bạn bấm chạy.",
+          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 credit, và bản render đầy đủ chỉ bị trừ credit sau khi bạn bấm chạy.",
           "caption": "Bạn quyết định, trước khi render.",
           "uiHeading": "Duyệt storyboard",
           "uiSpend": "Đã chi $0",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Bạn duyệt storyboard",
-          "body": "Mỗi beat có khung hình tham chiếu trước. Không render — và không tính phí — cho đến khi bạn ký duyệt."
+          "body": "Mỗi beat có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
         },
         "render": {
           "title": "Seedance render",

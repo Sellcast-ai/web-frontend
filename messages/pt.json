@@ -167,7 +167,7 @@
       "productFallback": "Produto",
       "save": "Salvar",
       "unsave": "Cancelar salvamento",
-      "mom": "{percent} MoM",
+      "mom": "{percent} intermensal",
       "byShop": "por {shop}",
       "commission": "Comissão {rate}",
       "creatorHook": "Gancho do criador",
@@ -457,7 +457,7 @@
       "size": {
         "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
-      "usageSummary": "{remaining} dos créditos {limit} restantes este mês · este vídeo usa {duration}",
+      "usageSummary": "{remaining} de {limit} créditos restantes este mês · este vídeo usa {duration} créditos",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
@@ -993,9 +993,9 @@
       "billingQuestions": "Perguntas sobre faturamento",
       "faq": {
         "q1": "O que é um crédito?",
-        "a1": "1 crédito = 1 segundo de vídeo finalizado. Um vídeo de 20 segundos utiliza 20 créditos; um de 30 segundos usa 30. Você escolhe a duração e só é cobrado pelo que renderiza.",
+        "a1": "1 crédito = 1 segundo de vídeo finalizado. Um vídeo de 20 segundos usa 20 créditos; um de 30 segundos usa 30. Você escolhe a duração, então o custo de cada render fica claro antes de começar.",
         "q2": "As regenerações custam créditos?",
-        "a2": "Não. Regenerar uma batida enquanto você revisa não tem custo extra — os créditos contam apenas o vídeo final renderizado.",
+        "a2": "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo mensal do seu render final.",
         "q3": "E se eu ficar sem créditos?",
         "a3": "Os créditos são redefinidos no início de cada ciclo de faturamento. O checkout self-service ainda não está disponível - para aumentar sua franquia mensal, envie um e-mail para {address} e nós configuramos.",
         "q4": "Posso mudar de plano a qualquer momento?",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Oferta — pedido claro"
         },
         "review": {
-          "body": "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere quantas vezes quiser — os créditos só queimam depois do seu ok.",
+          "body": "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere até ficar do jeito certo — cada regeneração custa 1 crédito, e o render completo só queima créditos depois do seu ok.",
           "caption": "Você decide, antes do render.",
           "uiHeading": "Revisão do storyboard",
           "uiSpend": "$0 gastos",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Você aprova o storyboard",
-          "body": "Cada beat recebe antes um frame de referência. Nada renderiza — e nada é cobrado — até você dar o ok."
+          "body": "Cada beat recebe antes um frame de referência. Regenerar custa 1 crédito — o render completo, e a cobrança, só acontece depois do seu ok."
         },
         "render": {
           "title": "A Seedance renderiza",

@@ -110,7 +110,7 @@
       "save": "Simpan",
       "unsave": "Batalkan penyimpanan",
       "productFallback": "Produk",
-      "commissionShort": "{rate} komunikasi.",
+      "commissionShort": "Komisi {rate}",
       "soldPerMonth": "{count} terjual/bln",
       "creators": "Pencipta {count}",
       "source": {
@@ -167,7 +167,7 @@
       "productFallback": "Produk",
       "save": "Simpan",
       "unsave": "Batalkan penyimpanan",
-      "mom": "{percent} Ibu",
+      "mom": "{percent} vs bulan lalu",
       "byShop": "oleh {shop}",
       "commission": "Komisi {rate}",
       "creatorHook": "Kait pencipta",
@@ -457,7 +457,7 @@
       "size": {
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
-      "usageSummary": "{remaining} dari kredit {limit} tersisa bulan ini · video ini menggunakan {duration}",
+      "usageSummary": "{remaining} dari {limit} kredit tersisa bulan ini · video ini menggunakan {duration} kredit",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
@@ -993,9 +993,9 @@
       "billingQuestions": "Pertanyaan penagihan",
       "faq": {
         "q1": "Apa itu kredit?",
-        "a1": "1 kredit = 1 detik video selesai. Video berdurasi 20 detik menggunakan 20 kredit; yang berdurasi 30 detik menggunakan 30. Anda memilih durasinya, dan Anda hanya dikenakan biaya untuk apa yang Anda render.",
+        "a1": "1 kredit = 1 detik video jadi. Video 20 detik memakai 20 kredit; yang 30 detik memakai 30. Anda memilih durasinya, jadi biaya setiap render selalu jelas sebelum dimulai.",
         "q2": "Apakah regenerasi memerlukan kredit?",
-        "a2": "Tidak. Membuat ulang irama saat Anda meninjau tidak memerlukan biaya tambahan — kredit hanya menghitung video akhir yang dirender.",
+        "a2": "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong jatah bulanan yang sama dengan render final Anda.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
         "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke {address} dan kami akan menyiapkannya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
@@ -1074,7 +1074,7 @@
           "uiOffer": "Penawaran — ajakan jelas"
         },
         "review": {
-          "body": "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sesuka Anda — kredit baru terpakai setelah Anda bilang jalan.",
+          "body": "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sampai pas — setiap pembuatan ulang memakai 1 kredit, dan render penuh baru memakai kredit setelah Anda bilang jalan.",
           "caption": "Anda yang putuskan, sebelum render.",
           "uiHeading": "Tinjauan storyboard",
           "uiSpend": "$0 terpakai",
@@ -1098,7 +1098,7 @@
         },
         "approve": {
           "title": "Anda menyetujui storyboard",
-          "body": "Setiap beat mendapat frame acuan lebih dulu. Tidak ada yang dirender — dan tidak ada tagihan — sebelum Anda setuju."
+          "body": "Setiap beat mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
         },
         "render": {
           "title": "Seedance merendernya",

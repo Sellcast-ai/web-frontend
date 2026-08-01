@@ -71,7 +71,10 @@ shows a non-link "Product deleted" badge when the product fetch returns 404.
 
 Message catalogs live in `messages/*.json`; `messages/en.json` is the source of
 truth and all nine catalogs must keep the same key and placeholder structure.
-Run the message parity tests after changing catalog keys.
+The non-English catalogs are seeded with `scripts/translate-messages.mjs`, whose
+`MANUAL_OVERRIDES` preserve hand-verified translations and money-surface copy
+that the machine translation has historically misread. Run the message parity
+tests after changing catalog keys.
 
 ## Deployment
 
