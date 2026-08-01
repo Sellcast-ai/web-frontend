@@ -42,6 +42,19 @@
       "readLinkFailed": "Não conseguimos ler esse link de produto. Tente novamente.",
       "previewStoreFailed": "Não conseguimos ler essa loja. Verifique o endereço e tente novamente.",
       "importNone": "Não foi possível importar {requested, plural, one {# produto} other {# produtos}}. Tente novamente.",
+      "importFailedReasons": {
+        "workerRestart": "A importação foi interrompida por uma reinicialização do nosso lado. Tudo o que foi importado até agora foi salvo - tente novamente.",
+        "rateLimitedSaved": "Essa loja não está permitindo leituras automatizadas de catálogo no momento. Salvamos tudo o que foi importado até agora - tente reimportar em alguns minutos.",
+        "rateLimited": "Essa loja está limitando as leituras de catálogo no momento. Tente novamente em alguns minutos.",
+        "botWall": "Essa loja está bloqueando leituras automatizadas de catálogo no momento. Tente novamente mais tarde.",
+        "catalogUnreachable": "Não conseguimos acessar o catálogo dessa loja no momento. Tente novamente mais tarde.",
+        "storeUnsupported": "Não conseguimos ler um catálogo público de produtos dessa loja. Isso funciona com lojas Shopify e WooCommerce com dados de produtos públicos. Você ainda pode adicionar produtos um por um colando cada link.",
+        "notShopify": "Não conseguimos ler um catálogo público de produtos dessa loja. Isso funciona com lojas Shopify com dados de produtos públicos. Você ainda pode adicionar produtos um por um colando cada link.",
+        "notWoocommerce": "Não conseguimos ler um catálogo público de produtos WooCommerce dessa loja. Você ainda pode adicionar produtos um por um colando cada link.",
+        "selectionMissing": "Não conseguimos importar alguns dos produtos que você escolheu - eles podem não estar mais nesta loja.",
+        "catalogCap": "Apenas parte do catálogo foi importada porque esta loja excede o limite de catálogo. Fale conosco para importar catálogos maiores.",
+        "productsUnreadable": "Alguns produtos que encontramos não puderam ser importados. Você pode adicioná-los colando cada link."
+      },
       "videoDeleted": "Vídeo excluído.",
       "deleteVideoFailed": "Não foi possível excluir o vídeo. Tente de novo."
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "Falha na geração",
         "fallbackMessage": "Algo deu errado. Tente criá-lo novamente.",
+        "reasons": {
+          "workerRestart": "Nosso sistema de renderização reiniciou e perdeu o rastro deste vídeo. Seus créditos foram reembolsados - toque em Tentar novamente para criá-lo de novo.",
+          "resumeInvalidScript": "Este vídeo não conseguiu continuar de onde parou. Seus créditos foram reembolsados - tente novamente.",
+          "productNotFound": "O produto deste vídeo não existe mais. Seus créditos foram reembolsados.",
+          "providerUnavailable": "A geração de vídeo está temporariamente indisponível por um problema do nosso lado. Seus créditos foram reembolsados - tente novamente mais tarde.",
+          "renderStart": "Não conseguimos iniciar as renderizações do vídeo. Seus créditos foram reembolsados - tente novamente.",
+          "renderIncomplete": "Uma ou mais renderizações do vídeo não terminaram. Seus créditos foram reembolsados - tente novamente.",
+          "assembling": "Algo deu errado do nosso lado ao montar este vídeo. Seus créditos foram reembolsados - tente novamente.",
+          "finishing": "Algo deu errado do nosso lado ao finalizar este vídeo. Seus créditos foram reembolsados - tente novamente.",
+          "making": "Algo deu errado do nosso lado ao criar este vídeo. Seus créditos foram reembolsados - tente novamente.",
+          "categoryUnsupported": "Ainda não conseguimos criar vídeos para a categoria deste produto. Seus créditos foram reembolsados.",
+          "scriptQuality": "Não conseguimos escrever um roteiro bom o suficiente para este produto. Tente novamente ou ajuste os detalhes do produto."
+        },
         "retry": "Tentar novamente",
         "startNewVideo": "Iniciar um novo vídeo"
       },

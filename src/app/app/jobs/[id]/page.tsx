@@ -37,6 +37,7 @@ import {
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
 import { ApiError, api, apiErrorMessage } from "@/lib/api/client";
+import { videoJobFailureKey } from "@/lib/failure-messages";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
@@ -1196,7 +1197,10 @@ function FailedView({ job }: { job: VideoJob }) {
       <div>
         <p className="font-semibold text-ink">{t("title")}</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {job.error_message ?? t("fallbackMessage")}
+          {/* never the raw server string: `error_message` is free-form English
+              (operator jargon included) - mapped to a catalog key, generic for
+              anything unknown (see `failure-messages.ts`) */}
+          {t(videoJobFailureKey(job.error_message))}
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           {/* resumes already-paid work (rendered shots, reference images) */}

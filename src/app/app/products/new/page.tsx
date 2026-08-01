@@ -37,6 +37,7 @@ import {
   saveSelection,
   selectedUrls,
 } from "@/lib/import-selection";
+import { importFailureKey } from "@/lib/failure-messages";
 import { toast } from "@/lib/toast";
 import { PathHeader } from "@/components/app/path-header";
 import { Button } from "@/components/ui/button";
@@ -682,7 +683,9 @@ function StoreImport({
       // a terminal job is nothing to watch: let the handle go, or the store
       // flow keeps owning the page with no card left to render
       setRunning(null);
-      toast.error(job.error ?? tt("importFailed"));
+      // never the raw server string: `job.error` carries the same free-form
+      // English as the failed-render page - mapped, generic for the unknown
+      toast.error(tt(importFailureKey(job.error)));
       return;
     }
     qc.invalidateQueries({ queryKey: qk.myProducts });

@@ -42,6 +42,19 @@
       "readLinkFailed": "Tidak bisa membaca tautan produk itu. Silakan coba lagi.",
       "previewStoreFailed": "Tidak bisa membaca toko itu. Periksa alamatnya dan coba lagi.",
       "importNone": "Tidak ada dari {requested, plural, one {# produk} other {# produk}} yang bisa diimpor. Silakan coba lagi.",
+      "importFailedReasons": {
+        "workerRestart": "Impor terhenti karena restart di sisi kami. Semua yang sudah terimpor telah disimpan - silakan coba lagi.",
+        "rateLimitedSaved": "Toko itu saat ini tidak mengizinkan pembacaan katalog otomatis. Kami telah menyimpan semua yang sudah terimpor - coba impor ulang dalam beberapa menit.",
+        "rateLimited": "Toko itu saat ini membatasi pembacaan katalog. Silakan coba lagi dalam beberapa menit.",
+        "botWall": "Toko itu saat ini memblokir pembacaan katalog otomatis. Silakan coba lagi nanti.",
+        "catalogUnreachable": "Kami tidak bisa mengakses katalog toko itu saat ini. Silakan coba lagi nanti.",
+        "storeUnsupported": "Kami tidak bisa membaca katalog produk publik dari toko itu. Ini berfungsi untuk toko Shopify dan WooCommerce dengan data produk publik. Anda masih bisa menambahkan produk satu per satu dengan menempelkan setiap tautan.",
+        "notShopify": "Kami tidak bisa membaca katalog produk publik dari toko itu. Ini berfungsi untuk toko Shopify dengan data produk publik. Anda masih bisa menambahkan produk satu per satu dengan menempelkan setiap tautan.",
+        "notWoocommerce": "Kami tidak bisa membaca katalog produk WooCommerce publik dari toko itu. Anda masih bisa menambahkan produk satu per satu dengan menempelkan setiap tautan.",
+        "selectionMissing": "Kami tidak bisa mengimpor beberapa produk yang Anda pilih - mungkin produk itu sudah tidak ada di toko ini.",
+        "catalogCap": "Hanya sebagian katalog yang diimpor karena toko ini melebihi batas katalog. Hubungi kami untuk mengimpor katalog yang lebih besar.",
+        "productsUnreadable": "Beberapa produk yang kami temukan tidak bisa diimpor. Anda bisa menambahkannya dengan menempelkan setiap tautan."
+      },
       "videoDeleted": "Video dihapus.",
       "deleteVideoFailed": "Tidak bisa menghapus video. Coba lagi."
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "Generasi gagal",
         "fallbackMessage": "Ada yang tidak beres. Coba buat lagi.",
+        "reasons": {
+          "workerRestart": "Sistem rendering kami dimulai ulang dan kehilangan jejak video ini. Kredit Anda telah dikembalikan - ketuk Coba lagi untuk membuatnya kembali.",
+          "resumeInvalidScript": "Video ini tidak bisa melanjutkan dari titik terakhir. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "productNotFound": "Produk untuk video ini sudah tidak ada. Kredit Anda telah dikembalikan.",
+          "providerUnavailable": "Pembuatan video sementara tidak tersedia karena masalah di sisi kami. Kredit Anda telah dikembalikan - silakan coba lagi nanti.",
+          "renderStart": "Kami tidak bisa memulai rendering video. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "renderIncomplete": "Satu atau lebih rendering video tidak selesai. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "assembling": "Terjadi kesalahan di sisi kami saat merakit video ini. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "finishing": "Terjadi kesalahan di sisi kami saat menyelesaikan video ini. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "making": "Terjadi kesalahan di sisi kami saat membuat video ini. Kredit Anda telah dikembalikan - silakan coba lagi.",
+          "categoryUnsupported": "Kami belum bisa membuat video untuk kategori produk ini. Kredit Anda telah dikembalikan.",
+          "scriptQuality": "Kami tidak bisa menulis skrip yang cukup bagus untuk produk ini. Coba lagi, atau sesuaikan detail produk."
+        },
         "retry": "Coba lagi",
         "startNewVideo": "Mulai video baru"
       },

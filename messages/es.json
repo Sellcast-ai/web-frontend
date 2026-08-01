@@ -42,6 +42,19 @@
       "readLinkFailed": "No pudimos leer ese enlace de producto. Inténtalo de nuevo.",
       "previewStoreFailed": "No pudimos leer esa tienda. Revisa la dirección e inténtalo de nuevo.",
       "importNone": "No se pudo importar {requested, plural, one {# producto} other {# productos}}. Inténtalo de nuevo.",
+      "importFailedReasons": {
+        "workerRestart": "La importación se interrumpió por un reinicio de nuestra parte. Todo lo importado hasta ahora se guardó - inténtalo de nuevo.",
+        "rateLimitedSaved": "Esa tienda no permite lecturas automatizadas del catálogo ahora mismo. Guardamos todo lo importado hasta ahora - vuelve a intentar la importación en unos minutos.",
+        "rateLimited": "Esa tienda está limitando las lecturas del catálogo ahora mismo. Inténtalo de nuevo en unos minutos.",
+        "botWall": "Esa tienda está bloqueando las lecturas automatizadas del catálogo ahora mismo. Inténtalo más tarde.",
+        "catalogUnreachable": "No pudimos acceder al catálogo de esa tienda ahora mismo. Inténtalo más tarde.",
+        "storeUnsupported": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona con tiendas Shopify y WooCommerce con datos de productos públicos. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
+        "notShopify": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona con tiendas Shopify con datos de productos públicos. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
+        "notWoocommerce": "No pudimos leer un catálogo público de productos de WooCommerce de esa tienda. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
+        "selectionMissing": "No pudimos importar algunos de los productos que elegiste - puede que ya no estén en esta tienda.",
+        "catalogCap": "Solo se importó una parte del catálogo porque esta tienda supera el límite de catálogo. Contáctanos para importar catálogos más grandes.",
+        "productsUnreadable": "Algunos productos que encontramos no pudieron importarse. Puedes agregarlos pegando cada enlace."
+      },
       "videoDeleted": "Video eliminado.",
       "deleteVideoFailed": "No se pudo eliminar el video. Inténtalo de nuevo."
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "Generación fallida",
         "fallbackMessage": "Algo salió mal. Intente crearlo nuevamente.",
+        "reasons": {
+          "workerRestart": "Nuestro sistema de renderizado se reinició y perdió el rastro de este video. Tus créditos han sido reembolsados - toca Reintentar para crearlo de nuevo.",
+          "resumeInvalidScript": "Este video no pudo continuar donde lo dejó. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "productNotFound": "El producto de este video ya no existe. Tus créditos han sido reembolsados.",
+          "providerUnavailable": "La generación de video no está disponible temporalmente por un problema de nuestra parte. Tus créditos han sido reembolsados - inténtalo más tarde.",
+          "renderStart": "No pudimos iniciar los renders del video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "renderIncomplete": "Uno o más renders del video no terminaron. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "assembling": "Algo salió mal de nuestra parte al ensamblar este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "finishing": "Algo salió mal de nuestra parte al finalizar este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "making": "Algo salió mal de nuestra parte al crear este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
+          "categoryUnsupported": "Todavía no podemos crear videos para la categoría de este producto. Tus créditos han sido reembolsados.",
+          "scriptQuality": "No pudimos escribir un guion lo suficientemente bueno para este producto. Inténtalo de nuevo o ajusta los detalles del producto."
+        },
         "retry": "Reintentar",
         "startNewVideo": "Iniciar un nuevo vídeo"
       },

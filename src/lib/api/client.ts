@@ -40,7 +40,9 @@ export class ApiError extends Error {
 }
 
 /** The string to show a user for a failed call: the server's own message when
- * it sent one, else the caller's already-localized fallback. */
+ * it sent one meant for users, else the caller's already-localized fallback.
+ * A 5xx body message without a structured `error_type` is not "meant for
+ * users" (see `errorFrom`), so it never wins over the fallback here. */
 export function apiErrorMessage(err: unknown, fallback: string): string {
   return (err instanceof ApiError && err.serverMessage) || fallback;
 }
@@ -75,9 +77,18 @@ function parseErrorBody(text: string): ErrorBody {
 function errorFrom(status: number, statusText: string, text: string): ApiError {
   const data = parseErrorBody(text);
   const fromBody = data && (data.detail || data.error || data.message);
-  const serverMessage = typeof fromBody === "string" && fromBody ? fromBody : undefined;
   const errorType =
     data && typeof data.error_type === "string" ? data.error_type : undefined;
+  // A 5xx `detail` is operator prose ("Unexpected server error", "Database
+  // operation failed") - untranslated English never written for users - so it
+  // is displayable only when a structured `error_type` vouches for it (the
+  // backend marks its deliberate user-facing 5xx messages that way, e.g. the
+  // SMS-unconfigured 503). 4xx messages stay displayable: curated backend
+  // prose is deliberate there.
+  const serverMessage =
+    typeof fromBody === "string" && fromBody && (status < 500 || errorType)
+      ? fromBody
+      : undefined;
   return new ApiError(
     status,
     serverMessage || statusText || "Request failed",

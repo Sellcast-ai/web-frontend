@@ -42,6 +42,19 @@
       "readLinkFailed": "无法读取该商品链接。请重试。",
       "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
       "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。",
+      "importFailedReasons": {
+        "workerRestart": "导入因我们这边的重启而中断。已导入的内容都已保存 - 请重试。",
+        "rateLimitedSaved": "该商店目前不允许自动读取商品目录。我们已保存目前导入的所有内容 - 请几分钟后重新导入。",
+        "rateLimited": "该商店目前正在限制目录读取频率。请几分钟后重试。",
+        "botWall": "该商店目前正在阻止自动读取目录。请稍后重试。",
+        "catalogUnreachable": "我们目前无法访问该商店的目录。请稍后重试。",
+        "storeUnsupported": "我们无法读取该商店的公开商品目录。此功能适用于具有公开商品数据的 Shopify 和 WooCommerce 商店。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "notShopify": "我们无法读取该商店的公开商品目录。此功能适用于具有公开商品数据的 Shopify 商店。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "notWoocommerce": "我们无法读取该商店的公开 WooCommerce 商品目录。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "selectionMissing": "你选择的部分商品无法导入 - 它们可能已从该商店下架。",
+        "catalogCap": "由于该商店超出目录上限，只导入了部分目录。如需导入更大的目录，请联系我们。",
+        "productsUnreadable": "我们找到的部分商品无法导入。你可以通过逐个粘贴链接来添加它们。"
+      },
       "videoDeleted": "视频已删除。",
       "deleteVideoFailed": "删除视频失败，请重试。"
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "生成失败",
         "fallbackMessage": "出了点问题。尝试再次创建它。",
+        "reasons": {
+          "workerRestart": "我们的渲染系统重启后丢失了这个视频的进度。你的额度已退还 - 点击重试重新制作。",
+          "resumeInvalidScript": "这个视频无法从中断处继续。你的额度已退还 - 请重试。",
+          "productNotFound": "这个视频对应的商品已不存在。你的额度已退还。",
+          "providerUnavailable": "由于我们这边的问题，视频生成暂时不可用。你的额度已退还 - 请稍后重试。",
+          "renderStart": "我们无法启动视频渲染。你的额度已退还 - 请重试。",
+          "renderIncomplete": "一个或多个视频渲染未能完成。你的额度已退还 - 请重试。",
+          "assembling": "在合成这个视频时，我们这边出现了问题。你的额度已退还 - 请重试。",
+          "finishing": "在完成这个视频的收尾时，我们这边出现了问题。你的额度已退还 - 请重试。",
+          "making": "在制作这个视频时，我们这边出现了问题。你的额度已退还 - 请重试。",
+          "categoryUnsupported": "我们暂时还无法为这个商品类目制作视频。你的额度已退还。",
+          "scriptQuality": "我们无法为这个商品写出足够好的脚本。请重试，或调整商品信息。"
+        },
         "retry": "重试",
         "startNewVideo": "开始一个新视频"
       },

@@ -42,6 +42,19 @@
       "readLinkFailed": "Không đọc được liên kết sản phẩm đó. Vui lòng thử lại.",
       "previewStoreFailed": "Không đọc được cửa hàng đó. Vui lòng kiểm tra địa chỉ và thử lại.",
       "importNone": "Không nhập được sản phẩm nào trong số {requested, plural, one {# sản phẩm} other {# sản phẩm}}. Vui lòng thử lại.",
+      "importFailedReasons": {
+        "workerRestart": "Quá trình nhập bị gián đoạn do khởi động lại từ phía chúng tôi. Mọi nội dung đã nhập cho đến nay đều đã được lưu - vui lòng thử lại.",
+        "rateLimitedSaved": "Cửa hàng đó hiện không cho phép đọc danh mục tự động. Chúng tôi đã lưu mọi thứ đã nhập cho đến nay - vui lòng thử nhập lại sau vài phút.",
+        "rateLimited": "Cửa hàng đó hiện đang giới hạn lượt đọc danh mục. Vui lòng thử lại sau vài phút.",
+        "botWall": "Cửa hàng đó hiện đang chặn đọc danh mục tự động. Vui lòng thử lại sau.",
+        "catalogUnreachable": "Chúng tôi hiện không thể truy cập danh mục của cửa hàng đó. Vui lòng thử lại sau.",
+        "storeUnsupported": "Chúng tôi không thể đọc danh mục sản phẩm công khai từ cửa hàng đó. Tính năng này hoạt động với các cửa hàng Shopify và WooCommerce có dữ liệu sản phẩm công khai. Bạn vẫn có thể thêm từng sản phẩm bằng cách dán từng liên kết.",
+        "notShopify": "Chúng tôi không thể đọc danh mục sản phẩm công khai từ cửa hàng đó. Tính năng này hoạt động với các cửa hàng Shopify có dữ liệu sản phẩm công khai. Bạn vẫn có thể thêm từng sản phẩm bằng cách dán từng liên kết.",
+        "notWoocommerce": "Chúng tôi không thể đọc danh mục sản phẩm WooCommerce công khai từ cửa hàng đó. Bạn vẫn có thể thêm từng sản phẩm bằng cách dán từng liên kết.",
+        "selectionMissing": "Chúng tôi không thể nhập một số sản phẩm bạn đã chọn - chúng có thể không còn trong cửa hàng này.",
+        "catalogCap": "Chỉ một phần danh mục được nhập vì cửa hàng này vượt quá giới hạn danh mục. Hãy liên hệ với chúng tôi để nhập danh mục lớn hơn.",
+        "productsUnreadable": "Một số sản phẩm chúng tôi tìm thấy không thể nhập được. Bạn có thể thêm chúng bằng cách dán từng liên kết."
+      },
       "videoDeleted": "Đã xóa video.",
       "deleteVideoFailed": "Không thể xóa video. Vui lòng thử lại."
     },
@@ -593,6 +606,19 @@
       "failed": {
         "title": "Thế hệ không thành công",
         "fallbackMessage": "Đã xảy ra lỗi. Hãy thử tạo lại.",
+        "reasons": {
+          "workerRestart": "Hệ thống kết xuất của chúng tôi đã khởi động lại và mất dấu video này. Tín dụng của bạn đã được hoàn lại - nhấn Thử lại để tạo lại.",
+          "resumeInvalidScript": "Video này không thể tiếp tục từ điểm đã dừng. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "productNotFound": "Sản phẩm của video này không còn tồn tại. Tín dụng của bạn đã được hoàn lại.",
+          "providerUnavailable": "Tính năng tạo video tạm thời không khả dụng do sự cố từ phía chúng tôi. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại sau.",
+          "renderStart": "Chúng tôi không thể bắt đầu kết xuất video. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "renderIncomplete": "Một hoặc nhiều lượt kết xuất video chưa hoàn tất. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "assembling": "Đã xảy ra sự cố từ phía chúng tôi khi lắp ghép video này. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "finishing": "Đã xảy ra sự cố từ phía chúng tôi khi hoàn thiện video này. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "making": "Đã xảy ra sự cố từ phía chúng tôi khi tạo video này. Tín dụng của bạn đã được hoàn lại - vui lòng thử lại.",
+          "categoryUnsupported": "Chúng tôi chưa thể tạo video cho danh mục sản phẩm này. Tín dụng của bạn đã được hoàn lại.",
+          "scriptQuality": "Chúng tôi không thể viết kịch bản đủ tốt cho sản phẩm này. Hãy thử lại hoặc điều chỉnh thông tin sản phẩm."
+        },
         "retry": "Thử lại",
         "startNewVideo": "Bắt đầu một video mới"
       },
