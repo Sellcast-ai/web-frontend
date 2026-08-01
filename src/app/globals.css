@@ -23,6 +23,8 @@
   --border: #eae3d8; /* ~black 6% over cream */
   --border-strong: #ddd4c6;
   --ring: #8be5fc;
+  /* error/destructive text on light surfaces: --color-rose is 2.93:1 there */
+  --danger: #be123c;
 }
 
 .dark {
@@ -38,6 +40,7 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);
   --ring: #8be5fc;
+  --danger: #ff5f7a; /* rose already passes on dark surfaces (6.6:1) */
 }
 
 @theme {
@@ -57,7 +60,9 @@
   --color-rose: #ff5f7a;
   --color-warning: #ff7a00;
   --color-gold: #f5a623;
-  --color-success: #16a34a;
+  /* deep enough for 4.5:1 text on --color-success-soft (6.2:1) and on white
+     for the bg-success step badges; the old #16a34a was 2.86:1 on the soft */
+  --color-success: #166534;
   --color-success-soft: #dcf5e5;
   /* "live/approved" green tuned for dark marketing panels (arcads' one-accent
      rule: green only ever means live/winning) */
@@ -108,6 +113,7 @@
   --color-border: var(--border);
   --color-border-strong: var(--border-strong);
   --color-ring: var(--ring);
+  --color-danger: var(--danger);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 }

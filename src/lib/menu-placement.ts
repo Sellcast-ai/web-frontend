@@ -29,3 +29,17 @@ export function menuPlacement({
   const up = menuHeight > below && above > below;
   return { up, maxHeight: Math.max(MIN_MENU_HEIGHT, up ? above : below) };
 }
+
+/** Pixels a right-edge-anchored menu must shift right so its left edge clears
+ * `VIEWPORT_EDGE`. Menus anchor to the trigger's right edge, so only left-edge
+ * overflow is possible (a trigger sitting in the viewport's left sliver, e.g.
+ * the 320px marketing header). */
+export function menuShiftX({
+  triggerRight,
+  menuWidth,
+}: {
+  triggerRight: number;
+  menuWidth: number;
+}): number {
+  return Math.max(0, VIEWPORT_EDGE - (triggerRight - menuWidth));
+}

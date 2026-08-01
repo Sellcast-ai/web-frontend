@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -84,6 +84,8 @@ const STYLE_LABEL_KEYS: Partial<Record<VideoStyle, StyleLabelKey>> = {
 
 export default function JobDetailPage() {
   const t = useTranslations("app.jobs");
+  const tf = useTranslations("app.format");
+  const locale = useLocale();
   const { id } = useParams<{ id: string }>();
   const { data: job, error, isFetching, isLoading, isError, dataUpdatedAt, refetch } =
     useVideoJob(id);
@@ -146,7 +148,7 @@ export default function JobDetailPage() {
             </h1>
             <p className="text-sm text-muted-foreground">
               {styleLabel} · {job.duration_seconds}s · {job.aspect_ratio} ·{" "}
-              {relativeTime(job.created_at)}
+              {relativeTime(job.created_at, tf, locale)}
             </p>
           </div>
         </div>
@@ -307,7 +309,7 @@ function DeleteVideoSection({ job }: { job: VideoJob }) {
       <Button
         variant="outline"
         size="sm"
-        className="border-rose/40 text-rose hover:bg-rose/5 hover:text-rose"
+        className="border-danger/40 text-danger hover:bg-rose/5 hover:text-danger"
         onClick={() => setConfirming(true)}
       >
         <Trash2 className="h-4 w-4" />
@@ -420,7 +422,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
             {i < STEP_LABEL_KEYS.length - 1 && (
               <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
                 <motion.span
-                  className="absolute inset-0 origin-left rounded-full bg-success"
+                  className="absolute inset-0 origin-left rounded-full bg-success dark:bg-live"
                   initial={false}
                   animate={{ scaleX: done ? 1 : 0 }}
                   transition={{ duration: DUR.slow, ease: EASE_OUT }}
@@ -733,7 +735,7 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
           {subject.label}
         </span>
         {subject.locked && (
-          <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success">
+          <span className="mt-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-success dark:text-live">
             <Lock className="h-3 w-3" />
             {tj("locked")}
           </span>
@@ -787,7 +789,9 @@ function ShotCard({
 
       {/* read-first content */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <span className="inline-flex w-fit items-center rounded-full bg-ink/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
+        {/* fixed black scrim: bg-ink flips near-white in dark mode and the
+            white label would go white-on-near-white */}
+        <span className="inline-flex w-fit items-center rounded-full bg-black/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
           {label} · {shot.duration}s
         </span>
         {shot.dialogue ? (
@@ -1032,8 +1036,14 @@ function BeatGrid({
 
 const BEAT_STATUS: Record<BeatReviewStatus, { labelKey: string; cls: string }> = {
   pending: { labelKey: "pending", cls: "bg-muted text-muted-foreground" },
-  auto_approved: { labelKey: "autoApproved", cls: "bg-success-soft text-success" },
-  user_approved: { labelKey: "approved", cls: "bg-success-soft text-success" },
+  auto_approved: {
+    labelKey: "autoApproved",
+    cls: "bg-success-soft text-success dark:bg-[#123524] dark:text-live",
+  },
+  user_approved: {
+    labelKey: "approved",
+    cls: "bg-success-soft text-success dark:bg-[#123524] dark:text-live",
+  },
   regen_requested: { labelKey: "regenerating", cls: "bg-brand-100 text-brand-800" },
 };
 
@@ -1068,7 +1078,7 @@ function BeatCard({
             <Loader2 className="h-5 w-5 animate-spin text-brand-400" />
           </div>
         )}
-        <span className="absolute left-2 top-2 rounded-full bg-ink/70 px-2 py-0.5 text-[11px] font-bold text-white">
+        <span className="absolute left-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[11px] font-bold text-white">
           {label}
           {beat.duration ? ` · ${beat.duration}s` : ""}
         </span>
@@ -1103,7 +1113,7 @@ function BeatCard({
             className={cn(
               "flex flex-1 items-center justify-center gap-1 rounded-lg py-1.5 text-xs font-semibold transition-colors",
               approved
-                ? "bg-success-soft text-success"
+                ? "bg-success-soft text-success dark:bg-[#123524] dark:text-live"
                 : "bg-brand-700 text-white hover:bg-brand-800",
             )}
           >

@@ -57,8 +57,10 @@ function Shell({
         className,
       )}
     >
+      {/* fixed scrim, never a theme token: --ink flips near-white in dark
+          mode, which would lighten the screen instead of dimming it */}
       <motion.div
-        className="absolute inset-0 bg-ink/40"
+        className="absolute inset-0 bg-black/40"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
