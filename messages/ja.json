@@ -278,6 +278,10 @@
       "title": "プロフィール",
       "videosCreated": "作成されたビデオ",
       "readyToPublish": "公開する準備ができました",
+      "statsError": {
+        "description": "動画の統計を読み込めませんでした。",
+        "action": "もう一度試す"
+      },
       "thisMonth": "今月",
       "usageSummary": "{limit} クレジットのうち {used} が使用されました · {plan} プラン · {date} をリセット",
       "creditNote": "1 クレジット = 1 秒のビデオ",
@@ -475,6 +479,20 @@
       "generateUploading": "参照をアップロード中…",
       "outOfQuota": "{duration} のビデオのクレジットが足りません ({remaining}/{limit} が残っています)。",
       "seePlans": "プランを見る",
+      "cap": {
+        "reached": "現在 {count} 件の動画を生成中です（上限 {limit} 件）。いずれかが完了すると、新しい動画を生成できます。",
+        "viewVideos": "私のビデオ"
+      },
+      "productError": {
+        "title": "この商品を読み込めません",
+        "description": "商品が削除されたか、リンクが間違っている可能性があります。動画を作成する商品を選んでください。",
+        "action": "商品を選ぶ"
+      },
+      "productLoadError": {
+        "title": "商品を読み込めませんでした",
+        "description": "この商品を読み込めませんでした。少ししてからもう一度お試しください。",
+        "action": "もう一度試す"
+      },
       "pickProduct": {
         "title": "まずは製品を選んでください",
         "description": "商品を追加または選択すると、Lumi がスクロールを止める動画に変換します。",

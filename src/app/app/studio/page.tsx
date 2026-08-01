@@ -14,6 +14,7 @@ import {
   PackagePlus,
   Link2,
   Upload,
+  AlertTriangle,
 } from "lucide-react";
 import {
   useProduct,
@@ -21,8 +22,9 @@ import {
   useUsage,
   useAvatars,
   useMyProducts,
+  useVideoJobs,
 } from "@/lib/api/hooks";
-import { api } from "@/lib/api/client";
+import { ApiError, api } from "@/lib/api/client";
 import {
   VIDEO_ASPECT_RATIOS,
   VIDEO_DURATIONS,
@@ -37,6 +39,8 @@ import {
   type VideoMode,
   type VideoVibe,
   type VideoDuration,
+  type VideoJob,
+  type VideoJobStatus,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
@@ -45,7 +49,38 @@ import { ProductCard } from "@/components/app/product-card";
 import { StaggerItem } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
+import { useMutationGuard } from "@/lib/mutation-guard";
 import { cn } from "@/lib/utils";
+
+/** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
+ *  usage endpoint doesn't expose the cap, so Studio derives it from the jobs
+ *  list and pre-flights it before the user configures and clicks (P2-1). The
+ *  first jobs page is enough: jobs come newest-first, so anything active is on
+ *  it, and the backend cap check stays the authoritative gate regardless. */
+const MAX_ACTIVE_JOBS = 3;
+
+/** The statuses the backend's cap counts (`_ACTIVE_STATUSES` in
+ *  video_job_repository.py): only jobs the worker still owns. The
+ *  awaiting_storyboard/awaiting_review gates are parked on the user and
+ *  excluded there, so counting them here would disable Generate over a cap
+ *  the backend would not enforce. Kept apart from ACTIVE_JOB_STATUSES, the
+ *  polling definition, which does include both gates. */
+const CAP_ACTIVE_JOB_STATUSES: VideoJobStatus[] = [
+  "queued",
+  "submitted",
+  "in_progress",
+];
+
+/** While the cap note is showing, nothing else refreshes the jobs list
+ *  (no polling default, no focus refetch, and mutations can't fire with
+ *  Generate disabled), so the note polls for the finish it promises. */
+const CAP_POLL_MS = 4000;
+
+function capActiveCount(jobs: VideoJob[] | undefined): number {
+  return (jobs ?? []).filter((j) =>
+    CAP_ACTIVE_JOB_STATUSES.includes(j.status),
+  ).length;
+}
 
 export default function StudioPage() {
   return (
@@ -108,9 +143,20 @@ function StudioInner() {
   const router = useRouter();
   const sp = useSearchParams();
   const productId = sp.get("product") ?? "";
-  const { data: product, isLoading } = useProduct(productId);
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error: productError,
+    refetch: refetchProduct,
+    isFetching: isFetchingProduct,
+  } = useProduct(productId);
   const { data: usage } = useUsage();
+  const { data: jobs } = useVideoJobs({}, (list) =>
+    capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
+  );
   const create = useCreateJob({ startError: tt("startVideoFailed") });
+  const generateGuard = useMutationGuard();
 
   // default is product_only, not ai_avatar: avatar mode is selectable but does
   // not currently render, and a first attempt must not land on it. See AGENTS.md.
@@ -139,6 +185,10 @@ function StudioInner() {
 
   // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
   const outOfQuota = !!usage && usage.remaining < duration;
+  // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
+  // learns about it before configuring, not from a raw 409 after the click.
+  const activeCount = capActiveCount(jobs);
+  const atActiveCap = activeCount >= MAX_ACTIVE_JOBS;
   const trimmedReferenceUrl = referenceUrl.trim();
   const linkInvalid =
     referenceMode === "link" &&
@@ -156,9 +206,13 @@ function StudioInner() {
 
   async function generate() {
     if (!productId || linkInvalid || referenceUploading) return;
-    // failure is surfaced as a toast by useCreateJob
-    const job = await create
-      .mutateAsync({
+    // Synchronous latch: `disabled={create.isPending}` cannot catch two clicks
+    // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
+    // charged 45 credits). This rejects the second click before any await.
+    if (!generateGuard.tryBegin()) return;
+    try {
+      // failure is surfaced as a toast by useCreateJob
+      const job = await create.mutateAsync({
         product_id: productId,
         mode,
         style,
@@ -171,13 +225,65 @@ function StudioInner() {
         resolution,
         aspect_ratio: aspectRatio,
         avatar_id: mode === "ai_avatar" ? avatarId : null,
-      })
-      .catch(() => null);
-    if (job) router.push(`/app/jobs/${job.id}`);
+      });
+      // Success keeps the latch held until navigation unmounts the page.
+      router.push(`/app/jobs/${job.id}`);
+    } catch {
+      generateGuard.end();
+    }
   }
 
   if (!productId) {
     return <PickProduct />;
+  }
+
+  const productUnavailable =
+    productError instanceof ApiError &&
+    (productError.status === 404 || productError.status === 403);
+
+  if (isError && productUnavailable) {
+    return (
+      <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+          <AlertTriangle className="h-8 w-8" />
+        </div>
+        <h1 className="mt-5 font-display text-2xl font-bold text-ink">
+          {t("productError.title")}
+        </h1>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          {t("productError.description")}
+        </p>
+        <Button href={STUDIO_HREF} size="lg" className="mt-6">
+          {t("productError.action")}
+        </Button>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="container-page flex min-h-[60vh] flex-col items-center justify-center text-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+          <AlertTriangle className="h-8 w-8" />
+        </div>
+        <h1 className="mt-5 font-display text-2xl font-bold text-ink">
+          {t("productLoadError.title")}
+        </h1>
+        <p className="mt-2 max-w-sm text-muted-foreground">
+          {t("productLoadError.description")}
+        </p>
+        <Button
+          type="button"
+          size="lg"
+          className="mt-6"
+          onClick={() => refetchProduct()}
+          disabled={isFetchingProduct}
+        >
+          {isFetchingProduct && <Loader2 className="h-4 w-4 animate-spin" />}
+          {t("productLoadError.action")}
+        </Button>
+      </div>
+    );
   }
 
   const cover = product?.cover_image_url || product?.hero_image_urls?.[0];
@@ -572,6 +678,7 @@ function StudioInner() {
                 create.isPending ||
                 !product ||
                 outOfQuota ||
+                atActiveCap ||
                 linkInvalid ||
                 referenceUploading
               }
@@ -590,6 +697,14 @@ function StudioInner() {
                 </>
               )}
             </Button>
+            {atActiveCap && (
+              <p className="mt-2 text-center text-xs text-muted-foreground">
+                {t("cap.reached", { count: activeCount, limit: MAX_ACTIVE_JOBS })}{" "}
+                <Link href="/app/videos" className="font-semibold text-brand-700">
+                  {t("cap.viewVideos")}
+                </Link>
+              </p>
+            )}
             {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {

@@ -1,16 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence } from "motion/react";
 import { Loader2, Check, LogOut, Clapperboard, Phone, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PopIn } from "@/components/ui/motion";
-import { useCurrentUser, useVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
+import { useCurrentUser, usePagedVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
 import { toast } from "@/lib/toast";
+import { useMutationGuard } from "@/lib/mutation-guard";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,9 +22,28 @@ export default function ProfilePage() {
   const router = useRouter();
   const qc = useQueryClient();
   const { data: user, isLoading } = useCurrentUser();
-  const { data: jobs } = useVideoJobs();
+  // The stats are lifetime totals, so a single 50-job page is not enough
+  // (audit L4 P1-3: 243 jobs showed "Videos created: 50"). Drain every page
+  // via the shared paged query — the pages it loads are the same cache the My
+  // Videos list reads.
+  const jobsQuery = usePagedVideoJobs();
+  const { hasNextPage, isFetchNextPageError, isFetchingNextPage, fetchNextPage } = jobsQuery;
+  useEffect(() => {
+    if (hasNextPage && !isFetchNextPageError && !isFetchingNextPage) void fetchNextPage();
+  }, [hasNextPage, isFetchNextPageError, isFetchingNextPage, fetchNextPage]);
+  const jobsData = jobsQuery.data;
+  const statsReady = jobsData !== undefined && !hasNextPage;
+  // A failed first page (isError) or a failed mid-drain page
+  // (isFetchNextPageError) stops the drain for good - the stats get an error
+  // card with a retry instead of sitting on "…" for the rest of the session.
+  // The card only replaces the stats when there is nothing true to show: a
+  // refetch failing over already-drained totals keeps the totals (same rule
+  // as My Products - a failed refetch never replaces good data).
+  const statsFailed = jobsQuery.isError || isFetchNextPageError;
+  const statsRetrying = jobsQuery.isRefetching || isFetchingNextPage;
   const { data: usage } = useUsage();
   const update = useUpdateProfile();
+  const saveGuard = useMutationGuard();
 
   const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -37,16 +57,25 @@ export default function ProfilePage() {
     );
   }
 
-  const completed = jobs?.filter((j) => j.status === "completed").length ?? 0;
-  const total = jobs?.length ?? 0;
+  const allJobs = jobsData?.pages.flat() ?? [];
+  const completed = allJobs.filter((j) => j.status === "completed").length;
+  const total = allJobs.length;
+
+  function retryStats() {
+    if (isFetchNextPageError) void fetchNextPage();
+    else void jobsQuery.refetch();
+  }
 
   async function save() {
     if (!user || name.trim() === user.display_name) return;
+    if (!saveGuard.tryBegin()) return;
     try {
       await update.mutateAsync({ display_name: name.trim() });
     } catch {
       toast.error(tt("saveDisplayNameFailed"));
       return;
+    } finally {
+      saveGuard.end();
     }
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -98,11 +127,29 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* stats */}
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <Stat label={t("videosCreated")} value={total} />
-        <Stat label={t("readyToPublish")} value={completed} />
-      </div>
+      {/* stats — shown once every jobs page has landed, never a partial count
+          presented as the lifetime total */}
+      {statsFailed && !statsReady ? (
+        <div className="mt-4 flex items-center justify-between gap-4 rounded-card border border-border bg-card p-5 shadow-soft">
+          <p className="text-sm text-muted-foreground">
+            {t("statsError.description")}
+          </p>
+          <Button
+            size="md"
+            variant="outline"
+            onClick={retryStats}
+            disabled={statsRetrying}
+          >
+            {statsRetrying && <Loader2 className="h-4 w-4 animate-spin" />}
+            {t("statsError.action")}
+          </Button>
+        </div>
+      ) : (
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          <Stat label={t("videosCreated")} value={statsReady ? total : null} />
+          <Stat label={t("readyToPublish")} value={statsReady ? completed : null} />
+        </div>
+      )}
 
       {/* monthly quota */}
       {usage && (
@@ -228,14 +275,16 @@ export default function ProfilePage() {
   );
 }
 
-function Stat({ label, value }: { label: string; value: number }) {
+function Stat({ label, value }: { label: string; value: number | null }) {
   return (
     <div className="rounded-card border border-border bg-card p-5 shadow-soft">
       <p className="flex items-center gap-2 text-sm text-muted-foreground">
         <Clapperboard className="h-4 w-4" />
         {label}
       </p>
-      <p className="mt-1 font-display text-3xl font-bold text-brand-700">{value}</p>
+      <p className="mt-1 font-display text-3xl font-bold text-brand-700">
+        {value ?? "…"}
+      </p>
     </div>
   );
 }

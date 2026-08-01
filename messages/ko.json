@@ -278,6 +278,10 @@
       "title": "프로필",
       "videosCreated": "제작된 동영상",
       "readyToPublish": "게시 준비 완료",
+      "statsError": {
+        "description": "동영상 통계를 불러오지 못했습니다.",
+        "action": "다시 시도"
+      },
       "thisMonth": "이번 달",
       "usageSummary": "사용된 {limit} 크레딧 중 {used} · {plan} 계획 · {date} 재설정",
       "creditNote": "1크레딧 = 동영상 1초",
@@ -475,6 +479,20 @@
       "generateUploading": "참조 업로드 중…",
       "outOfQuota": "{duration} 동영상의 크레딧이 부족합니다({limit} 중 {remaining} 왼쪽).",
       "seePlans": "요금제 보기",
+      "cap": {
+        "reached": "이미 {count}개의 동영상을 생성 중입니다(최대 {limit}개). 하나가 완료되면 새 동영상을 생성할 수 있습니다.",
+        "viewVideos": "내 동영상"
+      },
+      "productError": {
+        "title": "해당 상품을 불러올 수 없습니다",
+        "description": "상품이 삭제되었거나 링크가 잘못되었을 수 있습니다. 동영상을 만들 상품을 선택하세요.",
+        "action": "상품 선택"
+      },
+      "productLoadError": {
+        "title": "상품을 불러오지 못했습니다",
+        "description": "이 상품을 불러오지 못했습니다. 잠시 후 다시 시도하세요.",
+        "action": "다시 시도"
+      },
       "pickProduct": {
         "title": "먼저 제품을 선택하세요",
         "description": "제품을 추가하거나 선택하면 Lumi가 스크롤을 멈추게 하는 영상으로 바꿔줍니다.",

@@ -278,6 +278,10 @@
       "title": "公司简介",
       "videosCreated": "已创建视频",
       "readyToPublish": "准备发布",
+      "statsError": {
+        "description": "无法加载你的视频统计。",
+        "action": "重试"
+      },
       "thisMonth": "这个月",
       "usageSummary": "{used} 已使用 {limit} 积分 · {plan} 计划 · 重置 {date}",
       "creditNote": "1 学分 = 1 秒视频",
@@ -475,6 +479,20 @@
       "generateUploading": "正在上传参考…",
       "outOfQuota": "{duration} 视频的学分不足（剩余 {limit} 的 {remaining}）。",
       "seePlans": "查看计划",
+      "cap": {
+        "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
+        "viewVideos": "我的视频"
+      },
+      "productError": {
+        "title": "无法加载该商品",
+        "description": "该商品可能已被删除，或链接有误。请选择你的商品来开始制作视频。",
+        "action": "选择商品"
+      },
+      "productLoadError": {
+        "title": "无法加载商品",
+        "description": "我们无法加载此商品。请稍后重试。",
+        "action": "重试"
+      },
       "pickProduct": {
         "title": "首先选择产品",
         "description": "添加或选择你的一个产品，Lumi 会将其变成让人停下滑动的视频。",

@@ -278,6 +278,10 @@
       "title": "Hồ sơ",
       "videosCreated": "Video đã được tạo",
       "readyToPublish": "Sẵn sàng xuất bản",
+      "statsError": {
+        "description": "Chúng tôi không thể tải số liệu video của bạn.",
+        "action": "Thử lại"
+      },
       "thisMonth": "Tháng này",
       "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
       "creditNote": "1 tín dụng = 1 giây của video",
@@ -475,6 +479,20 @@
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
       "seePlans": "Xem kế hoạch",
+      "cap": {
+        "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
+        "viewVideos": "Video của tôi"
+      },
+      "productError": {
+        "title": "Không thể tải sản phẩm đó",
+        "description": "Sản phẩm có thể đã bị xóa hoặc liên kết không đúng. Hãy chọn một sản phẩm của bạn để bắt đầu tạo video.",
+        "action": "Chọn sản phẩm"
+      },
+      "productLoadError": {
+        "title": "Không thể tải sản phẩm",
+        "description": "Chúng tôi không thể tải sản phẩm này. Hãy thử lại sau giây lát.",
+        "action": "Thử lại"
+      },
       "pickProduct": {
         "title": "Chọn một sản phẩm đầu tiên",
         "description": "Thêm hoặc chọn một sản phẩm của bạn và Lumi sẽ biến sản phẩm đó thành video khiến người xem dừng cuộn.",
