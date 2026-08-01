@@ -284,7 +284,7 @@
       },
       "thisMonth": "Este mês",
       "usageSummary": "{used} de créditos {limit} usados · Plano {plan} · redefine {date}",
-      "creditNote": "Os créditos acompanham o custo real do render — o custo exato depende do modelo, da resolução e da proporção de tela, e é mostrado antes de cada render.",
+      "creditNote": "Os créditos acompanham o custo real do render - o custo exato depende do modelo, da resolução e da proporção de tela que você escolher.",
       "creditsLeft": "restantes",
       "limitHit": "Você atingiu seu limite mensal.",
       "seePlans": "Ver planos",
@@ -296,7 +296,9 @@
       "appearance": "Aparência",
       "appearanceDescription": "Sistema, claro ou escuro – corresponde ao aplicativo Lumi.",
       "logOut": "Sair",
-      "usageSummaryOneTime": "{used} de {limit} créditos usados · plano {plan} · concessão única, não renova"
+      "usageSummaryOneTime": "{used} de {limit} créditos usados · plano {plan} · concessão única, não renova",
+      "creditsOneTime": "Seus créditos",
+      "limitHitOneTime": "Você usou seus créditos gratuitos."
     },
     "productsNew": {
       "startTitle": "Adicionar um produto",
@@ -947,9 +949,9 @@
       "q2": "Preciso filmar alguma coisa ou estar na frente das câmeras?",
       "a2": "Não. A Lumi monta uma vitrine limpa só de produto — gera as imagens e a narração falada de ponta a ponta a partir do seu produto, então não há nada para filmar.",
       "q3": "Posso revisar o vídeo antes que ele seja totalmente renderizado?",
-      "a3": "Sim – esse é o portão do Beat Review. Lumi gera primeiro uma imagem de referência para cada batida (disparo). Você aprova ou regenera cada um e só então gasta tempo de renderização. Prefere mãos livres? O Auto-QA aprova batidas para você.",
+      "a3": "Sim. Seu roteiro chega como um storyboard de takes, cada um com um frame de referência gerado primeiro. Aprove os takes que gostar, regenere os que não gostar por 1 crédito cada, e só depois da sua aprovação o render completo gasta créditos.",
       "q4": "Qual modelo de vídeo Lumi usa?",
-      "a4": "Lumi é renderizado com Seedance 2.0, ajustando as configurações por cena. Mais modelos de vídeo de vanguarda estão no roteiro – seus roteiros e batidas são transferidos quando novos modelos chegam.",
+      "a4": "Você escolhe no Studio: Seedance 2.0 para a melhor qualidade, ou Seedance 2.0 Fast e 2.0 Mini quando velocidade e custo pesam mais. O Seedance 2.5 chega em breve - seus roteiros e storyboards aprovados são transferidos quando ele chegar.",
       "q5": "De onde vêm os dados do produto?",
       "a5": "Cole um link da Amazon, Shopee, TikTok Shop ou da sua própria loja, ou envie suas próprias fotos de produto, e a Lumi lê o título, a descrição e as imagens para criar a partir deles. Seus produtos ficam privados para você.",
       "q6": "Quanto tempo leva um vídeo?",
@@ -1033,7 +1035,7 @@
           "cta": "Entre em contato com vendas"
         }
       },
-      "creditFootnote": "Os créditos acompanham o custo real do render: o custo exato de um vídeo depende do modelo, da resolução e da proporção de tela escolhidos, e o Studio mostra esse valor antes de cada render. As contagens de vídeos são aproximadas, com base em clipes de 20 segundos no Seedance 2.0 a 720p (300 créditos cada).",
+      "creditFootnote": "Os créditos acompanham o custo real do render: o custo exato de um vídeo depende do modelo, da resolução e da proporção de tela escolhidos. As contagens de vídeos são aproximadas, com base em clipes de 20 segundos no Seedance 2.0 a 720p (300 créditos cada).",
       "everyPlanIncludes": "Todo plano inclui",
       "included": [
         "Roteiros baseados em padrões reais",
@@ -1044,9 +1046,9 @@
       "billingQuestions": "Perguntas sobre faturamento",
       "faq": {
         "q1": "O que é um crédito?",
-        "a1": "Os créditos acompanham o custo real de renderização do seu vídeo. O custo exato depende do modelo, da resolução e da proporção de tela escolhidos — um clipe de 20 segundos no Seedance 2.0 a 720p custa 300 créditos, e configurações mais leves custam menos. O Studio sempre mostra o custo exato em créditos antes de renderizar.",
+        "a1": "Os créditos acompanham o custo real de renderização do seu vídeo. O custo exato depende do modelo, da resolução e da proporção de tela escolhidos — um clipe de 20 segundos no Seedance 2.0 a 720p custa 300 créditos, e configurações mais leves custam menos.",
         "q2": "As regenerações custam créditos?",
-        "a2": "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo mensal do seu render final.",
+        "a2": "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo de créditos do seu render final.",
         "q3": "E se eu ficar sem créditos?",
         "a3": "Os créditos dos planos pagos renovam no início de cada ciclo de cobrança; o crédito gratuito de cadastro é único e não renova. O checkout self-service ainda não está disponível - para aumentar sua cota mensal, envie um e-mail para {address} e nós configuramos.",
         "q4": "Posso mudar de plano a qualquer momento?",
@@ -1157,7 +1159,7 @@
         }
       },
       "storyFact1": "$0 de gasto em render até você aprovar",
-      "storyFact2": "Custo exato em créditos visível antes de cada render",
+      "storyFact2": "Os créditos acompanham o custo real do render",
       "wallTitle": "Cada categoria, <highlight>cada mercado</highlight>",
       "wallSubtitle": "Todo vídeo Lumi sai com narração falada na proporção que você escolher, com roteiro e voz adaptados para cada mercado-alvo.",
       "wallAudience": "Feito para vendedores, criadores, marcas e agências — qualquer um que venda com vídeo.",
@@ -1188,7 +1190,7 @@
         }
       },
       "pricingTitle": "Comece grátis. <highlight>Escale quando funcionar.</highlight>",
-      "pricingSubtitle": "Baseado em créditos: os créditos acompanham o custo real do render, e o Studio mostra o custo exato antes de cada render. Seu primeiro vídeo é grátis — sem cartão.",
+      "pricingSubtitle": "Baseado em créditos: os créditos acompanham o custo real do render, então configurações mais leves custam menos. Seu primeiro vídeo é grátis - sem cartão.",
       "mostPopular": "Mais popular",
       "pricingTiers": {
         "creator": {
@@ -1419,7 +1421,7 @@
       },
       "pricing": {
         "title": "Preços",
-        "description": "Comece grátis e escale quando estiver funcionando. O preço do Lumi é baseado em créditos — os créditos acompanham o custo real do render, mostrado antes de cada render. Free (primeiro vídeo), Creator, Pro, Scale e Enterprise. Sem cartão para começar; o anual economiza ~20%."
+        "description": "Comece grátis e escale quando estiver funcionando. O preço do Lumi é baseado em créditos — os créditos acompanham o custo real do render, e configurações mais leves custam menos. Free (primeiro vídeo), Creator, Pro, Scale e Enterprise. Sem cartão para começar; o anual economiza ~20%."
       },
       "about": {
         "title": "Sobre",

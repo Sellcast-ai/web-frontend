@@ -52,14 +52,14 @@ const MANUAL_OVERRIDES = {
   // Regenerations are metered (1 credit each, same monthly allowance) - the
   // machine seed promised them free. Hand-set so a regen never reopens the lie.
   "marketing.pricing.faq.a2": {
-    es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo mensual que tu render final.",
-    zh: "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份月度额度。",
-    ja: "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じ月間クレジットから消費されます。",
-    ko: "네, 재생성 1회당 1크레딧이 사용됩니다. 검토 중 숏을 다시 생성하면 최종 렌더링과 같은 월간 크레딧에서 차감됩니다.",
-    pt: "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo mensal do seu render final.",
-    id: "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong jatah bulanan yang sama dengan render final Anda.",
-    vi: "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
-    th: "มี การสร้างใหม่แต่ละครั้งใช้ 1 เครดิต การสร้างช็อตใหม่ระหว่างรีวิวจะหักจากเครดิตรายเดือนก้อนเดียวกับการเรนเดอร์ขั้นสุดท้ายของคุณ",
+    es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo de créditos que tu render final.",
+    zh: "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份积分余额。",
+    ja: "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じクレジット残高から消費されます。",
+    ko: "네, 재생성 1회당 1크레딧이 사용됩니다. 검토 중 숏을 다시 생성하면 최종 렌더링과 같은 크레딧 잔액에서 차감됩니다.",
+    pt: "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo de créditos do seu render final.",
+    id: "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong saldo kredit yang sama dengan render final Anda.",
+    vi: "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng số dư tín dụng với lần render cuối cùng của bạn.",
+    th: "มี การสร้างใหม่แต่ละครั้งใช้ 1 เครดิต การสร้างช็อตใหม่ระหว่างรีวิวจะหักจากยอดเครดิตก้อนเดียวกับการเรนเดอร์ขั้นสุดท้ายของคุณ",
   },
   // Same metered-regen lie lived in the hand-translated landing copy - these
   // two keys now state the 1-credit regen charge instead of "nothing is
@@ -182,20 +182,21 @@ const MANUAL_OVERRIDES = {
     th: "มืด",
   },
   // pricing-copy-c4 (captain decisions 2026-08-01): credits track real render
-  // cost (model/resolution/aspect ratio, exact cost shown before render), free
-  // grant is 300 one-time, plans are 900/3,000/7,500, storyboard-first wording,
-  // 5 aspect ratios, Seedance picker (2.0/Fast/Mini live, 2.5 coming soon).
-  // Hand-set in all 9 locales - the machine mangles money surfaces and reads
-  // 'Live'/'left' as directions. Do not remove these pins.
+  // cost (model/resolution/aspect ratio - no claim that Studio displays it
+  // until the cost-preview UI ships), free grant is 300 one-time, plans are
+  // 900/3,000/7,500, storyboard-first wording, 5 aspect ratios, Seedance picker
+  // (2.0/Fast/Mini live, 2.5 coming soon). Hand-set in all 9 locales - the
+  // machine mangles money surfaces, reads 'Live'/'left' as directions and the
+  // Creator tier as a deity in id ('Pencipta'). Do not remove these pins.
   "app.profile.creditNote": {
-    es: "Los créditos reflejan el costo real del render: el costo exacto depende del modelo, la resolución y la relación de aspecto, y se muestra antes de cada render.",
-    zh: "积分对应真实渲染成本——确切费用取决于模型、分辨率和宽高比，并会在每次渲染前显示。",
-    ja: "クレジットは実際のレンダリングコストに連動します。正確なコストはモデル・解像度・アスペクト比によって変わり、レンダリング前に表示されます。",
-    ko: "크레딧은 실제 렌더링 비용을 반영합니다 — 정확한 비용은 모델, 해상도, 화면 비율에 따라 달라지며 매 렌더링 전에 표시됩니다.",
-    pt: "Os créditos acompanham o custo real do render — o custo exato depende do modelo, da resolução e da proporção de tela, e é mostrado antes de cada render.",
-    id: "Kredit mengikuti biaya render nyata — biaya pastinya tergantung pada model, resolusi, dan rasio aspek, dan ditampilkan sebelum setiap render.",
-    vi: "Tín dụng phản ánh chi phí render thực tế — chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình, và được hiển thị trước mỗi lần render.",
-    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริง — ต้นทุนที่แน่ชัดขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพ และจะแสดงก่อนเรนเดอร์ทุกครั้ง",
+    es: "Los créditos reflejan el costo real del render: el costo exacto depende del modelo, la resolución y la relación de aspecto que elijas.",
+    zh: "积分对应真实渲染成本——确切费用取决于你选择的模型、分辨率和宽高比。",
+    ja: "クレジットは実際のレンダリングコストに連動します。正確なコストは選んだモデル・解像度・アスペクト比によって変わります。",
+    ko: "크레딧은 실제 렌더링 비용을 반영합니다 - 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라집니다.",
+    pt: "Os créditos acompanham o custo real do render - o custo exato depende do modelo, da resolução e da proporção de tela que você escolher.",
+    id: "Kredit mengikuti biaya render nyata - biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih.",
+    vi: "Tín dụng phản ánh chi phí render thực tế - chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn.",
+    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริง - ต้นทุนที่แน่ชัดขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพที่คุณเลือก",
   },
   "app.profile.creditsLeft": {
     es: "restantes",
@@ -206,6 +207,26 @@ const MANUAL_OVERRIDES = {
     id: "tersisa",
     vi: "còn lại",
     th: "คงเหลือ",
+  },
+  "app.profile.creditsOneTime": {
+    es: "Tus créditos",
+    zh: "你的积分",
+    ja: "あなたのクレジット",
+    ko: "내 크레딧",
+    pt: "Seus créditos",
+    id: "Kredit Anda",
+    vi: "Tín dụng của bạn",
+    th: "เครดิตของคุณ",
+  },
+  "app.profile.limitHitOneTime": {
+    es: "Has usado tus créditos gratuitos.",
+    zh: "你的免费积分已用完。",
+    ja: "無料クレジットを使い切りました。",
+    ko: "무료 크레딧을 모두 사용했습니다.",
+    pt: "Você usou seus créditos gratuitos.",
+    id: "Kredit gratis Anda sudah habis.",
+    vi: "Bạn đã dùng hết tín dụng miễn phí.",
+    th: "คุณใช้เครดิตฟรีหมดแล้ว",
   },
   "app.profile.usageSummaryOneTime": {
     es: "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
@@ -266,6 +287,26 @@ const MANUAL_OVERRIDES = {
     id: "Tinjau storyboard shot demi shot. Render penuh hanya memakai kredit setelah persetujuan Anda.",
     vi: "Duyệt storyboard từng cảnh một. Bản render đầy đủ chỉ tiêu tín dụng sau khi bạn ký duyệt.",
     th: "ตรวจสตอรี่บอร์ดทีละช็อต การเรนเดอร์เต็มจะใช้เครดิตหลังคุณเซ็นผ่านเท่านั้น",
+  },
+  "marketing.faq.a3": {
+    es: "Sí. Tu guion llega como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te gusten, regenera las que no por 1 crédito cada una, y solo cuando apruebas el render completo gasta créditos.",
+    zh: "可以。你的脚本会以分镜的形式呈现，每个镜头都会先生成一张参考画面。满意的镜头直接通过，不满意的可以重新生成，每次 1 积分；只有在你确认之后，完整渲染才会消耗积分。",
+    ja: "はい。脚本はショットごとのストーリーボードとして届き、各ショットの参照フレームが先に生成されます。気に入ったショットは承認し、そうでないものは1クレジットで再生成。承認して初めて、本番レンダリングがクレジットを消費します。",
+    ko: "네. 스크립트는 숏 단위 스토리보드로 도착하며, 각 숏의 참조 프레임이 먼저 생성됩니다. 마음에 드는 숏은 승인하고 아닌 숏은 1크레딧으로 다시 생성하세요. 승인한 뒤에야 전체 렌더링이 크레딧을 사용합니다.",
+    pt: "Sim. Seu roteiro chega como um storyboard de takes, cada um com um frame de referência gerado primeiro. Aprove os takes que gostar, regenere os que não gostar por 1 crédito cada, e só depois da sua aprovação o render completo gasta créditos.",
+    id: "Ya. Skrip Anda datang sebagai storyboard berisi shot, masing-masing dengan frame referensi yang dibuat lebih dulu. Setujui shot yang Anda suka, buat ulang yang tidak dengan 1 kredit per shot, dan render penuh baru memakai kredit setelah Anda menyetujuinya.",
+    vi: "Có. Kịch bản của bạn đến dưới dạng storyboard gồm các cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn ưng ý, tạo lại những cảnh chưa ưng với 1 tín dụng mỗi lần, và chỉ khi bạn duyệt thì bản render đầy đủ mới tiêu tín dụng.",
+    th: "ได้ สคริปต์ของคุณจะมาในรูปสตอรี่บอร์ดแบบทีละช็อต โดยแต่ละช็อตจะสร้างเฟรมอ้างอิงก่อน อนุมัติช็อตที่คุณชอบ สร้างใหม่ช็อตที่ยังไม่ใช่ด้วยราคา 1 เครดิตต่อครั้ง และการเรนเดอร์เต็มจะใช้เครดิตก็ต่อเมื่อคุณอนุมัติแล้วเท่านั้น",
+  },
+  "marketing.faq.a4": {
+    es: "Tú lo eliges en Studio: Seedance 2.0 para la mejor calidad, o Seedance 2.0 Fast y 2.0 Mini cuando importan más la velocidad y el costo. Seedance 2.5 llegará pronto: tus guiones y storyboards aprobados se conservan cuando aterrice.",
+    zh: "由你在 Studio 中选择：追求最佳画质用 Seedance 2.0，更看重速度和成本就用 Seedance 2.0 Fast 或 2.0 Mini。Seedance 2.5 即将上线，上线后你的脚本和已确认的分镜都会照常沿用。",
+    ja: "Studio であなたが選びます。最高品質なら Seedance 2.0、速度とコストを重視するなら Seedance 2.0 Fast や 2.0 Mini。Seedance 2.5 は近日登場予定で、脚本と承認済みのストーリーボードはそのまま引き継がれます。",
+    ko: "Studio에서 직접 고릅니다. 최고 품질은 Seedance 2.0, 속도와 비용이 더 중요하면 Seedance 2.0 Fast나 2.0 Mini를 쓰세요. Seedance 2.5는 곧 추가되며, 출시되면 스크립트와 승인된 스토리보드가 그대로 이어집니다.",
+    pt: "Você escolhe no Studio: Seedance 2.0 para a melhor qualidade, ou Seedance 2.0 Fast e 2.0 Mini quando velocidade e custo pesam mais. O Seedance 2.5 chega em breve - seus roteiros e storyboards aprovados são transferidos quando ele chegar.",
+    id: "Anda yang memilih di Studio: Seedance 2.0 untuk kualitas terbaik, atau Seedance 2.0 Fast dan 2.0 Mini saat kecepatan dan biaya lebih penting. Seedance 2.5 segera hadir - skrip dan storyboard yang sudah Anda setujui tetap terpakai saat model itu tiba.",
+    vi: "Bạn tự chọn trong Studio: Seedance 2.0 cho chất lượng cao nhất, hoặc Seedance 2.0 Fast và 2.0 Mini khi tốc độ và chi phí quan trọng hơn. Seedance 2.5 sắp ra mắt - kịch bản và storyboard đã duyệt của bạn vẫn dùng được khi nó xuất hiện.",
+    th: "คุณเลือกเองใน Studio: Seedance 2.0 สำหรับคุณภาพสูงสุด หรือ Seedance 2.0 Fast และ 2.0 Mini เมื่อความเร็วและต้นทุนสำคัญกว่า ส่วน Seedance 2.5 กำลังจะมา - สคริปต์และสตอรี่บอร์ดที่คุณอนุมัติแล้วจะใช้ต่อได้ทันที",
   },
   "marketing.features.rows.modes.bullets[0]": {
     es: "4 estilos pensados para el comercio",
@@ -418,14 +459,14 @@ const MANUAL_OVERRIDES = {
     th: "Seedance 2.0 · Fast · Mini",
   },
   "marketing.landing.pricingSubtitle": {
-    es: "Basado en créditos: los créditos reflejan el costo real del render, y Studio muestra el costo exacto antes de cada render. Tu primer video es gratis, sin tarjeta.",
-    zh: "积分制：积分对应真实渲染成本，Studio 会在每次渲染前显示确切费用。首个视频免费，无需银行卡。",
-    ja: "クレジット制：クレジットは実際のレンダリングコストに連動し、Studio がレンダリング前に正確なコストを表示します。最初の動画は無料、カード不要です。",
-    ko: "크레딧 기반: 크레딧은 실제 렌더링 비용을 반영하며, Studio가 매 렌더링 전 정확한 비용을 보여줍니다. 첫 영상은 무료, 카드도 필요 없습니다.",
-    pt: "Baseado em créditos: os créditos acompanham o custo real do render, e o Studio mostra o custo exato antes de cada render. Seu primeiro vídeo é grátis — sem cartão.",
-    id: "Berbasis kredit: kredit mengikuti biaya render nyata, dan Studio menampilkan biaya pasti sebelum setiap render. Video pertama Anda gratis — tanpa kartu.",
-    vi: "Tính theo tín dụng: tín dụng phản ánh chi phí render thực tế, và Studio hiển thị chi phí chính xác trước mỗi lần render. Video đầu tiên của bạn miễn phí — không cần thẻ.",
-    th: "ระบบเครดิต: เครดิตสะท้อนต้นทุนการเรนเดอร์จริง และ Studio แสดงต้นทุนที่แน่ชัดก่อนเรนเดอร์ทุกครั้ง วิดีโอแรกของคุณฟรี — ไม่ต้องใช้บัตร",
+    es: "Basado en créditos: los créditos reflejan el costo real del render, así que los ajustes más ligeros cuestan menos. Tu primer video es gratis, sin tarjeta.",
+    zh: "积分制：积分对应真实渲染成本，设置越轻花费越少。首个视频免费，无需银行卡。",
+    ja: "クレジット制：クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。最初の動画は無料、カード不要です。",
+    ko: "크레딧 기반: 크레딧은 실제 렌더링 비용을 반영해, 가벼운 설정일수록 적게 듭니다. 첫 영상은 무료, 카드도 필요 없습니다.",
+    pt: "Baseado em créditos: os créditos acompanham o custo real do render, então configurações mais leves custam menos. Seu primeiro vídeo é grátis - sem cartão.",
+    id: "Berbasis kredit: kredit mengikuti biaya render nyata, jadi pengaturan yang lebih ringan lebih murah. Video pertama Anda gratis - tanpa kartu.",
+    vi: "Tính theo tín dụng: tín dụng phản ánh chi phí render thực tế, nên thiết lập nhẹ hơn sẽ rẻ hơn. Video đầu tiên của bạn miễn phí - không cần thẻ.",
+    th: "ระบบเครดิต: เครดิตสะท้อนต้นทุนการเรนเดอร์จริง การตั้งค่าที่เบากว่าจึงถูกกว่า วิดีโอแรกของคุณฟรี - ไม่ต้องใช้บัตร",
   },
   "marketing.landing.pricingTiers.creator.features[0]": {
     es: "900 créditos — unos 3 videos",
@@ -457,6 +498,9 @@ const MANUAL_OVERRIDES = {
     vi: "Duyệt storyboard",
     th: "รีวิวสตอรี่บอร์ด",
   },
+  "marketing.landing.pricingTiers.creator.name": {
+    id: "Kreator",
+  },
   "marketing.landing.pricingTiers.pro.features[0]": {
     es: "3.000 créditos — unos 10 videos",
     zh: "3,000 积分 — 约 10 个视频",
@@ -473,7 +517,7 @@ const MANUAL_OVERRIDES = {
     ja: "Creator のすべて",
     ko: "Creator의 모든 기능",
     pt: "Tudo do Creator",
-    id: "Semua fitur Creator",
+    id: "Semua fitur Kreator",
     vi: "Mọi tính năng của Creator",
     th: "ทุกอย่างใน Creator",
   },
@@ -528,14 +572,14 @@ const MANUAL_OVERRIDES = {
     th: "สำหรับสายโพสต์ไม่หยุด",
   },
   "marketing.landing.storyFact2": {
-    es: "Costo exacto en créditos visible antes de cada render",
-    zh: "每次渲染前显示确切积分费用",
-    ja: "レンダリング前に正確なクレジット数を表示",
-    ko: "매 렌더링 전 정확한 크레딧 비용 표시",
-    pt: "Custo exato em créditos visível antes de cada render",
-    id: "Biaya kredit pasti ditampilkan sebelum setiap render",
-    vi: "Hiển thị chính xác số tín dụng trước mỗi lần render",
-    th: "แสดงจำนวนเครดิตที่แน่ชัดก่อนเรนเดอร์ทุกครั้ง",
+    es: "Los créditos reflejan el costo real del render",
+    zh: "积分对应真实渲染成本",
+    ja: "クレジットは実際のレンダリングコストに連動",
+    ko: "크레딧은 실제 렌더링 비용을 반영",
+    pt: "Os créditos acompanham o custo real do render",
+    id: "Kredit mengikuti biaya render nyata",
+    vi: "Tín dụng phản ánh chi phí render thực tế",
+    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริง",
   },
   "marketing.landing.storySteps.render.body": {
     es: "El control de calidad automático verifica cada línea hablada contra el guion, y el corte queda listo para publicar en la relación de aspecto que elegiste.",
@@ -578,14 +622,14 @@ const MANUAL_OVERRIDES = {
     th: "เลือกโมเดลเรนเดอร์ใน Studio — Seedance 2.0, 2.0 Fast หรือ 2.0 Mini พร้อม Seedance 2.5 ที่จะมาเร็วๆ นี้ ทุกช็อตได้รับการตั้งค่าที่เรนเดอร์ออกมาดีที่สุด",
   },
   "marketing.metadata.pricing.description": {
-    es: "Empieza gratis y escala cuando funcione. El precio de Lumi se basa en créditos: los créditos reflejan el costo real del render, visible antes de cada render. Free (primer video), Creator, Pro, Scale y Enterprise. Sin tarjeta para empezar; el plan anual ahorra ~20%.",
-    zh: "免费开始，见效再扩展。Lumi 采用积分制定价——积分对应真实渲染成本，每次渲染前都会显示。免费版（首个视频）、Creator、Pro、Scale 和 Enterprise。开始无需信用卡；按年付省约 20%。",
-    ja: "無料で始めて、効果が出たら拡大。Lumi の料金はクレジット制 — クレジットは実際のレンダリングコストに連動し、レンダリング前に表示されます。Free（最初の動画）、Creator、Pro、Scale、Enterprise。開始にクレジットカードは不要。年払いで約20%お得。",
-    ko: "무료로 시작하고, 효과가 보이면 확장하세요. Lumi 요금은 크레딧 기반 — 크레딧은 실제 렌더링 비용을 반영하며 매 렌더링 전에 표시됩니다. Free(첫 영상), Creator, Pro, Scale, Enterprise. 시작에 신용카드 불필요, 연간 결제 시 약 20% 절약.",
-    pt: "Comece grátis e escale quando estiver funcionando. O preço do Lumi é baseado em créditos — os créditos acompanham o custo real do render, mostrado antes de cada render. Free (primeiro vídeo), Creator, Pro, Scale e Enterprise. Sem cartão para começar; o anual economiza ~20%.",
-    id: "Mulai gratis, naik kelas saat sudah terbukti. Harga Lumi berbasis kredit — kredit mengikuti biaya render nyata, ditampilkan sebelum setiap render. Free (video pertama), Creator, Pro, Scale, dan Enterprise. Tanpa kartu kredit untuk mulai; tahunan hemat ~20%.",
-    vi: "Bắt đầu miễn phí, mở rộng khi thấy hiệu quả. Giá Lumi tính theo tín dụng — tín dụng phản ánh chi phí render thực tế, hiển thị trước mỗi lần render. Free (video đầu tiên), Creator, Pro, Scale và Enterprise. Không cần thẻ để bắt đầu; gói năm tiết kiệm ~20%.",
-    th: "เริ่มฟรี แล้วขยายเมื่อเห็นผล ราคา Lumi เป็นแบบเครดิต — เครดิตสะท้อนต้นทุนการเรนเดอร์จริง แสดงก่อนเรนเดอร์ทุกครั้ง Free (วิดีโอแรก), Creator, Pro, Scale และ Enterprise ไม่ต้องใช้บัตรเครดิตตอนเริ่ม รายปีประหยัด ~20%",
+    es: "Empieza gratis y escala cuando funcione. El precio de Lumi se basa en créditos: los créditos reflejan el costo real del render, y los ajustes más ligeros cuestan menos. Free (primer video), Creator, Pro, Scale y Enterprise. Sin tarjeta para empezar; el plan anual ahorra ~20%.",
+    zh: "免费开始，见效再扩展。Lumi 采用积分制定价——积分对应真实渲染成本，设置越轻花费越少。免费版（首个视频）、Creator、Pro、Scale 和 Enterprise。开始无需信用卡；按年付省约 20%。",
+    ja: "無料で始めて、効果が出たら拡大。Lumi の料金はクレジット制 — クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。Free（最初の動画）、Creator、Pro、Scale、Enterprise。開始にクレジットカードは不要。年払いで約20%お得。",
+    ko: "무료로 시작하고, 효과가 보이면 확장하세요. Lumi 요금은 크레딧 기반 — 크레딧은 실제 렌더링 비용을 반영해 가벼운 설정일수록 적게 듭니다. Free(첫 영상), Creator, Pro, Scale, Enterprise. 시작에 신용카드 불필요, 연간 결제 시 약 20% 절약.",
+    pt: "Comece grátis e escale quando estiver funcionando. O preço do Lumi é baseado em créditos — os créditos acompanham o custo real do render, e configurações mais leves custam menos. Free (primeiro vídeo), Creator, Pro, Scale e Enterprise. Sem cartão para começar; o anual economiza ~20%.",
+    id: "Mulai gratis, naik kelas saat sudah terbukti. Harga Lumi berbasis kredit — kredit mengikuti biaya render nyata, dan pengaturan yang lebih ringan lebih murah. Free (video pertama), Creator, Pro, Scale, dan Enterprise. Tanpa kartu kredit untuk mulai; tahunan hemat ~20%.",
+    vi: "Bắt đầu miễn phí, mở rộng khi thấy hiệu quả. Giá Lumi tính theo tín dụng — tín dụng phản ánh chi phí render thực tế, thiết lập nhẹ hơn sẽ rẻ hơn. Free (video đầu tiên), Creator, Pro, Scale và Enterprise. Không cần thẻ để bắt đầu; gói năm tiết kiệm ~20%.",
+    th: "เริ่มฟรี แล้วขยายเมื่อเห็นผล ราคา Lumi เป็นแบบเครดิต — เครดิตสะท้อนต้นทุนการเรนเดอร์จริง การตั้งค่าที่เบากว่าจึงถูกกว่า Free (วิดีโอแรก), Creator, Pro, Scale และ Enterprise ไม่ต้องใช้บัตรเครดิตตอนเริ่ม รายปีประหยัด ~20%",
   },
   "marketing.models.cards.fast.bestFor[0]": {
     es: "Velocidad",
@@ -848,24 +892,24 @@ const MANUAL_OVERRIDES = {
     th: "ปรับแต่งทีละช็อต",
   },
   "marketing.pricing.creditFootnote": {
-    es: "Los créditos reflejan el costo real del render: el costo exacto de un video depende del modelo, la resolución y la relación de aspecto que elijas, y Studio lo muestra antes de cada render. Los conteos de videos son aproximados, basados en clips de 20 segundos con Seedance 2.0 a 720p (300 créditos cada uno).",
-    zh: "积分对应真实的渲染成本：每个视频的确切花费取决于你选择的模型、分辨率和宽高比，Studio 会在每次渲染前显示该费用。视频数量为估算值，基于 Seedance 2.0 720p 的 20 秒片段（每条 300 积分）。",
-    ja: "クレジットは実際のレンダリングコストに連動します。動画の正確なコストは選択したモデル・解像度・アスペクト比によって変わり、Studio がレンダリング前に必ず表示します。動画本数は目安で、Seedance 2.0・720p の20秒クリップ（1本300クレジット）を基準にしています。",
-    ko: "크레딧은 실제 렌더링 비용을 반영합니다. 영상의 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라지며 Studio가 매 렌더링 전에 보여줍니다. 영상 개수는 Seedance 2.0 720p 기준 20초 클립(개당 300 크레딧)을 바탕으로 한 대략적인 수치입니다.",
-    pt: "Os créditos acompanham o custo real do render: o custo exato de um vídeo depende do modelo, da resolução e da proporção de tela escolhidos, e o Studio mostra esse valor antes de cada render. As contagens de vídeos são aproximadas, com base em clipes de 20 segundos no Seedance 2.0 a 720p (300 créditos cada).",
-    id: "Kredit mengikuti biaya render yang sebenarnya: biaya pasti sebuah video tergantung pada model, resolusi, dan rasio aspek yang Anda pilih, dan Studio menampilkannya sebelum setiap render. Jumlah video bersifat perkiraan, berdasarkan klip 20 detik di Seedance 2.0 720p (masing-masing 300 kredit).",
-    vi: "Tín dụng phản ánh chi phí render thực tế: chi phí chính xác của một video phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn, và Studio luôn hiển thị trước mỗi lần render. Số lượng video chỉ là ước tính, dựa trên clip 20 giây chạy Seedance 2.0 ở 720p (mỗi clip 300 tín dụng).",
-    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริง ต้นทุนที่แน่ชัดของวิดีโอแต่ละเรื่องขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพที่คุณเลือก และ Studio จะแสดงตัวเลขนั้นก่อนการเรนเดอร์ทุกครั้ง จำนวนวิดีโอเป็นเพียงค่าประมาณ อิงจากคลิป 20 วินาทีบน Seedance 2.0 ที่ 720p (เรื่องละ 300 เครดิต)",
+    es: "Los créditos reflejan el costo real del render: el costo exacto de un video depende del modelo, la resolución y la relación de aspecto que elijas. Los conteos de videos son aproximados, basados en clips de 20 segundos con Seedance 2.0 a 720p (300 créditos cada uno).",
+    zh: "积分对应真实的渲染成本：每个视频的确切花费取决于你选择的模型、分辨率和宽高比。视频数量为估算值，基于 Seedance 2.0 720p 的 20 秒片段（每条 300 积分）。",
+    ja: "クレジットは実際のレンダリングコストに連動します。動画の正確なコストは選択したモデル・解像度・アスペクト比によって変わります。動画本数は目安で、Seedance 2.0・720p の20秒クリップ（1本300クレジット）を基準にしています。",
+    ko: "크레딧은 실제 렌더링 비용을 반영합니다. 영상의 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라집니다. 영상 개수는 Seedance 2.0 720p 기준 20초 클립(개당 300 크레딧)을 바탕으로 한 대략적인 수치입니다.",
+    pt: "Os créditos acompanham o custo real do render: o custo exato de um vídeo depende do modelo, da resolução e da proporção de tela escolhidos. As contagens de vídeos são aproximadas, com base em clipes de 20 segundos no Seedance 2.0 a 720p (300 créditos cada).",
+    id: "Kredit mengikuti biaya render yang sebenarnya: biaya pasti sebuah video tergantung pada model, resolusi, dan rasio aspek yang Anda pilih. Jumlah video bersifat perkiraan, berdasarkan klip 20 detik di Seedance 2.0 720p (masing-masing 300 kredit).",
+    vi: "Tín dụng phản ánh chi phí render thực tế: chi phí chính xác của một video phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn. Số lượng video chỉ là ước tính, dựa trên clip 20 giây chạy Seedance 2.0 ở 720p (mỗi clip 300 tín dụng).",
+    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริง ต้นทุนที่แน่ชัดของวิดีโอแต่ละเรื่องขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพที่คุณเลือก จำนวนวิดีโอเป็นเพียงค่าประมาณ อิงจากคลิป 20 วินาทีบน Seedance 2.0 ที่ 720p (เรื่องละ 300 เครดิต)",
   },
   "marketing.pricing.faq.a1": {
-    es: "Los créditos reflejan el costo real de renderizado de tu video. El costo exacto depende del modelo, la resolución y la relación de aspecto que elijas: un clip de 20 segundos con Seedance 2.0 a 720p cuesta 300 créditos, y los ajustes más ligeros cuestan menos. Studio siempre muestra el costo exacto en créditos antes de renderizar.",
-    zh: "积分对应视频的真实渲染成本。确切费用取决于你选择的模型、分辨率和宽高比——Seedance 2.0 720p 的 20 秒片段需 300 积分，更轻的设置花费更少。Studio 总会在渲染前显示确切的积分费用。",
-    ja: "クレジットは動画の実際のレンダリングコストに連動します。正確なコストは選択したモデル・解像度・アスペクト比によって変わります。Seedance 2.0・720p の20秒クリップなら300クレジット、より軽い設定ならさらに少なくなります。Studio はレンダリング前に必ず正確なクレジット数を表示します。",
-    ko: "크레딧은 영상의 실제 렌더링 비용을 반영합니다. 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라집니다. Seedance 2.0 720p의 20초 클립은 300 크레딧이며, 더 가벼운 설정은 더 적게 듭니다. Studio는 렌더링 전에 항상 정확한 크레딧 비용을 보여줍니다.",
-    pt: "Os créditos acompanham o custo real de renderização do seu vídeo. O custo exato depende do modelo, da resolução e da proporção de tela escolhidos — um clipe de 20 segundos no Seedance 2.0 a 720p custa 300 créditos, e configurações mais leves custam menos. O Studio sempre mostra o custo exato em créditos antes de renderizar.",
-    id: "Kredit mengikuti biaya render nyata video Anda. Biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih — klip 20 detik di Seedance 2.0 720p berharga 300 kredit, dan pengaturan yang lebih ringan lebih murah. Studio selalu menampilkan biaya kredit yang pasti sebelum Anda merender.",
-    vi: "Tín dụng phản ánh chi phí render thực tế của video. Chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn — clip 20 giây chạy Seedance 2.0 ở 720p tốn 300 tín dụng, và các thiết lập nhẹ hơn thì rẻ hơn. Studio luôn hiển thị chính xác số tín dụng trước khi bạn render.",
-    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริงของวิดีโอคุณ ต้นทุนที่แน่ชัดขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพที่คุณเลือก — คลิป 20 วินาทีบน Seedance 2.0 ที่ 720p ใช้ 300 เครดิต และการตั้งค่าที่เบากว่าจะถูกกว่า Studio จะแสดงจำนวนเครดิตที่แน่ชัดก่อนคุณเรนเดอร์เสมอ",
+    es: "Los créditos reflejan el costo real de renderizado de tu video. El costo exacto depende del modelo, la resolución y la relación de aspecto que elijas: un clip de 20 segundos con Seedance 2.0 a 720p cuesta 300 créditos, y los ajustes más ligeros cuestan menos.",
+    zh: "积分对应视频的真实渲染成本。确切费用取决于你选择的模型、分辨率和宽高比——Seedance 2.0 720p 的 20 秒片段需 300 积分，更轻的设置花费更少。",
+    ja: "クレジットは動画の実際のレンダリングコストに連動します。正確なコストは選択したモデル・解像度・アスペクト比によって変わります。Seedance 2.0・720p の20秒クリップなら300クレジット、より軽い設定ならさらに少なくなります。",
+    ko: "크레딧은 영상의 실제 렌더링 비용을 반영합니다. 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라집니다. Seedance 2.0 720p의 20초 클립은 300 크레딧이며, 더 가벼운 설정은 더 적게 듭니다.",
+    pt: "Os créditos acompanham o custo real de renderização do seu vídeo. O custo exato depende do modelo, da resolução e da proporção de tela escolhidos — um clipe de 20 segundos no Seedance 2.0 a 720p custa 300 créditos, e configurações mais leves custam menos.",
+    id: "Kredit mengikuti biaya render nyata video Anda. Biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih — klip 20 detik di Seedance 2.0 720p berharga 300 kredit, dan pengaturan yang lebih ringan lebih murah.",
+    vi: "Tín dụng phản ánh chi phí render thực tế của video. Chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn — clip 20 giây chạy Seedance 2.0 ở 720p tốn 300 tín dụng, và các thiết lập nhẹ hơn thì rẻ hơn.",
+    th: "เครดิตสะท้อนต้นทุนการเรนเดอร์จริงของวิดีโอคุณ ต้นทุนที่แน่ชัดขึ้นอยู่กับโมเดล ความละเอียด และอัตราส่วนภาพที่คุณเลือก — คลิป 20 วินาทีบน Seedance 2.0 ที่ 720p ใช้ 300 เครดิต และการตั้งค่าที่เบากว่าจะถูกกว่า",
   },
   "marketing.pricing.faq.a3": {
     es: "Los créditos de los planes de pago se renuevan al inicio de cada ciclo de facturación; la asignación gratuita de registro es única y no se renueva. El pago autoservicio aún no está disponible - para subir a una asignación mensual mayor, escribe a {address} y lo configuramos.",
@@ -937,6 +981,9 @@ const MANUAL_OVERRIDES = {
     vi: "900 tín dụng / tháng",
     th: "900 เครดิต / เดือน",
   },
+  "marketing.pricing.tiers.creator.cta": {
+    id: "Mulai Kreator",
+  },
   "marketing.pricing.tiers.creator.features[0]": {
     es: "Sin marca de agua",
     zh: "无水印",
@@ -966,6 +1013,9 @@ const MANUAL_OVERRIDES = {
     id: "Ekspor 720p · 5 rasio aspek",
     vi: "Xuất 720p · 5 tỷ lệ khung hình",
     th: "ส่งออก 720p · 5 อัตราส่วนภาพ",
+  },
+  "marketing.pricing.tiers.creator.name": {
+    id: "Kreator",
   },
   "marketing.pricing.tiers.free.credits": {
     es: "300 créditos, una sola vez",
@@ -1049,7 +1099,7 @@ const MANUAL_OVERRIDES = {
   },
   "marketing.pricing.tiers.pro.features[0]": {
     zh: "包含创作者全部功能",
-    id: "Semua fitur Pencipta",
+    id: "Semua fitur Kreator",
   },
 };
 

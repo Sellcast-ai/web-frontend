@@ -284,7 +284,7 @@
       },
       "thisMonth": "Bulan ini",
       "usageSummary": "{used} dari kredit {limit} digunakan · Paket {plan} · menyetel ulang {date}",
-      "creditNote": "Kredit mengikuti biaya render nyata — biaya pastinya tergantung pada model, resolusi, dan rasio aspek, dan ditampilkan sebelum setiap render.",
+      "creditNote": "Kredit mengikuti biaya render nyata - biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih.",
       "creditsLeft": "tersisa",
       "limitHit": "Anda telah mencapai batas bulanan Anda.",
       "seePlans": "Lihat rencana",
@@ -296,7 +296,9 @@
       "appearance": "Penampilan",
       "appearanceDescription": "Sistem, terang, atau gelap — cocok dengan aplikasi Lumi.",
       "logOut": "Keluar",
-      "usageSummaryOneTime": "{used} dari {limit} kredit terpakai · paket {plan} · pemberian satu kali, tidak diperbarui"
+      "usageSummaryOneTime": "{used} dari {limit} kredit terpakai · paket {plan} · pemberian satu kali, tidak diperbarui",
+      "creditsOneTime": "Kredit Anda",
+      "limitHitOneTime": "Kredit gratis Anda sudah habis."
     },
     "productsNew": {
       "startTitle": "Tambahkan produk",
@@ -947,9 +949,9 @@
       "q2": "Apakah saya perlu merekam sesuatu atau berada di depan kamera?",
       "a2": "Tidak. Lumi membuat etalase khusus produk — visual dan sulih suaranya dihasilkan menyeluruh dari produk Anda, jadi tidak ada yang perlu direkam.",
       "q3": "Bisakah saya meninjau video sebelum dirender sepenuhnya?",
-      "a3": "Ya — itulah gerbang Beat Review. Lumi menghasilkan gambar referensi untuk setiap ketukan (shot) terlebih dahulu. Anda menyetujui atau membuat ulang masing-masing, dan baru setelah itu ia menghabiskan waktu render. Lebih suka lepas tangan? Auto-QA menyetujui ketukan untuk Anda.",
+      "a3": "Ya. Skrip Anda datang sebagai storyboard berisi shot, masing-masing dengan frame referensi yang dibuat lebih dulu. Setujui shot yang Anda suka, buat ulang yang tidak dengan 1 kredit per shot, dan render penuh baru memakai kredit setelah Anda menyetujuinya.",
       "q4": "Model video manakah yang digunakan Lumi?",
-      "a4": "Lumi dirender dengan Seedance 2.0, menyetel pengaturan per bidikan. Lebih banyak model video terdepan yang sedang direncanakan — skrip dan irama Anda akan terbawa saat model baru hadir.",
+      "a4": "Anda yang memilih di Studio: Seedance 2.0 untuk kualitas terbaik, atau Seedance 2.0 Fast dan 2.0 Mini saat kecepatan dan biaya lebih penting. Seedance 2.5 segera hadir - skrip dan storyboard yang sudah Anda setujui tetap terpakai saat model itu tiba.",
       "q5": "Dari mana data produk berasal?",
       "a5": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri, atau unggah foto produk Anda sendiri, dan Lumi akan membaca judul, deskripsi, serta gambar untuk dibuat. Produk Anda tetap pribadi untuk Anda.",
       "q6": "Berapa lama waktu yang dibutuhkan untuk satu video?",
@@ -983,7 +985,7 @@
           "cta": "Mulai gratis"
         },
         "creator": {
-          "name": "Pencipta",
+          "name": "Kreator",
           "note": "per bulan",
           "allowance": "≈ 3 video / bln",
           "credits": "900 kredit / bulan",
@@ -992,7 +994,7 @@
             "Tinjauan storyboard",
             "Ekspor 720p · 5 rasio aspek"
           ],
-          "cta": "Mulai Pencipta"
+          "cta": "Mulai Kreator"
         },
         "pro": {
           "name": "Pro",
@@ -1000,7 +1002,7 @@
           "allowance": "≈ 10 video / bln",
           "credits": "3.000 kredit / bulan",
           "features": [
-            "Semua fitur Pencipta",
+            "Semua fitur Kreator",
             "Kredit lebih banyak, biaya per video sama",
             "Prioritas atas render gratis"
           ],
@@ -1033,7 +1035,7 @@
           "cta": "Hubungi penjualan"
         }
       },
-      "creditFootnote": "Kredit mengikuti biaya render yang sebenarnya: biaya pasti sebuah video tergantung pada model, resolusi, dan rasio aspek yang Anda pilih, dan Studio menampilkannya sebelum setiap render. Jumlah video bersifat perkiraan, berdasarkan klip 20 detik di Seedance 2.0 720p (masing-masing 300 kredit).",
+      "creditFootnote": "Kredit mengikuti biaya render yang sebenarnya: biaya pasti sebuah video tergantung pada model, resolusi, dan rasio aspek yang Anda pilih. Jumlah video bersifat perkiraan, berdasarkan klip 20 detik di Seedance 2.0 720p (masing-masing 300 kredit).",
       "everyPlanIncludes": "Setiap paket mencakup",
       "included": [
         "Skrip berbasis pola terbukti",
@@ -1044,9 +1046,9 @@
       "billingQuestions": "Pertanyaan penagihan",
       "faq": {
         "q1": "Apa itu kredit?",
-        "a1": "Kredit mengikuti biaya render nyata video Anda. Biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih — klip 20 detik di Seedance 2.0 720p berharga 300 kredit, dan pengaturan yang lebih ringan lebih murah. Studio selalu menampilkan biaya kredit yang pasti sebelum Anda merender.",
+        "a1": "Kredit mengikuti biaya render nyata video Anda. Biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih — klip 20 detik di Seedance 2.0 720p berharga 300 kredit, dan pengaturan yang lebih ringan lebih murah.",
         "q2": "Apakah regenerasi memerlukan kredit?",
-        "a2": "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong jatah bulanan yang sama dengan render final Anda.",
+        "a2": "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong saldo kredit yang sama dengan render final Anda.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
         "a3": "Kredit paket berbayar diatur ulang di awal setiap siklus penagihan; pemberian gratis saat mendaftar bersifat satu kali dan tidak diperbarui. Checkout mandiri belum tersedia - untuk meningkatkan ke jatah bulanan yang lebih besar, email ke {address} dan kami akan mengaturnya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
@@ -1157,7 +1159,7 @@
         }
       },
       "storyFact1": "$0 biaya render sampai Anda menyetujui",
-      "storyFact2": "Biaya kredit pasti ditampilkan sebelum setiap render",
+      "storyFact2": "Kredit mengikuti biaya render nyata",
       "wallTitle": "Setiap kategori, <highlight>setiap pasar</highlight>",
       "wallSubtitle": "Setiap video Lumi hadir dengan sulih suara dalam rasio aspek pilihan Anda, dengan skrip dan suara yang disesuaikan untuk setiap pasar sasaran.",
       "wallAudience": "Dibuat untuk penjual, kreator, merek, dan agensi — siapa pun yang berjualan lewat video.",
@@ -1188,11 +1190,11 @@
         }
       },
       "pricingTitle": "Mulai gratis. <highlight>Skalakan saat berhasil.</highlight>",
-      "pricingSubtitle": "Berbasis kredit: kredit mengikuti biaya render nyata, dan Studio menampilkan biaya pasti sebelum setiap render. Video pertama Anda gratis — tanpa kartu.",
+      "pricingSubtitle": "Berbasis kredit: kredit mengikuti biaya render nyata, jadi pengaturan yang lebih ringan lebih murah. Video pertama Anda gratis - tanpa kartu.",
       "mostPopular": "Paling populer",
       "pricingTiers": {
         "creator": {
-          "name": "Pencipta",
+          "name": "Kreator",
           "price": "$29",
           "note": "/ bln",
           "features": [
@@ -1207,7 +1209,7 @@
           "note": "/ bln",
           "features": [
             "3.000 kredit — sekitar 10 video",
-            "Semua fitur Creator",
+            "Semua fitur Kreator",
             "Render prioritas",
             "Ekspor 720p · 5 rasio aspek"
           ]
@@ -1419,7 +1421,7 @@
       },
       "pricing": {
         "title": "Harga",
-        "description": "Mulai gratis, naik kelas saat sudah terbukti. Harga Lumi berbasis kredit — kredit mengikuti biaya render nyata, ditampilkan sebelum setiap render. Free (video pertama), Creator, Pro, Scale, dan Enterprise. Tanpa kartu kredit untuk mulai; tahunan hemat ~20%."
+        "description": "Mulai gratis, naik kelas saat sudah terbukti. Harga Lumi berbasis kredit — kredit mengikuti biaya render nyata, dan pengaturan yang lebih ringan lebih murah. Free (video pertama), Creator, Pro, Scale, dan Enterprise. Tanpa kartu kredit untuk mulai; tahunan hemat ~20%."
       },
       "about": {
         "title": "Tentang",

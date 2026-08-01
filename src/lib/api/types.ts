@@ -527,7 +527,9 @@ export interface UserProfileUpdate {
 
 export interface Usage {
   plan: string;
-  /** All quantities are in credits (1 credit = 1 second of 720p video). */
+  /** All quantities are in credits, which track real render cost - what one
+   * render costs depends on its model, resolution and aspect ratio (see
+   * `src/lib/render-cost.ts`), so credits never convert to seconds. */
   limit: number;
   used: number;
   remaining: number;

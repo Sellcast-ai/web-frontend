@@ -48,6 +48,10 @@ export default function ProfilePage() {
   const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const name = nameEdit ?? user?.display_name ?? "";
+  // The free grant is one-time and does not renew, so the whole usage card -
+  // heading, summary line and exhausted notice - has to swap together; leaving
+  // any of the three on the monthly wording implies a reset that never comes.
+  const oneTimeGrant = usage?.plan === "free";
 
   if (isLoading || !user) {
     return (
@@ -151,33 +155,21 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* monthly quota */}
+      {/* credit quota */}
       {usage && (
         <section className="mt-4 rounded-card border border-border bg-card p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-lg font-semibold text-ink">
-                {t("thisMonth")}
+                {t(oneTimeGrant ? "creditsOneTime" : "thisMonth")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {usage.plan === "free"
-                  ? // the free grant is one-time and does not renew, so it must
-                    // not show the paid plans' "resets {date}" line
-                    t("usageSummaryOneTime", {
-                      used: usage.used,
-                      limit: usage.limit,
-                      plan:
-                        usage.plan.charAt(0).toUpperCase() +
-                        usage.plan.slice(1),
-                    })
-                  : t("usageSummary", {
-                      used: usage.used,
-                      limit: usage.limit,
-                      plan:
-                        usage.plan.charAt(0).toUpperCase() +
-                        usage.plan.slice(1),
-                      date: usage.resets_at.slice(0, 10),
-                    })}
+                {t(oneTimeGrant ? "usageSummaryOneTime" : "usageSummary", {
+                  used: usage.used,
+                  limit: usage.limit,
+                  plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
+                  date: usage.resets_at.slice(0, 10),
+                })}
               </p>
               <p className="text-xs text-muted-foreground/80">
                 {t("creditNote")}
@@ -201,7 +193,7 @@ export default function ProfilePage() {
           </div>
           {usage.remaining <= 0 && (
             <p className="mt-3 text-sm text-muted-foreground">
-              {t("limitHit")}{" "}
+              {t(oneTimeGrant ? "limitHitOneTime" : "limitHit")}{" "}
               <a href="/pricing" className="font-semibold text-brand-700">
                 {t("seePlans")}
               </a>{" "}

@@ -43,6 +43,7 @@ import {
   type VideoJobStatus,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
+import { renderCostCredits } from "@/lib/render-cost";
 import { defaultStyleForMode } from "@/lib/vibe";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/app/product-card";
@@ -183,8 +184,15 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
-  const outOfQuota = !!usage && usage.remaining < duration;
+  // Credits track real render cost, so the pre-flight has to price the picked
+  // model/resolution/aspect ratio, not the clip's length (see render-cost.ts).
+  const renderCost = renderCostCredits({
+    model: videoModel,
+    resolution,
+    aspectRatio,
+    durationSeconds: duration,
+  });
+  const outOfQuota = !!usage && usage.remaining < renderCost;
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);

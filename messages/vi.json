@@ -284,7 +284,7 @@
       },
       "thisMonth": "Tháng này",
       "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
-      "creditNote": "Tín dụng phản ánh chi phí render thực tế — chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình, và được hiển thị trước mỗi lần render.",
+      "creditNote": "Tín dụng phản ánh chi phí render thực tế - chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn.",
       "creditsLeft": "còn lại",
       "limitHit": "Bạn đã đạt đến giới hạn hàng tháng của mình.",
       "seePlans": "Xem kế hoạch",
@@ -296,7 +296,9 @@
       "appearance": "Ngoại hình",
       "appearanceDescription": "Hệ thống, sáng hoặc tối - khớp với ứng dụng Lumi.",
       "logOut": "Đăng xuất",
-      "usageSummaryOneTime": "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn"
+      "usageSummaryOneTime": "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
+      "creditsOneTime": "Tín dụng của bạn",
+      "limitHitOneTime": "Bạn đã dùng hết tín dụng miễn phí."
     },
     "productsNew": {
       "startTitle": "Thêm một sản phẩm",
@@ -947,9 +949,9 @@
       "q2": "Tôi có cần quay phim hay chụp ảnh gì không?",
       "a2": "Không. Lumi dựng bản giới thiệu chỉ có sản phẩm — hình ảnh và lời lồng tiếng được tạo từ đầu đến cuối từ sản phẩm của bạn, nên không phải quay gì cả.",
       "q3": "Tôi có thể xem lại video trước khi video được hiển thị đầy đủ không?",
-      "a3": "Vâng - đó là cổng Beat Review. Lumi tạo hình ảnh tham chiếu cho mỗi nhịp (cú đánh) trước tiên. Bạn phê duyệt hoặc tạo lại từng cái và chỉ khi đó nó mới dành thời gian hiển thị. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
+      "a3": "Có. Kịch bản của bạn đến dưới dạng storyboard gồm các cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn ưng ý, tạo lại những cảnh chưa ưng với 1 tín dụng mỗi lần, và chỉ khi bạn duyệt thì bản render đầy đủ mới tiêu tín dụng.",
       "q4": "Lumi sử dụng mô hình video nào?",
-      "a4": "Lumi hiển thị với Seedance 2.0, điều chỉnh cài đặt cho mỗi lần chụp. Nhiều mô hình video biên giới hơn đang được triển khai — tập lệnh và nhịp điệu của bạn sẽ được chuyển tiếp khi các mô hình mới xuất hiện.",
+      "a4": "Bạn tự chọn trong Studio: Seedance 2.0 cho chất lượng cao nhất, hoặc Seedance 2.0 Fast và 2.0 Mini khi tốc độ và chi phí quan trọng hơn. Seedance 2.5 sắp ra mắt - kịch bản và storyboard đã duyệt của bạn vẫn dùng được khi nó xuất hiện.",
       "q5": "Dữ liệu sản phẩm đến từ đâu?",
       "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của bạn, hoặc tải lên ảnh sản phẩm của riêng bạn, và Lumi sẽ đọc tiêu đề, mô tả, hình ảnh để tạo nội dung. Sản phẩm của bạn chỉ riêng tư với bạn.",
       "q6": "Một video mất bao lâu?",
@@ -1033,7 +1035,7 @@
           "cta": "Liên hệ bán hàng"
         }
       },
-      "creditFootnote": "Tín dụng phản ánh chi phí render thực tế: chi phí chính xác của một video phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn, và Studio luôn hiển thị trước mỗi lần render. Số lượng video chỉ là ước tính, dựa trên clip 20 giây chạy Seedance 2.0 ở 720p (mỗi clip 300 tín dụng).",
+      "creditFootnote": "Tín dụng phản ánh chi phí render thực tế: chi phí chính xác của một video phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn. Số lượng video chỉ là ước tính, dựa trên clip 20 giây chạy Seedance 2.0 ở 720p (mỗi clip 300 tín dụng).",
       "everyPlanIncludes": "Mỗi kế hoạch bao gồm",
       "included": [
         "Kịch bản dựa trên mô hình thực tế",
@@ -1044,9 +1046,9 @@
       "billingQuestions": "Câu hỏi thanh toán",
       "faq": {
         "q1": "Tín dụng là gì?",
-        "a1": "Tín dụng phản ánh chi phí render thực tế của video. Chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn — clip 20 giây chạy Seedance 2.0 ở 720p tốn 300 tín dụng, và các thiết lập nhẹ hơn thì rẻ hơn. Studio luôn hiển thị chính xác số tín dụng trước khi bạn render.",
+        "a1": "Tín dụng phản ánh chi phí render thực tế của video. Chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn — clip 20 giây chạy Seedance 2.0 ở 720p tốn 300 tín dụng, và các thiết lập nhẹ hơn thì rẻ hơn.",
         "q2": "Việc tái tạo có tốn tín dụng không?",
-        "a2": "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
+        "a2": "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng số dư tín dụng với lần render cuối cùng của bạn.",
         "q3": "Nếu tôi hết tín dụng thì sao?",
         "a3": "Tín dụng của gói trả phí được đặt lại vào đầu mỗi chu kỳ thanh toán; tín dụng miễn phí khi đăng ký chỉ cấp một lần và không gia hạn. Thanh toán tự phục vụ chưa khả dụng - để nâng lên hạn mức hằng tháng lớn hơn, hãy email {address} và chúng tôi sẽ thiết lập cho bạn.",
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
@@ -1157,7 +1159,7 @@
         }
       },
       "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
-      "storyFact2": "Hiển thị chính xác số tín dụng trước mỗi lần render",
+      "storyFact2": "Tín dụng phản ánh chi phí render thực tế",
       "wallTitle": "Mọi ngành hàng, <highlight>mọi thị trường</highlight>",
       "wallSubtitle": "Mọi video Lumi đều có lồng tiếng theo tỷ lệ khung hình bạn chọn, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
       "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
@@ -1188,7 +1190,7 @@
         }
       },
       "pricingTitle": "Bắt đầu miễn phí. <highlight>Hiệu quả rồi mở rộng.</highlight>",
-      "pricingSubtitle": "Tính theo tín dụng: tín dụng phản ánh chi phí render thực tế, và Studio hiển thị chi phí chính xác trước mỗi lần render. Video đầu tiên của bạn miễn phí — không cần thẻ.",
+      "pricingSubtitle": "Tính theo tín dụng: tín dụng phản ánh chi phí render thực tế, nên thiết lập nhẹ hơn sẽ rẻ hơn. Video đầu tiên của bạn miễn phí - không cần thẻ.",
       "mostPopular": "Phổ biến nhất",
       "pricingTiers": {
         "creator": {
@@ -1419,7 +1421,7 @@
       },
       "pricing": {
         "title": "Định giá",
-        "description": "Bắt đầu miễn phí, mở rộng khi thấy hiệu quả. Giá Lumi tính theo tín dụng — tín dụng phản ánh chi phí render thực tế, hiển thị trước mỗi lần render. Free (video đầu tiên), Creator, Pro, Scale và Enterprise. Không cần thẻ để bắt đầu; gói năm tiết kiệm ~20%."
+        "description": "Bắt đầu miễn phí, mở rộng khi thấy hiệu quả. Giá Lumi tính theo tín dụng — tín dụng phản ánh chi phí render thực tế, thiết lập nhẹ hơn sẽ rẻ hơn. Free (video đầu tiên), Creator, Pro, Scale và Enterprise. Không cần thẻ để bắt đầu; gói năm tiết kiệm ~20%."
       },
       "about": {
         "title": "Giới thiệu",
