@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "アバター出演の動画は、プレゼンターに合わせて形状が調整される場合があります。"
       },
-      "usageSummary": "残り {remaining}/{limit} クレジット · この動画は {cost} を使用します",
+      "usageSummary": "残り {remaining}/{limit} クレジット",
       "generateVideo": "ビデオの生成",
       "generateUploading": "参照をアップロード中…",
-      "outOfQuota": "この動画にはクレジットが足りません（{cost} 必要、残り {remaining}/{limit}）。",
+      "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
       "seePlans": "プランを見る",
       "cap": {
         "reached": "現在 {count} 件の動画を生成中です（上限 {limit} 件）。いずれかが完了すると、新しい動画を生成できます。",
@@ -534,13 +534,13 @@
         "shot": "ショット {number}"
       },
       "working": {
-        "renderingBeats": "ビートをレンダリング中…",
+        "renderingBeats": "ショットをレンダリング中…",
         "writingScript": "根拠のあるスクリプトを書いてください…",
         "description": "このページは自動的に更新されます。出発して戻ってくることもできます。"
       },
       "review": {
-        "title": "ビートを見直してください",
-        "description": "各ショットを承認するか、気に入らないショットを再生成します。 Lumi は、ビートが承認されるたびにレンダリングします。"
+        "title": "ストーリーボードを確認",
+        "description": "各ショットを承認するか、気に入らないものを再生成してください。すべてのショットが承認されると Lumi がレンダリングします。"
       },
       "storyboard": {
         "title": "動画の企画はこちら",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "スクリプト",
-      "beats": "ビート",
+      "beats": "ショット",
       "review": "レビュー",
       "render": "レンダリング",
       "ready": "準備完了"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "ショットごとに最適化",
-          "body": "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。あなたはモデルを選ぶだけ。細かい設定いじりは不要です。"
+          "body": "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。モデルの細かい設定をいじる必要はありません。"
         },
         "carriesOver": {
           "title": "あなたの仕事は引き継がれます",

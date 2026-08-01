@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
-      "usageSummary": "{remaining} dari {limit} kredit tersisa · video ini menggunakan {cost} kredit",
+      "usageSummary": "{remaining} dari {limit} kredit tersisa",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
-      "outOfQuota": "Kredit tidak cukup untuk video ini (butuh {cost}, tersisa {remaining} dari {limit}).",
+      "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
       "seePlans": "Lihat rencana",
       "cap": {
         "reached": "Kamu sudah punya {count} video yang sedang diproses (batas {limit}). Kamu bisa membuat video baru setelah salah satunya selesai.",
@@ -534,13 +534,13 @@
         "shot": "Tembakan {number}"
       },
       "working": {
-        "renderingBeats": "Merender ketukan Anda…",
+        "renderingBeats": "Merender shot Anda…",
         "writingScript": "Menulis skrip dasar Anda…",
         "description": "Halaman ini diperbarui secara otomatis. Anda bisa pergi dan kembali."
       },
       "review": {
-        "title": "Tinjau irama Anda",
-        "description": "Setujui setiap pengambilan gambar, atau buat ulang pengambilan gambar yang tidak Anda sukai. Lumi dirender setelah setiap ketukan disetujui."
+        "title": "Tinjau storyboard Anda",
+        "description": "Setujui setiap shot, atau buat ulang yang tidak Anda sukai. Lumi merender setelah setiap shot disetujui."
       },
       "storyboard": {
         "title": "Inilah rencana untuk video Anda",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "naskah",
-      "beats": "mengalahkan",
+      "beats": "Shot",
       "review": "Ulasan",
       "render": "Render",
       "ready": "Siap"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "Disetel per shot",
-          "body": "Lumi mengatur gerakan, durasi, dan pembingkaian per shot agar masing-masing tampil terbaik — Anda cukup memilih model, tidak perlu utak-atik pengaturan."
+          "body": "Lumi mengatur gerakan, durasi, dan pembingkaian per shot agar masing-masing tampil terbaik - Anda tidak perlu utak-atik pengaturan model."
         },
         "carriesOver": {
           "title": "Pekerjaan Anda berlanjut",

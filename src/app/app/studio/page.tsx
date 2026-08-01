@@ -186,10 +186,11 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // Credits track real render cost, so what Studio quotes prices the picked
+  // Credits track real render cost, so relative expense follows the picked
   // model/resolution/aspect ratio, not the clip's length (see render-cost.ts).
-  // It is a display estimate only: the backend meters the render itself and is
-  // the one gate, so a quote that drifts from it must never disable Generate.
+  // Never shown: the deployed backend still meters seconds, so quoting this
+  // number would contradict the backend's own 429 prose on the same screen.
+  // It only ranks one pick against the refused one, below.
   const renderCost = renderCostCredits({
     model: videoModel,
     resolution,
@@ -686,7 +687,6 @@ function StudioInner() {
                 {t("usageSummary", {
                   remaining: usage.remaining,
                   limit: usage.limit,
-                  cost: renderCost,
                 })}
               </p>
             )}
@@ -727,7 +727,6 @@ function StudioInner() {
             {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {
-                  cost: renderCost,
                   remaining: usage?.remaining ?? 0,
                   limit: usage?.limit ?? 0,
                 })}{" "}

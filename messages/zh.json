@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "数字人出镜的成片可能会调整画面比例以适配主播。"
       },
-      "usageSummary": "剩余 {remaining}/{limit} 积分 · 此视频将消耗 {cost} 积分",
+      "usageSummary": "剩余 {remaining}/{limit} 积分",
       "generateVideo": "生成视频",
       "generateUploading": "正在上传参考…",
-      "outOfQuota": "积分不足，无法生成此视频（需要 {cost}，剩余 {remaining}/{limit}）。",
+      "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
       "seePlans": "查看计划",
       "cap": {
         "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
@@ -534,13 +534,13 @@
         "shot": "射击{number}"
       },
       "working": {
-        "renderingBeats": "渲染你的节拍...",
+        "renderingBeats": "正在渲染你的镜头…",
         "writingScript": "编写你的接地脚本......",
         "description": "此页面会自动更新。你可以离开并回来。"
       },
       "review": {
-        "title": "检查您的节拍",
-        "description": "批准每个镜头，或者重新生成您不喜欢的镜头。一旦每个节拍获得批准，Lumi 就会渲染。"
+        "title": "检查你的分镜",
+        "description": "批准每个镜头，或重新生成你不喜欢的镜头。每个镜头获批后，Lumi 就会开始渲染。"
       },
       "storyboard": {
         "title": "这是您的视频计划",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "脚本",
-      "beats": "节拍",
+      "beats": "镜头",
       "review": "评论",
       "render": "渲染",
       "ready": "准备好了"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "逐镜头调优",
-          "body": "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果——你只需选择模型，无需折腾参数。"
+          "body": "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果，你无需折腾模型参数。"
         },
         "carriesOver": {
           "title": "你的工作继续进行",

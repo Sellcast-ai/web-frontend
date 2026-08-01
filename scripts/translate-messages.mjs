@@ -238,25 +238,29 @@ const MANUAL_OVERRIDES = {
     vi: "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
     th: "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan} · ให้ครั้งเดียว ไม่ต่ออายุ",
   },
+  // Studio quotes no per-render cost until the backend credit lane flips: the
+  // deployed backend still meters seconds, so a client-computed cost would
+  // contradict the backend's own 429 prose on the same screen. render-cost.ts
+  // holds the flip-ready computation - re-enabling is one string each.
   "app.studio.outOfQuota": {
-    es: "No hay suficientes créditos para este video (se necesitan {cost}, quedan {remaining} de {limit}).",
-    zh: "积分不足，无法生成此视频（需要 {cost}，剩余 {remaining}/{limit}）。",
-    ja: "この動画にはクレジットが足りません（{cost} 必要、残り {remaining}/{limit}）。",
-    ko: "이 영상을 만들 크레딧이 부족합니다({cost} 필요, {limit} 중 {remaining} 남음).",
-    pt: "Créditos insuficientes para este vídeo ({cost} necessários, {remaining} de {limit} restantes).",
-    id: "Kredit tidak cukup untuk video ini (butuh {cost}, tersisa {remaining} dari {limit}).",
-    vi: "Không đủ tín dụng cho video này (cần {cost}, còn {remaining}/{limit}).",
-    th: "เครดิตไม่พอสำหรับวิดีโอนี้ (ต้องใช้ {cost} เหลือ {remaining} จาก {limit})",
+    es: "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
+    zh: "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
+    ja: "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
+    ko: "이 영상을 만들 크레딧이 부족합니다({limit} 중 {remaining} 남음).",
+    pt: "Créditos insuficientes para este vídeo ({remaining} de {limit} restantes).",
+    id: "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
+    vi: "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
+    th: "เครดิตไม่พอสำหรับวิดีโอนี้ (เหลือ {remaining} จาก {limit})",
   },
   "app.studio.usageSummary": {
-    es: "{remaining} de {limit} créditos restantes · este video usa {cost}",
-    zh: "剩余 {remaining}/{limit} 积分 · 此视频将消耗 {cost} 积分",
-    ja: "残り {remaining}/{limit} クレジット · この動画は {cost} を使用します",
-    ko: "{limit} 크레딧 중 {remaining} 크레딧이 남아 있습니다 · 이 영상은 {cost} 크레딧을 사용합니다",
-    pt: "{remaining} de {limit} créditos restantes · este vídeo usa {cost} créditos",
-    id: "{remaining} dari {limit} kredit tersisa · video ini menggunakan {cost} kredit",
-    vi: "Còn {remaining}/{limit} tín dụng · video này dùng {cost} tín dụng",
-    th: "เหลือ {remaining}/{limit} เครดิต · วิดีโอนี้ใช้ {cost} เครดิต",
+    es: "{remaining} de {limit} créditos restantes",
+    zh: "剩余 {remaining}/{limit} 积分",
+    ja: "残り {remaining}/{limit} クレジット",
+    ko: "{limit} 크레딧 중 {remaining} 크레딧 남음",
+    pt: "{remaining} de {limit} créditos restantes",
+    id: "{remaining} dari {limit} kredit tersisa",
+    vi: "Còn {remaining}/{limit} tín dụng",
+    th: "เหลือ {remaining}/{limit} เครดิต",
   },
   "auth.layout.benefitPublish": {
     es: "5 relaciones de aspecto para cada plataforma",
@@ -901,15 +905,17 @@ const MANUAL_OVERRIDES = {
     vi: "Kịch bản và storyboard đã duyệt không phụ thuộc mô hình. Khi có mô hình mới, video của bạn dùng được ngay mà không cần làm lại.",
     th: "สคริปต์และสตอรี่บอร์ดที่อนุมัติแล้วไม่ผูกกับโมเดลใด เมื่อมีโมเดลใหม่ วิดีโอของคุณใช้มันได้ทันทีโดยไม่ต้องทำใหม่",
   },
+  // No model-choice claim while VIDEO_MODELS has one entry - the picker offers
+  // no choice today.
   "marketing.models.points.tuned.body": {
-    es: "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo — tú eliges el modelo, nunca peleas con ajustes.",
-    zh: "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果——你只需选择模型，无需折腾参数。",
-    ja: "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。あなたはモデルを選ぶだけ。細かい設定いじりは不要です。",
-    ko: "Lumi는 숏마다 모션, 길이, 프레이밍을 설정해 각 숏이 최상으로 렌더링되게 합니다. 모델만 고르세요. 설정을 만지작거릴 필요는 없습니다.",
-    pt: "Lumi define movimento, duração e enquadramento por take para que cada um renda o seu melhor — você escolhe o modelo, nunca mexe em configurações.",
-    id: "Lumi mengatur gerakan, durasi, dan pembingkaian per shot agar masing-masing tampil terbaik — Anda cukup memilih model, tidak perlu utak-atik pengaturan.",
-    vi: "Lumi thiết lập chuyển động, độ dài và bố cục cho từng cảnh để mỗi cảnh đẹp nhất — bạn chỉ chọn mô hình, không bao giờ phải vọc cài đặt.",
-    th: "Lumi ตั้งค่ามอชัน ความยาว และเฟรมมิงให้ทีละช็อตเพื่อให้ทุกช็อตออกมาดีที่สุด — คุณแค่เลือกโมเดล ไม่ต้องจุ้นกับการตั้งค่า",
+    es: "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo: nunca tienes que pelear con ajustes del modelo.",
+    zh: "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果，你无需折腾模型参数。",
+    ja: "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。モデルの細かい設定をいじる必要はありません。",
+    ko: "Lumi는 샷마다 모션, 길이, 프레이밍을 설정해 각 샷이 최상으로 렌더링되게 합니다. 모델 설정을 만지작거릴 필요가 없습니다.",
+    pt: "Lumi define movimento, duração e enquadramento por take para que cada um renda o seu melhor - você nunca mexe em configurações do modelo.",
+    id: "Lumi mengatur gerakan, durasi, dan pembingkaian per shot agar masing-masing tampil terbaik - Anda tidak perlu utak-atik pengaturan model.",
+    vi: "Lumi thiết lập chuyển động, độ dài và bố cục cho từng cảnh để mỗi cảnh đẹp nhất - bạn không bao giờ phải vọc cài đặt mô hình.",
+    th: "Lumi ตั้งค่ามอชัน ความยาว และเฟรมมิงให้ทีละช็อตเพื่อให้ทุกช็อตออกมาดีที่สุด คุณไม่ต้องจุ้นกับการตั้งค่าโมเดล",
   },
   "marketing.models.points.tuned.title": {
     es: "Ajustado por toma",
@@ -1130,6 +1136,50 @@ const MANUAL_OVERRIDES = {
   "marketing.pricing.tiers.pro.features[0]": {
     zh: "包含创作者全部功能",
     id: "Semua fitur Kreator",
+  },
+  // In-app storyboard vocabulary. The retired "beat" noun is the one word the
+  // machine cannot survive - it read it as a heartbeat/musical beat in every
+  // locale ("Latidos", "nhịp đập", "เต้น") and as "to defeat" in id
+  // ("mengalahkan"). Shot/storyboard wording is hand-set here; do not unpin.
+  "app.jobs.working.renderingBeats": {
+    es: "Renderizando tus tomas…",
+    zh: "正在渲染你的镜头…",
+    ja: "ショットをレンダリング中…",
+    ko: "샷을 렌더링하는 중…",
+    pt: "Renderizando suas tomadas…",
+    id: "Merender shot Anda…",
+    vi: "Đang render các cảnh của bạn…",
+    th: "กำลังเรนเดอร์ช็อตของคุณ…",
+  },
+  "app.jobs.review.title": {
+    es: "Revisa tu storyboard",
+    zh: "检查你的分镜",
+    ja: "ストーリーボードを確認",
+    ko: "스토리보드를 검토하세요",
+    pt: "Revise seu storyboard",
+    id: "Tinjau storyboard Anda",
+    vi: "Xem lại storyboard của bạn",
+    th: "ตรวจสอบสตอรี่บอร์ดของคุณ",
+  },
+  "app.jobs.review.description": {
+    es: "Aprueba cada toma, o regenera las que no te convenzan. Lumi renderiza en cuanto cada toma está aprobada.",
+    zh: "批准每个镜头，或重新生成你不喜欢的镜头。每个镜头获批后，Lumi 就会开始渲染。",
+    ja: "各ショットを承認するか、気に入らないものを再生成してください。すべてのショットが承認されると Lumi がレンダリングします。",
+    ko: "각 샷을 승인하거나 마음에 들지 않는 샷을 다시 생성하세요. 모든 샷이 승인되면 Lumi가 렌더링합니다.",
+    pt: "Aprove cada tomada ou regenere as que você não curtir. A Lumi renderiza assim que cada tomada é aprovada.",
+    id: "Setujui setiap shot, atau buat ulang yang tidak Anda sukai. Lumi merender setelah setiap shot disetujui.",
+    vi: "Duyệt từng cảnh, hoặc tạo lại những cảnh bạn chưa ưng. Lumi sẽ render khi mọi cảnh đã được duyệt.",
+    th: "อนุมัติแต่ละช็อต หรือสร้างช็อตที่คุณไม่ชอบขึ้นมาใหม่ Lumi จะเรนเดอร์เมื่อทุกช็อตได้รับการอนุมัติแล้ว",
+  },
+  "shared.jobProgress.beats": {
+    es: "Tomas",
+    zh: "镜头",
+    ja: "ショット",
+    ko: "샷",
+    pt: "Tomadas",
+    id: "Shot",
+    vi: "Cảnh",
+    th: "ช็อต",
   },
 };
 

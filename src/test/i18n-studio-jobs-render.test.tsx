@@ -165,10 +165,13 @@ function save(name: string, html: string) {
 let StudioPage: React.ComponentType;
 let JobDetailPage: React.ComponentType;
 
+// Transforming these two pages costs seconds, and it competes with the rest of
+// the suite for cores, so the default 10s hook timeout is a coin flip on a busy
+// machine (it passes isolated, fails in a full run).
 beforeAll(async () => {
   StudioPage = (await import("@/app/app/studio/page")).default;
   JobDetailPage = (await import("@/app/app/jobs/[id]/page")).default;
-});
+}, 60_000);
 
 describe("Studio page renders extracted English copy", () => {
   it("shows the config screen strings from app.studio.*", () => {

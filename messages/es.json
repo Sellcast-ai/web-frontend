@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "La salida con presentador puede adaptar su forma para encajar con el presentador."
       },
-      "usageSummary": "{remaining} de {limit} créditos restantes · este video usa {cost}",
+      "usageSummary": "{remaining} de {limit} créditos restantes",
       "generateVideo": "Generar vídeo",
       "generateUploading": "Subiendo referencia…",
-      "outOfQuota": "No hay suficientes créditos para este video (se necesitan {cost}, quedan {remaining} de {limit}).",
+      "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
       "seePlans": "Ver planos",
       "cap": {
         "reached": "Ya tienes {count} videos en proceso (límite {limit}). Podrás generar uno nuevo en cuanto uno de ellos termine.",
@@ -534,13 +534,13 @@
         "shot": "Disparo {number}"
       },
       "working": {
-        "renderingBeats": "Representando tus ritmos...",
+        "renderingBeats": "Renderizando tus tomas…",
         "writingScript": "Escribiendo tu guión fundamentado...",
         "description": "Esta página se actualiza automáticamente. Puedes irte y volver."
       },
       "review": {
-        "title": "Revisa tus ritmos",
-        "description": "Aprueba cada disparo o regenera los que no te gustan. Lumi se procesa una vez que se aprueba cada latido."
+        "title": "Revisa tu storyboard",
+        "description": "Aprueba cada toma, o regenera las que no te convenzan. Lumi renderiza en cuanto cada toma está aprobada."
       },
       "storyboard": {
         "title": "Aquí está el plan para tu vídeo.",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "Guión",
-      "beats": "Latidos",
+      "beats": "Tomas",
       "review": "Revisión",
       "render": "renderizar",
       "ready": "Listo"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "Ajustado por toma",
-          "body": "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo — tú eliges el modelo, nunca peleas con ajustes."
+          "body": "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo: nunca tienes que pelear con ajustes del modelo."
         },
         "carriesOver": {
           "title": "Tu trabajo se traslada",

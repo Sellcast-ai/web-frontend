@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
-      "usageSummary": "Còn {remaining}/{limit} tín dụng · video này dùng {cost} tín dụng",
+      "usageSummary": "Còn {remaining}/{limit} tín dụng",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
-      "outOfQuota": "Không đủ tín dụng cho video này (cần {cost}, còn {remaining}/{limit}).",
+      "outOfQuota": "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
       "seePlans": "Xem kế hoạch",
       "cap": {
         "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
@@ -534,13 +534,13 @@
         "shot": "Bắn {number}"
       },
       "working": {
-        "renderingBeats": "Đang hiển thị nhịp đập của bạn…",
+        "renderingBeats": "Đang render các cảnh của bạn…",
         "writingScript": "Viết kịch bản có căn cứ của bạn…",
         "description": "Trang này cập nhật tự động. Bạn có thể rời đi và quay lại."
       },
       "review": {
-        "title": "Xem lại nhịp đập của bạn",
-        "description": "Phê duyệt từng cảnh quay hoặc tạo lại những cảnh bạn không yêu thích. Lumi hiển thị khi mỗi nhịp được phê duyệt."
+        "title": "Xem lại storyboard của bạn",
+        "description": "Duyệt từng cảnh, hoặc tạo lại những cảnh bạn chưa ưng. Lumi sẽ render khi mọi cảnh đã được duyệt."
       },
       "storyboard": {
         "title": "Đây là kế hoạch cho video của bạn",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "kịch bản",
-      "beats": "nhịp đập",
+      "beats": "Cảnh",
       "review": "Xem lại",
       "render": "Kết xuất",
       "ready": "Sẵn sàng"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "Tinh chỉnh theo từng cảnh",
-          "body": "Lumi thiết lập chuyển động, độ dài và bố cục cho từng cảnh để mỗi cảnh đẹp nhất — bạn chỉ chọn mô hình, không bao giờ phải vọc cài đặt."
+          "body": "Lumi thiết lập chuyển động, độ dài và bố cục cho từng cảnh để mỗi cảnh đẹp nhất - bạn không bao giờ phải vọc cài đặt mô hình."
         },
         "carriesOver": {
           "title": "Công việc của bạn tiếp tục",

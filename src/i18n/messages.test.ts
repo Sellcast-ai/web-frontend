@@ -178,13 +178,18 @@ describe("locale catalogs", () => {
   });
 
   it("preserves ICU placeholders and rich-text tags across locales", () => {
+    // Signatures are compared a whole catalog at a time: one assertion per
+    // locale instead of ~13k, which is the difference between this test taking
+    // a moment and timing out. The diff still names the keys that drift.
+    const expected = Object.fromEntries(
+      sourceKeys.map((key) => [key, placeholderSignature(sourceMessages[key])]),
+    );
     for (const locale of nonEnglishLocales) {
       const messages = flattenMessages(catalogs[locale]);
-      for (const key of sourceKeys) {
-        expect(placeholderSignature(messages[key]), `${locale}.${key}`).toEqual(
-          placeholderSignature(sourceMessages[key]),
-        );
-      }
+      const actual = Object.fromEntries(
+        sourceKeys.map((key) => [key, placeholderSignature(messages[key])]),
+      );
+      expect(actual, locale).toEqual(expected);
     }
   });
 

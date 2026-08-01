@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
-      "usageSummary": "{remaining} de {limit} créditos restantes · este vídeo usa {cost} créditos",
+      "usageSummary": "{remaining} de {limit} créditos restantes",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
-      "outOfQuota": "Créditos insuficientes para este vídeo ({cost} necessários, {remaining} de {limit} restantes).",
+      "outOfQuota": "Créditos insuficientes para este vídeo ({remaining} de {limit} restantes).",
       "seePlans": "Ver planos",
       "cap": {
         "reached": "Você já tem {count} vídeos em andamento (limite de {limit}). Assim que um deles terminar, você poderá gerar um novo.",
@@ -534,13 +534,13 @@
         "shot": "Tiro {number}"
       },
       "working": {
-        "renderingBeats": "Renderizando suas batidas…",
+        "renderingBeats": "Renderizando suas tomadas…",
         "writingScript": "Escrevendo seu roteiro fundamentado…",
         "description": "Esta página é atualizada automaticamente. Você pode sair e voltar."
       },
       "review": {
-        "title": "Revise suas batidas",
-        "description": "Aprove cada tiro ou regenere aqueles que você não gosta. Lumi é renderizado assim que cada batida é aprovada."
+        "title": "Revise seu storyboard",
+        "description": "Aprove cada tomada ou regenere as que você não curtir. A Lumi renderiza assim que cada tomada é aprovada."
       },
       "storyboard": {
         "title": "Aqui está o plano para o seu vídeo",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "Roteiro",
-      "beats": "Batidas",
+      "beats": "Tomadas",
       "review": "Revisão",
       "render": "Renderizar",
       "ready": "Pronto"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "Ajustado por take",
-          "body": "Lumi define movimento, duração e enquadramento por take para que cada um renda o seu melhor — você escolhe o modelo, nunca mexe em configurações."
+          "body": "Lumi define movimento, duração e enquadramento por take para que cada um renda o seu melhor - você nunca mexe em configurações do modelo."
         },
         "carriesOver": {
           "title": "Seu trabalho continua",

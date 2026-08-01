@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Talking-head output may adapt its shape to fit the presenter."
       },
-      "usageSummary": "{remaining} of {limit} credits left · this video uses {cost}",
+      "usageSummary": "{remaining} of {limit} credits left",
       "generateVideo": "Generate video",
       "generateUploading": "Uploading reference…",
-      "outOfQuota": "Not enough credits for this video ({cost} needed, {remaining} of {limit} left).",
+      "outOfQuota": "Not enough credits for this video ({remaining} of {limit} left).",
       "seePlans": "See plans",
       "cap": {
         "reached": "You already have {count} videos in progress (limit {limit}). You can generate a new one as soon as one of them finishes.",
@@ -534,13 +534,13 @@
         "shot": "Shot {number}"
       },
       "working": {
-        "renderingBeats": "Rendering your beats…",
+        "renderingBeats": "Rendering your shots…",
         "writingScript": "Writing your grounded script…",
         "description": "This page updates automatically. You can leave and come back."
       },
       "review": {
-        "title": "Review your beats",
-        "description": "Approve each shot, or regenerate the ones you don't love. Lumi renders once every beat is approved."
+        "title": "Review your storyboard",
+        "description": "Approve each shot, or regenerate the ones you don't love. Lumi renders once every shot is approved."
       },
       "storyboard": {
         "title": "Here's the plan for your video",
@@ -687,7 +687,7 @@
     },
     "jobProgress": {
       "script": "Script",
-      "beats": "Beats",
+      "beats": "Shots",
       "review": "Review",
       "render": "Render",
       "ready": "Ready"
@@ -1357,7 +1357,7 @@
       "points": {
         "tuned": {
           "title": "Tuned per shot",
-          "body": "Lumi sets motion, length, and framing per shot so each one renders its best — you pick the model, never fiddle with settings."
+          "body": "Lumi sets motion, length, and framing per shot so each one renders its best - you never fiddle with model settings."
         },
         "carriesOver": {
           "title": "Your work carries over",
