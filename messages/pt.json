@@ -284,8 +284,8 @@
       },
       "thisMonth": "Este mês",
       "usageSummary": "{used} de créditos {limit} usados · Plano {plan} · redefine {date}",
-      "creditNote": "1 crédito = 1 segundo de vídeo",
-      "creditsLeft": "esquerda",
+      "creditNote": "Os créditos acompanham o custo real do render — o custo exato depende do modelo, da resolução e da proporção de tela, e é mostrado antes de cada render.",
+      "creditsLeft": "restantes",
       "limitHit": "Você atingiu seu limite mensal.",
       "seePlans": "Ver planos",
       "forMore": "para mais.",
@@ -295,7 +295,8 @@
       "connectedAccounts": "Contas conectadas",
       "appearance": "Aparência",
       "appearanceDescription": "Sistema, claro ou escuro – corresponde ao aplicativo Lumi.",
-      "logOut": "Sair"
+      "logOut": "Sair",
+      "usageSummaryOneTime": "{used} de {limit} créditos usados · plano {plan} · concessão única, não renova"
     },
     "productsNew": {
       "startTitle": "Adicionar um produto",
@@ -474,7 +475,7 @@
       "size": {
         "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
-      "usageSummary": "{remaining} de {limit} créditos restantes este mês · este vídeo usa {duration} créditos",
+      "usageSummary": "{remaining} de {limit} créditos restantes · este vídeo usa {duration} créditos",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para um vídeo {duration}s ({remaining} de {limit} restantes).",
@@ -617,7 +618,7 @@
       "completed": {
         "badge": "Pronto para publicar",
         "title": "Seu vídeo está pronto 🎉",
-        "description": "Um corte de 9:16 pronto para publicação com áudio falado. Baixe-o ou marque-o como postado para manter suas estatísticas organizadas.",
+        "description": "Um corte pronto para publicar com áudio falado. Baixe ou marque como postado para manter suas estatísticas em ordem.",
         "download": "Baixar",
         "markPosted": "Marcar como postado"
       },
@@ -728,8 +729,8 @@
     "layout": {
       "heroTitle": "Do link do produto ao vídeo de parar a rolagem – em minutos.",
       "benefitScripts": "Scripts baseados em padrões virais reais",
-      "benefitReview": "Revise cada batida antes de renderizar",
-      "benefitPublish": "Pronto para publicação 9:16 para TikTok e Momentos"
+      "benefitReview": "Revise cada take antes do render",
+      "benefitPublish": "5 proporções de tela para cada plataforma"
     },
     "metadata": {
       "signIn": "Faça login",
@@ -972,11 +973,11 @@
           "name": "Grátis",
           "note": "sem cartão",
           "allowance": "Seu primeiro vídeo grátis",
-          "credits": "20 créditos, uma única vez",
+          "credits": "300 créditos, uma única vez",
           "features": [
-            "720p · 9:16 exportação",
-            "Importação por link de produto",
-            "Renderização de controle de qualidade automático",
+            "Exportação 720p · 5 proporções de tela",
+            "Importação por link do produto",
+            "Revisão do storyboard",
             "Marca d'água Lumi"
           ],
           "cta": "Comece gratuitamente"
@@ -985,11 +986,11 @@
           "name": "Criador",
           "note": "por mês",
           "allowance": "≈ 3 vídeos/mês",
-          "credits": "75 créditos/mês",
+          "credits": "900 créditos / mês",
           "features": [
             "Sem marca d'água",
-            "Revisão passo a passo",
-            "720p · 9:16 exportação"
+            "Revisão do storyboard",
+            "Exportação 720p · 5 proporções de tela"
           ],
           "cta": "Iniciar Criador"
         },
@@ -997,7 +998,7 @@
           "name": "Pró",
           "note": "por mês",
           "allowance": "≈ 10 vídeos/mês",
-          "credits": "200 créditos/mês",
+          "credits": "3.000 créditos / mês",
           "features": [
             "Tudo no Criador",
             "Mais créditos, mesmo custo por vídeo",
@@ -1009,7 +1010,7 @@
           "name": "Escala",
           "note": "por mês",
           "allowance": "≈ 25 vídeos/mês",
-          "credits": "500 créditos/mês",
+          "credits": "7.500 créditos / mês",
           "features": [
             "Tudo em Pró",
             "Para postagem sempre ativa",
@@ -1032,26 +1033,26 @@
           "cta": "Entre em contato com vendas"
         }
       },
-      "creditFootnote": "1 crédito = 1 segundo de vídeo. As contagens de vídeo são aproximadas, baseadas em clipes de 20 segundos – um vídeo de 15 segundos usa menos créditos, um vídeo de 30 segundos usa mais.",
+      "creditFootnote": "Os créditos acompanham o custo real do render: o custo exato de um vídeo depende do modelo, da resolução e da proporção de tela escolhidos, e o Studio mostra esse valor antes de cada render. As contagens de vídeos são aproximadas, com base em clipes de 20 segundos no Seedance 2.0 a 720p (300 créditos cada).",
       "everyPlanIncludes": "Todo plano inclui",
       "included": [
-        "Scripts baseados em padrões",
-        "Revisão passo a passo",
-        "9:16 para TikTok e carretéis",
+        "Roteiros baseados em padrões reais",
+        "Revisão do storyboard antes de gastar",
+        "5 proporções de tela para cada plataforma",
         "Cole qualquer link de produto ou envie fotos do produto"
       ],
       "billingQuestions": "Perguntas sobre faturamento",
       "faq": {
         "q1": "O que é um crédito?",
-        "a1": "1 crédito = 1 segundo de vídeo finalizado. Um vídeo de 20 segundos usa 20 créditos; um de 30 segundos usa 30. Você escolhe a duração, então o custo de cada render fica claro antes de começar.",
+        "a1": "Os créditos acompanham o custo real de renderização do seu vídeo. O custo exato depende do modelo, da resolução e da proporção de tela escolhidos — um clipe de 20 segundos no Seedance 2.0 a 720p custa 300 créditos, e configurações mais leves custam menos. O Studio sempre mostra o custo exato em créditos antes de renderizar.",
         "q2": "As regenerações custam créditos?",
         "a2": "Sim — 1 crédito por regeneração. Refazer um take durante a revisão sai do mesmo saldo mensal do seu render final.",
         "q3": "E se eu ficar sem créditos?",
-        "a3": "Os créditos são redefinidos no início de cada ciclo de faturamento. O checkout self-service ainda não está disponível - para aumentar sua franquia mensal, envie um e-mail para {address} e nós configuramos.",
+        "a3": "Os créditos dos planos pagos renovam no início de cada ciclo de cobrança; o crédito gratuito de cadastro é único e não renova. O checkout self-service ainda não está disponível - para aumentar sua cota mensal, envie um e-mail para {address} e nós configuramos.",
         "q4": "Posso mudar de plano a qualquer momento?",
         "a4": "Sim. Enquanto o checkout self-service está em construção, as mudanças de plano são feitas por e-mail - escreva para {address}. O anual economiza cerca de 20% em relação ao mensal.",
         "q5": "Qual modelo de renderização Lumi usa?",
-        "a5": "Lumi é renderizado com Seedance 2.0, com mais modelos sendo lançados. Ele escolhe as melhores configurações por foto."
+        "a5": "Você escolhe o modelo de renderização no Studio: Seedance 2.0 para a máxima qualidade, ou Seedance 2.0 Fast e 2.0 Mini quando velocidade e custo importam mais. Seedance 2.5 chega em breve."
       },
       "upgrade": {
         "cta": "Fazer upgrade",
@@ -1063,10 +1064,10 @@
     },
     "landing": {
       "heroTitle": "Transforme qualquer link de produto em <highlight>vídeo que vende.</highlight>",
-      "heroSubtitle": "Cole um link. A Lumi aprende o padrão dos vídeos com melhor desempenho na sua categoria, escreve o roteiro e renderiza take a take. Você aprova cada beat antes de gastar um único crédito.",
+      "heroSubtitle": "Cole um link. Lumi aprende o padrão por trás dos vídeos de melhor desempenho da sua categoria e escreve seu roteiro como um storyboard de takes. Revise e aprove cada take — o render completo só gasta créditos quando você dá o sinal.",
       "heroPrimary": "Crie seu primeiro vídeo",
       "heroSecondary": "Veja como funciona",
-      "heroFinePrint": "Primeiro vídeo grátis · Sem cartão · 9:16 pronto para publicar",
+      "heroFinePrint": "Primeiro vídeo grátis · Sem cartão · 5 proporções de tela",
       "sound": {
         "unmute": "Ativar o som do vídeo de demonstração",
         "mute": "Silenciar o vídeo de demonstração"
@@ -1101,12 +1102,12 @@
         "shopNow": "Comprar agora"
       },
       "marquee": {
-        "seedance": "Renderização Seedance 2.0",
+        "seedance": "Seedance 2.0 · Fast · Mini",
         "languages": "8 idiomas de narração",
         "productOnly": "Modo só produto",
-        "review": "Revisão beat a beat",
+        "review": "Revisão do storyboard",
         "qa": "QA automático de fala",
-        "ratio": "9:16 pronto para publicar",
+        "ratio": "5 proporções de tela",
         "vibes": "5 vibes de assinatura",
         "sources": "Amazon · Shopee · TikTok Shop",
         "durations": "Cortes de 10–30 segundos"
@@ -1152,13 +1153,13 @@
         },
         "render": {
           "title": "A Seedance renderiza",
-          "body": "O QA automático confere cada fala com o roteiro e o corte 9:16 sai pronto para postar."
+          "body": "O QA automático confere cada linha falada com o roteiro, e o corte fica pronto para postar na proporção que você escolheu."
         }
       },
       "storyFact1": "$0 de gasto em render até você aprovar",
-      "storyFact2": "1 crédito = 1 segundo de vídeo",
+      "storyFact2": "Custo exato em créditos visível antes de cada render",
       "wallTitle": "Cada categoria, <highlight>cada mercado</highlight>",
-      "wallSubtitle": "Todo vídeo da Lumi sai em 9:16 com narração falada, com roteiro e voz adaptados para cada mercado-alvo.",
+      "wallSubtitle": "Todo vídeo Lumi sai com narração falada na proporção que você escolher, com roteiro e voz adaptados para cada mercado-alvo.",
       "wallAudience": "Feito para vendedores, criadores, marcas e agências — qualquer um que venda com vídeo.",
       "wall": {
         "beauty": {
@@ -1187,7 +1188,7 @@
         }
       },
       "pricingTitle": "Comece grátis. <highlight>Escale quando funcionar.</highlight>",
-      "pricingSubtitle": "Por créditos: 1 crédito = 1 segundo de vídeo. Seu primeiro vídeo é grátis — sem cartão.",
+      "pricingSubtitle": "Baseado em créditos: os créditos acompanham o custo real do render, e o Studio mostra o custo exato antes de cada render. Seu primeiro vídeo é grátis — sem cartão.",
       "mostPopular": "Mais popular",
       "pricingTiers": {
         "creator": {
@@ -1195,9 +1196,9 @@
           "price": "US$ 29",
           "note": "/ mês",
           "features": [
-            "75 créditos — cerca de 3 vídeos",
+            "900 créditos — cerca de 3 vídeos",
             "Sem marca d'água",
-            "Revisão passo a passo"
+            "Revisão do storyboard"
           ]
         },
         "pro": {
@@ -1205,10 +1206,10 @@
           "price": "US$ 79",
           "note": "/ mês",
           "features": [
-            "200 créditos — cerca de 10 vídeos",
-            "Tudo no Criador",
+            "3.000 créditos — cerca de 10 vídeos",
+            "Tudo do Creator",
             "Renderização prioritária",
-            "720p · 9:16 exportação"
+            "Exportação 720p · 5 proporções de tela"
           ]
         },
         "scale": {
@@ -1216,9 +1217,9 @@
           "price": "US$ 199",
           "note": "/ mês",
           "features": [
-            "500 créditos — cerca de 25 vídeos",
-            "Tudo em Pró",
-            "Para postar sem parar"
+            "7.500 créditos — cerca de 25 vídeos",
+            "Tudo do Pro",
+            "Feito para postar sem parar"
           ]
         }
       },
@@ -1265,12 +1266,12 @@
         },
         "review": {
           "kicker": "Controle",
-          "title": "Revisão passo a passo",
-          "body": "Lumi gera primeiro uma imagem de referência para cada batida. Aprove as fotos que você adora, regenere as que não gosta - e só então isso gasta tempo de renderização. Prefere mãos livres? O Auto-QA aprova batidas para você.",
+          "title": "Revisão do storyboard",
+          "body": "Lumi escreve seu roteiro como um storyboard de takes, cada um com um frame de referência gerado primeiro. Aprove os takes que você adora, regenere os que não aprovou por 1 crédito cada — e só quando você aprova o render completo gasta créditos.",
           "bullets": [
-            "Um quadro de referência por foto antes de qualquer renderização queimar",
-            "Aprovar ou regenerar, batida por batida",
-            "Controle de qualidade automático opcional para um fluxo sem cliques"
+            "Um frame de referência por take antes de gastar com render",
+            "Regenere takes soltos por 1 crédito cada",
+            "O render completo espera sua aprovação"
           ]
         },
         "modes": {
@@ -1278,8 +1279,8 @@
           "title": "Vitrine só de produto",
           "body": "Um corte limpo focado no produto, sem apresentador para filmar — quatro estilos prontos que abrangem tomadas de vitrine nítidas, destaques de recursos, unboxings e cortes focados em ofertas.",
           "bullets": [
-            "4 estilos voltados para o comércio",
-            "Duração de 10 a 30 segundos, 9:16 nativo"
+            "4 estilos ajustados para comércio",
+            "Durações de 10–30 segundos, 5 proporções de tela"
           ]
         },
         "qa": {
@@ -1295,10 +1296,10 @@
         "publish": {
           "kicker": "Publicar",
           "title": "Exportação pronta para publicar",
-          "body": "O corte tem tamanho 9:16 para TikTok e Reels — pronto para baixar ou marcar como postado, para que suas estatísticas permaneçam organizadas.",
+          "body": "Escolha entre 5 proporções de tela no Studio — 9:16 para TikTok e Reels, 16:9, 1:1, 4:3 ou 3:4 — depois baixe ou marque como postado, mantendo suas estatísticas em ordem.",
           "bullets": [
-            "Exportação 9:16 pronta para publicação",
-            "Acompanhe postado vs. rascunho em Meus Vídeos"
+            "Exportação pronta para publicar em 5 proporções de tela",
+            "Acompanhe postados vs. rascunhos em Meus Vídeos"
           ]
         }
       }
@@ -1308,37 +1309,57 @@
         "kicker": "Modelos",
         "title": "Um estúdio, a fronteira do",
         "highlight": "IA de vídeo.",
-        "subtitle": "Lumi renderiza cada batida com Seedance 2.0 – e seus scripts são transferidos conforme novos modelos chegam."
+        "subtitle": "O seletor de modelos do Studio coloca a família Seedance ao seu alcance — e seus roteiros continuam valendo quando novos modelos chegam."
       },
       "cards": {
         "seedance": {
           "name": "Seedance 2.0",
-          "tag": "Ao vivo",
-          "desc": "Movimento rápido e realista para fotos de produtos — mecanismo de renderização do Lumi para cada batida, com áudio gerado por tomada.",
+          "tag": "Disponível",
+          "desc": "O carro-chefe — o movimento mais realista para takes de produto, até 1080p, com áudio gerado por take.",
           "bestFor": [
-            "Movimento do produto",
-            "Áudio por tomada",
-            "Velocidade"
+            "Qualidade máxima",
+            "Até 1080p",
+            "Áudio por take"
           ]
         },
-        "more": {
-          "name": "Mais a caminho",
-          "tag": "Em breve",
-          "desc": "Estamos adicionando modelos de vídeo de ponta à medida que eles são comprovados. Seus scripts e batidas aprovadas são independentes de modelo, portanto, eles são transferidos sem refazer.",
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "Disponível",
+          "desc": "A mesma família ajustada para velocidade — renders mais rápidos com menor custo em créditos, até 720p.",
           "bestFor": [
-            "Roteiro",
-            "Não refazer"
+            "Velocidade",
+            "Custo menor",
+            "Até 720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "Disponível",
+          "desc": "O nível mais leve — rascunhe e itere com o menor custo em créditos por render, até 720p.",
+          "bestFor": [
+            "Rascunhos",
+            "Custo mínimo",
+            "Até 720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "Em breve",
+          "desc": "A próxima geração entra no seletor assim que estiver disponível no nosso provedor de render. Seus roteiros e storyboards aprovados seguem sem refazer nada.",
+          "bestFor": [
+            "Roadmap",
+            "Sem retrabalho"
           ]
         }
       },
       "points": {
         "tuned": {
-          "title": "Afinado por batida",
-          "body": "Lumi define o movimento, a duração e o enquadramento por cena para que cada batida tenha o melhor desempenho - você nunca mexe nas configurações do modelo manualmente."
+          "title": "Ajustado por take",
+          "body": "Lumi define movimento, duração e enquadramento por take para que cada um renda o seu melhor — você escolhe o modelo, nunca mexe em configurações."
         },
         "carriesOver": {
           "title": "Seu trabalho continua",
-          "body": "Scripts e batidas aprovadas são independentes de modelo. Quando um novo modelo chega, seus vídeos podem usá-lo sem refazer."
+          "body": "Roteiros e storyboards aprovados não dependem do modelo. Quando um novo modelo chega, seus vídeos podem usá-lo sem refazer nada."
         },
         "oneBill": {
           "title": "Um estúdio, uma conta",
@@ -1355,7 +1376,7 @@
         "subtitle": "Lumi é um produto Sellcast. Transformamos qualquer produto em um vídeo que pode ser comprado de parar a rolagem, baseado no que já está ganhando."
       },
       "intro1": "Vídeos curtos são a vitrine agora - mas a maioria dos vendedores não tem tempo para filmar, editar e testar seu caminho até o vencedor. Ferramentas genéricas de IA preenchem a lacuna com conteúdo que parece IA.",
-      "intro2": "Lumi segue um caminho diferente. Antes de escrever um roteiro, ele estuda uma grande amostra de produtos reais e orgânicos de melhor desempenho na categoria do seu produto e aprende a estrutura <em></em> que converte - em seguida, cria scripts, storyboards e renderiza um vídeo que você pode revisar batida por batida e enviar em minutos.",
+      "intro2": "Lumi segue outro caminho. Antes de escrever um roteiro, estuda uma grande amostra dos sucessos orgânicos reais da categoria do seu produto e aprende a <em>estrutura</em> que converte — depois roteiriza, storyboarda e renderiza um vídeo que você revisa take a take e publica em minutos.",
       "values": {
         "grounded": {
           "title": "Aterrado, sem adivinhar",
@@ -1367,7 +1388,7 @@
         },
         "control": {
           "title": "Você permanece no controle",
-          "body": "Revise batida por batida. Nada queima o tempo de renderização sem a sua aprovação (a menos que você queira)."
+          "body": "Revise o storyboard take a take. O render completo só gasta créditos depois do seu ok."
         },
         "sellers": {
           "title": "Construído para vendedores",
@@ -1390,15 +1411,15 @@
     "metadata": {
       "features": {
         "title": "Recursos",
-        "description": "Tudo o que a Lumi faz — link para vídeo, roteiros baseados em padrões, revisão batida por batida, formatos só de produto, controle de qualidade de diálogo automático e exportação 9:16 pronta para publicar."
+        "description": "Tudo o que Lumi faz — do link ao vídeo, roteiros baseados em padrões, revisão do storyboard, formatos só de produto, QA de diálogo e exportação pronta para publicar em 5 proporções de tela."
       },
       "models": {
         "title": "Modelos",
-        "description": "Lumi renderiza com Seedance 2.0 hoje, com mais modelos de vídeo de ponta a caminho. Cada foto recebe as configurações que melhor a tornam."
+        "description": "Escolha seu modelo de renderização no Studio — Seedance 2.0, 2.0 Fast ou 2.0 Mini, com Seedance 2.5 em breve. Cada take recebe as configurações que melhor o renderizam."
       },
       "pricing": {
         "title": "Preços",
-        "description": "Comece gratuitamente, escale quando estiver funcionando. O preço de Lumi é baseado em crédito – 1 crédito = 1 segundo de vídeo. Gratuito (primeiro vídeo), Creator, Pro, Scale e Enterprise. Nenhum cartão de crédito para começar; economia anual de aproximadamente 20%."
+        "description": "Comece grátis e escale quando estiver funcionando. O preço do Lumi é baseado em créditos — os créditos acompanham o custo real do render, mostrado antes de cada render. Free (primeiro vídeo), Creator, Pro, Scale e Enterprise. Sem cartão para começar; o anual economiza ~20%."
       },
       "about": {
         "title": "Sobre",

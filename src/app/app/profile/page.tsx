@@ -160,12 +160,24 @@ export default function ProfilePage() {
                 {t("thisMonth")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {t("usageSummary", {
-                  used: usage.used,
-                  limit: usage.limit,
-                  plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
-                  date: usage.resets_at.slice(0, 10),
-                })}
+                {usage.plan === "free"
+                  ? // the free grant is one-time and does not renew, so it must
+                    // not show the paid plans' "resets {date}" line
+                    t("usageSummaryOneTime", {
+                      used: usage.used,
+                      limit: usage.limit,
+                      plan:
+                        usage.plan.charAt(0).toUpperCase() +
+                        usage.plan.slice(1),
+                    })
+                  : t("usageSummary", {
+                      used: usage.used,
+                      limit: usage.limit,
+                      plan:
+                        usage.plan.charAt(0).toUpperCase() +
+                        usage.plan.slice(1),
+                      date: usage.resets_at.slice(0, 10),
+                    })}
               </p>
               <p className="text-xs text-muted-foreground/80">
                 {t("creditNote")}

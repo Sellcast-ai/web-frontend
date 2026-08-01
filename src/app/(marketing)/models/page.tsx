@@ -11,7 +11,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const MODELS = [
   { key: "seedance", live: true },
-  { key: "more", live: false },
+  { key: "fast", live: true },
+  { key: "mini", live: true },
+  { key: "seedance25", live: false },
 ] as const;
 
 const POINTS = [

@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · Lumi",
   },
   description:
-    "Lumi studies the top-performing videos in your category, writes the script, and renders publish-ready 9:16 video with Seedance 2.0. You approve every beat before a credit is spent.",
+    "Lumi studies the top-performing videos in your category, writes the script as a storyboard of shots, and renders publish-ready video with Seedance 2.0 in the aspect ratio you choose. You approve the storyboard before the render spends credits.",
   keywords: [
     "AI video",
     "shoppable video",

@@ -113,6 +113,14 @@ Pricing swaps too (`PricingClient` reads the same context): Free's CTA becomes "
 The pricing FAQ answers the same way (`marketing.pricing.faq.a3`/`.a4` name the email path in all 9 catalogs); a claim that upgrades "apply immediately" contradicts the dialog on the same page, so keep the two in sync.
 `/pricing` is the *only* surface that decides what a *paid* click does, so it owns that decision alone: the landing page's paid-tier cards link to `/pricing` under one shared marketing-namespace label (`marketing.landing.seePlans` - never reuse `app.studio.seePlans`, whose translations are written for the in-app quota nudge), and no `?plan=` param survives anywhere (nothing consumed it).
 
+## Credit, plan & model truth for copy (2026-08-01 captain decisions)
+
+- Credits track real render cost (cost pass-through): the exact cost of a render depends on the model, resolution, and aspect ratio chosen, and Studio shows it before every render. The old "1 credit = 1 second of video" claim is dead everywhere (pricing footnote/FAQ, landing `storyFact2`/`pricingSubtitle`, `app.profile.creditNote`, pricing metadata). Reference rate: 20s on Seedance 2.0 720p = 300 credits, which keeps the "about 3/10/25 videos" tier claims true. Regenerations stay flat 1 credit each.
+- Free tier = 300 credits one-time at signup, non-renewing; paid plans (prices unchanged $29/$79/$199) are Creator 900 / Pro 3,000 / Scale 7,500 credits per month. No free-tier copy may imply a monthly reset: profile renders `usageSummaryOneTime` when `usage.plan === "free"` (paid keeps `resets {date}`), and Studio's `usageSummary` no longer says "this month".
+- Two marketing claims are anchored to Studio's pickers: 5 aspect ratios (9:16/16:9/1:1/4:3/3:4 - "9:16-only" phrasing is dead, including in-app spots like `app.jobs.completed.description`) and the render-model ladder (marketing sells Seedance 2.0/Fast/Mini with 2.5 "coming soon", never as available). `VIDEO_MODELS` in `types.ts` is what the picker actually offers; if copy and picker ever disagree, the picker is the truth and the copy waits.
+- The marketing story is storyboard-first: the script arrives as a storyboard of shots with per-shot reference frames, regens cost 1 credit, and the full render only spends credits on approval. "Beat-by-beat review" and "Auto-QA approves beats for you" phrasing is retired; render-time dialogue QA (the Whisper spoken-line check) stays.
+- Every key these claims touch is hand-set in all 9 locales and pinned in `MANUAL_OVERRIDES` (the pricing-copy-c4 block) - on money surfaces the machine reads "Live" as a broadcast, "left" as a direction, and the "Creator" tier as a deity (zh/id), so do not unpin.
+
 ## Claims the marketing copy must not make
 
 Marketing copy may only promise what production actually renders.
