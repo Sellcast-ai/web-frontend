@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { VIDEO_ASPECT_RATIOS, VIDEO_DURATIONS, VIDEO_RESOLUTIONS } from "./api/types";
+import {
+  VIDEO_ASPECT_RATIOS,
+  VIDEO_DURATIONS,
+  VIDEO_MODELS,
+  VIDEO_RESOLUTIONS,
+} from "./api/types";
 import { renderCostCredits } from "./render-cost";
 
 describe("renderCostCredits", () => {
@@ -62,12 +67,12 @@ describe("renderCostCredits", () => {
   });
 
   it("quotes a positive whole cost for every combination the picker offers", () => {
-    for (const model of ["seedance-2.0"] as const) {
+    for (const model of VIDEO_MODELS) {
       for (const resolution of VIDEO_RESOLUTIONS) {
         for (const aspectRatio of VIDEO_ASPECT_RATIOS) {
           for (const durationSeconds of VIDEO_DURATIONS) {
             const cost = renderCostCredits({
-              model,
+              model: model.value,
               resolution: resolution.value,
               aspectRatio: aspectRatio.value,
               durationSeconds,

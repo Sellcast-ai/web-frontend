@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Talking-head output may adapt its shape to fit the presenter."
       },
-      "usageSummary": "{remaining} of {limit} credits left · this video uses {duration}",
+      "usageSummary": "{remaining} of {limit} credits left · this video uses {cost}",
       "generateVideo": "Generate video",
       "generateUploading": "Uploading reference…",
-      "outOfQuota": "Not enough credits for a {duration}s video ({remaining} of {limit} left).",
+      "outOfQuota": "Not enough credits for this video ({cost} needed, {remaining} of {limit} left).",
       "seePlans": "See plans",
       "cap": {
         "reached": "You already have {count} videos in progress (limit {limit}). You can generate a new one as soon as one of them finishes.",
@@ -916,7 +916,7 @@
           "title": "Workflow",
           "linkToVideo": "Link to Video",
           "patternScripts": "Pattern scripts",
-          "beatReview": "Beat review",
+          "beatReview": "Storyboard review",
           "publish": "Publish"
         },
         "company": {
@@ -951,7 +951,7 @@
       "q3": "Can I review the video before it's fully rendered?",
       "a3": "Yes - your script arrives as a storyboard of shots, each with a reference frame generated first. Approve the shots you love, regenerate the ones you don't for 1 credit each, and only when you approve does the full render spend credits.",
       "q4": "Which video model does Lumi use?",
-      "a4": "You pick it in Studio: Seedance 2.0 for top quality, or Seedance 2.0 Fast and 2.0 Mini when speed and cost matter more. Seedance 2.5 is coming soon - your scripts and approved storyboards carry over when it lands.",
+      "a4": "Seedance 2.0 renders your video today. Seedance 2.0 Fast and 2.0 Mini join the Studio picker soon, with Seedance 2.5 after them - your scripts and approved storyboards carry over when they land.",
       "q5": "Where does the product data come from?",
       "a5": "Paste a link from Amazon, Shopee, TikTok Shop, or your own store — or upload your own product photos — and Lumi reads the title, description, and imagery to build from. Your products stay private to you.",
       "q6": "How long does one video take?",
@@ -1054,7 +1054,7 @@
         "q4": "Can I change plans anytime?",
         "a4": "Yes. While self-serve checkout is being built, plan changes are handled by email - write to {address}. Annual saves ~20% over monthly.",
         "q5": "Which render model does Lumi use?",
-        "a5": "You pick the render model in Studio: Seedance 2.0 for top quality, or Seedance 2.0 Fast and 2.0 Mini when speed and cost matter more. Seedance 2.5 is coming soon."
+        "a5": "Seedance 2.0 is the render model in Studio today. Seedance 2.0 Fast and 2.0 Mini join the picker soon, for when speed and cost matter more, and Seedance 2.5 after them."
       },
       "upgrade": {
         "cta": "Upgrade",
@@ -1104,7 +1104,7 @@
         "shopNow": "Shop now"
       },
       "marquee": {
-        "seedance": "Seedance 2.0 · Fast · Mini",
+        "seedance": "Seedance 2.0",
         "languages": "8 voiceover languages",
         "productOnly": "Product-only mode",
         "review": "Storyboard review",
@@ -1151,7 +1151,7 @@
         },
         "approve": {
           "title": "You approve the storyboard",
-          "body": "Every beat gets a reference frame first. Regens cost 1 credit each — the full render, and its full charge, waits until you sign off."
+          "body": "Every shot gets a reference frame first. Regens cost 1 credit each — the full render, and its full charge, waits until you sign off."
         },
         "render": {
           "title": "Seedance renders it",
@@ -1288,7 +1288,7 @@
         "qa": {
           "kicker": "Quality",
           "title": "Auto dialogue QA",
-          "body": "After each beat renders, Whisper transcribes the spoken line and checks it against the script, flagging drift. The voice always says what it's supposed to — no off-script surprises.",
+          "body": "After each shot renders, Whisper transcribes the spoken line and checks it against the script, flagging drift. The voice always says what it's supposed to — no off-script surprises.",
           "bullets": [
             "Whisper transcription on every rendered line",
             "Drift score against the intended script",
@@ -1311,7 +1311,7 @@
         "kicker": "Models",
         "title": "One studio, the frontier of",
         "highlight": "video AI.",
-        "subtitle": "Studio's model picker puts the Seedance family at your fingertips — and your scripts carry over as new models arrive."
+        "subtitle": "Studio renders on Seedance 2.0 today; the rest of the family joins the picker as it lands, and your scripts carry over."
       },
       "cards": {
         "seedance": {
@@ -1326,8 +1326,8 @@
         },
         "fast": {
           "name": "Seedance 2.0 Fast",
-          "tag": "Live",
-          "desc": "The same family tuned for speed — quicker renders at a lower credit cost, up to 720p.",
+          "tag": "Coming soon",
+          "desc": "The same family tuned for speed — quicker renders at a lower credit cost, up to 720p. Joins the picker soon.",
           "bestFor": [
             "Speed",
             "Lower cost",
@@ -1336,8 +1336,8 @@
         },
         "mini": {
           "name": "Seedance 2.0 Mini",
-          "tag": "Live",
-          "desc": "The lightest tier — draft and iterate at the lowest credit cost per render, up to 720p.",
+          "tag": "Coming soon",
+          "desc": "The lightest tier — draft and iterate at the lowest credit cost per render, up to 720p. Joins the picker soon.",
           "bestFor": [
             "Drafting",
             "Lowest cost",
@@ -1417,7 +1417,7 @@
       },
       "models": {
         "title": "Models",
-        "description": "Pick your render model in Studio — Seedance 2.0, 2.0 Fast, or 2.0 Mini, with Seedance 2.5 coming soon. Each shot gets the settings that render it best."
+        "description": "Studio renders on Seedance 2.0 today, with 2.0 Fast, 2.0 Mini and Seedance 2.5 joining the picker. Each shot gets the settings that render it best."
       },
       "pricing": {
         "title": "Pricing",

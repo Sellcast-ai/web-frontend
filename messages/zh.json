@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "数字人出镜的成片可能会调整画面比例以适配主播。"
       },
-      "usageSummary": "剩余 {remaining}/{limit} 积分 · 此视频将消耗 {duration} 积分",
+      "usageSummary": "剩余 {remaining}/{limit} 积分 · 此视频将消耗 {cost} 积分",
       "generateVideo": "生成视频",
       "generateUploading": "正在上传参考…",
-      "outOfQuota": "{duration} 视频的学分不足（剩余 {limit} 的 {remaining}）。",
+      "outOfQuota": "积分不足，无法生成此视频（需要 {cost}，剩余 {remaining}/{limit}）。",
       "seePlans": "查看计划",
       "cap": {
         "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
@@ -916,7 +916,7 @@
           "title": "工作流程",
           "linkToVideo": "视频链接",
           "patternScripts": "模式脚本",
-          "beatReview": "打败评论",
+          "beatReview": "分镜审阅",
           "publish": "发布"
         },
         "company": {
@@ -951,7 +951,7 @@
       "q3": "我可以在视频完全渲染之前查看视频吗？",
       "a3": "可以。你的脚本会以分镜的形式呈现，每个镜头都会先生成一张参考画面。满意的镜头直接通过，不满意的可以重新生成，每次 1 积分；只有在你确认之后，完整渲染才会消耗积分。",
       "q4": "Lumi使用哪种视频模型？",
-      "a4": "由你在 Studio 中选择：追求最佳画质用 Seedance 2.0，更看重速度和成本就用 Seedance 2.0 Fast 或 2.0 Mini。Seedance 2.5 即将上线，上线后你的脚本和已确认的分镜都会照常沿用。",
+      "a4": "目前你的视频由 Seedance 2.0 渲染。Seedance 2.0 Fast 与 2.0 Mini 很快会加入 Studio 的选择器，Seedance 2.5 随后到来；上线后你的脚本和已确认的分镜都会照常沿用。",
       "q5": "产品数据从哪里来？",
       "a5": "粘贴来自 Amazon、Shopee、TikTok Shop 或你自己店铺的链接，或者上传自己的产品照片，Lumi 会读取标题、描述和图像来生成内容。你的产品只对你可见。",
       "q6": "一个视频需要多长时间？",
@@ -1054,7 +1054,7 @@
         "q4": "我可以随时更改计划吗？",
         "a4": "可以。在自助付费功能建设期间，套餐变更通过邮件处理 - 请发送邮件至 {address}。年付比月付节省约 20%。",
         "q5": "Lumi 使用哪种渲染模型？",
-        "a5": "渲染模型由你在 Studio 中选择：追求最高画质选 Seedance 2.0，更看重速度和成本则选 Seedance 2.0 Fast 和 2.0 Mini。Seedance 2.5 即将推出。"
+        "a5": "目前 Studio 使用的渲染模型是 Seedance 2.0。更看重速度和成本的 Seedance 2.0 Fast 与 2.0 Mini 很快会加入选择器，Seedance 2.5 随后推出。"
       },
       "upgrade": {
         "cta": "升级",
@@ -1104,7 +1104,7 @@
         "shopNow": "立即购买"
       },
       "marquee": {
-        "seedance": "Seedance 2.0 · Fast · Mini",
+        "seedance": "Seedance 2.0",
         "languages": "8 种配音语言",
         "productOnly": "纯商品模式",
         "review": "分镜审阅",
@@ -1151,7 +1151,7 @@
         },
         "approve": {
           "title": "你来审定分镜脚本",
-          "body": "每个分镜先出参考图。重新生成一次扣 1 积分；完整渲染和相应的扣费，都等你确认后才开始。"
+          "body": "每个镜头先出参考图。重新生成一次扣 1 积分；完整渲染和相应的扣费，都等你确认后才开始。"
         },
         "render": {
           "title": "Seedance 渲染成片",
@@ -1288,7 +1288,7 @@
         "qa": {
           "kicker": "品质",
           "title": "自动对话QA",
-          "body": "每个节拍渲染后，Whisper 都会转录台词并对照脚本进行检查，标记偏差。声音总是说它应该说的话——没有剧本外的意外。",
+          "body": "每个镜头渲染完成后，Whisper 都会转录台词并与脚本比对，标记偏差。配音永远说该说的话，不会出现脱稿的意外。",
           "bullets": [
             "在每条渲染线上进行耳语转录",
             "分数与预期脚本的偏差",
@@ -1311,7 +1311,7 @@
         "kicker": "型号",
         "title": "一间工作室，前沿",
         "highlight": "视频人工智能。",
-        "subtitle": "Studio 的模型选择器让你随心选用 Seedance 系列——新模型到来时，你的脚本依然可用。"
+        "subtitle": "目前 Studio 使用 Seedance 2.0 渲染；系列中的其他模型上线后会陆续加入选择器，你的脚本始终可以沿用。"
       },
       "cards": {
         "seedance": {
@@ -1326,8 +1326,8 @@
         },
         "fast": {
           "name": "Seedance 2.0 Fast",
-          "tag": "已上线",
-          "desc": "同系列的速度优化版——渲染更快、积分成本更低，最高 720p。",
+          "tag": "即将推出",
+          "desc": "同系列的速度优化版——渲染更快、积分成本更低，最高 720p。很快就会加入选择器。",
           "bestFor": [
             "速度",
             "更低成本",
@@ -1336,8 +1336,8 @@
         },
         "mini": {
           "name": "Seedance 2.0 Mini",
-          "tag": "已上线",
-          "desc": "最轻量的一档——以每次渲染最低的积分成本打草稿、做迭代，最高 720p。",
+          "tag": "即将推出",
+          "desc": "最轻量的一档——以每次渲染最低的积分成本打草稿、做迭代，最高 720p。很快就会加入选择器。",
           "bestFor": [
             "草稿",
             "最低成本",
@@ -1417,7 +1417,7 @@
       },
       "models": {
         "title": "型号",
-        "description": "在 Studio 中选择渲染模型——Seedance 2.0、2.0 Fast 或 2.0 Mini，Seedance 2.5 即将推出。每个镜头都会获得最佳渲染设置。"
+        "description": "目前 Studio 使用 Seedance 2.0 渲染，2.0 Fast、2.0 Mini 和 Seedance 2.5 将陆续加入选择器。每个镜头都会获得最佳渲染设置。"
       },
       "pricing": {
         "title": "定价",

@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
-      "usageSummary": "{remaining} dari {limit} kredit tersisa · video ini menggunakan {duration} kredit",
+      "usageSummary": "{remaining} dari {limit} kredit tersisa · video ini menggunakan {cost} kredit",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
-      "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
+      "outOfQuota": "Kredit tidak cukup untuk video ini (butuh {cost}, tersisa {remaining} dari {limit}).",
       "seePlans": "Lihat rencana",
       "cap": {
         "reached": "Kamu sudah punya {count} video yang sedang diproses (batas {limit}). Kamu bisa membuat video baru setelah salah satunya selesai.",
@@ -916,7 +916,7 @@
           "title": "Alur kerja",
           "linkToVideo": "Tautan ke Video",
           "patternScripts": "Skrip pola",
-          "beatReview": "Kalahkan ulasan",
+          "beatReview": "Tinjauan storyboard",
           "publish": "Publikasikan"
         },
         "company": {
@@ -951,7 +951,7 @@
       "q3": "Bisakah saya meninjau video sebelum dirender sepenuhnya?",
       "a3": "Ya. Skrip Anda datang sebagai storyboard berisi shot, masing-masing dengan frame referensi yang dibuat lebih dulu. Setujui shot yang Anda suka, buat ulang yang tidak dengan 1 kredit per shot, dan render penuh baru memakai kredit setelah Anda menyetujuinya.",
       "q4": "Model video manakah yang digunakan Lumi?",
-      "a4": "Anda yang memilih di Studio: Seedance 2.0 untuk kualitas terbaik, atau Seedance 2.0 Fast dan 2.0 Mini saat kecepatan dan biaya lebih penting. Seedance 2.5 segera hadir - skrip dan storyboard yang sudah Anda setujui tetap terpakai saat model itu tiba.",
+      "a4": "Saat ini Seedance 2.0 yang merender video Anda. Seedance 2.0 Fast dan 2.0 Mini segera bergabung ke pemilih di Studio, lalu Seedance 2.5 - skrip dan storyboard yang sudah Anda setujui tetap terpakai saat model itu tiba.",
       "q5": "Dari mana data produk berasal?",
       "a5": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri, atau unggah foto produk Anda sendiri, dan Lumi akan membaca judul, deskripsi, serta gambar untuk dibuat. Produk Anda tetap pribadi untuk Anda.",
       "q6": "Berapa lama waktu yang dibutuhkan untuk satu video?",
@@ -1054,7 +1054,7 @@
         "q4": "Bisakah saya mengubah rencana kapan saja?",
         "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke {address}. Tahunan hemat ~20% dibanding bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
-        "a5": "Anda memilih model render di Studio: Seedance 2.0 untuk kualitas terbaik, atau Seedance 2.0 Fast dan 2.0 Mini saat kecepatan dan biaya lebih penting. Seedance 2.5 segera hadir."
+        "a5": "Saat ini model render di Studio adalah Seedance 2.0. Seedance 2.0 Fast dan 2.0 Mini segera bergabung ke pemilih untuk saat kecepatan dan biaya lebih penting, lalu Seedance 2.5 menyusul."
       },
       "upgrade": {
         "cta": "Upgrade",
@@ -1104,7 +1104,7 @@
         "shopNow": "Beli sekarang"
       },
       "marquee": {
-        "seedance": "Seedance 2.0 · Fast · Mini",
+        "seedance": "Seedance 2.0",
         "languages": "8 bahasa sulih suara",
         "productOnly": "Mode produk saja",
         "review": "Tinjauan storyboard",
@@ -1151,7 +1151,7 @@
         },
         "approve": {
           "title": "Anda menyetujui storyboard",
-          "body": "Setiap beat mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
+          "body": "Setiap shot mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
         },
         "render": {
           "title": "Seedance merendernya",
@@ -1288,7 +1288,7 @@
         "qa": {
           "kicker": "Kualitas",
           "title": "Dialog otomatis QA",
-          "body": "Setelah setiap ketukan ditampilkan, Whisper mentranskripsikan kalimat yang diucapkan dan membandingkannya dengan skrip, menandai penyimpangan. Suaranya selalu mengatakan apa yang seharusnya — tidak ada kejutan di luar naskah.",
+          "body": "Setelah setiap shot dirender, Whisper mentranskripsikan kalimat yang diucapkan dan membandingkannya dengan skrip, menandai penyimpangan. Suaranya selalu mengatakan yang seharusnya, tanpa kejutan di luar naskah.",
           "bullets": [
             "Transkripsi bisikan pada setiap baris yang dirender",
             "Skor drift terhadap skrip yang dimaksudkan",
@@ -1311,7 +1311,7 @@
         "kicker": "Model",
         "title": "Satu studio, perbatasan",
         "highlight": "video AI.",
-        "subtitle": "Pemilih model Studio menyediakan keluarga Seedance di ujung jari Anda — dan skrip Anda tetap terbawa saat model baru tiba."
+        "subtitle": "Saat ini Studio merender dengan Seedance 2.0; anggota keluarga lainnya bergabung ke pemilih begitu tersedia, dan skrip Anda tetap terbawa."
       },
       "cards": {
         "seedance": {
@@ -1326,8 +1326,8 @@
         },
         "fast": {
           "name": "Seedance 2.0 Fast",
-          "tag": "Tersedia",
-          "desc": "Keluarga yang sama, disetel untuk kecepatan — render lebih cepat dengan biaya kredit lebih rendah, hingga 720p.",
+          "tag": "Segera hadir",
+          "desc": "Keluarga yang sama, disetel untuk kecepatan — render lebih cepat dengan biaya kredit lebih rendah, hingga 720p. Segera bergabung ke pemilih model.",
           "bestFor": [
             "Kecepatan",
             "Biaya lebih rendah",
@@ -1336,8 +1336,8 @@
         },
         "mini": {
           "name": "Seedance 2.0 Mini",
-          "tag": "Tersedia",
-          "desc": "Tingkat paling ringan — buat draf dan iterasi dengan biaya kredit terendah per render, hingga 720p.",
+          "tag": "Segera hadir",
+          "desc": "Tingkat paling ringan — buat draf dan iterasi dengan biaya kredit terendah per render, hingga 720p. Segera bergabung ke pemilih model.",
           "bestFor": [
             "Draf",
             "Biaya terendah",
@@ -1417,7 +1417,7 @@
       },
       "models": {
         "title": "Model",
-        "description": "Pilih model render Anda di Studio — Seedance 2.0, 2.0 Fast, atau 2.0 Mini, dengan Seedance 2.5 segera hadir. Setiap shot mendapat pengaturan yang merendernya paling baik."
+        "description": "Saat ini Studio merender dengan Seedance 2.0, sementara 2.0 Fast, 2.0 Mini, dan Seedance 2.5 menyusul ke pemilih model. Setiap shot mendapat pengaturan yang merendernya paling baik."
       },
       "pricing": {
         "title": "Harga",

@@ -175,6 +175,8 @@ function StudioInner() {
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
+  // What the render the backend last refused for want of credits (429) cost.
+  const [rejectedCost, setRejectedCost] = useState<number | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
@@ -184,15 +186,21 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // Credits track real render cost, so the pre-flight has to price the picked
+  // Credits track real render cost, so what Studio quotes prices the picked
   // model/resolution/aspect ratio, not the clip's length (see render-cost.ts).
+  // It is a display estimate only: the backend meters the render itself and is
+  // the one gate, so a quote that drifts from it must never disable Generate.
   const renderCost = renderCostCredits({
     model: videoModel,
     resolution,
     aspectRatio,
     durationSeconds: duration,
   });
-  const outOfQuota = !!usage && usage.remaining < renderCost;
+  // The refusal is shown for as long as the picked render is at least as
+  // expensive as the one the backend turned down, so dropping to a cheaper
+  // model/resolution/length clears it instead of leaving stale copy under a
+  // Generate that would now go through.
+  const outOfQuota = rejectedCost !== null && renderCost >= rejectedCost;
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);
@@ -218,6 +226,7 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
+    setRejectedCost(null);
     try {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
@@ -236,7 +245,10 @@ function StudioInner() {
       });
       // Success keeps the latch held until navigation unmounts the page.
       router.push(`/app/jobs/${job.id}`);
-    } catch {
+    } catch (err) {
+      // 429 is the credit meter refusing this render; everything else is
+      // already a toast from useCreateJob.
+      if (err instanceof ApiError && err.status === 429) setRejectedCost(renderCost);
       generateGuard.end();
     }
   }
@@ -674,7 +686,7 @@ function StudioInner() {
                 {t("usageSummary", {
                   remaining: usage.remaining,
                   limit: usage.limit,
-                  duration,
+                  cost: renderCost,
                 })}
               </p>
             )}
@@ -685,7 +697,6 @@ function StudioInner() {
               disabled={
                 create.isPending ||
                 !product ||
-                outOfQuota ||
                 atActiveCap ||
                 linkInvalid ||
                 referenceUploading
@@ -716,7 +727,7 @@ function StudioInner() {
             {outOfQuota && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {
-                  duration,
+                  cost: renderCost,
                   remaining: usage?.remaining ?? 0,
                   limit: usage?.limit ?? 0,
                 })}{" "}

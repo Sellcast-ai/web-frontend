@@ -9,10 +9,12 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
+/** `live` mirrors Studio's picker (`VIDEO_MODELS` in api/types.ts), which is
+ * the truth: a card may only claim availability once the picker offers it. */
 const MODELS = [
   { key: "seedance", live: true },
-  { key: "fast", live: true },
-  { key: "mini", live: true },
+  { key: "fast", live: false },
+  { key: "mini", live: false },
   { key: "seedance25", live: false },
 ] as const;
 

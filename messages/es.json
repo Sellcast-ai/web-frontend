@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "La salida con presentador puede adaptar su forma para encajar con el presentador."
       },
-      "usageSummary": "{remaining} de {limit} créditos restantes · este video usa {duration}",
+      "usageSummary": "{remaining} de {limit} créditos restantes · este video usa {cost}",
       "generateVideo": "Generar vídeo",
       "generateUploading": "Subiendo referencia…",
-      "outOfQuota": "No hay suficientes créditos para un vídeo de {duration}s (quedan {remaining} de {limit}).",
+      "outOfQuota": "No hay suficientes créditos para este video (se necesitan {cost}, quedan {remaining} de {limit}).",
       "seePlans": "Ver planos",
       "cap": {
         "reached": "Ya tienes {count} videos en proceso (límite {limit}). Podrás generar uno nuevo en cuanto uno de ellos termine.",
@@ -916,7 +916,7 @@
           "title": "Flujo de trabajo",
           "linkToVideo": "Enlace al vídeo",
           "patternScripts": "Guiones de patrones",
-          "beatReview": "revisión de ritmo",
+          "beatReview": "Revisión del storyboard",
           "publish": "Publicar"
         },
         "company": {
@@ -951,7 +951,7 @@
       "q3": "¿Puedo revisar el vídeo antes de que esté completamente renderizado?",
       "a3": "Sí. Tu guion llega como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te gusten, regenera las que no por 1 crédito cada una, y solo cuando apruebas el render completo gasta créditos.",
       "q4": "¿Qué modelo de vídeo utiliza Lumi?",
-      "a4": "Tú lo eliges en Studio: Seedance 2.0 para la mejor calidad, o Seedance 2.0 Fast y 2.0 Mini cuando importan más la velocidad y el costo. Seedance 2.5 llegará pronto: tus guiones y storyboards aprobados se conservan cuando aterrice.",
+      "a4": "Hoy Seedance 2.0 renderiza tu video. Seedance 2.0 Fast y 2.0 Mini se suman pronto al selector de Studio, y Seedance 2.5 después: tus guiones y storyboards aprobados se conservan cuando lleguen.",
       "q5": "¿De dónde provienen los datos del producto?",
       "a5": "Pega un enlace de Amazon, Shopee, TikTok Shop o tu propia tienda, o sube tus propias fotos de producto, y Lumi leerá el título, la descripción y las imágenes para construir desde ahí. Tus productos permanecen privados para ti.",
       "q6": "¿Cuánto tiempo dura un vídeo?",
@@ -1054,7 +1054,7 @@
         "q4": "¿Puedo cambiar de plan en cualquier momento?",
         "a4": "Sí. Mientras se desarrolla el pago en línea de autoservicio, los cambios de plan se gestionan por correo - escribe a {address}. El plan anual ahorra ~20% frente al mensual.",
         "q5": "¿Qué modelo de renderizado utiliza Lumi?",
-        "a5": "Tú eliges el modelo de renderizado en Studio: Seedance 2.0 para la máxima calidad, o Seedance 2.0 Fast y 2.0 Mini cuando importan más la velocidad y el costo. Seedance 2.5 llegará pronto."
+        "a5": "Hoy el modelo de renderizado en Studio es Seedance 2.0. Seedance 2.0 Fast y 2.0 Mini se suman al selector muy pronto, para cuando importan más la velocidad y el costo, y Seedance 2.5 después."
       },
       "upgrade": {
         "cta": "Mejorar plan",
@@ -1104,7 +1104,7 @@
         "shopNow": "Comprar ahora"
       },
       "marquee": {
-        "seedance": "Seedance 2.0 · Fast · Mini",
+        "seedance": "Seedance 2.0",
         "languages": "8 idiomas de voz en off",
         "productOnly": "Modo solo producto",
         "review": "Revisión del storyboard",
@@ -1151,7 +1151,7 @@
         },
         "approve": {
           "title": "Tú apruebas el storyboard",
-          "body": "Cada beat recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno."
+          "body": "Cada toma recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno."
         },
         "render": {
           "title": "Seedance lo renderiza",
@@ -1288,7 +1288,7 @@
         "qa": {
           "kicker": "Calidad",
           "title": "Control de calidad del diálogo automático",
-          "body": "Después de que se reproduce cada ritmo, Whisper transcribe la línea hablada y la compara con el guión, marcando deriva. La voz siempre dice lo que se supone que debe decir, sin sorpresas fuera del guión.",
+          "body": "Después de que se renderiza cada toma, Whisper transcribe la línea hablada y la compara con el guion, marcando cualquier desvío. La voz siempre dice lo que debe decir, sin sorpresas fuera del guion.",
           "bullets": [
             "Transcripción susurrada en cada línea renderizada",
             "Puntuación de deriva según el guión previsto",
@@ -1311,7 +1311,7 @@
         "kicker": "Modelos",
         "title": "Un estudio, la frontera de",
         "highlight": "vídeo IA.",
-        "subtitle": "El selector de modelos de Studio pone la familia Seedance a tu alcance — y tus guiones se conservan a medida que llegan nuevos modelos."
+        "subtitle": "Hoy Studio renderiza con Seedance 2.0; el resto de la familia se suma al selector a medida que llega, y tus guiones se conservan."
       },
       "cards": {
         "seedance": {
@@ -1326,8 +1326,8 @@
         },
         "fast": {
           "name": "Seedance 2.0 Fast",
-          "tag": "Disponible",
-          "desc": "La misma familia ajustada para velocidad — renders más rápidos a un menor costo en créditos, hasta 720p.",
+          "tag": "Próximamente",
+          "desc": "La misma familia ajustada para velocidad — renders más rápidos a un menor costo en créditos, hasta 720p. Se suma al selector muy pronto.",
           "bestFor": [
             "Velocidad",
             "Menor costo",
@@ -1336,8 +1336,8 @@
         },
         "mini": {
           "name": "Seedance 2.0 Mini",
-          "tag": "Disponible",
-          "desc": "El nivel más ligero — borradores e iteraciones al menor costo en créditos por render, hasta 720p.",
+          "tag": "Próximamente",
+          "desc": "El nivel más ligero — borradores e iteraciones al menor costo en créditos por render, hasta 720p. Se suma al selector muy pronto.",
           "bestFor": [
             "Borradores",
             "Costo mínimo",
@@ -1417,7 +1417,7 @@
       },
       "models": {
         "title": "Modelos",
-        "description": "Elige tu modelo de renderizado en Studio: Seedance 2.0, 2.0 Fast o 2.0 Mini, con Seedance 2.5 próximamente. Cada toma recibe los ajustes que mejor la renderizan."
+        "description": "Hoy Studio renderiza con Seedance 2.0, y 2.0 Fast, 2.0 Mini y Seedance 2.5 se sumarán al selector. Cada toma recibe los ajustes que mejor la renderizan."
       },
       "pricing": {
         "title": "Precios",

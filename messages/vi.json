@@ -477,10 +477,10 @@
       "size": {
         "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
-      "usageSummary": "Còn {remaining}/{limit} tín dụng · video này dùng {duration} tín dụng",
+      "usageSummary": "Còn {remaining}/{limit} tín dụng · video này dùng {cost} tín dụng",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
-      "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
+      "outOfQuota": "Không đủ tín dụng cho video này (cần {cost}, còn {remaining}/{limit}).",
       "seePlans": "Xem kế hoạch",
       "cap": {
         "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
@@ -916,7 +916,7 @@
           "title": "Quy trình làm việc",
           "linkToVideo": "Liên kết tới Video",
           "patternScripts": "Kịch bản mẫu",
-          "beatReview": "Đánh giá đánh giá",
+          "beatReview": "Duyệt storyboard",
           "publish": "Xuất bản"
         },
         "company": {
@@ -951,7 +951,7 @@
       "q3": "Tôi có thể xem lại video trước khi video được hiển thị đầy đủ không?",
       "a3": "Có. Kịch bản của bạn đến dưới dạng storyboard gồm các cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn ưng ý, tạo lại những cảnh chưa ưng với 1 tín dụng mỗi lần, và chỉ khi bạn duyệt thì bản render đầy đủ mới tiêu tín dụng.",
       "q4": "Lumi sử dụng mô hình video nào?",
-      "a4": "Bạn tự chọn trong Studio: Seedance 2.0 cho chất lượng cao nhất, hoặc Seedance 2.0 Fast và 2.0 Mini khi tốc độ và chi phí quan trọng hơn. Seedance 2.5 sắp ra mắt - kịch bản và storyboard đã duyệt của bạn vẫn dùng được khi nó xuất hiện.",
+      "a4": "Hiện Seedance 2.0 render video của bạn. Seedance 2.0 Fast và 2.0 Mini sắp có trong bộ chọn của Studio, sau đó là Seedance 2.5 - kịch bản và storyboard đã duyệt của bạn vẫn dùng được khi chúng xuất hiện.",
       "q5": "Dữ liệu sản phẩm đến từ đâu?",
       "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của bạn, hoặc tải lên ảnh sản phẩm của riêng bạn, và Lumi sẽ đọc tiêu đề, mô tả, hình ảnh để tạo nội dung. Sản phẩm của bạn chỉ riêng tư với bạn.",
       "q6": "Một video mất bao lâu?",
@@ -1054,7 +1054,7 @@
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
         "a4": "Được. Trong khi thanh toán tự phục vụ đang được xây dựng, việc đổi gói được xử lý qua email - hãy gửi thư tới {address}. Gói năm tiết kiệm khoảng 20% so với gói tháng.",
         "q5": "Lumi sử dụng mô hình kết xuất nào?",
-        "a5": "Bạn tự chọn mô hình render trong Studio: Seedance 2.0 cho chất lượng cao nhất, hoặc Seedance 2.0 Fast và 2.0 Mini khi tốc độ và chi phí quan trọng hơn. Seedance 2.5 sắp ra mắt."
+        "a5": "Hiện mô hình render trong Studio là Seedance 2.0. Seedance 2.0 Fast và 2.0 Mini sắp có trong bộ chọn cho những lúc tốc độ và chi phí quan trọng hơn, rồi đến Seedance 2.5."
       },
       "upgrade": {
         "cta": "Nâng cấp",
@@ -1104,7 +1104,7 @@
         "shopNow": "Mua ngay"
       },
       "marquee": {
-        "seedance": "Seedance 2.0 · Fast · Mini",
+        "seedance": "Seedance 2.0",
         "languages": "8 ngôn ngữ lồng tiếng",
         "productOnly": "Chế độ chỉ sản phẩm",
         "review": "Duyệt storyboard",
@@ -1151,7 +1151,7 @@
         },
         "approve": {
           "title": "Bạn duyệt storyboard",
-          "body": "Mỗi beat có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
+          "body": "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
         },
         "render": {
           "title": "Seedance render",
@@ -1288,7 +1288,7 @@
         "qa": {
           "kicker": "chất lượng",
           "title": "QA đối thoại tự động",
-          "body": "Sau khi mỗi nhịp hiển thị, Whisper sẽ ghi lại lời thoại và kiểm tra nó với kịch bản, gắn cờ trôi dạt. Giọng nói luôn nói lên những gì nó phải nói — không có bất ngờ nào ngoài kịch bản.",
+          "body": "Sau khi mỗi cảnh render xong, Whisper ghi lại lời thoại và đối chiếu với kịch bản, đánh dấu chỗ lệch. Giọng đọc luôn nói đúng những gì cần nói, không có bất ngờ ngoài kịch bản.",
           "bullets": [
             "Phiên âm thì thầm trên mỗi dòng được hiển thị",
             "Điểm trôi so với kịch bản dự định",
@@ -1311,7 +1311,7 @@
         "kicker": "Người mẫu",
         "title": "Một studio, biên giới của",
         "highlight": "AI video.",
-        "subtitle": "Bộ chọn mô hình trong Studio đưa cả gia đình Seedance đến tầm tay bạn — và kịch bản của bạn vẫn dùng được khi có mô hình mới."
+        "subtitle": "Hiện Studio render bằng Seedance 2.0; các mô hình còn lại trong gia đình sẽ vào bộ chọn khi sẵn sàng, và kịch bản của bạn vẫn dùng được."
       },
       "cards": {
         "seedance": {
@@ -1326,8 +1326,8 @@
         },
         "fast": {
           "name": "Seedance 2.0 Fast",
-          "tag": "Đang dùng được",
-          "desc": "Cùng gia đình nhưng tối ưu cho tốc độ — render nhanh hơn với chi phí tín dụng thấp hơn, lên đến 720p.",
+          "tag": "Sắp ra mắt",
+          "desc": "Cùng gia đình nhưng tối ưu cho tốc độ — render nhanh hơn với chi phí tín dụng thấp hơn, lên đến 720p. Sắp có trong bộ chọn.",
           "bestFor": [
             "Tốc độ",
             "Chi phí thấp hơn",
@@ -1336,8 +1336,8 @@
         },
         "mini": {
           "name": "Seedance 2.0 Mini",
-          "tag": "Đang dùng được",
-          "desc": "Gói nhẹ nhất — nháp và lặp lại với chi phí tín dụng thấp nhất mỗi lần render, lên đến 720p.",
+          "tag": "Sắp ra mắt",
+          "desc": "Gói nhẹ nhất — nháp và lặp lại với chi phí tín dụng thấp nhất mỗi lần render, lên đến 720p. Sắp có trong bộ chọn.",
           "bestFor": [
             "Bản nháp",
             "Chi phí thấp nhất",
@@ -1417,7 +1417,7 @@
       },
       "models": {
         "title": "Người mẫu",
-        "description": "Chọn mô hình render trong Studio — Seedance 2.0, 2.0 Fast hoặc 2.0 Mini, Seedance 2.5 sắp ra mắt. Mỗi cảnh đều được thiết lập để render đẹp nhất."
+        "description": "Hiện Studio render bằng Seedance 2.0, còn 2.0 Fast, 2.0 Mini và Seedance 2.5 sẽ lần lượt vào bộ chọn. Mỗi cảnh đều được thiết lập để render đẹp nhất."
       },
       "pricing": {
         "title": "Định giá",
