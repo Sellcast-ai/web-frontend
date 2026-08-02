@@ -284,10 +284,10 @@
         "action": "Thử lại"
       },
       "thisMonth": "Tháng này",
-      "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
+      "usageSummary": "Đã dùng {used}/{limit} tín dụng · gói {plan} · làm mới ngày {date}",
       "creditNote": "Tín dụng phản ánh chi phí render thực tế - chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn.",
       "creditsLeft": "còn lại",
-      "limitHit": "Bạn đã đạt đến giới hạn hàng tháng của mình.",
+      "limitHit": "Bạn đã dùng hết hạn mức tháng này.",
       "seePlans": "Xem kế hoạch",
       "forMore": "để biết thêm.",
       "displayName": "Tên hiển thị",

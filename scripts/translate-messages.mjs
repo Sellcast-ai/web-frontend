@@ -244,6 +244,19 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã dùng hết tín dụng.",
     th: "คุณใช้เครดิตหมดแล้ว",
   },
+  // Renewing-plan third of the usage card (thisMonth/usageSummary/limitHit).
+  // Pinned alongside its one-time and neutral twins so all three thirds stay
+  // one voice: the machine seed inverted {used}/{limit} on a money surface.
+  "app.profile.limitHit": {
+    es: "Has alcanzado tu límite mensual.",
+    zh: "你本月的积分已用完。",
+    ja: "今月の上限に達しました。",
+    ko: "이번 달 한도를 모두 사용했습니다.",
+    pt: "Você atingiu seu limite mensal.",
+    id: "Anda telah mencapai batas bulanan.",
+    vi: "Bạn đã dùng hết hạn mức tháng này.",
+    th: "คุณใช้เครดิตของเดือนนี้หมดแล้ว",
+  },
   "app.profile.limitHitOneTime": {
     es: "Has usado tus créditos gratuitos.",
     zh: "你的免费积分已用完。",
@@ -253,6 +266,26 @@ const MANUAL_OVERRIDES = {
     id: "Kredit gratis Anda sudah habis.",
     vi: "Bạn đã dùng hết tín dụng miễn phí.",
     th: "คุณใช้เครดิตฟรีหมดแล้ว",
+  },
+  "app.profile.thisMonth": {
+    es: "Este mes",
+    zh: "本月",
+    ja: "今月",
+    ko: "이번 달",
+    pt: "Este mês",
+    id: "Bulan ini",
+    vi: "Tháng này",
+    th: "เดือนนี้",
+  },
+  "app.profile.usageSummary": {
+    es: "{used} de {limit} créditos usados · plan {plan} · se renueva el {date}",
+    zh: "已使用 {limit} 积分中的 {used} · {plan} 套餐 · {date} 重置",
+    ja: "{limit} クレジット中 {used} を使用 · {plan} プラン · {date} にリセット",
+    ko: "{limit} 크레딧 중 {used} 사용 · {plan} 플랜 · {date} 갱신",
+    pt: "{used} de {limit} créditos usados · plano {plan} · renova em {date}",
+    id: "{used} dari {limit} kredit terpakai · paket {plan} · diperbarui {date}",
+    vi: "Đã dùng {used}/{limit} tín dụng · gói {plan} · làm mới ngày {date}",
+    th: "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan} · รีเซ็ต {date}",
   },
   // Renewal-neutral twin: an unrecognised plan literal must claim neither a
   // monthly reset nor a one-time grant, since nobody knows which it is.

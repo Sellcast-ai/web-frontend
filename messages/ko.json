@@ -284,10 +284,10 @@
         "action": "다시 시도"
       },
       "thisMonth": "이번 달",
-      "usageSummary": "사용된 {limit} 크레딧 중 {used} · {plan} 계획 · {date} 재설정",
+      "usageSummary": "{limit} 크레딧 중 {used} 사용 · {plan} 플랜 · {date} 갱신",
       "creditNote": "크레딧은 실제 렌더링 비용을 반영합니다 - 정확한 비용은 선택한 모델, 해상도, 화면 비율에 따라 달라집니다.",
       "creditsLeft": "크레딧 남음",
-      "limitHit": "월별 한도에 도달했습니다.",
+      "limitHit": "이번 달 한도를 모두 사용했습니다.",
       "seePlans": "요금제 보기",
       "forMore": "더 많은 것을 위해.",
       "displayName": "표시 이름",

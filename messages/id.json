@@ -284,10 +284,10 @@
         "action": "Coba lagi"
       },
       "thisMonth": "Bulan ini",
-      "usageSummary": "{used} dari kredit {limit} digunakan · Paket {plan} · menyetel ulang {date}",
+      "usageSummary": "{used} dari {limit} kredit terpakai · paket {plan} · diperbarui {date}",
       "creditNote": "Kredit mengikuti biaya render nyata - biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih.",
       "creditsLeft": "tersisa",
-      "limitHit": "Anda telah mencapai batas bulanan Anda.",
+      "limitHit": "Anda telah mencapai batas bulanan.",
       "seePlans": "Lihat rencana",
       "forMore": "untuk lebih.",
       "displayName": "Nama tampilan",

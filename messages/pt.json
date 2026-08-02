@@ -284,7 +284,7 @@
         "action": "Tentar novamente"
       },
       "thisMonth": "Este mês",
-      "usageSummary": "{used} de créditos {limit} usados · Plano {plan} · redefine {date}",
+      "usageSummary": "{used} de {limit} créditos usados · plano {plan} · renova em {date}",
       "creditNote": "Os créditos acompanham o custo real do render - o custo exato depende do modelo, da resolução e da proporção de tela que você escolher.",
       "creditsLeft": "restantes",
       "limitHit": "Você atingiu seu limite mensal.",

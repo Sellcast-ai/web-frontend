@@ -284,10 +284,10 @@
         "action": "もう一度試す"
       },
       "thisMonth": "今月",
-      "usageSummary": "{limit} クレジットのうち {used} が使用されました · {plan} プラン · {date} をリセット",
+      "usageSummary": "{limit} クレジット中 {used} を使用 · {plan} プラン · {date} にリセット",
       "creditNote": "クレジットは実際のレンダリングコストに連動します。正確なコストは選んだモデル・解像度・アスペクト比によって変わります。",
       "creditsLeft": "残りクレジット",
-      "limitHit": "毎月の制限に達しました。",
+      "limitHit": "今月の上限に達しました。",
       "seePlans": "プランを見る",
       "forMore": "さらに詳しく。",
       "displayName": "表示名",
