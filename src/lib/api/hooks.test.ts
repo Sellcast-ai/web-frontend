@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
 import {
+  createJobFailureMessage,
   deleteVideoJobOrGone,
   importPollInterval,
   patchProductLists,
@@ -148,5 +149,19 @@ describe("status-aware product probes", () => {
   it("retries transient product probe failures once", () => {
     expect(retryUnlessNotFound(0, new ApiError(502, "Bad gateway"))).toBe(true);
     expect(retryUnlessNotFound(1, new ApiError(502, "Bad gateway"))).toBe(false);
+  });
+});
+
+describe("createJobFailureMessage", () => {
+  const secondsProse = "This 15s 720p video needs 15 credits, but you have 4 of 300 left.";
+
+  it("drops the credit refusal's prose for the localized fallback", () => {
+    const refusal = new ApiError(429, secondsProse, undefined, secondsProse);
+    expect(createJobFailureMessage(refusal, "fallback")).toBe("fallback");
+  });
+
+  it("keeps every other 4xx's curated server message", () => {
+    const capped = new ApiError(409, "Too many active jobs", undefined, "Too many active jobs");
+    expect(createJobFailureMessage(capped, "fallback")).toBe("Too many active jobs");
   });
 });

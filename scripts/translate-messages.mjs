@@ -940,6 +940,12 @@ const MANUAL_OVERRIDES = {
     vi: "Kịch bản và storyboard đã duyệt không phụ thuộc mô hình. Khi có mô hình mới, video của bạn dùng được ngay mà không cần làm lại.",
     th: "สคริปต์และสตอรี่บอร์ดที่อนุมัติแล้วไม่ผูกกับโมเดลใด เมื่อมีโมเดลใหม่ วิดีโอของคุณใช้มันได้ทันทีโดยไม่ต้องทำใหม่",
   },
+  // zh names the credit unit 积分 everywhere; the machine reaches for 信用,
+  // which is creditworthiness/banking credit (信用卡 = credit card is the one
+  // place it belongs). Same reason for the two pricing pins below.
+  "marketing.models.points.oneBill.body": {
+    zh: "无需处理单独的模型帐户或积分——一切都在 Lumi 内。",
+  },
   // No model-choice claim while VIDEO_MODELS has one entry - the picker offers
   // no choice today.
   "marketing.models.points.tuned.body": {
@@ -1001,6 +1007,9 @@ const MANUAL_OVERRIDES = {
     id: "Saat ini model render di Studio adalah Seedance 2.0. Seedance 2.0 Fast dan 2.0 Mini segera bergabung ke pemilih untuk saat kecepatan dan biaya lebih penting, lalu Seedance 2.5 menyusul.",
     vi: "Hiện mô hình render trong Studio là Seedance 2.0. Seedance 2.0 Fast và 2.0 Mini sắp có trong bộ chọn cho những lúc tốc độ và chi phí quan trọng hơn, rồi đến Seedance 2.5.",
     th: "ตอนนี้โมเดลเรนเดอร์ใน Studio คือ Seedance 2.0 ส่วน Seedance 2.0 Fast และ 2.0 Mini จะเข้ามาในตัวเลือกเร็วๆ นี้ สำหรับงานที่ความเร็วและต้นทุนสำคัญกว่า แล้วตามด้วย Seedance 2.5",
+  },
+  "marketing.pricing.faq.q1": {
+    zh: "什么是积分？",
   },
   "marketing.pricing.included[0]": {
     es: "Guiones basados en patrones reales",
@@ -1087,6 +1096,9 @@ const MANUAL_OVERRIDES = {
   },
   "marketing.pricing.tiers.creator.name": {
     id: "Kreator",
+  },
+  "marketing.pricing.tiers.enterprise.allowance": {
+    zh: "定制积分额度",
   },
   "marketing.pricing.tiers.free.credits": {
     es: "300 créditos, una sola vez",

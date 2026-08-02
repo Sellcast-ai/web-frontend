@@ -8,6 +8,7 @@ import {
   type QueryClient,
 } from "@tanstack/react-query";
 import { ApiError, api, apiErrorMessage } from "./client";
+import { isOutOfCreditsError } from "@/lib/quota-error";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -316,6 +317,15 @@ export function useCreateProduct(
   });
 }
 
+/** The credit refusal is the one 4xx whose prose we drop: the backend still
+ * meters seconds, so its detail spells out the retired "1 credit = 1 second"
+ * arithmetic, in English, right beside Studio's `outOfQuota` notice, which
+ * carries the balance already. Every other 4xx keeps its curated server
+ * message. */
+export function createJobFailureMessage(err: unknown, fallback: string): string {
+  return isOutOfCreditsError(err) ? fallback : apiErrorMessage(err, fallback);
+}
+
 export function useCreateJob(messages: { startError: string }) {
   const qc = useQueryClient();
   return useMutation({
@@ -331,7 +341,7 @@ export function useCreateJob(messages: { startError: string }) {
       // offering a Generate that re-429s every click (audit L4 P2-3).
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
-      toast.error(apiErrorMessage(err, messages.startError));
+      toast.error(createJobFailureMessage(err, messages.startError));
     },
   });
 }
