@@ -62,7 +62,7 @@ const MANUAL_OVERRIDES = {
     vi: "{percent} so với tháng trước",
     th: "{percent} เทียบกับเดือนก่อน",
   },
-  // Regenerations are metered (1 credit each, same monthly allowance) - the
+  // Regenerations are metered (1 credit each, same credit balance) - the
   // machine seed promised them free. Hand-set so a regen never reopens the lie.
   "marketing.pricing.faq.a2": {
     es: "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo de créditos que tu render final.",

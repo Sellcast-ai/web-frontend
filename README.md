@@ -67,6 +67,15 @@ refund credits; the job detail page confirms that before deleting. Videos outliv
 products, so the job page links to the source product when it still exists and
 shows a non-link "Product deleted" badge when the product fetch returns 404.
 
+Credits track real render cost, so they never convert to seconds of video: what
+one render costs depends on its model, resolution, and aspect ratio. The free
+grant is 300 credits one-time at signup and does not renew; paid plans renew
+monthly, which is why the profile usage card swaps heading, summary, and
+exhausted notice together by plan (`RENEWING_PLANS` in `src/lib/api/types.ts`).
+Studio never prices a render itself - the only out-of-credits signals it trusts
+are a drained meter and the backend's own refusal. `AGENTS.md` holds the full
+copy rules these claims are bound to.
+
 ## Localization
 
 Message catalogs live in `messages/*.json`; `messages/en.json` is the source of
@@ -82,7 +91,10 @@ maps known backend strings to catalog keys and falls back to translated generic
 messages for anything unknown. API call failures should render through
 `apiErrorMessage(err, localizedFallback)`, not `ApiError.message`; bare 5xx body
 messages are treated as operator prose unless a structured `error_type` is
-present.
+present. Metered calls (video create, retry, shot regenerate) render through
+`renderFailureMessage` in `src/lib/api/hooks.ts`, which shows the localized
+out-of-credits copy for the credit meter's own refusal and falls through to
+`apiErrorMessage` for every other failure.
 
 ## Deployment
 
