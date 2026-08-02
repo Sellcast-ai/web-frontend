@@ -176,10 +176,13 @@ function StudioInner() {
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
   // The backend-metered balance a create was last refused against by the
-  // credit meter. Only a later read showing more credits than that clears the
-  // notice - the client has no honest way to price a render (see
-  // render-cost.ts), so it must never decide that a cheaper pick would now fit.
-  const [refusedBalance, setRefusedBalance] = useState<number | null>(null);
+  // credit meter, plus the render it was judged against. Only a later read
+  // showing more credits than that clears the notice - the client has no
+  // honest way to price a render (see render-cost.ts), so it must never decide
+  // that a cheaper pick would now fit. Reconfiguring doesn't reprice it either;
+  // it just makes the refusal stale, so the notice stops describing a render
+  // nobody attempted and the next Generate re-tests against the backend.
+  const [refused, setRefused] = useState<{ balance: number; render: string } | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
@@ -191,14 +194,18 @@ function StudioInner() {
 
   // Two backend-metered signals, no client pricing: an empty meter (zero is
   // zero under any rate card, and the user should see it before clicking), or
-  // a refused create whose balance hasn't grown since. `useCreateJob` refetches
+  // a refused create, still on the render it refused, whose balance hasn't
+  // grown since. `useCreateJob` refetches
   // usage on failure, so a top-up or a plan change clears this on its own; a
   // fresh Generate clears it too. Without a usage read there is no honest
   // balance to quote, so the create toast carries the failure alone.
+  const renderKey = [mode, vibe, duration, videoModel, resolution, aspectRatio].join("|");
   const outOfQuota =
     usage !== undefined &&
     (usage.remaining <= 0 ||
-      (refusedBalance !== null && usage.remaining <= refusedBalance));
+      (refused !== null &&
+        refused.render === renderKey &&
+        usage.remaining <= refused.balance));
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);
@@ -224,7 +231,7 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
-    setRefusedBalance(null);
+    setRefused(null);
     try {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
@@ -252,7 +259,7 @@ function StudioInner() {
       // nothing latches and the toast carries the failure alone - a read
       // landing later is a fresh balance, never evidence of the refusal.
       if (isOutOfCreditsError(err) && usage !== undefined) {
-        setRefusedBalance(usage.remaining);
+        setRefused({ balance: usage.remaining, render: renderKey });
       }
       generateGuard.end();
     }
