@@ -288,7 +288,7 @@
       "creditNote": "Tín dụng phản ánh chi phí render thực tế - chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn.",
       "creditsLeft": "còn lại",
       "limitHit": "Bạn đã dùng hết hạn mức tháng này.",
-      "seePlans": "Xem kế hoạch",
+      "seePlans": "Xem các gói",
       "forMore": "để biết thêm.",
       "displayName": "Tên hiển thị",
       "save": "Lưu",
@@ -484,7 +484,7 @@
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
-      "seePlans": "Xem kế hoạch",
+      "seePlans": "Xem các gói",
       "cap": {
         "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
         "viewVideos": "Video của tôi"

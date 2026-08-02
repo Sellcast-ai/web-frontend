@@ -288,7 +288,7 @@
       "creditNote": "积分对应真实渲染成本——确切费用取决于你选择的模型、分辨率和宽高比。",
       "creditsLeft": "剩余积分",
       "limitHit": "你本月的积分已用完。",
-      "seePlans": "查看计划",
+      "seePlans": "查看套餐",
       "forMore": "了解更多。",
       "displayName": "显示名称",
       "save": "保存",
@@ -484,7 +484,7 @@
       "generateVideo": "生成视频",
       "generateUploading": "正在上传参考…",
       "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
-      "seePlans": "查看计划",
+      "seePlans": "查看套餐",
       "cap": {
         "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
         "viewVideos": "我的视频"

@@ -267,6 +267,40 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã dùng hết tín dụng miễn phí.",
     th: "คุณใช้เครดิตฟรีหมดแล้ว",
   },
+  // One label, three render sites (profile card, Studio notice, landing pricing
+  // footer) - all pinned together so a regeneration can't ship two spellings of
+  // the same link. The machine reads "plans" as intentions (id/vi) or drawings
+  // (es "planos", which is also Portuguese), never a subscription tier.
+  "app.profile.seePlans": {
+    es: "Ver planes",
+    zh: "查看套餐",
+    ja: "プランを見る",
+    ko: "요금제 보기",
+    pt: "Ver planos",
+    id: "Lihat paket",
+    vi: "Xem các gói",
+    th: "ดูแพ็กเกจ",
+  },
+  "app.studio.seePlans": {
+    es: "Ver planes",
+    zh: "查看套餐",
+    ja: "プランを見る",
+    ko: "요금제 보기",
+    pt: "Ver planos",
+    id: "Lihat paket",
+    vi: "Xem các gói",
+    th: "ดูแพ็กเกจ",
+  },
+  "marketing.landing.seePlans": {
+    es: "Ver planes",
+    zh: "查看套餐",
+    ja: "プランを見る",
+    ko: "요금제 보기",
+    pt: "Ver planos",
+    id: "Lihat paket",
+    vi: "Xem các gói",
+    th: "ดูแพ็กเกจ",
+  },
   "app.profile.thisMonth": {
     es: "Este mes",
     zh: "本月",

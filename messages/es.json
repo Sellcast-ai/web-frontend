@@ -288,7 +288,7 @@
       "creditNote": "Los créditos reflejan el costo real del render: el costo exacto depende del modelo, la resolución y la relación de aspecto que elijas.",
       "creditsLeft": "restantes",
       "limitHit": "Has alcanzado tu límite mensual.",
-      "seePlans": "Ver planos",
+      "seePlans": "Ver planes",
       "forMore": "para más.",
       "displayName": "Nombre para mostrar",
       "save": "Guardar",
@@ -484,7 +484,7 @@
       "generateVideo": "Generar vídeo",
       "generateUploading": "Subiendo referencia…",
       "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
-      "seePlans": "Ver planos",
+      "seePlans": "Ver planes",
       "cap": {
         "reached": "Ya tienes {count} videos en proceso (límite {limit}). Podrás generar uno nuevo en cuanto uno de ellos termine.",
         "viewVideos": "Mis vídeos"

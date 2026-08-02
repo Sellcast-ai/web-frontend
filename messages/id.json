@@ -288,7 +288,7 @@
       "creditNote": "Kredit mengikuti biaya render nyata - biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih.",
       "creditsLeft": "tersisa",
       "limitHit": "Anda telah mencapai batas bulanan.",
-      "seePlans": "Lihat rencana",
+      "seePlans": "Lihat paket",
       "forMore": "untuk lebih.",
       "displayName": "Nama tampilan",
       "save": "Simpan",
@@ -484,7 +484,7 @@
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
-      "seePlans": "Lihat rencana",
+      "seePlans": "Lihat paket",
       "cap": {
         "reached": "Kamu sudah punya {count} video yang sedang diproses (batas {limit}). Kamu bisa membuat video baru setelah salah satunya selesai.",
         "viewVideos": "Video Saya"

@@ -10,6 +10,7 @@ import { StatusBadge } from "@/components/app/status-badge";
 import { Button } from "@/components/ui/button";
 import { StaggerItem } from "@/components/ui/motion";
 import { apiErrorMessage } from "@/lib/api/client";
+import { aspectFrameClass } from "@/lib/aspect-frame";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
 import {
@@ -222,7 +223,7 @@ function JobCard({ job }: { job: VideoJob }) {
       href={`/app/jobs/${job.id}`}
       className="group overflow-hidden rounded-card border border-border bg-card shadow-soft transition-all hover:-translate-y-1 hover:shadow-card"
     >
-      <div className="relative aspect-9/16 bg-ink">
+      <div className={cn("relative bg-ink", aspectFrameClass(job.aspect_ratio))}>
         {thumb ? (
           <img src={thumb} alt="" className="h-full w-full object-cover opacity-90" />
         ) : (
