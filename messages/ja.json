@@ -297,6 +297,7 @@
       "appearanceDescription": "システム、ライト、またはダーク — Lumi アプリと一致します。",
       "logOut": "ログアウト",
       "usageSummaryOneTime": "{limit} クレジット中 {used} を使用 · {plan} プラン · 1回限りの付与、更新なし",
+      "usageSummaryNeutral": "{limit} クレジット中 {used} を使用 · {plan} プラン",
       "creditsOneTime": "あなたのクレジット",
       "limitHitOneTime": "無料クレジットを使い切りました。",
       "limitHitCredits": "クレジットを使い切りました。"

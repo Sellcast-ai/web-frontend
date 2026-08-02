@@ -297,6 +297,7 @@
       "appearanceDescription": "ระบบ สว่างหรือมืด — ตรงกับแอป Lumi",
       "logOut": "ออกจากระบบ",
       "usageSummaryOneTime": "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan} · ให้ครั้งเดียว ไม่ต่ออายุ",
+      "usageSummaryNeutral": "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan}",
       "creditsOneTime": "เครดิตของคุณ",
       "limitHitOneTime": "คุณใช้เครดิตฟรีหมดแล้ว",
       "limitHitCredits": "คุณใช้เครดิตหมดแล้ว"

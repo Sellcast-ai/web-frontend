@@ -241,6 +241,18 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã dùng hết tín dụng miễn phí.",
     th: "คุณใช้เครดิตฟรีหมดแล้ว",
   },
+  // Renewal-neutral twin: an unrecognised plan literal must claim neither a
+  // monthly reset nor a one-time grant, since nobody knows which it is.
+  "app.profile.usageSummaryNeutral": {
+    es: "{used} de {limit} créditos usados · plan {plan}",
+    zh: "已使用 {limit} 积分中的 {used} · {plan} 套餐",
+    ja: "{limit} クレジット中 {used} を使用 · {plan} プラン",
+    ko: "{limit} 크레딧 중 {used} 사용 · {plan} 플랜",
+    pt: "{used} de {limit} créditos usados · plano {plan}",
+    id: "{used} dari {limit} kredit terpakai · paket {plan}",
+    vi: "Đã dùng {used}/{limit} tín dụng · gói {plan}",
+    th: "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan}",
+  },
   "app.profile.usageSummaryOneTime": {
     es: "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
     zh: "已使用 {limit} 积分中的 {used} · {plan} 套餐 · 一次性发放，不会续期",

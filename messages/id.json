@@ -297,6 +297,7 @@
       "appearanceDescription": "Sistem, terang, atau gelap — cocok dengan aplikasi Lumi.",
       "logOut": "Keluar",
       "usageSummaryOneTime": "{used} dari {limit} kredit terpakai · paket {plan} · pemberian satu kali, tidak diperbarui",
+      "usageSummaryNeutral": "{used} dari {limit} kredit terpakai · paket {plan}",
       "creditsOneTime": "Kredit Anda",
       "limitHitOneTime": "Kredit gratis Anda sudah habis.",
       "limitHitCredits": "Kredit Anda sudah habis."

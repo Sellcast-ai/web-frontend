@@ -52,16 +52,21 @@ export default function ProfilePage() {
   // The free grant is one-time and does not renew, so the whole usage card -
   // heading, summary line and exhausted notice - has to swap together; leaving
   // any of the three on the monthly wording implies a reset that never comes.
-  // Only a known renewing plan earns that wording: an unrecognised literal
-  // falls to the one-time copy, which is the safe direction to be wrong in.
-  const oneTimeGrant = !!usage && !RENEWING_PLANS.includes(usage.plan);
-  // Only the known free plan may be told its *free* credits ran out; an
-  // unrecognised literal is on the one-time wording precisely because nobody
-  // knows what it is, so it gets the plan-neutral line rather than a "free"
-  // claim a paying customer would read as wrong.
-  const limitHitKey = !oneTimeGrant
+  // Three plans, not two: a known renewing plan earns the monthly wording, the
+  // known free literal earns the one-time wording, and a literal nobody
+  // recognises (a backend rename, a new tier) makes no renewal claim in either
+  // direction - "does not renew" is as wrong for a paying customer as "resets".
+  const renewing = !!usage && RENEWING_PLANS.includes(usage.plan);
+  const knownFree = usage?.plan === "free";
+  const oneTimeGrant = !!usage && !renewing;
+  const summaryKey = renewing
+    ? "usageSummary"
+    : knownFree
+      ? "usageSummaryOneTime"
+      : "usageSummaryNeutral";
+  const limitHitKey = renewing
     ? "limitHit"
-    : usage?.plan === "free"
+    : knownFree
       ? "limitHitOneTime"
       : "limitHitCredits";
 
@@ -176,7 +181,7 @@ export default function ProfilePage() {
                 {t(oneTimeGrant ? "creditsOneTime" : "thisMonth")}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {t(oneTimeGrant ? "usageSummaryOneTime" : "usageSummary", {
+                {t(summaryKey, {
                   used: usage.used,
                   limit: usage.limit,
                   plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),

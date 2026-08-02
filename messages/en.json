@@ -297,6 +297,7 @@
       "appearanceDescription": "System, light, or dark — matches the Lumi app.",
       "logOut": "Log out",
       "usageSummaryOneTime": "{used} of {limit} credits used · {plan} plan · one-time grant, does not renew",
+      "usageSummaryNeutral": "{used} of {limit} credits used · {plan} plan",
       "creditsOneTime": "Your credits",
       "limitHitOneTime": "You’ve used your free credits.",
       "limitHitCredits": "You’ve used your credits."

@@ -297,6 +297,7 @@
       "appearanceDescription": "Sistema, claro u oscuro: coincide con la aplicación Lumi.",
       "logOut": "Cerrar sesión",
       "usageSummaryOneTime": "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
+      "usageSummaryNeutral": "{used} de {limit} créditos usados · plan {plan}",
       "creditsOneTime": "Tus créditos",
       "limitHitOneTime": "Has usado tus créditos gratuitos.",
       "limitHitCredits": "Has usado tus créditos."

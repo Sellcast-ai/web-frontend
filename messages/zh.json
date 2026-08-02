@@ -297,6 +297,7 @@
       "appearanceDescription": "系统，浅色或深色 — 与 Lumi 应用程序匹配。",
       "logOut": "退出",
       "usageSummaryOneTime": "已使用 {limit} 积分中的 {used} · {plan} 套餐 · 一次性发放，不会续期",
+      "usageSummaryNeutral": "已使用 {limit} 积分中的 {used} · {plan} 套餐",
       "creditsOneTime": "你的积分",
       "limitHitOneTime": "你的免费积分已用完。",
       "limitHitCredits": "你的积分已用完。"

@@ -297,6 +297,7 @@
       "appearanceDescription": "Hệ thống, sáng hoặc tối - khớp với ứng dụng Lumi.",
       "logOut": "Đăng xuất",
       "usageSummaryOneTime": "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
+      "usageSummaryNeutral": "Đã dùng {used}/{limit} tín dụng · gói {plan}",
       "creditsOneTime": "Tín dụng của bạn",
       "limitHitOneTime": "Bạn đã dùng hết tín dụng miễn phí.",
       "limitHitCredits": "Bạn đã dùng hết tín dụng."

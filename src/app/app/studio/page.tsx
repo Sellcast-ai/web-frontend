@@ -193,19 +193,21 @@ function StudioInner() {
   const reviewMode = false;
 
   // Two backend-metered signals, no client pricing: an empty meter (zero is
-  // zero under any rate card, and the user should see it before clicking), or
+  // zero under any rate card, so the user sees it before clicking and Generate
+  // is disabled - no render costs nothing), or
   // a refused create, still on the render it refused, whose balance hasn't
   // grown since. `useCreateJob` refetches
   // usage on failure, so a top-up or a plan change clears this on its own; a
   // fresh Generate clears it too. Without a usage read there is no honest
   // balance to quote, so the create toast carries the failure alone.
   const renderKey = [mode, vibe, duration, videoModel, resolution, aspectRatio].join("|");
+  const noCredits = usage !== undefined && usage.remaining <= 0;
   const outOfQuota =
-    usage !== undefined &&
-    (usage.remaining <= 0 ||
-      (refused !== null &&
-        refused.render === renderKey &&
-        usage.remaining <= refused.balance));
+    noCredits ||
+    (usage !== undefined &&
+      refused !== null &&
+      refused.render === renderKey &&
+      usage.remaining <= refused.balance);
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);
@@ -709,6 +711,7 @@ function StudioInner() {
                 create.isPending ||
                 !product ||
                 atActiveCap ||
+                noCredits ||
                 linkInvalid ||
                 referenceUploading
               }
