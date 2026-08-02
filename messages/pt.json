@@ -298,7 +298,8 @@
       "logOut": "Sair",
       "usageSummaryOneTime": "{used} de {limit} créditos usados · plano {plan} · concessão única, não renova",
       "creditsOneTime": "Seus créditos",
-      "limitHitOneTime": "Você usou seus créditos gratuitos."
+      "limitHitOneTime": "Você usou seus créditos gratuitos.",
+      "limitHitCredits": "Você usou seus créditos."
     },
     "productsNew": {
       "startTitle": "Adicionar um produto",
@@ -1262,7 +1263,7 @@
           "body": "Antes de escrever uma palavra, Lumi estuda uma grande amostra de produtos orgânicos reais de melhor desempenho na categoria de seu produto e extrai o padrão estrutural - o gancho, a prova e as formas de CTA que realmente convertem. Seu script é baseado nisso, nunca em uma página em branco.",
           "bullets": [
             "Aprende a estrutura com os vencedores orgânicos filtrados em sua categoria",
-            "Batidas de gancho/prova/oferta, não execução copiada e colada",
+            "Takes de gancho / prova / oferta, não execução copiada e colada",
             "Linguagem do público modelada a partir dos melhores desempenhos"
           ]
         },

@@ -298,7 +298,8 @@
       "logOut": "Log out",
       "usageSummaryOneTime": "{used} of {limit} credits used · {plan} plan · one-time grant, does not renew",
       "creditsOneTime": "Your credits",
-      "limitHitOneTime": "You’ve used your free credits."
+      "limitHitOneTime": "You’ve used your free credits.",
+      "limitHitCredits": "You’ve used your credits."
     },
     "productsNew": {
       "startTitle": "Add a product",
@@ -1262,7 +1263,7 @@
           "body": "Before writing a word, Lumi studies a large sample of real, organic top-performers in your product's category and extracts the structural pattern — the hook, proof, and CTA shapes that actually convert. Your script is built on that, never a blank page.",
           "bullets": [
             "Learns structure from filtered organic winners in your category",
-            "Hook / proof / offer beats, not copy-pasted execution",
+            "Hook / proof / offer shots, not copy-pasted execution",
             "Audience language modeled from those top-performers"
           ]
         },

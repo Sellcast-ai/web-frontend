@@ -298,7 +298,8 @@
       "logOut": "Cerrar sesión",
       "usageSummaryOneTime": "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
       "creditsOneTime": "Tus créditos",
-      "limitHitOneTime": "Has usado tus créditos gratuitos."
+      "limitHitOneTime": "Has usado tus créditos gratuitos.",
+      "limitHitCredits": "Has usado tus créditos."
     },
     "productsNew": {
       "startTitle": "Añadir un producto",
@@ -1262,7 +1263,7 @@
           "body": "Antes de escribir una palabra, Lumi estudia una gran muestra de productos orgánicos y reales de alto rendimiento en la categoría de su producto y extrae el patrón estructural: las formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en eso, nunca en una página en blanco.",
           "bullets": [
             "Aprende la estructura de los ganadores orgánicos filtrados en su categoría",
-            "Gancho / prueba / oferta supera, ejecución no copiada y pegada",
+            "Takes de gancho / prueba / oferta, no una ejecución copiada y pegada",
             "Lenguaje de la audiencia modelado a partir de aquellos con mejor desempeño"
           ]
         },

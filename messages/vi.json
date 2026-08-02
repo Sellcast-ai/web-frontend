@@ -298,7 +298,8 @@
       "logOut": "Đăng xuất",
       "usageSummaryOneTime": "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
       "creditsOneTime": "Tín dụng của bạn",
-      "limitHitOneTime": "Bạn đã dùng hết tín dụng miễn phí."
+      "limitHitOneTime": "Bạn đã dùng hết tín dụng miễn phí.",
+      "limitHitCredits": "Bạn đã dùng hết tín dụng."
     },
     "productsNew": {
       "startTitle": "Thêm một sản phẩm",
@@ -1262,7 +1263,7 @@
           "body": "Trước khi viết một từ, Lumi nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và trích xuất mô hình cấu trúc — hình móc câu, bằng chứng và CTA thực sự chuyển đổi. Tập lệnh của bạn được xây dựng trên đó, không bao giờ là một trang trống.",
           "bullets": [
             "Tìm hiểu cấu trúc từ những người chiến thắng tự nhiên được lọc trong danh mục của bạn",
-            "Nhịp đập móc / bằng chứng / chào hàng, không thực hiện sao chép",
+            "Cảnh hook / bằng chứng / chào hàng, không phải bản sao chép",
             "Ngôn ngữ khán giả được mô phỏng từ những người biểu diễn hàng đầu"
           ]
         },

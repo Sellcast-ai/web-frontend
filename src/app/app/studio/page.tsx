@@ -50,6 +50,7 @@ import { StaggerItem } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
+import { isOutOfCreditsError } from "@/lib/quota-error";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -174,10 +175,10 @@ function StudioInner() {
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
-  // The backend-metered balance a create was last refused against (429). Only
-  // a later read showing more credits than that clears the notice - the client
-  // has no honest way to price a render (see render-cost.ts), so it must never
-  // decide that a cheaper pick would now fit.
+  // The backend-metered balance a create was last refused against by the
+  // credit meter. Only a later read showing more credits than that clears the
+  // notice - the client has no honest way to price a render (see
+  // render-cost.ts), so it must never decide that a cheaper pick would now fit.
   const [refusedBalance, setRefusedBalance] = useState<number | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
@@ -243,13 +244,15 @@ function StudioInner() {
       // Success keeps the latch held until navigation unmounts the page.
       router.push(`/app/jobs/${job.id}`);
     } catch (err) {
-      // 429 is the credit meter refusing this render; everything else is
-      // already a toast from useCreateJob.
+      // Only the credit meter's own refusal latches the notice (see
+      // isOutOfCreditsError - a 429 from an edge rate limiter is not one);
+      // everything else is already a toast from useCreateJob.
       // Nothing was charged, so the balance the backend judged is the one the
-      // meter already holds. With no usage read there is no such number, and
-      // no later read may be taken as an improvement on it.
-      if (err instanceof ApiError && err.status === 429) {
-        setRefusedBalance(usage?.remaining ?? Number.POSITIVE_INFINITY);
+      // meter already holds. Without a usage read there is no such number, so
+      // nothing latches and the toast carries the failure alone - a read
+      // landing later is a fresh balance, never evidence of the refusal.
+      if (isOutOfCreditsError(err) && usage !== undefined) {
+        setRefusedBalance(usage.remaining);
       }
       generateGuard.end();
     }

@@ -298,7 +298,8 @@
       "logOut": "Keluar",
       "usageSummaryOneTime": "{used} dari {limit} kredit terpakai · paket {plan} · pemberian satu kali, tidak diperbarui",
       "creditsOneTime": "Kredit Anda",
-      "limitHitOneTime": "Kredit gratis Anda sudah habis."
+      "limitHitOneTime": "Kredit gratis Anda sudah habis.",
+      "limitHitCredits": "Kredit Anda sudah habis."
     },
     "productsNew": {
       "startTitle": "Tambahkan produk",
@@ -1262,7 +1263,7 @@
           "body": "Sebelum menulis sepatah kata pun, Lumi mempelajari sampel besar produk organik yang berkinerja terbaik dalam kategori produk Anda dan mengekstrak pola strukturalnya — bentuk pengait, bukti, dan CTA yang benar-benar berkonversi. Skrip Anda dibuat berdasarkan hal itu, tidak pernah berupa halaman kosong.",
           "bullets": [
             "Pelajari struktur dari pemenang organik yang difilter dalam kategori Anda",
-            "Ketukan hook / proof / offer, bukan eksekusi copy-paste",
+            "Shot hook / bukti / penawaran, bukan eksekusi salin-tempel",
             "Bahasa audiens meniru model bahasa audiens yang berkinerja terbaik tersebut"
           ]
         },

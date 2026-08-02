@@ -84,7 +84,7 @@ export default function Image() {
               color: "#3a3a3e",
             }}
           >
-            Scripted from real category patterns, reviewed beat by beat, rendered for shoppable video.
+            Scripted from real category patterns, reviewed shot by shot, rendered for shoppable video.
           </div>
         </div>
         <div

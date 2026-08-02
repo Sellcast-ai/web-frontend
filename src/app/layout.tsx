@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lumi — Product links in. Publish-ready video out.",
     description:
-      "Grounded in the patterns that already sell. Scripted by AI, approved beat by beat, rendered with Seedance 2.0 — for sellers, creators, brands, and agencies.",
+      "Grounded in the patterns that already sell. Scripted by AI, approved shot by shot, rendered with Seedance 2.0 - for sellers, creators, brands, and agencies.",
     type: "website",
     siteName: "Lumi",
   },

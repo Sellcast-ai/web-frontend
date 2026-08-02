@@ -219,6 +219,18 @@ const MANUAL_OVERRIDES = {
     vi: "Tín dụng của bạn",
     th: "เครดิตของคุณ",
   },
+  // Plan-neutral twin of limitHitOneTime: an unrecognised plan literal takes
+  // the one-time wording, and must not be told its *free* credits ran out.
+  "app.profile.limitHitCredits": {
+    es: "Has usado tus créditos.",
+    zh: "你的积分已用完。",
+    ja: "クレジットを使い切りました。",
+    ko: "크레딧을 모두 사용했습니다.",
+    pt: "Você usou seus créditos.",
+    id: "Kredit Anda sudah habis.",
+    vi: "Bạn đã dùng hết tín dụng.",
+    th: "คุณใช้เครดิตหมดแล้ว",
+  },
   "app.profile.limitHitOneTime": {
     es: "Has usado tus créditos gratuitos.",
     zh: "你的免费积分已用完。",
@@ -432,6 +444,16 @@ const MANUAL_OVERRIDES = {
     id: "Tinjauan storyboard",
     vi: "Duyệt storyboard",
     th: "รีวิวสตอรี่บอร์ด",
+  },
+  "marketing.features.rows.scripts.bullets[1]": {
+    es: "Takes de gancho / prueba / oferta, no una ejecución copiada y pegada",
+    zh: "钩子/证明/报价镜头，而不是照搬的执行",
+    ja: "コピペの実行ではなく、フック／プルーフ／オファーのショット",
+    ko: "복사해 붙여넣은 실행이 아닌 후크 / 증명 / 제안 숏",
+    pt: "Takes de gancho / prova / oferta, não execução copiada e colada",
+    id: "Shot hook / bukti / penawaran, bukan eksekusi salin-tempel",
+    vi: "Cảnh hook / bằng chứng / chào hàng, không phải bản sao chép",
+    th: "ช็อตฮุก / พิสูจน์ / ข้อเสนอ ไม่ใช่การคัดลอกมาวาง",
   },
   "marketing.footer.columns.workflow.beatReview": {
     es: "Revisión del storyboard",

@@ -98,6 +98,18 @@ describe("en catalog", () => {
     ]);
   });
 
+  // The profile card picks one of these three by plan, so all three have to
+  // resolve: monthly for a renewing plan, "free credits" only for the free
+  // one, and the plan-neutral line for an unrecognised literal (which takes
+  // the one-time wording without being a free plan).
+  it("has the exhausted-credit keys the profile card picks between", () => {
+    expect(typeof en.app.profile.limitHit).toBe("string");
+    expect(typeof en.app.profile.limitHitOneTime).toBe("string");
+    expect(typeof en.app.profile.limitHitCredits).toBe("string");
+    expect(en.app.profile.limitHitOneTime).toContain("free");
+    expect(en.app.profile.limitHitCredits).not.toContain("free");
+  });
+
   it("has the legal keys used by the terms/privacy/refunds pages", () => {
     expect(Object.keys(en.marketing.legal).sort()).toEqual([
       "kicker",

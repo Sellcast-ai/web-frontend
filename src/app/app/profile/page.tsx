@@ -55,6 +55,15 @@ export default function ProfilePage() {
   // Only a known renewing plan earns that wording: an unrecognised literal
   // falls to the one-time copy, which is the safe direction to be wrong in.
   const oneTimeGrant = !!usage && !RENEWING_PLANS.includes(usage.plan);
+  // Only the known free plan may be told its *free* credits ran out; an
+  // unrecognised literal is on the one-time wording precisely because nobody
+  // knows what it is, so it gets the plan-neutral line rather than a "free"
+  // claim a paying customer would read as wrong.
+  const limitHitKey = !oneTimeGrant
+    ? "limitHit"
+    : usage?.plan === "free"
+      ? "limitHitOneTime"
+      : "limitHitCredits";
 
   if (isLoading || !user) {
     return (
@@ -196,7 +205,7 @@ export default function ProfilePage() {
           </div>
           {usage.remaining <= 0 && (
             <p className="mt-3 text-sm text-muted-foreground">
-              {t(oneTimeGrant ? "limitHitOneTime" : "limitHit")}{" "}
+              {t(limitHitKey)}{" "}
               <a href="/pricing" className="font-semibold text-brand-700">
                 {t("seePlans")}
               </a>{" "}
