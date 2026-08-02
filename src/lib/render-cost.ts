@@ -31,10 +31,19 @@ const FRAME_PIXELS: Record<VideoAspectRatio, number> = {
 
 const BASELINE_FRAME_PIXELS = FRAME_PIXELS["16:9"];
 
-/** What a render will cost, in whole credits — what Studio quotes beside the
- * credit meter and in the out-of-quota notice; the backend's own check stays
- * the gate. An unlisted resolution falls back to the model's top rate, so a gap
- * in the card can never quote less than the render will cost. */
+/** What a render will cost, in whole credits.
+ *
+ * Deliberately never rendered and never used to gate or clear UI: the deployed
+ * backend still meters rendered seconds, so this number would contradict its
+ * own 429 prose on the same screen. It is flip-ready computation, kept in sync
+ * with the provider's card until the backend quote endpoint lands and becomes
+ * the source of truth. Turning the display on is a product decision, not a
+ * cleanup.
+ *
+ * An unlisted resolution falls back to the highest rate this model does list,
+ * which is not a safe upper bound - `seedance-2.0-fast` at 1080p resolves to
+ * its 720p rate while the render is charged the 1080p one. Fill the gap in the
+ * card rather than relying on the fallback. */
 export function renderCostCredits(input: {
   model: VideoModelKey;
   resolution: VideoResolution;

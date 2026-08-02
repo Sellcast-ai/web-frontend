@@ -184,8 +184,9 @@ const MANUAL_OVERRIDES = {
   // pricing-copy-c4 (captain decisions 2026-08-01): credits track real render
   // cost (model/resolution/aspect ratio - no claim that Studio displays it
   // until the cost-preview UI ships), free grant is 300 one-time, plans are
-  // 900/3,000/7,500, storyboard-first wording, 5 aspect ratios, Seedance picker
-  // (2.0/Fast/Mini live, 2.5 coming soon). Hand-set in all 9 locales - the
+  // 900/3,000/7,500, storyboard-first wording, 5 aspect ratios, and only
+  // Seedance 2.0 live in the picker (2.0 Fast and 2.0 Mini are coming soon,
+  // 2.5 after them). Hand-set in all 9 locales - the
   // machine mangles money surfaces, reads 'Live'/'left' as directions and the
   // Creator tier as a deity in id ('Pencipta'). Do not remove these pins.
   "app.profile.creditNote": {

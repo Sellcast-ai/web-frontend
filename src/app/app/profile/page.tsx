@@ -10,6 +10,7 @@ import { useTranslations } from "next-intl";
 import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, usePagedVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
+import { RENEWING_PLANS } from "@/lib/api/types";
 import { toast } from "@/lib/toast";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -51,7 +52,9 @@ export default function ProfilePage() {
   // The free grant is one-time and does not renew, so the whole usage card -
   // heading, summary line and exhausted notice - has to swap together; leaving
   // any of the three on the monthly wording implies a reset that never comes.
-  const oneTimeGrant = usage?.plan === "free";
+  // Only a known renewing plan earns that wording: an unrecognised literal
+  // falls to the one-time copy, which is the safe direction to be wrong in.
+  const oneTimeGrant = !!usage && !RENEWING_PLANS.includes(usage.plan);
 
   if (isLoading || !user) {
     return (

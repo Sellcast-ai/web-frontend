@@ -56,7 +56,7 @@ const product: ProductSummary = {
 };
 
 const usage: Usage = {
-  plan: "starter",
+  plan: "creator",
   limit: 300,
   used: 120,
   remaining: 180,
@@ -258,6 +258,24 @@ describe("Studio page renders extracted English copy", () => {
     expect(html.indexOf("Size")).toBeGreaterThan(html.indexOf("Resolution"));
     // Summary Format row reflects the (default) chosen size, not a literal.
     expect(text).toContain("9:16");
+  });
+
+  // The out-of-quota notice is backend-metered only: a drained meter says so
+  // before the click, a funded one stays quiet, and no usage read means no
+  // invented balance (the create toast carries that failure alone).
+  it.each([
+    { label: "drained meter", usage: { ...usage, used: 300, remaining: 0 }, shown: true },
+    { label: "funded meter", usage, shown: false },
+    { label: "no usage read", usage: undefined, shown: false },
+  ])("$label: out-of-quota notice shown=$shown", ({ usage: seeded, shown }) => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      if (seeded) c.setQueryData(["usage"], seeded);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+    });
+    const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
+    expect(text.includes("Not enough credits for this video")).toBe(shown);
   });
 });
 

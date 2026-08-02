@@ -525,8 +525,19 @@ export interface UserProfileUpdate {
   email?: string | null;
 }
 
+/** The plans the backend meters, mirroring its own literals. */
+export type UsagePlan = "free" | "creator" | "pro" | "scale";
+
+/** Plans whose credits renew every month. Only these may be shown the
+ * "resets {date}" / monthly-limit wording: the free grant is one-time, and a
+ * plan literal this list doesn't know (a backend rename, a new tier) has to
+ * degrade to the non-renewing copy rather than promise a reset that never
+ * comes. Matched as plain strings so an unlisted literal is handled, not
+ * narrowed away. */
+export const RENEWING_PLANS: readonly string[] = ["creator", "pro", "scale"];
+
 export interface Usage {
-  plan: string;
+  plan: UsagePlan;
   /** All quantities are in credits, which track real render cost - what one
    * render costs depends on its model, resolution and aspect ratio (see
    * `src/lib/render-cost.ts`), so credits never convert to seconds. */

@@ -43,7 +43,6 @@ import {
   type VideoJobStatus,
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
-import { renderCostCredits } from "@/lib/render-cost";
 import { defaultStyleForMode } from "@/lib/vibe";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/app/product-card";
@@ -175,8 +174,11 @@ function StudioInner() {
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
-  // What the render the backend last refused for want of credits (429) cost.
-  const [rejectedCost, setRejectedCost] = useState<number | null>(null);
+  // The backend-metered balance a create was last refused against (429). Only
+  // a later read showing more credits than that clears the notice - the client
+  // has no honest way to price a render (see render-cost.ts), so it must never
+  // decide that a cheaper pick would now fit.
+  const [refusedBalance, setRefusedBalance] = useState<number | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
@@ -186,22 +188,16 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // Credits track real render cost, so relative expense follows the picked
-  // model/resolution/aspect ratio, not the clip's length (see render-cost.ts).
-  // Never shown: the deployed backend still meters seconds, so quoting this
-  // number would contradict the backend's own 429 prose on the same screen.
-  // It only ranks one pick against the refused one, below.
-  const renderCost = renderCostCredits({
-    model: videoModel,
-    resolution,
-    aspectRatio,
-    durationSeconds: duration,
-  });
-  // The refusal is shown for as long as the picked render is at least as
-  // expensive as the one the backend turned down, so dropping to a cheaper
-  // model/resolution/length clears it instead of leaving stale copy under a
-  // Generate that would now go through.
-  const outOfQuota = rejectedCost !== null && renderCost >= rejectedCost;
+  // Two backend-metered signals, no client pricing: an empty meter (zero is
+  // zero under any rate card, and the user should see it before clicking), or
+  // a refused create whose balance hasn't grown since. `useCreateJob` refetches
+  // usage on failure, so a top-up or a plan change clears this on its own; a
+  // fresh Generate clears it too. Without a usage read there is no honest
+  // balance to quote, so the create toast carries the failure alone.
+  const outOfQuota =
+    usage !== undefined &&
+    (usage.remaining <= 0 ||
+      (refusedBalance !== null && usage.remaining <= refusedBalance));
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);
@@ -227,7 +223,7 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
-    setRejectedCost(null);
+    setRefusedBalance(null);
     try {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
@@ -249,7 +245,12 @@ function StudioInner() {
     } catch (err) {
       // 429 is the credit meter refusing this render; everything else is
       // already a toast from useCreateJob.
-      if (err instanceof ApiError && err.status === 429) setRejectedCost(renderCost);
+      // Nothing was charged, so the balance the backend judged is the one the
+      // meter already holds. With no usage read there is no such number, and
+      // no later read may be taken as an improvement on it.
+      if (err instanceof ApiError && err.status === 429) {
+        setRefusedBalance(usage?.remaining ?? Number.POSITIVE_INFINITY);
+      }
       generateGuard.end();
     }
   }
@@ -724,11 +725,11 @@ function StudioInner() {
                 </Link>
               </p>
             )}
-            {outOfQuota && (
+            {outOfQuota && usage && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {
-                  remaining: usage?.remaining ?? 0,
-                  limit: usage?.limit ?? 0,
+                  remaining: usage.remaining,
+                  limit: usage.limit,
                 })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   {t("seePlans")}
