@@ -24,6 +24,7 @@
       "startImportFailed": "Không thể bắt đầu quá trình nhập. Vui lòng thử lại.",
       "saveProductFailed": "Không thể lưu sản phẩm. Vui lòng thử lại.",
       "startVideoFailed": "Không thể bắt đầu video. Vui lòng thử lại.",
+      "outOfCredits": "Không đủ tín dụng cho lần render này.",
       "approveShotFailed": "Không thể phê duyệt cảnh quay. Vui lòng thử lại.",
       "regenerateShotFailed": "Không thể tạo lại cảnh quay. Vui lòng thử lại.",
       "approveStoryboardFailed": "Không thể phê duyệt bảng phân cảnh. Vui lòng thử lại.",
@@ -1041,7 +1042,7 @@
       "everyPlanIncludes": "Mỗi kế hoạch bao gồm",
       "included": [
         "Kịch bản dựa trên mô hình thực tế",
-        "Duyệt storyboard trước khi tốn credit",
+        "Duyệt storyboard trước khi tốn tín dụng",
         "5 tỷ lệ khung hình cho mọi nền tảng",
         "Dán bất kỳ liên kết sản phẩm nào hoặc tải ảnh sản phẩm lên"
       ],
@@ -1129,7 +1130,7 @@
           "uiOffer": "Ưu đãi — lời mời rõ ràng"
         },
         "review": {
-          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 credit, và bản render đầy đủ chỉ bị trừ credit sau khi bạn bấm chạy.",
+          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 tín dụng, và bản render đầy đủ chỉ bị trừ tín dụng sau khi bạn bấm chạy.",
           "caption": "Bạn quyết định, trước khi render.",
           "uiHeading": "Duyệt storyboard",
           "uiSpend": "Đã chi $0",
@@ -1153,7 +1154,7 @@
         },
         "approve": {
           "title": "Bạn duyệt storyboard",
-          "body": "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
+          "body": "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 tín dụng mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
         },
         "render": {
           "title": "Seedance render",
@@ -1271,10 +1272,10 @@
         "review": {
           "kicker": "Kiểm soát",
           "title": "Duyệt storyboard",
-          "body": "Lumi viết kịch bản thành storyboard gồm nhiều cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn thích, tạo lại những cảnh chưa ưng với giá 1 credit mỗi lần — và chỉ khi bạn duyệt, bản render đầy đủ mới tiêu tín dụng.",
+          "body": "Lumi viết kịch bản thành storyboard gồm nhiều cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn thích, tạo lại những cảnh chưa ưng với giá 1 tín dụng mỗi lần — và chỉ khi bạn duyệt, bản render đầy đủ mới tiêu tín dụng.",
           "bullets": [
             "Một khung hình tham chiếu cho mỗi cảnh trước khi render tốn phí",
-            "Tạo lại từng cảnh riêng lẻ với 1 credit",
+            "Tạo lại từng cảnh riêng lẻ với 1 tín dụng",
             "Bản render đầy đủ chờ bạn phê duyệt"
           ]
         },

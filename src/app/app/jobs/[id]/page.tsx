@@ -476,6 +476,7 @@ function ReviewView({ job }: { job: VideoJob }) {
   const action = useBeatAction(job.id, {
     approveError: tt("approveShotFailed"),
     regenerateError: tt("regenerateShotFailed"),
+    outOfCredits: tt("outOfCredits"),
   });
 
   return (
@@ -1229,7 +1230,10 @@ function CompletedView({ job }: { job: VideoJob }) {
 function FailedView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.failed");
   const tt = useTranslations("app.toasts");
-  const retry = useRetryJob({ retryError: tt("retryJobFailed") });
+  const retry = useRetryJob({
+    retryError: tt("retryJobFailed"),
+    outOfCredits: tt("outOfCredits"),
+  });
   // Synchronous latch — retry resumes billed work, so a same-tick double-click
   // must not fire it twice before `retry.isPending` can engage.
   const retryGuard = useMutationGuard();

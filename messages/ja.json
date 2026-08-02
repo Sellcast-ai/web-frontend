@@ -24,6 +24,7 @@
       "startImportFailed": "インポートを開始できませんでした。もう一度試してください。",
       "saveProductFailed": "商品を保存できませんでした。もう一度試してください。",
       "startVideoFailed": "ビデオを開始できませんでした。もう一度試してください。",
+      "outOfCredits": "このレンダリングに必要なクレジットが足りません。",
       "approveShotFailed": "ショットを承認できませんでした。もう一度試してください。",
       "regenerateShotFailed": "ショットを再生できませんでした。もう一度試してください。",
       "approveStoryboardFailed": "ストーリーボードを承認できませんでした。もう一度試してください。",

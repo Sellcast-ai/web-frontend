@@ -1,12 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
 import {
-  createJobFailureMessage,
   deleteVideoJobOrGone,
   importPollInterval,
   patchProductLists,
   qk,
   removeJobFromCachedLists,
+  renderFailureMessage,
   retryUnlessNotFound,
   snapshotProductQueries,
 } from "./hooks";
@@ -152,16 +152,23 @@ describe("status-aware product probes", () => {
   });
 });
 
-describe("createJobFailureMessage", () => {
+describe("renderFailureMessage", () => {
   const secondsProse = "This 15s 720p video needs 15 credits, but you have 4 of 300 left.";
+  const messages = { fallback: "fallback", outOfCredits: "out of credits" };
 
-  it("drops the credit refusal's prose for the localized fallback", () => {
+  it("drops the credit refusal's prose for the localized credit copy", () => {
     const refusal = new ApiError(429, secondsProse, undefined, secondsProse);
-    expect(createJobFailureMessage(refusal, "fallback")).toBe("fallback");
+    expect(renderFailureMessage(refusal, messages)).toBe("out of credits");
   });
 
   it("keeps every other 4xx's curated server message", () => {
     const capped = new ApiError(409, "Too many active jobs", undefined, "Too many active jobs");
-    expect(createJobFailureMessage(capped, "fallback")).toBe("Too many active jobs");
+    expect(renderFailureMessage(capped, messages)).toBe("Too many active jobs");
+  });
+
+  it("falls back to the generic copy when the body carried nothing", () => {
+    expect(renderFailureMessage(new ApiError(500, "Server Error"), messages)).toBe(
+      "fallback",
+    );
   });
 });

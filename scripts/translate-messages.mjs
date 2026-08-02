@@ -17,6 +17,19 @@ const TARGETS = {
 };
 
 const MANUAL_OVERRIDES = {
+  // The one toast standing in for the backend's untranslated credit-refusal
+  // prose - the machine reads "credits" as academic credits and "render" as a
+  // drawing verb, so every locale is hand-set on the unit noun it already uses.
+  "app.toasts.outOfCredits": {
+    es: "No tienes créditos suficientes para este render.",
+    zh: "积分不足，无法完成这次渲染。",
+    ja: "このレンダリングに必要なクレジットが足りません。",
+    ko: "이 렌더링에 필요한 크레딧이 부족합니다.",
+    pt: "Créditos insuficientes para este render.",
+    id: "Kredit tidak cukup untuk render ini.",
+    vi: "Không đủ tín dụng cho lần render này.",
+    th: "เครดิตไม่พอสำหรับการเรนเดอร์ครั้งนี้",
+  },
   "app.toasts.importSucceeded": {
     es: "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
     zh: "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
@@ -71,7 +84,7 @@ const MANUAL_OVERRIDES = {
     ko: "모든 숏에 참조 프레임이 먼저 생성됩니다. 마음에 들 때까지 승인하고, 다듬고, 다시 생성하세요. 재생성은 1회 1크레딧이며, 전체 렌더링 크레딧은 당신이 승인한 뒤에만 소모됩니다.",
     pt: "Cada take recebe antes um frame de referência. Aprove, ajuste ou regenere até ficar do jeito certo — cada regeneração custa 1 crédito, e o render completo só queima créditos depois do seu ok.",
     id: "Setiap shot mendapat frame acuan lebih dulu. Setujui, rapikan, atau buat ulang sampai pas — setiap pembuatan ulang memakai 1 kredit, dan render penuh baru memakai kredit setelah Anda bilang jalan.",
-    vi: "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 credit, và bản render đầy đủ chỉ bị trừ credit sau khi bạn bấm chạy.",
+    vi: "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 tín dụng, và bản render đầy đủ chỉ bị trừ tín dụng sau khi bạn bấm chạy.",
     th: "ทุกช็อตจะได้เฟรมอ้างอิงก่อน อนุมัติ ปรับ หรือสร้างใหม่ได้จนกว่าจะถูกใจ — สร้างใหม่ครั้งละ 1 เครดิต ส่วนการเรนเดอร์เต็มจะใช้เครดิตก็ต่อเมื่อคุณสั่งลุย",
   },
   "marketing.landing.storySteps.approve.body": {
@@ -81,7 +94,7 @@ const MANUAL_OVERRIDES = {
     ko: "모든 숏에 참조 프레임이 먼저 생성됩니다. 재생성은 1회 1크레딧이며, 전체 렌더링과 과금은 당신이 사인하기 전까지 시작되지 않습니다.",
     pt: "Cada take recebe antes um frame de referência. Regenerar custa 1 crédito — o render completo, e a cobrança, só acontece depois do seu ok.",
     id: "Setiap shot mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju.",
-    vi: "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt.",
+    vi: "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 tín dụng mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt.",
     th: "ทุกช็อตจะได้เฟรมอ้างอิงก่อน สร้างใหม่ครั้งละ 1 เครดิต ส่วนการเรนเดอร์เต็มและการเก็บเงินจะเริ่มก็ต่อเมื่อคุณเซ็นผ่าน",
   },
   // ja machine seed left these two in English while the other locales translated.
@@ -414,7 +427,7 @@ const MANUAL_OVERRIDES = {
     ko: "Lumi는 스크립트를 숏 단위의 스토리보드로 작성하고, 각 숏에는 참조 프레임이 먼저 생성됩니다. 마음에 드는 숏은 승인하고, 마음에 들지 않는 숏은 개당 1크레딧으로 다시 생성하세요. 전체 렌더링은 당신이 승인할 때만 크레딧을 사용합니다.",
     pt: "Lumi escreve seu roteiro como um storyboard de takes, cada um com um frame de referência gerado primeiro. Aprove os takes que você adora, regenere os que não aprovou por 1 crédito cada — e só quando você aprova o render completo gasta créditos.",
     id: "Lumi menulis skrip Anda sebagai storyboard berisi shot, masing-masing dengan frame acuan yang dibuat lebih dulu. Setujui shot yang Anda sukai, buat ulang yang tidak seharga 1 kredit per shot — dan hanya saat Anda menyetujui, render penuh memakai kredit.",
-    vi: "Lumi viết kịch bản thành storyboard gồm nhiều cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn thích, tạo lại những cảnh chưa ưng với giá 1 credit mỗi lần — và chỉ khi bạn duyệt, bản render đầy đủ mới tiêu tín dụng.",
+    vi: "Lumi viết kịch bản thành storyboard gồm nhiều cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn thích, tạo lại những cảnh chưa ưng với giá 1 tín dụng mỗi lần — và chỉ khi bạn duyệt, bản render đầy đủ mới tiêu tín dụng.",
     th: "Lumi เขียนสคริปต์ของคุณเป็นสตอรี่บอร์ดทีละช็อต โดยแต่ละช็อตมีเฟรมอ้างอิงสร้างไว้ก่อน อนุมัติช็อตที่ชอบ สร้างช็อตที่ไม่ชอบใหม่ในราคาช็อตละ 1 เครดิต — และการเรนเดอร์เต็มจะใช้เครดิตก็ต่อเมื่อคุณอนุมัติเท่านั้น",
   },
   "marketing.features.rows.review.bullets[0]": {
@@ -434,7 +447,7 @@ const MANUAL_OVERRIDES = {
     ko: "숏 하나만 다시 생성해도 1크레딧",
     pt: "Regenere takes soltos por 1 crédito cada",
     id: "Buat ulang shot satuan seharga 1 kredit",
-    vi: "Tạo lại từng cảnh riêng lẻ với 1 credit",
+    vi: "Tạo lại từng cảnh riêng lẻ với 1 tín dụng",
     th: "สร้างช็อตเดี่ยวใหม่ครั้งละ 1 เครดิต",
   },
   "marketing.features.rows.review.bullets[2]": {
@@ -1028,7 +1041,7 @@ const MANUAL_OVERRIDES = {
     ko: "크레딧을 쓰기 전 스토리보드 검토",
     pt: "Revisão do storyboard antes de gastar",
     id: "Tinjauan storyboard sebelum Anda membayar",
-    vi: "Duyệt storyboard trước khi tốn credit",
+    vi: "Duyệt storyboard trước khi tốn tín dụng",
     th: "รีวิวสตอรี่บอร์ดก่อนเสียเครดิต",
   },
   "marketing.pricing.included[2]": {

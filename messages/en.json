@@ -24,6 +24,7 @@
       "startImportFailed": "Couldn’t start the import. Please try again.",
       "saveProductFailed": "Couldn’t save the product. Please try again.",
       "startVideoFailed": "Couldn’t start the video. Please try again.",
+      "outOfCredits": "Not enough credits for this render.",
       "approveShotFailed": "Couldn’t approve the shot. Please try again.",
       "regenerateShotFailed": "Couldn’t regenerate the shot. Please try again.",
       "approveStoryboardFailed": "Couldn’t approve the storyboard. Please try again.",

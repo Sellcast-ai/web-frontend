@@ -24,6 +24,7 @@
       "startImportFailed": "无法开始导入。请再试一次。",
       "saveProductFailed": "无法保存产品。请再试一次。",
       "startVideoFailed": "无法启动视频。请再试一次。",
+      "outOfCredits": "积分不足，无法完成这次渲染。",
       "approveShotFailed": "无法批准拍摄。请再试一次。",
       "regenerateShotFailed": "无法重新生成镜头。请再试一次。",
       "approveStoryboardFailed": "无法批准故事板。请再试一次。",

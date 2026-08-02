@@ -24,6 +24,7 @@
       "startImportFailed": "Tidak dapat memulai impor. Silakan coba lagi.",
       "saveProductFailed": "Tidak dapat menyimpan produk. Silakan coba lagi.",
       "startVideoFailed": "Tidak dapat memulai video. Silakan coba lagi.",
+      "outOfCredits": "Kredit tidak cukup untuk render ini.",
       "approveShotFailed": "Tidak dapat menyetujui pengambilan gambar. Silakan coba lagi.",
       "regenerateShotFailed": "Tidak dapat membuat ulang tembakannya. Silakan coba lagi.",
       "approveStoryboardFailed": "Tidak dapat menyetujui storyboard. Silakan coba lagi.",

@@ -320,13 +320,21 @@ export function useCreateProduct(
 /** The credit refusal is the one 4xx whose prose we drop: the backend still
  * meters seconds, so its detail spells out the retired "1 credit = 1 second"
  * arithmetic, in English, right beside Studio's `outOfQuota` notice, which
- * carries the balance already. Every other 4xx keeps its curated server
- * message. */
-export function createJobFailureMessage(err: unknown, fallback: string): string {
-  return isOutOfCreditsError(err) ? fallback : apiErrorMessage(err, fallback);
+ * carries the balance already. It gets its own localized copy rather than the
+ * generic "please try again" fallback, which would name no cause and invite a
+ * click that fails identically. Every other 4xx keeps its curated server
+ * message. Use this for every metered call - create, retry, regenerate - so
+ * the seconds prose has no path to a user. */
+export function renderFailureMessage(
+  err: unknown,
+  messages: { fallback: string; outOfCredits: string },
+): string {
+  return isOutOfCreditsError(err)
+    ? messages.outOfCredits
+    : apiErrorMessage(err, messages.fallback);
 }
 
-export function useCreateJob(messages: { startError: string }) {
+export function useCreateJob(messages: { startError: string; outOfCredits: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (payload: VideoJobCreate) => api.createVideoJob(payload),
@@ -341,14 +349,23 @@ export function useCreateJob(messages: { startError: string }) {
       // offering a Generate that re-429s every click (audit L4 P2-3).
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
-      toast.error(createJobFailureMessage(err, messages.startError));
+      toast.error(
+        renderFailureMessage(err, {
+          fallback: messages.startError,
+          outOfCredits: messages.outOfCredits,
+        }),
+      );
     },
   });
 }
 
 export function useBeatAction(
   jobId: string,
-  messages: { approveError: string; regenerateError: string },
+  messages: {
+    approveError: string;
+    regenerateError: string;
+    outOfCredits: string;
+  },
 ) {
   const qc = useQueryClient();
   return useMutation({
@@ -365,10 +382,11 @@ export function useBeatAction(
     onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
     onError: (err, { action }) =>
       toast.error(
-        apiErrorMessage(
-          err,
-          action === "approve" ? messages.approveError : messages.regenerateError,
-        ),
+        renderFailureMessage(err, {
+          fallback:
+            action === "approve" ? messages.approveError : messages.regenerateError,
+          outOfCredits: messages.outOfCredits,
+        }),
       ),
   });
 }
@@ -394,7 +412,7 @@ export function usePatchStoryboard(jobId: string, messages: { saveError: string 
   });
 }
 
-export function useRetryJob(messages: { retryError: string }) {
+export function useRetryJob(messages: { retryError: string; outOfCredits: string }) {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => api.retryVideoJob(id),
@@ -403,7 +421,13 @@ export function useRetryJob(messages: { retryError: string }) {
       qc.invalidateQueries({ queryKey: ["jobs"] });
       qc.invalidateQueries({ queryKey: ["usage"] });
     },
-    onError: (err) => toast.error(apiErrorMessage(err, messages.retryError)),
+    onError: (err) =>
+      toast.error(
+        renderFailureMessage(err, {
+          fallback: messages.retryError,
+          outOfCredits: messages.outOfCredits,
+        }),
+      ),
   });
 }
 

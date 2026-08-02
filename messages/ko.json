@@ -24,6 +24,7 @@
       "startImportFailed": "가져오기를 시작할 수 없습니다. 다시 시도해 주세요.",
       "saveProductFailed": "제품을 저장할 수 없습니다. 다시 시도해 주세요.",
       "startVideoFailed": "동영상을 시작할 수 없습니다. 다시 시도해 주세요.",
+      "outOfCredits": "이 렌더링에 필요한 크레딧이 부족합니다.",
       "approveShotFailed": "촬영을 승인할 수 없습니다. 다시 시도해 주세요.",
       "regenerateShotFailed": "샷을 재생성할 수 없습니다. 다시 시도해 주세요.",
       "approveStoryboardFailed": "스토리보드를 승인할 수 없습니다. 다시 시도해 주세요.",

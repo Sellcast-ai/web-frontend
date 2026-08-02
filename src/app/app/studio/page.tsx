@@ -156,7 +156,10 @@ function StudioInner() {
   const { data: jobs } = useVideoJobs({}, (list) =>
     capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
   );
-  const create = useCreateJob({ startError: tt("startVideoFailed") });
+  const create = useCreateJob({
+    startError: tt("startVideoFailed"),
+    outOfCredits: tt("outOfCredits"),
+  });
   const generateGuard = useMutationGuard();
 
   // default is product_only, not ai_avatar: avatar mode is selectable but does

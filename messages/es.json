@@ -24,6 +24,7 @@
       "startImportFailed": "No se pudo iniciar la importación. Por favor inténtalo de nuevo.",
       "saveProductFailed": "No se pudo guardar el producto. Por favor inténtalo de nuevo.",
       "startVideoFailed": "No se pudo iniciar el video. Por favor inténtalo de nuevo.",
+      "outOfCredits": "No tienes créditos suficientes para este render.",
       "approveShotFailed": "No se pudo aprobar la toma. Por favor inténtalo de nuevo.",
       "regenerateShotFailed": "No se pudo regenerar el tiro. Por favor inténtalo de nuevo.",
       "approveStoryboardFailed": "No se pudo aprobar el guión gráfico. Por favor inténtalo de nuevo.",
