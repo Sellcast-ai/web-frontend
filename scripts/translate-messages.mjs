@@ -1193,6 +1193,42 @@ const MANUAL_OVERRIDES = {
     vi: "Một bản cắt sẵn sàng đăng kèm âm thanh lồng tiếng. Tải xuống hoặc đánh dấu đã đăng để số liệu luôn gọn gàng.",
     th: "คลิปพร้อมโพสต์พร้อมเสียงพูด ดาวน์โหลดหรือทำเครื่องหมายว่าโพสต์แล้วเพื่อให้สถิติของคุณเป็นระเบียบ",
   },
+  // One balance, one noun: zh calls the credit unit 积分 on every money surface,
+  // so the refund lines and the delete warning say it too - the machine reaches
+  // for 额度 (an allowance/limit) here, which reads as a second currency.
+  "app.jobs.failed.reasons.workerRestart": {
+    zh: "我们的渲染系统重启后丢失了这个视频的进度。你的积分已退还 - 点击重试重新制作。",
+  },
+  "app.jobs.failed.reasons.resumeInvalidScript": {
+    zh: "这个视频无法从中断处继续。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.productNotFound": {
+    zh: "这个视频对应的商品已不存在。你的积分已退还。",
+  },
+  "app.jobs.failed.reasons.providerUnavailable": {
+    zh: "由于我们这边的问题，视频生成暂时不可用。你的积分已退还 - 请稍后重试。",
+  },
+  "app.jobs.failed.reasons.renderStart": {
+    zh: "我们无法启动视频渲染。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.renderIncomplete": {
+    zh: "一个或多个视频渲染未能完成。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.assembling": {
+    zh: "在合成这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.finishing": {
+    zh: "在完成这个视频的收尾时，我们这边出现了问题。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.making": {
+    zh: "在制作这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
+  },
+  "app.jobs.failed.reasons.categoryUnsupported": {
+    zh: "我们暂时还无法为这个商品类目制作视频。你的积分已退还。",
+  },
+  "app.jobs.delete.description": {
+    zh: "此操作将永久删除该视频，无法恢复，已消耗的积分不予退还。",
+  },
   "marketing.pricing.tiers.pro.features[0]": {
     zh: "包含创作者全部功能",
     id: "Semua fitur Kreator",
