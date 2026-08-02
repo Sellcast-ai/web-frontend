@@ -17,6 +17,30 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
+// The free grant is one-time and does not renew, so the whole usage card -
+// heading, summary line and exhausted notice - swaps as one triple; picking any
+// of the three on its own is how one of them ends up implying a reset that
+// never comes. Three plans, not two: a known renewing plan earns the monthly
+// wording, the known free literal earns the one-time wording, and a literal
+// nobody recognises (a backend rename, a new tier, or no usage read at all)
+// makes no renewal claim in either direction - "does not renew" is as wrong for
+// a paying customer as "resets" is for a free one.
+function usageCopy(plan: string | undefined) {
+  if (plan && RENEWING_PLANS.includes(plan))
+    return { heading: "thisMonth", summary: "usageSummary", limitHit: "limitHit" } as const;
+  if (plan === "free")
+    return {
+      heading: "creditsOneTime",
+      summary: "usageSummaryOneTime",
+      limitHit: "limitHitOneTime",
+    } as const;
+  return {
+    heading: "creditsOneTime",
+    summary: "usageSummaryNeutral",
+    limitHit: "limitHitCredits",
+  } as const;
+}
+
 export default function ProfilePage() {
   const t = useTranslations("app.profile");
   const tt = useTranslations("app.toasts");
@@ -49,26 +73,7 @@ export default function ProfilePage() {
   const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const name = nameEdit ?? user?.display_name ?? "";
-  // The free grant is one-time and does not renew, so the whole usage card -
-  // heading, summary line and exhausted notice - has to swap together; leaving
-  // any of the three on the monthly wording implies a reset that never comes.
-  // Three plans, not two: a known renewing plan earns the monthly wording, the
-  // known free literal earns the one-time wording, and a literal nobody
-  // recognises (a backend rename, a new tier) makes no renewal claim in either
-  // direction - "does not renew" is as wrong for a paying customer as "resets".
-  const renewing = !!usage && RENEWING_PLANS.includes(usage.plan);
-  const knownFree = usage?.plan === "free";
-  const oneTimeGrant = !!usage && !renewing;
-  const summaryKey = renewing
-    ? "usageSummary"
-    : knownFree
-      ? "usageSummaryOneTime"
-      : "usageSummaryNeutral";
-  const limitHitKey = renewing
-    ? "limitHit"
-    : knownFree
-      ? "limitHitOneTime"
-      : "limitHitCredits";
+  const cardCopy = usageCopy(usage?.plan);
 
   if (isLoading || !user) {
     return (
@@ -178,10 +183,10 @@ export default function ProfilePage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-lg font-semibold text-ink">
-                {t(oneTimeGrant ? "creditsOneTime" : "thisMonth")}
+                {t(cardCopy.heading)}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {t(summaryKey, {
+                {t(cardCopy.summary, {
                   used: usage.used,
                   limit: usage.limit,
                   plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
@@ -210,7 +215,7 @@ export default function ProfilePage() {
           </div>
           {usage.remaining <= 0 && (
             <p className="mt-3 text-sm text-muted-foreground">
-              {t(limitHitKey)}{" "}
+              {t(cardCopy.limitHit)}{" "}
               <a href="/pricing" className="font-semibold text-brand-700">
                 {t("seePlans")}
               </a>{" "}
