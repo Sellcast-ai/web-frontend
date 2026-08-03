@@ -468,6 +468,10 @@
         "comingSoonTitle": "Coming soon",
         "soonBadge": "soon"
       },
+      "optionUnavailable": {
+        "title": "Not available with this mode",
+        "badge": "n/a"
+      },
       "reviewDescription": "Lumi will show you the storyboard before it spends anything — review and approve it before any images or video are generated.",
       "summary": {
         "vibe": "Vibe",

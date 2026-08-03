@@ -468,6 +468,10 @@
         "comingSoonTitle": "近日公開予定",
         "soonBadge": "すぐに"
       },
+      "optionUnavailable": {
+        "title": "このモードでは利用できません",
+        "badge": "対象外"
+      },
       "reviewDescription": "Lumi は、何かを費やす前にストーリーボードを表示します。画像やビデオが生成される前に、ストーリーボードを確認して承認します。",
       "summary": {
         "vibe": "バイブ",

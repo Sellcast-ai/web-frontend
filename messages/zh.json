@@ -468,6 +468,10 @@
         "comingSoonTitle": "即将推出",
         "soonBadge": "很快"
       },
+      "optionUnavailable": {
+        "title": "此模式不支持",
+        "badge": "不适用"
+      },
       "reviewDescription": "Lumi 将在花费任何内容之前向您展示故事板 - 在生成任何图像或视频之前对其进行审查和批准。",
       "summary": {
         "vibe": "氛围",

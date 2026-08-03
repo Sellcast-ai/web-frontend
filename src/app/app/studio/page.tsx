@@ -47,8 +47,11 @@ import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
 import {
   isModeKnownUnavailable,
+  optionFor,
   repairMode,
   studioCapabilityState,
+  type CapabilityOption,
+  type OptionUnavailableReason,
   type StudioCapabilitySelection,
 } from "@/lib/video-capabilities";
 import { Button } from "@/components/ui/button";
@@ -549,7 +552,7 @@ function StudioInner() {
                       key={m.value}
                       type="button"
                       disabled={!option.enabled}
-                      title={option.enabled ? undefined : t("language.comingSoonTitle")}
+                      title={unavailableTitle(option.reason, t)}
                       onClick={() => selectWithCapabilities({ videoModel: m.value })}
                       className={cn(
                         "rounded-2xl border p-3.5 text-left transition-colors",
@@ -562,7 +565,7 @@ function StudioInner() {
                     >
                       <p className="text-sm font-semibold text-ink">
                         {t(MODEL_KEYS[m.value].label)}
-                        {!option.enabled && <SoonBadge />}
+                        <UnavailableBadge reason={option.reason} />
                       </p>
                       <p className="text-xs text-muted-foreground">
                         {t(MODEL_KEYS[m.value].blurb)}
@@ -581,11 +584,7 @@ function StudioInner() {
                 <ResolutionButton
                   key={r.value}
                   resolution={r}
-                  enabled={
-                    capabilityState.resolutions.find(
-                      (option) => option.value === r.value,
-                    )?.enabled ?? r.enabled
-                  }
+                  option={optionFor(capabilityState.resolutions, r.value)}
                   selected={effectiveResolution === r.value}
                   onClick={() => selectWithCapabilities({ resolution: r.value })}
                 />
@@ -598,20 +597,17 @@ function StudioInner() {
           <Section title={t("sections.size")}>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
               {VIDEO_ASPECT_RATIOS.map((a) => {
-                const enabled =
-                  capabilityState.aspectRatios.find(
-                    (option) => option.value === a.value,
-                  )?.enabled ?? true;
+                const option = optionFor(capabilityState.aspectRatios, a.value);
                 return (
                   <button
                     key={a.value}
                     type="button"
-                    disabled={!enabled}
-                    title={enabled ? undefined : t("language.comingSoonTitle")}
+                    disabled={!option.enabled}
+                    title={unavailableTitle(option.reason, t)}
                     onClick={() => selectWithCapabilities({ aspectRatio: a.value })}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
-                      !enabled
+                      !option.enabled
                         ? "cursor-not-allowed border-border bg-card opacity-60"
                         : effectiveAspectRatio === a.value
                           ? "border-brand-400 bg-accent"
@@ -620,7 +616,7 @@ function StudioInner() {
                   >
                     <p className="text-sm font-semibold text-ink">
                       {a.label}
-                      {!enabled && <SoonBadge />}
+                      <UnavailableBadge reason={option.reason} />
                     </p>
                     <p className="text-xs text-muted-foreground">{a.blurb}</p>
                   </button>
@@ -641,11 +637,7 @@ function StudioInner() {
                 <LanguageButton
                   key={lang.value}
                   language={lang}
-                  enabled={
-                    capabilityState.languages.find(
-                      (option) => option.value === lang.value,
-                    )?.enabled ?? lang.enabled
-                  }
+                  option={optionFor(capabilityState.languages, lang.value)}
                   selected={language === lang.value}
                   onClick={() => selectWithCapabilities({ language: lang.value })}
                 />
@@ -869,12 +861,12 @@ function ModeButton({
 
 function ResolutionButton({
   resolution,
-  enabled,
+  option,
   selected,
   onClick,
 }: {
   resolution: (typeof VIDEO_RESOLUTIONS)[number];
-  enabled: boolean;
+  option: CapabilityOption<VideoResolution>;
   selected: boolean;
   onClick: () => void;
 }) {
@@ -882,12 +874,12 @@ function ResolutionButton({
   return (
     <button
       type="button"
-      disabled={!enabled}
-      title={enabled ? undefined : t("language.comingSoonTitle")}
+      disabled={!option.enabled}
+      title={unavailableTitle(option.reason, t)}
       onClick={onClick}
       className={cn(
         "rounded-2xl border p-3.5 text-left transition-colors",
-        !enabled
+        !option.enabled
           ? "cursor-not-allowed border-border bg-card opacity-60"
           : selected
             ? "border-brand-400 bg-accent"
@@ -896,7 +888,7 @@ function ResolutionButton({
     >
       <p className="text-sm font-semibold text-ink">
         {t(RESOLUTION_KEYS[resolution.value].label)}
-        {!enabled && <SoonBadge />}
+        <UnavailableBadge reason={option.reason} />
       </p>
       <p className="text-xs text-muted-foreground">
         {t(RESOLUTION_KEYS[resolution.value].blurb)}
@@ -907,12 +899,12 @@ function ResolutionButton({
 
 function LanguageButton({
   language,
-  enabled,
+  option,
   selected,
   onClick,
 }: {
   language: (typeof VIDEO_LANGUAGES)[number];
-  enabled: boolean;
+  option: CapabilityOption<VideoLanguage>;
   selected: boolean;
   onClick: () => void;
 }) {
@@ -920,12 +912,12 @@ function LanguageButton({
   return (
     <button
       type="button"
-      disabled={!enabled}
-      title={enabled ? undefined : t("language.comingSoonTitle")}
+      disabled={!option.enabled}
+      title={unavailableTitle(option.reason, t)}
       onClick={onClick}
       className={cn(
         "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
-        !enabled
+        !option.enabled
           ? "cursor-not-allowed border-border bg-card text-muted-foreground opacity-60"
           : selected
             ? "border-brand-400 bg-accent text-accent-foreground"
@@ -933,16 +925,29 @@ function LanguageButton({
       )}
     >
       {language.label}
-      {!enabled && <SoonBadge />}
+      <UnavailableBadge reason={option.reason} />
     </button>
   );
 }
 
-function SoonBadge() {
+// "Coming soon" is a claim about inventory; an option the selected mode can't
+// render is built and offered elsewhere, so it gets its own copy.
+function unavailableTitle(
+  reason: OptionUnavailableReason | null,
+  t: (key: "language.comingSoonTitle" | "optionUnavailable.title") => string,
+) {
+  if (!reason) return undefined;
+  return reason === "soon"
+    ? t("language.comingSoonTitle")
+    : t("optionUnavailable.title");
+}
+
+function UnavailableBadge({ reason }: { reason: OptionUnavailableReason | null }) {
   const t = useTranslations("app.studio");
+  if (!reason) return null;
   return (
     <span className="ml-1.5 text-[10px] font-bold uppercase tracking-wide">
-      {t("language.soonBadge")}
+      {reason === "soon" ? t("language.soonBadge") : t("optionUnavailable.badge")}
     </span>
   );
 }

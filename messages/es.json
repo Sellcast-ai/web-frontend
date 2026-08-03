@@ -468,6 +468,10 @@
         "comingSoonTitle": "Próximamente",
         "soonBadge": "pronto"
       },
+      "optionUnavailable": {
+        "title": "No disponible con este modo",
+        "badge": "n/d"
+      },
       "reviewDescription": "Lumi le mostrará el guión gráfico antes de que gaste nada; revíselo y apruebe antes de que se generen imágenes o videos.",
       "summary": {
         "vibe": "Ambiente",

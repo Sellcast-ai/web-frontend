@@ -468,6 +468,10 @@
         "comingSoonTitle": "곧 출시 예정",
         "soonBadge": "곧"
       },
+      "optionUnavailable": {
+        "title": "이 모드에서는 사용할 수 없음",
+        "badge": "미지원"
+      },
       "reviewDescription": "Lumi는 비용을 지출하기 전에 스토리보드를 보여줍니다. 이미지나 비디오가 생성되기 전에 검토하고 승인하세요.",
       "summary": {
         "vibe": "바이브",

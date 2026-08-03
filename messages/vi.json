@@ -468,6 +468,10 @@
         "comingSoonTitle": "Sắp có",
         "soonBadge": "sớm thôi"
       },
+      "optionUnavailable": {
+        "title": "Không khả dụng ở chế độ này",
+        "badge": "n/a"
+      },
       "reviewDescription": "Lumi sẽ hiển thị cho bạn bảng phân cảnh trước khi chi tiêu bất cứ thứ gì - xem xét và phê duyệt bảng phân cảnh trước khi tạo bất kỳ hình ảnh hoặc video nào.",
       "summary": {
         "vibe": "rung cảm",

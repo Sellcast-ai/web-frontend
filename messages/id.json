@@ -468,6 +468,10 @@
         "comingSoonTitle": "Segera hadir",
         "soonBadge": "segera"
       },
+      "optionUnavailable": {
+        "title": "Tidak tersedia untuk mode ini",
+        "badge": "n/a"
+      },
       "reviewDescription": "Lumi akan menunjukkan kepada Anda storyboard sebelum menghabiskan apa pun — tinjau dan setujui sebelum gambar atau video apa pun dibuat.",
       "summary": {
         "vibe": "Getaran",
