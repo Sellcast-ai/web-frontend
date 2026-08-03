@@ -411,6 +411,15 @@ describe("Studio page renders extracted English copy", () => {
       html.lastIndexOf("<button", html.indexOf("Generate video")),
     );
     expect(generateButton).toContain("disabled");
+    // The reason sits beside the dead button too, like every other blocked
+    // Generate state - the mode card is sections away on a phone.
+    expect(text).toContain("Product Only isn’t available right now.");
+    // ...and the blocked card still reads as the user's own selection.
+    const modeCard = html.slice(
+      html.lastIndexOf("<button", html.indexOf("Product Only")),
+      html.indexOf("Product Only"),
+    );
+    expect(modeCard).toContain("border-brand-400");
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so

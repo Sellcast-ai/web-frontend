@@ -431,7 +431,8 @@
           "label": "製品のみ",
           "blurb": "顔はなく、製品だけです。"
         },
-        "unavailable": "一時的に利用できません"
+        "unavailable": "一時的に利用できません",
+        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。"
       },
       "presenter": {
         "auto": "自動",

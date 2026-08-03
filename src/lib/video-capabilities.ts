@@ -10,7 +10,7 @@ import {
   type VideoResolution,
 } from "@/lib/api/types";
 
-const MODE_ORDER: VideoMode[] = ["product_only", "ai_avatar"];
+const KNOWN_MODES: readonly VideoMode[] = ["product_only", "ai_avatar"];
 const DEFAULT_MODEL = VIDEO_MODELS[0].value;
 const DEFAULT_RESOLUTION: VideoResolution = "720p";
 const DEFAULT_ASPECT_RATIO: VideoAspectRatio = "9:16";
@@ -85,7 +85,7 @@ function optionalString(value: unknown): string | null {
  * Studio has - a backend rename would otherwise read as every mode reported
  * off, disabling Generate for everyone - so the entry is no read at all. */
 function asVideoMode(value: unknown): VideoMode | null {
-  return typeof value === "string" && (MODE_ORDER as string[]).includes(value)
+  return typeof value === "string" && (KNOWN_MODES as readonly string[]).includes(value)
     ? (value as VideoMode)
     : null;
 }

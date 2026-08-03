@@ -135,10 +135,6 @@ const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof User
   },
 ];
 
-function modeLabelKey(mode: VideoMode): string {
-  return MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label";
-}
-
 const MODEL_KEYS: Record<VideoModelKey, StudioOptionKeys> = {
   "seedance-2.0": { label: "models.seedance20.label", blurb: "models.seedance20.blurb" },
   "seedance-2.0-fast": { label: "models.seedance20Fast.label", blurb: "models.seedance20Fast.blurb" },
@@ -161,6 +157,7 @@ function byValue<T extends { value: string }>(entries: readonly T[]) {
 
 const ASPECT_RATIO_META = byValue(VIDEO_ASPECT_RATIOS);
 const LANGUAGE_META = byValue(VIDEO_LANGUAGES);
+const MODE_META = byValue(MODES);
 
 function StudioInner() {
   const t = useTranslations("app.studio");
@@ -721,7 +718,7 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.mode")}
-                value={t(modeLabelKey(mode))}
+                value={t(MODE_META[mode].label)}
               />
               <Row
                 label={t("summary.length")}
@@ -784,6 +781,11 @@ function StudioInner() {
                 </>
               )}
             </Button>
+            {!capabilityState.modeAvailable && (
+              <p className="mt-2 text-center text-xs font-semibold text-danger">
+                {t("modes.unavailableNote", { mode: t(MODE_META[mode].label) })}
+              </p>
+            )}
             {atActiveCap && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("cap.reached", { count: activeCount, limit: MAX_ACTIVE_JOBS })}{" "}
@@ -857,18 +859,12 @@ function ModeButton({
       onClick={onClick}
       className={cn(
         "rounded-2xl border-2 p-4 text-left transition-colors",
-        disabled
-          ? "cursor-not-allowed border-border bg-card opacity-60"
-          : selected
-            ? "border-brand-400 bg-accent"
-            : "border-border bg-card hover:border-border-strong",
+        selected ? "border-brand-400 bg-accent" : "border-border bg-card",
+        disabled ? "cursor-not-allowed opacity-60" : !selected && "hover:border-border-strong",
       )}
     >
       <mode.Icon
-        className={cn(
-          "h-6 w-6",
-          selected && !disabled ? "text-brand-700" : "text-muted-foreground",
-        )}
+        className={cn("h-6 w-6", selected ? "text-brand-700" : "text-muted-foreground")}
       />
       <p className="mt-2 font-display font-semibold text-ink">
         {t(mode.label)}

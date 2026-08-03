@@ -31,6 +31,16 @@ const MANUAL_OVERRIDES = {
     vi: "Tạm thời chưa có",
     th: "ไม่พร้อมใช้งานชั่วคราว",
   },
+  "app.studio.modes.unavailableNote": {
+    es: "{mode} no está disponible ahora mismo. Elige otro modo para generar.",
+    zh: "{mode} 暂时不可用。请选择其他模式来生成。",
+    ja: "{mode} は現在利用できません。別のモードを選んで生成してください。",
+    ko: "{mode}은(는) 지금 사용할 수 없습니다. 다른 모드를 선택해 생성하세요.",
+    pt: "{mode} está indisponível agora. Escolha outro modo para gerar.",
+    id: "{mode} sedang tidak tersedia. Pilih mode lain untuk membuat video.",
+    vi: "{mode} hiện chưa khả dụng. Hãy chọn chế độ khác để tạo video.",
+    th: "{mode} ยังใช้งานไม่ได้ตอนนี้ เลือกโหมดอื่นเพื่อสร้างวิดีโอ",
+  },
   "app.studio.models.seedance20Fast.label": {
     es: "Seedance 2.0 Fast",
     zh: "Seedance 2.0 Fast",

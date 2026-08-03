@@ -431,7 +431,8 @@
           "label": "Somente produto",
           "blurb": "Sem rosto – apenas o produto."
         },
-        "unavailable": "Temporariamente indisponível"
+        "unavailable": "Temporariamente indisponível",
+        "unavailableNote": "{mode} está indisponível agora. Escolha outro modo para gerar."
       },
       "presenter": {
         "auto": "Automático",

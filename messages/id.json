@@ -431,7 +431,8 @@
           "label": "Hanya Produk",
           "blurb": "Tanpa wajah — hanya produknya."
         },
-        "unavailable": "Sementara tidak tersedia"
+        "unavailable": "Sementara tidak tersedia",
+        "unavailableNote": "{mode} sedang tidak tersedia. Pilih mode lain untuk membuat video."
       },
       "presenter": {
         "auto": "Otomatis",
