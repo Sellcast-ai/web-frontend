@@ -430,7 +430,9 @@
         "productOnly": {
           "label": "Producto solamente",
           "blurb": "Sin rostro, sólo el producto."
-        }
+        },
+        "unavailableTitle": "Temporalmente no disponible",
+        "unavailable": "Temporalmente no disponible"
       },
       "presenter": {
         "auto": "Automático",
@@ -441,6 +443,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Lo más nuevo · hasta 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Más rápido · hasta 720p"
         }
       },
       "resolutions": {

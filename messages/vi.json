@@ -430,7 +430,9 @@
         "productOnly": {
           "label": "Chỉ sản phẩm",
           "blurb": "Không có khuôn mặt - chỉ là sản phẩm."
-        }
+        },
+        "unavailableTitle": "Tạm thời chưa có",
+        "unavailable": "Tạm thời chưa có"
       },
       "presenter": {
         "auto": "Tự động",
@@ -441,6 +443,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Mới nhất · lên tới 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Nhanh hơn · lên tới 720p"
         }
       },
       "resolutions": {

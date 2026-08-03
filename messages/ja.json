@@ -430,7 +430,9 @@
         "productOnly": {
           "label": "製品のみ",
           "blurb": "顔はなく、製品だけです。"
-        }
+        },
+        "unavailableTitle": "一時的に利用できません",
+        "unavailable": "一時的に利用できません"
       },
       "presenter": {
         "auto": "自動",
@@ -441,6 +443,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "最新・最大1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "高速・最大720p"
         }
       },
       "resolutions": {

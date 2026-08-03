@@ -143,6 +143,24 @@ describe("api (BFF client)", () => {
     expect(init.method).toBe("POST");
   });
 
+  it("fetches video capabilities through the BFF proxy", async () => {
+    const fetchMock = mockFetch(200, [
+      {
+        mode: "product_only",
+        available: true,
+        aspect_ratios: ["9:16"],
+        languages: null,
+        beat_durations: [5, 10],
+        max_resolution: "1080p",
+        models: [],
+      },
+    ]);
+    await api.getVideoCapabilities();
+    const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("/api/bff/video/capabilities");
+    expect(init.method).toBeUndefined();
+  });
+
   it("patchStoryboard PATCHes the edited VideoScript as JSON", async () => {
     const fetchMock = mockFetch(200, { id: "j1" });
     const sb = {

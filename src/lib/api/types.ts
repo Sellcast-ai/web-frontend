@@ -317,11 +317,11 @@ export interface ReferencePresign {
   key: string;
 }
 
-export type VideoModelKey = "seedance-2.0";
+export type VideoModelKey = "seedance-2.0" | "seedance-2.0-fast";
 
-/** Models shown in the Studio picker. `value`/`enabled` must mirror the
- * backend's settings.selectable_video_models (SELLCAST_VIDEO_MODELS). Seedance
- * 2.0 (standard) only — avatars use the preset library; up to 1080p. */
+/** Models Studio knows how to label. Fallback mode preserves the old picker
+ * (`enabled` here), while `GET /video/capabilities` can enable a supported
+ * backend option such as Fast for the selected mode. */
 export const VIDEO_MODELS: {
   value: VideoModelKey;
   label: string;
@@ -329,6 +329,7 @@ export const VIDEO_MODELS: {
   enabled: boolean;
 }[] = [
   { value: "seedance-2.0", label: "Seedance 2.0", blurb: "Newest · up to 1080p", enabled: true },
+  { value: "seedance-2.0-fast", label: "Seedance 2.0 Fast", blurb: "Faster · up to 720p", enabled: false },
 ];
 
 export type VideoResolution = "480p" | "720p" | "1080p";
@@ -474,6 +475,27 @@ export interface VideoJobEventCreate {
   event_type: VideoJobEventType;
   metadata?: Record<string, unknown> | null;
 }
+
+export interface VideoModelCapability {
+  key: string;
+  label: string;
+  model_id: string;
+  max_resolution: string;
+  beat_durations: number[];
+}
+
+export interface VideoModeCapabilities {
+  mode: string;
+  available: boolean;
+  aspect_ratios: string[];
+  /** null means the mode has no language restriction beyond the shared picker. */
+  languages: string[] | null;
+  beat_durations: number[];
+  max_resolution: string;
+  models: VideoModelCapability[];
+}
+
+export type VideoCapabilities = VideoModeCapabilities[];
 
 /* -------------------------------------------------------------------- auth */
 

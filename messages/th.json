@@ -430,7 +430,9 @@
         "productOnly": {
           "label": "สินค้าเท่านั้น",
           "blurb": "ไม่มีหน้า — เป็นเพียงผลิตภัณฑ์"
-        }
+        },
+        "unavailableTitle": "ไม่พร้อมใช้งานชั่วคราว",
+        "unavailable": "ไม่พร้อมใช้งานชั่วคราว"
       },
       "presenter": {
         "auto": "อัตโนมัติ",
@@ -441,6 +443,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "ใหม่ล่าสุด · สูงถึง 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "เร็วขึ้น · สูงถึง 720p"
         }
       },
       "resolutions": {

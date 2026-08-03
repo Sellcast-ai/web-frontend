@@ -27,6 +27,7 @@ export const qk = {
   product: (id: string) => ["product", id] as const,
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
+  videoCapabilities: ["video-capabilities"] as const,
   import: (id: string) => ["import", id] as const,
   importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
   shopifyAvailability: ["shopify-availability"] as const,
@@ -200,6 +201,17 @@ export function useVideoJob(id: string) {
       const status = query.state.data?.status;
       return status && ACTIVE.includes(status) ? 4000 : false;
     },
+  });
+}
+
+/** Render capability metadata changes only when backend/provider config changes.
+ * A slow or failed read must not block Studio, so callers treat missing data as
+ * the static picker constants. */
+export function useVideoCapabilities() {
+  return useQuery({
+    queryKey: qk.videoCapabilities,
+    queryFn: api.getVideoCapabilities,
+    staleTime: 30 * 60_000,
   });
 }
 
