@@ -364,11 +364,9 @@ describe("Studio page renders extracted English copy", () => {
     expect(languageRow).not.toContain("soon: Coming soon");
   });
 
-  // A repair moves the user off the mode they were on, so it is committed to
-  // the selection (never left derived, or a later refetch reporting the old
-  // mode available again would move them back with no click) and said out loud
-  // where the mode is picked.
-  it("commits a mode repair and says the mode was moved", () => {
+  // The mode is the one selection Studio never makes for the user: an off mode
+  // is shown as off and blocks Generate, and only their own click leaves it.
+  it("blocks an unavailable mode instead of moving the user off it", () => {
     const qc = makeClient((c) => {
       c.setQueryData(qk.product("prod-1"), product);
       c.setQueryData(["usage"], usage);
@@ -406,10 +404,13 @@ describe("Studio page renders extracted English copy", () => {
     const html = render(qc, React.createElement(StudioPage));
     const text = html.replace(/<[^>]+>/g, " ");
 
-    expect(text).toContain("Product Only isn’t available right now. Switched to AI Avatar.");
-    // The repaired mode is the one the rest of the screen renders against.
-    expect(sectionHeadings(html)).toContain("Presenter");
-    expect(text).toContain("Generate video");
+    expect(text).toContain("Temporarily unavailable");
+    // Still on Product Only: no presenter section, and nothing to generate.
+    expect(sectionHeadings(html)).not.toContain("Presenter");
+    const generateButton = html.slice(
+      html.lastIndexOf("<button", html.indexOf("Generate video")),
+    );
+    expect(generateButton).toContain("disabled");
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so

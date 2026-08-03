@@ -431,8 +431,7 @@
           "label": "Chỉ sản phẩm",
           "blurb": "Không có khuôn mặt - chỉ là sản phẩm."
         },
-        "unavailable": "Tạm thời chưa có",
-        "movedAway": "{from} hiện chưa khả dụng. Đã chuyển sang {to}."
+        "unavailable": "Tạm thời chưa có"
       },
       "presenter": {
         "auto": "Tự động",

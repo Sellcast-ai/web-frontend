@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   isModeKnownUnavailable as modeKnownUnavailableIn,
   normalizeVideoCapabilities,
-  repairMode as repairModeIn,
   studioCapabilityState as capabilityStateIn,
   type StudioCapabilitySelection,
 } from "./video-capabilities";
@@ -17,8 +16,6 @@ import {
 // payload shape the backend sends, so they normalize on the way in.
 const studioCapabilityState = (raw: unknown, selection: StudioCapabilitySelection) =>
   capabilityStateIn(normalizeVideoCapabilities(raw), selection);
-const repairMode = (raw: unknown, mode: VideoMode) =>
-  repairModeIn(normalizeVideoCapabilities(raw), mode);
 const isModeKnownUnavailable = (raw: unknown, mode: VideoMode) =>
   modeKnownUnavailableIn(normalizeVideoCapabilities(raw), mode);
 
@@ -152,7 +149,6 @@ describe("studioCapabilityState", () => {
 
     expect(state.modeAvailable).toBe(false);
     expect(state.canSubmit).toBe(false);
-    expect(repairMode(capabilities, "ai_avatar")).toBe("product_only");
   });
 
   it("treats a mode the payload omits as unavailable", () => {
@@ -163,19 +159,15 @@ describe("studioCapabilityState", () => {
       .toMatchObject({ modeAvailable: false, canSubmit: false });
   });
 
-  it("only repairs into a mode the payload reports as available", () => {
-    const avatarOnly: VideoCapabilities = [
-      { ...capabilities[1], available: true },
-    ];
-    // product_only is missing entirely, so it is not a repair target.
-    expect(repairMode(avatarOnly, "product_only")).toBe("ai_avatar");
-    // Neither mode is available: stay put rather than move to another dead end.
-    expect(
-      repairMode(
-        capabilities.map((entry) => ({ ...entry, available: false })),
-        "product_only",
-      ),
-    ).toBe("product_only");
+  it("never moves the user off an unavailable mode", () => {
+    // Sub-options fall back on their own, but the mode is the user's choice of
+    // what to ship: an off mode blocks Generate until they click another one.
+    const avatarOnly: VideoCapabilities = [{ ...capabilities[1], available: true }];
+    const state = studioCapabilityState(avatarOnly, baseSelection);
+
+    expect(state.modeAvailable).toBe(false);
+    expect(state.canSubmit).toBe(false);
+    expect(isModeKnownUnavailable(avatarOnly, "ai_avatar")).toBe(false);
   });
 
   it("falls back to the constants rather than dead-ending an available mode", () => {
@@ -298,7 +290,6 @@ describe("studioCapabilityState", () => {
       expect(state.canSubmit).toBe(true);
       expect(enabledValues(state.models)).toEqual(["seedance-2.0"]);
       expect(isModeKnownUnavailable(malformed, "product_only")).toBe(false);
-      expect(repairMode(malformed, "product_only")).toBe("product_only");
     }
   });
 
@@ -314,7 +305,6 @@ describe("studioCapabilityState", () => {
 
     expect(isModeKnownUnavailable(renamed, "product_only")).toBe(false);
     expect(isModeKnownUnavailable(renamed, "ai_avatar")).toBe(false);
-    expect(repairMode(renamed, "product_only")).toBe("product_only");
     expect(state.modeAvailable).toBe(true);
     expect(state.canSubmit).toBe(true);
     expect(enabledValues(state.aspectRatios)).toEqual(
@@ -347,7 +337,6 @@ describe("studioCapabilityState", () => {
     const state = studioCapabilityState(caps, baseSelection);
 
     expect(isModeKnownUnavailable(caps, "product_only")).toBe(false);
-    expect(repairMode(caps, "product_only")).toBe("product_only");
     expect(state.modeAvailable).toBe(true);
     expect(state.canSubmit).toBe(true);
     expect(enabledValues(state.aspectRatios)).toEqual(
@@ -355,15 +344,6 @@ describe("studioCapabilityState", () => {
     );
     // The sibling entry still parses, so its own verdict stands.
     expect(isModeKnownUnavailable(caps, "ai_avatar")).toBe(true);
-  });
-
-  it("never repairs into a mode whose entry is unparseable", () => {
-    const caps = [
-      { ...capabilities[0], available: false },
-      { ...capabilities[1], models: "nonsense" },
-    ];
-
-    expect(repairMode(caps, "product_only")).toBe("product_only");
   });
 
   it("hides the model picker for an unavailable mode", () => {
@@ -425,7 +405,6 @@ describe("studioCapabilityState", () => {
     expect(enabledValues(state.models)).toEqual(["seedance-2.0"]);
     expect(state.models.map((model) => model.value)).toEqual(["seedance-2.0"]);
     expect(state.repaired).toMatchObject({
-      mode: "ai_avatar",
       videoModel: "seedance-2.0",
       resolution: "1080p",
       aspectRatio: "4:3",

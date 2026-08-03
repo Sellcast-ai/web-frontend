@@ -431,8 +431,7 @@
           "label": "Product Only",
           "blurb": "No face — just the product."
         },
-        "unavailable": "Temporarily unavailable",
-        "movedAway": "{from} isn’t available right now. Switched to {to}."
+        "unavailable": "Temporarily unavailable"
       },
       "presenter": {
         "auto": "Auto",

@@ -431,8 +431,7 @@
           "label": "製品のみ",
           "blurb": "顔はなく、製品だけです。"
         },
-        "unavailable": "一時的に利用できません",
-        "movedAway": "現在 {from} は利用できません。{to} に切り替えました。"
+        "unavailable": "一時的に利用できません"
       },
       "presenter": {
         "auto": "自動",

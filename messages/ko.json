@@ -431,8 +431,7 @@
           "label": "제품만",
           "blurb": "얼굴은 없습니다. 제품만 있을 뿐입니다."
         },
-        "unavailable": "일시적으로 사용할 수 없음",
-        "movedAway": "지금은 {from}을(를) 사용할 수 없어 {to}(으)로 변경했습니다."
+        "unavailable": "일시적으로 사용할 수 없음"
       },
       "presenter": {
         "auto": "자동",

@@ -50,7 +50,7 @@ export type StudioCapabilityState = {
   resolutions: CapabilityOption<VideoResolution>[];
   aspectRatios: CapabilityOption<VideoAspectRatio>[];
   languages: CapabilityOption<VideoLanguage>[];
-  repaired: Omit<StudioCapabilitySelection, "videoModel"> & {
+  repaired: Omit<StudioCapabilitySelection, "mode" | "videoModel"> & {
     videoModel: VideoModelKey | null;
   };
   canSubmit: boolean;
@@ -145,34 +145,13 @@ export function normalizeVideoCapabilities(
   return entries.length > 0 ? entries : undefined;
 }
 
-/** Once a usable payload exists, a mode it doesn't positively report as
- * available is unavailable - an omitted entry is not a green light. */
-function modeAvailableIn(caps: ModeCapability[], mode: VideoMode): boolean {
-  return Boolean(caps.find((entry) => entry.mode === mode)?.available);
-}
-
-/** The entry for this mode was there but didn't parse, so nothing is known
- * about it - and unknown must read as "no capability data" for that mode, never
- * as a backend saying no. */
-function modeUnknownIn(
-  caps: VideoCapabilitySnapshot | undefined,
-  mode: VideoMode,
-): boolean {
-  return caps?.find((entry) => entry.mode === mode)?.readable === false;
-}
-
-/** The snapshot as this mode may read it: a mode whose own entry is unreadable
- * degrades to the static constants exactly as a missing read does, so one bad
- * entry can't block the mode the user is on. */
-function capsForMode(
-  caps: VideoCapabilitySnapshot | undefined,
-  mode: VideoMode,
-): VideoCapabilitySnapshot | undefined {
-  return modeUnknownIn(caps, mode) ? undefined : caps;
-}
-
 /** The three states a picker narrows by, so no call site can hold a mode that
- * is both unreadable and available, or an entry it must re-check for. */
+ * is both unreadable and available, or an entry it must re-check for. This is
+ * the one lookup every export shares. An entry that was there but didn't parse
+ * says nothing about the mode, and unknown must read as "no capability data"
+ * for it, never as a backend saying no; once a usable payload exists, a mode it
+ * doesn't positively report as available is off - an omitted entry is not a
+ * green light. */
 type ModeNarrowing =
   | { kind: "unknown" }
   | { kind: "off" }
@@ -182,9 +161,9 @@ function modeNarrowing(
   caps: VideoCapabilitySnapshot | undefined,
   mode: VideoMode,
 ): ModeNarrowing {
-  const known = capsForMode(caps, mode);
-  if (!known) return { kind: "unknown" };
-  const cap = known.find((entry) => entry.mode === mode);
+  if (!caps) return { kind: "unknown" };
+  const cap = caps.find((entry) => entry.mode === mode);
+  if (cap && !cap.readable) return { kind: "unknown" };
   return cap?.available ? { kind: "narrow", cap } : { kind: "off" };
 }
 
@@ -193,15 +172,6 @@ export function isModeKnownUnavailable(
   mode: VideoMode,
 ): boolean {
   return modeNarrowing(caps, mode).kind === "off";
-}
-
-export function repairMode(
-  caps: VideoCapabilitySnapshot | undefined,
-  mode: VideoMode,
-): VideoMode {
-  const known = capsForMode(caps, mode);
-  if (!known || modeAvailableIn(known, mode)) return mode;
-  return MODE_ORDER.find((candidate) => modeAvailableIn(known, candidate)) ?? mode;
 }
 
 export function studioCapabilityState(
@@ -228,7 +198,6 @@ export function studioCapabilityState(
     aspectRatios,
     languages,
     repaired: {
-      mode: selection.mode,
       videoModel: repairedModel,
       resolution: repairOption(selection.resolution, resolutions, DEFAULT_RESOLUTION),
       aspectRatio: repairOption(selection.aspectRatio, aspectRatios, DEFAULT_ASPECT_RATIO),

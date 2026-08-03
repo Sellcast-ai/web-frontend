@@ -47,7 +47,6 @@ import { defaultStyleForMode } from "@/lib/vibe";
 import {
   isModeKnownUnavailable,
   normalizeVideoCapabilities,
-  repairMode,
   studioCapabilityState,
   type CapabilityOption,
   type OptionUnavailableReason,
@@ -189,8 +188,8 @@ function StudioInner() {
   });
   const generateGuard = useMutationGuard();
 
-  // Start on the generally available path; capabilities can disable or repair
-  // mode-specific choices after the backend reports current provider support.
+  // Start on the generally available path; capabilities can disable a mode and
+  // narrow its options after the backend reports current provider support.
   const [mode, setMode] = useState<VideoMode>("product_only");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
   const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
@@ -221,20 +220,14 @@ function StudioInner() {
     () => normalizeVideoCapabilities(videoCapabilities),
     [videoCapabilities],
   );
-  // A repair has to change the stored selection, not just this render: left
-  // derived, a later capability refetch that reports the old mode available
-  // again would drop the user back into it with no click of theirs behind it.
-  // Adjusting during render (never in an effect) keeps the committed mode and
-  // everything derived from it in the same paint, and `movedFrom` keeps the
-  // move on screen until the user picks a mode themselves.
-  const effectiveMode = repairMode(caps, mode);
-  const [movedFrom, setMovedFrom] = useState<VideoMode | null>(null);
-  if (effectiveMode !== mode) {
-    setMode(effectiveMode);
-    setMovedFrom(mode);
-  }
+  // The mode is never repaired for the user: a mode the backend reports off
+  // shows as unavailable and blocks Generate while it stays selected, and only
+  // a click of theirs leaves it. Moving them - even to a mode that works - is
+  // choosing which product they ship, and a transient backend answer must not
+  // make that choice. The sub-options below do fall back automatically; those
+  // don't change what the render is.
   const capabilityState = studioCapabilityState(caps, {
-    mode: effectiveMode,
+    mode,
     videoModel,
     resolution,
     aspectRatio,
@@ -246,30 +239,28 @@ function StudioInner() {
   const language = capabilityState.repaired.language;
   // Style is no longer a manual pick — it auto-derives from mode (locked
   // decision #1). We still send it so the backend schema stays intact.
-  const style = defaultStyleForMode(effectiveMode);
+  const style = defaultStyleForMode(mode);
   // Storyboard review is always on (the default gate); the legacy image-level
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
   function selectWithCapabilities(next: Partial<StudioCapabilitySelection>) {
     const repaired = studioCapabilityState(caps, {
-      mode: effectiveMode,
+      mode,
       videoModel,
       resolution,
       aspectRatio,
       language: selectedLanguage,
       ...next,
     }).repaired;
-    if (next.mode) {
-      setMode(next.mode);
-      setMovedFrom(null);
-    }
+    if (next.mode) setMode(next.mode);
     if (repaired.videoModel) setVideoModel(repaired.videoModel);
     setResolution(repaired.resolution);
     setAspectRatio(repaired.aspectRatio);
-    if (next.language !== undefined || repaired.language !== selectedLanguage) {
-      setLanguageOverride(repaired.language);
-    }
+    // Only a language click may pin the override: committing a narrowing
+    // repair from an unrelated click would overwrite the product-derived
+    // default with a language the user never chose.
+    if (next.language !== undefined) setLanguageOverride(repaired.language);
   }
 
   // Two backend-metered signals, no client pricing: an empty meter (zero is
@@ -281,7 +272,7 @@ function StudioInner() {
   // fresh Generate clears it too. Without a usage read there is no honest
   // balance to quote, so the create toast carries the failure alone.
   const renderKey = [
-    effectiveMode,
+    mode,
     vibe,
     duration,
     effectiveVideoModel ?? "",
@@ -325,7 +316,7 @@ function StudioInner() {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
         product_id: productId,
-        mode: effectiveMode,
+        mode,
         style,
         vibe,
         ...(referenceReady ? { reference_url: activeReferenceUrl } : {}),
@@ -338,7 +329,7 @@ function StudioInner() {
         ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
         resolution: effectiveResolution,
         aspect_ratio: effectiveAspectRatio,
-        avatar_id: effectiveMode === "ai_avatar" ? avatarId : null,
+        avatar_id: mode === "ai_avatar" ? avatarId : null,
       });
       // Success keeps the latch held until navigation unmounts the page.
       router.push(`/app/jobs/${job.id}`);
@@ -520,26 +511,16 @@ function StudioInner() {
                 <ModeButton
                   key={m.value}
                   mode={m}
-                  selected={effectiveMode === m.value}
+                  selected={mode === m.value}
                   disabled={isModeKnownUnavailable(caps, m.value)}
                   onClick={() => selectWithCapabilities({ mode: m.value })}
                 />
               ))}
             </div>
-            {movedFrom !== null &&
-              movedFrom !== effectiveMode &&
-              isModeKnownUnavailable(caps, movedFrom) && (
-                <p className="mt-3 text-xs font-semibold text-danger" role="status">
-                  {t("modes.movedAway", {
-                    from: t(modeLabelKey(movedFrom)),
-                    to: t(modeLabelKey(effectiveMode)),
-                  })}
-                </p>
-              )}
           </Section>
 
           {/* avatar — who's on screen (avatar mode only) */}
-          {effectiveMode === "ai_avatar" && (
+          {mode === "ai_avatar" && (
             <Section title={t("sections.presenter")}>
               <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
                 <AvatarChoice
@@ -666,7 +647,7 @@ function StudioInner() {
                 );
               })}
             </div>
-            {effectiveMode === "ai_avatar" && (
+            {mode === "ai_avatar" && (
               <p className="mt-2 text-xs text-muted-foreground">
                 {t("size.avatarHint")}
               </p>
@@ -740,7 +721,7 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.mode")}
-                value={t(modeLabelKey(effectiveMode))}
+                value={t(modeLabelKey(mode))}
               />
               <Row
                 label={t("summary.length")}

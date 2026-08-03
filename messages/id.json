@@ -431,8 +431,7 @@
           "label": "Hanya Produk",
           "blurb": "Tanpa wajah — hanya produknya."
         },
-        "unavailable": "Sementara tidak tersedia",
-        "movedAway": "{from} sedang tidak tersedia. Kami beralih ke {to}."
+        "unavailable": "Sementara tidak tersedia"
       },
       "presenter": {
         "auto": "Otomatis",
