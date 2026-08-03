@@ -146,6 +146,18 @@ const RESOLUTION_KEYS: Record<VideoResolution, StudioOptionKeys> = {
   "1080p": { label: "resolutions.p1080.label", blurb: "resolutions.p1080.blurb" },
 };
 
+// Capability options carry only a value, so their labels are looked up by that
+// value - never by position in the static array they were narrowed from.
+function byValue<T extends { value: string }>(entries: readonly T[]) {
+  return Object.fromEntries(entries.map((entry) => [entry.value, entry])) as Record<
+    T["value"],
+    T
+  >;
+}
+
+const ASPECT_RATIO_META = byValue(VIDEO_ASPECT_RATIOS);
+const LANGUAGE_META = byValue(VIDEO_LANGUAGES);
+
 function StudioInner() {
   const t = useTranslations("app.studio");
   const tt = useTranslations("app.toasts");
@@ -552,7 +564,6 @@ function StudioInner() {
                     key={option.value}
                     type="button"
                     disabled={!option.enabled}
-                    title={unavailableTitle(option.reason, t)}
                     onClick={() => selectWithCapabilities({ videoModel: option.value })}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
@@ -570,6 +581,7 @@ function StudioInner() {
                     <p className="text-xs text-muted-foreground">
                       {t(MODEL_KEYS[option.value].blurb)}
                     </p>
+                    <UnavailableNote reason={option.reason} />
                   </button>
                 ))}
               </div>
@@ -594,14 +606,13 @@ function StudioInner() {
               mode; talking-head output may adapt its shape server-side. */}
           <Section title={t("sections.size")}>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
-              {VIDEO_ASPECT_RATIOS.map((a, i) => {
-                const option = capabilityState.aspectRatios[i];
+              {capabilityState.aspectRatios.map((option) => {
+                const a = ASPECT_RATIO_META[option.value];
                 return (
                   <button
                     key={a.value}
                     type="button"
                     disabled={!option.enabled}
-                    title={unavailableTitle(option.reason, t)}
                     onClick={() => selectWithCapabilities({ aspectRatio: a.value })}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
@@ -617,6 +628,7 @@ function StudioInner() {
                       <UnavailableBadge reason={option.reason} />
                     </p>
                     <p className="text-xs text-muted-foreground">{a.blurb}</p>
+                    <UnavailableNote reason={option.reason} />
                   </button>
                 );
               })}
@@ -631,13 +643,13 @@ function StudioInner() {
           {/* language — only voice-QA-validated languages are selectable */}
           <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
-              {VIDEO_LANGUAGES.map((lang, i) => (
+              {capabilityState.languages.map((option) => (
                 <LanguageButton
-                  key={lang.value}
-                  language={lang}
-                  option={capabilityState.languages[i]}
-                  selected={language === lang.value}
-                  onClick={() => selectWithCapabilities({ language: lang.value })}
+                  key={option.value}
+                  label={LANGUAGE_META[option.value].label}
+                  option={option}
+                  selected={language === option.value}
+                  onClick={() => selectWithCapabilities({ language: option.value })}
                 />
               ))}
             </div>
@@ -827,7 +839,6 @@ function ModeButton({
     <button
       type="button"
       disabled={disabled}
-      title={disabled ? t("modes.unavailable") : undefined}
       onClick={onClick}
       className={cn(
         "rounded-2xl border-2 p-4 text-left transition-colors",
@@ -871,7 +882,6 @@ function ResolutionButton({
     <button
       type="button"
       disabled={!option.enabled}
-      title={unavailableTitle(option.reason, t)}
       onClick={onClick}
       className={cn(
         "rounded-2xl border p-3.5 text-left transition-colors",
@@ -889,27 +899,26 @@ function ResolutionButton({
       <p className="text-xs text-muted-foreground">
         {t(RESOLUTION_KEYS[option.value].blurb)}
       </p>
+      <UnavailableNote reason={option.reason} />
     </button>
   );
 }
 
 function LanguageButton({
-  language,
+  label,
   option,
   selected,
   onClick,
 }: {
-  language: (typeof VIDEO_LANGUAGES)[number];
+  label: string;
   option: CapabilityOption<VideoLanguage>;
   selected: boolean;
   onClick: () => void;
 }) {
-  const t = useTranslations("app.studio");
   return (
     <button
       type="button"
       disabled={!option.enabled}
-      title={unavailableTitle(option.reason, t)}
       onClick={onClick}
       className={cn(
         "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
@@ -920,31 +929,45 @@ function LanguageButton({
             : "border-border bg-card text-muted-foreground hover:text-ink",
       )}
     >
-      {language.label}
+      {label}
       <UnavailableBadge reason={option.reason} />
+      <UnavailableNote reason={option.reason} srOnly />
     </button>
   );
-}
-
-// "Coming soon" is a claim about inventory; an option the selected mode can't
-// render is built and offered elsewhere, so it gets its own copy.
-function unavailableTitle(
-  reason: OptionUnavailableReason | null,
-  t: (key: "language.comingSoonTitle" | "optionUnavailable.title") => string,
-) {
-  if (!reason) return undefined;
-  return reason === "soon"
-    ? t("language.comingSoonTitle")
-    : t("optionUnavailable.title");
 }
 
 function UnavailableBadge({ reason }: { reason: OptionUnavailableReason | null }) {
   const t = useTranslations("app.studio");
   if (!reason) return null;
   return (
-    <span className="ml-1.5 text-[10px] font-bold uppercase tracking-wide">
+    <span
+      aria-hidden="true"
+      className="ml-1.5 text-[10px] font-bold uppercase tracking-wide"
+    >
       {reason === "soon" ? t("language.soonBadge") : t("optionUnavailable.badge")}
     </span>
+  );
+}
+
+// The reason has to be in the option itself: a `title` on a disabled control
+// never opens, so the badge alone would be the only explanation a seller gets.
+// "Coming soon" is a claim about inventory; an option the selected mode can't
+// render is built and offered elsewhere, so it gets its own copy.
+function UnavailableNote({
+  reason,
+  srOnly,
+}: {
+  reason: OptionUnavailableReason | null;
+  srOnly?: boolean;
+}) {
+  const t = useTranslations("app.studio");
+  if (!reason) return null;
+  const text =
+    reason === "soon" ? t("language.comingSoonTitle") : t("optionUnavailable.title");
+  return srOnly ? (
+    <span className="sr-only">{text}</span>
+  ) : (
+    <p className="mt-2 text-xs font-semibold text-danger">{text}</p>
   );
 }
 

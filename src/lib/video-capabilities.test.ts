@@ -206,6 +206,39 @@ describe("studioCapabilityState", () => {
     );
   });
 
+  it("keeps the coming-soon reason for a model the inventory hasn't released", () => {
+    const state = studioCapabilityState(
+      [{ ...capabilities[0], models: [capabilities[0].models[0]] }],
+      baseSelection,
+    );
+
+    // Fast is `enabled: false` in the static inventory, so it is unbuilt, not
+    // "offered in the other mode".
+    expect(state.models.find((model) => model.value === "seedance-2.0-fast")).toMatchObject(
+      { enabled: false, reason: "soon" },
+    );
+  });
+
+  it("uses the lowest offered ceiling when no model is being sent", () => {
+    const state = studioCapabilityState(
+      [
+        {
+          ...capabilities[0],
+          max_resolution: "1080p",
+          models: [
+            { ...capabilities[0].models[0], key: "veo-9", max_resolution: "1080p" },
+            { ...capabilities[0].models[1], key: "veo-mini", max_resolution: "720p" },
+          ],
+        },
+      ],
+      { ...baseSelection, resolution: "1080p" },
+    );
+
+    expect(state.repaired.videoModel).toBeNull();
+    expect(enabledValues(state.resolutions)).toEqual(["480p", "720p"]);
+    expect(state.repaired.resolution).toBe("720p");
+  });
+
   it("degrades to the constants when the payload is malformed", () => {
     for (const malformed of [
       { modes: [] },

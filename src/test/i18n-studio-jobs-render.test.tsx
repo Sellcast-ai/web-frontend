@@ -299,6 +299,46 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).toContain("Generate video");
   });
 
+  // A `title` on a disabled control never opens, so the reason has to be in the
+  // option itself for it to reach anyone at all.
+  it("spells out why a narrowed option is unpickable, without a dead tooltip", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: true,
+          aspect_ratios: ["9:16", "16:9"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [
+            {
+              key: "seedance-2.0",
+              label: "Seedance 2.0",
+              model_id: "doubao-seedance-2-0-260128",
+              max_resolution: "720p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    // 4:3, 1080p and Spanish are all narrowed away by this payload.
+    expect(html).toContain("disabled");
+    expect(text).toContain("Not available with this mode");
+    expect(html).not.toContain("title=");
+    // Fast is unbuilt inventory, not a mode restriction, so it keeps its own
+    // copy rather than claiming the other mode offers it.
+    expect(text).toContain("Coming soon");
+  });
+
   // The out-of-quota notice is backend-metered only: a drained meter says so
   // before the click, a funded one stays quiet, and no usage read means no
   // invented balance (the create toast carries that failure alone).

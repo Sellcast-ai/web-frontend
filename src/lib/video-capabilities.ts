@@ -188,12 +188,17 @@ function modelOptions(
     );
   }
   if (!cap || cap.models.length === 0) return [];
+  // A model the static inventory hasn't released is not "unsupported by this
+  // mode" - it isn't offered anywhere yet, so it keeps the coming-soon reason
+  // while capabilities stay the only thing that can enable it.
+  const reason = (model: (typeof VIDEO_MODELS)[number]): OptionUnavailableReason =>
+    model.enabled ? "unsupported" : "soon";
   if (!modeAvailable) {
-    return VIDEO_MODELS.map((model) => option(model.value, false, "unsupported"));
+    return VIDEO_MODELS.map((model) => option(model.value, false, reason(model)));
   }
   const supported = new Set(cap.models.map((model) => model.key));
   const narrowed = VIDEO_MODELS.map((model) =>
-    option(model.value, supported.has(model.value), "unsupported"),
+    option(model.value, supported.has(model.value), reason(model)),
   );
   // Nothing the backend offers has a label here - hide the picker and keep the
   // current model rather than blocking Generate behind an all-disabled row.
@@ -212,10 +217,12 @@ function resolutionOptions(
     );
   if (!caps) return staticOptions(true);
   if (!modeAvailable) return staticOptions(false);
-  const modelCap = selectedModel
-    ? cap?.models.find((model) => model.key === selectedModel)
-    : undefined;
-  const maxResolution = asResolution(modelCap?.maxResolution ?? cap?.maxResolution);
+  const maxResolution = selectedModel
+    ? asResolution(
+        cap?.models.find((model) => model.key === selectedModel)?.maxResolution ??
+          cap?.maxResolution,
+      )
+    : (lowestOfferedResolution(cap) ?? asResolution(cap?.maxResolution));
   if (!maxResolution) return staticOptions(true);
   return VIDEO_RESOLUTIONS.map((resolution) =>
     resolution.enabled
@@ -290,6 +297,22 @@ function enabledOnly<T extends string | number>(
 
 function hasEnabled(options: CapabilityOption<string | number>[]): boolean {
   return options.some((option) => option.enabled);
+}
+
+/** No model is being sent, so the backend picks one and the mode's aggregate
+ * ceiling would over-promise: the only height Studio can stand behind is the
+ * lowest among the models this mode offers. */
+function lowestOfferedResolution(
+  cap: ModeCapability | undefined,
+): VideoResolution | null {
+  const ceilings = (cap?.models ?? [])
+    .map((model) => asResolution(model.maxResolution))
+    .filter((value): value is VideoResolution => value !== null);
+  return ceilings.length === 0
+    ? null
+    : ceilings.reduce((lowest, value) =>
+        RESOLUTION_RANK[value] < RESOLUTION_RANK[lowest] ? value : lowest,
+      );
 }
 
 function asResolution(value: string | null | undefined): VideoResolution | null {
