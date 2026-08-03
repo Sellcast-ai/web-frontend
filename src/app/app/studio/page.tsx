@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -46,6 +46,7 @@ import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
 import {
   isModeKnownUnavailable,
+  normalizeVideoCapabilities,
   repairMode,
   studioCapabilityState,
   type CapabilityOption,
@@ -210,8 +211,14 @@ function StudioInner() {
   // until the user explicitly picks one — derived, so no effect needed.
   const [languageOverride, setLanguageOverride] = useState<VideoLanguage | null>(null);
   const selectedLanguage = languageOverride ?? defaultLanguageFor(product);
-  const effectiveMode = repairMode(videoCapabilities, mode);
-  const capabilityState = studioCapabilityState(videoCapabilities, {
+  // One validated snapshot per capability read: the mode gate, the repair and
+  // the pickers all narrow against the same thing.
+  const caps = useMemo(
+    () => normalizeVideoCapabilities(videoCapabilities),
+    [videoCapabilities],
+  );
+  const effectiveMode = repairMode(caps, mode);
+  const capabilityState = studioCapabilityState(caps, {
     mode: effectiveMode,
     videoModel,
     resolution,
@@ -230,7 +237,7 @@ function StudioInner() {
   const reviewMode = false;
 
   function selectWithCapabilities(next: Partial<StudioCapabilitySelection>) {
-    const repaired = studioCapabilityState(videoCapabilities, {
+    const repaired = studioCapabilityState(caps, {
       mode: effectiveMode,
       videoModel,
       resolution,
@@ -239,11 +246,9 @@ function StudioInner() {
       ...next,
     }).repaired;
     if (next.mode) setMode(next.mode);
-    if (repaired.videoModel && repaired.videoModel !== videoModel) {
-      setVideoModel(repaired.videoModel);
-    }
-    if (repaired.resolution !== resolution) setResolution(repaired.resolution);
-    if (repaired.aspectRatio !== aspectRatio) setAspectRatio(repaired.aspectRatio);
+    if (repaired.videoModel) setVideoModel(repaired.videoModel);
+    setResolution(repaired.resolution);
+    setAspectRatio(repaired.aspectRatio);
     if (next.language !== undefined || repaired.language !== selectedLanguage) {
       setLanguageOverride(repaired.language);
     }
@@ -498,7 +503,7 @@ function StudioInner() {
                   key={m.value}
                   mode={m}
                   selected={effectiveMode === m.value}
-                  disabled={isModeKnownUnavailable(videoCapabilities, m.value)}
+                  disabled={isModeKnownUnavailable(caps, m.value)}
                   onClick={() => selectWithCapabilities({ mode: m.value })}
                 />
               ))}

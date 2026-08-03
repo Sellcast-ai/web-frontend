@@ -1,15 +1,26 @@
 import { describe, expect, it } from "vitest";
 import {
-  isModeKnownUnavailable,
-  repairMode,
-  studioCapabilityState,
+  isModeKnownUnavailable as modeKnownUnavailableIn,
+  normalizeVideoCapabilities,
+  repairMode as repairModeIn,
+  studioCapabilityState as capabilityStateIn,
   type StudioCapabilitySelection,
 } from "./video-capabilities";
 import {
   VIDEO_ASPECT_RATIOS,
   VIDEO_LANGUAGES,
   type VideoCapabilities,
+  type VideoMode,
 } from "./api/types";
+
+// The module takes one validated snapshot; these cases start from the raw
+// payload shape the backend sends, so they normalize on the way in.
+const studioCapabilityState = (raw: unknown, selection: StudioCapabilitySelection) =>
+  capabilityStateIn(normalizeVideoCapabilities(raw), selection);
+const repairMode = (raw: unknown, mode: VideoMode) =>
+  repairModeIn(normalizeVideoCapabilities(raw), mode);
+const isModeKnownUnavailable = (raw: unknown, mode: VideoMode) =>
+  modeKnownUnavailableIn(normalizeVideoCapabilities(raw), mode);
 
 const baseSelection: StudioCapabilitySelection = {
   mode: "product_only",
@@ -238,6 +249,32 @@ describe("studioCapabilityState", () => {
     expect(enabledValues(state.resolutions)).toEqual(["480p", "720p"]);
     expect(state.repaired.resolution).toBe("720p");
   });
+
+  it.each([null, "ultra-hd", undefined])(
+    "drops to the lowest offered ceiling when the picked model declares %s",
+    (unreadable) => {
+      // The mode says 1080p in aggregate, but the model being sent declares no
+      // ceiling this module can read - trusting the aggregate would offer a
+      // height the server clamps while still charging the 1080p multiplier.
+      const state = studioCapabilityState(
+        [
+          {
+            ...capabilities[0],
+            max_resolution: "1080p",
+            models: [
+              { ...capabilities[0].models[0], max_resolution: unreadable },
+              capabilities[0].models[1],
+            ],
+          },
+        ],
+        { ...baseSelection, resolution: "1080p" },
+      );
+
+      expect(state.repaired.videoModel).toBe("seedance-2.0");
+      expect(enabledValues(state.resolutions)).toEqual(["480p", "720p"]);
+      expect(state.repaired.resolution).toBe("720p");
+    },
+  );
 
   it("degrades to the constants when the payload is malformed", () => {
     for (const malformed of [

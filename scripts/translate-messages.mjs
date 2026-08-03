@@ -17,6 +17,60 @@ const TARGETS = {
 };
 
 const MANUAL_OVERRIDES = {
+  // Studio's capability-narrowing copy: the machine turns a two-letter badge
+  // like "n/a" into a sentence, reads "Fast" in the model name as an adjective
+  // to translate, and renders "Temporarily unavailable" as a speed claim. All
+  // hand-set per locale on the wording that surface already uses.
+  "app.studio.modes.unavailable": {
+    es: "Temporalmente no disponible",
+    zh: "暂时不可用",
+    ja: "一時的に利用できません",
+    ko: "일시적으로 사용할 수 없음",
+    pt: "Temporariamente indisponível",
+    id: "Sementara tidak tersedia",
+    vi: "Tạm thời chưa có",
+    th: "ไม่พร้อมใช้งานชั่วคราว",
+  },
+  "app.studio.models.seedance20Fast.label": {
+    es: "Seedance 2.0 Fast",
+    zh: "Seedance 2.0 Fast",
+    ja: "Seedance 2.0 Fast",
+    ko: "Seedance 2.0 Fast",
+    pt: "Seedance 2.0 Fast",
+    id: "Seedance 2.0 Fast",
+    vi: "Seedance 2.0 Fast",
+    th: "Seedance 2.0 Fast",
+  },
+  "app.studio.models.seedance20Fast.blurb": {
+    es: "Más rápido · hasta 720p",
+    zh: "更快 · 最高 720p",
+    ja: "高速・最大720p",
+    ko: "더 빠름 · 최대 720p",
+    pt: "Mais rápido · até 720p",
+    id: "Lebih cepat · hingga 720p",
+    vi: "Nhanh hơn · lên tới 720p",
+    th: "เร็วขึ้น · สูงถึง 720p",
+  },
+  "app.studio.optionUnavailable.title": {
+    es: "No disponible con este modo",
+    zh: "此模式不支持",
+    ja: "このモードでは利用できません",
+    ko: "이 모드에서는 사용할 수 없음",
+    pt: "Não disponível neste modo",
+    id: "Tidak tersedia untuk mode ini",
+    vi: "Không khả dụng ở chế độ này",
+    th: "ไม่รองรับในโหมดนี้",
+  },
+  "app.studio.optionUnavailable.badge": {
+    es: "n/d",
+    zh: "不适用",
+    ja: "対象外",
+    ko: "미지원",
+    pt: "n/d",
+    id: "n/a",
+    vi: "n/a",
+    th: "ไม่รองรับ",
+  },
   // The one toast standing in for the backend's untranslated credit-refusal
   // prose - the machine reads "credits" as academic credits and "render" as a
   // drawing verb, so every locale is hand-set on the unit noun it already uses.

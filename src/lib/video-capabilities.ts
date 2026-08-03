@@ -104,7 +104,14 @@ function normalizeMode(raw: unknown): ModeCapability | null {
   };
 }
 
-function normalizeCapabilities(raw: unknown): ModeCapability[] | undefined {
+/** The validated payload every entry point reads. Normalize once per capability
+ * read and pass the result around, so the mode gate, the repair and the pickers
+ * provably share one snapshot. `undefined` means no usable read. */
+export type VideoCapabilitySnapshot = ModeCapability[];
+
+export function normalizeVideoCapabilities(
+  raw: unknown,
+): VideoCapabilitySnapshot | undefined {
   if (!Array.isArray(raw)) return undefined;
   const entries = raw
     .map(normalizeMode)
@@ -118,22 +125,25 @@ function modeAvailableIn(caps: ModeCapability[], mode: VideoMode): boolean {
   return Boolean(caps.find((entry) => entry.mode === mode)?.available);
 }
 
-export function isModeKnownUnavailable(capabilities: unknown, mode: VideoMode): boolean {
-  const caps = normalizeCapabilities(capabilities);
+export function isModeKnownUnavailable(
+  caps: VideoCapabilitySnapshot | undefined,
+  mode: VideoMode,
+): boolean {
   return caps !== undefined && !modeAvailableIn(caps, mode);
 }
 
-export function repairMode(capabilities: unknown, mode: VideoMode): VideoMode {
-  const caps = normalizeCapabilities(capabilities);
+export function repairMode(
+  caps: VideoCapabilitySnapshot | undefined,
+  mode: VideoMode,
+): VideoMode {
   if (!caps || modeAvailableIn(caps, mode)) return mode;
   return MODE_ORDER.find((candidate) => modeAvailableIn(caps, candidate)) ?? mode;
 }
 
 export function studioCapabilityState(
-  capabilities: unknown,
+  caps: VideoCapabilitySnapshot | undefined,
   selection: StudioCapabilitySelection,
 ): StudioCapabilityState {
-  const caps = normalizeCapabilities(capabilities);
   const cap = caps?.find((entry) => entry.mode === selection.mode);
   const modeAvailable = !caps || Boolean(cap?.available);
   const models = modelOptions(caps, cap, modeAvailable);
@@ -217,14 +227,19 @@ function resolutionOptions(
     );
   if (!caps) return staticOptions(true);
   if (!modeAvailable) return staticOptions(false);
-  const maxResolution = selectedModel
-    ? asResolution(
-        cap?.models.find((model) => model.key === selectedModel)?.maxResolution ??
-          cap?.maxResolution,
-      )
-    : (lowestOfferedResolution(cap) ?? asResolution(cap?.maxResolution));
+  // A ceiling this module can't read is a reason for more caution, not less:
+  // an unparseable one drops to the same lowest-offered height as sending no
+  // model at all, never up to the mode's aggregate maximum.
+  const maxResolution =
+    (selectedModel
+      ? asResolution(
+          cap?.models.find((model) => model.key === selectedModel)?.maxResolution,
+        )
+      : null) ??
+    lowestOfferedResolution(cap) ??
+    asResolution(cap?.maxResolution);
   if (!maxResolution) return staticOptions(true);
-  return VIDEO_RESOLUTIONS.map((resolution) =>
+  const narrowed = VIDEO_RESOLUTIONS.map((resolution) =>
     resolution.enabled
       ? option(
           resolution.value,
@@ -233,6 +248,7 @@ function resolutionOptions(
         )
       : option(resolution.value, false, "soon"),
   );
+  return hasEnabled(narrowed) ? narrowed : staticOptions(true);
 }
 
 function aspectRatioOptions(

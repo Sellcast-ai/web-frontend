@@ -149,6 +149,21 @@ function render(qc: QueryClient, node: React.ReactNode): string {
   );
 }
 
+// Scoped readers, so an assertion about the pickers fails on the pickers rather
+// than on any future `title`/heading anywhere else on the page.
+function disabledControls(html: string): string[] {
+  return (html.match(/<button[^>]*>/g) ?? []).filter((tag) => /\bdisabled\b/.test(tag));
+}
+
+function tagText(html: string, tag: string): string[] {
+  return [...html.matchAll(new RegExp(`<${tag}[^>]*>([^<]*)</${tag}>`, "g"))].map(
+    (match) => match[1],
+  );
+}
+
+const sectionHeadings = (html: string) => tagText(html, "h2");
+const summaryLabels = (html: string) => tagText(html, "dt");
+
 function save(name: string, html: string) {
   // Best-effort: dumps the rendered surface for reviewers; the assertions below
   // are the real check, so never fail the test if the evidence dir is absent.
@@ -290,11 +305,14 @@ describe("Studio page renders extracted English copy", () => {
         },
       ]);
     });
-    const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).not.toContain("Newest · up to 1080p");
     expect(text).not.toContain("Veo 9");
-    expect(text).not.toContain("Model");
+    // Neither the picker's own section nor the summary row it feeds.
+    expect(sectionHeadings(html)).not.toContain("Model");
+    expect(summaryLabels(html)).not.toContain("Model");
     // Generate stays usable — an unknown model list is not a dead end.
     expect(text).toContain("Generate video");
   });
@@ -331,9 +349,10 @@ describe("Studio page renders extracted English copy", () => {
     const text = html.replace(/<[^>]+>/g, " ");
 
     // 4:3, 1080p and Spanish are all narrowed away by this payload.
-    expect(html).toContain("disabled");
+    const disabled = disabledControls(html);
+    expect(disabled.length).toBeGreaterThan(0);
     expect(text).toContain("Not available with this mode");
-    expect(html).not.toContain("title=");
+    expect(disabled.filter((tag) => tag.includes("title="))).toEqual([]);
     // Fast is unbuilt inventory, not a mode restriction, so it keeps its own
     // copy rather than claiming the other mode offers it.
     expect(text).toContain("Coming soon");
