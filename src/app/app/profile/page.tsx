@@ -10,11 +10,36 @@ import { useTranslations } from "next-intl";
 import { PopIn } from "@/components/ui/motion";
 import { useCurrentUser, usePagedVideoJobs, useUpdateProfile, useUsage } from "@/lib/api/hooks";
 import { api } from "@/lib/api/client";
+import { RENEWING_PLANS } from "@/lib/api/types";
 import { toast } from "@/lib/toast";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+
+// The free grant is one-time and does not renew, so the whole usage card -
+// heading, summary line and exhausted notice - swaps as one triple; picking any
+// of the three on its own is how one of them ends up implying a reset that
+// never comes. Three plans, not two: a known renewing plan earns the monthly
+// wording, the known free literal earns the one-time wording, and a literal
+// nobody recognises (a backend rename, a new tier, or no usage read at all)
+// makes no renewal claim in either direction - "does not renew" is as wrong for
+// a paying customer as "resets" is for a free one.
+function usageCopy(plan: string | undefined) {
+  if (plan && RENEWING_PLANS.includes(plan))
+    return { heading: "thisMonth", summary: "usageSummary", limitHit: "limitHit" } as const;
+  if (plan === "free")
+    return {
+      heading: "creditsOneTime",
+      summary: "usageSummaryOneTime",
+      limitHit: "limitHitOneTime",
+    } as const;
+  return {
+    heading: "creditsOneTime",
+    summary: "usageSummaryNeutral",
+    limitHit: "limitHitCredits",
+  } as const;
+}
 
 export default function ProfilePage() {
   const t = useTranslations("app.profile");
@@ -48,6 +73,7 @@ export default function ProfilePage() {
   const [nameEdit, setNameEdit] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const name = nameEdit ?? user?.display_name ?? "";
+  const cardCopy = usageCopy(usage?.plan);
 
   if (isLoading || !user) {
     return (
@@ -151,16 +177,16 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* monthly quota */}
+      {/* credit quota */}
       {usage && (
         <section className="mt-4 rounded-card border border-border bg-card p-6 shadow-soft">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-display text-lg font-semibold text-ink">
-                {t("thisMonth")}
+                {t(cardCopy.heading)}
               </h2>
               <p className="text-sm text-muted-foreground">
-                {t("usageSummary", {
+                {t(cardCopy.summary, {
                   used: usage.used,
                   limit: usage.limit,
                   plan: usage.plan.charAt(0).toUpperCase() + usage.plan.slice(1),
@@ -189,7 +215,7 @@ export default function ProfilePage() {
           </div>
           {usage.remaining <= 0 && (
             <p className="mt-3 text-sm text-muted-foreground">
-              {t("limitHit")}{" "}
+              {t(cardCopy.limitHit)}{" "}
               <a href="/pricing" className="font-semibold text-brand-700">
                 {t("seePlans")}
               </a>{" "}

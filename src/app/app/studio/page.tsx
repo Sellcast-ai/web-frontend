@@ -50,6 +50,7 @@ import { StaggerItem } from "@/components/ui/motion";
 import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
+import { isOutOfCreditsError } from "@/lib/quota-error";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -155,7 +156,10 @@ function StudioInner() {
   const { data: jobs } = useVideoJobs({}, (list) =>
     capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
   );
-  const create = useCreateJob({ startError: tt("startVideoFailed") });
+  const create = useCreateJob({
+    startError: tt("startVideoFailed"),
+    outOfCredits: tt("outOfCredits"),
+  });
   const generateGuard = useMutationGuard();
 
   // default is product_only, not ai_avatar: avatar mode is selectable but does
@@ -174,6 +178,14 @@ function StudioInner() {
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
+  // The backend-metered balance a create was last refused against by the
+  // credit meter, plus the render it was judged against. Only a later read
+  // showing more credits than that clears the notice - the client has no
+  // honest way to price a render (see render-cost.ts), so it must never decide
+  // that a cheaper pick would now fit. Reconfiguring doesn't reprice it either;
+  // it just makes the refusal stale, so the notice stops describing a render
+  // nobody attempted and the next Generate re-tests against the backend.
+  const [refused, setRefused] = useState<{ balance: number; render: string } | null>(null);
   const { data: avatars } = useAvatars();
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
@@ -183,8 +195,22 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // 1 credit = 1 second of 720p video; this clip needs `duration` credits.
-  const outOfQuota = !!usage && usage.remaining < duration;
+  // Two backend-metered signals, no client pricing: an empty meter (zero is
+  // zero under any rate card, so the user sees it before clicking and Generate
+  // is disabled - no render costs nothing), or
+  // a refused create, still on the render it refused, whose balance hasn't
+  // grown since. `useCreateJob` refetches
+  // usage on failure, so a top-up or a plan change clears this on its own; a
+  // fresh Generate clears it too. Without a usage read there is no honest
+  // balance to quote, so the create toast carries the failure alone.
+  const renderKey = [mode, vibe, duration, videoModel, resolution, aspectRatio].join("|");
+  const noCredits = usage !== undefined && usage.remaining <= 0;
+  const outOfQuota =
+    noCredits ||
+    (usage !== undefined &&
+      refused !== null &&
+      refused.render === renderKey &&
+      usage.remaining <= refused.balance);
   // Pre-flight the backend's active-jobs cap (see MAX_ACTIVE_JOBS) so the user
   // learns about it before configuring, not from a raw 409 after the click.
   const activeCount = capActiveCount(jobs);
@@ -210,6 +236,7 @@ function StudioInner() {
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
     if (!generateGuard.tryBegin()) return;
+    setRefused(null);
     try {
       // failure is surfaced as a toast by useCreateJob
       const job = await create.mutateAsync({
@@ -228,7 +255,17 @@ function StudioInner() {
       });
       // Success keeps the latch held until navigation unmounts the page.
       router.push(`/app/jobs/${job.id}`);
-    } catch {
+    } catch (err) {
+      // Only the credit meter's own refusal latches the notice (see
+      // isOutOfCreditsError - a 429 from an edge rate limiter is not one);
+      // everything else is already a toast from useCreateJob.
+      // Nothing was charged, so the balance the backend judged is the one the
+      // meter already holds. Without a usage read there is no such number, so
+      // nothing latches and the toast carries the failure alone - a read
+      // landing later is a fresh balance, never evidence of the refusal.
+      if (isOutOfCreditsError(err) && usage !== undefined) {
+        setRefused({ balance: usage.remaining, render: renderKey });
+      }
       generateGuard.end();
     }
   }
@@ -666,7 +703,6 @@ function StudioInner() {
                 {t("usageSummary", {
                   remaining: usage.remaining,
                   limit: usage.limit,
-                  duration,
                 })}
               </p>
             )}
@@ -677,8 +713,8 @@ function StudioInner() {
               disabled={
                 create.isPending ||
                 !product ||
-                outOfQuota ||
                 atActiveCap ||
+                noCredits ||
                 linkInvalid ||
                 referenceUploading
               }
@@ -705,12 +741,11 @@ function StudioInner() {
                 </Link>
               </p>
             )}
-            {outOfQuota && (
+            {outOfQuota && usage && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("outOfQuota", {
-                  duration,
-                  remaining: usage?.remaining ?? 0,
-                  limit: usage?.limit ?? 0,
+                  remaining: usage.remaining,
+                  limit: usage.limit,
                 })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   {t("seePlans")}

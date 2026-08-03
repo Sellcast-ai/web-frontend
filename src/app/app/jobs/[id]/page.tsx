@@ -37,6 +37,7 @@ import {
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
 import { ApiError, api, apiErrorMessage } from "@/lib/api/client";
+import { aspectFrameClass } from "@/lib/aspect-frame";
 import { videoJobFailureKey } from "@/lib/failure-messages";
 import { toast } from "@/lib/toast";
 import { StatusBadge } from "@/components/app/status-badge";
@@ -463,7 +464,9 @@ function WorkingView({ job }: { job: VideoJob }) {
           {t("description")}
         </p>
       </div>
-      {job.beats.length > 0 && <BeatGrid beats={job.beats} />}
+      {job.beats.length > 0 && (
+        <BeatGrid beats={job.beats} frameClass={aspectFrameClass(job.aspect_ratio)} />
+      )}
     </div>
   );
 }
@@ -476,6 +479,7 @@ function ReviewView({ job }: { job: VideoJob }) {
   const action = useBeatAction(job.id, {
     approveError: tt("approveShotFailed"),
     regenerateError: tt("regenerateShotFailed"),
+    outOfCredits: tt("outOfCredits"),
   });
 
   return (
@@ -490,7 +494,13 @@ function ReviewView({ job }: { job: VideoJob }) {
         </div>
       </div>
 
-      <BeatGrid beats={job.beats} jobId={job.id} action={action} reviewable />
+      <BeatGrid
+        beats={job.beats}
+        jobId={job.id}
+        frameClass={aspectFrameClass(job.aspect_ratio)}
+        action={action}
+        reviewable
+      />
     </div>
   );
 }
@@ -656,6 +666,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
             shot={shot}
             label={storyboardShotLabel(t, i, draft.shots.length)}
             imageUrl={mediaUrl(job.product_image_url)}
+            frameClass={aspectFrameClass(job.aspect_ratio)}
             onEdit={() => setEditing(i)}
           />
         ))}
@@ -762,17 +773,20 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
   );
 }
 
-/** Read-first shot card: a 9:16 on-screen-text preview + the spoken line as a
- *  quote, with director metadata tucked into the tap-to-edit drawer. */
+/** Read-first shot card: an on-screen-text preview in the job's own output
+ *  shape + the spoken line as a quote, with director metadata tucked into the
+ *  tap-to-edit drawer. */
 function ShotCard({
   shot,
   label,
   imageUrl,
+  frameClass,
   onEdit,
 }: {
   shot: Shot;
   label: string;
   imageUrl?: string;
+  frameClass: string;
   onEdit: () => void;
 }) {
   const t = useTranslations("app.jobs.shotCard");
@@ -784,10 +798,15 @@ function ShotCard({
       : shot.nudge_note?.trim() || null;
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
-      {/* 9:16 preview — no shots are generated pre-approval, so show the product
-          photo (it already exists) + the on-screen text; fall back to the soft
+      {/* no shots are generated pre-approval, so show the product photo (it
+          already exists) + the on-screen text; fall back to the soft
           placeholder when the job has no product image. Mirrors BeatCard. */}
-      <div className="relative aspect-9/16 w-20 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10 sm:w-24">
+      <div
+        className={cn(
+          "relative w-20 shrink-0 overflow-hidden rounded-xl bg-brand-gradient/10 sm:w-24",
+          frameClass,
+        )}
+      >
         {imageUrl ? (
           <img src={imageUrl} alt="" className="h-full w-full object-cover" />
         ) : (
@@ -796,8 +815,8 @@ function ShotCard({
           </div>
         )}
         {shot.on_screen_text && (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-1.5 pb-1.5 pt-6">
-            <p className="text-center text-[10px] font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-1.5 pb-1 pt-3">
+            <p className="line-clamp-2 text-center text-[10px] font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
               {shot.on_screen_text}
             </p>
           </div>
@@ -1026,11 +1045,13 @@ function beatLabel(
 function BeatGrid({
   beats,
   jobId,
+  frameClass,
   action,
   reviewable = false,
 }: {
   beats: VideoJobBeat[];
   jobId?: string;
+  frameClass: string;
   action?: ReturnType<typeof useBeatAction>;
   reviewable?: boolean;
 }) {
@@ -1042,6 +1063,7 @@ function BeatGrid({
           key={b.beat_index}
           beat={b}
           label={beatLabel(t, b.beat_index, beats.length)}
+          frameClass={frameClass}
           action={action}
           reviewable={reviewable}
           jobId={jobId}
@@ -1067,11 +1089,13 @@ const BEAT_STATUS: Record<BeatReviewStatus, { labelKey: string; cls: string }> =
 function BeatCard({
   beat,
   label,
+  frameClass,
   action,
   reviewable,
 }: {
   beat: VideoJobBeat;
   label: string;
+  frameClass: string;
   action?: ReturnType<typeof useBeatAction>;
   reviewable: boolean;
   jobId?: string;
@@ -1099,7 +1123,7 @@ function BeatCard({
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-      <div className="relative aspect-9/16 bg-muted">
+      <div className={cn("relative bg-muted", frameClass)}>
         {img ? (
           <img src={img} alt={label} className="h-full w-full object-cover" />
         ) : (
@@ -1123,8 +1147,8 @@ function BeatCard({
             disabled in the backend (settings.burn_captions), so this text does
             not appear in the rendered file. See AGENTS.md. */}
         {beat.on_screen_text && (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-3 pb-3 pt-10">
-            <p className="text-center text-sm font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent px-3 pb-2 pt-6">
+            <p className="line-clamp-2 text-center text-sm font-extrabold leading-tight text-white [text-shadow:_0_1px_4px_rgb(0_0_0_/_55%)]">
               {beat.on_screen_text}
             </p>
           </div>
@@ -1187,7 +1211,12 @@ function CompletedView({ job }: { job: VideoJob }) {
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-[20rem_1fr]">
       <div className="mx-auto w-full max-w-[20rem]">
-        <div className="aspect-9/16 overflow-hidden rounded-card border border-border bg-ink shadow-card">
+        <div
+          className={cn(
+            "overflow-hidden rounded-card border border-border bg-ink shadow-card",
+            aspectFrameClass(job.aspect_ratio),
+          )}
+        >
           <video
             src={src}
             poster={mediaUrl(job.thumbnail_url)}
@@ -1218,7 +1247,9 @@ function CompletedView({ job }: { job: VideoJob }) {
             {t("markPosted")}
           </Button>
         </div>
-        {job.beats.length > 0 && <BeatGrid beats={job.beats} />}
+        {job.beats.length > 0 && (
+          <BeatGrid beats={job.beats} frameClass={aspectFrameClass(job.aspect_ratio)} />
+        )}
       </div>
     </div>
   );
@@ -1229,7 +1260,10 @@ function CompletedView({ job }: { job: VideoJob }) {
 function FailedView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.failed");
   const tt = useTranslations("app.toasts");
-  const retry = useRetryJob({ retryError: tt("retryJobFailed") });
+  const retry = useRetryJob({
+    retryError: tt("retryJobFailed"),
+    outOfCredits: tt("outOfCredits"),
+  });
   // Synchronous latch — retry resumes billed work, so a same-tick double-click
   // must not fire it twice before `retry.isPending` can engage.
   const retryGuard = useMutationGuard();

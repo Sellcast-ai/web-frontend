@@ -76,16 +76,25 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
   it is not configured, the card honestly reads unavailable.
 - [ ] Create a video → worker renders it → it appears under My Videos **Success** and plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** is still selectable but does not currently produce a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
 - [ ] Check My Videos management: `awaiting_storyboard` / `awaiting_review` jobs show under **Needs you**, `queued` / `submitted` / `in_progress` jobs under **On the way**, failed jobs under **Failed**, and deleting a job requires the permanent/no-refund confirmation before it disappears from the list.
-- [ ] Hit the monthly limit (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → create is blocked with "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
+- [ ] Drain the credit meter (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → Studio disables **Generate** at zero remaining and says why, and a create the backend refuses shows the localized out-of-credits toast, never the backend's English refusal prose. "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
+- [ ] Open `/app/profile` on a free account → the usage card reads as a one-time credit grant, never "this month" / "resets"; only a plan literal in `RENEWING_PLANS` (`src/lib/api/types.ts`, mirroring the backend's `settings.plan_monthly_credits`) earns the monthly wording, and an unrecognised one claims neither
 - [ ] While signed in, browse the marketing pages → header and every CTA read "Open Studio"; opening `/signup` or `/login` directly redirects into the app
 - [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` resolves from `SITE_URL` (`src/lib/site-url.ts`), which defaults to the Vercel deployment origin - once a real domain is attached, set `NEXT_PUBLIC_SITE_URL` to it in Vercel (all environments) and redeploy, or the card URL keeps pointing at the old origin.
 
 ## Cost control (free beta)
 Each rendered video spends OpenAI + FAL credit, and shot regenerations during
-review spend 1 credit each from the same monthly allowance. The guardrail is the
-per-user monthly cap (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`, default 10) enforced
-on `POST /video-jobs`. Lower it if you want a tighter budget. Set a hard spend
-cap on the OpenAI + FAL accounts as a backstop.
+review spend 1 credit each from the same balance. The guardrail is the per-user
+cap (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`, default 10) enforced on
+`POST /video-jobs`. Lower it if you want a tighter budget. Set a hard spend cap
+on the OpenAI + FAL accounts as a backstop.
+
+**The backend credit lane is a launch prerequisite.** The web copy already
+states the 2026-08-01 credit model (credits track real render cost, decided by
+model, resolution and aspect ratio; the free grant is 300 credits one-time and
+never renews; paid plans are Creator 900 / Pro 3,000 / Scale 7,500 per month),
+while the deployed backend still meters rendered seconds under the cap above.
+That copy was approved as ahead-of-backend, so flipping the grant and the plan
+allowances happens before announcing, not after (credit section of `AGENTS.md`).
 
 ## When you're ready to charge (later)
 Add Stripe: a `plan` column on `users`, a checkout + webhook that sets the plan,

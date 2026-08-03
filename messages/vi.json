@@ -24,6 +24,7 @@
       "startImportFailed": "Không thể bắt đầu quá trình nhập. Vui lòng thử lại.",
       "saveProductFailed": "Không thể lưu sản phẩm. Vui lòng thử lại.",
       "startVideoFailed": "Không thể bắt đầu video. Vui lòng thử lại.",
+      "outOfCredits": "Không đủ tín dụng cho lần render này.",
       "approveShotFailed": "Không thể phê duyệt cảnh quay. Vui lòng thử lại.",
       "regenerateShotFailed": "Không thể tạo lại cảnh quay. Vui lòng thử lại.",
       "approveStoryboardFailed": "Không thể phê duyệt bảng phân cảnh. Vui lòng thử lại.",
@@ -283,11 +284,11 @@
         "action": "Thử lại"
       },
       "thisMonth": "Tháng này",
-      "usageSummary": "{used} của tín dụng {limit} đã sử dụng · Gói {plan} · đặt lại {date}",
-      "creditNote": "1 tín dụng = 1 giây của video",
-      "creditsLeft": "trái",
-      "limitHit": "Bạn đã đạt đến giới hạn hàng tháng của mình.",
-      "seePlans": "Xem kế hoạch",
+      "usageSummary": "Đã dùng {used}/{limit} tín dụng · gói {plan} · làm mới ngày {date}",
+      "creditNote": "Tín dụng phản ánh chi phí render thực tế - chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn.",
+      "creditsLeft": "còn lại",
+      "limitHit": "Bạn đã dùng hết hạn mức tháng này.",
+      "seePlans": "Xem các gói",
       "forMore": "để biết thêm.",
       "displayName": "Tên hiển thị",
       "save": "Lưu",
@@ -295,7 +296,12 @@
       "connectedAccounts": "Tài khoản được kết nối",
       "appearance": "Ngoại hình",
       "appearanceDescription": "Hệ thống, sáng hoặc tối - khớp với ứng dụng Lumi.",
-      "logOut": "Đăng xuất"
+      "logOut": "Đăng xuất",
+      "usageSummaryOneTime": "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
+      "usageSummaryNeutral": "Đã dùng {used}/{limit} tín dụng · gói {plan}",
+      "creditsOneTime": "Tín dụng của bạn",
+      "limitHitOneTime": "Bạn đã dùng hết tín dụng miễn phí.",
+      "limitHitCredits": "Bạn đã dùng hết tín dụng."
     },
     "productsNew": {
       "startTitle": "Thêm một sản phẩm",
@@ -474,11 +480,11 @@
       "size": {
         "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
-      "usageSummary": "Còn {remaining}/{limit} tín dụng trong tháng này · video này dùng {duration} tín dụng",
+      "usageSummary": "Còn {remaining}/{limit} tín dụng",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
-      "outOfQuota": "Không đủ tín dụng cho video {duration} (còn lại {remaining} của {limit}).",
-      "seePlans": "Xem kế hoạch",
+      "outOfQuota": "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
+      "seePlans": "Xem các gói",
       "cap": {
         "reached": "Bạn đã có {count} video đang được xử lý (giới hạn {limit}). Bạn có thể tạo video mới ngay khi một trong số đó hoàn tất.",
         "viewVideos": "Video của tôi"
@@ -531,13 +537,13 @@
         "shot": "Bắn {number}"
       },
       "working": {
-        "renderingBeats": "Đang hiển thị nhịp đập của bạn…",
+        "renderingBeats": "Đang render các cảnh của bạn…",
         "writingScript": "Viết kịch bản có căn cứ của bạn…",
         "description": "Trang này cập nhật tự động. Bạn có thể rời đi và quay lại."
       },
       "review": {
-        "title": "Xem lại nhịp đập của bạn",
-        "description": "Phê duyệt từng cảnh quay hoặc tạo lại những cảnh bạn không yêu thích. Lumi hiển thị khi mỗi nhịp được phê duyệt."
+        "title": "Xem lại storyboard của bạn",
+        "description": "Duyệt từng cảnh, hoặc tạo lại những cảnh bạn chưa ưng. Lumi sẽ render khi mọi cảnh đã được duyệt."
       },
       "storyboard": {
         "title": "Đây là kế hoạch cho video của bạn",
@@ -617,7 +623,7 @@
       "completed": {
         "badge": "Sẵn sàng xuất bản",
         "title": "Video của bạn đã sẵn sàng 🎉",
-        "description": "Đoạn cắt 9:16 sẵn sàng xuất bản có âm thanh nói. Tải xuống hoặc đánh dấu nó đã đăng để giữ cho số liệu thống kê của bạn gọn gàng.",
+        "description": "Một bản cắt sẵn sàng đăng kèm âm thanh lồng tiếng. Tải xuống hoặc đánh dấu đã đăng để số liệu luôn gọn gàng.",
         "download": "Tải xuống",
         "markPosted": "Đánh dấu là đã đăng"
       },
@@ -684,7 +690,7 @@
     },
     "jobProgress": {
       "script": "kịch bản",
-      "beats": "nhịp đập",
+      "beats": "Cảnh",
       "review": "Xem lại",
       "render": "Kết xuất",
       "ready": "Sẵn sàng"
@@ -728,8 +734,8 @@
     "layout": {
       "heroTitle": "Từ liên kết sản phẩm đến video dừng cuộn — chỉ trong vài phút.",
       "benefitScripts": "Kịch bản dựa trên mô hình lan truyền thực sự",
-      "benefitReview": "Xem lại từng nhịp trước khi nó hiển thị",
-      "benefitPublish": "Sẵn sàng xuất bản 9:16 cho TikTok & Câu chuyện"
+      "benefitReview": "Xem từng cảnh trước khi render",
+      "benefitPublish": "5 tỷ lệ khung hình cho mọi nền tảng"
     },
     "metadata": {
       "signIn": "Đăng nhập",
@@ -913,7 +919,7 @@
           "title": "Quy trình làm việc",
           "linkToVideo": "Liên kết tới Video",
           "patternScripts": "Kịch bản mẫu",
-          "beatReview": "Đánh giá đánh giá",
+          "beatReview": "Duyệt storyboard",
           "publish": "Xuất bản"
         },
         "company": {
@@ -946,9 +952,9 @@
       "q2": "Tôi có cần quay phim hay chụp ảnh gì không?",
       "a2": "Không. Lumi dựng bản giới thiệu chỉ có sản phẩm — hình ảnh và lời lồng tiếng được tạo từ đầu đến cuối từ sản phẩm của bạn, nên không phải quay gì cả.",
       "q3": "Tôi có thể xem lại video trước khi video được hiển thị đầy đủ không?",
-      "a3": "Vâng - đó là cổng Beat Review. Lumi tạo hình ảnh tham chiếu cho mỗi nhịp (cú đánh) trước tiên. Bạn phê duyệt hoặc tạo lại từng cái và chỉ khi đó nó mới dành thời gian hiển thị. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
+      "a3": "Có. Kịch bản của bạn đến dưới dạng storyboard gồm các cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn ưng ý, tạo lại những cảnh chưa ưng với 1 tín dụng mỗi lần, và chỉ khi bạn duyệt thì bản render đầy đủ mới tiêu tín dụng.",
       "q4": "Lumi sử dụng mô hình video nào?",
-      "a4": "Lumi hiển thị với Seedance 2.0, điều chỉnh cài đặt cho mỗi lần chụp. Nhiều mô hình video biên giới hơn đang được triển khai — tập lệnh và nhịp điệu của bạn sẽ được chuyển tiếp khi các mô hình mới xuất hiện.",
+      "a4": "Hiện Seedance 2.0 render video của bạn. Seedance 2.0 Fast và 2.0 Mini sắp có trong bộ chọn của Studio, sau đó là Seedance 2.5 - kịch bản và storyboard đã duyệt của bạn vẫn dùng được khi chúng xuất hiện.",
       "q5": "Dữ liệu sản phẩm đến từ đâu?",
       "a5": "Dán liên kết từ Amazon, Shopee, TikTok Shop hoặc cửa hàng của bạn, hoặc tải lên ảnh sản phẩm của riêng bạn, và Lumi sẽ đọc tiêu đề, mô tả, hình ảnh để tạo nội dung. Sản phẩm của bạn chỉ riêng tư với bạn.",
       "q6": "Một video mất bao lâu?",
@@ -972,11 +978,11 @@
           "name": "miễn phí",
           "note": "không có thẻ",
           "allowance": "Video đầu tiên của bạn miễn phí",
-          "credits": "20 tín chỉ, một lần",
+          "credits": "300 tín dụng, một lần",
           "features": [
-            "720p · xuất 9:16",
+            "Xuất 720p · 5 tỷ lệ khung hình",
             "Nhập bằng liên kết sản phẩm",
-            "Hiển thị QA tự động",
+            "Duyệt storyboard",
             "Hình mờ Lumi"
           ],
           "cta": "Bắt đầu miễn phí"
@@ -985,11 +991,11 @@
           "name": "Người sáng tạo",
           "note": "mỗi tháng",
           "allowance": "≈ 3 video / tháng",
-          "credits": "75 tín chỉ/tháng",
+          "credits": "900 tín dụng / tháng",
           "features": [
-            "Không có hình mờ",
-            "Đánh giá từng nhịp",
-            "720p · xuất 9:16"
+            "Không hình mờ",
+            "Duyệt storyboard",
+            "Xuất 720p · 5 tỷ lệ khung hình"
           ],
           "cta": "Bắt đầu tạo"
         },
@@ -997,7 +1003,7 @@
           "name": "chuyên nghiệp",
           "note": "mỗi tháng",
           "allowance": "≈ 10 video/tháng",
-          "credits": "200 tín chỉ/tháng",
+          "credits": "3.000 tín dụng / tháng",
           "features": [
             "Mọi thứ trong Creator",
             "Nhiều tín dụng hơn, cùng chi phí cho mỗi video",
@@ -1009,7 +1015,7 @@
           "name": "quy mô",
           "note": "mỗi tháng",
           "allowance": "≈ 25 video/tháng",
-          "credits": "500 tín chỉ/tháng",
+          "credits": "7.500 tín dụng / tháng",
           "features": [
             "Mọi thứ trong Pro",
             "Để đăng bài liên tục",
@@ -1032,26 +1038,26 @@
           "cta": "Liên hệ bán hàng"
         }
       },
-      "creditFootnote": "1 tín dụng = 1 giây của video. Số lượng video là gần đúng, dựa trên các clip dài 20 giây - video 15 giây sử dụng ít tín dụng hơn, video 30 giây sử dụng nhiều hơn.",
+      "creditFootnote": "Tín dụng phản ánh chi phí render thực tế: chi phí chính xác của một video phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn. Số lượng video chỉ là ước tính, dựa trên clip 20 giây chạy Seedance 2.0 ở 720p (mỗi clip 300 tín dụng).",
       "everyPlanIncludes": "Mỗi kế hoạch bao gồm",
       "included": [
-        "Kịch bản dựa trên mẫu",
-        "Đánh giá từng nhịp",
-        "9:16 cho TikTok & Cuộn phim",
+        "Kịch bản dựa trên mô hình thực tế",
+        "Duyệt storyboard trước khi tốn tín dụng",
+        "5 tỷ lệ khung hình cho mọi nền tảng",
         "Dán bất kỳ liên kết sản phẩm nào hoặc tải ảnh sản phẩm lên"
       ],
       "billingQuestions": "Câu hỏi thanh toán",
       "faq": {
         "q1": "Tín dụng là gì?",
-        "a1": "1 tín dụng = 1 giây video hoàn chỉnh. Video 20 giây tốn 20 tín dụng; video 30 giây tốn 30. Bạn tự chọn độ dài, nên chi phí mỗi lần render luôn rõ ràng trước khi bắt đầu.",
+        "a1": "Tín dụng phản ánh chi phí render thực tế của video. Chi phí chính xác phụ thuộc vào mô hình, độ phân giải và tỷ lệ khung hình bạn chọn — clip 20 giây chạy Seedance 2.0 ở 720p tốn 300 tín dụng, và các thiết lập nhẹ hơn thì rẻ hơn.",
         "q2": "Việc tái tạo có tốn tín dụng không?",
-        "a2": "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng hạn mức tín dụng hằng tháng với lần render cuối cùng của bạn.",
+        "a2": "Có — mỗi lần tạo lại tốn 1 tín dụng. Tạo lại một cảnh trong lúc duyệt sẽ trừ vào cùng số dư tín dụng với lần render cuối cùng của bạn.",
         "q3": "Nếu tôi hết tín dụng thì sao?",
-        "a3": "Tín dụng được đặt lại vào đầu mỗi chu kỳ thanh toán. Thanh toán trực tuyến tự phục vụ chưa khả dụng - để tăng hạn mức hằng tháng, hãy gửi email tới {address} và chúng tôi sẽ thiết lập cho bạn.",
+        "a3": "Tín dụng của gói trả phí được đặt lại vào đầu mỗi chu kỳ thanh toán; tín dụng miễn phí khi đăng ký chỉ cấp một lần và không gia hạn. Thanh toán tự phục vụ chưa khả dụng - để nâng lên hạn mức hằng tháng lớn hơn, hãy email {address} và chúng tôi sẽ thiết lập cho bạn.",
         "q4": "Tôi có thể thay đổi kế hoạch bất cứ lúc nào không?",
         "a4": "Được. Trong khi thanh toán tự phục vụ đang được xây dựng, việc đổi gói được xử lý qua email - hãy gửi thư tới {address}. Gói năm tiết kiệm khoảng 20% so với gói tháng.",
         "q5": "Lumi sử dụng mô hình kết xuất nào?",
-        "a5": "Lumi hiển thị với Seedance 2.0 và sắp ra mắt nhiều mẫu hơn. Nó chọn các cài đặt tốt nhất cho mỗi lần chụp."
+        "a5": "Hiện mô hình render trong Studio là Seedance 2.0. Seedance 2.0 Fast và 2.0 Mini sắp có trong bộ chọn cho những lúc tốc độ và chi phí quan trọng hơn, rồi đến Seedance 2.5."
       },
       "upgrade": {
         "cta": "Nâng cấp",
@@ -1063,10 +1069,10 @@
     },
     "landing": {
       "heroTitle": "Biến mọi liên kết sản phẩm thành <highlight>video bán được hàng.</highlight>",
-      "heroSubtitle": "Dán liên kết vào. Lumi học mẫu hình từ những video hiệu quả nhất trong ngành hàng của bạn, viết kịch bản và render từng cảnh một. Bạn duyệt từng beat trước khi một credit nào bị trừ.",
+      "heroSubtitle": "Dán một liên kết. Lumi học mô hình đằng sau những video hiệu quả nhất trong ngành của bạn và viết kịch bản thành một storyboard gồm nhiều cảnh. Xem và duyệt từng cảnh — bản render đầy đủ chỉ tiêu tín dụng khi bạn ra hiệu.",
       "heroPrimary": "Tạo video đầu tiên của bạn",
       "heroSecondary": "Xem cách hoạt động",
-      "heroFinePrint": "Video đầu tiên miễn phí · Không cần thẻ · 9:16 sẵn sàng đăng",
+      "heroFinePrint": "Video đầu tiên miễn phí · Không cần thẻ · 5 tỷ lệ khung hình",
       "sound": {
         "unmute": "Bật tiếng video mẫu",
         "mute": "Tắt tiếng video mẫu"
@@ -1101,12 +1107,12 @@
         "shopNow": "Mua ngay"
       },
       "marquee": {
-        "seedance": "Render bằng Seedance 2.0",
+        "seedance": "Seedance 2.0",
         "languages": "8 ngôn ngữ lồng tiếng",
         "productOnly": "Chế độ chỉ sản phẩm",
-        "review": "Duyệt từng beat",
+        "review": "Duyệt storyboard",
         "qa": "QA lời thoại tự động",
-        "ratio": "9:16 sẵn sàng đăng",
+        "ratio": "5 tỷ lệ khung hình",
         "vibes": "5 vibe đặc trưng",
         "sources": "Amazon · Shopee · TikTok Shop",
         "durations": "Video 10–30 giây"
@@ -1124,7 +1130,7 @@
           "uiOffer": "Ưu đãi — lời mời rõ ràng"
         },
         "review": {
-          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 credit, và bản render đầy đủ chỉ bị trừ credit sau khi bạn bấm chạy.",
+          "body": "Mỗi cảnh có một khung hình tham chiếu trước. Duyệt, chỉnh, hoặc tạo lại đến khi ưng ý — mỗi lần tạo lại tốn 1 tín dụng, và bản render đầy đủ chỉ bị trừ tín dụng sau khi bạn bấm chạy.",
           "caption": "Bạn quyết định, trước khi render.",
           "uiHeading": "Duyệt storyboard",
           "uiSpend": "Đã chi $0",
@@ -1148,17 +1154,17 @@
         },
         "approve": {
           "title": "Bạn duyệt storyboard",
-          "body": "Mỗi beat có khung hình tham chiếu trước. Tạo lại tốn 1 credit mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
+          "body": "Mỗi cảnh có khung hình tham chiếu trước. Tạo lại tốn 1 tín dụng mỗi lần — bản render đầy đủ, và khoản phí của nó, chỉ bắt đầu sau khi bạn ký duyệt."
         },
         "render": {
           "title": "Seedance render",
-          "body": "QA tự động đối chiếu từng câu thoại với kịch bản, và bản cắt 9:16 sẵn sàng để đăng."
+          "body": "QA tự động đối chiếu từng câu thoại với kịch bản, và video sẵn sàng đăng theo tỷ lệ khung hình bạn đã chọn."
         }
       },
       "storyFact1": "Chi phí render bằng $0 cho đến khi bạn duyệt",
-      "storyFact2": "1 credit = 1 giây video",
+      "storyFact2": "Tín dụng phản ánh chi phí render thực tế",
       "wallTitle": "Mọi ngành hàng, <highlight>mọi thị trường</highlight>",
-      "wallSubtitle": "Mọi video Lumi đều xuất ở 9:16 kèm lời lồng tiếng, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
+      "wallSubtitle": "Mọi video Lumi đều có lồng tiếng theo tỷ lệ khung hình bạn chọn, với kịch bản và giọng đọc được điều chỉnh cho từng thị trường mục tiêu.",
       "wallAudience": "Dành cho người bán, nhà sáng tạo, thương hiệu và agency — bất kỳ ai bán hàng bằng video.",
       "wall": {
         "beauty": {
@@ -1187,7 +1193,7 @@
         }
       },
       "pricingTitle": "Bắt đầu miễn phí. <highlight>Hiệu quả rồi mở rộng.</highlight>",
-      "pricingSubtitle": "Theo credit: 1 credit = 1 giây video. Video đầu tiên miễn phí — không cần thẻ.",
+      "pricingSubtitle": "Tính theo tín dụng: tín dụng phản ánh chi phí render thực tế, nên thiết lập nhẹ hơn sẽ rẻ hơn. Video đầu tiên của bạn miễn phí - không cần thẻ.",
       "mostPopular": "Phổ biến nhất",
       "pricingTiers": {
         "creator": {
@@ -1195,9 +1201,9 @@
           "price": "$29",
           "note": "/ tháng",
           "features": [
-            "75 credit — khoảng 3 video",
-            "Không có hình mờ",
-            "Đánh giá từng nhịp"
+            "900 tín dụng — khoảng 3 video",
+            "Không hình mờ",
+            "Duyệt storyboard"
           ]
         },
         "pro": {
@@ -1205,10 +1211,10 @@
           "price": "$79",
           "note": "/ tháng",
           "features": [
-            "200 credit — khoảng 10 video",
-            "Mọi thứ trong Creator",
+            "3.000 tín dụng — khoảng 10 video",
+            "Mọi tính năng của Creator",
             "Render ưu tiên",
-            "720p · xuất 9:16"
+            "Xuất 720p · 5 tỷ lệ khung hình"
           ]
         },
         "scale": {
@@ -1216,9 +1222,9 @@
           "price": "$199",
           "note": "/ tháng",
           "features": [
-            "500 credit — khoảng 25 video",
-            "Mọi thứ trong Pro",
-            "Cho việc đăng đều đặn không ngừng"
+            "7.500 tín dụng — khoảng 25 video",
+            "Mọi tính năng của Pro",
+            "Dành cho đăng bài liên tục"
           ]
         }
       },
@@ -1259,18 +1265,18 @@
           "body": "Trước khi viết một từ, Lumi nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và trích xuất mô hình cấu trúc — hình móc câu, bằng chứng và CTA thực sự chuyển đổi. Tập lệnh của bạn được xây dựng trên đó, không bao giờ là một trang trống.",
           "bullets": [
             "Tìm hiểu cấu trúc từ những người chiến thắng tự nhiên được lọc trong danh mục của bạn",
-            "Nhịp đập móc / bằng chứng / chào hàng, không thực hiện sao chép",
+            "Cảnh hook / bằng chứng / chào hàng, không phải bản sao chép",
             "Ngôn ngữ khán giả được mô phỏng từ những người biểu diễn hàng đầu"
           ]
         },
         "review": {
           "kicker": "Kiểm soát",
-          "title": "Đánh giá từng nhịp",
-          "body": "Lumi tạo hình ảnh tham chiếu cho mỗi nhịp đầu tiên. Phê duyệt những bức ảnh bạn yêu thích, tạo lại những bức ảnh bạn không thích — và chỉ khi đó nó mới tiêu tốn thời gian kết xuất. Thích rảnh tay hơn? Auto-QA phê duyệt nhịp cho bạn.",
+          "title": "Duyệt storyboard",
+          "body": "Lumi viết kịch bản thành storyboard gồm nhiều cảnh, mỗi cảnh có một khung hình tham chiếu được tạo trước. Duyệt những cảnh bạn thích, tạo lại những cảnh chưa ưng với giá 1 tín dụng mỗi lần — và chỉ khi bạn duyệt, bản render đầy đủ mới tiêu tín dụng.",
           "bullets": [
-            "Khung tham chiếu cho mỗi lần chụp trước khi kết xuất bất kỳ kết xuất nào",
-            "Phê duyệt hoặc tái tạo, đánh bại từng nhịp",
-            "QA tự động tùy chọn cho luồng không cần nhấp chuột"
+            "Một khung hình tham chiếu cho mỗi cảnh trước khi render tốn phí",
+            "Tạo lại từng cảnh riêng lẻ với 1 tín dụng",
+            "Bản render đầy đủ chờ bạn phê duyệt"
           ]
         },
         "modes": {
@@ -1278,14 +1284,14 @@
           "title": "Giới thiệu chỉ sản phẩm",
           "body": "Bản cắt gọn gàng lấy sản phẩm làm trung tâm, không cần quay người dẫn — bốn phong cách dựng sẵn gồm cảnh giới thiệu sắc nét, làm nổi bật tính năng, mở hộp và các đoạn cắt tập trung vào ưu đãi.",
           "bullets": [
-            "4 phong cách được điều chỉnh cho thương mại",
-            "Độ dài 10–30 giây, 9:16 bản địa"
+            "4 phong cách tối ưu cho thương mại",
+            "Độ dài 10–30 giây, 5 tỷ lệ khung hình"
           ]
         },
         "qa": {
           "kicker": "chất lượng",
           "title": "QA đối thoại tự động",
-          "body": "Sau khi mỗi nhịp hiển thị, Whisper sẽ ghi lại lời thoại và kiểm tra nó với kịch bản, gắn cờ trôi dạt. Giọng nói luôn nói lên những gì nó phải nói — không có bất ngờ nào ngoài kịch bản.",
+          "body": "Sau khi mỗi cảnh render xong, Whisper ghi lại lời thoại và đối chiếu với kịch bản, đánh dấu chỗ lệch. Giọng đọc luôn nói đúng những gì cần nói, không có bất ngờ ngoài kịch bản.",
           "bullets": [
             "Phiên âm thì thầm trên mỗi dòng được hiển thị",
             "Điểm trôi so với kịch bản dự định",
@@ -1295,10 +1301,10 @@
         "publish": {
           "kicker": "Xuất bản",
           "title": "Bản xuất sẵn sàng đăng",
-          "body": "Bản cắt có kích thước 9:16 cho TikTok và Reels — sẵn sàng tải xuống hoặc đánh dấu đã đăng để số liệu của bạn luôn gọn gàng.",
+          "body": "Chọn trong 5 tỷ lệ khung hình trong Studio — 9:16 cho TikTok và Reels, 16:9, 1:1, 4:3 hoặc 3:4 — rồi tải xuống hoặc đánh dấu đã đăng để số liệu luôn gọn gàng.",
           "bullets": [
-            "Bản xuất 9:16 sẵn sàng đăng",
-            "Theo dõi đã đăng và bản nháp trong Video của tôi"
+            "Xuất video sẵn sàng đăng với 5 tỷ lệ khung hình",
+            "Theo dõi đã đăng vs. bản nháp trong Video của tôi"
           ]
         }
       }
@@ -1308,37 +1314,57 @@
         "kicker": "Người mẫu",
         "title": "Một studio, biên giới của",
         "highlight": "AI video.",
-        "subtitle": "Lumi hiển thị mọi nhịp điệu với Seedance 2.0 — và tập lệnh của bạn sẽ tiếp tục khi có mẫu mới."
+        "subtitle": "Hiện Studio render bằng Seedance 2.0; các mô hình còn lại trong gia đình sẽ vào bộ chọn khi sẵn sàng, và kịch bản của bạn vẫn dùng được."
       },
       "cards": {
         "seedance": {
           "name": "Seedance 2.0",
-          "tag": "Trực tiếp",
-          "desc": "Chuyển động nhanh, sống động như thật cho ảnh chụp sản phẩm — công cụ kết xuất của Lumi cho từng nhịp, với âm thanh được tạo ra trên mỗi lần chụp.",
+          "tag": "Đang dùng được",
+          "desc": "Mẫu flagship — chuyển động sống động nhất cho cảnh sản phẩm, lên đến 1080p, kèm âm thanh tạo theo từng cảnh.",
           "bestFor": [
-            "Chuyển động của sản phẩm",
-            "Âm thanh theo từng cảnh",
-            "Tốc độ"
+            "Chất lượng cao nhất",
+            "Lên đến 1080p",
+            "Âm thanh theo cảnh"
           ]
         },
-        "more": {
-          "name": "Thêm nữa trên đường đi",
-          "tag": "Sớm thôi",
-          "desc": "Chúng tôi đang bổ sung thêm các mô hình video biên giới khi chúng chứng minh được điều đó. Các tập lệnh và nhịp được phê duyệt của bạn không phụ thuộc vào mô hình nên chúng sẽ tiếp tục mà không cần làm lại.",
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "Sắp ra mắt",
+          "desc": "Cùng gia đình nhưng tối ưu cho tốc độ — render nhanh hơn với chi phí tín dụng thấp hơn, lên đến 720p. Sắp có trong bộ chọn.",
+          "bestFor": [
+            "Tốc độ",
+            "Chi phí thấp hơn",
+            "Lên đến 720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "Sắp ra mắt",
+          "desc": "Gói nhẹ nhất — nháp và lặp lại với chi phí tín dụng thấp nhất mỗi lần render, lên đến 720p. Sắp có trong bộ chọn.",
+          "bestFor": [
+            "Bản nháp",
+            "Chi phí thấp nhất",
+            "Lên đến 720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "Sắp ra mắt",
+          "desc": "Thế hệ tiếp theo sẽ xuất hiện trong bộ chọn ngay khi có trên nhà cung cấp render của chúng tôi. Kịch bản và storyboard đã duyệt của bạn được chuyển sang mà không cần làm lại.",
           "bestFor": [
             "Lộ trình",
-            "Không làm lại"
+            "Không cần làm lại"
           ]
         }
       },
       "points": {
         "tuned": {
-          "title": "Điều chỉnh theo nhịp",
-          "body": "Lumi đặt chuyển động, độ dài và khung hình cho mỗi cảnh quay để mỗi nhịp thể hiện tốt nhất — bạn không bao giờ phải loay hoay với các cài đặt mô hình bằng tay."
+          "title": "Tinh chỉnh theo từng cảnh",
+          "body": "Lumi thiết lập chuyển động, độ dài và bố cục cho từng cảnh để mỗi cảnh đẹp nhất - bạn không bao giờ phải vọc cài đặt mô hình."
         },
         "carriesOver": {
           "title": "Công việc của bạn tiếp tục",
-          "body": "Các tập lệnh và nhịp được phê duyệt không phụ thuộc vào mô hình. Khi có mô hình mới, video của bạn có thể sử dụng mô hình đó mà không cần làm lại."
+          "body": "Kịch bản và storyboard đã duyệt không phụ thuộc mô hình. Khi có mô hình mới, video của bạn dùng được ngay mà không cần làm lại."
         },
         "oneBill": {
           "title": "Một studio, một hóa đơn",
@@ -1355,7 +1381,7 @@
         "subtitle": "Lumi là sản phẩm Sellcast. Chúng tôi biến bất kỳ sản phẩm nào thành video có thể mua được, dừng cuộn, dựa trên những gì đã chiến thắng."
       },
       "intro1": "Video dạng ngắn hiện là mặt tiền cửa hàng — nhưng hầu hết người bán không có thời gian để quay phim, chỉnh sửa và thử nghiệm cách tìm người chiến thắng. Các công cụ AI thông thường sẽ lấp đầy khoảng trống bằng nội dung có cảm giác giống AI.",
-      "intro2": "Lumi đi theo một con đường khác. Trước khi viết kịch bản, nó sẽ nghiên cứu một mẫu lớn các sản phẩm thực sự có hiệu suất hàng đầu trong danh mục sản phẩm của bạn và tìm hiểu cấu trúc <em></em> chuyển đổi — sau đó viết kịch bản, bảng phân cảnh và hiển thị video mà bạn có thể xem lại từng nhịp và xuất xưởng trong vài phút.",
+      "intro2": "Lumi đi một hướng khác. Trước khi viết kịch bản, nó nghiên cứu một mẫu lớn các video tự nhiên hiệu quả nhất trong ngành của bạn và học <em>cấu trúc</em> tạo ra chuyển đổi — rồi viết kịch bản, dựng storyboard và render video để bạn xem từng cảnh và đăng trong vài phút.",
       "values": {
         "grounded": {
           "title": "Có căn cứ, không đoán",
@@ -1367,7 +1393,7 @@
         },
         "control": {
           "title": "Bạn luôn kiểm soát",
-          "body": "Xem lại từng nhịp. Không có gì làm mất thời gian kết xuất mà không có sự đăng xuất của bạn (trừ khi bạn muốn)."
+          "body": "Duyệt storyboard từng cảnh một. Bản render đầy đủ chỉ tiêu tín dụng sau khi bạn ký duyệt."
         },
         "sellers": {
           "title": "Được xây dựng cho người bán",
@@ -1390,15 +1416,15 @@
     "metadata": {
       "features": {
         "title": "Tính năng",
-        "description": "Mọi thứ Lumi thực hiện — liên kết tới video, kịch bản dựa trên mẫu, duyệt từng nhịp, định dạng chỉ sản phẩm, QA lời thoại tự động và bản xuất 9:16 sẵn sàng đăng."
+        "description": "Mọi thứ Lumi làm — từ liên kết thành video, kịch bản dựa trên mô hình, duyệt storyboard, định dạng chỉ sản phẩm, QA lời thoại và xuất video sẵn sàng đăng với 5 tỷ lệ khung hình."
       },
       "models": {
         "title": "Người mẫu",
-        "description": "Lumi hôm nay kết xuất với Seedance 2.0 và sắp ra mắt thêm nhiều mẫu video tiên tiến hơn. Mỗi lần chụp đều có cài đặt hiển thị tốt nhất."
+        "description": "Hiện Studio render bằng Seedance 2.0, còn 2.0 Fast, 2.0 Mini và Seedance 2.5 sẽ lần lượt vào bộ chọn. Mỗi cảnh đều được thiết lập để render đẹp nhất."
       },
       "pricing": {
         "title": "Định giá",
-        "description": "Bắt đầu miễn phí, mở rộng quy mô khi nó hoạt động. Giá Lumi dựa trên tín dụng - 1 tín dụng = 1 giây video. Miễn phí (video đầu tiên), Creator, Pro, Scal và Enterprise. Không có thẻ tín dụng để bắt đầu; tiết kiệm hàng năm ~ 20%."
+        "description": "Bắt đầu miễn phí, mở rộng khi thấy hiệu quả. Giá Lumi tính theo tín dụng — tín dụng phản ánh chi phí render thực tế, thiết lập nhẹ hơn sẽ rẻ hơn. Free (video đầu tiên), Creator, Pro, Scale và Enterprise. Không cần thẻ để bắt đầu; gói năm tiết kiệm ~20%."
       },
       "about": {
         "title": "Giới thiệu",

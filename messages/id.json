@@ -24,6 +24,7 @@
       "startImportFailed": "Tidak dapat memulai impor. Silakan coba lagi.",
       "saveProductFailed": "Tidak dapat menyimpan produk. Silakan coba lagi.",
       "startVideoFailed": "Tidak dapat memulai video. Silakan coba lagi.",
+      "outOfCredits": "Kredit tidak cukup untuk render ini.",
       "approveShotFailed": "Tidak dapat menyetujui pengambilan gambar. Silakan coba lagi.",
       "regenerateShotFailed": "Tidak dapat membuat ulang tembakannya. Silakan coba lagi.",
       "approveStoryboardFailed": "Tidak dapat menyetujui storyboard. Silakan coba lagi.",
@@ -283,11 +284,11 @@
         "action": "Coba lagi"
       },
       "thisMonth": "Bulan ini",
-      "usageSummary": "{used} dari kredit {limit} digunakan · Paket {plan} · menyetel ulang {date}",
-      "creditNote": "1 kredit = 1 detik video",
-      "creditsLeft": "kiri",
-      "limitHit": "Anda telah mencapai batas bulanan Anda.",
-      "seePlans": "Lihat rencana",
+      "usageSummary": "{used} dari {limit} kredit terpakai · paket {plan} · diperbarui {date}",
+      "creditNote": "Kredit mengikuti biaya render nyata - biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih.",
+      "creditsLeft": "tersisa",
+      "limitHit": "Anda telah mencapai batas bulanan.",
+      "seePlans": "Lihat paket",
       "forMore": "untuk lebih.",
       "displayName": "Nama tampilan",
       "save": "Simpan",
@@ -295,7 +296,12 @@
       "connectedAccounts": "Akun yang terhubung",
       "appearance": "Penampilan",
       "appearanceDescription": "Sistem, terang, atau gelap — cocok dengan aplikasi Lumi.",
-      "logOut": "Keluar"
+      "logOut": "Keluar",
+      "usageSummaryOneTime": "{used} dari {limit} kredit terpakai · paket {plan} · pemberian satu kali, tidak diperbarui",
+      "usageSummaryNeutral": "{used} dari {limit} kredit terpakai · paket {plan}",
+      "creditsOneTime": "Kredit Anda",
+      "limitHitOneTime": "Kredit gratis Anda sudah habis.",
+      "limitHitCredits": "Kredit Anda sudah habis."
     },
     "productsNew": {
       "startTitle": "Tambahkan produk",
@@ -474,11 +480,11 @@
       "size": {
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
-      "usageSummary": "{remaining} dari {limit} kredit tersisa bulan ini · video ini menggunakan {duration} kredit",
+      "usageSummary": "{remaining} dari {limit} kredit tersisa",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
-      "outOfQuota": "Kredit tidak cukup untuk video {duration} ({remaining} dari {limit} tersisa).",
-      "seePlans": "Lihat rencana",
+      "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
+      "seePlans": "Lihat paket",
       "cap": {
         "reached": "Kamu sudah punya {count} video yang sedang diproses (batas {limit}). Kamu bisa membuat video baru setelah salah satunya selesai.",
         "viewVideos": "Video Saya"
@@ -531,13 +537,13 @@
         "shot": "Tembakan {number}"
       },
       "working": {
-        "renderingBeats": "Merender ketukan Anda…",
+        "renderingBeats": "Merender shot Anda…",
         "writingScript": "Menulis skrip dasar Anda…",
         "description": "Halaman ini diperbarui secara otomatis. Anda bisa pergi dan kembali."
       },
       "review": {
-        "title": "Tinjau irama Anda",
-        "description": "Setujui setiap pengambilan gambar, atau buat ulang pengambilan gambar yang tidak Anda sukai. Lumi dirender setelah setiap ketukan disetujui."
+        "title": "Tinjau storyboard Anda",
+        "description": "Setujui setiap shot, atau buat ulang yang tidak Anda sukai. Lumi merender setelah setiap shot disetujui."
       },
       "storyboard": {
         "title": "Inilah rencana untuk video Anda",
@@ -617,7 +623,7 @@
       "completed": {
         "badge": "Siap dipublikasikan",
         "title": "Video Anda sudah siap 🎉",
-        "description": "Potongan 9:16 yang siap dipublikasikan dengan audio lisan. Unduh atau tandai diposting agar statistik Anda tetap rapi.",
+        "description": "Hasil siap posting dengan audio suara. Unduh atau tandai sudah diposting agar statistik Anda tetap rapi.",
         "download": "Unduh",
         "markPosted": "Tandai sebagai diposting"
       },
@@ -684,7 +690,7 @@
     },
     "jobProgress": {
       "script": "naskah",
-      "beats": "mengalahkan",
+      "beats": "Shot",
       "review": "Ulasan",
       "render": "Render",
       "ready": "Siap"
@@ -728,8 +734,8 @@
     "layout": {
       "heroTitle": "Dari tautan produk hingga video yang menghentikan gulir — dalam hitungan menit.",
       "benefitScripts": "Skrip didasarkan pada pola viral yang nyata",
-      "benefitReview": "Tinjau setiap ketukan sebelum dirender",
-      "benefitPublish": "Publikasikan siap 09:16 untuk TikTok & Reel"
+      "benefitReview": "Tinjau setiap shot sebelum dirender",
+      "benefitPublish": "5 rasio aspek untuk setiap platform"
     },
     "metadata": {
       "signIn": "Masuk",
@@ -913,7 +919,7 @@
           "title": "Alur kerja",
           "linkToVideo": "Tautan ke Video",
           "patternScripts": "Skrip pola",
-          "beatReview": "Kalahkan ulasan",
+          "beatReview": "Tinjauan storyboard",
           "publish": "Publikasikan"
         },
         "company": {
@@ -946,9 +952,9 @@
       "q2": "Apakah saya perlu merekam sesuatu atau berada di depan kamera?",
       "a2": "Tidak. Lumi membuat etalase khusus produk — visual dan sulih suaranya dihasilkan menyeluruh dari produk Anda, jadi tidak ada yang perlu direkam.",
       "q3": "Bisakah saya meninjau video sebelum dirender sepenuhnya?",
-      "a3": "Ya — itulah gerbang Beat Review. Lumi menghasilkan gambar referensi untuk setiap ketukan (shot) terlebih dahulu. Anda menyetujui atau membuat ulang masing-masing, dan baru setelah itu ia menghabiskan waktu render. Lebih suka lepas tangan? Auto-QA menyetujui ketukan untuk Anda.",
+      "a3": "Ya. Skrip Anda datang sebagai storyboard berisi shot, masing-masing dengan frame referensi yang dibuat lebih dulu. Setujui shot yang Anda suka, buat ulang yang tidak dengan 1 kredit per shot, dan render penuh baru memakai kredit setelah Anda menyetujuinya.",
       "q4": "Model video manakah yang digunakan Lumi?",
-      "a4": "Lumi dirender dengan Seedance 2.0, menyetel pengaturan per bidikan. Lebih banyak model video terdepan yang sedang direncanakan — skrip dan irama Anda akan terbawa saat model baru hadir.",
+      "a4": "Saat ini Seedance 2.0 yang merender video Anda. Seedance 2.0 Fast dan 2.0 Mini segera bergabung ke pemilih di Studio, lalu Seedance 2.5 - skrip dan storyboard yang sudah Anda setujui tetap terpakai saat model itu tiba.",
       "q5": "Dari mana data produk berasal?",
       "a5": "Tempel tautan dari Amazon, Shopee, TikTok Shop, atau toko Anda sendiri, atau unggah foto produk Anda sendiri, dan Lumi akan membaca judul, deskripsi, serta gambar untuk dibuat. Produk Anda tetap pribadi untuk Anda.",
       "q6": "Berapa lama waktu yang dibutuhkan untuk satu video?",
@@ -972,34 +978,34 @@
           "name": "Gratis",
           "note": "tidak ada kartu",
           "allowance": "Video pertama Anda gratis",
-          "credits": "20 kredit, satu kali",
+          "credits": "300 kredit, satu kali",
           "features": [
-            "720p · 9:16 ekspor",
+            "Ekspor 720p · 5 rasio aspek",
             "Impor tautan produk",
-            "Render QA otomatis",
+            "Tinjauan storyboard",
             "Tanda air Lumi"
           ],
           "cta": "Mulai gratis"
         },
         "creator": {
-          "name": "Pencipta",
+          "name": "Kreator",
           "note": "per bulan",
           "allowance": "≈ 3 video / bln",
-          "credits": "75 kredit / bln",
+          "credits": "900 kredit / bulan",
           "features": [
-            "Tidak ada tanda air",
-            "Ulasan detak demi detak",
-            "720p · 9:16 ekspor"
+            "Tanpa tanda air",
+            "Tinjauan storyboard",
+            "Ekspor 720p · 5 rasio aspek"
           ],
-          "cta": "Mulai Pencipta"
+          "cta": "Mulai Kreator"
         },
         "pro": {
           "name": "Pro",
           "note": "per bulan",
           "allowance": "≈ 10 video / bln",
-          "credits": "200 kredit / bln",
+          "credits": "3.000 kredit / bulan",
           "features": [
-            "Segalanya ada pada Sang Pencipta",
+            "Semua fitur Kreator",
             "Kredit lebih banyak, biaya per video sama",
             "Prioritas atas render gratis"
           ],
@@ -1009,7 +1015,7 @@
           "name": "Skala",
           "note": "per bulan",
           "allowance": "≈ 25 video / bln",
-          "credits": "500 kredit / bln",
+          "credits": "7.500 kredit / bulan",
           "features": [
             "Semuanya di Pro",
             "Untuk postingan yang selalu aktif",
@@ -1032,26 +1038,26 @@
           "cta": "Hubungi penjualan"
         }
       },
-      "creditFootnote": "1 kredit = 1 detik video. Jumlah video merupakan perkiraan, berdasarkan klip berdurasi 20 detik — video berdurasi 15 detik menggunakan kredit lebih sedikit, video berdurasi 30 detik lebih banyak.",
+      "creditFootnote": "Kredit mengikuti biaya render yang sebenarnya: biaya pasti sebuah video tergantung pada model, resolusi, dan rasio aspek yang Anda pilih. Jumlah video bersifat perkiraan, berdasarkan klip 20 detik di Seedance 2.0 720p (masing-masing 300 kredit).",
       "everyPlanIncludes": "Setiap paket mencakup",
       "included": [
-        "Skrip berdasarkan pola",
-        "Ulasan detak demi detak",
-        "9:16 untuk TikTok & Gulungan",
+        "Skrip berbasis pola terbukti",
+        "Tinjauan storyboard sebelum Anda membayar",
+        "5 rasio aspek untuk setiap platform",
         "Tempel tautan produk apa pun atau unggah foto produk"
       ],
       "billingQuestions": "Pertanyaan penagihan",
       "faq": {
         "q1": "Apa itu kredit?",
-        "a1": "1 kredit = 1 detik video jadi. Video 20 detik memakai 20 kredit; yang 30 detik memakai 30. Anda memilih durasinya, jadi biaya setiap render selalu jelas sebelum dimulai.",
+        "a1": "Kredit mengikuti biaya render nyata video Anda. Biaya pastinya tergantung pada model, resolusi, dan rasio aspek yang Anda pilih — klip 20 detik di Seedance 2.0 720p berharga 300 kredit, dan pengaturan yang lebih ringan lebih murah.",
         "q2": "Apakah regenerasi memerlukan kredit?",
-        "a2": "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong jatah bulanan yang sama dengan render final Anda.",
+        "a2": "Ya — 1 kredit setiap kali membuat ulang. Membuat ulang shot saat peninjauan memotong saldo kredit yang sama dengan render final Anda.",
         "q3": "Bagaimana jika saya kehabisan kredit?",
-        "a3": "Kredit disetel ulang pada awal setiap siklus penagihan. Checkout mandiri belum tersedia - untuk menambah kuota bulanan, kirim email ke {address} dan kami akan menyiapkannya.",
+        "a3": "Kredit paket berbayar diatur ulang di awal setiap siklus penagihan; pemberian gratis saat mendaftar bersifat satu kali dan tidak diperbarui. Checkout mandiri belum tersedia - untuk meningkatkan ke jatah bulanan yang lebih besar, email ke {address} dan kami akan mengaturnya.",
         "q4": "Bisakah saya mengubah rencana kapan saja?",
         "a4": "Bisa. Selama checkout mandiri masih dikembangkan, perubahan paket ditangani lewat email - kirim email ke {address}. Tahunan hemat ~20% dibanding bulanan.",
         "q5": "Model render manakah yang digunakan Lumi?",
-        "a5": "Lumi dirender dengan Seedance 2.0, dengan lebih banyak model yang diluncurkan. Ini memilih pengaturan terbaik per pengambilan gambar."
+        "a5": "Saat ini model render di Studio adalah Seedance 2.0. Seedance 2.0 Fast dan 2.0 Mini segera bergabung ke pemilih untuk saat kecepatan dan biaya lebih penting, lalu Seedance 2.5 menyusul."
       },
       "upgrade": {
         "cta": "Upgrade",
@@ -1063,10 +1069,10 @@
     },
     "landing": {
       "heroTitle": "Ubah tautan produk apa pun menjadi <highlight>video yang menjual.</highlight>",
-      "heroSubtitle": "Tempel tautan. Lumi mempelajari pola video berperforma terbaik di kategori Anda, menulis naskah, lalu merendernya shot demi shot. Anda menyetujui setiap beat sebelum satu kredit pun terpakai.",
+      "heroSubtitle": "Tempel tautan. Lumi mempelajari pola di balik video berperforma terbaik di kategori Anda dan menulis skrip Anda sebagai storyboard berisi shot. Tinjau dan setujui setiap shot — render penuh hanya memakai kredit saat Anda memberi aba-aba.",
       "heroPrimary": "Buat video pertama Anda",
       "heroSecondary": "Lihat cara kerjanya",
-      "heroFinePrint": "Video pertama gratis · Tanpa kartu · 9:16 siap terbit",
+      "heroFinePrint": "Video pertama gratis · Tanpa kartu · 5 rasio aspek",
       "sound": {
         "unmute": "Nyalakan suara video contoh",
         "mute": "Bisukan video contoh"
@@ -1101,12 +1107,12 @@
         "shopNow": "Beli sekarang"
       },
       "marquee": {
-        "seedance": "Rendering Seedance 2.0",
+        "seedance": "Seedance 2.0",
         "languages": "8 bahasa sulih suara",
         "productOnly": "Mode produk saja",
-        "review": "Tinjauan beat demi beat",
+        "review": "Tinjauan storyboard",
         "qa": "QA dialog otomatis",
-        "ratio": "9:16 siap terbit",
+        "ratio": "5 rasio aspek",
         "vibes": "5 vibe khas",
         "sources": "Amazon · Shopee · TikTok Shop",
         "durations": "Durasi 10–30 detik"
@@ -1148,17 +1154,17 @@
         },
         "approve": {
           "title": "Anda menyetujui storyboard",
-          "body": "Setiap beat mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
+          "body": "Setiap shot mendapat frame acuan lebih dulu. Membuat ulang memakai 1 kredit — render penuh, dan tagihannya, baru berjalan setelah Anda setuju."
         },
         "render": {
           "title": "Seedance merendernya",
-          "body": "QA otomatis mencocokkan tiap kalimat dengan naskah, dan potongan 9:16 siap diunggah."
+          "body": "QA otomatis memeriksa setiap baris ucapan terhadap skrip, dan hasilnya siap diposting dalam rasio aspek yang Anda pilih."
         }
       },
       "storyFact1": "$0 biaya render sampai Anda menyetujui",
-      "storyFact2": "1 kredit = 1 detik video",
+      "storyFact2": "Kredit mengikuti biaya render nyata",
       "wallTitle": "Setiap kategori, <highlight>setiap pasar</highlight>",
-      "wallSubtitle": "Setiap video Lumi hadir dalam 9:16 dengan sulih suara, dengan naskah dan suara yang disesuaikan untuk tiap target pasar.",
+      "wallSubtitle": "Setiap video Lumi hadir dengan sulih suara dalam rasio aspek pilihan Anda, dengan skrip dan suara yang disesuaikan untuk setiap pasar sasaran.",
       "wallAudience": "Dibuat untuk penjual, kreator, merek, dan agensi — siapa pun yang berjualan lewat video.",
       "wall": {
         "beauty": {
@@ -1187,17 +1193,17 @@
         }
       },
       "pricingTitle": "Mulai gratis. <highlight>Skalakan saat berhasil.</highlight>",
-      "pricingSubtitle": "Berbasis kredit: 1 kredit = 1 detik video. Video pertama Anda gratis — tanpa kartu.",
+      "pricingSubtitle": "Berbasis kredit: kredit mengikuti biaya render nyata, jadi pengaturan yang lebih ringan lebih murah. Video pertama Anda gratis - tanpa kartu.",
       "mostPopular": "Paling populer",
       "pricingTiers": {
         "creator": {
-          "name": "Pencipta",
+          "name": "Kreator",
           "price": "$29",
           "note": "/ bln",
           "features": [
-            "75 kredit — sekitar 3 video",
-            "Tidak ada tanda air",
-            "Ulasan detak demi detak"
+            "900 kredit — sekitar 3 video",
+            "Tanpa tanda air",
+            "Tinjauan storyboard"
           ]
         },
         "pro": {
@@ -1205,10 +1211,10 @@
           "price": "$79",
           "note": "/ bln",
           "features": [
-            "200 kredit — sekitar 10 video",
-            "Segalanya ada pada Sang Pencipta",
+            "3.000 kredit — sekitar 10 video",
+            "Semua fitur Kreator",
             "Render prioritas",
-            "720p · 9:16 ekspor"
+            "Ekspor 720p · 5 rasio aspek"
           ]
         },
         "scale": {
@@ -1216,9 +1222,9 @@
           "price": "$199",
           "note": "/ bln",
           "features": [
-            "500 kredit — sekitar 25 video",
-            "Semuanya di Pro",
-            "Untuk posting tanpa henti"
+            "7.500 kredit — sekitar 25 video",
+            "Semua fitur Pro",
+            "Dibuat untuk posting tanpa henti"
           ]
         }
       },
@@ -1259,18 +1265,18 @@
           "body": "Sebelum menulis sepatah kata pun, Lumi mempelajari sampel besar produk organik yang berkinerja terbaik dalam kategori produk Anda dan mengekstrak pola strukturalnya — bentuk pengait, bukti, dan CTA yang benar-benar berkonversi. Skrip Anda dibuat berdasarkan hal itu, tidak pernah berupa halaman kosong.",
           "bullets": [
             "Pelajari struktur dari pemenang organik yang difilter dalam kategori Anda",
-            "Ketukan hook / proof / offer, bukan eksekusi copy-paste",
+            "Shot hook / bukti / penawaran, bukan eksekusi salin-tempel",
             "Bahasa audiens meniru model bahasa audiens yang berkinerja terbaik tersebut"
           ]
         },
         "review": {
           "kicker": "Kontrol",
-          "title": "Ulasan detak demi detak",
-          "body": "Lumi menghasilkan gambar referensi untuk setiap ketukan terlebih dahulu. Setujui gambar yang Anda sukai, buat ulang gambar yang tidak Anda suka — dan baru setelah itu barulah gambar tersebut menghabiskan waktu render. Lebih suka lepas tangan? Auto-QA menyetujui ketukan untuk Anda.",
+          "title": "Tinjauan storyboard",
+          "body": "Lumi menulis skrip Anda sebagai storyboard berisi shot, masing-masing dengan frame acuan yang dibuat lebih dulu. Setujui shot yang Anda sukai, buat ulang yang tidak seharga 1 kredit per shot — dan hanya saat Anda menyetujui, render penuh memakai kredit.",
           "bullets": [
-            "Bingkai referensi per bidikan sebelum render apa pun dibakar",
-            "Setujui atau buat ulang, ketukan demi ketukan",
-            "QA otomatis opsional untuk alur tanpa klik"
+            "Satu frame acuan per shot sebelum render apa pun",
+            "Buat ulang shot satuan seharga 1 kredit",
+            "Render penuh menunggu persetujuan Anda"
           ]
         },
         "modes": {
@@ -1278,14 +1284,14 @@
           "title": "Etalase khusus produk",
           "body": "Potongan bersih yang berfokus pada produk, tanpa presenter yang perlu direkam — empat gaya siap pakai yang mencakup tampilan etalase yang rapi, sorotan fitur, unboxing, dan potongan yang berfokus pada penawaran.",
           "bullets": [
-            "4 gaya disetel untuk perdagangan",
-            "Durasi 10–30 detik, asli 9:16"
+            "4 gaya yang disetel untuk niaga",
+            "Durasi 10–30 detik, 5 rasio aspek"
           ]
         },
         "qa": {
           "kicker": "Kualitas",
           "title": "Dialog otomatis QA",
-          "body": "Setelah setiap ketukan ditampilkan, Whisper mentranskripsikan kalimat yang diucapkan dan membandingkannya dengan skrip, menandai penyimpangan. Suaranya selalu mengatakan apa yang seharusnya — tidak ada kejutan di luar naskah.",
+          "body": "Setelah setiap shot dirender, Whisper mentranskripsikan kalimat yang diucapkan dan membandingkannya dengan skrip, menandai penyimpangan. Suaranya selalu mengatakan yang seharusnya, tanpa kejutan di luar naskah.",
           "bullets": [
             "Transkripsi bisikan pada setiap baris yang dirender",
             "Skor drift terhadap skrip yang dimaksudkan",
@@ -1295,10 +1301,10 @@
         "publish": {
           "kicker": "Terbitkan",
           "title": "Ekspor siap terbit",
-          "body": "Potongannya berukuran 9:16 untuk TikTok dan Reel — siap diunduh atau ditandai sudah diposting, sehingga statistik Anda tetap rapi.",
+          "body": "Pilih dari 5 rasio aspek di Studio — 9:16 untuk TikTok dan Reels, 16:9, 1:1, 4:3, atau 3:4 — lalu unduh atau tandai sudah diposting, agar statistik Anda tetap rapi.",
           "bullets": [
-            "Ekspor siap publikasi 9:16",
-            "Lacak yang sudah diposting vs. draf di Video Saya"
+            "Ekspor siap posting dalam 5 rasio aspek",
+            "Lacak yang diposting vs. draf di Video Saya"
           ]
         }
       }
@@ -1308,37 +1314,57 @@
         "kicker": "Model",
         "title": "Satu studio, perbatasan",
         "highlight": "video AI.",
-        "subtitle": "Lumi merender setiap irama dengan Seedance 2.0 — dan skrip Anda terbawa saat model baru tiba."
+        "subtitle": "Saat ini Studio merender dengan Seedance 2.0; anggota keluarga lainnya bergabung ke pemilih begitu tersedia, dan skrip Anda tetap terbawa."
       },
       "cards": {
         "seedance": {
           "name": "Seedance 2.0",
-          "tag": "Hidup",
-          "desc": "Gerakan cepat dan nyata untuk pengambilan gambar produk — mesin render Lumi untuk setiap ketukan, dengan audio yang dihasilkan per pengambilan gambar.",
+          "tag": "Tersedia",
+          "desc": "Sang unggulan — gerakan paling hidup untuk shot produk, hingga 1080p, dengan audio yang dibuat per shot.",
           "bestFor": [
-            "Gerakan produk",
-            "Audio per bidikan",
-            "Kecepatan"
+            "Kualitas terbaik",
+            "Hingga 1080p",
+            "Audio per shot"
           ]
         },
-        "more": {
-          "name": "Lebih banyak lagi di jalan",
-          "tag": "Segera",
-          "desc": "Kami menambahkan model video frontier setelah terbukti. Skrip dan ketukan Anda yang disetujui bersifat model-agnostik, sehingga dapat diterapkan tanpa pengulangan.",
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "Segera hadir",
+          "desc": "Keluarga yang sama, disetel untuk kecepatan — render lebih cepat dengan biaya kredit lebih rendah, hingga 720p. Segera bergabung ke pemilih model.",
+          "bestFor": [
+            "Kecepatan",
+            "Biaya lebih rendah",
+            "Hingga 720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "Segera hadir",
+          "desc": "Tingkat paling ringan — buat draf dan iterasi dengan biaya kredit terendah per render, hingga 720p. Segera bergabung ke pemilih model.",
+          "bestFor": [
+            "Draf",
+            "Biaya terendah",
+            "Hingga 720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "Segera hadir",
+          "desc": "Generasi berikutnya bergabung ke pemilih begitu tersedia di penyedia render kami. Skrip dan storyboard yang sudah disetujui terbawa tanpa perlu mengulang.",
           "bestFor": [
             "Peta jalan",
-            "Tidak ada pengulangan"
+            "Tanpa mengulang"
           ]
         }
       },
       "points": {
         "tuned": {
-          "title": "Disetel per ketukan",
-          "body": "Lumi mengatur gerakan, panjang, dan framing per pengambilan gambar sehingga setiap ketukan menampilkan yang terbaik — Anda tidak perlu mengutak-atik pengaturan model secara manual."
+          "title": "Disetel per shot",
+          "body": "Lumi mengatur gerakan, durasi, dan pembingkaian per shot agar masing-masing tampil terbaik - Anda tidak perlu utak-atik pengaturan model."
         },
         "carriesOver": {
           "title": "Pekerjaan Anda berlanjut",
-          "body": "Skrip dan ketukan yang disetujui bersifat model-agnostik. Saat model baru hadir, video Anda dapat menggunakannya tanpa pengulangan."
+          "body": "Skrip dan storyboard yang disetujui tidak tergantung model. Saat model baru tiba, video Anda bisa memakainya tanpa mengulang."
         },
         "oneBill": {
           "title": "Satu studio, satu tagihan",
@@ -1355,7 +1381,7 @@
         "subtitle": "Lumi adalah produk Sellcast. Kami mengubah produk apa pun menjadi video belanjaan yang menarik, berdasarkan pada produk yang sudah unggul."
       },
       "intro1": "Video berdurasi pendek kini menjadi etalase — namun sebagian besar penjual tidak punya waktu untuk memfilmkan, mengedit, dan menguji cara mereka untuk menjadi pemenang. Alat AI generik mengisi kesenjangan dengan konten yang terasa seperti AI.",
-      "intro2": "Lumi mengambil jalan yang berbeda. Sebelum menulis skrip, skrip mempelajari sampel besar yang nyata dan organik dengan kinerja terbaik dalam kategori produk Anda dan mempelajari struktur <em></em> yang mengonversi — lalu skrip, storyboard, dan merender video yang dapat Anda tinjau sedikit demi sedikit dan dikirimkan dalam hitungan menit.",
+      "intro2": "Lumi mengambil jalan berbeda. Sebelum menulis skrip, ia mempelajari sampel besar konten organik berperforma terbaik di kategori produk Anda dan mempelajari <em>struktur</em> yang menghasilkan konversi — lalu menulis skrip, membuat storyboard, dan merender video yang Anda tinjau shot demi shot dan terbitkan dalam hitungan menit.",
       "values": {
         "grounded": {
           "title": "Beralas, tidak menebak-nebak",
@@ -1367,7 +1393,7 @@
         },
         "control": {
           "title": "Anda tetap memegang kendali",
-          "body": "Tinjau irama demi irama. Tidak ada yang menghabiskan waktu render tanpa persetujuan Anda (kecuali jika Anda menginginkannya)."
+          "body": "Tinjau storyboard shot demi shot. Render penuh hanya memakai kredit setelah persetujuan Anda."
         },
         "sellers": {
           "title": "Dibangun untuk penjual",
@@ -1390,15 +1416,15 @@
     "metadata": {
       "features": {
         "title": "Fitur",
-        "description": "Segala sesuatu yang dilakukan Lumi — tautan ke video, skrip berdasarkan pola, ulasan detak demi detak, format khusus produk, QA dialog otomatis, dan ekspor 9:16 siap terbit."
+        "description": "Semua yang Lumi lakukan — dari tautan ke video, skrip berbasis pola, tinjauan storyboard, format khusus produk, QA dialog, dan ekspor siap posting dalam 5 rasio aspek."
       },
       "models": {
         "title": "Model",
-        "description": "Lumi dirender dengan Seedance 2.0 hari ini, dengan lebih banyak model video terdepan yang akan segera hadir. Setiap pengambilan gambar mendapatkan pengaturan yang menjadikannya terbaik."
+        "description": "Saat ini Studio merender dengan Seedance 2.0, sementara 2.0 Fast, 2.0 Mini, dan Seedance 2.5 menyusul ke pemilih model. Setiap shot mendapat pengaturan yang merendernya paling baik."
       },
       "pricing": {
         "title": "Harga",
-        "description": "Mulai dengan gratis, skalakan saat berhasil. Harga Lumi berbasis kredit — 1 kredit = 1 detik video. Gratis (video pertama), Kreator, Pro, Skala, dan Perusahaan. Tidak ada kartu kredit untuk memulai; penghematan tahunan ~20%."
+        "description": "Mulai gratis, naik kelas saat sudah terbukti. Harga Lumi berbasis kredit — kredit mengikuti biaya render nyata, dan pengaturan yang lebih ringan lebih murah. Free (video pertama), Creator, Pro, Scale, dan Enterprise. Tanpa kartu kredit untuk mulai; tahunan hemat ~20%."
       },
       "about": {
         "title": "Tentang",
