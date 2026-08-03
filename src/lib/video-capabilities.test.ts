@@ -302,6 +302,26 @@ describe("studioCapabilityState", () => {
     }
   });
 
+  it("treats a payload naming no mode Studio has as no read at all", () => {
+    // A backend rename must never report every mode off and strand every user
+    // behind a disabled Generate.
+    const renamed = capabilities.map((entry) => ({
+      ...entry,
+      mode: entry.mode.replace("_", "-"),
+      available: true,
+    }));
+    const state = studioCapabilityState(renamed, baseSelection);
+
+    expect(isModeKnownUnavailable(renamed, "product_only")).toBe(false);
+    expect(isModeKnownUnavailable(renamed, "ai_avatar")).toBe(false);
+    expect(repairMode(renamed, "product_only")).toBe("product_only");
+    expect(state.modeAvailable).toBe(true);
+    expect(state.canSubmit).toBe(true);
+    expect(enabledValues(state.aspectRatios)).toEqual(
+      VIDEO_ASPECT_RATIOS.map((ratio) => ratio.value),
+    );
+  });
+
   it("survives a payload whose entries are partly junk", () => {
     const state = studioCapabilityState(
       [

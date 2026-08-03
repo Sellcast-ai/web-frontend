@@ -62,7 +62,7 @@ export type StudioCapabilityState = {
  * degrades to the static picker constants instead of throwing mid-render or
  * reporting a mode off that the backend never said was off. */
 type ModeCapability = {
-  mode: string;
+  mode: VideoMode;
   /** false when the entry was present but didn't conform. That mode's
    * capabilities are unknown, which is never the same as unavailable. */
   readable: boolean;
@@ -81,12 +81,22 @@ function optionalString(value: unknown): string | null {
   return typeof value === "string" ? value : null;
 }
 
+/** A name outside Studio's own mode literals says nothing about the modes
+ * Studio has - a backend rename would otherwise read as every mode reported
+ * off, disabling Generate for everyone - so the entry is no read at all. */
+function asVideoMode(value: unknown): VideoMode | null {
+  return typeof value === "string" && (MODE_ORDER as string[]).includes(value)
+    ? (value as VideoMode)
+    : null;
+}
+
 function normalizeMode(raw: unknown): ModeCapability | null {
   if (!raw || typeof raw !== "object") return null;
   const entry = raw as Record<string, unknown>;
-  if (typeof entry.mode !== "string") return null;
+  const mode = asVideoMode(entry.mode);
+  if (!mode) return null;
   const unreadable: ModeCapability = {
-    mode: entry.mode,
+    mode,
     readable: false,
     available: false,
     aspectRatios: [],
@@ -98,7 +108,7 @@ function normalizeMode(raw: unknown): ModeCapability | null {
   if (!Array.isArray(entry.aspect_ratios) || !Array.isArray(entry.models)) return unreadable;
   if (entry.languages != null && !Array.isArray(entry.languages)) return unreadable;
   return {
-    mode: entry.mode,
+    mode,
     readable: true,
     available: entry.available,
     aspectRatios: strings(entry.aspect_ratios),
@@ -161,12 +171,28 @@ function capsForMode(
   return modeUnknownIn(caps, mode) ? undefined : caps;
 }
 
+/** The three states a picker narrows by, so no call site can hold a mode that
+ * is both unreadable and available, or an entry it must re-check for. */
+type ModeNarrowing =
+  | { kind: "unknown" }
+  | { kind: "off" }
+  | { kind: "narrow"; cap: ModeCapability };
+
+function modeNarrowing(
+  caps: VideoCapabilitySnapshot | undefined,
+  mode: VideoMode,
+): ModeNarrowing {
+  const known = capsForMode(caps, mode);
+  if (!known) return { kind: "unknown" };
+  const cap = known.find((entry) => entry.mode === mode);
+  return cap?.available ? { kind: "narrow", cap } : { kind: "off" };
+}
+
 export function isModeKnownUnavailable(
   caps: VideoCapabilitySnapshot | undefined,
   mode: VideoMode,
 ): boolean {
-  const known = capsForMode(caps, mode);
-  return known !== undefined && !modeAvailableIn(known, mode);
+  return modeNarrowing(caps, mode).kind === "off";
 }
 
 export function repairMode(
@@ -182,18 +208,17 @@ export function studioCapabilityState(
   caps: VideoCapabilitySnapshot | undefined,
   selection: StudioCapabilitySelection,
 ): StudioCapabilityState {
-  const known = capsForMode(caps, selection.mode);
-  const cap = known?.find((entry) => entry.mode === selection.mode);
-  const modeAvailable = !known || Boolean(cap?.available);
-  const models = modelOptions(known, cap, modeAvailable);
+  const narrowing = modeNarrowing(caps, selection.mode);
+  const modeAvailable = narrowing.kind !== "off";
+  const models = modelOptions(narrowing);
   const modelPickerVisible = models.length > 0;
   const repairedModel = enabledOnly(
     repairOption(selection.videoModel, models, DEFAULT_MODEL),
     models,
   );
-  const resolutions = resolutionOptions(known, cap, modeAvailable, repairedModel);
-  const aspectRatios = aspectRatioOptions(known, cap, modeAvailable);
-  const languages = languageOptions(known, cap, modeAvailable);
+  const resolutions = resolutionOptions(narrowing, repairedModel);
+  const aspectRatios = aspectRatioOptions(narrowing);
+  const languages = languageOptions(narrowing);
 
   return {
     modeAvailable,
@@ -213,8 +238,7 @@ export function studioCapabilityState(
       modeAvailable &&
       hasEnabled(aspectRatios) &&
       hasEnabled(resolutions) &&
-      hasEnabled(languages) &&
-      (!modelPickerVisible || hasEnabled(models)),
+      hasEnabled(languages),
   };
 }
 
@@ -234,22 +258,20 @@ function inertOptions<T extends string | number>(
   return values.map(({ value }) => ({ value, enabled: false, reason: null }));
 }
 
-function modelOptions(
-  caps: ModeCapability[] | undefined,
-  cap: ModeCapability | undefined,
-  modeAvailable: boolean,
-): CapabilityOption<VideoModelKey>[] {
+function modelOptions(narrowing: ModeNarrowing): CapabilityOption<VideoModelKey>[] {
   // One shape whether or not capabilities have landed: the static inventory
   // decides which models exist at all, capabilities only decide which of those
   // this mode can pick. A card that appeared a moment after load would read as
   // the backend offering something new when it offered what it always did.
   const released = VIDEO_MODELS.filter((model) => model.enabled);
-  if (!caps) return released.map((model) => option(model.value, true, "unsupported"));
+  if (narrowing.kind === "unknown") {
+    return released.map((model) => option(model.value, true, "unsupported"));
+  }
   // The mode card already says the whole mode is off; a row of models under it
   // would only restate that, so hide the picker either way.
-  if (!modeAvailable) return [];
-  if (!cap || cap.models.length === 0) return [];
-  const supported = new Set(cap.models.map((model) => model.key));
+  if (narrowing.kind === "off") return [];
+  if (narrowing.cap.models.length === 0) return [];
+  const supported = new Set(narrowing.cap.models.map((model) => model.key));
   const narrowed = released.map((model) =>
     option(model.value, supported.has(model.value), "unsupported"),
   );
@@ -259,28 +281,27 @@ function modelOptions(
 }
 
 function resolutionOptions(
-  caps: ModeCapability[] | undefined,
-  cap: ModeCapability | undefined,
-  modeAvailable: boolean,
+  narrowing: ModeNarrowing,
   selectedModel: VideoModelKey | null,
 ): CapabilityOption<VideoResolution>[] {
   const staticOptions = () =>
     VIDEO_RESOLUTIONS.map((resolution) =>
       option(resolution.value, resolution.enabled, "soon"),
     );
-  if (!caps) return staticOptions();
-  if (!modeAvailable) return inertOptions(VIDEO_RESOLUTIONS);
+  if (narrowing.kind === "unknown") return staticOptions();
+  if (narrowing.kind === "off") return inertOptions(VIDEO_RESOLUTIONS);
+  const { cap } = narrowing;
   // A ceiling this module can't read is a reason for more caution, not less:
   // an unparseable one drops to the same lowest-offered height as sending no
   // model at all, never up to the mode's aggregate maximum.
   const maxResolution =
     (selectedModel
       ? asResolution(
-          cap?.models.find((model) => model.key === selectedModel)?.maxResolution,
+          cap.models.find((model) => model.key === selectedModel)?.maxResolution,
         )
       : null) ??
     lowestOfferedResolution(cap) ??
-    asResolution(cap?.maxResolution);
+    asResolution(cap.maxResolution);
   if (!maxResolution) return staticOptions();
   const narrowed = VIDEO_RESOLUTIONS.map((resolution) =>
     resolution.enabled
@@ -295,15 +316,13 @@ function resolutionOptions(
 }
 
 function aspectRatioOptions(
-  caps: ModeCapability[] | undefined,
-  cap: ModeCapability | undefined,
-  modeAvailable: boolean,
+  narrowing: ModeNarrowing,
 ): CapabilityOption<VideoAspectRatio>[] {
   const staticOptions = () =>
     VIDEO_ASPECT_RATIOS.map((ratio) => option(ratio.value, true, "unsupported"));
-  if (!caps) return staticOptions();
-  if (!modeAvailable) return inertOptions(VIDEO_ASPECT_RATIOS);
-  const supported = new Set(cap?.aspectRatios ?? []);
+  if (narrowing.kind === "unknown") return staticOptions();
+  if (narrowing.kind === "off") return inertOptions(VIDEO_ASPECT_RATIOS);
+  const supported = new Set(narrowing.cap.aspectRatios);
   const narrowed = VIDEO_ASPECT_RATIOS.map((ratio) =>
     option(ratio.value, supported.has(ratio.value), "unsupported"),
   );
@@ -312,17 +331,13 @@ function aspectRatioOptions(
   return hasEnabled(narrowed) ? narrowed : staticOptions();
 }
 
-function languageOptions(
-  caps: ModeCapability[] | undefined,
-  cap: ModeCapability | undefined,
-  modeAvailable: boolean,
-): CapabilityOption<VideoLanguage>[] {
+function languageOptions(narrowing: ModeNarrowing): CapabilityOption<VideoLanguage>[] {
   const staticOptions = () =>
     VIDEO_LANGUAGES.map((language) => option(language.value, language.enabled, "soon"));
-  if (!caps) return staticOptions();
-  if (!modeAvailable) return inertOptions(VIDEO_LANGUAGES);
-  if (!cap || cap.languages === null) return staticOptions();
-  const supported = new Set(cap.languages);
+  if (narrowing.kind === "unknown") return staticOptions();
+  if (narrowing.kind === "off") return inertOptions(VIDEO_LANGUAGES);
+  if (narrowing.cap.languages === null) return staticOptions();
+  const supported = new Set(narrowing.cap.languages);
   const narrowed = VIDEO_LANGUAGES.map((language) =>
     language.enabled
       ? option(language.value, supported.has(language.value), "unsupported")
@@ -359,10 +374,8 @@ function hasEnabled(options: CapabilityOption<string | number>[]): boolean {
 /** No model is being sent, so the backend picks one and the mode's aggregate
  * ceiling would over-promise: the only height Studio can stand behind is the
  * lowest among the models this mode offers. */
-function lowestOfferedResolution(
-  cap: ModeCapability | undefined,
-): VideoResolution | null {
-  const ceilings = (cap?.models ?? [])
+function lowestOfferedResolution(cap: ModeCapability): VideoResolution | null {
+  const ceilings = cap.models
     .map((model) => asResolution(model.maxResolution))
     .filter((value): value is VideoResolution => value !== null);
   return ceilings.length === 0
