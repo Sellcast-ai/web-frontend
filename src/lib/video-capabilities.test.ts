@@ -307,6 +307,48 @@ describe("studioCapabilityState", () => {
     expect(state.canSubmit).toBe(true);
   });
 
+  it.each([
+    { available: "yes" },
+    { models: { "seedance-2.0": {} } },
+    { aspect_ratios: { "0": "9:16" } },
+    { languages: "en" },
+  ])("treats an unparseable entry for the selected mode as unknown, not off", (bad) => {
+    // One bad entry beside a valid sibling must not hard-block the mode the
+    // user is on: nothing is known about it, so it degrades to the constants.
+    const caps = [{ ...capabilities[0], ...bad }, capabilities[1]];
+    const state = studioCapabilityState(caps, baseSelection);
+
+    expect(isModeKnownUnavailable(caps, "product_only")).toBe(false);
+    expect(repairMode(caps, "product_only")).toBe("product_only");
+    expect(state.modeAvailable).toBe(true);
+    expect(state.canSubmit).toBe(true);
+    expect(enabledValues(state.aspectRatios)).toEqual(
+      VIDEO_ASPECT_RATIOS.map((ratio) => ratio.value),
+    );
+    // The sibling entry still parses, so its own verdict stands.
+    expect(isModeKnownUnavailable(caps, "ai_avatar")).toBe(true);
+  });
+
+  it("never repairs into a mode whose entry is unparseable", () => {
+    const caps = [
+      { ...capabilities[0], available: false },
+      { ...capabilities[1], models: "nonsense" },
+    ];
+
+    expect(repairMode(caps, "product_only")).toBe("product_only");
+  });
+
+  it("hides the model picker for an unavailable mode", () => {
+    const state = studioCapabilityState(
+      [{ ...capabilities[0], available: false }],
+      baseSelection,
+    );
+
+    expect(state.models).toEqual([]);
+    expect(state.modelPickerVisible).toBe(false);
+    expect(state.canSubmit).toBe(false);
+  });
+
   it("hides the model picker when no offered model has a label", () => {
     const state = studioCapabilityState(
       [

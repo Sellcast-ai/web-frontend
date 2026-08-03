@@ -57,10 +57,15 @@ export type StudioCapabilityState = {
 };
 
 /** What this module trusts from the payload, after validation. A capability
- * read that doesn't conform is treated as no read at all, so Studio degrades
- * to the static picker constants instead of throwing mid-render. */
+ * read that doesn't conform is treated as no read at all - for the whole
+ * payload, or for the single mode whose entry is the bad one - so Studio
+ * degrades to the static picker constants instead of throwing mid-render or
+ * reporting a mode off that the backend never said was off. */
 type ModeCapability = {
   mode: string;
+  /** false when the entry was present but didn't conform. That mode's
+   * capabilities are unknown, which is never the same as unavailable. */
+  readable: boolean;
   available: boolean;
   aspectRatios: string[];
   languages: string[] | null;
@@ -79,11 +84,22 @@ function optionalString(value: unknown): string | null {
 function normalizeMode(raw: unknown): ModeCapability | null {
   if (!raw || typeof raw !== "object") return null;
   const entry = raw as Record<string, unknown>;
-  if (typeof entry.mode !== "string" || typeof entry.available !== "boolean") return null;
-  if (!Array.isArray(entry.aspect_ratios) || !Array.isArray(entry.models)) return null;
-  if (entry.languages != null && !Array.isArray(entry.languages)) return null;
+  if (typeof entry.mode !== "string") return null;
+  const unreadable: ModeCapability = {
+    mode: entry.mode,
+    readable: false,
+    available: false,
+    aspectRatios: [],
+    languages: null,
+    maxResolution: null,
+    models: [],
+  };
+  if (typeof entry.available !== "boolean") return unreadable;
+  if (!Array.isArray(entry.aspect_ratios) || !Array.isArray(entry.models)) return unreadable;
+  if (entry.languages != null && !Array.isArray(entry.languages)) return unreadable;
   return {
     mode: entry.mode,
+    readable: true,
     available: entry.available,
     aspectRatios: strings(entry.aspect_ratios),
     languages: entry.languages == null ? null : strings(entry.languages),
@@ -125,36 +141,59 @@ function modeAvailableIn(caps: ModeCapability[], mode: VideoMode): boolean {
   return Boolean(caps.find((entry) => entry.mode === mode)?.available);
 }
 
+/** The entry for this mode was there but didn't parse, so nothing is known
+ * about it - and unknown must read as "no capability data" for that mode, never
+ * as a backend saying no. */
+function modeUnknownIn(
+  caps: VideoCapabilitySnapshot | undefined,
+  mode: VideoMode,
+): boolean {
+  return caps?.find((entry) => entry.mode === mode)?.readable === false;
+}
+
+/** The snapshot as this mode may read it: a mode whose own entry is unreadable
+ * degrades to the static constants exactly as a missing read does, so one bad
+ * entry can't block the mode the user is on. */
+function capsForMode(
+  caps: VideoCapabilitySnapshot | undefined,
+  mode: VideoMode,
+): VideoCapabilitySnapshot | undefined {
+  return modeUnknownIn(caps, mode) ? undefined : caps;
+}
+
 export function isModeKnownUnavailable(
   caps: VideoCapabilitySnapshot | undefined,
   mode: VideoMode,
 ): boolean {
-  return caps !== undefined && !modeAvailableIn(caps, mode);
+  const known = capsForMode(caps, mode);
+  return known !== undefined && !modeAvailableIn(known, mode);
 }
 
 export function repairMode(
   caps: VideoCapabilitySnapshot | undefined,
   mode: VideoMode,
 ): VideoMode {
-  if (!caps || modeAvailableIn(caps, mode)) return mode;
-  return MODE_ORDER.find((candidate) => modeAvailableIn(caps, candidate)) ?? mode;
+  const known = capsForMode(caps, mode);
+  if (!known || modeAvailableIn(known, mode)) return mode;
+  return MODE_ORDER.find((candidate) => modeAvailableIn(known, candidate)) ?? mode;
 }
 
 export function studioCapabilityState(
   caps: VideoCapabilitySnapshot | undefined,
   selection: StudioCapabilitySelection,
 ): StudioCapabilityState {
-  const cap = caps?.find((entry) => entry.mode === selection.mode);
-  const modeAvailable = !caps || Boolean(cap?.available);
-  const models = modelOptions(caps, cap, modeAvailable);
+  const known = capsForMode(caps, selection.mode);
+  const cap = known?.find((entry) => entry.mode === selection.mode);
+  const modeAvailable = !known || Boolean(cap?.available);
+  const models = modelOptions(known, cap, modeAvailable);
   const modelPickerVisible = models.length > 0;
   const repairedModel = enabledOnly(
     repairOption(selection.videoModel, models, DEFAULT_MODEL),
     models,
   );
-  const resolutions = resolutionOptions(caps, cap, modeAvailable, repairedModel);
-  const aspectRatios = aspectRatioOptions(caps, cap, modeAvailable);
-  const languages = languageOptions(caps, cap, modeAvailable);
+  const resolutions = resolutionOptions(known, cap, modeAvailable, repairedModel);
+  const aspectRatios = aspectRatioOptions(known, cap, modeAvailable);
+  const languages = languageOptions(known, cap, modeAvailable);
 
   return {
     modeAvailable,
@@ -197,18 +236,16 @@ function modelOptions(
       option(model.value, true, "soon"),
     );
   }
+  // The mode card already says the whole mode is off; a row of models under it
+  // would only restate that, so hide the picker either way.
+  if (!modeAvailable) return [];
   if (!cap || cap.models.length === 0) return [];
-  // A model the static inventory hasn't released is not "unsupported by this
-  // mode" - it isn't offered anywhere yet, so it keeps the coming-soon reason
-  // while capabilities stay the only thing that can enable it.
-  const reason = (model: (typeof VIDEO_MODELS)[number]): OptionUnavailableReason =>
-    model.enabled ? "unsupported" : "soon";
-  if (!modeAvailable) {
-    return VIDEO_MODELS.map((model) => option(model.value, false, reason(model)));
-  }
   const supported = new Set(cap.models.map((model) => model.key));
   const narrowed = VIDEO_MODELS.map((model) =>
-    option(model.value, supported.has(model.value), reason(model)),
+    // A model the static inventory hasn't released is not "unsupported by this
+    // mode" - it isn't offered anywhere yet, so it keeps the coming-soon reason
+    // while capabilities stay the only thing that can enable it.
+    option(model.value, supported.has(model.value), model.enabled ? "unsupported" : "soon"),
   );
   // Nothing the backend offers has a label here - hide the picker and keep the
   // current model rather than blocking Generate behind an all-disabled row.
