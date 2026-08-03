@@ -607,8 +607,8 @@ function StudioInner() {
             </div>
           </Section>
 
-          {/* size — output aspect ratio. All sizes stay selectable in every
-              mode; talking-head output may adapt its shape server-side. */}
+          {/* size — output aspect ratio, narrowed to what the selected mode
+              reports; talking-head output may adapt its shape server-side. */}
           <Section title={t("sections.size")}>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
               {capabilityState.aspectRatios.map((option) => {

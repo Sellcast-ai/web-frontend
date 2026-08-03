@@ -226,26 +226,32 @@ function option<T extends string | number>(
   return { value, enabled, reason: enabled ? null : reason };
 }
 
+/** The mode card already carries the whole explanation when a mode is off, so
+ * the options under it go quiet rather than each blaming itself for it. */
+function inertOptions<T extends string | number>(
+  values: readonly { value: T }[],
+): CapabilityOption<T>[] {
+  return values.map(({ value }) => ({ value, enabled: false, reason: null }));
+}
+
 function modelOptions(
   caps: ModeCapability[] | undefined,
   cap: ModeCapability | undefined,
   modeAvailable: boolean,
 ): CapabilityOption<VideoModelKey>[] {
-  if (!caps) {
-    return VIDEO_MODELS.filter((model) => model.enabled).map((model) =>
-      option(model.value, true, "soon"),
-    );
-  }
+  // One shape whether or not capabilities have landed: the static inventory
+  // decides which models exist at all, capabilities only decide which of those
+  // this mode can pick. A card that appeared a moment after load would read as
+  // the backend offering something new when it offered what it always did.
+  const released = VIDEO_MODELS.filter((model) => model.enabled);
+  if (!caps) return released.map((model) => option(model.value, true, "unsupported"));
   // The mode card already says the whole mode is off; a row of models under it
   // would only restate that, so hide the picker either way.
   if (!modeAvailable) return [];
   if (!cap || cap.models.length === 0) return [];
   const supported = new Set(cap.models.map((model) => model.key));
-  const narrowed = VIDEO_MODELS.map((model) =>
-    // A model the static inventory hasn't released is not "unsupported by this
-    // mode" - it isn't offered anywhere yet, so it keeps the coming-soon reason
-    // while capabilities stay the only thing that can enable it.
-    option(model.value, supported.has(model.value), model.enabled ? "unsupported" : "soon"),
+  const narrowed = released.map((model) =>
+    option(model.value, supported.has(model.value), "unsupported"),
   );
   // Nothing the backend offers has a label here - hide the picker and keep the
   // current model rather than blocking Generate behind an all-disabled row.
@@ -258,12 +264,12 @@ function resolutionOptions(
   modeAvailable: boolean,
   selectedModel: VideoModelKey | null,
 ): CapabilityOption<VideoResolution>[] {
-  const staticOptions = (enabled: boolean) =>
+  const staticOptions = () =>
     VIDEO_RESOLUTIONS.map((resolution) =>
-      option(resolution.value, resolution.enabled && enabled, resolution.enabled ? "unsupported" : "soon"),
+      option(resolution.value, resolution.enabled, "soon"),
     );
-  if (!caps) return staticOptions(true);
-  if (!modeAvailable) return staticOptions(false);
+  if (!caps) return staticOptions();
+  if (!modeAvailable) return inertOptions(VIDEO_RESOLUTIONS);
   // A ceiling this module can't read is a reason for more caution, not less:
   // an unparseable one drops to the same lowest-offered height as sending no
   // model at all, never up to the mode's aggregate maximum.
@@ -275,7 +281,7 @@ function resolutionOptions(
       : null) ??
     lowestOfferedResolution(cap) ??
     asResolution(cap?.maxResolution);
-  if (!maxResolution) return staticOptions(true);
+  if (!maxResolution) return staticOptions();
   const narrowed = VIDEO_RESOLUTIONS.map((resolution) =>
     resolution.enabled
       ? option(
@@ -285,7 +291,7 @@ function resolutionOptions(
         )
       : option(resolution.value, false, "soon"),
   );
-  return hasEnabled(narrowed) ? narrowed : staticOptions(true);
+  return hasEnabled(narrowed) ? narrowed : staticOptions();
 }
 
 function aspectRatioOptions(
@@ -293,17 +299,17 @@ function aspectRatioOptions(
   cap: ModeCapability | undefined,
   modeAvailable: boolean,
 ): CapabilityOption<VideoAspectRatio>[] {
-  const staticOptions = (enabled: boolean) =>
-    VIDEO_ASPECT_RATIOS.map((ratio) => option(ratio.value, enabled, "unsupported"));
-  if (!caps) return staticOptions(true);
-  if (!modeAvailable) return staticOptions(false);
+  const staticOptions = () =>
+    VIDEO_ASPECT_RATIOS.map((ratio) => option(ratio.value, true, "unsupported"));
+  if (!caps) return staticOptions();
+  if (!modeAvailable) return inertOptions(VIDEO_ASPECT_RATIOS);
   const supported = new Set(cap?.aspectRatios ?? []);
   const narrowed = VIDEO_ASPECT_RATIOS.map((ratio) =>
     option(ratio.value, supported.has(ratio.value), "unsupported"),
   );
   // An empty or foreign-notation list ("9x16") would otherwise disable every
   // size and dead-end Generate; an available mode falls back to the constants.
-  return hasEnabled(narrowed) ? narrowed : staticOptions(true);
+  return hasEnabled(narrowed) ? narrowed : staticOptions();
 }
 
 function languageOptions(
@@ -311,20 +317,18 @@ function languageOptions(
   cap: ModeCapability | undefined,
   modeAvailable: boolean,
 ): CapabilityOption<VideoLanguage>[] {
-  const staticOptions = (enabled: boolean) =>
-    VIDEO_LANGUAGES.map((language) =>
-      option(language.value, language.enabled && enabled, language.enabled ? "unsupported" : "soon"),
-    );
-  if (!caps) return staticOptions(true);
-  if (!modeAvailable) return staticOptions(false);
-  if (!cap || cap.languages === null) return staticOptions(true);
+  const staticOptions = () =>
+    VIDEO_LANGUAGES.map((language) => option(language.value, language.enabled, "soon"));
+  if (!caps) return staticOptions();
+  if (!modeAvailable) return inertOptions(VIDEO_LANGUAGES);
+  if (!cap || cap.languages === null) return staticOptions();
   const supported = new Set(cap.languages);
   const narrowed = VIDEO_LANGUAGES.map((language) =>
     language.enabled
       ? option(language.value, supported.has(language.value), "unsupported")
       : option(language.value, false, "soon"),
   );
-  return hasEnabled(narrowed) ? narrowed : staticOptions(true);
+  return hasEnabled(narrowed) ? narrowed : staticOptions();
 }
 
 function repairOption<T extends string | number>(

@@ -77,10 +77,7 @@ describe("studioCapabilityState", () => {
     const state = studioCapabilityState(capabilities, baseSelection);
 
     expect(enabledValues(state.aspectRatios)).toEqual(["9:16", "16:9"]);
-    expect(enabledValues(state.models)).toEqual([
-      "seedance-2.0",
-      "seedance-2.0-fast",
-    ]);
+    expect(enabledValues(state.models)).toEqual(["seedance-2.0"]);
     expect(enabledValues(state.languages)).toEqual([
       "en",
       "es",
@@ -103,24 +100,21 @@ describe("studioCapabilityState", () => {
     expect(state.aspectRatios.find((ratio) => ratio.value === "3:4")?.enabled).toBe(
       false,
     );
-
-    const seedanceOnly = studioCapabilityState(
-      [{ ...capabilities[0], models: [capabilities[0].models[0]] }],
-      baseSelection,
-    );
-    expect(
-      seedanceOnly.models.find((model) => model.value === "seedance-2.0-fast")
-        ?.enabled,
-    ).toBe(false);
   });
 
   it("uses the selected model's resolution ceiling", () => {
-    const state = studioCapabilityState(capabilities, {
-      ...baseSelection,
-      videoModel: "seedance-2.0-fast",
-      resolution: "1080p",
-    });
+    const state = studioCapabilityState(
+      [
+        {
+          ...capabilities[0],
+          max_resolution: "1080p",
+          models: [{ ...capabilities[0].models[0], max_resolution: "720p" }],
+        },
+      ],
+      { ...baseSelection, resolution: "1080p" },
+    );
 
+    expect(state.repaired.videoModel).toBe("seedance-2.0");
     expect(enabledValues(state.resolutions)).toEqual(["480p", "720p"]);
     expect(state.repaired.resolution).toBe("720p");
   });
@@ -217,17 +211,31 @@ describe("studioCapabilityState", () => {
     );
   });
 
-  it("keeps the coming-soon reason for a model the inventory hasn't released", () => {
-    const state = studioCapabilityState(
-      [{ ...capabilities[0], models: [capabilities[0].models[0]] }],
-      baseSelection,
-    );
+  it("keeps one picker shape whether or not capabilities have landed", () => {
+    // Fast is `enabled: false` in the static inventory, so it is not offered
+    // anywhere yet - a payload naming it must not grow a second card.
+    const listed = (state: { models: { value: string }[] }) =>
+      state.models.map((model) => model.value);
 
-    // Fast is `enabled: false` in the static inventory, so it is unbuilt, not
-    // "offered in the other mode".
-    expect(state.models.find((model) => model.value === "seedance-2.0-fast")).toMatchObject(
-      { enabled: false, reason: "soon" },
-    );
+    expect(listed(studioCapabilityState(undefined, baseSelection))).toEqual([
+      "seedance-2.0",
+    ]);
+    expect(listed(studioCapabilityState(capabilities, baseSelection))).toEqual([
+      "seedance-2.0",
+    ]);
+  });
+
+  it("blames the mode, not each option, when the mode is off", () => {
+    const state = studioCapabilityState(capabilities, {
+      ...baseSelection,
+      mode: "ai_avatar",
+    });
+
+    for (const options of [state.resolutions, state.aspectRatios, state.languages]) {
+      expect(options.length).toBeGreaterThan(0);
+      expect(options.every((option) => !option.enabled)).toBe(true);
+      expect(options.every((option) => option.reason === null)).toBe(true);
+    }
   });
 
   it("uses the lowest offered ceiling when no model is being sent", () => {

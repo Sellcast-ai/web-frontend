@@ -353,9 +353,9 @@ describe("Studio page renders extracted English copy", () => {
     expect(disabled.length).toBeGreaterThan(0);
     expect(text).toContain("Not available with this mode");
     expect(disabled.filter((tag) => tag.includes("title="))).toEqual([]);
-    // Fast is unbuilt inventory, not a mode restriction, so it keeps its own
-    // copy rather than claiming the other mode offers it.
-    expect(text).toContain("Coming soon");
+    // Fast is unbuilt inventory, so it is not in the picker at all — a payload
+    // landing must not grow a card that wasn't there before it did.
+    expect(text).not.toContain("Seedance 2.0 Fast");
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so
