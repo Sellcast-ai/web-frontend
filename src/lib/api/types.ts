@@ -319,9 +319,9 @@ export interface ReferencePresign {
 
 export type VideoModelKey = "seedance-2.0" | "seedance-2.0-fast";
 
-/** Models Studio knows how to label. Fallback mode preserves the old picker
- * (`enabled` here), while `GET /video/capabilities` can enable a supported
- * backend option such as Fast for the selected mode. */
+/** Models Studio knows how to label. `enabled` is the static inventory of what
+ * may be offered at all; `GET /video/capabilities` can only narrow that list to
+ * the selected mode, never enable an entry this flag has switched off. */
 export const VIDEO_MODELS: {
   value: VideoModelKey;
   label: string;

@@ -136,6 +136,10 @@ const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof User
   },
 ];
 
+function modeLabelKey(mode: VideoMode): string {
+  return MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label";
+}
+
 const MODEL_KEYS: Record<VideoModelKey, StudioOptionKeys> = {
   "seedance-2.0": { label: "models.seedance20.label", blurb: "models.seedance20.blurb" },
   "seedance-2.0-fast": { label: "models.seedance20Fast.label", blurb: "models.seedance20Fast.blurb" },
@@ -217,7 +221,18 @@ function StudioInner() {
     () => normalizeVideoCapabilities(videoCapabilities),
     [videoCapabilities],
   );
+  // A repair has to change the stored selection, not just this render: left
+  // derived, a later capability refetch that reports the old mode available
+  // again would drop the user back into it with no click of theirs behind it.
+  // Adjusting during render (never in an effect) keeps the committed mode and
+  // everything derived from it in the same paint, and `movedFrom` keeps the
+  // move on screen until the user picks a mode themselves.
   const effectiveMode = repairMode(caps, mode);
+  const [movedFrom, setMovedFrom] = useState<VideoMode | null>(null);
+  if (effectiveMode !== mode) {
+    setMode(effectiveMode);
+    setMovedFrom(mode);
+  }
   const capabilityState = studioCapabilityState(caps, {
     mode: effectiveMode,
     videoModel,
@@ -245,7 +260,10 @@ function StudioInner() {
       language: selectedLanguage,
       ...next,
     }).repaired;
-    if (next.mode) setMode(next.mode);
+    if (next.mode) {
+      setMode(next.mode);
+      setMovedFrom(null);
+    }
     if (repaired.videoModel) setVideoModel(repaired.videoModel);
     setResolution(repaired.resolution);
     setAspectRatio(repaired.aspectRatio);
@@ -508,6 +526,14 @@ function StudioInner() {
                 />
               ))}
             </div>
+            {movedFrom !== null && movedFrom !== effectiveMode && (
+              <p className="mt-3 text-xs font-semibold text-danger" role="status">
+                {t("modes.movedAway", {
+                  from: t(modeLabelKey(movedFrom)),
+                  to: t(modeLabelKey(effectiveMode)),
+                })}
+              </p>
+            )}
           </Section>
 
           {/* avatar — who's on screen (avatar mode only) */}
@@ -711,7 +737,7 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.mode")}
-                value={t(MODES.find((m) => m.value === effectiveMode)?.label ?? "modes.aiAvatar.label")}
+                value={t(modeLabelKey(effectiveMode))}
               />
               <Row
                 label={t("summary.length")}

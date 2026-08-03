@@ -71,6 +71,19 @@ const MANUAL_OVERRIDES = {
     vi: "n/a",
     th: "ไม่รองรับ",
   },
+  // Announces a capability read moving the user off their mode. Both slots are
+  // mode names, so each locale is written around the particle/agreement its own
+  // mode labels need rather than a literal translation of the frame.
+  "app.studio.modes.movedAway": {
+    es: "{from} no está disponible ahora mismo. Cambiamos a {to}.",
+    zh: "{from} 目前不可用，已切换到 {to}。",
+    ja: "現在 {from} は利用できません。{to} に切り替えました。",
+    ko: "지금은 {from}을(를) 사용할 수 없어 {to}(으)로 변경했습니다.",
+    pt: "{from} não está disponível agora. Mudamos para {to}.",
+    id: "{from} sedang tidak tersedia. Kami beralih ke {to}.",
+    vi: "{from} hiện chưa khả dụng. Đã chuyển sang {to}.",
+    th: "ตอนนี้ใช้ {from} ไม่ได้ จึงเปลี่ยนไปใช้ {to} แล้ว",
+  },
   // The one toast standing in for the backend's untranslated credit-refusal
   // prose - the machine reads "credits" as academic credits and "render" as a
   // drawing verb, so every locale is hand-set on the unit noun it already uses.

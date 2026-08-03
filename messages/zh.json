@@ -431,7 +431,8 @@
           "label": "仅产品",
           "blurb": "没有面孔——只有产品。"
         },
-        "unavailable": "暂时不可用"
+        "unavailable": "暂时不可用",
+        "movedAway": "{from} 目前不可用，已切换到 {to}。"
       },
       "presenter": {
         "auto": "汽车",

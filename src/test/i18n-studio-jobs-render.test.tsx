@@ -358,6 +358,54 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).not.toContain("Seedance 2.0 Fast");
   });
 
+  // A repair moves the user off the mode they were on, so it is committed to
+  // the selection (never left derived, or a later refetch reporting the old
+  // mode available again would move them back with no click) and said out loud
+  // where the mode is picked.
+  it("commits a mode repair and says the mode was moved", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: false,
+          aspect_ratios: ["9:16"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [],
+        },
+        {
+          mode: "ai_avatar",
+          available: true,
+          aspect_ratios: ["9:16"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [
+            {
+              key: "seedance-2.0",
+              label: "Seedance 2.0",
+              model_id: "doubao-seedance-2-0-260128",
+              max_resolution: "720p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Product Only isn’t available right now. Switched to AI Avatar.");
+    // The repaired mode is the one the rest of the screen renders against.
+    expect(sectionHeadings(html)).toContain("Presenter");
+    expect(text).toContain("Generate video");
+  });
+
   // The out-of-quota notice is backend-metered only: a drained meter says so
   // before the click, a funded one stays quiet, and no usage read means no
   // invented balance (the create toast carries that failure alone).
