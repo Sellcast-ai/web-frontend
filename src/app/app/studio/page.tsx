@@ -526,14 +526,16 @@ function StudioInner() {
                 />
               ))}
             </div>
-            {movedFrom !== null && movedFrom !== effectiveMode && (
-              <p className="mt-3 text-xs font-semibold text-danger" role="status">
-                {t("modes.movedAway", {
-                  from: t(modeLabelKey(movedFrom)),
-                  to: t(modeLabelKey(effectiveMode)),
-                })}
-              </p>
-            )}
+            {movedFrom !== null &&
+              movedFrom !== effectiveMode &&
+              isModeKnownUnavailable(caps, movedFrom) && (
+                <p className="mt-3 text-xs font-semibold text-danger" role="status">
+                  {t("modes.movedAway", {
+                    from: t(modeLabelKey(movedFrom)),
+                    to: t(modeLabelKey(effectiveMode)),
+                  })}
+                </p>
+              )}
           </Section>
 
           {/* avatar — who's on screen (avatar mode only) */}
@@ -684,6 +686,7 @@ function StudioInner() {
                 />
               ))}
             </div>
+            <UnavailableLegend options={capabilityState.languages} />
           </Section>
 
           {/* storyboard review — always on; this is the product's wedge, not an
@@ -964,6 +967,24 @@ function LanguageButton({
       <UnavailableBadge reason={option.reason} />
       <UnavailableNote reason={option.reason} srOnly />
     </button>
+  );
+}
+
+// Language chips are too small to carry a per-chip note, so the row gets one
+// line mapping every badge in play to its reason - the badge alone explains
+// nothing, and a disabled control can't be focused to reveal more.
+const LEGEND_REASONS: OptionUnavailableReason[] = ["unsupported", "soon"];
+
+function UnavailableLegend({ options }: { options: CapabilityOption<VideoLanguage>[] }) {
+  const t = useTranslations("app.studio");
+  const parts = LEGEND_REASONS.filter((r) => options.some((o) => o.reason === r)).map((r) =>
+    r === "soon"
+      ? `${t("language.soonBadge")}: ${t("language.comingSoonTitle")}`
+      : `${t("optionUnavailable.badge")}: ${t("optionUnavailable.title")}`,
+  );
+  if (parts.length === 0) return null;
+  return (
+    <p className="mt-2 text-xs font-semibold text-danger">{parts.join(" · ")}</p>
   );
 }
 

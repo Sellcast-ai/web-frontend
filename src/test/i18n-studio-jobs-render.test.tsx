@@ -356,6 +356,12 @@ describe("Studio page renders extracted English copy", () => {
     // Fast is unbuilt inventory, so it is not in the picker at all — a payload
     // landing must not grow a card that wasn't there before it did.
     expect(text).not.toContain("Seedance 2.0 Fast");
+    // Language chips carry only a two-character badge, so the row itself has to
+    // spell that badge out — sr-only text a sighted keyboard user never sees is
+    // not an explanation. Only the badges actually in play are named.
+    const languageRow = html.slice(html.indexOf("Español"));
+    expect(languageRow).toContain("n/a: Not available with this mode");
+    expect(languageRow).not.toContain("soon: Coming soon");
   });
 
   // A repair moves the user off the mode they were on, so it is committed to
