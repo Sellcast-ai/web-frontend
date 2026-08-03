@@ -260,6 +260,45 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).toContain("9:16");
   });
 
+  // A mode whose offered models Studio can't label has no model to show and
+  // none to send: the picker and the summary row both go, so the create payload
+  // has nothing to read (`repaired.videoModel` is null, see
+  // video-capabilities.test.ts) and the backend applies its own default.
+  it("drops the model picker and summary row when no offered model is labelled", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: true,
+          aspect_ratios: ["9:16", "16:9"],
+          languages: null,
+          beat_durations: [5, 10],
+          max_resolution: "1080p",
+          models: [
+            {
+              key: "veo-9",
+              label: "Veo 9",
+              model_id: "veo-9",
+              max_resolution: "1080p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
+
+    expect(text).not.toContain("Newest · up to 1080p");
+    expect(text).not.toContain("Veo 9");
+    expect(text).not.toContain("Model");
+    // Generate stays usable — an unknown model list is not a dead end.
+    expect(text).toContain("Generate video");
+  });
+
   // The out-of-quota notice is backend-metered only: a drained meter says so
   // before the click, a funded one stays quiet, and no usage read means no
   // invented balance (the create toast carries that failure alone).

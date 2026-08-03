@@ -40,6 +40,9 @@ export type StudioCapabilitySelection = {
   language: VideoLanguage;
 };
 
+/** `videoModel` is null when this mode offers no model Studio can stand behind:
+ * there is nothing honest to pick or to send, so the create payload omits the
+ * field and the backend picks its own default. */
 export type StudioCapabilityState = {
   modeAvailable: boolean;
   modelPickerVisible: boolean;
@@ -47,7 +50,9 @@ export type StudioCapabilityState = {
   resolutions: CapabilityOption<VideoResolution>[];
   aspectRatios: CapabilityOption<VideoAspectRatio>[];
   languages: CapabilityOption<VideoLanguage>[];
-  repaired: StudioCapabilitySelection;
+  repaired: Omit<StudioCapabilitySelection, "videoModel"> & {
+    videoModel: VideoModelKey | null;
+  };
   canSubmit: boolean;
 };
 
@@ -124,15 +129,6 @@ export function repairMode(capabilities: unknown, mode: VideoMode): VideoMode {
   return MODE_ORDER.find((candidate) => modeAvailableIn(caps, candidate)) ?? mode;
 }
 
-export function optionFor<T extends string | number>(
-  options: CapabilityOption<T>[],
-  value: T,
-): CapabilityOption<T> {
-  return (
-    options.find((option) => option.value === value) ?? { value, enabled: true, reason: null }
-  );
-}
-
 export function studioCapabilityState(
   capabilities: unknown,
   selection: StudioCapabilitySelection,
@@ -142,13 +138,11 @@ export function studioCapabilityState(
   const modeAvailable = !caps || Boolean(cap?.available);
   const models = modelOptions(caps, cap, modeAvailable);
   const modelPickerVisible = models.length > 0;
-  const repairedModel = repairOption(selection.videoModel, models, DEFAULT_MODEL);
-  const resolutions = resolutionOptions(
-    caps,
-    cap,
-    modeAvailable,
-    modelPickerVisible ? repairedModel : null,
+  const repairedModel = enabledOnly(
+    repairOption(selection.videoModel, models, DEFAULT_MODEL),
+    models,
   );
+  const resolutions = resolutionOptions(caps, cap, modeAvailable, repairedModel);
   const aspectRatios = aspectRatioOptions(caps, cap, modeAvailable);
   const languages = languageOptions(caps, cap, modeAvailable);
 
@@ -285,6 +279,13 @@ function repairOption<T extends string | number>(
     return preferred;
   }
   return options.find((option) => option.enabled)?.value ?? current;
+}
+
+function enabledOnly<T extends string | number>(
+  value: T,
+  options: CapabilityOption<T>[],
+): T | null {
+  return options.some((option) => option.value === value && option.enabled) ? value : null;
 }
 
 function hasEnabled(options: CapabilityOption<string | number>[]): boolean {

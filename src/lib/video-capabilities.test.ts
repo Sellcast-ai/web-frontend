@@ -249,8 +249,26 @@ describe("studioCapabilityState", () => {
     );
 
     expect(state.modelPickerVisible).toBe(false);
-    expect(state.repaired.videoModel).toBe("seedance-2.0");
+    // Nothing here Studio can stand behind, so there is no model to send: the
+    // create payload drops the field and the backend picks its own default.
+    expect(state.repaired.videoModel).toBeNull();
     expect(state.canSubmit).toBe(true);
+  });
+
+  it("sends no model when the offered set doesn't contain the selection", () => {
+    for (const caps of [
+      // Mode offers models, none of which Studio can label.
+      [{ ...capabilities[0], models: [{ ...capabilities[0].models[0], key: "veo-9" }] }],
+      // Mode offers no models at all.
+      [{ ...capabilities[0], models: [] }],
+      // Mode itself is unavailable, so no model is offered either.
+      capabilities.map((entry) => ({ ...entry, available: false })),
+    ]) {
+      const { videoModel } = studioCapabilityState(caps, baseSelection).repaired;
+
+      expect(videoModel).toBeNull();
+      expect(videoModel).not.toBe("");
+    }
   });
 
   it("falls back to today's constants when capabilities are unavailable", () => {

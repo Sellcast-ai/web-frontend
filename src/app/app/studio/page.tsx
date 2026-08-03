@@ -31,7 +31,6 @@ import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
   VIDEO_MODELS,
-  VIDEO_RESOLUTIONS,
   VIDEO_VIBES,
   type VideoAspectRatio,
   type VideoLanguage,
@@ -47,7 +46,6 @@ import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
 import {
   isModeKnownUnavailable,
-  optionFor,
   repairMode,
   studioCapabilityState,
   type CapabilityOption,
@@ -229,7 +227,9 @@ function StudioInner() {
       ...next,
     }).repaired;
     if (next.mode) setMode(next.mode);
-    if (repaired.videoModel !== videoModel) setVideoModel(repaired.videoModel);
+    if (repaired.videoModel && repaired.videoModel !== videoModel) {
+      setVideoModel(repaired.videoModel);
+    }
     if (repaired.resolution !== resolution) setResolution(repaired.resolution);
     if (repaired.aspectRatio !== aspectRatio) setAspectRatio(repaired.aspectRatio);
     if (next.language !== undefined || repaired.language !== selectedLanguage) {
@@ -249,7 +249,7 @@ function StudioInner() {
     effectiveMode,
     vibe,
     duration,
-    effectiveVideoModel,
+    effectiveVideoModel ?? "",
     effectiveResolution,
     effectiveAspectRatio,
   ].join("|");
@@ -297,7 +297,10 @@ function StudioInner() {
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
-        video_model: effectiveVideoModel,
+        // Omitted when this mode offers no model we can stand behind: the
+        // field is optional and the backend then picks its own default,
+        // rather than being handed a model it just said it doesn't offer.
+        ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
         resolution: effectiveResolution,
         aspect_ratio: effectiveAspectRatio,
         avatar_id: effectiveMode === "ai_avatar" ? avatarId : null,
@@ -544,35 +547,31 @@ function StudioInner() {
           {capabilityState.modelPickerVisible && (
             <Section title={t("sections.model")}>
               <div className="grid grid-cols-2 gap-3">
-                {capabilityState.models.map((option) => {
-                  const m = VIDEO_MODELS.find((model) => model.value === option.value);
-                  if (!m) return null;
-                  return (
-                    <button
-                      key={m.value}
-                      type="button"
-                      disabled={!option.enabled}
-                      title={unavailableTitle(option.reason, t)}
-                      onClick={() => selectWithCapabilities({ videoModel: m.value })}
-                      className={cn(
-                        "rounded-2xl border p-3.5 text-left transition-colors",
-                        !option.enabled
-                          ? "cursor-not-allowed border-border bg-card opacity-60"
-                          : effectiveVideoModel === m.value
-                            ? "border-brand-400 bg-accent"
-                            : "border-border bg-card hover:border-border-strong",
-                      )}
-                    >
-                      <p className="text-sm font-semibold text-ink">
-                        {t(MODEL_KEYS[m.value].label)}
-                        <UnavailableBadge reason={option.reason} />
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {t(MODEL_KEYS[m.value].blurb)}
-                      </p>
-                    </button>
-                  );
-                })}
+                {capabilityState.models.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    disabled={!option.enabled}
+                    title={unavailableTitle(option.reason, t)}
+                    onClick={() => selectWithCapabilities({ videoModel: option.value })}
+                    className={cn(
+                      "rounded-2xl border p-3.5 text-left transition-colors",
+                      !option.enabled
+                        ? "cursor-not-allowed border-border bg-card opacity-60"
+                        : effectiveVideoModel === option.value
+                          ? "border-brand-400 bg-accent"
+                          : "border-border bg-card hover:border-border-strong",
+                    )}
+                  >
+                    <p className="text-sm font-semibold text-ink">
+                      {t(MODEL_KEYS[option.value].label)}
+                      <UnavailableBadge reason={option.reason} />
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {t(MODEL_KEYS[option.value].blurb)}
+                    </p>
+                  </button>
+                ))}
               </div>
             </Section>
           )}
@@ -580,13 +579,12 @@ function StudioInner() {
           {/* resolution — render quality */}
           <Section title={t("sections.resolution")}>
             <div className="grid grid-cols-3 gap-3">
-              {VIDEO_RESOLUTIONS.map((r) => (
+              {capabilityState.resolutions.map((option) => (
                 <ResolutionButton
-                  key={r.value}
-                  resolution={r}
-                  option={optionFor(capabilityState.resolutions, r.value)}
-                  selected={effectiveResolution === r.value}
-                  onClick={() => selectWithCapabilities({ resolution: r.value })}
+                  key={option.value}
+                  option={option}
+                  selected={effectiveResolution === option.value}
+                  onClick={() => selectWithCapabilities({ resolution: option.value })}
                 />
               ))}
             </div>
@@ -596,8 +594,8 @@ function StudioInner() {
               mode; talking-head output may adapt its shape server-side. */}
           <Section title={t("sections.size")}>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
-              {VIDEO_ASPECT_RATIOS.map((a) => {
-                const option = optionFor(capabilityState.aspectRatios, a.value);
+              {VIDEO_ASPECT_RATIOS.map((a, i) => {
+                const option = capabilityState.aspectRatios[i];
                 return (
                   <button
                     key={a.value}
@@ -633,11 +631,11 @@ function StudioInner() {
           {/* language — only voice-QA-validated languages are selectable */}
           <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
-              {VIDEO_LANGUAGES.map((lang) => (
+              {VIDEO_LANGUAGES.map((lang, i) => (
                 <LanguageButton
                   key={lang.value}
                   language={lang}
-                  option={optionFor(capabilityState.languages, lang.value)}
+                  option={capabilityState.languages[i]}
                   selected={language === lang.value}
                   onClick={() => selectWithCapabilities({ language: lang.value })}
                 />
@@ -702,7 +700,7 @@ function StudioInner() {
                 label={t("summary.length")}
                 value={t("durationSeconds", { duration })}
               />
-              {capabilityState.modelPickerVisible && (
+              {effectiveVideoModel && (
                 <Row
                   label={t("summary.model")}
                   value={t(MODEL_KEYS[effectiveVideoModel].label)}
@@ -829,7 +827,7 @@ function ModeButton({
     <button
       type="button"
       disabled={disabled}
-      title={disabled ? t("modes.unavailableTitle") : undefined}
+      title={disabled ? t("modes.unavailable") : undefined}
       onClick={onClick}
       className={cn(
         "rounded-2xl border-2 p-4 text-left transition-colors",
@@ -860,12 +858,10 @@ function ModeButton({
 }
 
 function ResolutionButton({
-  resolution,
   option,
   selected,
   onClick,
 }: {
-  resolution: (typeof VIDEO_RESOLUTIONS)[number];
   option: CapabilityOption<VideoResolution>;
   selected: boolean;
   onClick: () => void;
@@ -887,11 +883,11 @@ function ResolutionButton({
       )}
     >
       <p className="text-sm font-semibold text-ink">
-        {t(RESOLUTION_KEYS[resolution.value].label)}
+        {t(RESOLUTION_KEYS[option.value].label)}
         <UnavailableBadge reason={option.reason} />
       </p>
       <p className="text-xs text-muted-foreground">
-        {t(RESOLUTION_KEYS[resolution.value].blurb)}
+        {t(RESOLUTION_KEYS[option.value].blurb)}
       </p>
     </button>
   );
