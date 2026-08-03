@@ -432,7 +432,8 @@
           "blurb": "Tanpa wajah — hanya produknya."
         },
         "unavailable": "Sementara tidak tersedia",
-        "unavailableNote": "{mode} sedang tidak tersedia. Pilih mode lain untuk membuat video."
+        "unavailableNote": "{mode} sedang tidak tersedia. Pilih mode lain untuk membuat video.",
+        "unavailableAllNote": "Tidak ada mode pembuatan yang tersedia saat ini. Coba lagi nanti."
       },
       "presenter": {
         "auto": "Otomatis",

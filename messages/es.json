@@ -432,7 +432,8 @@
           "blurb": "Sin rostro, sólo el producto."
         },
         "unavailable": "Temporalmente no disponible",
-        "unavailableNote": "{mode} no está disponible ahora mismo. Elige otro modo para generar."
+        "unavailableNote": "{mode} no está disponible ahora mismo. Elige otro modo para generar.",
+        "unavailableAllNote": "Ningún modo de generación está disponible ahora mismo. Inténtalo más tarde."
       },
       "presenter": {
         "auto": "Automático",

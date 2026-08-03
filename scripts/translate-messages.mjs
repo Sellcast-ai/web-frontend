@@ -41,6 +41,16 @@ const MANUAL_OVERRIDES = {
     vi: "{mode} hiện chưa khả dụng. Hãy chọn chế độ khác để tạo video.",
     th: "{mode} ยังใช้งานไม่ได้ตอนนี้ เลือกโหมดอื่นเพื่อสร้างวิดีโอ",
   },
+  "app.studio.modes.unavailableAllNote": {
+    es: "Ningún modo de generación está disponible ahora mismo. Inténtalo más tarde.",
+    zh: "目前没有可用的生成模式。请稍后再试。",
+    ja: "現在利用できる生成モードがありません。しばらくしてからお試しください。",
+    ko: "지금은 사용할 수 있는 생성 모드가 없습니다. 잠시 후 다시 시도해 주세요.",
+    pt: "Nenhum modo de geração está disponível agora. Tente novamente mais tarde.",
+    id: "Tidak ada mode pembuatan yang tersedia saat ini. Coba lagi nanti.",
+    vi: "Hiện không có chế độ tạo video nào khả dụng. Vui lòng thử lại sau.",
+    th: "ขณะนี้ไม่มีโหมดสร้างวิดีโอที่ใช้งานได้ กรุณาลองใหม่ภายหลัง",
+  },
   "app.studio.models.seedance20Fast.label": {
     es: "Seedance 2.0 Fast",
     zh: "Seedance 2.0 Fast",

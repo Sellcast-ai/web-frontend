@@ -50,7 +50,6 @@ import {
   studioCapabilityState,
   type CapabilityOption,
   type OptionUnavailableReason,
-  type StudioCapabilitySelection,
 } from "@/lib/video-capabilities";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/app/product-card";
@@ -120,20 +119,27 @@ const VIBE_KEYS: Record<VideoVibe, StudioOptionKeys> = {
   clean_demo: { label: "vibes.cleanDemo.label", blurb: "vibes.cleanDemo.blurb" },
 };
 
-const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof UserSquare2 }[] = [
-  {
+// Keyed by the union so a new `VideoMode` literal can't reach a render with no
+// label to show for it; the card row keeps this declaration order.
+const MODE_META: Record<
+  VideoMode,
+  { value: VideoMode; label: string; blurb: string; Icon: typeof UserSquare2 }
+> = {
+  ai_avatar: {
     value: "ai_avatar",
     label: "modes.aiAvatar.label",
     blurb: "modes.aiAvatar.blurb",
     Icon: UserSquare2,
   },
-  {
+  product_only: {
     value: "product_only",
     label: "modes.productOnly.label",
     blurb: "modes.productOnly.blurb",
     Icon: Package,
   },
-];
+};
+
+const MODES = Object.values(MODE_META);
 
 const MODEL_KEYS: Record<VideoModelKey, StudioOptionKeys> = {
   "seedance-2.0": { label: "models.seedance20.label", blurb: "models.seedance20.blurb" },
@@ -157,7 +163,6 @@ function byValue<T extends { value: string }>(entries: readonly T[]) {
 
 const ASPECT_RATIO_META = byValue(VIDEO_ASPECT_RATIOS);
 const LANGUAGE_META = byValue(VIDEO_LANGUAGES);
-const MODE_META = byValue(MODES);
 
 function StudioInner() {
   const t = useTranslations("app.studio");
@@ -222,7 +227,9 @@ function StudioInner() {
   // a click of theirs leaves it. Moving them - even to a mode that works - is
   // choosing which product they ship, and a transient backend answer must not
   // make that choice. The sub-options below do fall back automatically; those
-  // don't change what the render is.
+  // don't change what the render is. That fallback stays derived: only the
+  // control the user actually clicked writes state, so a repair narrowing
+  // 1080p to 720p under one mode can never outlive the mode that caused it.
   const capabilityState = studioCapabilityState(caps, {
     mode,
     videoModel,
@@ -230,6 +237,12 @@ function StudioInner() {
     aspectRatio,
     language: selectedLanguage,
   });
+  // "Pick another mode" is only an instruction while another mode can be
+  // picked; with every mode reported off it would name a way out the grid
+  // doesn't have, so the note names the outage instead.
+  const anotherModePickable = MODES.some(
+    (m) => m.value !== mode && !isModeKnownUnavailable(caps, m.value),
+  );
   const effectiveVideoModel = capabilityState.repaired.videoModel;
   const effectiveResolution = capabilityState.repaired.resolution;
   const effectiveAspectRatio = capabilityState.repaired.aspectRatio;
@@ -240,25 +253,6 @@ function StudioInner() {
   // Storyboard review is always on (the default gate); the legacy image-level
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
-
-  function selectWithCapabilities(next: Partial<StudioCapabilitySelection>) {
-    const repaired = studioCapabilityState(caps, {
-      mode,
-      videoModel,
-      resolution,
-      aspectRatio,
-      language: selectedLanguage,
-      ...next,
-    }).repaired;
-    if (next.mode) setMode(next.mode);
-    if (repaired.videoModel) setVideoModel(repaired.videoModel);
-    setResolution(repaired.resolution);
-    setAspectRatio(repaired.aspectRatio);
-    // Only a language click may pin the override: committing a narrowing
-    // repair from an unrelated click would overwrite the product-derived
-    // default with a language the user never chose.
-    if (next.language !== undefined) setLanguageOverride(repaired.language);
-  }
 
   // Two backend-metered signals, no client pricing: an empty meter (zero is
   // zero under any rate card, so the user sees it before clicking and Generate
@@ -510,7 +504,7 @@ function StudioInner() {
                   mode={m}
                   selected={mode === m.value}
                   disabled={isModeKnownUnavailable(caps, m.value)}
-                  onClick={() => selectWithCapabilities({ mode: m.value })}
+                  onClick={() => setMode(m.value)}
                 />
               ))}
             </div>
@@ -575,7 +569,7 @@ function StudioInner() {
                     key={option.value}
                     type="button"
                     disabled={!option.enabled}
-                    onClick={() => selectWithCapabilities({ videoModel: option.value })}
+                    onClick={() => setVideoModel(option.value)}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
                       !option.enabled
@@ -607,7 +601,7 @@ function StudioInner() {
                   key={option.value}
                   option={option}
                   selected={effectiveResolution === option.value}
-                  onClick={() => selectWithCapabilities({ resolution: option.value })}
+                  onClick={() => setResolution(option.value)}
                 />
               ))}
             </div>
@@ -624,7 +618,7 @@ function StudioInner() {
                     key={a.value}
                     type="button"
                     disabled={!option.enabled}
-                    onClick={() => selectWithCapabilities({ aspectRatio: a.value })}
+                    onClick={() => setAspectRatio(a.value)}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
                       !option.enabled
@@ -660,7 +654,7 @@ function StudioInner() {
                   label={LANGUAGE_META[option.value].label}
                   option={option}
                   selected={language === option.value}
-                  onClick={() => selectWithCapabilities({ language: option.value })}
+                  onClick={() => setLanguageOverride(option.value)}
                 />
               ))}
             </div>
@@ -783,7 +777,9 @@ function StudioInner() {
             </Button>
             {!capabilityState.modeAvailable && (
               <p className="mt-2 text-center text-xs font-semibold text-danger">
-                {t("modes.unavailableNote", { mode: t(MODE_META[mode].label) })}
+                {anotherModePickable
+                  ? t("modes.unavailableNote", { mode: t(MODE_META[mode].label) })
+                  : t("modes.unavailableAllNote")}
               </p>
             )}
             {atActiveCap && (

@@ -262,8 +262,8 @@ describe("Studio page renders extracted English copy", () => {
     ]) {
       expect(text, `expected size option "${s}" in studio render`).toContain(s);
     }
-    // Every size stays selectable — none of the five buttons is disabled
-    // (product decision: nothing greyed out in any mode).
+    // No capability data is seeded here, so the fallback keeps every size
+    // selectable — none of the five buttons is disabled.
     const sizeSection = html.slice(html.indexOf(">Size<"), html.indexOf("5 · Language"));
     expect(sizeSection).not.toContain("disabled");
     // Default mode is product_only, so the talking-head shape hint stays hidden.
@@ -420,6 +420,36 @@ describe("Studio page renders extracted English copy", () => {
       html.indexOf("Product Only"),
     );
     expect(modeCard).toContain("border-brand-400");
+  });
+
+  // With every mode reported off there is no other mode to pick, so the note
+  // may not instruct an action the grid makes impossible.
+  it("names the outage instead of pointing at a mode nobody can pick", () => {
+    const off = (mode: string) => ({
+      mode,
+      available: false,
+      aspect_ratios: ["9:16"],
+      languages: ["en"],
+      beat_durations: [5, 10],
+      max_resolution: "720p",
+      models: [],
+    });
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [off("product_only"), off("ai_avatar")]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("No render modes are available right now.");
+    expect(text).not.toContain("Pick another mode to generate");
+    const generateButton = html.slice(
+      html.lastIndexOf("<button", html.indexOf("Generate video")),
+    );
+    expect(generateButton).toContain("disabled");
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so

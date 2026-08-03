@@ -432,7 +432,8 @@
           "blurb": "얼굴은 없습니다. 제품만 있을 뿐입니다."
         },
         "unavailable": "일시적으로 사용할 수 없음",
-        "unavailableNote": "{mode}은(는) 지금 사용할 수 없습니다. 다른 모드를 선택해 생성하세요."
+        "unavailableNote": "{mode}은(는) 지금 사용할 수 없습니다. 다른 모드를 선택해 생성하세요.",
+        "unavailableAllNote": "지금은 사용할 수 있는 생성 모드가 없습니다. 잠시 후 다시 시도해 주세요."
       },
       "presenter": {
         "auto": "자동",

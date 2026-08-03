@@ -10,7 +10,13 @@ import {
   type VideoResolution,
 } from "@/lib/api/types";
 
-const KNOWN_MODES: readonly VideoMode[] = ["product_only", "ai_avatar"];
+// Keyed by the union so a new `VideoMode` literal fails to compile here rather
+// than being silently dropped by `asVideoMode` - which would report a mode the
+// backend positively offered as off.
+const KNOWN_MODES = Object.keys({
+  product_only: true,
+  ai_avatar: true,
+} satisfies Record<VideoMode, true>) as readonly VideoMode[];
 const DEFAULT_MODEL = VIDEO_MODELS[0].value;
 const DEFAULT_RESOLUTION: VideoResolution = "720p";
 const DEFAULT_ASPECT_RATIO: VideoAspectRatio = "9:16";

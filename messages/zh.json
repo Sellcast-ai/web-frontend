@@ -432,7 +432,8 @@
           "blurb": "没有面孔——只有产品。"
         },
         "unavailable": "暂时不可用",
-        "unavailableNote": "{mode} 暂时不可用。请选择其他模式来生成。"
+        "unavailableNote": "{mode} 暂时不可用。请选择其他模式来生成。",
+        "unavailableAllNote": "目前没有可用的生成模式。请稍后再试。"
       },
       "presenter": {
         "auto": "汽车",

@@ -432,7 +432,8 @@
           "blurb": "Không có khuôn mặt - chỉ là sản phẩm."
         },
         "unavailable": "Tạm thời chưa có",
-        "unavailableNote": "{mode} hiện chưa khả dụng. Hãy chọn chế độ khác để tạo video."
+        "unavailableNote": "{mode} hiện chưa khả dụng. Hãy chọn chế độ khác để tạo video.",
+        "unavailableAllNote": "Hiện không có chế độ tạo video nào khả dụng. Vui lòng thử lại sau."
       },
       "presenter": {
         "auto": "Tự động",

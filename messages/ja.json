@@ -432,7 +432,8 @@
           "blurb": "顔はなく、製品だけです。"
         },
         "unavailable": "一時的に利用できません",
-        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。"
+        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。",
+        "unavailableAllNote": "現在利用できる生成モードがありません。しばらくしてからお試しください。"
       },
       "presenter": {
         "auto": "自動",
