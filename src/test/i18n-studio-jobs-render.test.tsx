@@ -414,12 +414,17 @@ describe("Studio page renders extracted English copy", () => {
     // The reason sits beside the dead button too, like every other blocked
     // Generate state - the mode card is sections away on a phone.
     expect(text).toContain("Product Only isn’t available right now.");
-    // ...and the blocked card still reads as the user's own selection.
-    const modeCard = html.slice(
-      html.lastIndexOf("<button", html.indexOf("Product Only")),
-      html.indexOf("Product Only"),
-    );
-    expect(modeCard).toContain("border-brand-400");
+    // ...and the blocked card still reads as the user's own selection, as do
+    // the sub-pickers it takes down with it: a seller must not lose sight of
+    // what they picked just because the mode above it went off.
+    for (const label of ["Product Only", "720p", "9:16", "English"]) {
+      const card = html.slice(
+        html.lastIndexOf("<button", html.indexOf(label)),
+        html.indexOf(label),
+      );
+      expect(card).toContain("border-brand-400");
+      expect(card).toContain("disabled");
+    }
   });
 
   // With every mode reported off there is no other mode to pick, so the note

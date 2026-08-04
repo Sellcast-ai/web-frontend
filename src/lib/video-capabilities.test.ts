@@ -151,18 +151,40 @@ describe("studioCapabilityState", () => {
     expect(state.canSubmit).toBe(false);
   });
 
-  it("treats a mode the payload omits as unavailable", () => {
+  it("treats a mode the payload omits as unknown, not unavailable", () => {
+    // Only `available: false` is the backend saying no. A payload that just
+    // doesn't mention a mode - a rename, a different mode set - says nothing
+    // about it, so that mode keeps the constants instead of blocking Generate.
     const productOnly = [capabilities[0]];
 
-    expect(isModeKnownUnavailable(productOnly, "ai_avatar")).toBe(true);
+    expect(isModeKnownUnavailable(productOnly, "ai_avatar")).toBe(false);
     expect(studioCapabilityState(productOnly, { ...baseSelection, mode: "ai_avatar" }))
-      .toMatchObject({ modeAvailable: false, canSubmit: false });
+      .toMatchObject({ modeAvailable: true, canSubmit: true });
+  });
+
+  it("keeps a positively reported mode's verdict through a partial rename", () => {
+    // `product_only` renamed away, `ai_avatar` still spelled as Studio has it:
+    // the renamed one is unknown (constants), the named one still counts.
+    const partiallyRenamed = [
+      { ...capabilities[0], mode: "product" },
+      capabilities[1],
+    ];
+
+    expect(isModeKnownUnavailable(partiallyRenamed, "product_only")).toBe(false);
+    expect(studioCapabilityState(partiallyRenamed, baseSelection)).toMatchObject({
+      modeAvailable: true,
+      canSubmit: true,
+    });
+    expect(isModeKnownUnavailable(partiallyRenamed, "ai_avatar")).toBe(true);
   });
 
   it("never moves the user off an unavailable mode", () => {
     // Sub-options fall back on their own, but the mode is the user's choice of
     // what to ship: an off mode blocks Generate until they click another one.
-    const avatarOnly: VideoCapabilities = [{ ...capabilities[1], available: true }];
+    const avatarOnly: VideoCapabilities = [
+      { ...capabilities[0], available: false },
+      { ...capabilities[1], available: true },
+    ];
     const state = studioCapabilityState(avatarOnly, baseSelection);
 
     expect(state.modeAvailable).toBe(false);

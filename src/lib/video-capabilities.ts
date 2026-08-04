@@ -64,9 +64,9 @@ export type StudioCapabilityState = {
 
 /** What this module trusts from the payload, after validation. A capability
  * read that doesn't conform is treated as no read at all - for the whole
- * payload, or for the single mode whose entry is the bad one - so Studio
- * degrades to the static picker constants instead of throwing mid-render or
- * reporting a mode off that the backend never said was off. */
+ * payload, or for the single mode whose entry is the bad one or missing - so
+ * Studio degrades to the static picker constants instead of throwing mid-render
+ * or reporting a mode off that the backend never said was off. */
 type ModeCapability = {
   mode: VideoMode;
   /** false when the entry was present but didn't conform. That mode's
@@ -88,8 +88,8 @@ function optionalString(value: unknown): string | null {
 }
 
 /** A name outside Studio's own mode literals says nothing about the modes
- * Studio has - a backend rename would otherwise read as every mode reported
- * off, disabling Generate for everyone - so the entry is no read at all. */
+ * Studio has - a renamed entry describes some other vocabulary - so the entry
+ * is no read at all, and the mode it might have been keeps its constants. */
 function asVideoMode(value: unknown): VideoMode | null {
   return typeof value === "string" && (KNOWN_MODES as readonly string[]).includes(value)
     ? (value as VideoMode)
@@ -153,11 +153,12 @@ export function normalizeVideoCapabilities(
 
 /** The three states a picker narrows by, so no call site can hold a mode that
  * is both unreadable and available, or an entry it must re-check for. This is
- * the one lookup every export shares. An entry that was there but didn't parse
- * says nothing about the mode, and unknown must read as "no capability data"
- * for it, never as a backend saying no; once a usable payload exists, a mode it
- * doesn't positively report as available is off - an omitted entry is not a
- * green light. */
+ * the one lookup every export shares. Only `available: false` is the backend
+ * saying no; a missing entry, an unparseable one and an entry naming a mode
+ * Studio doesn't have are all the same thing - nothing was read for that mode,
+ * so it keeps the static constants. Studio's gate is a courtesy on top of the
+ * backend's own refusal, and a courtesy must never brick the product over a
+ * payload it couldn't read. */
 type ModeNarrowing =
   | { kind: "unknown" }
   | { kind: "off" }
@@ -169,8 +170,8 @@ function modeNarrowing(
 ): ModeNarrowing {
   if (!caps) return { kind: "unknown" };
   const cap = caps.find((entry) => entry.mode === mode);
-  if (cap && !cap.readable) return { kind: "unknown" };
-  return cap?.available ? { kind: "narrow", cap } : { kind: "off" };
+  if (!cap || !cap.readable) return { kind: "unknown" };
+  return cap.available ? { kind: "narrow", cap } : { kind: "off" };
 }
 
 export function isModeKnownUnavailable(
@@ -250,8 +251,9 @@ function modelOptions(narrowing: ModeNarrowing): CapabilityOption<VideoModelKey>
   const narrowed = released.map((model) =>
     option(model.value, supported.has(model.value), "unsupported"),
   );
-  // Nothing the backend offers has a label here - hide the picker and keep the
-  // current model rather than blocking Generate behind an all-disabled row.
+  // Nothing the backend offers has a label here, so there is no model to show
+  // or to send: the picker hides and the create payload omits the field (see
+  // `videoModel: null` above) rather than blocking Generate behind a dead row.
   return hasEnabled(narrowed) ? narrowed : [];
 }
 

@@ -621,11 +621,12 @@ function StudioInner() {
                     onClick={() => setAspectRatio(a.value)}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
+                      effectiveAspectRatio === a.value
+                        ? "border-brand-400 bg-accent"
+                        : "border-border bg-card",
                       !option.enabled
-                        ? "cursor-not-allowed border-border bg-card opacity-60"
-                        : effectiveAspectRatio === a.value
-                          ? "border-brand-400 bg-accent"
-                          : "border-border bg-card hover:border-border-strong",
+                        ? "cursor-not-allowed opacity-60"
+                        : effectiveAspectRatio !== a.value && "hover:border-border-strong",
                     )}
                   >
                     <p className="text-sm font-semibold text-ink">
@@ -892,11 +893,10 @@ function ResolutionButton({
       onClick={onClick}
       className={cn(
         "rounded-2xl border p-3.5 text-left transition-colors",
+        selected ? "border-brand-400 bg-accent" : "border-border bg-card",
         !option.enabled
-          ? "cursor-not-allowed border-border bg-card opacity-60"
-          : selected
-            ? "border-brand-400 bg-accent"
-            : "border-border bg-card hover:border-border-strong",
+          ? "cursor-not-allowed opacity-60"
+          : !selected && "hover:border-border-strong",
       )}
     >
       <p className="text-sm font-semibold text-ink">
@@ -929,11 +929,10 @@ function LanguageButton({
       onClick={onClick}
       className={cn(
         "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
-        !option.enabled
-          ? "cursor-not-allowed border-border bg-card text-muted-foreground opacity-60"
-          : selected
-            ? "border-brand-400 bg-accent text-accent-foreground"
-            : "border-border bg-card text-muted-foreground hover:text-ink",
+        selected
+          ? "border-brand-400 bg-accent text-accent-foreground"
+          : "border-border bg-card text-muted-foreground",
+        !option.enabled ? "cursor-not-allowed opacity-60" : !selected && "hover:text-ink",
       )}
     >
       {label}
