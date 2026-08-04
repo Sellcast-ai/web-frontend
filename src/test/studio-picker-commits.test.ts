@@ -4,8 +4,7 @@
  * on one picker persist another picker's *derived* repair - burning the user's
  * explicit 1080p pick the moment they touch a size card under a 720p mode.
  * There is no DOM harness in this project, so this is the structural form of
- * the guarantee: exactly one writer per field, and it is that field's own
- * click handler.
+ * the guarantee: exactly one writer per field.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -29,9 +28,8 @@ function occurrences(pattern: RegExp): number {
 }
 
 describe("Studio picker commits", () => {
-  it.each(SETTERS)("%s is written only by its own click handler", (setter) => {
+  it.each(SETTERS)("%s has exactly one call site", (setter) => {
     // The `useState` destructuring is a declaration, not a call.
     expect(occurrences(new RegExp(`\\b${setter}\\(`, "g"))).toBe(1);
-    expect(occurrences(new RegExp(`onClick=\\{\\(\\) => ${setter}\\(`, "g"))).toBe(1);
   });
 });

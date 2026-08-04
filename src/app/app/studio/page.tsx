@@ -572,11 +572,13 @@ function StudioInner() {
                     onClick={() => setVideoModel(option.value)}
                     className={cn(
                       "rounded-2xl border p-3.5 text-left transition-colors",
+                      capabilityState.selectedModel === option.value
+                        ? "border-brand-400 bg-accent"
+                        : "border-border bg-card",
                       !option.enabled
-                        ? "cursor-not-allowed border-border bg-card opacity-60"
-                        : effectiveVideoModel === option.value
-                          ? "border-brand-400 bg-accent"
-                          : "border-border bg-card hover:border-border-strong",
+                        ? "cursor-not-allowed opacity-60"
+                        : capabilityState.selectedModel !== option.value &&
+                          "hover:border-border-strong",
                     )}
                   >
                     <p className="text-sm font-semibold text-ink">
@@ -719,10 +721,10 @@ function StudioInner() {
                 label={t("summary.length")}
                 value={t("durationSeconds", { duration })}
               />
-              {effectiveVideoModel && (
+              {capabilityState.modelPickerVisible && (
                 <Row
                   label={t("summary.model")}
-                  value={t(MODEL_KEYS[effectiveVideoModel].label)}
+                  value={t(MODEL_KEYS[capabilityState.selectedModel].label)}
                 />
               )}
               <Row
@@ -731,10 +733,7 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.language")}
-                value={
-                  VIDEO_LANGUAGES.find((l) => l.value === language)?.label ??
-                  VIDEO_LANGUAGES[0].label
-                }
+                value={LANGUAGE_META[language].label}
               />
               <Row label={t("summary.format")} value={effectiveAspectRatio} />
               <Row label={t("summary.review")} value={t("summary.storyboard")} />

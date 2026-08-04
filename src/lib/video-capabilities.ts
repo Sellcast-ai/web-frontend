@@ -48,11 +48,14 @@ export type StudioCapabilitySelection = {
 
 /** `videoModel` is null when this mode offers no model Studio can stand behind:
  * there is nothing honest to pick or to send, so the create payload omits the
- * field and the backend picks its own default. */
+ * field and the backend picks its own default. `selectedModel` is the card that
+ * still reads as chosen in that state, so a mode reported off greys the row
+ * without erasing the user's pick, exactly like the other three pickers. */
 export type StudioCapabilityState = {
   modeAvailable: boolean;
   modelPickerVisible: boolean;
   models: CapabilityOption<VideoModelKey>[];
+  selectedModel: VideoModelKey;
   resolutions: CapabilityOption<VideoResolution>[];
   aspectRatios: CapabilityOption<VideoAspectRatio>[];
   languages: CapabilityOption<VideoLanguage>[];
@@ -138,17 +141,15 @@ function normalizeMode(raw: unknown): ModeCapability | null {
 
 /** The validated payload every entry point reads. Normalize once per capability
  * read and pass the result around, so the mode gate, the repair and the pickers
- * provably share one snapshot. `undefined` means no usable read. */
+ * provably share one snapshot. An entry a mode has no match in means nothing was
+ * read for it, so an empty snapshot needs no separate spelling. */
 export type VideoCapabilitySnapshot = ModeCapability[];
 
-export function normalizeVideoCapabilities(
-  raw: unknown,
-): VideoCapabilitySnapshot | undefined {
-  if (!Array.isArray(raw)) return undefined;
-  const entries = raw
+export function normalizeVideoCapabilities(raw: unknown): VideoCapabilitySnapshot {
+  if (!Array.isArray(raw)) return [];
+  return raw
     .map(normalizeMode)
     .filter((entry): entry is ModeCapability => entry !== null);
-  return entries.length > 0 ? entries : undefined;
 }
 
 /** The three states a picker narrows by, so no call site can hold a mode that
@@ -164,35 +165,29 @@ type ModeNarrowing =
   | { kind: "off" }
   | { kind: "narrow"; cap: ModeCapability };
 
-function modeNarrowing(
-  caps: VideoCapabilitySnapshot | undefined,
-  mode: VideoMode,
-): ModeNarrowing {
-  if (!caps) return { kind: "unknown" };
+function modeNarrowing(caps: VideoCapabilitySnapshot, mode: VideoMode): ModeNarrowing {
   const cap = caps.find((entry) => entry.mode === mode);
   if (!cap || !cap.readable) return { kind: "unknown" };
   return cap.available ? { kind: "narrow", cap } : { kind: "off" };
 }
 
 export function isModeKnownUnavailable(
-  caps: VideoCapabilitySnapshot | undefined,
+  caps: VideoCapabilitySnapshot,
   mode: VideoMode,
 ): boolean {
   return modeNarrowing(caps, mode).kind === "off";
 }
 
 export function studioCapabilityState(
-  caps: VideoCapabilitySnapshot | undefined,
+  caps: VideoCapabilitySnapshot,
   selection: StudioCapabilitySelection,
 ): StudioCapabilityState {
   const narrowing = modeNarrowing(caps, selection.mode);
   const modeAvailable = narrowing.kind !== "off";
   const models = modelOptions(narrowing);
   const modelPickerVisible = models.length > 0;
-  const repairedModel = enabledOnly(
-    repairOption(selection.videoModel, models, DEFAULT_MODEL),
-    models,
-  );
+  const selectedModel = repairOption(selection.videoModel, models, DEFAULT_MODEL);
+  const repairedModel = enabledOnly(selectedModel, models);
   const resolutions = resolutionOptions(narrowing, repairedModel);
   const aspectRatios = aspectRatioOptions(narrowing);
   const languages = languageOptions(narrowing);
@@ -201,6 +196,7 @@ export function studioCapabilityState(
     modeAvailable,
     modelPickerVisible,
     models,
+    selectedModel,
     resolutions,
     aspectRatios,
     languages,
@@ -243,9 +239,10 @@ function modelOptions(narrowing: ModeNarrowing): CapabilityOption<VideoModelKey>
   if (narrowing.kind === "unknown") {
     return released.map((model) => option(model.value, true, "unsupported"));
   }
-  // The mode card already says the whole mode is off; a row of models under it
-  // would only restate that, so hide the picker either way.
-  if (narrowing.kind === "off") return [];
+  // The mode card carries the whole explanation, so the row goes quiet rather
+  // than blaming each model - and stays put, keeping the user's pick visible
+  // instead of collapsing the section out from under them.
+  if (narrowing.kind === "off") return inertOptions(released);
   if (narrowing.cap.models.length === 0) return [];
   const supported = new Set(narrowing.cap.models.map((model) => model.key));
   const narrowed = released.map((model) =>

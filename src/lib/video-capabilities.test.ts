@@ -245,7 +245,12 @@ describe("studioCapabilityState", () => {
       mode: "ai_avatar",
     });
 
-    for (const options of [state.resolutions, state.aspectRatios, state.languages]) {
+    for (const options of [
+      state.models,
+      state.resolutions,
+      state.aspectRatios,
+      state.languages,
+    ]) {
       expect(options.length).toBeGreaterThan(0);
       expect(options.every((option) => !option.enabled)).toBe(true);
       expect(options.every((option) => option.reason === null)).toBe(true);
@@ -368,14 +373,18 @@ describe("studioCapabilityState", () => {
     expect(isModeKnownUnavailable(caps, "ai_avatar")).toBe(true);
   });
 
-  it("hides the model picker for an unavailable mode", () => {
+  it("keeps the model row visible but inert for an unavailable mode", () => {
     const state = studioCapabilityState(
       [{ ...capabilities[0], available: false }],
       baseSelection,
     );
 
-    expect(state.models).toEqual([]);
-    expect(state.modelPickerVisible).toBe(false);
+    expect(state.modelPickerVisible).toBe(true);
+    expect(state.models.every((model) => !model.enabled)).toBe(true);
+    // The user's pick still reads as chosen, but nothing is sent for a mode the
+    // backend just said is off.
+    expect(state.selectedModel).toBe("seedance-2.0");
+    expect(state.repaired.videoModel).toBeNull();
     expect(state.canSubmit).toBe(false);
   });
 
