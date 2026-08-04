@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "Hanya Produk",
           "blurb": "Tanpa wajah — hanya produknya."
-        }
+        },
+        "unavailable": "Sementara tidak tersedia",
+        "unavailableNote": "{mode} sedang tidak tersedia. Pilih mode lain untuk membuat video.",
+        "unavailableAllNote": "Tidak ada mode pembuatan yang tersedia saat ini. Coba lagi nanti."
       },
       "presenter": {
         "auto": "Otomatis",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Terbaru · hingga 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Lebih cepat · hingga 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "Segera hadir",
         "soonBadge": "segera"
+      },
+      "optionUnavailable": {
+        "title": "Tidak tersedia untuk mode ini",
+        "badge": "n/a"
       },
       "reviewDescription": "Lumi akan menunjukkan kepada Anda storyboard sebelum menghabiskan apa pun — tinjau dan setujui sebelum gambar atau video apa pun dibuat.",
       "summary": {

@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "Product Only",
           "blurb": "No face — just the product."
-        }
+        },
+        "unavailable": "Temporarily unavailable",
+        "unavailableNote": "{mode} isn’t available right now. Pick another mode to generate.",
+        "unavailableAllNote": "No render modes are available right now. Please try again later."
       },
       "presenter": {
         "auto": "Auto",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Newest · up to 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Faster · up to 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "Coming soon",
         "soonBadge": "soon"
+      },
+      "optionUnavailable": {
+        "title": "Not available with this mode",
+        "badge": "n/a"
       },
       "reviewDescription": "Lumi will show you the storyboard before it spends anything — review and approve it before any images or video are generated.",
       "summary": {

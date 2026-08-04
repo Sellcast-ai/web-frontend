@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
@@ -23,6 +23,7 @@ import {
   useAvatars,
   useMyProducts,
   useVideoJobs,
+  useVideoCapabilities,
 } from "@/lib/api/hooks";
 import { ApiError, api } from "@/lib/api/client";
 import {
@@ -30,7 +31,6 @@ import {
   VIDEO_DURATIONS,
   VIDEO_LANGUAGES,
   VIDEO_MODELS,
-  VIDEO_RESOLUTIONS,
   VIDEO_VIBES,
   type VideoAspectRatio,
   type VideoLanguage,
@@ -44,6 +44,13 @@ import {
 } from "@/lib/api/types";
 import { defaultLanguageFor } from "@/lib/language";
 import { defaultStyleForMode } from "@/lib/vibe";
+import {
+  isModeKnownUnavailable,
+  normalizeVideoCapabilities,
+  studioCapabilityState,
+  type CapabilityOption,
+  type OptionUnavailableReason,
+} from "@/lib/video-capabilities";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/app/product-card";
 import { StaggerItem } from "@/components/ui/motion";
@@ -112,23 +119,31 @@ const VIBE_KEYS: Record<VideoVibe, StudioOptionKeys> = {
   clean_demo: { label: "vibes.cleanDemo.label", blurb: "vibes.cleanDemo.blurb" },
 };
 
-const MODES: { value: VideoMode; label: string; blurb: string; Icon: typeof UserSquare2 }[] = [
-  {
+// Keyed by the union so a new `VideoMode` literal can't reach a render with no
+// label to show for it; the card row keeps this declaration order.
+const MODE_META: Record<
+  VideoMode,
+  { value: VideoMode; label: string; blurb: string; Icon: typeof UserSquare2 }
+> = {
+  ai_avatar: {
     value: "ai_avatar",
     label: "modes.aiAvatar.label",
     blurb: "modes.aiAvatar.blurb",
     Icon: UserSquare2,
   },
-  {
+  product_only: {
     value: "product_only",
     label: "modes.productOnly.label",
     blurb: "modes.productOnly.blurb",
     Icon: Package,
   },
-];
+};
+
+const MODES = Object.values(MODE_META);
 
 const MODEL_KEYS: Record<VideoModelKey, StudioOptionKeys> = {
   "seedance-2.0": { label: "models.seedance20.label", blurb: "models.seedance20.blurb" },
+  "seedance-2.0-fast": { label: "models.seedance20Fast.label", blurb: "models.seedance20Fast.blurb" },
 };
 
 const RESOLUTION_KEYS: Record<VideoResolution, StudioOptionKeys> = {
@@ -136,6 +151,18 @@ const RESOLUTION_KEYS: Record<VideoResolution, StudioOptionKeys> = {
   "720p": { label: "resolutions.p720.label", blurb: "resolutions.p720.blurb" },
   "1080p": { label: "resolutions.p1080.label", blurb: "resolutions.p1080.blurb" },
 };
+
+// Capability options carry only a value, so their labels are looked up by that
+// value - never by position in the static array they were narrowed from.
+function byValue<T extends { value: string }>(entries: readonly T[]) {
+  return Object.fromEntries(entries.map((entry) => [entry.value, entry])) as Record<
+    T["value"],
+    T
+  >;
+}
+
+const ASPECT_RATIO_META = byValue(VIDEO_ASPECT_RATIOS);
+const LANGUAGE_META = byValue(VIDEO_LANGUAGES);
 
 function StudioInner() {
   const t = useTranslations("app.studio");
@@ -153,6 +180,7 @@ function StudioInner() {
     isFetching: isFetchingProduct,
   } = useProduct(productId);
   const { data: usage } = useUsage();
+  const { data: videoCapabilities } = useVideoCapabilities();
   const { data: jobs } = useVideoJobs({}, (list) =>
     capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
   );
@@ -162,8 +190,8 @@ function StudioInner() {
   });
   const generateGuard = useMutationGuard();
 
-  // default is product_only, not ai_avatar: avatar mode is selectable but does
-  // not currently render, and a first attempt must not land on it. See AGENTS.md.
+  // Start on the generally available path; capabilities can disable a mode and
+  // narrow its options after the backend reports current provider support.
   const [mode, setMode] = useState<VideoMode>("product_only");
   const [vibe, setVibe] = useState<VideoVibe>("premium_clean");
   const [referenceMode, setReferenceMode] = useState<ReferenceMode>("link");
@@ -171,9 +199,6 @@ function StudioInner() {
   const [uploadedUrl, setUploadedUrl] = useState<string | null>(null);
   const [referenceUploading, setReferenceUploading] = useState(false);
   const [duration, setDuration] = useState<VideoDuration>(15);
-  // Style is no longer a manual pick — it auto-derives from mode (locked
-  // decision #1). We still send it so the backend schema stays intact.
-  const style = defaultStyleForMode(mode);
   const [videoModel, setVideoModel] = useState<VideoModelKey>(VIDEO_MODELS[0].value);
   const [resolution, setResolution] = useState<VideoResolution>("720p");
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
@@ -190,7 +215,41 @@ function StudioInner() {
   // Language defaults to the product's source market (shopee.co.id → id)
   // until the user explicitly picks one — derived, so no effect needed.
   const [languageOverride, setLanguageOverride] = useState<VideoLanguage | null>(null);
-  const language = languageOverride ?? defaultLanguageFor(product);
+  const selectedLanguage = languageOverride ?? defaultLanguageFor(product);
+  // One validated snapshot per capability read: the mode gate, the repair and
+  // the pickers all narrow against the same thing.
+  const caps = useMemo(
+    () => normalizeVideoCapabilities(videoCapabilities),
+    [videoCapabilities],
+  );
+  // The mode is never repaired for the user: a mode the backend reports off
+  // shows as unavailable and blocks Generate while it stays selected, and only
+  // a click of theirs leaves it. Moving them - even to a mode that works - is
+  // choosing which product they ship, and a transient backend answer must not
+  // make that choice. The sub-options below do fall back automatically; those
+  // don't change what the render is. That fallback stays derived: only the
+  // control the user actually clicked writes state, so a repair narrowing
+  // 1080p to 720p under one mode can never outlive the mode that caused it.
+  const capabilityState = studioCapabilityState(caps, {
+    mode,
+    videoModel,
+    resolution,
+    aspectRatio,
+    language: selectedLanguage,
+  });
+  // "Pick another mode" is only an instruction while another mode can be
+  // picked; with every mode reported off it would name a way out the grid
+  // doesn't have, so the note names the outage instead.
+  const anotherModePickable = MODES.some(
+    (m) => m.value !== mode && !isModeKnownUnavailable(caps, m.value),
+  );
+  const effectiveVideoModel = capabilityState.repaired.videoModel;
+  const effectiveResolution = capabilityState.repaired.resolution;
+  const effectiveAspectRatio = capabilityState.repaired.aspectRatio;
+  const language = capabilityState.repaired.language;
+  // Style is no longer a manual pick — it auto-derives from mode (locked
+  // decision #1). We still send it so the backend schema stays intact.
+  const style = defaultStyleForMode(mode);
   // Storyboard review is always on (the default gate); the legacy image-level
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
@@ -203,7 +262,14 @@ function StudioInner() {
   // usage on failure, so a top-up or a plan change clears this on its own; a
   // fresh Generate clears it too. Without a usage read there is no honest
   // balance to quote, so the create toast carries the failure alone.
-  const renderKey = [mode, vibe, duration, videoModel, resolution, aspectRatio].join("|");
+  const renderKey = [
+    mode,
+    vibe,
+    duration,
+    effectiveVideoModel ?? "",
+    effectiveResolution,
+    effectiveAspectRatio,
+  ].join("|");
   const noCredits = usage !== undefined && usage.remaining <= 0;
   const outOfQuota =
     noCredits ||
@@ -231,7 +297,7 @@ function StudioInner() {
   const referenceReady = activeReferenceUrl.length > 0;
 
   async function generate() {
-    if (!productId || linkInvalid || referenceUploading) return;
+    if (!productId || !capabilityState.canSubmit || linkInvalid || referenceUploading) return;
     // Synchronous latch: `disabled={create.isPending}` cannot catch two clicks
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
@@ -248,9 +314,12 @@ function StudioInner() {
         duration_seconds: duration,
         review_mode: reviewMode,
         language,
-        video_model: videoModel,
-        resolution,
-        aspect_ratio: aspectRatio,
+        // Omitted when this mode offers no model we can stand behind: the
+        // field is optional and the backend then picks its own default,
+        // rather than being handed a model it just said it doesn't offer.
+        ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
+        resolution: effectiveResolution,
+        aspect_ratio: effectiveAspectRatio,
         avatar_id: mode === "ai_avatar" ? avatarId : null,
       });
       // Success keeps the latch held until navigation unmounts the page.
@@ -430,28 +499,13 @@ function StudioInner() {
           <Section title={t("sections.mode")}>
             <div className="grid grid-cols-2 gap-3">
               {MODES.map((m) => (
-                <button
+                <ModeButton
                   key={m.value}
-                  type="button"
+                  mode={m}
+                  selected={mode === m.value}
+                  disabled={isModeKnownUnavailable(caps, m.value)}
                   onClick={() => setMode(m.value)}
-                  className={cn(
-                    "rounded-2xl border-2 p-4 text-left transition-colors",
-                    mode === m.value
-                      ? "border-brand-400 bg-accent"
-                      : "border-border bg-card hover:border-border-strong",
-                  )}
-                >
-                  <m.Icon
-                    className={cn(
-                      "h-6 w-6",
-                      mode === m.value ? "text-brand-700" : "text-muted-foreground",
-                    )}
-                  />
-                  <p className="mt-2 font-display font-semibold text-ink">
-                    {t(m.label)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">{t(m.blurb)}</p>
-                </button>
+                />
               ))}
             </div>
           </Section>
@@ -506,84 +560,86 @@ function StudioInner() {
             </div>
           </Section>
 
-          {/* model — which Seedance model renders the video */}
-          <Section title={t("sections.model")}>
-            <div className="grid grid-cols-2 gap-3">
-              {VIDEO_MODELS.map((m) => (
-                <button
-                  key={m.value}
-                  type="button"
-                  disabled={!m.enabled}
-                  onClick={() => setVideoModel(m.value)}
-                  className={cn(
-                    "rounded-2xl border p-3.5 text-left transition-colors",
-                    !m.enabled
-                      ? "cursor-not-allowed border-border bg-card opacity-60"
-                      : videoModel === m.value
+          {/* model — only shown when the selected mode exposes a model picker */}
+          {capabilityState.modelPickerVisible && (
+            <Section title={t("sections.model")}>
+              <div className="grid grid-cols-2 gap-3">
+                {capabilityState.models.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    disabled={!option.enabled}
+                    onClick={() => setVideoModel(option.value)}
+                    className={cn(
+                      "rounded-2xl border p-3.5 text-left transition-colors",
+                      capabilityState.selectedModel === option.value
                         ? "border-brand-400 bg-accent"
-                        : "border-border bg-card hover:border-border-strong",
-                  )}
-                >
-                  <p className="text-sm font-semibold text-ink">
-                    {t(MODEL_KEYS[m.value].label)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {t(MODEL_KEYS[m.value].blurb)}
-                  </p>
-                </button>
-              ))}
-            </div>
-          </Section>
+                        : "border-border bg-card",
+                      !option.enabled
+                        ? "cursor-not-allowed opacity-60"
+                        : capabilityState.selectedModel !== option.value &&
+                          "hover:border-border-strong",
+                    )}
+                  >
+                    <p className="text-sm font-semibold text-ink">
+                      {t(MODEL_KEYS[option.value].label)}
+                      <UnavailableBadge reason={option.reason} />
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {t(MODEL_KEYS[option.value].blurb)}
+                    </p>
+                    <UnavailableNote reason={option.reason} />
+                  </button>
+                ))}
+              </div>
+            </Section>
+          )}
 
           {/* resolution — render quality */}
           <Section title={t("sections.resolution")}>
             <div className="grid grid-cols-3 gap-3">
-              {VIDEO_RESOLUTIONS.map((r) => (
-                <button
-                  key={r.value}
-                  type="button"
-                  disabled={!r.enabled}
-                  onClick={() => setResolution(r.value)}
-                  className={cn(
-                    "rounded-2xl border p-3.5 text-left transition-colors",
-                    !r.enabled
-                      ? "cursor-not-allowed border-border bg-card opacity-60"
-                      : resolution === r.value
-                        ? "border-brand-400 bg-accent"
-                        : "border-border bg-card hover:border-border-strong",
-                  )}
-                >
-                  <p className="text-sm font-semibold text-ink">
-                    {t(RESOLUTION_KEYS[r.value].label)}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {t(RESOLUTION_KEYS[r.value].blurb)}
-                  </p>
-                </button>
+              {capabilityState.resolutions.map((option) => (
+                <ResolutionButton
+                  key={option.value}
+                  option={option}
+                  selected={effectiveResolution === option.value}
+                  onClick={() => setResolution(option.value)}
+                />
               ))}
             </div>
           </Section>
 
-          {/* size — output aspect ratio. All sizes stay selectable in every
-              mode; talking-head output may adapt its shape server-side. */}
+          {/* size — output aspect ratio, narrowed to what the selected mode
+              reports; talking-head output may adapt its shape server-side. */}
           <Section title={t("sections.size")}>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-5">
-              {VIDEO_ASPECT_RATIOS.map((a) => (
-                <button
-                  key={a.value}
-                  type="button"
-                  onClick={() => setAspectRatio(a.value)}
-                  className={cn(
-                    "rounded-2xl border p-3.5 text-left transition-colors",
-                    aspectRatio === a.value
-                      ? "border-brand-400 bg-accent"
-                      : "border-border bg-card hover:border-border-strong",
-                  )}
-                >
-                  <p className="text-sm font-semibold text-ink">{a.label}</p>
-                  <p className="text-xs text-muted-foreground">{a.blurb}</p>
-                </button>
-              ))}
+              {capabilityState.aspectRatios.map((option) => {
+                const a = ASPECT_RATIO_META[option.value];
+                return (
+                  <button
+                    key={a.value}
+                    type="button"
+                    disabled={!option.enabled}
+                    onClick={() => setAspectRatio(a.value)}
+                    className={cn(
+                      "rounded-2xl border p-3.5 text-left transition-colors",
+                      effectiveAspectRatio === a.value
+                        ? "border-brand-400 bg-accent"
+                        : "border-border bg-card",
+                      !option.enabled
+                        ? "cursor-not-allowed opacity-60"
+                        : effectiveAspectRatio !== a.value && "hover:border-border-strong",
+                    )}
+                  >
+                    <p className="text-sm font-semibold text-ink">
+                      {a.label}
+                      <UnavailableBadge reason={option.reason} />
+                    </p>
+                    <p className="text-xs text-muted-foreground">{a.blurb}</p>
+                    <UnavailableNote reason={option.reason} />
+                  </button>
+                );
+              })}
             </div>
             {mode === "ai_avatar" && (
               <p className="mt-2 text-xs text-muted-foreground">
@@ -592,34 +648,21 @@ function StudioInner() {
             )}
           </Section>
 
-          {/* language — only voice-QA-validated languages are selectable */}
+          {/* language — voice-QA-validated languages, narrowed to the ones the
+              selected mode reports; the two reasons never share copy */}
           <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
-              {VIDEO_LANGUAGES.map((lang) => (
-                <button
-                  key={lang.value}
-                  type="button"
-                  disabled={!lang.enabled}
-                  title={lang.enabled ? undefined : t("language.comingSoonTitle")}
-                  onClick={() => setLanguageOverride(lang.value)}
-                  className={cn(
-                    "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
-                    !lang.enabled
-                      ? "cursor-not-allowed border-border bg-card text-muted-foreground opacity-60"
-                      : language === lang.value
-                        ? "border-brand-400 bg-accent text-accent-foreground"
-                        : "border-border bg-card text-muted-foreground hover:text-ink",
-                  )}
-                >
-                  {lang.label}
-                  {!lang.enabled && (
-                    <span className="ml-1.5 text-[10px] font-bold uppercase tracking-wide">
-                      {t("language.soonBadge")}
-                    </span>
-                  )}
-                </button>
+              {capabilityState.languages.map((option) => (
+                <LanguageButton
+                  key={option.value}
+                  label={LANGUAGE_META[option.value].label}
+                  option={option}
+                  selected={language === option.value}
+                  onClick={() => setLanguageOverride(option.value)}
+                />
               ))}
             </div>
+            <UnavailableLegend options={capabilityState.languages} />
           </Section>
 
           {/* storyboard review — always on; this is the product's wedge, not an
@@ -673,28 +716,27 @@ function StudioInner() {
               />
               <Row
                 label={t("summary.mode")}
-                value={t(MODES.find((m) => m.value === mode)?.label ?? "modes.aiAvatar.label")}
+                value={t(MODE_META[mode].label)}
               />
               <Row
                 label={t("summary.length")}
                 value={t("durationSeconds", { duration })}
               />
-              <Row
-                label={t("summary.model")}
-                value={t(MODEL_KEYS[videoModel].label)}
-              />
+              {capabilityState.modelPickerVisible && (
+                <Row
+                  label={t("summary.model")}
+                  value={t(MODEL_KEYS[capabilityState.selectedModel].label)}
+                />
+              )}
               <Row
                 label={t("summary.resolution")}
-                value={t(RESOLUTION_KEYS[resolution].label)}
+                value={t(RESOLUTION_KEYS[effectiveResolution].label)}
               />
               <Row
                 label={t("summary.language")}
-                value={
-                  VIDEO_LANGUAGES.find((l) => l.value === language)?.label ??
-                  VIDEO_LANGUAGES[0].label
-                }
+                value={LANGUAGE_META[language].label}
               />
-              <Row label={t("summary.format")} value={aspectRatio} />
+              <Row label={t("summary.format")} value={effectiveAspectRatio} />
               <Row label={t("summary.review")} value={t("summary.storyboard")} />
             </dl>
 
@@ -715,6 +757,7 @@ function StudioInner() {
                 !product ||
                 atActiveCap ||
                 noCredits ||
+                !capabilityState.canSubmit ||
                 linkInvalid ||
                 referenceUploading
               }
@@ -733,6 +776,13 @@ function StudioInner() {
                 </>
               )}
             </Button>
+            {!capabilityState.modeAvailable && (
+              <p className="mt-2 text-center text-xs font-semibold text-danger">
+                {anotherModePickable
+                  ? t("modes.unavailableNote", { mode: t(MODE_META[mode].label) })
+                  : t("modes.unavailableAllNote")}
+              </p>
+            )}
             {atActiveCap && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
                 {t("cap.reached", { count: activeCount, limit: MAX_ACTIVE_JOBS })}{" "}
@@ -784,6 +834,164 @@ function ReferenceModeButton({
       {icon}
       {label}
     </button>
+  );
+}
+
+function ModeButton({
+  mode,
+  selected,
+  disabled,
+  onClick,
+}: {
+  mode: (typeof MODES)[number];
+  selected: boolean;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const t = useTranslations("app.studio");
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className={cn(
+        "rounded-2xl border-2 p-4 text-left transition-colors",
+        selected ? "border-brand-400 bg-accent" : "border-border bg-card",
+        disabled ? "cursor-not-allowed opacity-60" : !selected && "hover:border-border-strong",
+      )}
+    >
+      <mode.Icon
+        className={cn("h-6 w-6", selected ? "text-brand-700" : "text-muted-foreground")}
+      />
+      <p className="mt-2 font-display font-semibold text-ink">
+        {t(mode.label)}
+      </p>
+      <p className="text-xs text-muted-foreground">{t(mode.blurb)}</p>
+      {disabled && (
+        <p className="mt-2 text-xs font-semibold text-danger">
+          {t("modes.unavailable")}
+        </p>
+      )}
+    </button>
+  );
+}
+
+function ResolutionButton({
+  option,
+  selected,
+  onClick,
+}: {
+  option: CapabilityOption<VideoResolution>;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  const t = useTranslations("app.studio");
+  return (
+    <button
+      type="button"
+      disabled={!option.enabled}
+      onClick={onClick}
+      className={cn(
+        "rounded-2xl border p-3.5 text-left transition-colors",
+        selected ? "border-brand-400 bg-accent" : "border-border bg-card",
+        !option.enabled
+          ? "cursor-not-allowed opacity-60"
+          : !selected && "hover:border-border-strong",
+      )}
+    >
+      <p className="text-sm font-semibold text-ink">
+        {t(RESOLUTION_KEYS[option.value].label)}
+        <UnavailableBadge reason={option.reason} />
+      </p>
+      <p className="text-xs text-muted-foreground">
+        {t(RESOLUTION_KEYS[option.value].blurb)}
+      </p>
+      <UnavailableNote reason={option.reason} />
+    </button>
+  );
+}
+
+function LanguageButton({
+  label,
+  option,
+  selected,
+  onClick,
+}: {
+  label: string;
+  option: CapabilityOption<VideoLanguage>;
+  selected: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={!option.enabled}
+      onClick={onClick}
+      className={cn(
+        "rounded-xl border px-4 py-2 text-sm font-semibold transition-colors",
+        selected
+          ? "border-brand-400 bg-accent text-accent-foreground"
+          : "border-border bg-card text-muted-foreground",
+        !option.enabled ? "cursor-not-allowed opacity-60" : !selected && "hover:text-ink",
+      )}
+    >
+      {label}
+      <UnavailableBadge reason={option.reason} />
+      <UnavailableNote reason={option.reason} srOnly />
+    </button>
+  );
+}
+
+// Language chips are too small to carry a per-chip note, so the row gets one
+// line mapping every badge in play to its reason - the badge alone explains
+// nothing, and a disabled control can't be focused to reveal more.
+const LEGEND_REASONS: OptionUnavailableReason[] = ["unsupported", "soon"];
+
+function UnavailableLegend({ options }: { options: CapabilityOption<VideoLanguage>[] }) {
+  const t = useTranslations("app.studio");
+  const parts = LEGEND_REASONS.filter((r) => options.some((o) => o.reason === r)).map((r) =>
+    r === "soon"
+      ? `${t("language.soonBadge")}: ${t("language.comingSoonTitle")}`
+      : `${t("optionUnavailable.badge")}: ${t("optionUnavailable.title")}`,
+  );
+  if (parts.length === 0) return null;
+  return (
+    <p className="mt-2 text-xs font-semibold text-danger">{parts.join(" · ")}</p>
+  );
+}
+
+function UnavailableBadge({ reason }: { reason: OptionUnavailableReason | null }) {
+  const t = useTranslations("app.studio");
+  if (!reason) return null;
+  return (
+    <span
+      aria-hidden="true"
+      className="ml-1.5 text-[10px] font-bold uppercase tracking-wide"
+    >
+      {reason === "soon" ? t("language.soonBadge") : t("optionUnavailable.badge")}
+    </span>
+  );
+}
+
+// The reason has to be in the option itself: a `title` on a disabled control
+// never opens, so the badge alone would be the only explanation a seller gets.
+// "Coming soon" is a claim about inventory; an option the selected mode can't
+// render is built and offered elsewhere, so it gets its own copy.
+function UnavailableNote({
+  reason,
+  srOnly,
+}: {
+  reason: OptionUnavailableReason | null;
+  srOnly?: boolean;
+}) {
+  const t = useTranslations("app.studio");
+  if (!reason) return null;
+  const text =
+    reason === "soon" ? t("language.comingSoonTitle") : t("optionUnavailable.title");
+  return srOnly ? (
+    <span className="sr-only">{text}</span>
+  ) : (
+    <p className="mt-2 text-xs font-semibold text-danger">{text}</p>
   );
 }
 

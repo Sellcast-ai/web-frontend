@@ -149,6 +149,21 @@ function render(qc: QueryClient, node: React.ReactNode): string {
   );
 }
 
+// Scoped readers, so an assertion about the pickers fails on the pickers rather
+// than on any future `title`/heading anywhere else on the page.
+function disabledControls(html: string): string[] {
+  return (html.match(/<button[^>]*>/g) ?? []).filter((tag) => /\bdisabled\b/.test(tag));
+}
+
+function tagText(html: string, tag: string): string[] {
+  return [...html.matchAll(new RegExp(`<${tag}[^>]*>([^<]*)</${tag}>`, "g"))].map(
+    (match) => match[1],
+  );
+}
+
+const sectionHeadings = (html: string) => tagText(html, "h2");
+const summaryLabels = (html: string) => tagText(html, "dt");
+
 function save(name: string, html: string) {
   // Best-effort: dumps the rendered surface for reviewers; the assertions below
   // are the real check, so never fail the test if the evidence dir is absent.
@@ -247,8 +262,8 @@ describe("Studio page renders extracted English copy", () => {
     ]) {
       expect(text, `expected size option "${s}" in studio render`).toContain(s);
     }
-    // Every size stays selectable — none of the five buttons is disabled
-    // (product decision: nothing greyed out in any mode).
+    // No capability data is seeded here, so the fallback keeps every size
+    // selectable — none of the five buttons is disabled.
     const sizeSection = html.slice(html.indexOf(">Size<"), html.indexOf("5 · Language"));
     expect(sizeSection).not.toContain("disabled");
     // Default mode is product_only, so the talking-head shape hint stays hidden.
@@ -258,6 +273,188 @@ describe("Studio page renders extracted English copy", () => {
     expect(html.indexOf("Size")).toBeGreaterThan(html.indexOf("Resolution"));
     // Summary Format row reflects the (default) chosen size, not a literal.
     expect(text).toContain("9:16");
+  });
+
+  // A mode whose offered models Studio can't label has no model to show and
+  // none to send: the picker and the summary row both go, so the create payload
+  // has nothing to read (`repaired.videoModel` is null, see
+  // video-capabilities.test.ts) and the backend applies its own default.
+  it("drops the model picker and summary row when no offered model is labelled", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: true,
+          aspect_ratios: ["9:16", "16:9"],
+          languages: null,
+          beat_durations: [5, 10],
+          max_resolution: "1080p",
+          models: [
+            {
+              key: "veo-9",
+              label: "Veo 9",
+              model_id: "veo-9",
+              max_resolution: "1080p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).not.toContain("Newest · up to 1080p");
+    expect(text).not.toContain("Veo 9");
+    // Neither the picker's own section nor the summary row it feeds.
+    expect(sectionHeadings(html)).not.toContain("Model");
+    expect(summaryLabels(html)).not.toContain("Model");
+    // Generate stays usable — an unknown model list is not a dead end.
+    expect(text).toContain("Generate video");
+  });
+
+  // A `title` on a disabled control never opens, so the reason has to be in the
+  // option itself for it to reach anyone at all.
+  it("spells out why a narrowed option is unpickable, without a dead tooltip", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: true,
+          aspect_ratios: ["9:16", "16:9"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [
+            {
+              key: "seedance-2.0",
+              label: "Seedance 2.0",
+              model_id: "doubao-seedance-2-0-260128",
+              max_resolution: "720p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    // 4:3, 1080p and Spanish are all narrowed away by this payload.
+    const disabled = disabledControls(html);
+    expect(disabled.length).toBeGreaterThan(0);
+    expect(text).toContain("Not available with this mode");
+    expect(disabled.filter((tag) => tag.includes("title="))).toEqual([]);
+    // Fast is unbuilt inventory, so it is not in the picker at all — a payload
+    // landing must not grow a card that wasn't there before it did.
+    expect(text).not.toContain("Seedance 2.0 Fast");
+    // Language chips carry only a two-character badge, so the row itself has to
+    // spell that badge out — sr-only text a sighted keyboard user never sees is
+    // not an explanation. Only the badges actually in play are named.
+    const languageRow = html.slice(html.indexOf("Español"));
+    expect(languageRow).toContain("n/a: Not available with this mode");
+    expect(languageRow).not.toContain("soon: Coming soon");
+  });
+
+  // The mode is the one selection Studio never makes for the user: an off mode
+  // is shown as off and blocks Generate, and only their own click leaves it.
+  it("blocks an unavailable mode instead of moving the user off it", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [
+        {
+          mode: "product_only",
+          available: false,
+          aspect_ratios: ["9:16"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [],
+        },
+        {
+          mode: "ai_avatar",
+          available: true,
+          aspect_ratios: ["9:16"],
+          languages: ["en"],
+          beat_durations: [5, 10],
+          max_resolution: "720p",
+          models: [
+            {
+              key: "seedance-2.0",
+              label: "Seedance 2.0",
+              model_id: "doubao-seedance-2-0-260128",
+              max_resolution: "720p",
+              beat_durations: [5, 10],
+            },
+          ],
+        },
+      ]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Temporarily unavailable");
+    // Still on Product Only: no presenter section, and nothing to generate.
+    expect(sectionHeadings(html)).not.toContain("Presenter");
+    const generateButton = html.slice(
+      html.lastIndexOf("<button", html.indexOf("Generate video")),
+    );
+    expect(generateButton).toContain("disabled");
+    // The reason sits beside the dead button too, like every other blocked
+    // Generate state - the mode card is sections away on a phone.
+    expect(text).toContain("Product Only isn’t available right now.");
+    // ...and the blocked card still reads as the user's own selection, as do
+    // the sub-pickers it takes down with it: a seller must not lose sight of
+    // what they picked just because the mode above it went off.
+    for (const label of ["Product Only", "720p", "9:16", "English"]) {
+      const card = html.slice(
+        html.lastIndexOf("<button", html.indexOf(label)),
+        html.indexOf(label),
+      );
+      expect(card).toContain("border-brand-400");
+      expect(card).toContain("disabled");
+    }
+  });
+
+  // With every mode reported off there is no other mode to pick, so the note
+  // may not instruct an action the grid makes impossible.
+  it("names the outage instead of pointing at a mode nobody can pick", () => {
+    const off = (mode: string) => ({
+      mode,
+      available: false,
+      aspect_ratios: ["9:16"],
+      languages: ["en"],
+      beat_durations: [5, 10],
+      max_resolution: "720p",
+      models: [],
+    });
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, [off("product_only"), off("ai_avatar")]);
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("No render modes are available right now.");
+    expect(text).not.toContain("Pick another mode to generate");
+    const generateButton = html.slice(
+      html.lastIndexOf("<button", html.indexOf("Generate video")),
+    );
+    expect(generateButton).toContain("disabled");
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so

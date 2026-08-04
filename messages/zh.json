@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "仅产品",
           "blurb": "没有面孔——只有产品。"
-        }
+        },
+        "unavailable": "暂时不可用",
+        "unavailableNote": "{mode} 暂时不可用。请选择其他模式来生成。",
+        "unavailableAllNote": "目前没有可用的生成模式。请稍后再试。"
       },
       "presenter": {
         "auto": "汽车",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "最新·高达 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "更快 · 最高 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "即将推出",
         "soonBadge": "很快"
+      },
+      "optionUnavailable": {
+        "title": "此模式不支持",
+        "badge": "不适用"
       },
       "reviewDescription": "Lumi 将在花费任何内容之前向您展示故事板 - 在生成任何图像或视频之前对其进行审查和批准。",
       "summary": {

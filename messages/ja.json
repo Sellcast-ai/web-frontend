@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "製品のみ",
           "blurb": "顔はなく、製品だけです。"
-        }
+        },
+        "unavailable": "一時的に利用できません",
+        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。",
+        "unavailableAllNote": "現在利用できる生成モードがありません。しばらくしてからお試しください。"
       },
       "presenter": {
         "auto": "自動",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "最新・最大1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "高速・最大720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "近日公開予定",
         "soonBadge": "すぐに"
+      },
+      "optionUnavailable": {
+        "title": "このモードでは利用できません",
+        "badge": "対象外"
       },
       "reviewDescription": "Lumi は、何かを費やす前にストーリーボードを表示します。画像やビデオが生成される前に、ストーリーボードを確認して承認します。",
       "summary": {

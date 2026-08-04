@@ -9,8 +9,10 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
-/** `live` mirrors Studio's picker (`VIDEO_MODELS` in api/types.ts), which is
- * the truth: a card may only claim availability once the picker offers it. */
+/** `live` mirrors the static `enabled` flag in `VIDEO_MODELS` (api/types.ts),
+ * which is the ceiling: a card may only claim availability once the picker can
+ * offer it. Capability data narrows that picker further per mode, so a `live`
+ * card may still be unpickable in a given mode - never widen this from it. */
 const MODELS = [
   { key: "seedance", live: true },
   { key: "fast", live: false },

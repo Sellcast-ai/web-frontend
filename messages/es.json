@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "Producto solamente",
           "blurb": "Sin rostro, sólo el producto."
-        }
+        },
+        "unavailable": "Temporalmente no disponible",
+        "unavailableNote": "{mode} no está disponible ahora mismo. Elige otro modo para generar.",
+        "unavailableAllNote": "Ningún modo de generación está disponible ahora mismo. Inténtalo más tarde."
       },
       "presenter": {
         "auto": "Automático",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Lo más nuevo · hasta 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Más rápido · hasta 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "Próximamente",
         "soonBadge": "pronto"
+      },
+      "optionUnavailable": {
+        "title": "No disponible con este modo",
+        "badge": "n/d"
       },
       "reviewDescription": "Lumi le mostrará el guión gráfico antes de que gaste nada; revíselo y apruebe antes de que se generen imágenes o videos.",
       "summary": {

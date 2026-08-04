@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "Somente produto",
           "blurb": "Sem rosto – apenas o produto."
-        }
+        },
+        "unavailable": "Temporariamente indisponível",
+        "unavailableNote": "{mode} está indisponível agora. Escolha outro modo para gerar.",
+        "unavailableAllNote": "Nenhum modo de geração está disponível agora. Tente novamente mais tarde."
       },
       "presenter": {
         "auto": "Automático",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Mais recente · até 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Mais rápido · até 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "Em breve",
         "soonBadge": "em breve"
+      },
+      "optionUnavailable": {
+        "title": "Não disponível neste modo",
+        "badge": "n/d"
       },
       "reviewDescription": "Lumi mostrará o storyboard antes de gastar qualquer coisa – revise e aprove antes que qualquer imagem ou vídeo seja gerado.",
       "summary": {

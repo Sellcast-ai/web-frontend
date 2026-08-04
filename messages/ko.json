@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "제품만",
           "blurb": "얼굴은 없습니다. 제품만 있을 뿐입니다."
-        }
+        },
+        "unavailable": "일시적으로 사용할 수 없음",
+        "unavailableNote": "{mode}은(는) 지금 사용할 수 없습니다. 다른 모드를 선택해 생성하세요.",
+        "unavailableAllNote": "지금은 사용할 수 있는 생성 모드가 없습니다. 잠시 후 다시 시도해 주세요."
       },
       "presenter": {
         "auto": "자동",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "최신 · 최대 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "더 빠름 · 최대 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "곧 출시 예정",
         "soonBadge": "곧"
+      },
+      "optionUnavailable": {
+        "title": "이 모드에서는 사용할 수 없음",
+        "badge": "미지원"
       },
       "reviewDescription": "Lumi는 비용을 지출하기 전에 스토리보드를 보여줍니다. 이미지나 비디오가 생성되기 전에 검토하고 승인하세요.",
       "summary": {

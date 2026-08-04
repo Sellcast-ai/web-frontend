@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "Chỉ sản phẩm",
           "blurb": "Không có khuôn mặt - chỉ là sản phẩm."
-        }
+        },
+        "unavailable": "Tạm thời chưa có",
+        "unavailableNote": "{mode} hiện chưa khả dụng. Hãy chọn chế độ khác để tạo video.",
+        "unavailableAllNote": "Hiện không có chế độ tạo video nào khả dụng. Vui lòng thử lại sau."
       },
       "presenter": {
         "auto": "Tự động",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "Mới nhất · lên tới 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Nhanh hơn · lên tới 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "Sắp có",
         "soonBadge": "sớm thôi"
+      },
+      "optionUnavailable": {
+        "title": "Không khả dụng ở chế độ này",
+        "badge": "n/a"
       },
       "reviewDescription": "Lumi sẽ hiển thị cho bạn bảng phân cảnh trước khi chi tiêu bất cứ thứ gì - xem xét và phê duyệt bảng phân cảnh trước khi tạo bất kỳ hình ảnh hoặc video nào.",
       "summary": {

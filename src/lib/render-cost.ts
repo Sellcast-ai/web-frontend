@@ -9,8 +9,9 @@ type RatedModel = "seedance-2.0" | "seedance-2.0-fast" | "seedance-2.0-mini";
 /** Credits per second of rendered video, by model and resolution. Mirrors the
  * render provider's rate card; the backend's quote endpoint is the eventual
  * source of truth, so keep this in sync until Studio can call it. Models the
- * picker doesn't offer yet (fast/mini) are listed so the card stays whole when
- * `VIDEO_MODELS` grows. */
+ * picker doesn't offer yet are listed too (`seedance-2.0-fast` is in
+ * `VIDEO_MODELS` with `enabled: false`; `seedance-2.0-mini` is not there at
+ * all), so the card stays whole as that inventory grows. */
 const CREDITS_PER_SECOND: Record<RatedModel, Partial<Record<VideoResolution, number>>> = {
   "seedance-2.0": { "480p": 7, "720p": 15, "1080p": 37 },
   "seedance-2.0-fast": { "480p": 6, "720p": 12 },

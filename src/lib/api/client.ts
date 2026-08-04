@@ -19,6 +19,7 @@ import type {
   Usage,
   ReferencePresign,
   ShopifyAvailability,
+  VideoCapabilities,
 } from "./types";
 
 export class ApiError extends Error {
@@ -228,6 +229,7 @@ export const api = {
     bff<void>(`avatars/${id}`, { method: "DELETE" }),
 
   /* --- video jobs --- */
+  getVideoCapabilities: () => bff<VideoCapabilities>(`video/capabilities`),
   listVideoJobs: (
     params: { product_id?: string; limit?: number; offset?: number } = {},
   ) => {

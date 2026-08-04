@@ -430,7 +430,10 @@
         "productOnly": {
           "label": "สินค้าเท่านั้น",
           "blurb": "ไม่มีหน้า — เป็นเพียงผลิตภัณฑ์"
-        }
+        },
+        "unavailable": "ไม่พร้อมใช้งานชั่วคราว",
+        "unavailableNote": "{mode} ยังใช้งานไม่ได้ตอนนี้ เลือกโหมดอื่นเพื่อสร้างวิดีโอ",
+        "unavailableAllNote": "ขณะนี้ไม่มีโหมดสร้างวิดีโอที่ใช้งานได้ กรุณาลองใหม่ภายหลัง"
       },
       "presenter": {
         "auto": "อัตโนมัติ",
@@ -441,6 +444,10 @@
         "seedance20": {
           "label": "Seedance 2.0",
           "blurb": "ใหม่ล่าสุด · สูงถึง 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "เร็วขึ้น · สูงถึง 720p"
         }
       },
       "resolutions": {
@@ -461,6 +468,10 @@
       "language": {
         "comingSoonTitle": "เร็วๆ นี้",
         "soonBadge": "เร็ว ๆ นี้"
+      },
+      "optionUnavailable": {
+        "title": "ไม่รองรับในโหมดนี้",
+        "badge": "ไม่รองรับ"
       },
       "reviewDescription": "Lumi จะแสดงสตอรี่บอร์ดให้คุณดูก่อนที่จะใช้จ่ายใดๆ — ตรวจสอบและอนุมัติก่อนที่จะสร้างรูปภาพหรือวิดีโอใดๆ",
       "summary": {
