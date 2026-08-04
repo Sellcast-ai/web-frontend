@@ -336,7 +336,10 @@ export type VideoResolution = "480p" | "720p" | "1080p";
 
 /** Resolutions shown in the Studio picker — mirror settings.selectable_video_
  * resolutions. 1080p only renders on Seedance 2.0 (standard); the server clamps
- * it to 720p on fast/mini and charges the 1080p credit multiplier. */
+ * it to 720p on fast/mini and charges the 1080p credit multiplier.
+ * `enabled` is the static inventory of what may be offered at all; `GET
+ * /video/capabilities` can only narrow this list to the selected mode's
+ * ceiling, never enable an entry this flag has switched off. */
 export const VIDEO_RESOLUTIONS: {
   value: VideoResolution;
   label: string;
@@ -352,7 +355,9 @@ export type VideoAspectRatio = "9:16" | "16:9" | "1:1" | "4:3" | "3:4";
 
 /** Output sizes shown in the Studio picker. Enum + default must mirror the
  * backend schema exactly. Labels are ratios + platform hints (brand names, not
- * translated — same posture as the resolution/format rows). */
+ * translated — same posture as the resolution/format rows). The full list is
+ * what a mode may offer; `GET /video/capabilities` narrows it to the sizes the
+ * selected mode reports (see `src/lib/video-capabilities.ts`). */
 export const VIDEO_ASPECT_RATIOS: {
   value: VideoAspectRatio;
   label: string;
@@ -397,7 +402,8 @@ export type VideoLanguage =
 
 /** Languages shown in Studio. `enabled` must mirror the backend's
  * SELLCAST_ENABLED_LANGUAGES — flip an entry on only after its voiceover
- * passes scripts/voice_qa_languages.py. */
+ * passes scripts/voice_qa_languages.py. `GET /video/capabilities` can narrow
+ * this list to the selected mode, never enable an entry flagged off here. */
 export const VIDEO_LANGUAGES: {
   value: VideoLanguage;
   label: string;
@@ -484,6 +490,10 @@ export interface VideoModelCapability {
   beat_durations: number[];
 }
 
+/** One entry of `GET /video/capabilities`, keyed by a backend mode name. Fields
+ * stay loosely typed on purpose: this is unvalidated wire data, and
+ * `normalizeVideoCapabilities` in `src/lib/video-capabilities.ts` is the only
+ * thing that decides what Studio trusts from it. */
 export interface VideoModeCapabilities {
   mode: string;
   available: boolean;
@@ -495,6 +505,9 @@ export interface VideoModeCapabilities {
   models: VideoModelCapability[];
 }
 
+/** What the render backend currently supports, per mode. Studio narrows its
+ * pickers with this and falls back to the static constants above when the read
+ * is missing, slow or unreadable, so it must never gate Generate on its own. */
 export type VideoCapabilities = VideoModeCapabilities[];
 
 /* -------------------------------------------------------------------- auth */

@@ -648,7 +648,8 @@ function StudioInner() {
             )}
           </Section>
 
-          {/* language — only voice-QA-validated languages are selectable */}
+          {/* language — voice-QA-validated languages, narrowed to the ones the
+              selected mode reports; the two reasons never share copy */}
           <Section title={t("sections.language")}>
             <div className="flex flex-wrap gap-2">
               {capabilityState.languages.map((option) => (

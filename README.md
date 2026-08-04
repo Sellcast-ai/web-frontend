@@ -67,6 +67,18 @@ refund credits; the job detail page confirms that before deleting. Videos outliv
 products, so the job page links to the source product when it still exists and
 shows a non-link "Product deleted" badge when the product fetch returns 404.
 
+Studio asks the backend what it can actually render. `GET /video/capabilities`
+(through the generic BFF, `useVideoCapabilities`) narrows the mode, model,
+resolution, size, and language pickers to the selected mode, and
+`src/lib/video-capabilities.ts` is the only place that decides what to trust
+from that payload. It can only narrow the static lists in
+`src/lib/api/types.ts`, never enable an entry those lists flag off. A mode the
+backend reports unavailable is disabled and blocks Generate while it stays
+selected; the user is never moved off it. Sub-options do repair themselves when
+the mode changes, and a missing, slow, or unreadable capability read leaves
+Studio behaving exactly like the old hardcoded constants, so Generate stays
+usable. The backend's own refusal remains the real gate.
+
 Credits track real render cost, so they never convert to seconds of video: what
 one render costs depends on its model, resolution, and aspect ratio. The free
 grant is 300 credits one-time at signup and does not renew; paid plans renew
