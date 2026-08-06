@@ -90,8 +90,9 @@
     },
     "connections": {
       "title": "店铺",
-      "subtitle": "连接你的商店，让 Lumi 导入你的商品。",
+      "subtitle": "授权 Lumi 访问你的商店。",
       "connectHeading": "连接店铺",
+      "connectNotice": "连接会授权 Lumi 访问你的商店，但目前还不会自动导入商品。你可以<link>在“商品”页面导入你的商品目录</link>。",
       "yourStores": "我的店铺",
       "listUnavailable": "暂时还无法查看和移除已有的连接——店铺连接 API 目前仅支持连接操作。你已连接的店铺会保持生效，只是暂时无法显示在这里。",
       "notAvailableYet": "暂未开放",
@@ -101,7 +102,7 @@
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "连接",
       "dismiss": "关闭",
-      "connectedBanner": "{shop} 已连接到 Lumi。",
+      "connectedBanner": "{shop} 已授权将其商品目录分享给 Lumi。自动导入商品功能尚未上线。",
       "connectedBannerGeneric": "你的店铺已连接到 Lumi。",
       "errors": {
         "invalid-shop": "请输入店铺的 .myshopify.com 域名（例如 your-store.myshopify.com）。",

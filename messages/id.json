@@ -90,8 +90,9 @@
     },
     "connections": {
       "title": "Toko",
-      "subtitle": "Hubungkan toko Anda agar Lumi dapat mengimpor produk Anda.",
+      "subtitle": "Izinkan Lumi mengakses toko Anda.",
       "connectHeading": "Hubungkan toko",
+      "connectNotice": "Menghubungkan mengizinkan Lumi mengakses toko Anda, tetapi belum mengimpor produk secara otomatis. Sementara itu, <link>impor katalog Anda dari halaman Produk</link>.",
       "yourStores": "Toko Anda",
       "listUnavailable": "Melihat dan menghapus koneksi yang sudah ada belum tersedia — API koneksi toko saat ini hanya mendukung menghubungkan. Toko yang Anda hubungkan tetap aktif meskipun belum bisa ditampilkan di sini.",
       "notAvailableYet": "Belum tersedia",
@@ -101,7 +102,7 @@
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "Hubungkan",
       "dismiss": "Tutup",
-      "connectedBanner": "{shop} kini terhubung ke Lumi.",
+      "connectedBanner": "{shop} telah mengizinkan katalognya dibagikan ke Lumi. Impor produk otomatis belum tersedia.",
       "connectedBannerGeneric": "Toko Anda kini terhubung ke Lumi.",
       "errors": {
         "invalid-shop": "Masukkan domain .myshopify.com toko Anda (misalnya toko-anda.myshopify.com).",

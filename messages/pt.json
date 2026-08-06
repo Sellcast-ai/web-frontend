@@ -90,8 +90,9 @@
     },
     "connections": {
       "title": "Lojas",
-      "subtitle": "Conecte sua loja para que a Lumi possa importar seus produtos.",
+      "subtitle": "Autorize a Lumi a acessar sua loja.",
       "connectHeading": "Conectar uma loja",
+      "connectNotice": "Conectar autoriza a Lumi a acessar sua loja, mas ainda não importa produtos automaticamente. <link>Importe seu catálogo pela página Produtos</link> enquanto isso.",
       "yourStores": "Suas lojas",
       "listUnavailable": "Ainda não é possível ver nem remover conexões existentes — a API de conexão de lojas só permite conectar por enquanto. Uma loja que você conectar fica ativa, embora ainda não possa aparecer aqui.",
       "notAvailableYet": "Ainda não disponível",
@@ -101,7 +102,7 @@
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "Conectar",
       "dismiss": "Fechar",
-      "connectedBanner": "{shop} agora está conectada à Lumi.",
+      "connectedBanner": "{shop} está autorizada a compartilhar seu catálogo com a Lumi. A importação automática de produtos ainda não está disponível.",
       "connectedBannerGeneric": "Sua loja agora está conectada à Lumi.",
       "errors": {
         "invalid-shop": "Digite o domínio .myshopify.com da sua loja (por exemplo, sua-loja.myshopify.com).",

@@ -1418,6 +1418,42 @@ const MANUAL_OVERRIDES = {
     vi: "Cảnh",
     th: "ช็อต",
   },
+  // Connections-page honesty copy (2026-08-06): the Shopify OAuth handshake
+  // stores a real token but nothing imports a catalog from it yet, so this
+  // page must never read as "connect and your products import" - see
+  // /app/connections and CLAUDE.md's connections section. Hand-set per
+  // locale like the pricing-copy-c4 block above; do not let the machine
+  // regenerate a claim this surface exists specifically to retract.
+  "app.connections.subtitle": {
+    es: "Autoriza a Lumi para acceder a tu tienda.",
+    zh: "授权 Lumi 访问你的商店。",
+    ja: "Lumi にショップへのアクセスを許可します。",
+    ko: "Lumi가 상점에 접근하도록 승인하세요.",
+    pt: "Autorize a Lumi a acessar sua loja.",
+    id: "Izinkan Lumi mengakses toko Anda.",
+    vi: "Cấp quyền cho Lumi truy cập cửa hàng của bạn.",
+    th: "อนุญาตให้ Lumi เข้าถึงร้านค้าของคุณ",
+  },
+  "app.connections.connectNotice": {
+    es: "Conectar autoriza a Lumi a acceder a tu tienda, pero todavía no importa productos automáticamente. <link>Importa tu catálogo desde la página de Productos</link> mientras tanto.",
+    zh: "连接会授权 Lumi 访问你的商店，但目前还不会自动导入商品。你可以<link>在“商品”页面导入你的商品目录</link>。",
+    ja: "連携すると Lumi にストアへのアクセスを許可しますが、商品はまだ自動でインポートされません。それまでは<link>商品ページからカタログをインポート</link>してください。",
+    ko: "연결하면 Lumi가 상점에 접근할 수 있도록 승인되지만, 아직 상품이 자동으로 가져와지지는 않습니다. 그동안 <link>상품 페이지에서 카탈로그를 가져오세요</link>.",
+    pt: "Conectar autoriza a Lumi a acessar sua loja, mas ainda não importa produtos automaticamente. <link>Importe seu catálogo pela página Produtos</link> enquanto isso.",
+    id: "Menghubungkan mengizinkan Lumi mengakses toko Anda, tetapi belum mengimpor produk secara otomatis. Sementara itu, <link>impor katalog Anda dari halaman Produk</link>.",
+    vi: "Kết nối sẽ cấp quyền cho Lumi truy cập cửa hàng của bạn, nhưng chưa tự động nhập sản phẩm. Trong lúc chờ, hãy <link>nhập danh mục của bạn từ trang Sản phẩm</link>.",
+    th: "การเชื่อมต่อจะอนุญาตให้ Lumi เข้าถึงร้านค้าของคุณ แต่ยังไม่นำเข้าสินค้าโดยอัตโนมัติ ระหว่างนี้ <link>นำเข้าแคตตาล็อกของคุณจากหน้าสินค้า</link> ได้เลย",
+  },
+  "app.connections.connectedBanner": {
+    es: "{shop} está autorizada a compartir su catálogo con Lumi. La importación automática de productos aún no está disponible.",
+    zh: "{shop} 已授权将其商品目录分享给 Lumi。自动导入商品功能尚未上线。",
+    ja: "{shop} は Lumi とカタログを共有することを許可されました。商品の自動インポートはまだ利用できません。",
+    ko: "{shop}이(가) Lumi와 카탈로그를 공유하도록 승인되었습니다. 상품 자동 가져오기는 아직 제공되지 않습니다.",
+    pt: "{shop} está autorizada a compartilhar seu catálogo com a Lumi. A importação automática de produtos ainda não está disponível.",
+    id: "{shop} telah mengizinkan katalognya dibagikan ke Lumi. Impor produk otomatis belum tersedia.",
+    vi: "{shop} đã cấp quyền chia sẻ danh mục với Lumi. Tính năng tự động nhập sản phẩm chưa hoạt động.",
+    th: "{shop} ได้อนุญาตให้แชร์แคตตาล็อกกับ Lumi แล้ว การนำเข้าสินค้าอัตโนมัติยังไม่เปิดใช้งาน",
+  },
 };
 
 const PROTECT_PATTERNS = [

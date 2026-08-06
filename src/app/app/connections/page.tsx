@@ -1,12 +1,14 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, Plug, Store, X, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShopifyAvailability } from "@/lib/api/hooks";
 import { SHOPIFY_CONNECTED_COOKIE, normalizeShopDomain } from "@/lib/shopify-shop";
+import { NEW_PRODUCT_HREF } from "@/lib/launch-routes";
 
 /**
  * The platform grid is data-driven: adding a platform later is a new entry
@@ -64,6 +66,18 @@ export default function ConnectionsPage() {
         <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
           {t("connectHeading")}
         </h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {t.rich("connectNotice", {
+            link: (chunks) => (
+              <Link
+                href={NEW_PRODUCT_HREF}
+                className="font-semibold text-brand-700 underline underline-offset-4"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PLATFORMS.map((platform) => (
             <PlatformCard key={platform.id} platform={platform} />

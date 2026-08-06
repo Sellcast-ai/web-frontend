@@ -90,8 +90,9 @@
     },
     "connections": {
       "title": "ストア",
-      "subtitle": "ショップを連携して、Lumi で商品を取り込みましょう。",
+      "subtitle": "Lumi にショップへのアクセスを許可します。",
       "connectHeading": "ストアを連携",
+      "connectNotice": "連携すると Lumi にストアへのアクセスを許可しますが、商品はまだ自動でインポートされません。それまでは<link>商品ページからカタログをインポート</link>してください。",
       "yourStores": "連携済みストア",
       "listUnavailable": "既存の連携の表示や削除はまだ利用できません。ストア連携 API は現在「連携」のみに対応しています。連携したストアは有効なままですが、ここにはまだ表示されません。",
       "notAvailableYet": "まだ利用できません",
@@ -101,7 +102,7 @@
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "連携する",
       "dismiss": "閉じる",
-      "connectedBanner": "{shop} が Lumi に連携されました。",
+      "connectedBanner": "{shop} は Lumi とカタログを共有することを許可されました。商品の自動インポートはまだ利用できません。",
       "connectedBannerGeneric": "ストアが Lumi に連携されました。",
       "errors": {
         "invalid-shop": "ストアの .myshopify.com ドメインを入力してください（例: your-store.myshopify.com）。",
