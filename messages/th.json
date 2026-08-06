@@ -103,7 +103,6 @@
       "connect": "เชื่อมต่อ",
       "dismiss": "ปิด",
       "connectedBanner": "{shop} ได้อนุญาตให้แชร์แคตตาล็อกกับ Lumi แล้ว การนำเข้าสินค้าอัตโนมัติยังไม่เปิดใช้งาน",
-      "connectedBannerGeneric": "ร้านค้าของคุณเชื่อมต่อกับ Lumi แล้ว",
       "errors": {
         "invalid-shop": "กรอกโดเมน .myshopify.com ของร้านค้าของคุณ (เช่น your-store.myshopify.com)",
         "unavailable": "การเชื่อมต่อ Shopify ไม่พร้อมใช้งานในขณะนี้ โปรดลองอีกครั้งในภายหลัง",

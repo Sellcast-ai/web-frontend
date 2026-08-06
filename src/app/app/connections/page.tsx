@@ -71,7 +71,7 @@ export default function ConnectionsPage() {
             link: (chunks) => (
               <Link
                 href={NEW_PRODUCT_HREF}
-                className="font-semibold text-brand-700 underline underline-offset-4"
+                className="font-semibold text-accent-foreground underline underline-offset-4"
               >
                 {chunks}
               </Link>

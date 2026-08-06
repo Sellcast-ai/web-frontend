@@ -103,7 +103,6 @@
       "connect": "Hubungkan",
       "dismiss": "Tutup",
       "connectedBanner": "{shop} telah mengizinkan katalognya dibagikan ke Lumi. Impor produk otomatis belum tersedia.",
-      "connectedBannerGeneric": "Toko Anda kini terhubung ke Lumi.",
       "errors": {
         "invalid-shop": "Masukkan domain .myshopify.com toko Anda (misalnya toko-anda.myshopify.com).",
         "unavailable": "Koneksi Shopify sedang tidak tersedia. Coba lagi nanti.",

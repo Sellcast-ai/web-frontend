@@ -103,7 +103,6 @@
       "connect": "Conectar",
       "dismiss": "Cerrar",
       "connectedBanner": "{shop} está autorizada a compartir su catálogo con Lumi. La importación automática de productos aún no está disponible.",
-      "connectedBannerGeneric": "Tu tienda ahora está conectada con Lumi.",
       "errors": {
         "invalid-shop": "Introduce el dominio .myshopify.com de tu tienda (por ejemplo, tu-tienda.myshopify.com).",
         "unavailable": "La conexión con Shopify no está disponible ahora mismo. Inténtalo de nuevo más tarde.",

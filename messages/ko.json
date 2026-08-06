@@ -103,7 +103,6 @@
       "connect": "연결",
       "dismiss": "닫기",
       "connectedBanner": "{shop}이(가) Lumi와 카탈로그를 공유하도록 승인되었습니다. 상품 자동 가져오기는 아직 제공되지 않습니다.",
-      "connectedBannerGeneric": "스토어가 Lumi에 연결되었습니다.",
       "errors": {
         "invalid-shop": "상점의 .myshopify.com 도메인을 입력하세요 (예: your-store.myshopify.com).",
         "unavailable": "지금은 Shopify 연결을 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.",

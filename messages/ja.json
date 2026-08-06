@@ -103,7 +103,6 @@
       "connect": "連携する",
       "dismiss": "閉じる",
       "connectedBanner": "{shop} は Lumi とカタログを共有することを許可されました。商品の自動インポートはまだ利用できません。",
-      "connectedBannerGeneric": "ストアが Lumi に連携されました。",
       "errors": {
         "invalid-shop": "ストアの .myshopify.com ドメインを入力してください（例: your-store.myshopify.com）。",
         "unavailable": "Shopify 連携は現在利用できません。しばらくしてからもう一度お試しください。",

@@ -103,7 +103,6 @@
       "connect": "连接",
       "dismiss": "关闭",
       "connectedBanner": "{shop} 已授权将其商品目录分享给 Lumi。自动导入商品功能尚未上线。",
-      "connectedBannerGeneric": "你的店铺已连接到 Lumi。",
       "errors": {
         "invalid-shop": "请输入店铺的 .myshopify.com 域名（例如 your-store.myshopify.com）。",
         "unavailable": "Shopify 连接暂时不可用，请稍后再试。",

@@ -103,7 +103,6 @@
       "connect": "Kết nối",
       "dismiss": "Đóng",
       "connectedBanner": "{shop} đã cấp quyền chia sẻ danh mục với Lumi. Tính năng tự động nhập sản phẩm chưa hoạt động.",
-      "connectedBannerGeneric": "Cửa hàng của bạn hiện đã kết nối với Lumi.",
       "errors": {
         "invalid-shop": "Nhập tên miền .myshopify.com của cửa hàng (ví dụ: cua-hang-cua-ban.myshopify.com).",
         "unavailable": "Kết nối Shopify hiện không khả dụng. Vui lòng thử lại sau.",
