@@ -90,8 +90,9 @@
     },
     "connections": {
       "title": "스토어",
-      "subtitle": "상점을 연결하면 Lumi가 상품을 가져올 수 있습니다.",
+      "subtitle": "Lumi가 상점에 접근하도록 승인하세요.",
       "connectHeading": "스토어 연결",
+      "connectNotice": "연결하면 Lumi가 상점에 접근할 수 있도록 승인되지만, 아직 상품이 자동으로 가져와지지는 않습니다. 그동안 <link>상품 페이지에서 카탈로그를 가져오세요</link>.",
       "yourStores": "내 스토어",
       "listUnavailable": "기존 연결을 보거나 해제하는 기능은 아직 제공되지 않습니다. 스토어 연결 API는 현재 연결만 지원합니다. 연결한 스토어는 활성 상태로 유지되지만 아직 여기에 표시되지 않습니다.",
       "notAvailableYet": "아직 사용할 수 없음",
@@ -101,8 +102,7 @@
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "연결",
       "dismiss": "닫기",
-      "connectedBanner": "{shop}이(가) Lumi에 연결되었습니다.",
-      "connectedBannerGeneric": "스토어가 Lumi에 연결되었습니다.",
+      "connectedBanner": "{shop}이(가) Lumi와 카탈로그를 공유하도록 승인되었습니다. 상품 자동 가져오기는 아직 제공되지 않습니다.",
       "errors": {
         "invalid-shop": "상점의 .myshopify.com 도메인을 입력하세요 (예: your-store.myshopify.com).",
         "unavailable": "지금은 Shopify 연결을 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.",

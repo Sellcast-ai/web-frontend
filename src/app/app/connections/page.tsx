@@ -1,19 +1,23 @@
 "use client";
 
 import { Suspense, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, Plug, Store, X, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useShopifyAvailability } from "@/lib/api/hooks";
 import { SHOPIFY_CONNECTED_COOKIE, normalizeShopDomain } from "@/lib/shopify-shop";
+import { NEW_PRODUCT_HREF } from "@/lib/launch-routes";
 
 /**
  * The platform grid is data-driven: adding a platform later is a new entry
  * here (with its brand mark vendored under public/platforms/) plus a catalog
  * name key (app.connections.platforms.<id>.name), not a page rewrite. `connectable` marks the platforms with a real end-to-end connect
  * flow - everything else renders an honest "not available yet" badge and no
- * action, so no card ever offers something the product can't do.
+ * action, so no card ever offers something the product can't do. End to end
+ * means the authorization completes, not that a catalog arrives: nothing
+ * reads the stored token yet, which is what connectNotice below says.
  */
 const PLATFORMS = [
   { id: "shopify", connectable: true, logo: "/platforms/shopify.svg" },
@@ -64,6 +68,22 @@ export default function ConnectionsPage() {
         <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
           {t("connectHeading")}
         </h2>
+        {/* Persistent, and deliberately outside both gates: not the post-OAuth
+          * banner (a merchant who connected last week still needs to know no
+          * import is coming) and not behind the availability probe (the fact
+          * holds whether or not the button renders). */}
+        <p className="mt-1 text-sm text-muted-foreground">
+          {t.rich("connectNotice", {
+            link: (chunks) => (
+              <Link
+                href={NEW_PRODUCT_HREF}
+                className="font-semibold text-accent-foreground underline underline-offset-4"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PLATFORMS.map((platform) => (
             <PlatformCard key={platform.id} platform={platform} />

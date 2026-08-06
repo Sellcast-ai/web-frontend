@@ -53,6 +53,12 @@ Store connection flows live under `src/app/app/connections/` and
 `src/app/api/bff/auth/shopify/*`. Shopify is the only connectable platform
 today, and its card is gated by a backend availability probe; WooCommerce and
 TikTok Shop are shown as unavailable until their flows work end to end.
+Connecting only authorizes access: the OAuth round trip stores a real Admin API
+token, but no backend code reads it yet, so nothing imports or syncs from a
+connected store. The only working catalog import is the public-JSON crawler on
+`/app/products/new`, which is unrelated to the connection. The page subtitle, a
+persistent notice under "Connect a store", and the post-OAuth banner all say so;
+keep those three honest together when the Admin sync lands.
 
 My Videos is managed through four status tabs:
 
