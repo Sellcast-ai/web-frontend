@@ -15,7 +15,9 @@ import { NEW_PRODUCT_HREF } from "@/lib/launch-routes";
  * here (with its brand mark vendored under public/platforms/) plus a catalog
  * name key (app.connections.platforms.<id>.name), not a page rewrite. `connectable` marks the platforms with a real end-to-end connect
  * flow - everything else renders an honest "not available yet" badge and no
- * action, so no card ever offers something the product can't do.
+ * action, so no card ever offers something the product can't do. End to end
+ * means the authorization completes, not that a catalog arrives: nothing
+ * reads the stored token yet, which is what connectNotice below says.
  */
 const PLATFORMS = [
   { id: "shopify", connectable: true, logo: "/platforms/shopify.svg" },
@@ -66,6 +68,10 @@ export default function ConnectionsPage() {
         <h2 className="text-xs font-bold uppercase tracking-widest text-brand-600">
           {t("connectHeading")}
         </h2>
+        {/* Persistent, and deliberately outside both gates: not the post-OAuth
+          * banner (a merchant who connected last week still needs to know no
+          * import is coming) and not behind the availability probe (the fact
+          * holds whether or not the button renders). */}
         <p className="mt-1 text-sm text-muted-foreground">
           {t.rich("connectNotice", {
             link: (chunks) => (

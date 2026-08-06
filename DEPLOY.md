@@ -14,7 +14,7 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] **Prod Postgres** — a new Neon project/branch (NOT the dev one), or Render Postgres
 - [ ] **Google Cloud OAuth** — a **Web** OAuth client (free) → enables Google login
 - [ ] **Twilio** *(optional for beta)* — only if you want phone-OTP SMS; Google login alone is enough to launch (without it the web signup form shows phone as unavailable, see §3)
-- [ ] **Shopify Partner app** *(optional for beta)* — only if Stores should offer Shopify connect; without deployed backend routes and OAuth config the web card shows "not available yet" instead of a failing button
+- [ ] **Shopify Partner app** *(optional for beta)* — only if Stores should offer Shopify connect; without deployed backend routes and OAuth config the web card shows "not available yet" instead of a failing button. Connecting authorizes access only, it does not import a catalog yet (see §3)
 - [ ] **Cloudflare R2** — already configured (reuse the dev bucket or make a prod one)
 - [ ] A **domain** (optional; Vercel/Render give free subdomains)
 
@@ -56,7 +56,13 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
   the backend `connections/shopify/start` route returns a real Shopify authorize
   redirect. Configure the backend Shopify OAuth secrets and set the Shopify app
   callback URL to the web origin's `/api/bff/auth/shopify/callback`; otherwise
-  `/app/connections` intentionally shows Shopify as unavailable.
+  `/app/connections` intentionally shows Shopify as unavailable. A completed
+  connect stores a real encrypted Admin API token and nothing else: no backend
+  code reads it yet, so a connected store imports and syncs nothing. The page
+  says that in three places (subtitle, the persistent notice under "Connect a
+  store", the post-OAuth banner) and points merchants at the one import that
+  works today, the public-JSON crawler on `/app/products/new`. Nothing here is
+  a misconfiguration to chase.
 - **Phone OTP:** works once Twilio creds are set. Until then the web form disables
   the phone step with a "Phone unavailable" message pointing at Google, so an
   unconfigured phone path never looks broken, it just looks closed. Two backend
@@ -73,7 +79,11 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] Open `/app/connections` while signed in. If Shopify OAuth is configured on
   the backend, the Shopify card accepts `your-shop.myshopify.com` and returns
   with a success banner only after the backend reports an active connection; if
-  it is not configured, the card honestly reads unavailable.
+  it is not configured, the card honestly reads unavailable. No products appear
+  in My Products afterwards - that is the current state, not a bad deploy, and
+  the banner must not claim otherwise (§3). Check the notice under "Connect a
+  store" is on the page before any connect attempt and its link reaches
+  `/app/products/new`
 - [ ] Create a video → worker renders it → it appears under My Videos **Success** and plays on the job page. Leave the mode on Studio's **Product only** default; **AI Avatar** reads "Temporarily unavailable" and blocks **Generate** when the backend's `GET /video/capabilities` reports it off, and is otherwise still selectable without producing a working render, so a failure there is expected, not a bad deploy (see `AGENTS.md`)
 - [ ] Open Studio against a backend without `GET /video/capabilities` (or with it failing) → the mode, model, resolution, size and language pickers still show the full static lists and **Generate** still works. Capability data may only narrow those pickers, so a picker that came back empty or a blocked Generate with no unavailable mode selected is a bug, not a backend outage
 - [ ] Check My Videos management: `awaiting_storyboard` / `awaiting_review` jobs show under **Needs you**, `queued` / `submitted` / `in_progress` jobs under **On the way**, failed jobs under **Failed**, and deleting a job requires the permanent/no-refund confirmation before it disappears from the list.
