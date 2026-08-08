@@ -266,16 +266,20 @@ function StudioInner() {
   // nothing to narrow with, so the rail waits on `cost.pending` rather than
   // pricing 1080p a moment before capabilities clamp it to 720p and quietly
   // swapping the number under the user. Vibe and language don't reach pricing,
-  // so they don't re-quote.
-  const quoteParams = capabilities.isPending
-    ? null
-    : {
-        mode,
-        duration_seconds: duration,
-        resolution: effectiveResolution,
-        aspect_ratio: effectiveAspectRatio,
-        ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
-      };
+  // so they don't re-quote. A mode the backend reports unavailable is not
+  // priced at all: there is no render to put a number on, the card under
+  // Generate already names why, and a refused tuple would come back as "price
+  // unavailable" - blaming pricing for a capability outage.
+  const quoteParams =
+    capabilities.isPending || !capabilityState.modeAvailable
+      ? null
+      : {
+          mode,
+          duration_seconds: duration,
+          resolution: effectiveResolution,
+          aspect_ratio: effectiveAspectRatio,
+          ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
+        };
   const quote = useVideoQuote(quoteParams);
   const cost = quote.data?.credits;
   // With no number, the slot says which kind of no: `priceUnknownReason` is the
@@ -797,35 +801,41 @@ function StudioInner() {
                 the loud one - the balance was already here and was never the
                 question the user couldn't answer. */}
             <div className="mt-4 border-t border-border pt-4">
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="text-sm text-muted-foreground">
-                  {t("cost.label")}
-                </span>
-                {/* One slot, always occupied: a price that blinks out on every
-                    picker change reads worse than one that arrives late. A
-                    quote in flight or failed shows its own words here - never a
-                    number, and never the previous render's number - and a
-                    failure says whether anything is still trying, because a
-                    5xx we re-poll and a 4xx nobody will retry are different
-                    answers to "should I wait?". */}
-                <span
-                  aria-live="polite"
-                  className={cn(
-                    "text-right font-display font-semibold",
-                    cost !== undefined
-                      ? "text-base text-ink"
-                      : "text-sm text-muted-foreground",
-                  )}
-                >
-                  {cost !== undefined
-                    ? t("cost.value", { credits: cost })
-                    : costUnknown === "retrying"
-                      ? t("cost.retrying")
-                      : costUnknown === "settled"
-                        ? t("cost.unavailable")
-                        : t("cost.pending")}
-                </span>
-              </div>
+              {/* The row goes away entirely for a mode that can't render: no
+                  quote was asked for, so "pricing…" would be a wait that never
+                  ends, and the note under Generate is the answer the user
+                  actually needs. */}
+              {capabilityState.modeAvailable && (
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-sm text-muted-foreground">
+                    {t("cost.label")}
+                  </span>
+                  {/* One slot, always occupied: a price that blinks out on every
+                      picker change reads worse than one that arrives late. A
+                      quote in flight or failed shows its own words here - never a
+                      number, and never the previous render's number - and a
+                      failure says whether anything is still trying, because a
+                      5xx we re-poll and a 4xx nobody will retry are different
+                      answers to "should I wait?". */}
+                  <span
+                    aria-live="polite"
+                    className={cn(
+                      "text-right font-display font-semibold",
+                      cost !== undefined
+                        ? "text-base text-ink"
+                        : "text-sm text-muted-foreground",
+                    )}
+                  >
+                    {cost !== undefined
+                      ? t("cost.value", { credits: cost })
+                      : costUnknown === "retrying"
+                        ? t("cost.retrying")
+                        : costUnknown === "settled"
+                          ? t("cost.unavailable")
+                          : t("cost.pending")}
+                  </span>
+                </div>
+              )}
               {usage && (
                 <p className="mt-1 text-right text-xs text-muted-foreground">
                   {t("usageSummary", {

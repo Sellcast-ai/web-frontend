@@ -631,7 +631,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
   // What the balance means for this approve, split on how certain the outcome
   // is rather than on how big the gap is. An empty meter is certain - zero is
   // zero at any price, the backend refuses whatever the quote says and whether
-  // or not one landed - so it gets definite copy and never the ceiling's hedge.
+  // or not one landed - so it gets definite copy, never the ceiling's hedge,
+  // and it is the one thing on this bar that also stops the button: the copy
+  // and the control are read off this same value, or a page that says the
+  // approve won't go through would still invite the click - and a dirty draft
+  // would be PATCHed on the way to a refusal that was known before it started.
   // A non-empty balance under the quoted ceiling is genuinely uncertain, since
   // the debit prices the storyboard's shorter post-overlap length, so that one
   // keeps the hedge and stays a warning.
@@ -766,7 +770,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
         ref={barRef}
         className="sticky bottom-4 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/95 p-4 shadow-card backdrop-blur"
       >
-        <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
+        <Button size="lg" onClick={approveAndGenerate} disabled={busy || noCredits}>
           {busy ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
@@ -812,16 +816,17 @@ function StoryboardView({ job }: { job: VideoJob }) {
               cover the render is named rather than left as two adjacent numbers
               to compare, and always with the one route that resolves it. Which
               sentence depends on how certain the refusal is: an empty meter
-              states it plainly, a gap under the ceiling keeps the same hedge
-              Studio's warning carries, because the debit is usually lower and
-              approving is never blocked here. */}
+              states it plainly (and is the branch the button is disabled on),
+              a gap under the ceiling keeps the same hedge Studio's warning
+              carries, because the debit is usually lower and approving is not
+              blocked there. */}
           {(noCredits || shortfall !== null) && (
             <>
               {" "}
               <span className="font-semibold text-ink">
-                {shortfall === null
-                  ? t("noCreditsNote")
-                  : t("shortfallNote", { shortfall })}
+                {shortfall !== null
+                  ? t("shortfallNote", { shortfall })
+                  : t("noCreditsNote")}
               </span>{" "}
               <Link href="/pricing" className="font-semibold text-brand-700">
                 {t("seePlans")}

@@ -468,6 +468,12 @@ describe("Studio page renders extracted English copy", () => {
     // The reason sits beside the dead button too, like every other blocked
     // Generate state - the mode card is sections away on a phone.
     expect(text).toContain("Product Only isn’t available right now.");
+    // Nothing is priced for a render that cannot start: no number, and no
+    // "pricing…"/"price unavailable" that would blame pricing for a capability
+    // outage or promise a quote that was never asked for.
+    expect(text).not.toContain("This video");
+    expect(text).not.toContain("pricing…");
+    expect(text).not.toContain("price unavailable");
     // ...and the blocked card still reads as the user's own selection, as do
     // the sub-pickers it takes down with it: a seller must not lose sight of
     // what they picked just because the mode above it went off.
@@ -983,6 +989,11 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).not.toContain("credits short");
     // The refusal still names the action that clears it.
     expect(html).toContain('href="/pricing"');
+    // ...and the control agrees with the copy: a button the page has just said
+    // won't go through must not invite the click, which would PATCH a dirty
+    // draft on the way to a refusal known before it started.
+    const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
+    expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(true);
   });
 
   // A price the backend worked out for some OTHER model is a plausible wrong
