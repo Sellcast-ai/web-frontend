@@ -1,112 +1,66 @@
 {
-  "nav": {
-    "features": "Características",
-    "howItWorks": "como funciona",
-    "models": "Modelos",
-    "pricing": "Precios"
-  },
   "app": {
-    "nav": {
-      "products": "Productos",
-      "stores": "Tiendas",
-      "avatars": "Avatares",
-      "videos": "Vídeos",
-      "profile": "Perfil",
-      "newVideo": "Nuevo vídeo",
-      "new": "Nuevo",
-      "signedIn": "Iniciado sesión",
-      "logOut": "Cerrar sesión"
-    },
     "toasts": {
+      "outOfCredits": "No tienes créditos suficientes para este render.",
+      "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
       "updateLikeFailed": "No se pudo actualizar como. Por favor inténtalo de nuevo.",
       "saveAvatarFailed": "No se pudo guardar el avatar.",
       "deleteAvatarFailed": "No se pudo eliminar el avatar.",
       "startImportFailed": "No se pudo iniciar la importación. Por favor inténtalo de nuevo.",
       "saveProductFailed": "No se pudo guardar el producto. Por favor inténtalo de nuevo.",
       "startVideoFailed": "No se pudo iniciar el video. Por favor inténtalo de nuevo.",
-      "outOfCredits": "No tienes créditos suficientes para este render.",
       "approveShotFailed": "No se pudo aprobar la toma. Por favor inténtalo de nuevo.",
       "regenerateShotFailed": "No se pudo regenerar el tiro. Por favor inténtalo de nuevo.",
       "approveStoryboardFailed": "No se pudo aprobar el guión gráfico. Por favor inténtalo de nuevo.",
       "saveStoryboardEditsFailed": "No se pudieron guardar tus ediciones. Por favor inténtalo de nuevo.",
       "retryJobFailed": "No se pudo volver a intentar el trabajo. Por favor inténtalo de nuevo.",
       "saveDisplayNameFailed": "No se pudo guardar su nombre para mostrar. Por favor inténtalo de nuevo.",
-      "importPartial": "Importaste {imported} de {requested} productos - {failed, plural, one {# no se pudo leer} other {# no se pudieron leer}}. Puedes añadirlos pegando cada enlace.",
-      "importOvershoot": "Esta importación fue más allá de {requested, plural, one {# producto} other {# productos}} que elegiste. Se importaron {imported, plural, one {# producto} other {# productos}}: revisa Mis productos para ver lo que no elegiste.",
-      "importIgnoredSelection": "Esta importación no se limitó a los {requested, plural, one {# producto} other {# productos}} que elegiste: se importaron {imported, plural, one {# producto} other {# productos}} y {failed, plural, one {# más no se pudo leer} other {# más no se pudieron leer}}. Revisa Mis productos para ver lo que no elegiste.",
-      "importSucceeded": "Importaste {count, plural, one {# producto} other {# productos}} de tu tienda.",
+      "importPartial": "{imported} importado de productos {requested} - {fallido, plural, uno {# no se pudo leer} otro {# no se pudo leer}}. Puede agregarlos pegando cada enlace.",
+      "importOvershoot": "Esta importación fue más allá de los {solicitados, plural, un {# producto} otros {# productos}} que elegiste. {importado, plural, un {# producto} otro {# productos}} importado: revisa Mis productos para ver si hay algo que no hayas seleccionado.",
+      "importIgnoredSelection": "Esta importación no se ciñó al {solicitado, plural, un {# producto} otro {# productos}} que eligió: {importado, plural, un {# producto} otro {# productos}} importado y {fallido, plural, uno {# más no se pudo leer} otro {# más no se pudo leer}}. Revisa Mis productos para ver si hay algo que no hayas elegido.",
       "importFailed": "La importación no terminó. Por favor inténtalo de nuevo.",
       "storyboardSaved": "Guión gráfico guardado.",
       "markedPosted": "Marcado como publicado.",
       "recordPostedFailed": "No pude grabar eso. Por favor inténtalo de nuevo.",
-      "listCandidatesFailed": "No pudimos leer la lista de productos de esa tienda. Inténtalo de nuevo.",
-      "readLinkFailed": "No pudimos leer ese enlace de producto. Inténtalo de nuevo.",
-      "previewStoreFailed": "No pudimos leer esa tienda. Revisa la dirección e inténtalo de nuevo.",
-      "importNone": "No se pudo importar {requested, plural, one {# producto} other {# productos}}. Inténtalo de nuevo.",
+      "listCandidatesFailed": "No se pudo leer la lista de productos de esa tienda. Por favor inténtalo de nuevo.",
+      "readLinkFailed": "No se pudo leer el enlace de ese producto. Por favor inténtalo de nuevo.",
+      "previewStoreFailed": "No pude leer esa tienda. Por favor verifique la dirección e inténtelo nuevamente.",
+      "importNone": "Ninguno de los {solicitado, plural, un {# producto} otro {# productos}} se pudo importar. Por favor inténtalo de nuevo.",
       "importFailedReasons": {
-        "workerRestart": "La importación se interrumpió por un reinicio de nuestra parte. Todo lo importado hasta ahora se guardó - inténtalo de nuevo.",
-        "rateLimitedSaved": "Esa tienda no permite lecturas automatizadas del catálogo ahora mismo. Guardamos todo lo importado hasta ahora - vuelve a intentar la importación en unos minutos.",
-        "rateLimited": "Esa tienda está limitando las lecturas del catálogo ahora mismo. Inténtalo de nuevo en unos minutos.",
-        "botWall": "Esa tienda está bloqueando las lecturas automatizadas del catálogo ahora mismo. Inténtalo más tarde.",
-        "catalogUnreachable": "No pudimos acceder al catálogo de esa tienda ahora mismo. Inténtalo más tarde.",
-        "storeUnsupported": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona con tiendas Shopify y WooCommerce con datos de productos públicos. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
-        "notShopify": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona con tiendas Shopify con datos de productos públicos. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
-        "notWoocommerce": "No pudimos leer un catálogo público de productos de WooCommerce de esa tienda. Todavía puedes agregar productos de uno en uno pegando cada enlace.",
-        "selectionMissing": "No pudimos importar algunos de los productos que elegiste - puede que ya no estén en esta tienda.",
-        "catalogCap": "Solo se importó una parte del catálogo porque esta tienda supera el límite de catálogo. Contáctanos para importar catálogos más grandes.",
-        "productsUnreadable": "Algunos productos que encontramos no pudieron importarse. Puedes agregarlos pegando cada enlace."
+        "workerRestart": "La importación fue interrumpida por un reinicio por nuestra parte. Todo lo importado hasta el momento se guardó. Inténtelo de nuevo.",
+        "rateLimitedSaved": "Esa tienda no permite lecturas automáticas de catálogos en este momento. Guardamos todo lo importado hasta ahora; intente volver a importarlo en unos minutos.",
+        "rateLimited": "Esa tienda está limitando la tasa de lecturas de catálogo en este momento. Inténtelo de nuevo en unos minutos.",
+        "botWall": "Esa tienda está bloqueando las lecturas automáticas del catálogo en este momento. Inténtelo de nuevo más tarde.",
+        "catalogUnreachable": "No pudimos acceder al catálogo de esa tienda en este momento. Inténtelo de nuevo más tarde.",
+        "storeUnsupported": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona para tiendas Shopify y WooCommerce con datos de productos públicos. Aún puedes agregar productos uno a la vez pegando el enlace de cada producto.",
+        "notShopify": "No pudimos leer un catálogo público de productos de esa tienda. Esto funciona para tiendas Shopify con datos de productos públicos. Aún puedes agregar productos uno a la vez pegando el enlace de cada producto.",
+        "notWoocommerce": "No pudimos leer un catálogo público de productos WooCommerce de esa tienda. Aún puedes agregar productos uno a la vez pegando el enlace de cada producto.",
+        "selectionMissing": "No pudimos importar algunos de los productos que elegiste; es posible que ya no estén en esta tienda.",
+        "catalogCap": "Solo se importó una parte del catálogo porque esta tienda supera el límite del catálogo. Contáctenos para importar catálogos más grandes.",
+        "productsUnreadable": "Algunos productos que encontramos no se podían importar. Puede agregarlos pegando cada enlace."
       },
-      "videoDeleted": "Video eliminado.",
-      "deleteVideoFailed": "No se pudo eliminar el video. Inténtalo de nuevo."
-    },
-    "categories": {
-      "beautyPersonalCare": "Belleza y cuidado personal",
-      "healthWellness": "Salud y Bienestar",
-      "womensFashion": "Moda femenina",
-      "sportsOutdoors": "Deportes y aire libre",
-      "homeTextiles": "Textiles para el hogar",
-      "householdEssentials": "Artículos esenciales para el hogar",
-      "mobileElectronics": "Móviles y Electrónica",
-      "foodBeverage": "Alimentos y bebidas",
-      "mensFashion": "Moda masculina",
-      "toysHobbies": "Juguetes y pasatiempos"
-    },
-    "platforms": {
-      "amazon": "Amazon",
-      "shopee": "tienda",
-      "tiktokShop": "Tienda TikTok",
-      "walmart": "Walmart",
-      "lazada": "Lazada",
-      "aliexpress": "AliExpress",
-      "temu": "temu",
-      "alibaba": "Alibaba",
-      "taobao": "taobao",
-      "mercadolibre": "Mercado Libre",
-      "etsy": "Etsy",
-      "ebay": "eBay",
-      "shopify": "Shopify",
-      "generic": "tienda web",
-      "manual": "manuales"
+      "videoDeleted": "Vídeo eliminado.",
+      "deleteVideoFailed": "No se pudo eliminar el video. Por favor inténtalo de nuevo."
     },
     "connections": {
-      "title": "Tiendas",
       "subtitle": "Autoriza a Lumi para acceder a tu tienda.",
-      "connectHeading": "Conectar una tienda",
       "connectNotice": "Conectar autoriza a Lumi a acceder a tu tienda, pero todavía no importa productos automáticamente. <link>Importa tu catálogo desde la página de Productos</link> mientras tanto.",
+      "connectedBanner": "{shop} está autorizada a compartir su catálogo con Lumi. La importación automática de productos aún no está disponible.",
+      "title": "Tiendas",
+      "connectHeading": "Conectar una tienda",
       "yourStores": "Tus tiendas",
-      "listUnavailable": "Todavía no es posible ver ni eliminar las conexiones existentes: la API de conexión de tiendas solo permite conectar por ahora. Una tienda que conectes queda activa aunque aún no pueda mostrarse aquí.",
+      "listUnavailable": "Ver y eliminar conexiones existentes aún no está disponible; la API de conexión de la tienda solo admite la conexión por ahora. Una tienda que conectas está activa aunque aún no se puede mostrar aquí.",
       "notAvailableYet": "Aún no disponible",
       "checkingAvailability": "Comprobando disponibilidad…",
-      "shopifyUnavailable": "La conexión con Shopify no está disponible ahora mismo. Inténtalo de nuevo más tarde.",
+      "shopifyUnavailable": "La conexión Shopify no está disponible en este momento. Inténtelo de nuevo más tarde.",
       "shopDomainLabel": "Dominio de la tienda",
-      "shopDomainPlaceholder": "your-store.myshopify.com",
+      "shopDomainPlaceholder": "tu-tienda.myshopify.com",
       "connect": "Conectar",
-      "dismiss": "Cerrar",
-      "connectedBanner": "{shop} está autorizada a compartir su catálogo con Lumi. La importación automática de productos aún no está disponible.",
+      "dismiss": "Descartar",
       "errors": {
-        "invalid-shop": "Introduce el dominio .myshopify.com de tu tienda (por ejemplo, tu-tienda.myshopify.com).",
-        "unavailable": "La conexión con Shopify no está disponible ahora mismo. Inténtalo de nuevo más tarde.",
-        "failed": "La conexión no se completó. Inténtalo de nuevo."
+        "invalid-shop": "Ingresa el dominio .myshopify.com de tu tienda (por ejemplo tu-tienda.myshopify.com).",
+        "unavailable": "La conexión Shopify no está disponible en este momento. Inténtelo de nuevo más tarde.",
+        "failed": "La conexión no se completó. Por favor inténtalo de nuevo."
       },
       "platforms": {
         "shopify": {
@@ -116,15 +70,15 @@
           "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok Shop"
+          "name": "Tienda TikTok"
         }
       }
     },
     "productCard": {
+      "commissionShort": "{rate} com.",
       "save": "Guardar",
       "unsave": "Dejar de guardar",
       "productFallback": "Producto",
-      "commissionShort": "{rate} com.",
       "soldPerMonth": "{count} vendido/mes",
       "creators": "Creadores de {count}",
       "source": {
@@ -145,43 +99,12 @@
         "manual": "Añadido por ti"
       }
     },
-    "videoPresets": {
-      "styles": {
-        "avatarTalkingIntro": "Introducción parlante",
-        "avatarDemoExplainer": "Explicador de demostración",
-        "avatarTestimonial": "Testimonio",
-        "avatarHostProduct": "Anfitrión + producto",
-        "productCleanShowcase": "escaparate limpio",
-        "productFeatureHighlights": "Características destacadas",
-        "productUnboxing": "Desembalaje",
-        "productOfferFocused": "Oferta enfocada"
-      }
-    },
-    "products": {
-      "title": "Mis productos",
-      "subtitle": "Tu catálogo privado: importa una tienda, pega un enlace de producto o añade uno manualmente.",
-      "addProduct": "Añadir producto",
-      "pastePlaceholder": "Pegue el enlace de un producto: Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify o cualquier tienda.",
-      "readLink": "Leer enlace",
-      "storeImportTitle": "Trae toda tu tienda",
-      "storeImportDescription": "Pega la URL de tu tienda para previsualizar el catálogo, elegir los productos que quieres e importarlos a Mis productos.",
-      "storeImportCta": "Importar tienda",
-      "emptyTitle": "Aún no hay productos",
-      "emptyDescription": "Importa tu tienda, pega un enlace de producto arriba o añade uno manualmente; luego conviértelo en un video en Studio.",
-      "loadErrorTitle": "No pudimos cargar tus productos",
-      "loadErrorDescription": "Este catálogo no está vacío: la lista no se pudo cargar. Tus productos siguen ahí; vuelve a intentarlo en un momento.",
-      "offlineTitle": "Estás sin conexión",
-      "offlineDescription": "No es un catálogo vacío: ahora mismo no podemos acceder a tus productos. Vuelve a conectarte e inténtalo de nuevo.",
-      "refreshError": "No pudimos actualizar tus productos: mostramos la última lista que cargamos.",
-      "retry": "Intentar de nuevo",
-      "waitingForConnection": "Esperando conexión"
-    },
     "productDetail": {
+      "mom": "{percent} intermensual",
       "notFound": "Producto no encontrado.",
       "productFallback": "Producto",
       "save": "Guardar",
       "unsave": "Dejar de guardar",
-      "mom": "{percent} intermensual",
       "byShop": "por {shop}",
       "commission": "Comisión {rate}",
       "creatorHook": "Gancho del creador",
@@ -195,100 +118,25 @@
       "backToProducts": "Volver a productos",
       "products": "Mis productos"
     },
-    "videos": {
-      "title": "Mis vídeos",
-      "subtitle": "Todo lo que has generado con Lumi.",
-      "newVideo": "Nuevo vídeo",
-      "videoFallback": "Vídeo",
-      "loadMore": "Cargar videos más antiguos",
-      "loadError": {
-        "title": "No se pudieron cargar los videos",
-        "description": "No pudimos cargar tus videos. Inténtalo de nuevo.",
-        "action": "Intentar de nuevo"
-      },
-      "pageLoadError": {
-        "title": "No se pudieron cargar videos más antiguos",
-        "description": "No pudimos cargar más videos. Inténtalo de nuevo.",
-        "action": "Intentar de nuevo"
-      },
-      "empty": {
-        "title": "Aún no hay vídeos",
-        "description": "Elige uno de tus productos y Lumi lo convertirá en tu primer video que detiene el desplazamiento.",
-        "startFirstVideo": "Crear primer video"
-      },
-      "tabsLabel": "Filtrar videos por estado",
-      "tabs": {
-        "needsYou": "Tu turno",
-        "onTheWay": "En camino",
-        "failed": "Fallidos",
-        "success": "Listos"
-      },
-      "tabEmpty": {
-        "loadMore": "Cargar videos más antiguos",
-        "needsYou": {
-          "title": "Nada te necesita",
-          "loadedTitle": "Nada cargado necesita tu atención",
-          "loadedDescription": "Puede que haya videos más antiguos que aún necesiten tu atención. Carga más para seguir revisando.",
-          "description": "Cuando un video se pausa a la espera de tu aprobación del guion o de las tomas, te espera aquí."
-        },
-        "onTheWay": {
-          "title": "Nada en camino",
-          "loadedTitle": "Nada cargado está en camino",
-          "loadedDescription": "Puede que haya videos más antiguos en cola o renderizándose. Carga más para seguir revisando.",
-          "description": "Los videos en cola o en renderizado aparecen aquí."
-        },
-        "failed": {
-          "title": "Ningún video fallido",
-          "loadedTitle": "Ningún video fallido cargado",
-          "loadedDescription": "Puede que haya videos más antiguos que fallaron. Carga más para seguir revisando.",
-          "description": "Un video que no pudo terminarse aparece aquí, con la opción de reintentar."
-        },
-        "success": {
-          "title": "Aún no hay videos terminados",
-          "loadedTitle": "Ningún video terminado cargado",
-          "loadedDescription": "Puede que haya videos más antiguos ya terminados. Carga más para seguir revisando.",
-          "description": "Los videos completados aparecen aquí, listos para descargar y publicar."
-        }
-      }
-    },
-    "avatars": {
-      "title": "avatares",
-      "subtitle": "La cara que presenta su producto en videos de AI Avatar. Sube el tuyo propio o elige un personaje digital.",
-      "yourAvatars": "Tus avatares",
-      "emptyYourAvatars": "Ninguno todavía: sube una foto arriba para usar una cara específica en tus videos.",
-      "digitalCharacters": "Personajes digitales",
-      "digitalComingSoon": "Está por llegar una biblioteca de presentadores digitales listos para usar: rostros consistentes y con licencia que puedes incluir en cualquier video sin cargar una foto.",
-      "upload": {
-        "notImageError": "Esa no es una imagen.",
-        "tooLargeError": "La imagen ha terminado {max}MB.",
-        "addPhoto": "Añadir foto",
-        "namePlaceholder": "Nombra este avatar (por ejemplo, \"Maya - fundador\")",
-        "consent": "Tengo derecho a utilizar la imagen de esta persona en vídeos (soy yo o tengo su permiso).",
-        "saveAvatar": "guardar avatar",
-        "clear": "Borrar"
-      },
-      "card": {
-        "deleteAvatar": "eliminar avatar",
-        "deleteTitle": "¿Eliminar este avatar?",
-        "deleteDescription": "\"{name}\" se eliminará de tus avatares. Los vídeos que ya has hecho con él no se ven afectados.",
-        "cancel": "Cancelar",
-        "delete": "Eliminar"
-      }
-    },
     "profile": {
-      "title": "Perfil",
-      "videosCreated": "Vídeos creados",
-      "readyToPublish": "Listo para publicar",
-      "statsError": {
-        "description": "No pudimos cargar las estadísticas de tus videos.",
-        "action": "Intentar de nuevo"
-      },
       "thisMonth": "Este mes",
       "usageSummary": "{used} de {limit} créditos usados · plan {plan} · se renueva el {date}",
       "creditNote": "Los créditos reflejan el costo real del render: el costo exacto depende del modelo, la resolución y la relación de aspecto que elijas.",
       "creditsLeft": "restantes",
       "limitHit": "Has alcanzado tu límite mensual.",
       "seePlans": "Ver planes",
+      "usageSummaryOneTime": "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
+      "usageSummaryNeutral": "{used} de {limit} créditos usados · plan {plan}",
+      "creditsOneTime": "Tus créditos",
+      "limitHitOneTime": "Has usado tus créditos gratuitos.",
+      "limitHitCredits": "Has usado tus créditos.",
+      "title": "Perfil",
+      "videosCreated": "Vídeos creados",
+      "readyToPublish": "Listo para publicar",
+      "statsError": {
+        "description": "No pudimos cargar las estadísticas de tu video.",
+        "action": "Inténtalo de nuevo"
+      },
       "forMore": "para más.",
       "displayName": "Nombre para mostrar",
       "save": "Guardar",
@@ -296,83 +144,45 @@
       "connectedAccounts": "Cuentas conectadas",
       "appearance": "Apariencia",
       "appearanceDescription": "Sistema, claro u oscuro: coincide con la aplicación Lumi.",
-      "logOut": "Cerrar sesión",
-      "usageSummaryOneTime": "{used} de {limit} créditos usados · plan {plan} · asignación única, no se renueva",
-      "usageSummaryNeutral": "{used} de {limit} créditos usados · plan {plan}",
-      "creditsOneTime": "Tus créditos",
-      "limitHitOneTime": "Has usado tus créditos gratuitos.",
-      "limitHitCredits": "Has usado tus créditos."
-    },
-    "productsNew": {
-      "startTitle": "Añadir un producto",
-      "startSubtitle": "Importa el catálogo de una tienda, pega un enlace de producto o añade un producto manualmente. Lumi lee lo que puede; tú confirmas antes de que se renderice nada.",
-      "storePathTitle": "Importar productos desde tu tienda",
-      "storePathDescription": "Pega la URL de tu tienda, previsualiza el catálogo y elige qué productos conservar.",
-      "singleProductTitle": "Leer un enlace de producto",
-      "singleProductDescription": "Pega una página de producto de Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay u otra tienda.",
-      "manualPathTitle": "Añadir un producto manualmente",
-      "productLinkPlaceholder": "https://… enlace del producto",
-      "readLink": "Leer enlace",
-      "addManuallyInstead": "Agréguelo manualmente en su lugar →",
-      "startManualEditor": "Abrir editor manual",
-      "startManualEditorDescription": "Escribe los detalles y añade fotos dentro del editor, o empieza con fotos: suéltalas aquí o elígelas abajo.",
-      "startWithPhotos": "Empezar con fotos",
-      "startOver": "Empezar de nuevo",
-      "detailsTitle": "Comprueba los detalles",
-      "detailsSubtitle": "En esto se basará el vídeo: 10 segundos aquí ahorran un mal renderizado.",
-      "removePhoto": "Quitar foto",
-      "addPhoto": "Añadir",
-      "saveAndMakeVideo": "Guardar y hacer un vídeo",
-      "needPhoto": "Primero agregue al menos una foto real del producto.",
-      "upload": {
-        "notImageError": "{filename} no es una imagen.",
-        "tooLargeError": "{filename} ha terminado {max}MB."
-      },
-      "fields": {
-        "title": "Título",
-        "titlePlaceholder": "Nombre del producto",
-        "description": "Descripción",
-        "descriptionPlaceholder": "Qué es, para quién es, por qué es bueno: solo hechos, el guión se escribe a partir de esto.",
-        "category": "categoría",
-        "photos": "Fotos · {count} seleccionado",
-        "photosHint": "La primera foto seleccionada es la del héroe en torno al cual se basa el video. Desmarque las tablas de tallas y los carteles. Arrastra y suelta fotos en cualquier lugar de esta cuadrícula."
-      },
-      "storeImport": {
-        "importingTitle": "Importando tu tienda",
-        "importingProgress": "{upserted} importado de {found} productos hasta ahora; esto continúa en segundo plano.",
-        "importingUnknown": "Tu importación está en marcha: mostraremos el recuento en cuanto tengamos respuesta. Continúa en segundo plano.",
-        "wrappingUp": "Concluyendo…",
-        "importingLabel": "Importando",
-        "importingLeave": "Añade algo más mientras esto se ejecuta",
-        "alreadyImportingTitle": "Ya hay una importación de tienda en curso",
-        "alreadyImportingDescription": "Solo se puede importar una tienda a la vez. Espera a que esta termine y entonces podrás importar otra.",
-        "showProgress": "Ver el progreso de la importación",
-        "stopTracking": "Dejar de seguir esta importación: sigue en curso",
-        "previewFound": "Encontramos {count} productos de {domain}",
-        "chooseProducts": "Elegir productos",
-        "reviewTitle": "Elige qué importar de {domain}",
-        "reviewSubtitle": "Todo empieza seleccionado: desmarca lo que no quieras en tu cuenta.",
-        "readingCatalog": "Leyendo la lista de productos de la tienda…",
-        "retryReview": "Inténtalo de nuevo",
-        "reviewTruncated": "Esta tienda tiene más de lo que podemos listar de una vez: estás eligiendo entre los primeros {count} productos. El resto puedes añadirlo pegando cada enlace.",
-        "selectedCount": "{selected} de {total} seleccionados",
-        "selectAll": "Seleccionar todo",
-        "deselectAll": "Deseleccionar todo",
-        "importSelected": "Importar {count, plural, one {# producto} other {# productos}}",
-        "untitledProduct": "Producto sin título",
-        "reviewEmpty": "No pudimos listar ningún producto de esta tienda. Prueba con otra tienda o añade productos pegando cada enlace.",
-        "tryDifferentStore": "Prueba en otra tienda",
-        "placeholder": "your-store.myshopify.com - elige los productos en el paso siguiente",
-        "preview": "Vista previa"
-      }
+      "logOut": "Cerrar sesión"
     },
     "studio": {
+      "modes": {
+        "unavailable": "Temporalmente no disponible",
+        "unavailableNote": "{mode} no está disponible ahora mismo. Elige otro modo para generar.",
+        "unavailableAllNote": "Ningún modo de generación está disponible ahora mismo. Inténtalo más tarde.",
+        "aiAvatar": {
+          "label": "Avatar de IA",
+          "blurb": "Un presentador habla a la cámara."
+        },
+        "productOnly": {
+          "label": "Producto solamente",
+          "blurb": "Sin rostro, solo el producto."
+        }
+      },
+      "models": {
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "Más rápido · hasta 720p"
+        },
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "Lo más nuevo · hasta 1080p"
+        }
+      },
+      "optionUnavailable": {
+        "title": "No disponible con este modo",
+        "badge": "n/d"
+      },
+      "usageSummary": "{remaining} de {limit} créditos restantes",
+      "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
+      "seePlans": "Ver planes",
       "title": "Estudio de vídeo",
       "subtitle": "Lumi escribe y renderiza un vídeo de este producto: establece la dirección.",
       "loading": "Cargando…",
       "sections": {
         "vibe": "1 · ¿Cuál es la vibra?",
-        "reference": "2 · Hazlo como este",
+        "reference": "2 · Hazlo así",
         "mode": "3 · Modo",
         "presenter": "presentador",
         "duration": "4 · Duración",
@@ -406,49 +216,26 @@
       },
       "reference": {
         "linkTab": "Pegar enlace",
-        "uploadTab": "Clip subido",
-        "linkLabel": "Enlace de video de referencia",
-        "uploadLabel": "Enlace de clip subido",
+        "uploadTab": "clip subido",
+        "linkLabel": "Enlace del vídeo de referencia",
+        "uploadLabel": "Enlace del clip subido",
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
-        "linkHelper": "Lumi aprende solo vibra y energía: ritmo y ambiente para tu producto, no las tomas originales.",
-        "uploadHelper": "Cargue un clip privado (MP4, MOV o WebM), hasta 50 MB. Lumi aprende solo vibración y energía, no las tomas originales.",
-        "invalidUrl": "Pega un enlace de video compatible de TikTok o redes sociales.",
-        "invalidUpload": "Ingresa un enlace directo de MP4, MOV o WebM.",
+        "linkHelper": "Lumi aprende solo la vibra y la energía: el ritmo y el estado de ánimo de su producto, no las tomas originales.",
+        "uploadHelper": "Cargue un clip privado (MP4, MOV o WebM), hasta 50 MB. Lumi aprende solo vibra y energía, no las tomas originales.",
+        "invalidUrl": "Pegue un TikTok compatible o un enlace de video social.",
+        "invalidUpload": "Ingrese un enlace directo MP4, MOV o WebM.",
         "uploadCta": "Elige un archivo de vídeo",
         "uploadReplace": "Reemplazar",
-        "uploadRemove": "Eliminar",
+        "uploadRemove": "Quitar",
         "uploadTypeError": "Elija un video MP4, MOV o WebM.",
         "uploadSizeError": "Ese clip supera el límite de 50 MB.",
         "uploadFailed": "La carga no terminó. Por favor inténtalo de nuevo."
-      },
-      "modes": {
-        "aiAvatar": {
-          "label": "Avatar de IA",
-          "blurb": "Un presentador habla a la cámara."
-        },
-        "productOnly": {
-          "label": "Producto solamente",
-          "blurb": "Sin rostro, sólo el producto."
-        },
-        "unavailable": "Temporalmente no disponible",
-        "unavailableNote": "{mode} no está disponible ahora mismo. Elige otro modo para generar.",
-        "unavailableAllNote": "Ningún modo de generación está disponible ahora mismo. Inténtalo más tarde."
       },
       "presenter": {
         "auto": "Automático",
         "autoSublabel": "La IA elige un creador",
         "manageAvatars": "Administrar avatares →"
-      },
-      "models": {
-        "seedance20": {
-          "label": "Seedance 2.0",
-          "blurb": "Lo más nuevo · hasta 1080p"
-        },
-        "seedance20Fast": {
-          "label": "Seedance 2.0 Fast",
-          "blurb": "Más rápido · hasta 720p"
-        }
       },
       "resolutions": {
         "p480": {
@@ -469,10 +256,6 @@
         "comingSoonTitle": "Próximamente",
         "soonBadge": "pronto"
       },
-      "optionUnavailable": {
-        "title": "No disponible con este modo",
-        "badge": "n/d"
-      },
       "reviewDescription": "Lumi le mostrará el guión gráfico antes de que gaste nada; revíselo y apruebe antes de que se generen imágenes o videos.",
       "summary": {
         "vibe": "Ambiente",
@@ -483,41 +266,65 @@
         "language": "Idioma",
         "format": "Formato",
         "reference": "Referencia",
-        "referenceAdded": "Agregada",
-        "referenceNone": "Ninguna",
+        "referenceAdded": "Añadido",
+        "referenceNone": "Ninguno",
         "review": "Revisión",
         "storyboard": "Guión gráfico"
       },
       "size": {
-        "avatarHint": "La salida con presentador puede adaptar su forma para encajar con el presentador."
+        "avatarHint": "La salida del cabezal parlante puede adaptar su forma para adaptarse al presentador."
       },
-      "usageSummary": "{remaining} de {limit} créditos restantes",
       "generateVideo": "Generar vídeo",
       "generateUploading": "Subiendo referencia…",
-      "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
-      "seePlans": "Ver planes",
       "cap": {
-        "reached": "Ya tienes {count} videos en proceso (límite {limit}). Podrás generar uno nuevo en cuanto uno de ellos termine.",
+        "reached": "Ya tienes videos {count} en progreso (límite {limit}). Puedes generar uno nuevo tan pronto como finalice uno de ellos.",
         "viewVideos": "Mis vídeos"
       },
       "productError": {
-        "title": "No se puede cargar ese producto",
-        "description": "Puede que se haya eliminado o que el enlace sea incorrecto. Elige uno de tus productos para empezar un video.",
-        "action": "Elegir un producto"
+        "title": "Ese producto no se puede cargar.",
+        "description": "Puede que lo hayan eliminado o que el enlace sea incorrecto. Elija uno de sus productos para iniciar un video.",
+        "action": "Elige un producto"
       },
       "productLoadError": {
-        "title": "No se pudo cargar el producto",
+        "title": "El producto no se pudo cargar",
         "description": "No pudimos cargar este producto. Inténtalo de nuevo en un momento.",
-        "action": "Intentar de nuevo"
+        "action": "Inténtalo de nuevo"
       },
       "pickProduct": {
         "title": "Elige un producto primero",
-        "description": "Agrega o elige uno de tus productos y Lumi lo convertirá en un video que detiene el desplazamiento.",
-        "addProduct": "Agregar producto",
+        "description": "Agregue o elija uno de sus productos y Lumi lo convertirá en un video que hará que se detenga el desplazamiento.",
+        "addProduct": "Añadir producto",
         "viewProducts": "Ver productos"
       }
     },
     "jobs": {
+      "working": {
+        "queuedForScript": "Esperando para escribir tu guion…",
+        "writingScript": "Escribiendo tu guion…",
+        "queuedForShots": "Esperando para crear tus tomas…",
+        "buildingShots": "Creando tus tomas…",
+        "queuedForRender": "Esperando para renderizar tu video…",
+        "renderingVideo": "Renderizando tu video…",
+        "working": "Trabajando en tu video…",
+        "queuedScriptDescription": "Tu video está en cola para empezar. No se renderiza nada hasta que apruebas el storyboard.",
+        "scriptDescription": "Lumi está escribiendo tu guion. No se renderiza nada hasta que apruebas el storyboard.",
+        "queuedShotsDescription": "Tu storyboard está aprobado. Este video está en cola para preparar las referencias de tomas y los recursos de renderizado.",
+        "shotsDescription": "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado, y cada toma aparece aquí en cuanto está lista.",
+        "queuedRenderDescription": "Tus tomas aprobadas están en cola para renderizarse.",
+        "renderDescription": "Tus tomas aprobadas se están renderizando en el video final.",
+        "workingDescription": "Esta página se actualiza automáticamente. Puedes salir y volver."
+      },
+      "review": {
+        "title": "Revisa tus tomas",
+        "description": "Aprueba cada toma, o regenera las que no te convenzan. Lumi renderiza en cuanto cada toma está aprobada."
+      },
+      "completed": {
+        "description": "Un corte listo para publicar con audio hablado. Descárgalo o márcalo como publicado para mantener tus estadísticas ordenadas.",
+        "badge": "Listo para publicar",
+        "title": "Tu vídeo está listo 🎉",
+        "download": "Descargar",
+        "markPosted": "Marcar como publicado"
+      },
       "backToVideos": "Mis vídeos",
       "videoFallback": "tu vídeo",
       "styles": {
@@ -546,26 +353,6 @@
         "offer": "oferta",
         "cta": "llamada a la acción",
         "shot": "Disparo {number}"
-      },
-      "working": {
-        "queuedForScript": "Esperando para escribir tu guion…",
-        "writingScript": "Escribiendo tu guion…",
-        "queuedForShots": "Esperando para crear tus tomas…",
-        "buildingShots": "Creando tus tomas…",
-        "queuedForRender": "Esperando para renderizar tu video…",
-        "renderingVideo": "Renderizando tu video…",
-        "working": "Trabajando en tu video…",
-        "queuedScriptDescription": "Tu video está en cola para empezar. No se renderiza nada hasta que apruebas el storyboard.",
-        "scriptDescription": "Lumi está escribiendo tu guion. No se renderiza nada hasta que apruebas el storyboard.",
-        "queuedShotsDescription": "Tu storyboard está aprobado. Este video está en cola para preparar las referencias de tomas y los recursos de renderizado.",
-        "shotsDescription": "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado.",
-        "queuedRenderDescription": "Tus tomas aprobadas están en cola para renderizarse.",
-        "renderDescription": "Tus tomas aprobadas se están renderizando en el video final.",
-        "workingDescription": "Esta página se actualiza automáticamente. Puedes salir y volver."
-      },
-      "review": {
-        "title": "Revisa tus tomas",
-        "description": "Aprueba cada toma, o regenera las que no te convenzan. Lumi renderiza en cuanto cada toma está aprobada."
       },
       "storyboard": {
         "context": {
@@ -622,7 +409,7 @@
           "slowLingering": "Lento y persistente"
         },
         "proMode": "modo profesional",
-        "proHint": "Cambiar un toque o una nota vuelve a generar esta toma.",
+        "proHint": "Al cambiar un toque o una nota se vuelve a derivar esta toma.",
         "transitions": {
           "hardCut": "corte duro",
           "dissolve": "disolver",
@@ -649,28 +436,21 @@
         "approve": "Aprobar",
         "regenerate": "regenerar"
       },
-      "completed": {
-        "badge": "Listo para publicar",
-        "title": "Tu vídeo está listo 🎉",
-        "description": "Un corte listo para publicar con audio hablado. Descárgalo o márcalo como publicado para mantener tus estadísticas ordenadas.",
-        "download": "Descargar",
-        "markPosted": "Marcar como publicado"
-      },
       "failed": {
         "title": "Generación fallida",
         "fallbackMessage": "Algo salió mal. Intente crearlo nuevamente.",
         "reasons": {
-          "workerRestart": "Nuestro sistema de renderizado se reinició y perdió el rastro de este video. Tus créditos han sido reembolsados - toca Reintentar para crearlo de nuevo.",
-          "resumeInvalidScript": "Este video no pudo continuar donde lo dejó. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "productNotFound": "El producto de este video ya no existe. Tus créditos han sido reembolsados.",
-          "providerUnavailable": "La generación de video no está disponible temporalmente por un problema de nuestra parte. Tus créditos han sido reembolsados - inténtalo más tarde.",
-          "renderStart": "No pudimos iniciar los renders del video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "renderIncomplete": "Uno o más renders del video no terminaron. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "assembling": "Algo salió mal de nuestra parte al ensamblar este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "finishing": "Algo salió mal de nuestra parte al finalizar este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "making": "Algo salió mal de nuestra parte al crear este video. Tus créditos han sido reembolsados - inténtalo de nuevo.",
-          "categoryUnsupported": "Todavía no podemos crear videos para la categoría de este producto. Tus créditos han sido reembolsados.",
-          "scriptQuality": "No pudimos escribir un guion lo suficientemente bueno para este producto. Inténtalo de nuevo o ajusta los detalles del producto."
+          "workerRestart": "Nuestro sistema de renderizado se reinició y perdió la pista de este video. Tus créditos han sido reembolsados; toca Reintentar para hacerlo nuevamente.",
+          "resumeInvalidScript": "Este vídeo no pudo continuar donde lo dejó. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "productNotFound": "El producto para el que era este vídeo ya no existe. Tus créditos han sido reembolsados.",
+          "providerUnavailable": "La generación de vídeo no está disponible temporalmente debido a un problema nuestro. Sus créditos han sido reembolsados; inténtelo de nuevo más tarde.",
+          "renderStart": "No pudimos iniciar las renderizaciones del video. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "renderIncomplete": "Uno o más de los renderizados de vídeo no finalizaron. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "assembling": "Algo salió mal de nuestra parte al montar este vídeo. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "finishing": "Algo salió mal de nuestra parte al terminar este video. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "making": "Algo salió mal de nuestra parte mientras hacíamos este video. Sus créditos han sido reembolsados; inténtelo de nuevo.",
+          "categoryUnsupported": "Todavía no podemos hacer videos para la categoría de este producto. Tus créditos han sido reembolsados.",
+          "scriptQuality": "No pudimos escribir un guión lo suficientemente bueno para este producto. Inténtalo de nuevo o ajusta los detalles del producto."
         },
         "retry": "Reintentar",
         "startNewVideo": "Iniciar un nuevo vídeo"
@@ -680,21 +460,21 @@
         "deleted": "Producto eliminado"
       },
       "delete": {
-        "button": "Eliminar video",
-        "title": "¿Eliminar este video?",
-        "description": "Esto elimina el video de forma permanente. No se puede recuperar y los créditos ya gastados no se reembolsan.",
+        "button": "Eliminar vídeo",
+        "title": "¿Eliminar este vídeo?",
+        "description": "Esto elimina permanentemente el video. No se puede recuperar y los créditos ya gastados no se reembolsan.",
         "cancel": "Cancelar",
         "confirm": "Eliminar permanentemente"
       },
       "notFound": {
-        "title": "Este vídeo ya no existe",
-        "description": "Se eliminó, o el enlace apunta a un vídeo que no es tuyo. Todo lo que conservas está en Mis vídeos.",
+        "title": "Este vídeo ya no existe.",
+        "description": "Se eliminó o el enlace apunta a un vídeo que no es tuyo. Todo lo que aún tienes está en Mis videos.",
         "action": "Volver a Mis vídeos"
       },
       "loadError": {
-        "title": "No se pudo cargar el video",
-        "description": "No pudimos cargar este video. Inténtalo de nuevo.",
-        "action": "Intentar de nuevo"
+        "title": "El vídeo no se pudo cargar",
+        "description": "No pudimos cargar este video. Intentar otra vez.",
+        "action": "Inténtalo de nuevo"
       }
     },
     "format": {
@@ -702,10 +482,221 @@
       "minutesAgo": "hace {n} min",
       "hoursAgo": "hace {n} h",
       "daysAgo": "hace {n} d"
+    },
+    "nav": {
+      "products": "Productos",
+      "stores": "Tiendas",
+      "avatars": "avatares",
+      "videos": "Vídeos",
+      "profile": "Perfil",
+      "newVideo": "Nuevo vídeo",
+      "new": "Nuevo",
+      "signedIn": "Iniciado sesión",
+      "logOut": "Cerrar sesión"
+    },
+    "categories": {
+      "beautyPersonalCare": "Belleza y cuidado personal",
+      "healthWellness": "Salud y Bienestar",
+      "womensFashion": "Moda femenina",
+      "sportsOutdoors": "Deportes y aire libre",
+      "homeTextiles": "Textiles para el hogar",
+      "householdEssentials": "Artículos esenciales para el hogar",
+      "mobileElectronics": "Móviles y Electrónica",
+      "foodBeverage": "Alimentos y bebidas",
+      "mensFashion": "Moda masculina",
+      "toysHobbies": "Juguetes y pasatiempos"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "tienda",
+      "tiktokShop": "Tienda TikTok",
+      "walmart": "Walmart",
+      "lazada": "Lazada",
+      "aliexpress": "AliExpress",
+      "temu": "temu",
+      "alibaba": "Alibaba",
+      "taobao": "taobao",
+      "mercadolibre": "Mercado Libre",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "tienda web",
+      "manual": "manuales"
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "Introducción parlante",
+        "avatarDemoExplainer": "Explicador de demostración",
+        "avatarTestimonial": "Testimonio",
+        "avatarHostProduct": "Anfitrión + producto",
+        "productCleanShowcase": "escaparate limpio",
+        "productFeatureHighlights": "Características destacadas",
+        "productUnboxing": "Desembalaje",
+        "productOfferFocused": "Oferta enfocada"
+      }
+    },
+    "products": {
+      "title": "Mis productos",
+      "subtitle": "Su catálogo privado: importe una tienda, pegue el enlace de un producto o agregue uno manualmente.",
+      "addProduct": "Añadir producto",
+      "pastePlaceholder": "Pegue el enlace de un producto: Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify o cualquier tienda.",
+      "readLink": "Leer enlace",
+      "storeImportTitle": "Trae toda tu tienda",
+      "storeImportDescription": "Pegue la URL de su tienda para obtener una vista previa del catálogo, elija los productos que desee e impórtelos a Mis productos.",
+      "storeImportCta": "tienda de importación",
+      "emptyTitle": "Aún no hay productos",
+      "emptyDescription": "Importe su tienda, pegue el enlace de un producto arriba o agregue uno manualmente y luego conviértalo en un video en Studio.",
+      "loadErrorTitle": "No se pudieron cargar tus productos",
+      "loadErrorDescription": "Este no es un catálogo vacío: la lista no se pudo cargar. Tus productos todavía están ahí; Inténtalo de nuevo en un momento.",
+      "offlineTitle": "Estás desconectado",
+      "offlineDescription": "Este no es un catálogo vacío; no podemos acceder a sus productos en este momento. Vuelva a conectarse y vuelva a intentarlo.",
+      "refreshError": "No se pudieron actualizar sus productos; se muestra la lista que cargamos por última vez.",
+      "retry": "Inténtalo de nuevo",
+      "waitingForConnection": "Esperando conexión"
+    },
+    "videos": {
+      "title": "Mis vídeos",
+      "subtitle": "Todo lo que has generado con Lumi.",
+      "newVideo": "Nuevo vídeo",
+      "videoFallback": "Vídeo",
+      "loadMore": "Cargar vídeos más antiguos",
+      "loadError": {
+        "title": "Los videos no se pudieron cargar",
+        "description": "No pudimos cargar tus videos. Intentar otra vez.",
+        "action": "Inténtalo de nuevo"
+      },
+      "pageLoadError": {
+        "title": "Los videos más antiguos no se pudieron cargar",
+        "description": "No pudimos cargar más videos. Intentar otra vez.",
+        "action": "Inténtalo de nuevo"
+      },
+      "empty": {
+        "title": "Aún no hay vídeos",
+        "description": "Elija uno de sus productos y Lumi lo convertirá en su primer vídeo que detendrá el desplazamiento.",
+        "startFirstVideo": "Iniciar primer vídeo"
+      },
+      "tabsLabel": "Filtrar vídeos por estado",
+      "tabs": {
+        "needsYou": "te necesita",
+        "onTheWay": "en el camino",
+        "failed": "Fallido",
+        "success": "Éxito"
+      },
+      "tabEmpty": {
+        "loadMore": "Cargar vídeos más antiguos",
+        "needsYou": {
+          "title": "Nada te necesita",
+          "loadedTitle": "Nada cargado te necesita",
+          "loadedDescription": "Es posible que los vídeos más antiguos aún te necesiten. Cargue más para seguir comprobando.",
+          "description": "Cuando un vídeo se detiene para su guión gráfico o aprobación de toma, lo espera aquí."
+        },
+        "onTheWay": {
+          "title": "Nada en camino",
+          "loadedTitle": "No hay nada cargado en camino.",
+          "loadedDescription": "Es posible que los vídeos más antiguos aún estén en cola o renderizándose. Cargue más para seguir comprobando.",
+          "description": "Los vídeos que están en cola o renderizados aparecen aquí."
+        },
+        "failed": {
+          "title": "No hay vídeos fallidos.",
+          "loadedTitle": "No se han cargado videos fallidos",
+          "loadedDescription": "Es posible que los vídeos más antiguos aún hayan fallado. Cargue más para seguir comprobando.",
+          "description": "Un vídeo que no se pudo terminar llega aquí, con un nuevo intento."
+        },
+        "success": {
+          "title": "Aún no hay vídeos terminados",
+          "loadedTitle": "No hay videos terminados cargados",
+          "loadedDescription": "Es posible que los vídeos más antiguos aún estén terminados. Cargue más para seguir comprobando.",
+          "description": "Los videos completos aparecen aquí, listos para descargar y publicar."
+        }
+      }
+    },
+    "avatars": {
+      "title": "avatares",
+      "subtitle": "La cara que presenta su producto en videos de AI Avatar. Sube el tuyo propio o elige un personaje digital.",
+      "yourAvatars": "Tus avatares",
+      "emptyYourAvatars": "Ninguno todavía: sube una foto arriba para usar una cara específica en tus videos.",
+      "digitalCharacters": "Personajes digitales",
+      "digitalComingSoon": "Está por llegar una biblioteca de presentadores digitales listos para usar: rostros consistentes y con licencia que puedes incluir en cualquier video sin cargar una foto.",
+      "upload": {
+        "notImageError": "Esa no es una imagen.",
+        "tooLargeError": "La imagen ha terminado {max}MB.",
+        "addPhoto": "Añadir foto",
+        "namePlaceholder": "Nombra este avatar (por ejemplo, \"Maya - fundador\")",
+        "consent": "Tengo derecho a utilizar la imagen de esta persona en vídeos (soy yo o tengo su permiso).",
+        "saveAvatar": "guardar avatar",
+        "clear": "Borrar"
+      },
+      "card": {
+        "deleteAvatar": "eliminar avatar",
+        "deleteTitle": "¿Eliminar este avatar?",
+        "deleteDescription": "\"{name}\" se eliminará de tus avatares. Los vídeos que ya has hecho con él no se ven afectados.",
+        "cancel": "Cancelar",
+        "delete": "Eliminar"
+      }
+    },
+    "productsNew": {
+      "startTitle": "Añadir un producto",
+      "startSubtitle": "Importe un catálogo de tienda, pegue el enlace de un producto o agregue un producto manualmente. Lumi lee lo que puede; usted confirma antes de que algo se procese.",
+      "storePathTitle": "Importa productos de tu tienda",
+      "storePathDescription": "Pegue la URL de su tienda, obtenga una vista previa del catálogo y elija qué productos conservar.",
+      "singleProductTitle": "Leer un enlace de producto",
+      "singleProductDescription": "Pegue la página de un producto de Amazon, Walmart, Shopee, Lazada, TikTok Shop, Etsy, Shopify, eBay u otra tienda.",
+      "manualPathTitle": "Agregar un producto manualmente",
+      "productLinkPlaceholder": "https://… enlace del producto",
+      "readLink": "Leer enlace",
+      "addManuallyInstead": "Agréguelo manualmente en su lugar →",
+      "startManualEditor": "Abrir editor manual",
+      "startManualEditorDescription": "Escriba los detalles usted mismo y agregue fotos dentro del editor, o comience con las fotos: suéltelas aquí o selecciónelas a continuación.",
+      "startWithPhotos": "Empezar con fotos",
+      "startOver": "Empezar de nuevo",
+      "detailsTitle": "Comprueba los detalles",
+      "detailsSubtitle": "En esto se basará el vídeo: 10 segundos aquí ahorran un mal renderizado.",
+      "removePhoto": "Quitar foto",
+      "addPhoto": "Añadir",
+      "saveAndMakeVideo": "Guardar y hacer un vídeo",
+      "needPhoto": "Primero agregue al menos una foto real del producto.",
+      "upload": {
+        "notImageError": "{filename} no es una imagen.",
+        "tooLargeError": "{filename} ha terminado {max}MB."
+      },
+      "fields": {
+        "title": "Título",
+        "titlePlaceholder": "Nombre del producto",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Qué es, para quién es, por qué es bueno: solo hechos, el guión se escribe a partir de esto.",
+        "category": "categoría",
+        "photos": "Fotos · {count} seleccionado",
+        "photosHint": "La primera foto seleccionada es la del héroe en torno al cual se basa el video. Desmarque las tablas de tallas y los carteles. Arrastra y suelta fotos en cualquier lugar de esta cuadrícula."
+      },
+      "storeImport": {
+        "importingTitle": "Importando tu tienda",
+        "importingProgress": "Importé {upserted} de productos {found} hasta el momento; esto continúa en segundo plano.",
+        "importingUnknown": "Su importación se está ejecutando; mostraremos el recuento tan pronto como tengamos noticias. Sigue en segundo plano.",
+        "wrappingUp": "Concluyendo…",
+        "importingLabel": "Importando",
+        "importingLeave": "Añade algo más mientras esto se ejecuta.",
+        "alreadyImportingTitle": "Ya se está ejecutando una importación de tienda",
+        "alreadyImportingDescription": "Solo se puede ejecutar una importación de tienda a la vez. Espere a que termine este y luego podrá importar otra tienda.",
+        "showProgress": "Mostrar progreso de importación",
+        "stopTracking": "Dejar de rastrear esta importación: sigue ejecutándose",
+        "previewFound": "Encontramos {count} productos de {domain}",
+        "chooseProducts": "Elige productos",
+        "reviewTitle": "Elija qué importar desde {domain}",
+        "reviewSubtitle": "Todo comienza seleccionado: desmarque todo lo que no desee en su cuenta.",
+        "readingCatalog": "Leyendo la lista de productos de la tienda…",
+        "retryReview": "Inténtalo de nuevo",
+        "reviewTruncated": "Esta tienda tiene más de lo que podemos enumerar a la vez: estás eligiendo entre los primeros productos {count}. El resto se puede agregar pegando cada enlace.",
+        "selectedCount": "{selected} de {total} seleccionado",
+        "selectAll": "Seleccionar todo",
+        "deselectAll": "Deseleccionar todo",
+        "importSelected": "Importar {count, plural, one {# producto} other {# productos}}",
+        "untitledProduct": "Producto sin título",
+        "reviewEmpty": "No pudimos enumerar ningún producto de esta tienda. Pruebe con una tienda diferente o agregue productos pegando cada enlace.",
+        "tryDifferentStore": "Prueba en otra tienda",
+        "placeholder": "your-store.myshopify.com - elige productos en el siguiente paso",
+        "preview": "Vista previa"
+      }
     }
-  },
-  "languageSwitcher": {
-    "label": "Idioma"
   },
   "shared": {
     "status": {
@@ -718,9 +709,9 @@
       "reviewShots": "Revisar tomas",
       "queuedForRender": "En cola para render",
       "rendering": "Renderizando",
+      "working": "Trabajando",
       "ready": "Listo",
-      "failed": "Fallido",
-      "working": "Trabajando"
+      "failed": "Fallido"
     },
     "jobProgress": {
       "script": "Guion",
@@ -729,10 +720,16 @@
       "render": "Render",
       "ready": "Listo"
     },
+    "theme": {
+      "label": "Tema",
+      "light": "Claro",
+      "system": "Sistema",
+      "dark": "Oscuro"
+    },
     "subjects": {
       "product": "Producto",
       "host": "Anfitrión",
-      "scene": "escena"
+      "scene": "Escena"
     },
     "error": {
       "title": "Algo salió mal.",
@@ -756,20 +753,14 @@
     },
     "toaster": {
       "dismiss": "Descartar notificación"
-    },
-    "theme": {
-      "label": "Tema",
-      "light": "Claro",
-      "system": "Sistema",
-      "dark": "Oscuro"
     }
   },
   "auth": {
     "layout": {
-      "heroTitle": "Desde el enlace del producto hasta el vídeo que detiene el desplazamiento, en cuestión de minutos.",
-      "benefitScripts": "Guiones basados en patrones virales reales",
       "benefitReview": "Revisa cada toma antes de renderizar",
-      "benefitPublish": "5 relaciones de aspecto para cada plataforma"
+      "benefitPublish": "5 relaciones de aspecto para cada plataforma",
+      "heroTitle": "Desde el enlace del producto hasta el vídeo que detiene el desplazamiento, en cuestión de minutos.",
+      "benefitScripts": "Guiones basados en patrones virales reales"
     },
     "metadata": {
       "signIn": "Iniciar sesión",
@@ -788,8 +779,8 @@
       "invalidPhone": "Ingrese un número de teléfono válido.",
       "sendCode": "Enviar código",
       "sendCodeFailed": "No se pudo enviar el código.",
-      "phoneUnavailable": "El inicio de sesión por teléfono no está disponible en este sitio. Continúa con Google para empezar.",
-      "phoneUnavailableHint": "La entrega por SMS aún no está configurada. El inicio de sesión con Google está disponible ahora.",
+      "phoneUnavailable": "El inicio de sesión por teléfono no está disponible en este sitio. Continúe con Google para comenzar.",
+      "phoneUnavailableHint": "La entrega de SMS aún no está configurada. El inicio de sesión de Google ya está disponible.",
       "phoneUnavailableLabel": "Teléfono no disponible",
       "codePlaceholder": "código de 6 dígitos",
       "verificationCodeLabel": "Código de verificación",
@@ -803,6 +794,526 @@
     }
   },
   "marketing": {
+    "header": {
+      "startFreeMobile": "Empieza",
+      "signIn": "Iniciar sesión",
+      "startFree": "Empieza gratis",
+      "openStudio": "Estudio abierto"
+    },
+    "footer": {
+      "columns": {
+        "workflow": {
+          "beatReview": "Revisión del storyboard",
+          "title": "Flujo de trabajo",
+          "linkToVideo": "Enlace al vídeo",
+          "patternScripts": "Guiones de patrones",
+          "publish": "Publicar"
+        },
+        "product": {
+          "title": "Producto",
+          "features": "Características",
+          "models": "Modelos",
+          "pricing": "Precios"
+        },
+        "company": {
+          "title": "Empresa",
+          "about": "Acerca de",
+          "blog": "Blog",
+          "careers": "Carreras",
+          "contact": "Contacto"
+        },
+        "legal": {
+          "title": "Legales",
+          "privacy": "Privacidad",
+          "terms": "Términos",
+          "refunds": "Reembolsos"
+        }
+      },
+      "tagline": "Enlaces de productos entrantes. Salida de vídeo listo para publicar. Basado en los patrones que ya se venden.",
+      "copyright": "© {year} Sellcast. Lumi es un producto Sellcast.",
+      "madeFor": "Hecho para vendedores que prefieren vender que filmar.",
+      "signIn": "Iniciar sesión"
+    },
+    "faq": {
+      "a3": "Sí. Tu guion llega como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te gusten, regenera las que no por 1 crédito cada una, y solo cuando apruebas el render completo gasta créditos.",
+      "a4": "Hoy Seedance 2.0 renderiza tu video. Seedance 2.0 Fast y 2.0 Mini se suman pronto al selector de Studio, y Seedance 2.5 después: tus guiones y storyboards aprobados se conservan cuando lleguen.",
+      "q1": "¿En qué se diferencia Lumi de las herramientas genéricas de vídeo de IA?",
+      "a1": "Lumi no adivina. Antes de escribir una sola línea, estudia una gran muestra de productos reales y orgánicos de alto rendimiento en la categoría de su producto y extrae el patrón estructural: formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en ese patrón, no en una página en blanco.",
+      "q2": "¿Necesito filmar algo o estar frente a la cámara?",
+      "a2": "No. Lumi crea una presentación limpia exclusiva del producto: genera las imágenes y la voz en off de un extremo a otro de su producto, por lo que no es necesario filmar nada.",
+      "q3": "¿Puedo revisar el vídeo antes de que esté completamente renderizado?",
+      "q4": "¿Qué modelo de vídeo utiliza Lumi?",
+      "q5": "¿De dónde provienen los datos del producto?",
+      "a5": "Pegue un enlace de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue sus propias fotos de productos, y Lumi leerá el título, la descripción y las imágenes a partir de las cuales construir. Sus productos permanecen privados para usted.",
+      "q6": "¿Cuánto tiempo dura un vídeo?",
+      "a6": "Lumi guiones, guiones gráficos y renderizados sin que usted filme ni edite: lo inicia y regresa a un corte terminado y listo para publicar. La búsqueda de patrones para una categoría se almacena en caché, por lo que los vídeos posteriores de esa categoría comienzan aún más rápido."
+    },
+    "pricing": {
+      "tiers": {
+        "free": {
+          "credits": "300 créditos, una sola vez",
+          "features": [
+            "Exportación 720p · 5 relaciones de aspecto",
+            "Importación por enlace de producto",
+            "Revisión del storyboard",
+            "Marca de agua Lumi"
+          ],
+          "name": "Gratis",
+          "note": "sin tarjeta",
+          "allowance": "Tu primer vídeo gratis",
+          "cta": "Empieza gratis"
+        },
+        "creator": {
+          "credits": "900 créditos / mes",
+          "features": [
+            "Sin marca de agua",
+            "Revisión del storyboard",
+            "Exportación 720p · 5 relaciones de aspecto"
+          ],
+          "name": "Creador",
+          "note": "por mes",
+          "allowance": "≈ 3 vídeos / mes",
+          "cta": "Iniciar creador"
+        },
+        "pro": {
+          "credits": "3.000 créditos / mes",
+          "name": "profesional",
+          "note": "por mes",
+          "allowance": "≈ 10 vídeos/mes",
+          "features": [
+            "Todo en Creador",
+            "Más créditos, mismo costo por video",
+            "Prioridad sobre renderizados gratuitos"
+          ],
+          "cta": "Iniciar profesional"
+        },
+        "scale": {
+          "credits": "7.500 créditos / mes",
+          "name": "Escala",
+          "note": "por mes",
+          "allowance": "≈ 25 vídeos/mes",
+          "features": [
+            "Todo en Pro",
+            "Para publicar siempre",
+            "Mayor volumen de autoservicio"
+          ],
+          "cta": "Escala inicial"
+        },
+        "enterprise": {
+          "name": "Empresa",
+          "priceLabel": "hablemos",
+          "note": "para equipos y agencias",
+          "allowance": "Volumen de crédito personalizado",
+          "credits": "tarifa comprometida, mayorista",
+          "features": [
+            "Asientos y roles",
+            "kits de marca",
+            "Acceso API",
+            "SSO y soporte dedicado"
+          ],
+          "cta": "Contactar con ventas"
+        }
+      },
+      "creditFootnote": "Los créditos reflejan el costo real del render: el costo exacto de un video depende del modelo, la resolución y la relación de aspecto que elijas. Los conteos de videos son aproximados, basados en clips de 20 segundos con Seedance 2.0 a 720p (300 créditos cada uno).",
+      "included": [
+        "Guiones basados en patrones reales",
+        "Revisión del storyboard antes de gastar",
+        "5 relaciones de aspecto para cada plataforma",
+        "Pega cualquier enlace de producto o sube fotos del producto"
+      ],
+      "faq": {
+        "a1": "Los créditos reflejan el costo real de renderizado de tu video. El costo exacto depende del modelo, la resolución y la relación de aspecto que elijas: un clip de 20 segundos con Seedance 2.0 a 720p cuesta 300 créditos, y los ajustes más ligeros cuestan menos.",
+        "a2": "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo de créditos que tu render final.",
+        "a3": "Los créditos de los planes de pago se renuevan al inicio de cada ciclo de facturación; la asignación gratuita de registro es única y no se renueva. El pago autoservicio aún no está disponible - para subir a una asignación mensual mayor, escribe a {address} y lo configuramos.",
+        "a5": "Hoy el modelo de renderizado en Studio es Seedance 2.0. Seedance 2.0 Fast y 2.0 Mini se suman al selector muy pronto, para cuando importan más la velocidad y el costo, y Seedance 2.5 después.",
+        "q1": "¿Qué es un crédito?",
+        "q2": "¿Las regeneraciones cuestan créditos?",
+        "q3": "¿Qué pasa si me quedo sin créditos?",
+        "q4": "¿Puedo cambiar de plan en cualquier momento?",
+        "a4": "Sí. Mientras se crea el pago de autoservicio, los cambios de plan se manejan por correo electrónico; escriba a {address}. Ahorro anual ~20% respecto al mes.",
+        "q5": "¿Qué modelo de renderizado utiliza Lumi?"
+      },
+      "header": {
+        "kicker": "Precios",
+        "title": "Empieza gratis. Escalar cuando",
+        "highlight": "está funcionando.",
+        "subtitle": "Para empezar, no hay tarjeta de crédito. Cancele en cualquier momento. La facturación anual ahorra alrededor del 20%."
+      },
+      "billing": {
+        "monthly": "Mensual",
+        "annual": "Anual"
+      },
+      "mostPopular": "mas popular",
+      "perMonthYearly": "/mes · facturado anualmente",
+      "everyPlanIncludes": "Cada plan incluye",
+      "billingQuestions": "Preguntas sobre facturación",
+      "upgrade": {
+        "cta": "Actualizar",
+        "title": "La facturación aún no es de autoservicio",
+        "body": "El pago en línea aún se está construyendo, por lo que aún no se pueden comprar planes en el sitio. Para mudarse a {plan}, envíenos un correo electrónico y lo configuraremos por usted.",
+        "contact": "Correo electrónico {address}",
+        "subject": "Actualizar a {plan}"
+      }
+    },
+    "landing": {
+      "heroSubtitle": "Pega un enlace. Lumi aprende el patrón detrás de los videos más exitosos de tu categoría y escribe tu guion como un storyboard de tomas. Revisa y aprueba cada toma: el render completo solo gasta créditos cuando tú lo autorizas.",
+      "heroFinePrint": "Primer video gratis · Sin tarjeta · 5 relaciones de aspecto",
+      "marquee": {
+        "seedance": "Seedance 2.0",
+        "review": "Revisión del storyboard",
+        "ratio": "5 relaciones de aspecto",
+        "languages": "8 idiomas de voz en off",
+        "productOnly": "Modo solo producto",
+        "qa": "Control de calidad del diálogo automático",
+        "vibes": "5 vibraciones distintivas",
+        "sources": "Amazon · Tienda · TikTok Tienda",
+        "durations": "Cortes de 10 a 30 segundos"
+      },
+      "why": {
+        "review": {
+          "body": "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera hasta que te convenza — cada regeneración cuesta 1 crédito, y el render completo solo gasta créditos cuando das el visto bueno.",
+          "caption": "Tu llamada, antes del render.",
+          "uiHeading": "Revisión del guión gráfico",
+          "uiSpend": "$0 gastados hasta ahora",
+          "uiRegenerate": "regenerar"
+        },
+        "pattern": {
+          "body": "Antes de escribir una línea, Lumi deconstruye alrededor de cien de los vídeos con mejor rendimiento de su categoría y mantiene la estructura que convierte.",
+          "caption": "El guión se escribe solo, a partir de la evidencia.",
+          "uiHeading": "Extracto de patrón",
+          "uiSample": "~100 vídeos · Belleza",
+          "uiHook": "Gancho: reclama primero",
+          "uiProof": "Prueba: muéstralo funcionando",
+          "uiOffer": "Oferta - pregunta clara"
+        },
+        "reach": {
+          "body": "Cinco vibraciones, ocho idiomas de locución. El mismo enlace de producto viaja a todos los lugares donde vende.",
+          "caption": "Vende en ocho idiomas a la vez.",
+          "uiVibe": "Premium y limpio"
+        }
+      },
+      "storySteps": {
+        "approve": {
+          "body": "Cada toma recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno.",
+          "title": "Apruebas el guión gráfico."
+        },
+        "render": {
+          "body": "El control de calidad automático verifica cada línea hablada contra el guion, y el corte queda listo para publicar en la relación de aspecto que elegiste.",
+          "title": "Seedance lo renderiza"
+        },
+        "link": {
+          "title": "Empezar desde cualquier enlace",
+          "body": "Amazon, Shopee, TikTok Shop o su propia tienda, o fotografías directamente desde el carrete de su cámara."
+        },
+        "learn": {
+          "title": "Lumi aprende el patrón",
+          "body": "Estudia alrededor de cien de los vídeos con mejor rendimiento de la categoría y extrae la estructura que convierte: gancho, prueba, oferta."
+        }
+      },
+      "storyFact2": "Los créditos reflejan el costo real del render",
+      "wallSubtitle": "Cada video de Lumi sale con voz hablada en la relación de aspecto que elijas, con guion y voz adaptados a cada mercado.",
+      "pricingSubtitle": "Basado en créditos: los créditos reflejan el costo real del render, así que los ajustes más ligeros cuestan menos. Tu primer video es gratis, sin tarjeta.",
+      "pricingTiers": {
+        "creator": {
+          "features": [
+            "900 créditos — unos 3 videos",
+            "Sin marca de agua",
+            "Revisión del storyboard"
+          ],
+          "name": "Creador",
+          "price": "$29",
+          "note": "/ mes"
+        },
+        "pro": {
+          "features": [
+            "3.000 créditos — unos 10 videos",
+            "Todo lo de Creator",
+            "Renderizado prioritario",
+            "Exportación 720p · 5 relaciones de aspecto"
+          ],
+          "name": "profesional",
+          "price": "$79",
+          "note": "/ mes"
+        },
+        "scale": {
+          "features": [
+            "7.500 créditos — unos 25 videos",
+            "Todo lo de Pro",
+            "Hecho para publicar sin parar"
+          ],
+          "name": "Escala",
+          "price": "$199",
+          "note": "/ mes"
+        }
+      },
+      "seePlans": "Ver planes",
+      "heroTitle": "Convierta cualquier enlace de producto en <highlight>video que vende.</highlight>",
+      "heroPrimary": "Crea tu primer vídeo",
+      "heroSecondary": "Mira como funciona",
+      "sound": {
+        "unmute": "Dejar de silenciar el vídeo de presentación",
+        "mute": "Silenciar vídeo de presentación"
+      },
+      "pipeline": {
+        "stageLabel": "Estudio Lumi",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "leyendo el producto",
+        "pattern": "Aprendido de ~100 videos destacados de Belleza",
+        "productName": "Suero Resplandor 30 ml",
+        "productMeta": "$24 · Belleza",
+        "beats": {
+          "hook": {
+            "label": "Gancho",
+            "line": "Detiene el desplazamiento en el primer segundo."
+          },
+          "proof": {
+            "label": "Prueba",
+            "line": "Muestra que el suero realmente funciona."
+          },
+          "offer": {
+            "label": "oferta",
+            "line": "Precio en pantalla. Pregunta clara."
+          }
+        },
+        "approve": "Aprobar",
+        "approved": "Aprobado",
+        "rendering": "Renderizado con Seedance 2.0",
+        "rendered": "Renderizado",
+        "shopNow": "Compra ahora"
+      },
+      "whyTitle": "Construido sobre <highlight>lo que ya funciona</highlight>",
+      "whySubtitle": "No es un lienzo en blanco. Lumi parte de los patrones que tu categoría ya premia y te mantiene a cargo de cada fotograma.",
+      "storyTitle": "Desde el enlace del producto <highlight> al video en vivo</highlight>",
+      "storyFact1": "Gasto de renderizado de $0 hasta que lo apruebes",
+      "wallTitle": "Cada categoría, <highlight>cada mercado</highlight>",
+      "wallAudience": "Creado para vendedores, creadores, marcas y agencias: cualquiera que venda con video.",
+      "wall": {
+        "beauty": {
+          "category": "belleza",
+          "vibe": "Premium y limpio"
+        },
+        "gadgets": {
+          "category": "artilugios",
+          "vibe": "Audaz y contundente"
+        },
+        "home": {
+          "category": "Hogar y cocina",
+          "vibe": "Demostración limpia"
+        },
+        "pets": {
+          "category": "Mascotas",
+          "vibe": "divertido y rápido"
+        },
+        "fashion": {
+          "category": "Moda",
+          "vibe": "Acogedor y personal"
+        },
+        "fitness": {
+          "category": "aptitud",
+          "vibe": "Audaz y contundente"
+        }
+      },
+      "pricingTitle": "Empieza gratis. <highlight>Escale cuando funcione.</highlight>",
+      "mostPopular": "mas popular",
+      "pricingFooter": "Su primer video <signup> es gratis</signup>, no se requiere tarjeta. <plans>Comparar todos los planes →</plans>",
+      "faqTitle": "Preguntas, <highlight> respondidas</highlight>",
+      "finalCtaTitle": "Su próximo éxito de ventas es <highlight>on enlace de distancia.</highlight>",
+      "finalCtaSubtitle": "Haz tu primer vídeo gratis. Sin cámara, sin editor, sin página en blanco.",
+      "finalCtaPrimary": "Crea tu primer vídeo",
+      "finalCtaSecondary": "Ver precios"
+    },
+    "features": {
+      "rows": {
+        "scripts": {
+          "bullets": [
+            "Aprende la estructura de los ganadores orgánicos filtrados en su categoría",
+            "Takes de gancho / prueba / oferta, no una ejecución copiada y pegada",
+            "Lenguaje de la audiencia modelado a partir de aquellos con mejor desempeño"
+          ],
+          "kicker": "Guión",
+          "title": "Guiones basados en patrones",
+          "body": "Antes de escribir una palabra, Lumi estudia una gran muestra de productos orgánicos y reales de alto rendimiento en la categoría de su producto y extrae el patrón estructural: las formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en eso, nunca en una página en blanco."
+        },
+        "review": {
+          "title": "Revisión del storyboard",
+          "body": "Lumi escribe tu guion como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te encantan, regenera las que no por 1 crédito cada una — y solo cuando apruebas, el render completo gasta créditos.",
+          "bullets": [
+            "Un fotograma de referencia por toma antes de gastar en renders",
+            "Regenera tomas sueltas por 1 crédito cada una",
+            "El render completo espera tu aprobación"
+          ],
+          "kicker": "controlar"
+        },
+        "modes": {
+          "bullets": [
+            "4 estilos pensados para el comercio",
+            "Duraciones de 10–30 segundos, 5 relaciones de aspecto"
+          ],
+          "kicker": "Formato",
+          "title": "Exposición exclusiva de productos",
+          "body": "Un corte limpio, dirigido por el producto, sin presentador para filmar: cuatro estilos listos para usar que abarcan tomas de presentación nítidas, descripciones destacadas, revelaciones de unboxing y ediciones centradas en la oferta."
+        },
+        "qa": {
+          "body": "Después de que se renderiza cada toma, Whisper transcribe la línea hablada y la compara con el guion, marcando cualquier desvío. La voz siempre dice lo que debe decir, sin sorpresas fuera del guion.",
+          "kicker": "Calidad",
+          "title": "Control de calidad del diálogo automático",
+          "bullets": [
+            "Transcripción susurrada en cada línea renderizada",
+            "Puntuación de deriva según el guión previsto",
+            "Capta audio fuera del guión antes de publicar"
+          ]
+        },
+        "publish": {
+          "body": "Elige entre 5 relaciones de aspecto en Studio — 9:16 para TikTok y Reels, 16:9, 1:1, 4:3 o 3:4 — luego descarga o marca como publicado, para que tus estadísticas sigan ordenadas.",
+          "bullets": [
+            "Exportación lista para publicar en 5 relaciones de aspecto",
+            "Sigue publicados vs. borradores en Mis Videos"
+          ],
+          "kicker": "barco",
+          "title": "Exportación lista para publicar"
+        },
+        "linkToVideo": {
+          "kicker": "Fuente",
+          "title": "Enlace al vídeo",
+          "body": "Pegue el enlace de un producto de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue fotos. Lumi lee el producto, su ángulo y sus puntos de prueba, luego maneja el encuadre, el guión, la voz y la edición automáticamente. Sus productos permanecen privados para usted.",
+          "bullets": [
+            "Cualquier enlace: Amazon, Shopee, TikTok Shop o su propia tienda",
+            "O sube tus propias fotos de producto"
+          ]
+        }
+      },
+      "header": {
+        "kicker": "Características",
+        "title": "Todo el flujo de trabajo del vídeo,",
+        "highlight": "manejado.",
+        "subtitle": "Desde la obtención del producto hasta un corte listo para publicar, sin necesidad de unir cinco herramientas."
+      },
+      "pipeline": {
+        "find": "encontrar",
+        "deconstruct": "Deconstruir",
+        "script": "Guión",
+        "generate": "generar"
+      }
+    },
+    "models": {
+      "header": {
+        "subtitle": "Hoy Studio renderiza con Seedance 2.0; el resto de la familia se suma al selector a medida que llega, y tus guiones se conservan.",
+        "kicker": "Modelos",
+        "title": "Un estudio, la frontera de",
+        "highlight": "vídeo IA."
+      },
+      "cards": {
+        "seedance": {
+          "tag": "Disponible",
+          "desc": "El insignia: el movimiento más realista para tomas de producto, hasta 1080p, con audio generado por toma.",
+          "bestFor": [
+            "Máxima calidad",
+            "Hasta 1080p",
+            "Audio por toma"
+          ],
+          "name": "Seedance 2.0"
+        },
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "Próximamente",
+          "desc": "La misma familia ajustada para velocidad — renders más rápidos a un menor costo en créditos, hasta 720p. Se suma al selector muy pronto.",
+          "bestFor": [
+            "Velocidad",
+            "Menor costo",
+            "Hasta 720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "Próximamente",
+          "desc": "El nivel más ligero — borradores e iteraciones al menor costo en créditos por render, hasta 720p. Se suma al selector muy pronto.",
+          "bestFor": [
+            "Borradores",
+            "Costo mínimo",
+            "Hasta 720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "Próximamente",
+          "desc": "La próxima generación se une al selector en cuanto esté disponible en nuestro proveedor de render. Tus guiones y storyboards aprobados se conservan sin rehacer nada.",
+          "bestFor": [
+            "Hoja de ruta",
+            "Sin rehacer"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "Ajustado por toma",
+          "body": "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo: nunca tienes que pelear con ajustes del modelo."
+        },
+        "carriesOver": {
+          "body": "Los guiones y los storyboards aprobados no dependen del modelo. Cuando llega uno nuevo, tus videos pueden usarlo sin rehacer nada.",
+          "title": "Tu trabajo se traslada"
+        },
+        "oneBill": {
+          "title": "Un estudio, una factura",
+          "body": "No es necesario hacer malabarismos con cuentas de modelos o créditos separados: todo está dentro de Lumi."
+        }
+      },
+      "ctaTitle": "Renderice con los mejores modelos, sin el trabajo complicado."
+    },
+    "about": {
+      "intro2": "Lumi toma otro camino. Antes de escribir un guion, estudia una amplia muestra de los éxitos orgánicos reales de la categoría de tu producto y aprende la <em>estructura</em> que convierte — luego escribe, storyboarda y renderiza un video que revisas toma por toma y publicas en minutos.",
+      "values": {
+        "control": {
+          "body": "Revisa el storyboard toma por toma. El render completo solo gasta créditos tras tu visto bueno.",
+          "title": "Mantienes el control"
+        },
+        "grounded": {
+          "title": "Basado, sin adivinar",
+          "body": "Aprendemos de lo que realmente se convierte en una categoría antes de generar algo."
+        },
+        "quality": {
+          "title": "Calidad sobre volumen",
+          "body": "Creativos con sensación nativa que detienen el desplazamiento, no rellenos genéricos de IA."
+        },
+        "sellers": {
+          "title": "Creado para vendedores",
+          "body": "Creado para personas que prefieren vender que filmar: desde creadores en solitario hasta agencias."
+        }
+      },
+      "header": {
+        "kicker": "Acerca de",
+        "title": "Te ayudamos a vender con vídeo.",
+        "highlight": "sin el estudio.",
+        "subtitle": "Lumi es un producto Sellcast. Convertimos cualquier producto en un video de compra que te dejará sin aliento, basado en lo que ya está ganando."
+      },
+      "intro1": "Los videos de formato corto son el escaparate ahora, pero la mayoría de los vendedores no tienen tiempo para filmar, editar y probar hasta encontrar un ganador. Las herramientas genéricas de IA llenan el vacío con contenido que parece IA.",
+      "contact": "¿Quiere hablar sobre asociaciones, prensa o empresas? <email>hello@sellcast.ai</email>"
+    },
+    "metadata": {
+      "features": {
+        "description": "Todo lo que Lumi hace: de enlace a video, guiones basados en patrones, revisión del storyboard, formatos solo de producto, control de diálogo y exportación lista para publicar en 5 relaciones de aspecto.",
+        "title": "Características"
+      },
+      "models": {
+        "description": "Hoy Studio renderiza con Seedance 2.0, y 2.0 Fast, 2.0 Mini y Seedance 2.5 se sumarán al selector. Cada toma recibe los ajustes que mejor la renderizan.",
+        "title": "Modelos"
+      },
+      "pricing": {
+        "description": "Empieza gratis y escala cuando funcione. El precio de Lumi se basa en créditos: los créditos reflejan el costo real del render, y los ajustes más ligeros cuestan menos. Free (primer video), Creator, Pro, Scale y Enterprise. Sin tarjeta para empezar; el plan anual ahorra ~20%.",
+        "title": "Precios"
+      },
+      "about": {
+        "title": "Acerca de",
+        "description": "Lumi es un producto Sellcast que ayuda a vendedores y creadores a convertir productos en videos que permiten comprar y que se pueden desplazar, basados en patrones virales reales."
+      },
+      "blog": {
+        "title": "Blog"
+      },
+      "careers": {
+        "title": "Carreras"
+      }
+    },
     "legal": {
       "kicker": "Legales",
       "lastUpdated": "Última actualización el 1 de junio de 2026",
@@ -833,7 +1344,7 @@
         },
         "billing": {
           "heading": "Suscripciones y facturación",
-          "body": "Los planes pagos se facturan por adelantado de forma recurrente. Puedes cambiar o cancelar en cualquier momento; consulte nuestra <refunds>Política de reembolsos</refunds> para más detalles."
+          "body": "Los planes pagos se facturan por adelantado de forma recurrente. Puedes cambiar o cancelar en cualquier momento; consulte nuestra <refunds>Política de reembolsos</refunds> para obtener más detalles."
         },
         "disclaimers": {
           "heading": "Descargos de responsabilidad",
@@ -934,507 +1445,11 @@
         }
       }
     },
-    "header": {
-      "signIn": "Iniciar sesión",
-      "startFree": "Empieza gratis",
-      "openStudio": "Abrir Studio",
-      "startFreeMobile": "Empieza"
-    },
-    "footer": {
-      "tagline": "Entra un enlace de producto. Sale un video listo para publicar. Basado en los patrones que ya venden.",
-      "columns": {
-        "product": {
-          "title": "Producto",
-          "features": "Características",
-          "models": "Modelos",
-          "pricing": "Precios"
-        },
-        "workflow": {
-          "title": "Flujo de trabajo",
-          "linkToVideo": "Enlace al vídeo",
-          "patternScripts": "Guiones de patrones",
-          "beatReview": "Revisión del storyboard",
-          "publish": "Publicar"
-        },
-        "company": {
-          "title": "Empresa",
-          "about": "Acerca de",
-          "blog": "Blog",
-          "careers": "Carreras",
-          "contact": "Contacto"
-        },
-        "legal": {
-          "title": "Legales",
-          "privacy": "Privacidad",
-          "terms": "Términos",
-          "refunds": "Reembolsos"
-        }
-      },
-      "copyright": "© {year} Sellcast. Lumi es un producto Sellcast.",
-      "madeFor": "Hecho para vendedores que prefieren vender que filmar.",
-      "signIn": "Iniciar sesión"
-    },
     "cta": {
       "title": "Su próximo éxito de ventas está a un enlace de producto de distancia.",
       "subtitle": "Crea tu primer vídeo que detiene el desplazamiento de forma gratuita: sin cámara, sin editor ni página en blanco.",
       "primaryLabel": "Empieza a crear gratis",
       "seePricing": "Ver precios"
-    },
-    "faq": {
-      "q1": "¿En qué se diferencia Lumi de las herramientas genéricas de vídeo de IA?",
-      "a1": "Lumi no adivina. Antes de escribir una sola línea, estudia una gran muestra de productos reales y orgánicos de alto rendimiento en la categoría de su producto y extrae el patrón estructural: formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en ese patrón, no en una página en blanco.",
-      "q2": "¿Necesito filmar algo o estar frente a la cámara?",
-      "a2": "No. Lumi crea una presentación limpia solo de producto: genera las imágenes y la voz en off de principio a fin a partir de tu producto, así que no tienes que grabar nada.",
-      "q3": "¿Puedo revisar el vídeo antes de que esté completamente renderizado?",
-      "a3": "Sí. Tu guion llega como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te gusten, regenera las que no por 1 crédito cada una, y solo cuando apruebas el render completo gasta créditos.",
-      "q4": "¿Qué modelo de vídeo utiliza Lumi?",
-      "a4": "Hoy Seedance 2.0 renderiza tu video. Seedance 2.0 Fast y 2.0 Mini se suman pronto al selector de Studio, y Seedance 2.5 después: tus guiones y storyboards aprobados se conservan cuando lleguen.",
-      "q5": "¿De dónde provienen los datos del producto?",
-      "a5": "Pega un enlace de Amazon, Shopee, TikTok Shop o tu propia tienda, o sube tus propias fotos de producto, y Lumi leerá el título, la descripción y las imágenes para construir desde ahí. Tus productos permanecen privados para ti.",
-      "q6": "¿Cuánto tiempo dura un vídeo?",
-      "a6": "Lumi guiones, guiones gráficos y renderizados sin que usted filme o edite: lo inicia y regresa a un montaje terminado y listo para publicar. La búsqueda de patrones para una categoría se almacena en caché, por lo que los vídeos posteriores de esa categoría comienzan aún más rápido."
-    },
-    "pricing": {
-      "header": {
-        "kicker": "Precios",
-        "title": "Empieza gratis. Escalar cuando",
-        "highlight": "está funcionando.",
-        "subtitle": "Para empezar, no hay tarjeta de crédito. Cancele en cualquier momento. La facturación anual ahorra alrededor del 20%."
-      },
-      "billing": {
-        "monthly": "Mensual",
-        "annual": "Anual"
-      },
-      "mostPopular": "mas popular",
-      "perMonthYearly": "/mes · facturado anualmente",
-      "tiers": {
-        "free": {
-          "name": "Gratis",
-          "note": "sin tarjeta",
-          "allowance": "Tu primer vídeo gratis",
-          "credits": "300 créditos, una sola vez",
-          "features": [
-            "Exportación 720p · 5 relaciones de aspecto",
-            "Importación por enlace de producto",
-            "Revisión del storyboard",
-            "Marca de agua Lumi"
-          ],
-          "cta": "Empieza gratis"
-        },
-        "creator": {
-          "name": "Creador",
-          "note": "por mes",
-          "allowance": "≈ 3 vídeos / mes",
-          "credits": "900 créditos / mes",
-          "features": [
-            "Sin marca de agua",
-            "Revisión del storyboard",
-            "Exportación 720p · 5 relaciones de aspecto"
-          ],
-          "cta": "Iniciar creador"
-        },
-        "pro": {
-          "name": "profesional",
-          "note": "por mes",
-          "allowance": "≈ 10 vídeos/mes",
-          "credits": "3.000 créditos / mes",
-          "features": [
-            "Todo en Creador",
-            "Más créditos, mismo costo por video",
-            "Prioridad sobre renderizados gratuitos"
-          ],
-          "cta": "Iniciar profesional"
-        },
-        "scale": {
-          "name": "Escala",
-          "note": "por mes",
-          "allowance": "≈ 25 vídeos/mes",
-          "credits": "7.500 créditos / mes",
-          "features": [
-            "Todo en Pro",
-            "Para publicar siempre",
-            "Mayor volumen de autoservicio"
-          ],
-          "cta": "Escala inicial"
-        },
-        "enterprise": {
-          "name": "Empresa",
-          "priceLabel": "hablemos",
-          "note": "para equipos y agencias",
-          "allowance": "Volumen de crédito personalizado",
-          "credits": "tarifa comprometida, mayorista",
-          "features": [
-            "Asientos y roles",
-            "kits de marca",
-            "Acceso API",
-            "SSO y soporte dedicado"
-          ],
-          "cta": "Contactar con ventas"
-        }
-      },
-      "creditFootnote": "Los créditos reflejan el costo real del render: el costo exacto de un video depende del modelo, la resolución y la relación de aspecto que elijas. Los conteos de videos son aproximados, basados en clips de 20 segundos con Seedance 2.0 a 720p (300 créditos cada uno).",
-      "everyPlanIncludes": "Cada plan incluye",
-      "included": [
-        "Guiones basados en patrones reales",
-        "Revisión del storyboard antes de gastar",
-        "5 relaciones de aspecto para cada plataforma",
-        "Pega cualquier enlace de producto o sube fotos del producto"
-      ],
-      "billingQuestions": "Preguntas sobre facturación",
-      "faq": {
-        "q1": "¿Qué es un crédito?",
-        "a1": "Los créditos reflejan el costo real de renderizado de tu video. El costo exacto depende del modelo, la resolución y la relación de aspecto que elijas: un clip de 20 segundos con Seedance 2.0 a 720p cuesta 300 créditos, y los ajustes más ligeros cuestan menos.",
-        "q2": "¿Las regeneraciones cuestan créditos?",
-        "a2": "Sí: 1 crédito por regeneración. Volver a generar una toma durante la revisión se descuenta del mismo saldo de créditos que tu render final.",
-        "q3": "¿Qué pasa si me quedo sin créditos?",
-        "a3": "Los créditos de los planes de pago se renuevan al inicio de cada ciclo de facturación; la asignación gratuita de registro es única y no se renueva. El pago autoservicio aún no está disponible - para subir a una asignación mensual mayor, escribe a {address} y lo configuramos.",
-        "q4": "¿Puedo cambiar de plan en cualquier momento?",
-        "a4": "Sí. Mientras se desarrolla el pago en línea de autoservicio, los cambios de plan se gestionan por correo - escribe a {address}. El plan anual ahorra ~20% frente al mensual.",
-        "q5": "¿Qué modelo de renderizado utiliza Lumi?",
-        "a5": "Hoy el modelo de renderizado en Studio es Seedance 2.0. Seedance 2.0 Fast y 2.0 Mini se suman al selector muy pronto, para cuando importan más la velocidad y el costo, y Seedance 2.5 después."
-      },
-      "upgrade": {
-        "cta": "Mejorar plan",
-        "title": "La facturación aún no es autoservicio",
-        "body": "El pago en línea aún está en construcción, por lo que los planes todavía no se pueden comprar en el sitio. Para pasar a {plan}, escríbenos y lo configuramos por ti.",
-        "contact": "Enviar correo a {address}",
-        "subject": "Mejora a {plan}"
-      }
-    },
-    "landing": {
-      "heroTitle": "Convierte cualquier enlace de producto en <highlight>video que vende.</highlight>",
-      "heroSubtitle": "Pega un enlace. Lumi aprende el patrón detrás de los videos más exitosos de tu categoría y escribe tu guion como un storyboard de tomas. Revisa y aprueba cada toma: el render completo solo gasta créditos cuando tú lo autorizas.",
-      "heroPrimary": "Crea tu primer video",
-      "heroSecondary": "Ver cómo funciona",
-      "heroFinePrint": "Primer video gratis · Sin tarjeta · 5 relaciones de aspecto",
-      "sound": {
-        "unmute": "Activar el sonido del vídeo de muestra",
-        "mute": "Silenciar el vídeo de muestra"
-      },
-      "pipeline": {
-        "stageLabel": "Lumi Studio",
-        "chipRatio": "9:16",
-        "chipModel": "Seedance 2.0",
-        "url": "yourstore.com/products/glow-serum-30ml",
-        "reading": "Leyendo el producto",
-        "pattern": "Aprendido de ~100 videos top de Belleza",
-        "productName": "Sérum Glow 30 ml",
-        "productMeta": "$24 · Belleza",
-        "beats": {
-          "hook": {
-            "label": "Hook",
-            "line": "Detiene el scroll en el primer segundo."
-          },
-          "proof": {
-            "label": "Prueba",
-            "line": "Muestra el sérum funcionando de verdad."
-          },
-          "offer": {
-            "label": "Oferta",
-            "line": "Precio en pantalla. Llamada clara."
-          }
-        },
-        "approve": "Aprobar",
-        "approved": "Aprobado",
-        "rendering": "Renderizando con Seedance 2.0",
-        "rendered": "Renderizado",
-        "shopNow": "Comprar ahora"
-      },
-      "marquee": {
-        "seedance": "Seedance 2.0",
-        "languages": "8 idiomas de voz en off",
-        "productOnly": "Modo solo producto",
-        "review": "Revisión del storyboard",
-        "qa": "QA automático de diálogo",
-        "ratio": "5 relaciones de aspecto",
-        "vibes": "5 vibes de autor",
-        "sources": "Amazon · Shopee · TikTok Shop",
-        "durations": "Cortes de 10–30 segundos"
-      },
-      "whyTitle": "Construido sobre <highlight>lo que ya funciona</highlight>",
-      "whySubtitle": "Nada de lienzo en blanco. Lumi parte de los patrones que tu categoría ya premia — y te deja al mando de cada fotograma.",
-      "why": {
-        "pattern": {
-          "body": "Antes de escribir una línea, Lumi desmonta alrededor de cien de los videos con mejor rendimiento de tu categoría y conserva la estructura que convierte.",
-          "caption": "El guion se escribe solo — con evidencia.",
-          "uiHeading": "Extracto del patrón",
-          "uiSample": "~100 videos · Belleza",
-          "uiHook": "Hook — la promesa primero",
-          "uiProof": "Prueba — muéstralo funcionando",
-          "uiOffer": "Oferta — petición clara"
-        },
-        "review": {
-          "body": "Cada toma recibe primero un fotograma de referencia. Aprueba, ajusta o regenera hasta que te convenza — cada regeneración cuesta 1 crédito, y el render completo solo gasta créditos cuando das el visto bueno.",
-          "caption": "Tú decides, antes del render.",
-          "uiHeading": "Revisión del storyboard",
-          "uiSpend": "$0 gastados",
-          "uiRegenerate": "Regenerar"
-        },
-        "reach": {
-          "body": "Cinco vibes, ocho idiomas de voz. El mismo enlace de producto viaja a todos tus mercados.",
-          "caption": "Vende en ocho idiomas a la vez.",
-          "uiVibe": "Premium y limpio"
-        }
-      },
-      "storyTitle": "Del enlace de producto <highlight>al video publicado</highlight>",
-      "storySteps": {
-        "link": {
-          "title": "Empieza con cualquier enlace",
-          "body": "Amazon, Shopee, TikTok Shop o tu propia tienda — o fotos directas de tu galería."
-        },
-        "learn": {
-          "title": "Lumi aprende el patrón",
-          "body": "Estudia alrededor de cien de los mejores videos de la categoría y extrae la estructura que convierte: hook, prueba, oferta."
-        },
-        "approve": {
-          "title": "Tú apruebas el storyboard",
-          "body": "Cada toma recibe primero un fotograma de referencia. Regenerar cuesta 1 crédito — el render completo, y su cobro, espera hasta que des tu visto bueno."
-        },
-        "render": {
-          "title": "Seedance lo renderiza",
-          "body": "El control de calidad automático verifica cada línea hablada contra el guion, y el corte queda listo para publicar en la relación de aspecto que elegiste."
-        }
-      },
-      "storyFact1": "$0 de gasto en render hasta que apruebes",
-      "storyFact2": "Los créditos reflejan el costo real del render",
-      "wallTitle": "Cada categoría, <highlight>cada mercado</highlight>",
-      "wallSubtitle": "Cada video de Lumi sale con voz hablada en la relación de aspecto que elijas, con guion y voz adaptados a cada mercado.",
-      "wallAudience": "Hecho para vendedores, creadores, marcas y agencias — cualquiera que venda con video.",
-      "wall": {
-        "beauty": {
-          "category": "Belleza",
-          "vibe": "Premium y limpio"
-        },
-        "gadgets": {
-          "category": "Gadgets",
-          "vibe": "Audaz y directo"
-        },
-        "home": {
-          "category": "Hogar y cocina",
-          "vibe": "Demo limpia"
-        },
-        "pets": {
-          "category": "Mascotas",
-          "vibe": "Divertido y ágil"
-        },
-        "fashion": {
-          "category": "Moda",
-          "vibe": "Cercano y personal"
-        },
-        "fitness": {
-          "category": "Fitness",
-          "vibe": "Audaz y directo"
-        }
-      },
-      "pricingTitle": "Empieza gratis. <highlight>Escala cuando funcione.</highlight>",
-      "pricingSubtitle": "Basado en créditos: los créditos reflejan el costo real del render, así que los ajustes más ligeros cuestan menos. Tu primer video es gratis, sin tarjeta.",
-      "mostPopular": "mas popular",
-      "pricingTiers": {
-        "creator": {
-          "name": "Creador",
-          "price": "$29",
-          "note": "/ mes",
-          "features": [
-            "900 créditos — unos 3 videos",
-            "Sin marca de agua",
-            "Revisión del storyboard"
-          ]
-        },
-        "pro": {
-          "name": "profesional",
-          "price": "$79",
-          "note": "/ mes",
-          "features": [
-            "3.000 créditos — unos 10 videos",
-            "Todo lo de Creator",
-            "Renderizado prioritario",
-            "Exportación 720p · 5 relaciones de aspecto"
-          ]
-        },
-        "scale": {
-          "name": "Escala",
-          "price": "$199",
-          "note": "/ mes",
-          "features": [
-            "7.500 créditos — unos 25 videos",
-            "Todo lo de Pro",
-            "Hecho para publicar sin parar"
-          ]
-        }
-      },
-      "seePlans": "Ver planes",
-      "pricingFooter": "Tu <signup>primer video es gratis</signup> — sin tarjeta. <plans>Compara todos los planes →</plans>",
-      "faqTitle": "Preguntas, <highlight>respondidas</highlight>",
-      "finalCtaTitle": "Tu próximo superventas está a <highlight>un enlace de distancia.</highlight>",
-      "finalCtaSubtitle": "Haz tu primer video gratis. Sin cámara, sin editor, sin página en blanco.",
-      "finalCtaPrimary": "Crea tu primer video",
-      "finalCtaSecondary": "Ver precios"
-    },
-    "features": {
-      "header": {
-        "kicker": "Características",
-        "title": "Todo el flujo de trabajo del vídeo,",
-        "highlight": "manejado.",
-        "subtitle": "Desde la obtención del producto hasta un corte listo para publicar, sin necesidad de unir cinco herramientas."
-      },
-      "pipeline": {
-        "find": "encontrar",
-        "deconstruct": "Deconstruir",
-        "script": "Guión",
-        "generate": "generar"
-      },
-      "rows": {
-        "linkToVideo": {
-          "kicker": "Fuente",
-          "title": "Enlace al vídeo",
-          "body": "Pegue el enlace de un producto de Amazon, Shopee, TikTok Shop o su propia tienda, o cargue fotos. Lumi lee el producto, su ángulo y sus puntos de prueba, luego maneja el encuadre, el guión, la voz y la edición automáticamente. Sus productos permanecen privados para usted.",
-          "bullets": [
-            "Cualquier enlace: Amazon, Shopee, TikTok Shop o su propia tienda",
-            "O sube tus propias fotos de producto"
-          ]
-        },
-        "scripts": {
-          "kicker": "Guión",
-          "title": "Guiones basados en patrones",
-          "body": "Antes de escribir una palabra, Lumi estudia una gran muestra de productos orgánicos y reales de alto rendimiento en la categoría de su producto y extrae el patrón estructural: las formas de gancho, prueba y CTA que realmente convierten. Su guión se basa en eso, nunca en una página en blanco.",
-          "bullets": [
-            "Aprende la estructura de los ganadores orgánicos filtrados en su categoría",
-            "Takes de gancho / prueba / oferta, no una ejecución copiada y pegada",
-            "Lenguaje de la audiencia modelado a partir de aquellos con mejor desempeño"
-          ]
-        },
-        "review": {
-          "kicker": "controlar",
-          "title": "Revisión del storyboard",
-          "body": "Lumi escribe tu guion como un storyboard de tomas, cada una con un fotograma de referencia generado primero. Aprueba las tomas que te encantan, regenera las que no por 1 crédito cada una — y solo cuando apruebas, el render completo gasta créditos.",
-          "bullets": [
-            "Un fotograma de referencia por toma antes de gastar en renders",
-            "Regenera tomas sueltas por 1 crédito cada una",
-            "El render completo espera tu aprobación"
-          ]
-        },
-        "modes": {
-          "kicker": "Formato",
-          "title": "Presentación solo de producto",
-          "body": "Un corte limpio centrado en el producto, sin presentador que grabar: cuatro estilos listos para usar que abarcan tomas de presentación nítidas, resaltado de características, unboxings y cortes centrados en la oferta.",
-          "bullets": [
-            "4 estilos pensados para el comercio",
-            "Duraciones de 10–30 segundos, 5 relaciones de aspecto"
-          ]
-        },
-        "qa": {
-          "kicker": "Calidad",
-          "title": "Control de calidad del diálogo automático",
-          "body": "Después de que se renderiza cada toma, Whisper transcribe la línea hablada y la compara con el guion, marcando cualquier desvío. La voz siempre dice lo que debe decir, sin sorpresas fuera del guion.",
-          "bullets": [
-            "Transcripción susurrada en cada línea renderizada",
-            "Puntuación de deriva según el guión previsto",
-            "Capta audio fuera del guión antes de publicar"
-          ]
-        },
-        "publish": {
-          "kicker": "Publicar",
-          "title": "Exportación lista para publicar",
-          "body": "Elige entre 5 relaciones de aspecto en Studio — 9:16 para TikTok y Reels, 16:9, 1:1, 4:3 o 3:4 — luego descarga o marca como publicado, para que tus estadísticas sigan ordenadas.",
-          "bullets": [
-            "Exportación lista para publicar en 5 relaciones de aspecto",
-            "Sigue publicados vs. borradores en Mis Videos"
-          ]
-        }
-      }
-    },
-    "models": {
-      "header": {
-        "kicker": "Modelos",
-        "title": "Un estudio, la frontera de",
-        "highlight": "vídeo IA.",
-        "subtitle": "Hoy Studio renderiza con Seedance 2.0; el resto de la familia se suma al selector a medida que llega, y tus guiones se conservan."
-      },
-      "cards": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "Disponible",
-          "desc": "El insignia: el movimiento más realista para tomas de producto, hasta 1080p, con audio generado por toma.",
-          "bestFor": [
-            "Máxima calidad",
-            "Hasta 1080p",
-            "Audio por toma"
-          ]
-        },
-        "fast": {
-          "name": "Seedance 2.0 Fast",
-          "tag": "Próximamente",
-          "desc": "La misma familia ajustada para velocidad — renders más rápidos a un menor costo en créditos, hasta 720p. Se suma al selector muy pronto.",
-          "bestFor": [
-            "Velocidad",
-            "Menor costo",
-            "Hasta 720p"
-          ]
-        },
-        "mini": {
-          "name": "Seedance 2.0 Mini",
-          "tag": "Próximamente",
-          "desc": "El nivel más ligero — borradores e iteraciones al menor costo en créditos por render, hasta 720p. Se suma al selector muy pronto.",
-          "bestFor": [
-            "Borradores",
-            "Costo mínimo",
-            "Hasta 720p"
-          ]
-        },
-        "seedance25": {
-          "name": "Seedance 2.5",
-          "tag": "Próximamente",
-          "desc": "La próxima generación se une al selector en cuanto esté disponible en nuestro proveedor de render. Tus guiones y storyboards aprobados se conservan sin rehacer nada.",
-          "bestFor": [
-            "Hoja de ruta",
-            "Sin rehacer"
-          ]
-        }
-      },
-      "points": {
-        "tuned": {
-          "title": "Ajustado por toma",
-          "body": "Lumi ajusta movimiento, duración y encuadre por toma para que cada una rinda al máximo: nunca tienes que pelear con ajustes del modelo."
-        },
-        "carriesOver": {
-          "title": "Tu trabajo se traslada",
-          "body": "Los guiones y los storyboards aprobados no dependen del modelo. Cuando llega uno nuevo, tus videos pueden usarlo sin rehacer nada."
-        },
-        "oneBill": {
-          "title": "Un estudio, una factura",
-          "body": "No es necesario hacer malabarismos con cuentas de modelos o créditos separados: todo está dentro de Lumi."
-        }
-      },
-      "ctaTitle": "Renderice con los mejores modelos, sin el trabajo complicado."
-    },
-    "about": {
-      "header": {
-        "kicker": "Acerca de",
-        "title": "Te ayudamos a vender con vídeo.",
-        "highlight": "sin el estudio.",
-        "subtitle": "Lumi es un producto Sellcast. Convertimos cualquier producto en un video de compra que te dejará sin aliento, basado en lo que ya está ganando."
-      },
-      "intro1": "Los videos de formato corto son el escaparate ahora, pero la mayoría de los vendedores no tienen tiempo para filmar, editar y probar hasta encontrar un ganador. Las herramientas genéricas de IA llenan el vacío con contenido que parece IA.",
-      "intro2": "Lumi toma otro camino. Antes de escribir un guion, estudia una amplia muestra de los éxitos orgánicos reales de la categoría de tu producto y aprende la <em>estructura</em> que convierte — luego escribe, storyboarda y renderiza un video que revisas toma por toma y publicas en minutos.",
-      "values": {
-        "grounded": {
-          "title": "Basado, sin adivinar",
-          "body": "Aprendemos de lo que realmente se convierte en una categoría antes de generar algo."
-        },
-        "quality": {
-          "title": "Calidad sobre volumen",
-          "body": "Creativos con sensación nativa que detienen el desplazamiento, no rellenos genéricos de IA."
-        },
-        "control": {
-          "title": "Mantienes el control",
-          "body": "Revisa el storyboard toma por toma. El render completo solo gasta créditos tras tu visto bueno."
-        },
-        "sellers": {
-          "title": "Creado para vendedores",
-          "body": "Creado para personas que prefieren vender que filmar: desde creadores en solitario hasta agencias."
-        }
-      },
-      "contact": "¿Quiere hablar sobre asociaciones, prensa o empresas? <email>hello@sellcast.ai</email>"
     },
     "blog": {
       "title": "El blog Lumi llegará pronto",
@@ -1446,30 +1461,15 @@
       "title": "Estamos construyendo el futuro del vídeo del comercio.",
       "body": "Somos un equipo pequeño que avanza rápido. Aún no se han publicado puestos vacantes, pero si eres excepcional en IA, video o crecimiento, nos encantaría saber de ti.",
       "cta": "Preséntate"
-    },
-    "metadata": {
-      "features": {
-        "title": "Características",
-        "description": "Todo lo que Lumi hace: de enlace a video, guiones basados en patrones, revisión del storyboard, formatos solo de producto, control de diálogo y exportación lista para publicar en 5 relaciones de aspecto."
-      },
-      "models": {
-        "title": "Modelos",
-        "description": "Hoy Studio renderiza con Seedance 2.0, y 2.0 Fast, 2.0 Mini y Seedance 2.5 se sumarán al selector. Cada toma recibe los ajustes que mejor la renderizan."
-      },
-      "pricing": {
-        "title": "Precios",
-        "description": "Empieza gratis y escala cuando funcione. El precio de Lumi se basa en créditos: los créditos reflejan el costo real del render, y los ajustes más ligeros cuestan menos. Free (primer video), Creator, Pro, Scale y Enterprise. Sin tarjeta para empezar; el plan anual ahorra ~20%."
-      },
-      "about": {
-        "title": "Acerca de",
-        "description": "Lumi es un producto Sellcast que ayuda a vendedores y creadores a convertir productos en videos que permiten comprar y que se pueden desplazar, basados en patrones virales reales."
-      },
-      "blog": {
-        "title": "Blog"
-      },
-      "careers": {
-        "title": "Carreras"
-      }
     }
+  },
+  "nav": {
+    "features": "Características",
+    "howItWorks": "como funciona",
+    "models": "Modelos",
+    "pricing": "Precios"
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
   }
 }

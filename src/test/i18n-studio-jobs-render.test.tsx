@@ -661,6 +661,25 @@ describe("Job detail page renders extracted English copy", () => {
     expect(regionText(html, "job-working")).not.toContain("in line");
   });
 
+  // Legacy per-beat gate: Studio hardcodes review_mode false, so only jobs
+  // created before it can sit here. The tracker puts them on Shots, so the
+  // badge and the body have to read as reviewing shots too.
+  it("reads as reviewing shots on all three surfaces at the shot gate", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_review" }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    const tracker = region(html, "job-progress");
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    // The current step is the one drawn with the brand-gradient badge; a done
+    // step renders a checkmark rather than its number.
+    const current = tracker.slice(tracker.indexOf(">", tracker.indexOf("bg-brand-gradient")));
+    expect(current.replace(/<[^>]+>/g, " ")).toMatch(/^>\s*3\s+Shots/);
+    expect(text).toContain("Review shots");
+    expect(text).toContain("Review your shots");
+  });
+
   it("wraps every tracker label at 320px instead of scrolling the current step away", () => {
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "queued", beats: [] }),

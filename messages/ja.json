@@ -1,134 +1,84 @@
 {
-  "nav": {
-    "features": "特長",
-    "howItWorks": "仕組み",
-    "models": "モデル",
-    "pricing": "価格設定"
-  },
   "app": {
-    "nav": {
-      "products": "製品",
-      "stores": "ストア",
-      "avatars": "アバター",
-      "videos": "ビデオ",
-      "profile": "プロフィール",
-      "newVideo": "新しいビデオ",
-      "new": "新規",
-      "signedIn": "サインインしました",
-      "logOut": "ログアウト"
-    },
     "toasts": {
+      "outOfCredits": "このレンダリングに必要なクレジットが足りません。",
+      "importSucceeded": "ストアから {count, plural, one {# 個の商品} other {# 個の商品}} をインポートしました。",
       "updateLikeFailed": "「いいね」を更新できませんでした。もう一度試してください。",
       "saveAvatarFailed": "アバターを保存できませんでした。",
       "deleteAvatarFailed": "アバターを削除できませんでした。",
       "startImportFailed": "インポートを開始できませんでした。もう一度試してください。",
       "saveProductFailed": "商品を保存できませんでした。もう一度試してください。",
       "startVideoFailed": "ビデオを開始できませんでした。もう一度試してください。",
-      "outOfCredits": "このレンダリングに必要なクレジットが足りません。",
       "approveShotFailed": "ショットを承認できませんでした。もう一度試してください。",
       "regenerateShotFailed": "ショットを再生できませんでした。もう一度試してください。",
       "approveStoryboardFailed": "ストーリーボードを承認できませんでした。もう一度試してください。",
       "saveStoryboardEditsFailed": "編集内容を保存できませんでした。もう一度試してください。",
       "retryJobFailed": "ジョブを再試行できませんでした。もう一度試してください。",
       "saveDisplayNameFailed": "表示名を保存できませんでした。もう一度試してください。",
-      "importPartial": "{requested} 件中 {imported} 件をインポートしました — {failed, plural, one {# 件は読み取れませんでした} other {# 件は読み取れませんでした}}。それらはリンクを貼り付けて追加できます。",
-      "importOvershoot": "このインポートは選択した {requested, plural, one {# 件} other {# 件}} を超えて実行されました。{imported, plural, one {# 件} other {# 件}} をインポートしています。選んでいない商品がないか「マイプロダクト」で確認してください。",
-      "importIgnoredSelection": "このインポートは選択した {requested, plural, one {# 件} other {# 件}} だけにとどまりませんでした。{imported, plural, one {# 件} other {# 件}} をインポートし、さらに {failed, plural, one {# 件は読み取れませんでした} other {# 件は読み取れませんでした}}。選んでいない商品がないか「マイプロダクト」で確認してください。",
-      "importSucceeded": "ストアから {count, plural, one {# 個の商品} other {# 個の商品}} をインポートしました。",
+      "importPartial": "{requested} 製品の {imported} をインポートしました - {失敗、複数、one {# 読み取れませんでした} other {# 読み取れませんでした}}。各リンクを貼り付けることで追加できます。",
+      "importOvershoot": "このインポートは、選択した {requested, plural, one {# product} other {# products}} を超えています。 {imported, plural, one {# product} other {# products}} imported - 選択しなかったものがないか [マイ 製品] を確認してください。",
+      "importIgnoredSelection": "このインポートは、選択した {requested, plural, one {# product} other {# products}} に準拠していませんでした - {imported, plural, one {# product} other {# products}} がインポートされ、{failed, plural, one {# more Could not be read} other {# more Could not be read}} がインポートされました。選択しなかったものがないか [My Products] を確認してください。",
       "importFailed": "インポートが完了しませんでした。もう一度試してください。",
       "storyboardSaved": "ストーリーボードが保存されました。",
       "markedPosted": "投稿済みとしてマークされます。",
       "recordPostedFailed": "それを記録できませんでした。もう一度試してください。",
-      "listCandidatesFailed": "そのストアの商品リストを読み取れませんでした。もう一度お試しください。",
-      "readLinkFailed": "その商品リンクを読み取れませんでした。もう一度お試しください。",
-      "previewStoreFailed": "そのストアを読み取れませんでした。アドレスを確認してもう一度お試しください。",
-      "importNone": "{requested, plural, one {# 個の商品} other {# 個の商品}} のいずれもインポートできませんでした。もう一度お試しください。",
+      "listCandidatesFailed": "そのストアの商品リストを読み取れませんでした。もう一度試してください。",
+      "readLinkFailed": "その製品リンクを読み取れませんでした。もう一度試してください。",
+      "previewStoreFailed": "そのストアを読み取ることができませんでした。アドレスを確認して、もう一度お試しください。",
+      "importNone": "{requested, plural, one {# product} other {# products}} はどれもインポートできませんでした。もう一度試してください。",
       "importFailedReasons": {
-        "workerRestart": "こちら側の再起動によりインポートが中断されました。これまでにインポートされたものはすべて保存されています - もう一度お試しください。",
-        "rateLimitedSaved": "そのストアは現在、自動カタログ読み取りを許可していません。これまでにインポートしたものはすべて保存しました - 数分後に再インポートしてください。",
-        "rateLimited": "そのストアは現在、カタログ読み取りをレート制限しています。数分後にもう一度お試しください。",
-        "botWall": "そのストアは現在、自動カタログ読み取りをブロックしています。しばらくしてからもう一度お試しください。",
-        "catalogUnreachable": "そのストアのカタログに現在アクセスできませんでした。しばらくしてからもう一度お試しください。",
-        "storeUnsupported": "そのストアから公開商品カタログを読み取れませんでした。公開商品データのある Shopify および WooCommerce ストアで利用できます。商品リンクを1つずつ貼り付けて追加することもできます。",
-        "notShopify": "そのストアから公開商品カタログを読み取れませんでした。公開商品データのある Shopify ストアで利用できます。商品リンクを1つずつ貼り付けて追加することもできます。",
-        "notWoocommerce": "そのストアから公開 WooCommerce 商品カタログを読み取れませんでした。商品リンクを1つずつ貼り付けて追加することもできます。",
-        "selectionMissing": "選択した商品の一部をインポートできませんでした - このストアにはもう存在しない可能性があります。",
-        "catalogCap": "このストアがカタログ上限を超えているため、カタログの一部のみインポートされました。より大きなカタログのインポートについてはお問い合わせください。",
-        "productsUnreadable": "見つかった商品の一部をインポートできませんでした。リンクを1つずつ貼り付けて追加できます。"
+        "workerRestart": "弊社側の再起動によりインポートが中断されました。これまでにインポートされたものはすべて保存されました。もう一度試してください。",
+        "rateLimitedSaved": "そのストアでは現在、カタログの自動読み取りを許可していません。これまでにインポートされたものはすべて保存されました。数分後に再インポートしてください。",
+        "rateLimited": "現在、そのストアではカタログ読み取りのレート制限が行われています。数分後にもう一度試してください。",
+        "botWall": "現在、そのストアはカタログの自動読み取りをブロックしています。後でもう一度試してください。",
+        "catalogUnreachable": "現在、そのストアのカタログにアクセスできません。後でもう一度試してください。",
+        "storeUnsupported": "そのストアの公開製品カタログを読み取ることができませんでした。これは、公開商品データを持つ Shopify および WooCommerce ストアで機能します。各製品リンクを貼り付けることで、一度に製品を 1 つずつ追加することもできます。",
+        "notShopify": "そのストアの公開製品カタログを読み取ることができませんでした。これは、公開商品データを持つ Shopify ストアで機能します。各製品リンクを貼り付けることで、一度に製品を 1 つずつ追加することもできます。",
+        "notWoocommerce": "そのストアから公開されている WooCommerce 製品カタログを読み取ることができませんでした。各製品リンクを貼り付けることで、一度に製品を 1 つずつ追加することもできます。",
+        "selectionMissing": "選択した商品の一部はインポートできませんでした。このストアにはもう存在していない可能性があります。",
+        "catalogCap": "このストアはカタログの上限を超えているため、カタログの一部のみがインポートされました。より大きなカタログをインポートするには、お問い合わせください。",
+        "productsUnreadable": "一部の商品は輸入できませんでした。各リンクを貼り付けることで追加できます。"
       },
-      "videoDeleted": "動画を削除しました。",
-      "deleteVideoFailed": "動画を削除できませんでした。もう一度お試しください。"
-    },
-    "categories": {
-      "beautyPersonalCare": "美容とパーソナルケア",
-      "healthWellness": "健康とウェルネス",
-      "womensFashion": "レディースファッション",
-      "sportsOutdoors": "スポーツ＆アウトドア",
-      "homeTextiles": "ホームテキスタイル",
-      "householdEssentials": "家庭用品",
-      "mobileElectronics": "モバイル&エレクトロニクス",
-      "foodBeverage": "食べ物と飲み物",
-      "mensFashion": "メンズファッション",
-      "toysHobbies": "おもちゃ&ホビー"
-    },
-    "platforms": {
-      "amazon": "Amazon",
-      "shopee": "買い物客",
-      "tiktokShop": "ショップ",
-      "walmart": "ウォルマート",
-      "lazada": "ラザダ",
-      "aliexpress": "AliExpress",
-      "temu": "テム",
-      "alibaba": "アリババ",
-      "taobao": "タオバオ",
-      "mercadolibre": "メルカド リブレ",
-      "etsy": "Etsy",
-      "ebay": "eBay",
-      "shopify": "Shopify",
-      "generic": "ウェブストア",
-      "manual": "マニュアル"
+      "videoDeleted": "動画が削除されました。",
+      "deleteVideoFailed": "動画を削除できませんでした。もう一度試してください。"
     },
     "connections": {
-      "title": "ストア",
       "subtitle": "Lumi にショップへのアクセスを許可します。",
-      "connectHeading": "ストアを連携",
       "connectNotice": "連携すると Lumi にストアへのアクセスを許可しますが、商品はまだ自動でインポートされません。それまでは<link>商品ページからカタログをインポート</link>してください。",
-      "yourStores": "連携済みストア",
-      "listUnavailable": "既存の連携の表示や削除はまだ利用できません。ストア連携 API は現在「連携」のみに対応しています。連携したストアは有効なままですが、ここにはまだ表示されません。",
+      "connectedBanner": "{shop} は Lumi とカタログを共有することを許可されました。商品の自動インポートはまだ利用できません。",
+      "title": "店舗",
+      "connectHeading": "ストアを接続する",
+      "yourStores": "あなたの店舗",
+      "listUnavailable": "既存の接続の表示と削除はまだ利用できません。ストア接続 API は現時点では接続のみをサポートしています。ここにはまだ表示できませんが、接続したストアはアクティブです。",
       "notAvailableYet": "まだ利用できません",
-      "checkingAvailability": "利用可否を確認中…",
-      "shopifyUnavailable": "Shopify 連携は現在利用できません。しばらくしてからもう一度お試しください。",
+      "checkingAvailability": "空き状況を確認中…",
+      "shopifyUnavailable": "現在、Shopify 接続は利用できません。後でもう一度試してください。",
       "shopDomainLabel": "ショップドメイン",
       "shopDomainPlaceholder": "your-store.myshopify.com",
-      "connect": "連携する",
-      "dismiss": "閉じる",
-      "connectedBanner": "{shop} は Lumi とカタログを共有することを許可されました。商品の自動インポートはまだ利用できません。",
+      "connect": "接続する",
+      "dismiss": "解雇する",
       "errors": {
-        "invalid-shop": "ストアの .myshopify.com ドメインを入力してください（例: your-store.myshopify.com）。",
-        "unavailable": "Shopify 連携は現在利用できません。しばらくしてからもう一度お試しください。",
-        "failed": "連携を完了できませんでした。もう一度お試しください。"
+        "invalid-shop": "ストアの .myshopify.com ドメインを入力します (例: your-store.myshopify.com)。",
+        "unavailable": "現在、Shopify 接続は利用できません。後でもう一度試してください。",
+        "failed": "接続が完了しませんでした。もう一度試してください。"
       },
       "platforms": {
         "shopify": {
           "name": "Shopify"
         },
         "woocommerce": {
-          "name": "WooCommerce"
+          "name": "ウーコマース"
         },
         "tiktokShop": {
-          "name": "TikTok Shop"
+          "name": "ショップ"
         }
       }
     },
     "productCard": {
-      "save": "保存",
-      "unsave": "保存しない",
-      "productFallback": "製品",
       "commissionShort": "手数料 {rate}",
-      "soldPerMonth": "{count} 販売/月",
-      "creators": "{count} クリエイター",
       "source": {
         "amazon": "Amazonから",
+        "shopify": "Shopifyから",
         "shopee": "ショップから",
         "tiktokShop": "ショップから",
         "walmart": "ウォルマートから",
@@ -140,48 +90,21 @@
         "mercadolibre": "メルカドリブレから",
         "etsy": "Etsy から",
         "ebay": "eBayから",
-        "shopify": "Shopifyから",
         "generic": "あなたのストアから",
         "manual": "あなたが追加した"
-      }
-    },
-    "videoPresets": {
-      "styles": {
-        "avatarTalkingIntro": "トーキングイントロ",
-        "avatarDemoExplainer": "デモ説明者",
-        "avatarTestimonial": "お客様の声",
-        "avatarHostProduct": "ホスト + 製品",
-        "productCleanShowcase": "クリーンなショーケース",
-        "productFeatureHighlights": "機能のハイライト",
-        "productUnboxing": "開梱する",
-        "productOfferFocused": "オファーに焦点を当てた"
-      }
-    },
-    "products": {
-      "title": "私の製品",
-      "subtitle": "あなた専用の商品カタログです。ストアを取り込むか、商品リンクを貼り付けるか、手動で追加できます。",
-      "addProduct": "製品を追加",
-      "pastePlaceholder": "製品リンクを貼り付けます — Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、または任意のストア",
-      "readLink": "リンクを読む",
-      "storeImportTitle": "ストア全体を取り込む",
-      "storeImportDescription": "ストアのURLを貼り付けてカタログをプレビューし、必要な商品を選んでマイ商品に取り込みます。",
-      "storeImportCta": "ストアを取り込む",
-      "emptyTitle": "まだ製品はありません",
-      "emptyDescription": "ストアを取り込むか、上に商品リンクを貼り付けるか、手動で追加してから、Studioでビデオに変換します。",
-      "loadErrorTitle": "製品を読み込めませんでした",
-      "loadErrorDescription": "カタログが空なのではなく、リストの読み込みに失敗しました。製品はそのまま残っています。少し待ってからもう一度お試しください。",
-      "offlineTitle": "オフラインです",
-      "offlineDescription": "商品がないわけではありません。いま商品リストを取得できていません。接続を確認してからもう一度お試しください。",
-      "refreshError": "製品を更新できませんでした — 最後に読み込んだリストを表示しています。",
-      "retry": "再試行",
-      "waitingForConnection": "接続を待っています"
+      },
+      "save": "保存",
+      "unsave": "保存しない",
+      "productFallback": "製品",
+      "soldPerMonth": "{count} 販売/月",
+      "creators": "{count} クリエイター"
     },
     "productDetail": {
+      "mom": "前月比 {percent}",
       "notFound": "製品が見つかりません。",
       "productFallback": "製品",
       "save": "保存",
       "unsave": "保存しない",
-      "mom": "前月比 {percent}",
       "byShop": "投稿者: {shop}",
       "commission": "{rate}手数料",
       "creatorHook": "クリエイターフック",
@@ -192,103 +115,28 @@
         "activeCreators": "現役クリエイター",
         "totalViews": "合計視聴回数"
       },
-      "backToProducts": "商品に戻る",
-      "products": "マイ商品"
-    },
-    "videos": {
-      "title": "私のビデオ",
-      "subtitle": "Lumi で生成したものすべて。",
-      "newVideo": "新しいビデオ",
-      "videoFallback": "ビデオ",
-      "loadMore": "古い動画を読み込む",
-      "loadError": {
-        "title": "動画を読み込めませんでした",
-        "description": "動画を読み込めませんでした。もう一度お試しください。",
-        "action": "再試行"
-      },
-      "pageLoadError": {
-        "title": "古い動画を読み込めませんでした",
-        "description": "さらに動画を読み込めませんでした。もう一度お試しください。",
-        "action": "再試行"
-      },
-      "empty": {
-        "title": "まだビデオはありません",
-        "description": "商品を選択すると、Lumi が最初のスクロールを止める動画に変換します。",
-        "startFirstVideo": "最初の動画を作成"
-      },
-      "tabsLabel": "ステータスで動画を絞り込む",
-      "tabs": {
-        "needsYou": "要対応",
-        "onTheWay": "進行中",
-        "failed": "失敗",
-        "success": "完了"
-      },
-      "tabEmpty": {
-        "loadMore": "古い動画を読み込む",
-        "needsYou": {
-          "title": "対応が必要なものはありません",
-          "loadedTitle": "読み込んだ動画に要対応はありません",
-          "loadedDescription": "古い動画には、まだ対応が必要なものがある可能性があります。さらに読み込んで確認してください。",
-          "description": "ストーリーボードやショットの承認待ちで停止した動画は、ここであなたを待ちます。"
-        },
-        "onTheWay": {
-          "title": "進行中のものはありません",
-          "loadedTitle": "読み込んだ動画に進行中はありません",
-          "loadedDescription": "古い動画には、まだキュー待ちやレンダリング中のものがある可能性があります。さらに読み込んで確認してください。",
-          "description": "キュー待ちやレンダリング中の動画がここに表示されます。"
-        },
-        "failed": {
-          "title": "失敗した動画はありません",
-          "loadedTitle": "読み込んだ動画に失敗はありません",
-          "loadedDescription": "古い動画には、失敗したものがある可能性があります。さらに読み込んで確認してください。",
-          "description": "完成できなかった動画は、再試行とともにここに表示されます。"
-        },
-        "success": {
-          "title": "完成した動画はまだありません",
-          "loadedTitle": "読み込んだ動画に完成済みはありません",
-          "loadedDescription": "古い動画には、完成済みのものがある可能性があります。さらに読み込んで確認してください。",
-          "description": "完成した動画はここに表示され、ダウンロードや投稿ができます。"
-        }
-      }
-    },
-    "avatars": {
-      "title": "アバター",
-      "subtitle": "AI アバタービデオで製品を紹介する顔。自分のものをアップロードするか、デジタル キャラクターを選択します。",
-      "yourAvatars": "あなたのアバター",
-      "emptyYourAvatars": "まだありません — ビデオで特定の顔を使用するには、上に写真をアップロードしてください。",
-      "digitalCharacters": "デジタル文字",
-      "digitalComingSoon": "既製のデジタル プレゼンターのライブラリが登場します。写真をアップロードせずに、一貫したライセンス付きの顔をあらゆるビデオに組み込むことができます。",
-      "upload": {
-        "notImageError": "それはイメージではありません。",
-        "tooLargeError": "画像は{max}MB以上です。",
-        "addPhoto": "写真を追加",
-        "namePlaceholder": "このアバターに名前を付けます (例: 「Maya — 創設者」)",
-        "consent": "私には、この人の肖像をビデオで使用する権利があります（それが私であるか、許可を得ています）。",
-        "saveAvatar": "アバターの保存",
-        "clear": "クリア"
-      },
-      "card": {
-        "deleteAvatar": "アバターの削除",
-        "deleteTitle": "このアバターを削除しますか?",
-        "deleteDescription": "アバターから「{name}」が削除されます。既に作成したビデオは影響を受けません。",
-        "cancel": "キャンセル",
-        "delete": "削除"
-      }
+      "backToProducts": "製品に戻る",
+      "products": "私の製品"
     },
     "profile": {
-      "title": "プロフィール",
-      "videosCreated": "作成されたビデオ",
-      "readyToPublish": "公開する準備ができました",
-      "statsError": {
-        "description": "動画の統計を読み込めませんでした。",
-        "action": "もう一度試す"
-      },
       "thisMonth": "今月",
       "usageSummary": "{limit} クレジット中 {used} を使用 · {plan} プラン · {date} にリセット",
       "creditNote": "クレジットは実際のレンダリングコストに連動します。正確なコストは選んだモデル・解像度・アスペクト比によって変わります。",
       "creditsLeft": "残りクレジット",
       "limitHit": "今月の上限に達しました。",
       "seePlans": "プランを見る",
+      "usageSummaryOneTime": "{limit} クレジット中 {used} を使用 · {plan} プラン · 1回限りの付与、更新なし",
+      "usageSummaryNeutral": "{limit} クレジット中 {used} を使用 · {plan} プラン",
+      "creditsOneTime": "あなたのクレジット",
+      "limitHitOneTime": "無料クレジットを使い切りました。",
+      "limitHitCredits": "クレジットを使い切りました。",
+      "title": "プロフィール",
+      "videosCreated": "作成されたビデオ",
+      "readyToPublish": "公開する準備ができました",
+      "statsError": {
+        "description": "動画の統計情報を読み込めませんでした。",
+        "action": "もう一度試してください"
+      },
       "forMore": "さらに詳しく。",
       "displayName": "表示名",
       "save": "保存",
@@ -296,83 +144,45 @@
       "connectedAccounts": "接続されたアカウント",
       "appearance": "外観",
       "appearanceDescription": "システム、ライト、またはダーク — Lumi アプリと一致します。",
-      "logOut": "ログアウト",
-      "usageSummaryOneTime": "{limit} クレジット中 {used} を使用 · {plan} プラン · 1回限りの付与、更新なし",
-      "usageSummaryNeutral": "{limit} クレジット中 {used} を使用 · {plan} プラン",
-      "creditsOneTime": "あなたのクレジット",
-      "limitHitOneTime": "無料クレジットを使い切りました。",
-      "limitHitCredits": "クレジットを使い切りました。"
-    },
-    "productsNew": {
-      "startTitle": "製品を追加する",
-      "startSubtitle": "ストアのカタログを取り込むか、商品リンクを1つ貼り付けるか、商品を手動で追加します。Lumiは読み取れる内容を読み取り、レンダリング前にあなたが確認します。",
-      "storePathTitle": "ストアから商品を取り込む",
-      "storePathDescription": "ストアのURLを貼り付け、カタログをプレビューして、残す商品を選びます。",
-      "singleProductTitle": "商品リンクを1つ読み取る",
-      "singleProductDescription": "Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay、または別のストアの商品ページを貼り付けます。",
-      "manualPathTitle": "商品を1つ手動で追加",
-      "productLinkPlaceholder": "https://…製品リンク",
-      "readLink": "リンクを読む",
-      "addManuallyInstead": "代わりに手動で追加します→",
-      "startManualEditor": "手動エディターを開く",
-      "startManualEditorDescription": "エディター内で詳細を入力して写真を追加するか、写真から始めます - ここにドロップするか、下から選んでください。",
-      "startWithPhotos": "写真から始める",
-      "startOver": "やり直す",
-      "detailsTitle": "詳細を確認する",
-      "detailsSubtitle": "これがビデオのベースとなるものです。ここで 10 秒間使用することで、悪いレンダリングを回避できます。",
-      "removePhoto": "写真を削除",
-      "addPhoto": "追加",
-      "saveAndMakeVideo": "保存してビデオを作成する",
-      "needPhoto": "最初に実際の製品の写真を少なくとも 1 枚追加します。",
-      "upload": {
-        "notImageError": "{filename} はイメージではありません。",
-        "tooLargeError": "{filename} は {max}MB を超えています。"
-      },
-      "fields": {
-        "title": "タイトル",
-        "titlePlaceholder": "製品名",
-        "description": "説明",
-        "descriptionPlaceholder": "それが何なのか、誰のためなのか、なぜそれが良いのか、事実のみを基に脚本が書かれています。",
-        "category": "カテゴリ",
-        "photos": "写真 · {count} が選択されました",
-        "photosHint": "最初に選択された写真は、ビデオの中心となるヒーローです。サイズチャートとバナーのチェックを外します。このグリッド内の任意の場所に写真をドラッグ アンド ドロップします。"
-      },
-      "storeImport": {
-        "importingTitle": "ストアをインポートする",
-        "importingProgress": "これまでに {found} 件中 {upserted} 件をインポートしました — これはバックグラウンドで継続的に行われます。",
-        "importingUnknown": "インポートを実行中です。件数がわかり次第表示します。処理はバックグラウンドで続きます。",
-        "wrappingUp": "まとめ…",
-        "importingLabel": "インポート中",
-        "importingLeave": "実行中に別の商品を追加する",
-        "alreadyImportingTitle": "ストアのインポートがすでに実行中です",
-        "alreadyImportingDescription": "ストアのインポートは同時に1件しか実行できません。今のインポートが終わってから、次のストアをインポートしてください。",
-        "showProgress": "インポートの進捗を表示",
-        "stopTracking": "このインポートの追跡をやめる（インポートは続行されます）",
-        "previewFound": "{domain} の {count} 製品が見つかりました",
-        "chooseProducts": "商品を選ぶ",
-        "reviewTitle": "{domain} からインポートする商品を選択",
-        "reviewSubtitle": "最初はすべて選択されています - アカウントに追加したくない商品のチェックを外してください。",
-        "readingCatalog": "ストアの商品リストを読み取っています…",
-        "retryReview": "再試行",
-        "reviewTruncated": "このストアは一度に表示できる数を超えています - 最初の {count} 件の商品から選んでいます。残りはリンクを貼り付けて追加できます。",
-        "selectedCount": "{total} 件中 {selected} 件を選択",
-        "selectAll": "すべて選択",
-        "deselectAll": "すべて解除",
-        "importSelected": "{count, plural, one {# 個の商品} other {# 個の商品}} をインポート",
-        "untitledProduct": "名称未設定の商品",
-        "reviewEmpty": "このストアからは商品を一件も取得できませんでした。別のストアを試すか、リンクを貼り付けて商品を追加してください。",
-        "tryDifferentStore": "別の店舗を試してみる",
-        "placeholder": "your-store.myshopify.com - 次のステップで商品を選びます",
-        "preview": "プレビュー"
-      }
+      "logOut": "ログアウト"
     },
     "studio": {
+      "modes": {
+        "unavailable": "一時的に利用できません",
+        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。",
+        "unavailableAllNote": "現在利用できる生成モードがありません。しばらくしてからお試しください。",
+        "aiAvatar": {
+          "label": "AIアバター",
+          "blurb": "プレゼンターがカメラに向かって話します。"
+        },
+        "productOnly": {
+          "label": "製品のみ",
+          "blurb": "顔はなく、製品だけです。"
+        }
+      },
+      "models": {
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "高速・最大720p"
+        },
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "最新・最大1080p"
+        }
+      },
+      "optionUnavailable": {
+        "title": "このモードでは利用できません",
+        "badge": "対象外"
+      },
+      "usageSummary": "残り {remaining}/{limit} クレジット",
+      "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
+      "seePlans": "プランを見る",
       "title": "ビデオスタジオ",
       "subtitle": "Lumi は、この製品からビデオをスクリプト化してレンダリングします。方向を設定します。",
       "loading": "読み込み中…",
       "sections": {
         "vibe": "1・どんな雰囲気ですか？",
-        "reference": "2・この雰囲気にする",
+        "reference": "2・こんな感じに作ります",
         "mode": "3・モード",
         "presenter": "プレゼンター",
         "duration": "4・期間",
@@ -405,50 +215,27 @@
         }
       },
       "reference": {
-        "linkTab": "リンクを貼る",
-        "uploadTab": "アップロード済みクリップ",
+        "linkTab": "リンクを貼り付けます",
+        "uploadTab": "アップロードされたクリップ",
         "linkLabel": "参考動画リンク",
-        "uploadLabel": "アップロード済みクリップのリンク",
+        "uploadLabel": "アップロードされたクリップリンク",
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
-        "linkHelper": "Lumi は雰囲気とエネルギーだけを学びます。あなたの商品向けのテンポとムードで、元のショットはコピーしません。",
-        "uploadHelper": "最大 50MB のプライベート クリップ (MP4、MOV、または WebM) をアップロードします。Lumiはバイブとエネルギーのみを学習し、オリジナルのショットは学習しません。",
-        "invalidUrl": "対応している TikTok またはソーシャル動画のリンクを貼り付けてください。",
-        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力してください。",
+        "linkHelper": "Lumi は雰囲気とエネルギーのみを学習します。つまり、オリジナルのショットではなく、製品のペースとムードです。",
+        "uploadHelper": "最大 50MB のプライベート クリップ (MP4、MOV、または WebM) をアップロードします。 Lumi は、オリジナルのショットではなく、雰囲気とエネルギーのみを学習します。",
+        "invalidUrl": "サポートされている TikTok またはソーシャル ビデオのリンクを貼り付けます。",
+        "invalidUpload": "MP4、MOV、または WebM の直接リンクを入力します。",
         "uploadCta": "ビデオファイルを選択してください",
         "uploadReplace": "交換する",
-        "uploadRemove": "取り除く",
+        "uploadRemove": "削除",
         "uploadTypeError": "MP4、MOV、または WebM ビデオを選択します。",
         "uploadSizeError": "そのクリップは 50MB の制限を超えています。",
         "uploadFailed": "アップロードが完了しませんでした。もう一度試してください。"
-      },
-      "modes": {
-        "aiAvatar": {
-          "label": "AIアバター",
-          "blurb": "プレゼンターがカメラに向かって話します。"
-        },
-        "productOnly": {
-          "label": "製品のみ",
-          "blurb": "顔はなく、製品だけです。"
-        },
-        "unavailable": "一時的に利用できません",
-        "unavailableNote": "{mode} は現在利用できません。別のモードを選んで生成してください。",
-        "unavailableAllNote": "現在利用できる生成モードがありません。しばらくしてからお試しください。"
       },
       "presenter": {
         "auto": "自動",
         "autoSublabel": "AIがクリエイターを選ぶ",
         "manageAvatars": "アバターの管理 →"
-      },
-      "models": {
-        "seedance20": {
-          "label": "Seedance 2.0",
-          "blurb": "最新・最大1080p"
-        },
-        "seedance20Fast": {
-          "label": "Seedance 2.0 Fast",
-          "blurb": "高速・最大720p"
-        }
       },
       "resolutions": {
         "p480": {
@@ -469,10 +256,6 @@
         "comingSoonTitle": "近日公開予定",
         "soonBadge": "すぐに"
       },
-      "optionUnavailable": {
-        "title": "このモードでは利用できません",
-        "badge": "対象外"
-      },
       "reviewDescription": "Lumi は、何かを費やす前にストーリーボードを表示します。画像やビデオが生成される前に、ストーリーボードを確認して承認します。",
       "summary": {
         "vibe": "バイブ",
@@ -482,42 +265,66 @@
         "resolution": "解像度",
         "language": "言語",
         "format": "フォーマット",
-        "reference": "参考",
-        "referenceAdded": "追加済み",
+        "reference": "参考資料",
+        "referenceAdded": "追加されました",
         "referenceNone": "なし",
         "review": "レビュー",
         "storyboard": "絵コンテ"
       },
       "size": {
-        "avatarHint": "アバター出演の動画は、プレゼンターに合わせて形状が調整される場合があります。"
+        "avatarHint": "トーキングヘッド出力は、発表者に合わせてその形状を調整することができます。"
       },
-      "usageSummary": "残り {remaining}/{limit} クレジット",
       "generateVideo": "ビデオの生成",
       "generateUploading": "参照をアップロード中…",
-      "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
-      "seePlans": "プランを見る",
       "cap": {
-        "reached": "現在 {count} 件の動画を生成中です（上限 {limit} 件）。いずれかが完了すると、新しい動画を生成できます。",
+        "reached": "すでに {count} ビデオが進行中です ({limit} まで)。いずれかが終了するとすぐに新しいものを生成できます。",
         "viewVideos": "私のビデオ"
       },
       "productError": {
-        "title": "この商品を読み込めません",
-        "description": "商品が削除されたか、リンクが間違っている可能性があります。動画を作成する商品を選んでください。",
-        "action": "商品を選ぶ"
+        "title": "その商品は読み込めません",
+        "description": "削除されているか、リンクが間違っている可能性があります。製品の 1 つを選択してビデオを開始します。",
+        "action": "製品を選択してください"
       },
       "productLoadError": {
-        "title": "商品を読み込めませんでした",
-        "description": "この商品を読み込めませんでした。少ししてからもう一度お試しください。",
-        "action": "もう一度試す"
+        "title": "製品を読み込めませんでした",
+        "description": "この商品を読み込めませんでした。しばらくしてからもう一度試してください。",
+        "action": "もう一度試してください"
       },
       "pickProduct": {
         "title": "まずは製品を選んでください",
-        "description": "商品を追加または選択すると、Lumi がスクロールを止める動画に変換します。",
-        "addProduct": "商品を追加",
-        "viewProducts": "商品を見る"
+        "description": "製品の 1 つを追加または選択すると、Lumi がスクロールを停止するビデオに変換します。",
+        "addProduct": "製品を追加",
+        "viewProducts": "製品を見る"
       }
     },
     "jobs": {
+      "working": {
+        "queuedForScript": "スクリプト作成を待っています…",
+        "writingScript": "スクリプトを書いています…",
+        "queuedForShots": "ショット作成を待っています…",
+        "buildingShots": "ショットを作成しています…",
+        "queuedForRender": "動画レンダリングを待っています…",
+        "renderingVideo": "動画をレンダリングしています…",
+        "working": "動画を処理しています…",
+        "queuedScriptDescription": "動画は開始待ちの列に並んでいます。ストーリーボードを承認するまでレンダリングは始まりません。",
+        "scriptDescription": "Lumi がスクリプトを作成しています。ストーリーボードを承認するまでレンダリングは始まりません。",
+        "queuedShotsDescription": "ストーリーボードは承認済みです。この動画はショット参照とレンダリング素材の準備待ちです。",
+        "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しており、各ショットは完成しだいここに表示されます。",
+        "queuedRenderDescription": "承認済みのショットはレンダリング待ちです。",
+        "renderDescription": "承認済みのショットを最終動画にレンダリングしています。",
+        "workingDescription": "このページは自動更新されるので、離れてもあとで戻れます。"
+      },
+      "review": {
+        "title": "ショットを確認",
+        "description": "各ショットを承認するか、気に入らないものを再生成してください。すべてのショットが承認されると Lumi がレンダリングします。"
+      },
+      "completed": {
+        "description": "音声付きですぐに投稿できるカット。ダウンロードするか投稿済みにして、統計をすっきり保ちましょう。",
+        "badge": "公開する準備ができました",
+        "title": "ビデオの準備ができました 🎉",
+        "download": "ダウンロード",
+        "markPosted": "投稿済みとしてマークする"
+      },
       "backToVideos": "私のビデオ",
       "videoFallback": "あなたのビデオ",
       "styles": {
@@ -547,29 +354,9 @@
         "cta": "CTA",
         "shot": "ショット {number}"
       },
-      "working": {
-        "queuedForScript": "スクリプト作成を待っています…",
-        "writingScript": "スクリプトを書いています…",
-        "queuedForShots": "ショット作成を待っています…",
-        "buildingShots": "ショットを作成しています…",
-        "queuedForRender": "動画レンダリングを待っています…",
-        "renderingVideo": "動画をレンダリングしています…",
-        "working": "動画を処理しています…",
-        "queuedScriptDescription": "動画は開始待ちの列に並んでいます。ストーリーボードを承認するまでレンダリングは始まりません。",
-        "scriptDescription": "Lumi がスクリプトを作成しています。ストーリーボードを承認するまでレンダリングは始まりません。",
-        "queuedShotsDescription": "ストーリーボードは承認済みです。この動画はショット参照とレンダリング素材の準備待ちです。",
-        "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しています。",
-        "queuedRenderDescription": "承認済みのショットはレンダリング待ちです。",
-        "renderDescription": "承認済みのショットを最終動画にレンダリングしています。",
-        "workingDescription": "このページは自動更新されるので、離れてもあとで戻れます。"
-      },
-      "review": {
-        "title": "ショットを確認",
-        "description": "各ショットを承認するか、気に入らないものを再生成してください。すべてのショットが承認されると Lumi がレンダリングします。"
-      },
       "storyboard": {
         "title": "動画の企画はこちら",
-        "description": "まだ何も決まっていません。これは単なる計画です。それを読んで、必要な行を変更し、[実行] をクリックすると、Lumi がビデオ全体を構築します。",
+        "description": "まだ何も決まっていません。これは単なる計画です。それを読んで、必要な行を変更してから「実行」をクリックすると、Lumi がビデオ全体を構築します。",
         "approveAndMake": "私のビデオを承認して作成してください",
         "creditNote": "これがクレジットを使用する唯一のステップです。",
         "editTitle": "{label}を編集",
@@ -610,7 +397,7 @@
         },
         "placeholders": {
           "dialogue": "このショットにはセリフはありません",
-          "onScreenText": "画面上のテキストなし",
+          "onScreenText": "画面上のテキストはありません",
           "nudgeNote": "自分の言葉で説明してください",
           "technique": "Lumi にショットを選んでもらいましょう"
         },
@@ -622,7 +409,7 @@
           "slowLingering": "ゆっくりと長引く"
         },
         "proMode": "プロモード",
-        "proHint": "タップやメモを変更すると、このショットが再生成されます。",
+        "proHint": "タップまたはノートを変更すると、このショットが再取得されます。",
         "transitions": {
           "hardCut": "ハードカット",
           "dissolve": "溶解する",
@@ -649,52 +436,45 @@
         "approve": "承認する",
         "regenerate": "再生する"
       },
-      "completed": {
-        "badge": "公開する準備ができました",
-        "title": "ビデオの準備ができました 🎉",
-        "description": "音声付きですぐに投稿できるカット。ダウンロードするか投稿済みにして、統計をすっきり保ちましょう。",
-        "download": "ダウンロード",
-        "markPosted": "投稿済みとしてマークする"
-      },
       "failed": {
         "title": "生成に失敗しました",
         "fallbackMessage": "何か問題が発生しました。もう一度作成してみてください。",
         "reasons": {
-          "workerRestart": "レンダリングシステムが再起動し、このビデオの進行が失われました。クレジットは返金済みです - 「再試行」で作り直してください。",
-          "resumeInvalidScript": "このビデオは中断したところから再開できませんでした。クレジットは返金済みです - もう一度お試しください。",
-          "productNotFound": "このビデオの対象商品は存在しなくなりました。クレジットは返金済みです。",
-          "providerUnavailable": "こちら側の問題により、ビデオ生成は一時的に利用できません。クレジットは返金済みです - しばらくしてからもう一度お試しください。",
-          "renderStart": "ビデオのレンダリングを開始できませんでした。クレジットは返金済みです - もう一度お試しください。",
-          "renderIncomplete": "1つ以上のビデオレンダリングが完了しませんでした。クレジットは返金済みです - もう一度お試しください。",
-          "assembling": "このビデオの組み立て中にこちら側で問題が発生しました。クレジットは返金済みです - もう一度お試しください。",
-          "finishing": "このビデオの仕上げ中にこちら側で問題が発生しました。クレジットは返金済みです - もう一度お試しください。",
-          "making": "このビデオの作成中にこちら側で問題が発生しました。クレジットは返金済みです - もう一度お試しください。",
-          "categoryUnsupported": "この商品カテゴリのビデオはまだ作成できません。クレジットは返金済みです。",
-          "scriptQuality": "この商品に十分な品質のスクリプトを作成できませんでした。もう一度試すか、商品情報を調整してください。"
+          "workerRestart": "レンダリング システムが再起動し、このビデオを追跡できなくなりました。クレジットは返金されました。もう一度やり直すには、「再試行」をタップしてください。",
+          "resumeInvalidScript": "このビデオは中断したところから再開できませんでした。クレジットは返金されました - もう一度お試しください。",
+          "productNotFound": "このビデオの対象となった製品はもう存在しません。クレジットは返金されました。",
+          "providerUnavailable": "弊社側の問題により、ビデオ生成が一時的に利用できなくなりました。クレジットは返金されました - 後でもう一度お試しください。",
+          "renderStart": "ビデオのレンダリングを開始できませんでした。クレジットは返金されました - もう一度お試しください。",
+          "renderIncomplete": "1 つ以上のビデオのレンダリングが完了しませんでした。クレジットは返金されました - もう一度お試しください。",
+          "assembling": "このビデオを組み立てているときに、私たち側で問題が発生しました。クレジットは返金されました - もう一度お試しください。",
+          "finishing": "このビデオの完成中に問題が発生しました。クレジットは返金されました - もう一度お試しください。",
+          "making": "このビデオの作成中に問題が発生しました。クレジットは返金されました - もう一度お試しください。",
+          "categoryUnsupported": "この商品のカテゴリではまだ動画を作成できません。クレジットは返金されました。",
+          "scriptQuality": "この製品用に十分なスクリプトを作成できませんでした。もう一度試すか、商品の詳細を調整してください。"
         },
         "retry": "再試行",
         "startNewVideo": "新しいビデオを開始する"
       },
       "product": {
-        "view": "商品を見る",
-        "deleted": "削除された商品"
+        "view": "製品を見る",
+        "deleted": "製品が削除されました"
       },
       "delete": {
-        "button": "動画を削除",
-        "title": "この動画を削除しますか？",
-        "description": "この操作は動画を完全に削除します。元に戻すことはできず、使用済みのクレジットは返金されません。",
+        "button": "ビデオを削除する",
+        "title": "このビデオを削除しますか?",
+        "description": "これにより、ビデオが完全に削除されます。回復することはできず、すでに使用されたクレジットは返金されません。",
         "cancel": "キャンセル",
         "confirm": "完全に削除"
       },
       "notFound": {
-        "title": "この動画はもうありません",
-        "description": "削除されたか、リンク先があなたの動画ではありません。残っている動画はすべて「私のビデオ」にあります。",
+        "title": "このビデオはもう存在しません",
+        "description": "削除されているか、リンクがあなたのものではないビデオを指しています。あなたがまだ持っているものはすべてマイビデオにあります。",
         "action": "私のビデオに戻る"
       },
       "loadError": {
-        "title": "動画を読み込めませんでした",
-        "description": "この動画を読み込めませんでした。もう一度お試しください。",
-        "action": "再試行"
+        "title": "ビデオを読み込めませんでした",
+        "description": "このビデオを読み込めませんでした。もう一度やり直してください。",
+        "action": "もう一度試してください"
       }
     },
     "format": {
@@ -702,10 +482,221 @@
       "minutesAgo": "{n}分前",
       "hoursAgo": "{n}時間前",
       "daysAgo": "{n}日前"
+    },
+    "nav": {
+      "products": "製品",
+      "stores": "店舗",
+      "avatars": "アバター",
+      "videos": "動画",
+      "profile": "プロフィール",
+      "newVideo": "新しいビデオ",
+      "new": "新しい",
+      "signedIn": "サインインしました",
+      "logOut": "ログアウト"
+    },
+    "categories": {
+      "beautyPersonalCare": "美容とパーソナルケア",
+      "healthWellness": "健康とウェルネス",
+      "womensFashion": "レディースファッション",
+      "sportsOutdoors": "スポーツ＆アウトドア",
+      "homeTextiles": "ホームテキスタイル",
+      "householdEssentials": "家庭用品",
+      "mobileElectronics": "モバイル&エレクトロニクス",
+      "foodBeverage": "食べ物と飲み物",
+      "mensFashion": "メンズファッション",
+      "toysHobbies": "おもちゃ&ホビー"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "買い物客",
+      "tiktokShop": "ショップ",
+      "walmart": "ウォルマート",
+      "lazada": "ラザダ",
+      "aliexpress": "AliExpress",
+      "temu": "テム",
+      "alibaba": "アリババ",
+      "taobao": "タオバオ",
+      "mercadolibre": "メルカド リブレ",
+      "etsy": "Etsy",
+      "ebay": "eBay",
+      "shopify": "Shopify",
+      "generic": "ウェブストア",
+      "manual": "マニュアル"
+    },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "トーキングイントロ",
+        "avatarDemoExplainer": "デモ説明者",
+        "avatarTestimonial": "お客様の声",
+        "avatarHostProduct": "ホスト + 製品",
+        "productCleanShowcase": "クリーンなショーケース",
+        "productFeatureHighlights": "機能のハイライト",
+        "productUnboxing": "開梱する",
+        "productOfferFocused": "オファーに焦点を当てた"
+      }
+    },
+    "products": {
+      "title": "私の製品",
+      "subtitle": "プライベート カタログ - ストアをインポートするか、製品リンクを貼り付けるか、手動で追加します。",
+      "addProduct": "製品を追加",
+      "pastePlaceholder": "製品リンクを貼り付けます — Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、または任意のストア",
+      "readLink": "リンクを読む",
+      "storeImportTitle": "店舗全体を持ち込みます",
+      "storeImportDescription": "ストアフロント URL を貼り付けてカタログをプレビューし、必要な製品を選択して、それらを [マイ 製品] にインポートします。",
+      "storeImportCta": "輸入販売店",
+      "emptyTitle": "まだ製品はありません",
+      "emptyDescription": "ストアをインポートし、上に商品リンクを貼り付けるか、手動で追加してから、スタジオで動画に変換します。",
+      "loadErrorTitle": "商品を読み込めませんでした",
+      "loadErrorDescription": "これは空のカタログではありません。リストの読み込みに失敗しました。あなたの製品はまだそこにあります。しばらくしてからもう一度試してください。",
+      "offlineTitle": "オフラインです",
+      "offlineDescription": "これは空のカタログではありません。現在、貴社の製品にアクセスできません。再接続してから、もう一度お試しください。",
+      "refreshError": "商品を更新できませんでした。最後にロードしたリストが表示されています。",
+      "retry": "もう一度試してください",
+      "waitingForConnection": "接続を待っています"
+    },
+    "videos": {
+      "title": "私のビデオ",
+      "subtitle": "Lumi で生成したものすべて。",
+      "newVideo": "新しいビデオ",
+      "videoFallback": "ビデオ",
+      "loadMore": "古いビデオをロードする",
+      "loadError": {
+        "title": "動画を読み込めませんでした",
+        "description": "動画を読み込めませんでした。もう一度やり直してください。",
+        "action": "もう一度試してください"
+      },
+      "pageLoadError": {
+        "title": "古いビデオを読み込めませんでした",
+        "description": "これ以上ビデオを読み込むことができませんでした。もう一度やり直してください。",
+        "action": "もう一度試してください"
+      },
+      "empty": {
+        "title": "まだビデオはありません",
+        "description": "製品の 1 つを選択すると、Lumi がそれを最初のスクロール停止ビデオに変えます。",
+        "startFirstVideo": "最初のビデオを開始"
+      },
+      "tabsLabel": "ステータスごとにビデオをフィルタリングする",
+      "tabs": {
+        "needsYou": "あなたが必要です",
+        "onTheWay": "途中",
+        "failed": "失敗しました",
+        "success": "成功"
+      },
+      "tabEmpty": {
+        "loadMore": "古いビデオをロードする",
+        "needsYou": {
+          "title": "あなたを必要とするものは何もありません",
+          "loadedTitle": "あなたを必要とするものは何もロードされていません",
+          "loadedDescription": "古いビデオにはまだ必要があるかもしれません。確認を続けるにはさらにロードしてください。",
+          "description": "ストーリーボードやショットの承認のためにビデオが一時停止すると、ここでビデオが待機します。"
+        },
+        "onTheWay": {
+          "title": "途中には何もありません",
+          "loadedTitle": "途中でロードされたものはありません",
+          "loadedDescription": "古いビデオはまだキューに入れられているか、レンダリングされている可能性があります。確認を続けるにはさらにロードしてください。",
+          "description": "キューに入れられているビデオまたはレンダリング中のビデオがここに表示されます。"
+        },
+        "failed": {
+          "title": "失敗したビデオはありません",
+          "loadedTitle": "失敗したビデオは読み込まれていません",
+          "loadedDescription": "古いビデオはまだ失敗している可能性があります。確認を続けるにはさらにロードしてください。",
+          "description": "完了できなかったビデオがここに表示され、再試行されます。"
+        },
+        "success": {
+          "title": "完成したビデオはまだありません",
+          "loadedTitle": "完成したビデオが読み込まれていません",
+          "loadedDescription": "古いビデオはまだ完成している可能性があります。確認を続けるにはさらにロードしてください。",
+          "description": "完成したビデオがここに表示され、ダウンロードして投稿する準備ができています。"
+        }
+      }
+    },
+    "avatars": {
+      "title": "アバター",
+      "subtitle": "AI アバタービデオで製品を紹介する顔。自分のものをアップロードするか、デジタル キャラクターを選択します。",
+      "yourAvatars": "あなたのアバター",
+      "emptyYourAvatars": "まだありません — ビデオで特定の顔を使用するには、上に写真をアップロードしてください。",
+      "digitalCharacters": "デジタル文字",
+      "digitalComingSoon": "既製のデジタル プレゼンターのライブラリが登場します。写真をアップロードせずに、一貫したライセンス付きの顔をあらゆるビデオに組み込むことができます。",
+      "upload": {
+        "notImageError": "それはイメージではありません。",
+        "tooLargeError": "画像は{max}MB以上です。",
+        "addPhoto": "写真を追加",
+        "namePlaceholder": "このアバターに名前を付けます (例: 「Maya — 創設者」)",
+        "consent": "私には、この人の肖像をビデオで使用する権利があります（それが私であるか、許可を得ています）。",
+        "saveAvatar": "アバターの保存",
+        "clear": "クリア"
+      },
+      "card": {
+        "deleteAvatar": "アバターの削除",
+        "deleteTitle": "このアバターを削除しますか?",
+        "deleteDescription": "アバターから「{name}」が削除されます。既に作成したビデオは影響を受けません。",
+        "cancel": "キャンセル",
+        "delete": "削除"
+      }
+    },
+    "productsNew": {
+      "startTitle": "製品を追加する",
+      "startSubtitle": "ストア カタログをインポートするか、製品リンクを 1 つ貼り付けるか、製品を手動で追加します。 Lumi は可能なものを読み取ります。何かがレンダリングされる前に確認します。",
+      "storePathTitle": "ストアから商品を輸入する",
+      "storePathDescription": "ストアフロント URL を貼り付け、カタログをプレビューし、保持する製品を選択します。",
+      "singleProductTitle": "1 つの製品リンクを読む",
+      "singleProductDescription": "Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay、または別のストアから商品ページを貼り付けます。",
+      "manualPathTitle": "製品を 1 つ手動で追加します",
+      "productLinkPlaceholder": "https://…製品リンク",
+      "readLink": "リンクを読む",
+      "addManuallyInstead": "代わりに手動で追加します →",
+      "startManualEditor": "マニュアルエディタを開く",
+      "startManualEditorDescription": "詳細を自分で入力してエディター内に写真を追加するか、写真から始めます。写真をここにドロップするか、下から選択します。",
+      "startWithPhotos": "写真から始めましょう",
+      "startOver": "やり直す",
+      "detailsTitle": "詳細を確認する",
+      "detailsSubtitle": "これがビデオのベースとなるものです。ここで 10 秒間使用することで、悪いレンダリングを回避できます。",
+      "removePhoto": "写真を削除",
+      "addPhoto": "追加",
+      "saveAndMakeVideo": "保存してビデオを作成する",
+      "needPhoto": "最初に実際の製品の写真を少なくとも 1 枚追加します。",
+      "upload": {
+        "notImageError": "{filename} はイメージではありません。",
+        "tooLargeError": "{filename} は {max}MB を超えています。"
+      },
+      "fields": {
+        "title": "タイトル",
+        "titlePlaceholder": "製品名",
+        "description": "説明",
+        "descriptionPlaceholder": "それが何なのか、誰のためなのか、なぜそれが良いのか、事実のみを基に脚本が書かれています。",
+        "category": "カテゴリ",
+        "photos": "写真 · {count} が選択されました",
+        "photosHint": "最初に選択された写真は、ビデオの中心となるヒーローです。サイズチャートとバナーのチェックを外します。このグリッド内の任意の場所に写真をドラッグ アンド ドロップします。"
+      },
+      "storeImport": {
+        "importingTitle": "ストアをインポートする",
+        "importingProgress": "これまでに {found} 製品のうち {upserted} をインポートしました。これはバックグラウンドで継続的に行われます。",
+        "importingUnknown": "インポートは実行中です - 返答があり次第、カウントを表示します。バックグラウンドで継続して実行されます。",
+        "wrappingUp": "まとめ…",
+        "importingLabel": "インポート中",
+        "importingLeave": "これの実行中に何かを追加する",
+        "alreadyImportingTitle": "ストアのインポートはすでに実行されています",
+        "alreadyImportingDescription": "一度に実行できるストアのインポートは 1 つだけです。これが完了するまで待ってから、別のストアをインポートできます。",
+        "showProgress": "インポートの進行状況を表示する",
+        "stopTracking": "このインポートの追跡を停止します - 実行は継続されます",
+        "previewFound": "{domain} の {count} 製品が見つかりました",
+        "chooseProducts": "製品を選ぶ",
+        "reviewTitle": "{domain} からインポートするものを選択してください",
+        "reviewSubtitle": "すべてが選択された状態で開始されます。アカウントに追加したくないものはチェックを外します。",
+        "readingCatalog": "ストアの商品リストを読んでいると…",
+        "retryReview": "もう一度試してください",
+        "reviewTruncated": "このストアには一度にリストしきれないほどの商品が揃っています。最初の {count} 製品からお選びいただけます。残りは各リンクを貼り付けることで追加できます。",
+        "selectedCount": "{selected}/{total} が選択されました",
+        "selectAll": "すべて選択",
+        "deselectAll": "すべての選択を解除します",
+        "importSelected": "{数、複数、1 つの {# 製品} 他の {# 製品}} をインポートします",
+        "untitledProduct": "無題の商品",
+        "reviewEmpty": "このストアの商品をリストできませんでした。別のストアを試すか、各リンクを貼り付けて商品を追加してください。",
+        "tryDifferentStore": "別の店舗を試してみる",
+        "placeholder": "your-store.myshopify.com - 次のステップで製品を選択してください",
+        "preview": "プレビュー"
+      }
     }
-  },
-  "languageSwitcher": {
-    "label": "言語"
   },
   "shared": {
     "status": {
@@ -718,9 +709,9 @@
       "reviewShots": "ショット確認",
       "queuedForRender": "レンダリング待ち",
       "rendering": "レンダリング中",
+      "working": "処理中",
       "ready": "準備完了",
-      "failed": "失敗しました",
-      "working": "処理中"
+      "failed": "失敗しました"
     },
     "jobProgress": {
       "script": "スクリプト",
@@ -728,6 +719,12 @@
       "shots": "ショット",
       "render": "レンダリング",
       "ready": "準備完了"
+    },
+    "theme": {
+      "label": "テーマ",
+      "light": "ライト",
+      "system": "システム",
+      "dark": "ダーク"
     },
     "subjects": {
       "product": "製品",
@@ -756,20 +753,14 @@
     },
     "toaster": {
       "dismiss": "通知を閉じる"
-    },
-    "theme": {
-      "label": "テーマ",
-      "light": "ライト",
-      "system": "システム",
-      "dark": "ダーク"
     }
   },
   "auth": {
     "layout": {
-      "heroTitle": "製品リンクからスクロールが止まるビデオまで、数分で完了します。",
-      "benefitScripts": "実際のウイルスパターンに基づいたスクリプト",
       "benefitReview": "レンダリング前にすべてのショットを確認",
-      "benefitPublish": "あらゆるプラットフォームに対応する5つのアスペクト比"
+      "benefitPublish": "あらゆるプラットフォームに対応する5つのアスペクト比",
+      "heroTitle": "製品リンクからスクロールが止まるビデオまで、数分で完了します。",
+      "benefitScripts": "実際のウイルスパターンに基づいたスクリプト"
     },
     "metadata": {
       "signIn": "サインイン",
@@ -788,9 +779,9 @@
       "invalidPhone": "有効な電話番号を入力してください。",
       "sendCode": "コードを送信する",
       "sendCodeFailed": "コードを送信できませんでした。",
-      "phoneUnavailable": "このサイトでは電話番号によるログインはご利用いただけません。Google で続行してください。",
-      "phoneUnavailableHint": "SMS配信はまだ設定されていません。Googleサインインは現在利用できます。",
-      "phoneUnavailableLabel": "電話は利用できません",
+      "phoneUnavailable": "このサイトでは電話によるサインインは利用できません。引き続き Google を使用して開始してください。",
+      "phoneUnavailableHint": "SMS 配信はまだ設定されていません。 Google サインインが利用できるようになりました。",
+      "phoneUnavailableLabel": "電話が利用できません",
       "codePlaceholder": "6桁のコード",
       "verificationCodeLabel": "認証コード",
       "devCodeAutofilled": "開発モード — コード <code>{devCode}</code> が自動入力されます。",
@@ -803,6 +794,526 @@
     }
   },
   "marketing": {
+    "header": {
+      "startFreeMobile": "開始",
+      "signIn": "サインイン",
+      "startFree": "無料で始める",
+      "openStudio": "オープンスタジオ"
+    },
+    "footer": {
+      "columns": {
+        "workflow": {
+          "beatReview": "ストーリーボードレビュー",
+          "title": "ワークフロー",
+          "linkToVideo": "ビデオへのリンク",
+          "patternScripts": "パターンスクリプト",
+          "publish": "発行する"
+        },
+        "product": {
+          "title": "製品",
+          "features": "特長",
+          "models": "モデル",
+          "pricing": "価格設定"
+        },
+        "company": {
+          "title": "会社名",
+          "about": "について",
+          "blog": "ブログ",
+          "careers": "キャリア",
+          "contact": "お問い合わせ"
+        },
+        "legal": {
+          "title": "法的",
+          "privacy": "プライバシー",
+          "terms": "規約",
+          "refunds": "払い戻し"
+        }
+      },
+      "tagline": "製品リンクが入力されます。公開可能なビデオが出力されます。すでに売れているパターンに基づいています。",
+      "copyright": "© {year} Sellcast. LumiはSellcastの商品です。",
+      "madeFor": "フィルムよりも販売したい販売者向けに作られています。",
+      "signIn": "サインイン"
+    },
+    "faq": {
+      "a3": "はい。脚本はショットごとのストーリーボードとして届き、各ショットの参照フレームが先に生成されます。気に入ったショットは承認し、そうでないものは1クレジットで再生成。承認して初めて、本番レンダリングがクレジットを消費します。",
+      "a4": "現在、動画をレンダリングするのは Seedance 2.0 です。Seedance 2.0 Fast と 2.0 Mini はまもなく Studio のピッカーに加わり、その後 Seedance 2.5 が続きます。登場しても脚本と承認済みのストーリーボードはそのまま引き継がれます。",
+      "q1": "Lumi は一般的な AI ビデオ ツールとどう違うのですか?",
+      "a1": "Lumi は推測しません。一行を書き込む前に、製品のカテゴリ内でオーガニックなトップパフォーマーの実際のサンプルを大規模に調査し、実際にコンバージョンにつながるフック、プルーフ、CTA の形状などの構造パターンを抽出します。あなたのスクリプトは、白紙のページではなく、そのパターンに基づいています。",
+      "q2": "何かを撮影したり、カメラに映る必要はありますか?",
+      "a2": "いいえ、Lumi はクリーンな製品のみのショーケースを構築します。製品からビジュアルと音声ナレーションをエンドツーエンドで生成するため、何も撮影する必要はありません。",
+      "q3": "完全にレンダリングされる前にビデオを確認できますか?",
+      "q4": "Lumi はどのビデオ モデルを使用していますか?",
+      "q5": "製品データはどこから来たのでしょうか?",
+      "a5": "Amazon、Shopee、TikTok Shop、または自分のストアからのリンクを貼り付けるか、自分の製品写真をアップロードすると、Lumi がタイトル、説明、画像を読み取って構築します。あなたの製品はあなたのプライバシーに保たれます。",
+      "q6": "1つのビデオにどれくらい時間がかかりますか?",
+      "a6": "撮影や編集を行わなくても、Lumi スクリプト、ストーリーボード、レンダリングを実行できます。作業を開始して、すぐに公開できる完成したカットに戻ります。カテゴリのパターン調査はキャッシュされるため、そのカテゴリの後のビデオはさらに速く開始されます。"
+    },
+    "pricing": {
+      "tiers": {
+        "free": {
+          "credits": "300クレジット（1回限り）",
+          "features": [
+            "720p 書き出し · 5つのアスペクト比",
+            "商品リンク取り込み",
+            "ストーリーボードレビュー",
+            "Lumi ウォーターマーク"
+          ],
+          "name": "無料",
+          "note": "カードがありません",
+          "allowance": "最初の動画は無料",
+          "cta": "無料で始める"
+        },
+        "creator": {
+          "credits": "900クレジット / 月",
+          "features": [
+            "ウォーターマークなし",
+            "ストーリーボードレビュー",
+            "720p 書き出し · 5つのアスペクト比"
+          ],
+          "name": "クリエイター",
+          "note": "月あたり",
+          "allowance": "≈ 3 動画/月",
+          "cta": "クリエイターをスタート"
+        },
+        "pro": {
+          "credits": "3,000クレジット / 月",
+          "name": "プロ",
+          "note": "月あたり",
+          "allowance": "≈ 1 か月あたり 10 本のビデオ",
+          "features": [
+            "Creator のすべて",
+            "より多くのクレジットを、ビデオあたりのコストは同じに",
+            "無料レンダリングよりも優先"
+          ],
+          "cta": "プロを始める"
+        },
+        "scale": {
+          "credits": "7,500クレジット / 月",
+          "name": "スケール",
+          "note": "月あたり",
+          "allowance": "≈ 25 動画/月",
+          "features": [
+            "プロのすべて",
+            "常時投稿の場合",
+            "セルフサービスのボリュームが最大"
+          ],
+          "cta": "開始スケール"
+        },
+        "enterprise": {
+          "name": "エンタープライズ",
+          "priceLabel": "話しましょう",
+          "note": "チームと代理店向け",
+          "allowance": "カスタムクレジット量",
+          "credits": "コミットメント、卸売料金",
+          "features": [
+            "座席と役割",
+            "ブランドキット",
+            "APIアクセス",
+            "SSO と専用サポート"
+          ],
+          "cta": "営業担当者にお問い合わせください"
+        }
+      },
+      "creditFootnote": "クレジットは実際のレンダリングコストに連動します。動画の正確なコストは選択したモデル・解像度・アスペクト比によって変わります。動画本数は目安で、Seedance 2.0・720p の20秒クリップ（1本300クレジット）を基準にしています。",
+      "included": [
+        "パターンに基づく脚本",
+        "使う前に確認できるストーリーボードレビュー",
+        "あらゆるプラットフォームに対応する5つのアスペクト比",
+        "商品リンクを貼るだけ、または商品写真をアップロード"
+      ],
+      "faq": {
+        "a1": "クレジットは動画の実際のレンダリングコストに連動します。正確なコストは選択したモデル・解像度・アスペクト比によって変わります。Seedance 2.0・720p の20秒クリップなら300クレジット、より軽い設定ならさらに少なくなります。",
+        "a2": "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じクレジット残高から消費されます。",
+        "a3": "有料プランのクレジットは各請求サイクルの開始時にリセットされます。無料の登録特典は1回限りで、更新されません。セルフサービスのチェックアウトはまだ利用できません。より大きな月間クレジットへアップグレードするには、{address} までメールでご連絡ください。設定いたします。",
+        "a5": "現在 Studio のレンダリングモデルは Seedance 2.0 です。速度とコストを重視する Seedance 2.0 Fast と 2.0 Mini はまもなくピッカーに加わり、その後に Seedance 2.5 が続きます。",
+        "q1": "クレジットって何ですか？",
+        "q2": "再生にはクレジットがかかりますか?",
+        "q3": "クレジットがなくなったらどうすればいいですか?",
+        "q4": "プランはいつでも変更できますか?",
+        "a4": "はい。セルフサービス チェックアウトの構築中、プランの変更は電子メール ({address} 宛) で処理されます。年間では毎月より最大 20% 節約できます。",
+        "q5": "Lumi はどのレンダー モデルを使用しますか?"
+      },
+      "header": {
+        "kicker": "価格設定",
+        "title": "無料で始めましょう。いつスケールするか",
+        "highlight": "それは機能しています。",
+        "subtitle": "クレジットカードは必要ありません。いつでもキャンセルできます。年間請求では約 20% 節約できます。"
+      },
+      "billing": {
+        "monthly": "毎月",
+        "annual": "毎年恒例"
+      },
+      "mostPopular": "最も人気のある",
+      "perMonthYearly": "/月 · 毎年請求されます",
+      "everyPlanIncludes": "すべてのプランに含まれるもの",
+      "billingQuestions": "請求に関する質問",
+      "upgrade": {
+        "cta": "アップグレード",
+        "title": "請求はまだセルフサービスではありません",
+        "body": "オンライン チェックアウトはまだ構築中のため、プランはまだサイトで購入できません。 {plan} に移行するには、メールでご連絡ください。セットアップいたします。",
+        "contact": "メールアドレス {address}",
+        "subject": "{plan}にアップグレード"
+      }
+    },
+    "landing": {
+      "heroSubtitle": "リンクを貼るだけ。Lumi はあなたのカテゴリーで最も成果を上げている動画のパターンを学び、ショットのストーリーボードとして脚本を書きます。各ショットを確認・承認してください。本番レンダリングがクレジットを消費するのは、あなたがGOを出したときだけです。",
+      "heroFinePrint": "最初の動画は無料 · カード不要 · 5つのアスペクト比",
+      "marquee": {
+        "seedance": "Seedance 2.0",
+        "review": "ストーリーボードレビュー",
+        "ratio": "5つのアスペクト比",
+        "languages": "8 つのナレーション言語",
+        "productOnly": "製品専用モード",
+        "qa": "自動対話QA",
+        "vibes": "5つの特徴的な雰囲気",
+        "sources": "Amazon · Shopee · TikTok ショップ",
+        "durations": "10～30秒のカット"
+      },
+      "why": {
+        "review": {
+          "body": "すべてのショットに、まず参考フレームが付きます。納得いくまで承認・微調整・再生成できます。再生成は1回1クレジット、本番レンダリングのクレジットが減るのは、あなたがGOを出してからです。",
+          "caption": "レンダリング前の呼び出し。",
+          "uiHeading": "絵コンテレビュー",
+          "uiSpend": "これまでに費やした金額は 0 ドル",
+          "uiRegenerate": "再生する"
+        },
+        "pattern": {
+          "body": "Lumi は、一行を書く前に、カテゴリー内で最もパフォーマンスの高い約 100 本の動画を分解し、変換につながる構造を維持します。",
+          "caption": "スクリプトは証拠に基づいてそれ自体を作成します。",
+          "uiHeading": "パターン抽出",
+          "uiSample": "~100 ビデオ · 美容",
+          "uiHook": "フック — 最初に主張する",
+          "uiProof": "証明 — 機能することを示す",
+          "uiOffer": "オファー — 明確な要求"
+        },
+        "reach": {
+          "body": "5 つのバイブ、8 つのナレーション言語。同じ製品リンクが、販売するすべての場所に移動します。",
+          "caption": "同時に 8 つの言語で販売します。",
+          "uiVibe": "プレミアム＆クリーン"
+        }
+      },
+      "storySteps": {
+        "approve": {
+          "body": "各ショットには先に参考フレームが付きます。再生成は1回1クレジット。本番レンダリングとその課金は、あなたが承認するまで始まりません。",
+          "title": "ストーリーボードを承認します"
+        },
+        "render": {
+          "body": "自動QAがすべての音声セリフを脚本と照合し、選んだアスペクト比でそのまま投稿できる状態になります。",
+          "title": "Seedance がレンダリングします"
+        },
+        "link": {
+          "title": "任意のリンクから開始",
+          "body": "Amazon、Shopee、TikTok Shop、または自分のストア、またはカメラ ロールから直接写真。"
+        },
+        "learn": {
+          "title": "Lumi はパターンを学習します",
+          "body": "このカテゴリで最もパフォーマンスの高い約 100 本の動画を調査し、フック、証拠、オファーなどの変換につながる構造を抽出します。"
+        }
+      },
+      "storyFact2": "クレジットは実際のレンダリングコストに連動",
+      "wallSubtitle": "Lumi の動画はすべて、選んだアスペクト比で音声ナレーション付きで仕上がり、脚本と声は各ターゲット市場に合わせて調整されます。",
+      "pricingSubtitle": "クレジット制：クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。最初の動画は無料、カード不要です。",
+      "pricingTiers": {
+        "creator": {
+          "features": [
+            "900クレジット — 約3本",
+            "ウォーターマークなし",
+            "ストーリーボードレビュー"
+          ],
+          "name": "クリエイター",
+          "price": "29ドル",
+          "note": "/月"
+        },
+        "pro": {
+          "features": [
+            "3,000クレジット — 約10本",
+            "Creator のすべて",
+            "優先レンダリング",
+            "720p 書き出し · 5つのアスペクト比"
+          ],
+          "name": "プロ",
+          "price": "79ドル",
+          "note": "/月"
+        },
+        "scale": {
+          "features": [
+            "7,500クレジット — 約25本",
+            "Pro のすべて",
+            "毎日投稿し続けるためのプラン"
+          ],
+          "name": "スケール",
+          "price": "$199",
+          "note": "/月"
+        }
+      },
+      "seePlans": "プランを見る",
+      "heroTitle": "あらゆる製品リンクを <highlight> 販売するビデオに変換します。</highlight>",
+      "heroPrimary": "初めてのビデオを作成する",
+      "heroSecondary": "どのように機能するか見てみましょう",
+      "sound": {
+        "unmute": "ショーケースビデオのミュートを解除する",
+        "mute": "ショーケースビデオをミュートします"
+      },
+      "pipeline": {
+        "stageLabel": "Lumi スタジオ",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "製品を読む",
+        "pattern": "美容分野の約 100 のトップ動画から学んだ",
+        "productName": "グロウセラム 30ml",
+        "productMeta": "$24 · 美容",
+        "beats": {
+          "hook": {
+            "label": "フック",
+            "line": "最初の 1 秒でスクロールを停止します。"
+          },
+          "proof": {
+            "label": "証明",
+            "line": "血清が実際に機能していることを示します。"
+          },
+          "offer": {
+            "label": "オファー",
+            "line": "画面上の価格。明確に尋ねてください。"
+          }
+        },
+        "approve": "承認する",
+        "approved": "承認済み",
+        "rendering": "Seedance 2.0 によるレンダリング",
+        "rendered": "レンダリング済み",
+        "shopNow": "今すぐ購入"
+      },
+      "whyTitle": "<highlight>すでに機能するものをベースに構築されています</highlight>",
+      "whySubtitle": "真っ白なキャンバスではありません。 Lumi は、カテゴリーがすでに報酬を与えているパターンから開始し、すべてのフレームを管理します。",
+      "storyTitle": "製品リンクから <highlight> ライブビデオへ </highlight>",
+      "storyFact1": "承認するまでレンダリング費用は 0 ドル",
+      "wallTitle": "すべてのカテゴリ、<highlight>すべての市場</highlight>",
+      "wallAudience": "販売者、クリエイター、ブランド、代理店など、動画で販売するあらゆる人向けに構築されています。",
+      "wall": {
+        "beauty": {
+          "category": "美しさ",
+          "vibe": "プレミアム＆クリーン"
+        },
+        "gadgets": {
+          "category": "ガジェット",
+          "vibe": "大胆でパンチのある"
+        },
+        "home": {
+          "category": "ホーム&キッチン",
+          "vibe": "クリーンなデモ"
+        },
+        "pets": {
+          "category": "ペット",
+          "vibe": "楽しくて早い"
+        },
+        "fashion": {
+          "category": "ファッション",
+          "vibe": "居心地が良くて個性的"
+        },
+        "fitness": {
+          "category": "フィットネス",
+          "vibe": "大胆でパンチのある"
+        }
+      },
+      "pricingTitle": "無料で始めましょう。 <highlight>機能する場合はスケールします。</highlight>",
+      "mostPopular": "最も人気のある",
+      "pricingFooter": "<signup>最初のビデオは無料です</signup> - カードは必要ありません。 <plans>全プラン比較→</plans>",
+      "faqTitle": "質問、<highlight>回答済み</highlight>",
+      "finalCtaTitle": "次のベストセラーは <highlight>one リンクです。</highlight>",
+      "finalCtaSubtitle": "最初のビデオを無料にしましょう。カメラも編集者も空白のページもありません。",
+      "finalCtaPrimary": "初めてのビデオを作成する",
+      "finalCtaSecondary": "価格を見る"
+    },
+    "features": {
+      "rows": {
+        "scripts": {
+          "bullets": [
+            "カテゴリ内でフィルタリングされたオーガニック勝者から構造を学習します",
+            "コピペの実行ではなく、フック／プルーフ／オファーのショット",
+            "トップパフォーマーからモデル化された視聴者の言語"
+          ],
+          "kicker": "スクリプト",
+          "title": "パターンに基づいたスクリプト",
+          "body": "Lumi は、単語を書く前に、製品のカテゴリー内でオーガニックなトップパフォーマーの実際の大規模なサンプルを調査し、実際にコンバージョンにつながるフック、プルーフ、CTA の形状などの構造パターンを抽出します。スクリプトはそれに基づいて構築されており、空白のページはありません。"
+        },
+        "review": {
+          "title": "ストーリーボードレビュー",
+          "body": "Lumi は脚本をショットのストーリーボードとして書き、各ショットには最初に参考フレームが生成されます。気に入ったショットは承認し、気に入らないショットは1回1クレジットで再生成。本番レンダリングがクレジットを消費するのは、あなたが承認したときだけです。",
+          "bullets": [
+            "レンダリング前に各ショットの参考フレームを生成",
+            "1ショットだけの再生成は1回1クレジット",
+            "本番レンダリングはあなたの承認待ち"
+          ],
+          "kicker": "制御"
+        },
+        "modes": {
+          "bullets": [
+            "コマース向けの4スタイル",
+            "10〜30秒の長さ、5つのアスペクト比"
+          ],
+          "kicker": "フォーマット",
+          "title": "商品のみのショーケース",
+          "body": "撮影するプレゼンターを必要としない、クリーンで製品主導のカット。鮮明なショーケース ショット、機能の説明、開梱の公開、オファーに焦点を当てた編集を含む 4 つの既製のスタイル。"
+        },
+        "qa": {
+          "body": "各ショットのレンダリング後、Whisper が話されたセリフを文字起こしし、脚本と照合してズレを検出します。音声は常に台本どおりで、想定外の発話はありません。",
+          "kicker": "品質",
+          "title": "自動ダイアログQA",
+          "bullets": [
+            "レンダリングされたすべての行にささやき文字起こし",
+            "意図したスクリプトに対するスコアのドリフト",
+            "投稿する前に台本から外れた音声をキャッチします"
+          ]
+        },
+        "publish": {
+          "body": "Studio で5つのアスペクト比から選択 — TikTok や Reels には 9:16、ほかに 16:9、1:1、4:3、3:4 — あとはダウンロードするか投稿済みにするだけで、統計もすっきり保てます。",
+          "bullets": [
+            "5つのアスペクト比で投稿可能な書き出し",
+            "マイビデオで投稿済みと下書きを管理"
+          ],
+          "kicker": "船",
+          "title": "公開準備完了のエクスポート"
+        },
+        "linkToVideo": {
+          "kicker": "ソース",
+          "title": "ビデオへのリンク",
+          "body": "Amazon、Shopee、TikTok Shop、または自分のストアから製品リンクを貼り付けるか、写真をアップロードします。 Lumi は、作品、アングル、プルーフ ポイントを読み取り、フレーミング、スクリプト、音声、編集を自動的に処理します。あなたの製品はあなたのプライバシーに保たれます。",
+          "bullets": [
+            "任意のリンク — Amazon、Shopee、TikTok Shop、または自分のストア",
+            "または、独自の製品写真をアップロードしてください"
+          ]
+        }
+      },
+      "header": {
+        "kicker": "特長",
+        "title": "ビデオワークフロー全体、",
+        "highlight": "扱った。",
+        "subtitle": "製品の調達から公開可能なカットまで、5 つのツールをつなぎ合わせる必要はありません。"
+      },
+      "pipeline": {
+        "find": "探す",
+        "deconstruct": "解体する",
+        "script": "スクリプト",
+        "generate": "生成する"
+      }
+    },
+    "models": {
+      "header": {
+        "subtitle": "現在 Studio は Seedance 2.0 でレンダリングします。ファミリーの他のモデルは提供開始次第ピッカーに加わり、スクリプトはそのまま引き継がれます。",
+        "kicker": "モデル",
+        "title": "ひとつのスタジオ、フロンティア",
+        "highlight": "ビデオAI。"
+      },
+      "cards": {
+        "seedance": {
+          "tag": "提供中",
+          "desc": "フラッグシップ — 商品ショットに最も生き生きとしたモーションを。最大1080p、ショットごとの音声生成付き。",
+          "bestFor": [
+            "最高品質",
+            "最大1080p",
+            "ショットごとの音声"
+          ],
+          "name": "Seedance 2.0"
+        },
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "近日公開",
+          "desc": "同じファミリーを速度重視にチューニング — より速いレンダリングをより低いクレジットコストで。最大720p。まもなくピッカーに加わります。",
+          "bestFor": [
+            "速度",
+            "低コスト",
+            "最大720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "近日公開",
+          "desc": "最軽量ティア — 下書きと試行を1レンダリングあたり最小のクレジットコストで。最大720p。まもなくピッカーに加わります。",
+          "bestFor": [
+            "下書き",
+            "最小コスト",
+            "最大720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "近日公開",
+          "desc": "次世代モデルは、レンダリングプロバイダーで提供開始され次第ピッカーに追加されます。スクリプトと承認済みストーリーボードは作り直しなしで引き継がれます。",
+          "bestFor": [
+            "ロードマップ",
+            "作り直し不要"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "ショットごとに最適化",
+          "body": "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。モデルの細かい設定をいじる必要はありません。"
+        },
+        "carriesOver": {
+          "body": "スクリプトと承認済みストーリーボードはモデルに依存しません。新しいモデルが登場しても、作り直しなしで動画に使えます。",
+          "title": "あなたの仕事は引き継がれます"
+        },
+        "oneBill": {
+          "title": "1 つのスタジオ、1 つの請求書",
+          "body": "個別のモデル アカウントやクレジットをやりくりする必要はありません。すべて Lumi 内にあります。"
+        }
+      },
+      "ctaTitle": "忙しい作業をすることなく、最高のモデルを使用してレンダリングします。"
+    },
+    "about": {
+      "intro2": "Lumi は別のアプローチを取ります。脚本を書く前に、あなたの商品カテゴリーで実際に成果を上げたオーガニック動画を大量に分析し、コンバージョンにつながる<em>構造</em>を学習します。そして脚本・ストーリーボード・レンダリングを行い、あなたはショットごとに確認して数分で公開できます。",
+      "values": {
+        "control": {
+          "body": "ストーリーボードをショットごとに確認。本番レンダリングがクレジットを消費するのは承認後だけです。",
+          "title": "あなたはコントロールを維持します"
+        },
+        "grounded": {
+          "title": "推測ではなく、根拠を持って",
+          "body": "私たちは、何かを生成する前に、カテゴリ内で実際に何が変換されるかから学びます。"
+        },
+        "quality": {
+          "title": "量より質",
+          "body": "一般的な AI フィラーではなく、スクロールを止めるネイティブ感覚のクリエイティブ。"
+        },
+        "sellers": {
+          "title": "販売者向けに構築",
+          "body": "ソロクリエイターからエージェンシーまで、映画よりも販売したい人向けに作られています。"
+        }
+      },
+      "header": {
+        "kicker": "について",
+        "title": "動画で販売をお手伝いします —",
+        "highlight": "スタジオなしで。",
+        "subtitle": "LumiはSellcastの商品です。私たちは、すでに人気を集めているものに基づいて、あらゆる製品をスクロールを止めるようなショッピング可能なビデオに変えます。"
+      },
+      "intro1": "現在、短編ビデオが店頭に並んでいますが、ほとんどの販売者には、勝者に至るまでの道のりを撮影、編集、テストする時間がありません。汎用 AI ツールは、AI のようなコンテンツでそのギャップを埋めます。",
+      "contact": "パートナーシップ、報道、企業について話したいですか? <email>hello@sellcast.ai</email>"
+    },
+    "metadata": {
+      "features": {
+        "description": "Lumi のすべて — リンクから動画へ、パターンに基づく脚本、ストーリーボードレビュー、商品のみのフォーマット、セリフQA、5つのアスペクト比で投稿可能な書き出し。",
+        "title": "特長"
+      },
+      "models": {
+        "description": "現在 Studio は Seedance 2.0 でレンダリングし、2.0 Fast、2.0 Mini、Seedance 2.5 が順次ピッカーに加わります。各ショットに最適な設定が適用されます。",
+        "title": "モデル"
+      },
+      "pricing": {
+        "description": "無料で始めて、効果が出たら拡大。Lumi の料金はクレジット制 — クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。Free（最初の動画）、Creator、Pro、Scale、Enterprise。開始にクレジットカードは不要。年払いで約20%お得。",
+        "title": "価格設定"
+      },
+      "about": {
+        "title": "について",
+        "description": "Lumi は、販売者と作成者が実際のバイラル パターンに基づいて商品をスクロールを止めるショッピング可能なビデオに変えるのを支援する Sellcast 製品です。"
+      },
+      "blog": {
+        "title": "ブログ"
+      },
+      "careers": {
+        "title": "キャリア"
+      }
+    },
     "legal": {
       "kicker": "法的",
       "lastUpdated": "最終更新日: 2026 年 6 月 1 日",
@@ -837,7 +1348,7 @@
         },
         "disclaimers": {
           "heading": "免責事項",
-          "body": "Lumi は「現状のまま」提供されます。生成されたビデオが特定のパフォーマンスを達成することや、すべてのプラットフォームの進化するルールに準拠することを保証するものではありません。"
+          "body": "Lumi は「現状のまま」提供されます。生成された動画が特定のパフォーマンスを達成することや、すべてのプラットフォームの進化するルールに準拠することを保証するものではありません。"
         },
         "liability": {
           "heading": "責任の制限",
@@ -934,507 +1445,11 @@
         }
       }
     },
-    "header": {
-      "signIn": "サインイン",
-      "startFree": "無料で始める",
-      "openStudio": "Studio を開く",
-      "startFreeMobile": "開始"
-    },
-    "footer": {
-      "tagline": "商品リンクを入れると、公開できる動画が出てくる。すでに売れているパターンだけを土台に。",
-      "columns": {
-        "product": {
-          "title": "製品",
-          "features": "特長",
-          "models": "モデル",
-          "pricing": "価格設定"
-        },
-        "workflow": {
-          "title": "ワークフロー",
-          "linkToVideo": "ビデオへのリンク",
-          "patternScripts": "パターンスクリプト",
-          "beatReview": "ストーリーボードレビュー",
-          "publish": "発行する"
-        },
-        "company": {
-          "title": "会社名",
-          "about": "について",
-          "blog": "ブログ",
-          "careers": "キャリア",
-          "contact": "お問い合わせ"
-        },
-        "legal": {
-          "title": "法的",
-          "privacy": "プライバシー",
-          "terms": "規約",
-          "refunds": "払い戻し"
-        }
-      },
-      "copyright": "© {year} Sellcast. LumiはSellcastの商品です。",
-      "madeFor": "フィルムよりも販売したい販売者向けに作られています。",
-      "signIn": "ログイン"
-    },
     "cta": {
       "title": "次のベストセラーは、製品リンク 1 つ先にあります。",
-      "subtitle": "最初のスクロールを止めるビデオを無料で作成しましょう。カメラも編集者も空白ページも必要ありません。",
+      "subtitle": "最初のスクロールを止めるビデオを無料で作成しましょう。カメラもエディタも空白のページも必要ありません。",
       "primaryLabel": "無料で作成を開始",
       "seePricing": "価格を見る"
-    },
-    "faq": {
-      "q1": "Lumi は一般的な AI ビデオ ツールとどう違うのですか?",
-      "a1": "Lumi は推測しません。一行を書き込む前に、製品のカテゴリ内でオーガニックなトップパフォーマーの実際のサンプルを大規模に調査し、実際にコンバージョンにつながるフック、プルーフ、CTA の形状などの構造パターンを抽出します。あなたのスクリプトは、白紙のページではなく、そのパターンに基づいています。",
-      "q2": "何かを撮影したり、カメラに映る必要はありますか?",
-      "a2": "いいえ。Lumi は商品のみのショーケースを作成します。商品情報からビジュアルと音声ナレーションをエンドツーエンドで生成するため、撮影は不要です。",
-      "q3": "完全にレンダリングされる前にビデオを確認できますか?",
-      "a3": "はい。脚本はショットごとのストーリーボードとして届き、各ショットの参照フレームが先に生成されます。気に入ったショットは承認し、そうでないものは1クレジットで再生成。承認して初めて、本番レンダリングがクレジットを消費します。",
-      "q4": "Lumi はどのビデオ モデルを使用していますか?",
-      "a4": "現在、動画をレンダリングするのは Seedance 2.0 です。Seedance 2.0 Fast と 2.0 Mini はまもなく Studio のピッカーに加わり、その後 Seedance 2.5 が続きます。登場しても脚本と承認済みのストーリーボードはそのまま引き継がれます。",
-      "q5": "製品データはどこから来たのでしょうか?",
-      "a5": "Amazon、Shopee、TikTok Shop、または自分のストアのリンクを貼り付けるか、自分の商品写真をアップロードすると、Lumi がタイトル、説明、画像を読み取って制作します。商品は自分だけに非公開で保たれます。",
-      "q6": "1つのビデオにどれくらい時間がかかりますか?",
-      "a6": "撮影や編集を行わなくても、Lumi スクリプト、ストーリーボード、レンダリングを実行できます。作業を開始して、すぐに公開できる完成したカットに戻ります。カテゴリのパターン調査はキャッシュされるため、そのカテゴリの後のビデオはさらに速く開始されます。"
-    },
-    "pricing": {
-      "header": {
-        "kicker": "価格設定",
-        "title": "無料で始めましょう。いつスケールするか",
-        "highlight": "それは機能しています。",
-        "subtitle": "クレジットカードは必要ありません。いつでもキャンセルできます。年間請求では約 20% 節約できます。"
-      },
-      "billing": {
-        "monthly": "毎月",
-        "annual": "毎年恒例"
-      },
-      "mostPopular": "最も人気のある",
-      "perMonthYearly": "/月 · 毎年請求されます",
-      "tiers": {
-        "free": {
-          "name": "無料",
-          "note": "カードがありません",
-          "allowance": "最初の動画は無料",
-          "credits": "300クレジット（1回限り）",
-          "features": [
-            "720p 書き出し · 5つのアスペクト比",
-            "商品リンク取り込み",
-            "ストーリーボードレビュー",
-            "Lumi ウォーターマーク"
-          ],
-          "cta": "無料で始める"
-        },
-        "creator": {
-          "name": "クリエイター",
-          "note": "月あたり",
-          "allowance": "≈ 3 動画/月",
-          "credits": "900クレジット / 月",
-          "features": [
-            "ウォーターマークなし",
-            "ストーリーボードレビュー",
-            "720p 書き出し · 5つのアスペクト比"
-          ],
-          "cta": "クリエイターをスタート"
-        },
-        "pro": {
-          "name": "プロ",
-          "note": "月あたり",
-          "allowance": "≈ 1 か月あたり 10 本のビデオ",
-          "credits": "3,000クレジット / 月",
-          "features": [
-            "Creator のすべて",
-            "より多くのクレジットを、ビデオあたりのコストは同じに",
-            "無料レンダリングよりも優先"
-          ],
-          "cta": "プロを始める"
-        },
-        "scale": {
-          "name": "スケール",
-          "note": "月あたり",
-          "allowance": "≈ 25 動画/月",
-          "credits": "7,500クレジット / 月",
-          "features": [
-            "プロのすべて",
-            "常時投稿の場合",
-            "セルフサービスのボリュームが最大"
-          ],
-          "cta": "開始スケール"
-        },
-        "enterprise": {
-          "name": "エンタープライズ",
-          "priceLabel": "話しましょう",
-          "note": "チームと代理店向け",
-          "allowance": "カスタムクレジット量",
-          "credits": "コミットメント、卸売料金",
-          "features": [
-            "座席と役割",
-            "ブランドキット",
-            "APIアクセス",
-            "SSO と専用サポート"
-          ],
-          "cta": "営業担当者にお問い合わせください"
-        }
-      },
-      "creditFootnote": "クレジットは実際のレンダリングコストに連動します。動画の正確なコストは選択したモデル・解像度・アスペクト比によって変わります。動画本数は目安で、Seedance 2.0・720p の20秒クリップ（1本300クレジット）を基準にしています。",
-      "everyPlanIncludes": "すべてのプランに含まれるもの",
-      "included": [
-        "パターンに基づく脚本",
-        "使う前に確認できるストーリーボードレビュー",
-        "あらゆるプラットフォームに対応する5つのアスペクト比",
-        "商品リンクを貼るだけ、または商品写真をアップロード"
-      ],
-      "billingQuestions": "請求に関する質問",
-      "faq": {
-        "q1": "クレジットって何ですか？",
-        "a1": "クレジットは動画の実際のレンダリングコストに連動します。正確なコストは選択したモデル・解像度・アスペクト比によって変わります。Seedance 2.0・720p の20秒クリップなら300クレジット、より軽い設定ならさらに少なくなります。",
-        "q2": "再生成にはクレジットがかかりますか?",
-        "a2": "はい、1回につき1クレジットです。レビュー中のショットの再生成は、最終レンダリングと同じクレジット残高から消費されます。",
-        "q3": "クレジットがなくなったらどうすればいいですか?",
-        "a3": "有料プランのクレジットは各請求サイクルの開始時にリセットされます。無料の登録特典は1回限りで、更新されません。セルフサービスのチェックアウトはまだ利用できません。より大きな月間クレジットへアップグレードするには、{address} までメールでご連絡ください。設定いたします。",
-        "q4": "プランはいつでも変更できますか?",
-        "a4": "はい。セルフサービス決済の準備が整うまで、プラン変更はメールで承ります。{address} までご連絡ください。年払いは月払いより約 20% お得です。",
-        "q5": "Lumi はどのレンダー モデルを使用しますか?",
-        "a5": "現在 Studio のレンダリングモデルは Seedance 2.0 です。速度とコストを重視する Seedance 2.0 Fast と 2.0 Mini はまもなくピッカーに加わり、その後に Seedance 2.5 が続きます。"
-      },
-      "upgrade": {
-        "cta": "アップグレード",
-        "title": "セルフサービスの課金はまだご利用いただけません",
-        "body": "オンライン決済は現在準備中のため、サイト上でプランをご購入いただけません。{plan} への変更をご希望の場合は、メールでご連絡ください。設定を代行いたします。",
-        "contact": "{address} にメールする",
-        "subject": "{plan} へのアップグレード"
-      }
-    },
-    "landing": {
-      "heroTitle": "商品リンクを<highlight>売れる動画へ。</highlight>",
-      "heroSubtitle": "リンクを貼るだけ。Lumi はあなたのカテゴリーで最も成果を上げている動画のパターンを学び、ショットのストーリーボードとして脚本を書きます。各ショットを確認・承認してください。本番レンダリングがクレジットを消費するのは、あなたがGOを出したときだけです。",
-      "heroPrimary": "最初の動画をつくる",
-      "heroSecondary": "仕組みを見る",
-      "heroFinePrint": "最初の動画は無料 · カード不要 · 5つのアスペクト比",
-      "sound": {
-        "unmute": "サンプル動画の音声をオンにする",
-        "mute": "サンプル動画をミュートする"
-      },
-      "pipeline": {
-        "stageLabel": "Lumi Studio",
-        "chipRatio": "9:16",
-        "chipModel": "Seedance 2.0",
-        "url": "yourstore.com/products/glow-serum-30ml",
-        "reading": "商品を読み取り中",
-        "pattern": "ビューティー系トップ動画 約100本を学習済み",
-        "productName": "グロウセラム 30 ml",
-        "productMeta": "$24 · ビューティー",
-        "beats": {
-          "hook": {
-            "label": "フック",
-            "line": "最初の1秒でスクロールを止める。"
-          },
-          "proof": {
-            "label": "実証",
-            "line": "セラムが実際に効く様子を見せる。"
-          },
-          "offer": {
-            "label": "オファー",
-            "line": "価格を画面に。行動をはっきりと。"
-          }
-        },
-        "approve": "承認",
-        "approved": "承認済み",
-        "rendering": "Seedance 2.0 でレンダリング中",
-        "rendered": "レンダリング完了",
-        "shopNow": "今すぐ購入"
-      },
-      "marquee": {
-        "seedance": "Seedance 2.0",
-        "languages": "8言語のナレーション",
-        "productOnly": "商品のみモード",
-        "review": "ストーリーボードレビュー",
-        "qa": "セリフの自動QA",
-        "ratio": "5つのアスペクト比",
-        "vibes": "5つのバイブ",
-        "sources": "Amazon · Shopee · TikTok Shop",
-        "durations": "10–30秒のカット"
-      },
-      "whyTitle": "<highlight>すでに機能しているもの</highlight>の上に築く",
-      "whySubtitle": "白紙からは始めません。Lumi はカテゴリがすでに評価しているパターンから出発し、すべてのフレームの決定権はあなたに残します。",
-      "why": {
-        "pattern": {
-          "body": "一行も書き始める前に、Lumi はカテゴリのトップ動画およそ100本を分解し、転換につながる構造だけを残します。",
-          "caption": "台本は、証拠が書く。",
-          "uiHeading": "パターン抽出",
-          "uiSample": "約100本 · ビューティー",
-          "uiHook": "フック — まず主張",
-          "uiProof": "実証 — 効く様子を見せる",
-          "uiOffer": "オファー — 明確な誘導"
-        },
-        "review": {
-          "body": "すべてのショットに、まず参考フレームが付きます。納得いくまで承認・微調整・再生成できます。再生成は1回1クレジット、本番レンダリングのクレジットが減るのは、あなたがGOを出してからです。",
-          "caption": "レンダリングの前に、あなたが決める。",
-          "uiHeading": "ストーリーボード審査",
-          "uiSpend": "消費 $0",
-          "uiRegenerate": "再生成"
-        },
-        "reach": {
-          "body": "5つのバイブ、8言語のナレーション。ひとつの商品リンクが、売るすべての市場へ届きます。",
-          "caption": "8つの言語で、同時に売る。",
-          "uiVibe": "プレミアム&クリーン"
-        }
-      },
-      "storyTitle": "商品リンクから<highlight>公開動画まで</highlight>",
-      "storySteps": {
-        "link": {
-          "title": "どのリンクからでも",
-          "body": "Amazon、Shopee、TikTok Shop、自社ストア——カメラロールの写真からでも始められます。"
-        },
-        "learn": {
-          "title": "Lumi がパターンを学ぶ",
-          "body": "カテゴリの優秀動画およそ100本を研究し、転換を生む構造——フック、実証、オファー——を抽出します。"
-        },
-        "approve": {
-          "title": "あなたがストーリーボードを承認",
-          "body": "各ショットには先に参考フレームが付きます。再生成は1回1クレジット。本番レンダリングとその課金は、あなたが承認するまで始まりません。"
-        },
-        "render": {
-          "title": "Seedance がレンダリング",
-          "body": "自動QAがすべての音声セリフを脚本と照合し、選んだアスペクト比でそのまま投稿できる状態になります。"
-        }
-      },
-      "storyFact1": "承認するまでレンダリング費用は $0",
-      "storyFact2": "クレジットは実際のレンダリングコストに連動",
-      "wallTitle": "すべてのカテゴリー、<highlight>すべての市場へ</highlight>",
-      "wallSubtitle": "Lumi の動画はすべて、選んだアスペクト比で音声ナレーション付きで仕上がり、脚本と声は各ターゲット市場に合わせて調整されます。",
-      "wallAudience": "セラー、クリエイター、ブランド、代理店のために——動画で売るすべての人へ。",
-      "wall": {
-        "beauty": {
-          "category": "ビューティー",
-          "vibe": "プレミアム&クリーン"
-        },
-        "gadgets": {
-          "category": "ガジェット",
-          "vibe": "大胆&パンチ"
-        },
-        "home": {
-          "category": "ホーム&キッチン",
-          "vibe": "クリーンなデモ"
-        },
-        "pets": {
-          "category": "ペット",
-          "vibe": "楽しく軽快"
-        },
-        "fashion": {
-          "category": "ファッション",
-          "vibe": "あたたかく親密"
-        },
-        "fitness": {
-          "category": "フィットネス",
-          "vibe": "大胆&パンチ"
-        }
-      },
-      "pricingTitle": "無料で始めて、<highlight>効いたら広げる。</highlight>",
-      "pricingSubtitle": "クレジット制：クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。最初の動画は無料、カード不要です。",
-      "mostPopular": "最も人気のある",
-      "pricingTiers": {
-        "creator": {
-          "name": "クリエイター",
-          "price": "29ドル",
-          "note": "/月",
-          "features": [
-            "900クレジット — 約3本",
-            "ウォーターマークなし",
-            "ストーリーボードレビュー"
-          ]
-        },
-        "pro": {
-          "name": "プロ",
-          "price": "79ドル",
-          "note": "/月",
-          "features": [
-            "3,000クレジット — 約10本",
-            "Creator のすべて",
-            "優先レンダリング",
-            "720p 書き出し · 5つのアスペクト比"
-          ]
-        },
-        "scale": {
-          "name": "スケール",
-          "price": "$199",
-          "note": "/月",
-          "features": [
-            "7,500クレジット — 約25本",
-            "Pro のすべて",
-            "毎日投稿し続けるためのプラン"
-          ]
-        }
-      },
-      "seePlans": "プランを見る",
-      "pricingFooter": "<signup>初回の動画は無料</signup>——カード不要。<plans>全プランを比較 →</plans>",
-      "faqTitle": "よくある質問に、<highlight>お答えします</highlight>",
-      "finalCtaTitle": "次のベストセラーは、<highlight>リンクひとつ先に。</highlight>",
-      "finalCtaSubtitle": "最初の動画を無料で。カメラも、編集も、白紙のページも要りません。",
-      "finalCtaPrimary": "最初の動画をつくる",
-      "finalCtaSecondary": "料金を見る"
-    },
-    "features": {
-      "header": {
-        "kicker": "特長",
-        "title": "ビデオワークフロー全体、",
-        "highlight": "扱った。",
-        "subtitle": "製品の調達から公開可能なカットまで、5 つのツールをつなぎ合わせる必要はありません。"
-      },
-      "pipeline": {
-        "find": "探す",
-        "deconstruct": "解体する",
-        "script": "スクリプト",
-        "generate": "生成する"
-      },
-      "rows": {
-        "linkToVideo": {
-          "kicker": "ソース",
-          "title": "ビデオへのリンク",
-          "body": "Amazon、Shopee、TikTok Shop、または自分のストアから製品リンクを貼り付けるか、写真をアップロードします。 Lumi は、作品、アングル、プルーフ ポイントを読み取り、フレーミング、スクリプト、音声、編集を自動的に処理します。あなたの製品はあなたのプライバシーに保たれます。",
-          "bullets": [
-            "任意のリンク — Amazon、Shopee、TikTok Shop、または自分のストア",
-            "または、独自の製品写真をアップロードしてください"
-          ]
-        },
-        "scripts": {
-          "kicker": "スクリプト",
-          "title": "パターンに基づいたスクリプト",
-          "body": "Lumi は、単語を書く前に、製品のカテゴリー内で実際にオーガニックなトップパフォーマーの大規模なサンプルを調査し、実際にコンバージョンにつながるフック、プルーフ、CTA の形状などの構造パターンを抽出します。スクリプトはそれに基づいて構築されており、空白のページはありません。",
-          "bullets": [
-            "カテゴリ内でフィルタリングされたオーガニック勝者から構造を学習します",
-            "コピペの実行ではなく、フック／プルーフ／オファーのショット",
-            "トップパフォーマーからモデル化された視聴者の言語"
-          ]
-        },
-        "review": {
-          "kicker": "制御",
-          "title": "ストーリーボードレビュー",
-          "body": "Lumi は脚本をショットのストーリーボードとして書き、各ショットには最初に参考フレームが生成されます。気に入ったショットは承認し、気に入らないショットは1回1クレジットで再生成。本番レンダリングがクレジットを消費するのは、あなたが承認したときだけです。",
-          "bullets": [
-            "レンダリング前に各ショットの参考フレームを生成",
-            "1ショットだけの再生成は1回1クレジット",
-            "本番レンダリングはあなたの承認待ち"
-          ]
-        },
-        "modes": {
-          "kicker": "フォーマット",
-          "title": "商品のみのショーケース",
-          "body": "撮影の要らない商品主体のカット。きれいなショーケース、機能の訴求、開梱、オファー重視の編集にわたる4つの既製スタイルがあります。",
-          "bullets": [
-            "コマース向けの4スタイル",
-            "10〜30秒の長さ、5つのアスペクト比"
-          ]
-        },
-        "qa": {
-          "kicker": "品質",
-          "title": "自動ダイアログQA",
-          "body": "各ショットのレンダリング後、Whisper が話されたセリフを文字起こしし、脚本と照合してズレを検出します。音声は常に台本どおりで、想定外の発話はありません。",
-          "bullets": [
-            "レンダリングされたすべての行にささやき文字起こし",
-            "意図したスクリプトに対するスコアのドリフト",
-            "投稿する前に台本から外れた音声をキャッチします"
-          ]
-        },
-        "publish": {
-          "kicker": "公開",
-          "title": "公開できる書き出し",
-          "body": "Studio で5つのアスペクト比から選択 — TikTok や Reels には 9:16、ほかに 16:9、1:1、4:3、3:4 — あとはダウンロードするか投稿済みにするだけで、統計もすっきり保てます。",
-          "bullets": [
-            "5つのアスペクト比で投稿可能な書き出し",
-            "マイビデオで投稿済みと下書きを管理"
-          ]
-        }
-      }
-    },
-    "models": {
-      "header": {
-        "kicker": "モデル",
-        "title": "ひとつのスタジオ、フロンティア",
-        "highlight": "ビデオAI。",
-        "subtitle": "現在 Studio は Seedance 2.0 でレンダリングします。ファミリーの他のモデルは提供開始次第ピッカーに加わり、スクリプトはそのまま引き継がれます。"
-      },
-      "cards": {
-        "seedance": {
-          "name": "Seedance 2.0",
-          "tag": "提供中",
-          "desc": "フラッグシップ — 商品ショットに最も生き生きとしたモーションを。最大1080p、ショットごとの音声生成付き。",
-          "bestFor": [
-            "最高品質",
-            "最大1080p",
-            "ショットごとの音声"
-          ]
-        },
-        "fast": {
-          "name": "Seedance 2.0 Fast",
-          "tag": "近日公開",
-          "desc": "同じファミリーを速度重視にチューニング — より速いレンダリングをより低いクレジットコストで。最大720p。まもなくピッカーに加わります。",
-          "bestFor": [
-            "速度",
-            "低コスト",
-            "最大720p"
-          ]
-        },
-        "mini": {
-          "name": "Seedance 2.0 Mini",
-          "tag": "近日公開",
-          "desc": "最軽量ティア — 下書きと試行を1レンダリングあたり最小のクレジットコストで。最大720p。まもなくピッカーに加わります。",
-          "bestFor": [
-            "下書き",
-            "最小コスト",
-            "最大720p"
-          ]
-        },
-        "seedance25": {
-          "name": "Seedance 2.5",
-          "tag": "近日公開",
-          "desc": "次世代モデルは、レンダリングプロバイダーで提供開始され次第ピッカーに追加されます。スクリプトと承認済みストーリーボードは作り直しなしで引き継がれます。",
-          "bestFor": [
-            "ロードマップ",
-            "作り直し不要"
-          ]
-        }
-      },
-      "points": {
-        "tuned": {
-          "title": "ショットごとに最適化",
-          "body": "Lumi はショットごとにモーション・長さ・フレーミングを設定し、それぞれを最高の状態にレンダリングします。モデルの細かい設定をいじる必要はありません。"
-        },
-        "carriesOver": {
-          "title": "あなたの仕事は引き継がれます",
-          "body": "スクリプトと承認済みストーリーボードはモデルに依存しません。新しいモデルが登場しても、作り直しなしで動画に使えます。"
-        },
-        "oneBill": {
-          "title": "1 つのスタジオ、1 つの請求書",
-          "body": "個別のモデル アカウントやクレジットをやりくりする必要はありません。すべて Lumi 内にあります。"
-        }
-      },
-      "ctaTitle": "忙しい作業をすることなく、最高のモデルを使用してレンダリングします。"
-    },
-    "about": {
-      "header": {
-        "kicker": "について",
-        "title": "動画で販売をお手伝いします —",
-        "highlight": "スタジオなしで。",
-        "subtitle": "LumiはSellcastの商品です。私たちは、すでに人気を集めているものに基づいて、あらゆる製品をスクロールを止めるようなショッピング可能なビデオに変えます。"
-      },
-      "intro1": "現在、短編ビデオが店頭に並んでいますが、ほとんどの販売者には、勝者に至るまでの道のりを撮影、編集、テストする時間がありません。汎用 AI ツールは、AI のようなコンテンツでそのギャップを埋めます。",
-      "intro2": "Lumi は別のアプローチを取ります。脚本を書く前に、あなたの商品カテゴリーで実際に成果を上げたオーガニック動画を大量に分析し、コンバージョンにつながる<em>構造</em>を学習します。そして脚本・ストーリーボード・レンダリングを行い、あなたはショットごとに確認して数分で公開できます。",
-      "values": {
-        "grounded": {
-          "title": "推測ではなく、根拠を持って",
-          "body": "私たちは、何かを生成する前に、カテゴリ内で実際に何が変換されるかから学びます。"
-        },
-        "quality": {
-          "title": "量より質",
-          "body": "一般的な AI フィラーではなく、スクロールを止めるネイティブ感覚のクリエイティブ。"
-        },
-        "control": {
-          "title": "あなたはコントロールを維持します",
-          "body": "ストーリーボードをショットごとに確認。本番レンダリングがクレジットを消費するのは承認後だけです。"
-        },
-        "sellers": {
-          "title": "販売者向けに構築",
-          "body": "ソロクリエイターからエージェンシーまで、映画よりも販売したい人向けに作られています。"
-        }
-      },
-      "contact": "パートナーシップ、プレス、または企業について話したいですか? <email>hello@sellcast.ai</email>"
     },
     "blog": {
       "title": "Lumi ブログは近日公開予定です",
@@ -1444,32 +1459,17 @@
     },
     "careers": {
       "title": "私たちはコマースビデオの未来を構築しています",
-      "body": "私たちは小規模なチームであり、迅速に動いています。募集中の職種はまだ掲載されていません。ただし、AI、ビデオ、または成長分野で優れている方は、ぜひご連絡をお待ちしております。",
+      "body": "私たちは小規模なチームであり、迅速に動いています。募集中の職種はまだ掲載されていません。ただし、AI、ビデオ、または成長分野で優れた方であれば、ぜひご連絡をお待ちしております。",
       "cta": "自己紹介"
-    },
-    "metadata": {
-      "features": {
-        "title": "特長",
-        "description": "Lumi のすべて — リンクから動画へ、パターンに基づく脚本、ストーリーボードレビュー、商品のみのフォーマット、セリフQA、5つのアスペクト比で投稿可能な書き出し。"
-      },
-      "models": {
-        "title": "モデル",
-        "description": "現在 Studio は Seedance 2.0 でレンダリングし、2.0 Fast、2.0 Mini、Seedance 2.5 が順次ピッカーに加わります。各ショットに最適な設定が適用されます。"
-      },
-      "pricing": {
-        "title": "価格設定",
-        "description": "無料で始めて、効果が出たら拡大。Lumi の料金はクレジット制 — クレジットは実際のレンダリングコストに連動し、軽い設定ほど安く済みます。Free（最初の動画）、Creator、Pro、Scale、Enterprise。開始にクレジットカードは不要。年払いで約20%お得。"
-      },
-      "about": {
-        "title": "について",
-        "description": "Lumi は、販売者と作成者が実際のバイラル パターンに基づいて商品をスクロールを止めるショッピング可能なビデオに変えるのを支援する Sellcast 製品です。"
-      },
-      "blog": {
-        "title": "ブログ"
-      },
-      "careers": {
-        "title": "キャリア"
-      }
     }
+  },
+  "nav": {
+    "features": "特長",
+    "howItWorks": "仕組み",
+    "models": "モデル",
+    "pricing": "価格設定"
+  },
+  "languageSwitcher": {
+    "label": "言語"
   }
 }
