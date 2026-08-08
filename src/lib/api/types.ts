@@ -236,9 +236,11 @@ export const OUTCOME_NUDGES: OutcomeNudge[] = [
  * are derived from `outcome_nudges`/`nudge_note` (the main-path controls) and
  * default on legacy scripts, so treat them all as always-present.
  *
- * The backend model accepts plain strings here for forward/legacy lenience.
- * Render/edit paths must filter this list against `OUTCOME_NUDGES` before
- * showing labels or PATCHing it back. */
+ * `outcome_nudges` is `string[]`, not `OutcomeNudge[]`: the backend model is a
+ * plain string list and generation does emit free-form phrases outside the five
+ * taps. Every render/edit/save path must run it through `knownOutcomeNudges`
+ * (`src/lib/outcome-nudges.ts`) first - an unknown value has no label key, and
+ * must not be shown or PATCHed back. */
 export interface Shot {
   duration: 10 | 15;
   visual: string;

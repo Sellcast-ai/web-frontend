@@ -25,6 +25,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 const EVIDENCE_DIR =
+  process.env.EVIDENCE_DIR ??
   "/var/folders/dl/ss70wk2x45b39_4pclg537_m0000gn/T/no-mistakes-evidence/01KY4SBQQR1YSQ39XRGSE4KCG4";
 
 const product: ProductSummary = {
@@ -579,6 +580,7 @@ describe("Job detail page renders extracted English copy", () => {
       }),
     );
     const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-storyboard-unknown-nudges", html);
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("Closer on the product");

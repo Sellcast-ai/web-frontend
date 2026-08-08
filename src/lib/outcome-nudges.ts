@@ -17,6 +17,10 @@ function isOutcomeNudge(value: string): value is OutcomeNudge {
   return OUTCOME_NUDGE_SET.has(value);
 }
 
+/** Drop anything outside the canonical taps. Backend generation emits
+ * free-form phrases too, and those have no `nudgeLabels.*` key - rendering one
+ * shows the raw key. Filter on read and on save, never when seeding the editor
+ * draft: that compares against `job.storyboard` and would read as dirty. */
 export function knownOutcomeNudges(
   values: readonly string[] | null | undefined,
 ): OutcomeNudge[] {

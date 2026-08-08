@@ -115,7 +115,11 @@ tests after changing catalog keys.
 Backend failure fields are not localized user copy. Failed video reasons and
 store-import failure toasts must go through `src/lib/failure-messages.ts`, which
 maps known backend strings to catalog keys and falls back to translated generic
-messages for anything unknown. API call failures should render through
+messages for anything unknown. The same holds for storyboard shot nudges: the
+backend can return free-form phrases outside the five canonical taps, so the shot
+card, the shot editor, and the `PATCH /storyboard` payload all filter
+`Shot.outcome_nudges` through `src/lib/outcome-nudges.ts` and simply drop the
+rest. API call failures should render through
 `apiErrorMessage(err, localizedFallback)`, not `ApiError.message`; bare 5xx body
 messages are treated as operator prose unless a structured `error_type` is
 present. Metered calls (video create, retry, shot regenerate) render through
