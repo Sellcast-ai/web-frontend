@@ -555,10 +555,13 @@
         "queuedForRender": "Đang chờ render video của bạn…",
         "renderingVideo": "Đang render video của bạn…",
         "working": "Đang xử lý video của bạn…",
-        "scriptDescription": "Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động.",
-        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
-        "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
-        "workingDescription": "Trang này cập nhật tự động."
+        "queuedScriptDescription": "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "scriptDescription": "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "queuedShotsDescription": "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "queuedRenderDescription": "Các cảnh đã duyệt của bạn đang xếp hàng chờ render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "workingDescription": "Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại."
       },
       "review": {
         "title": "Xem lại các cảnh của bạn",
@@ -706,7 +709,6 @@
   },
   "shared": {
     "status": {
-      "queued": "Đã xếp hàng",
       "queuedForScript": "Chờ viết kịch bản",
       "writingScript": "Đang viết kịch bản",
       "reviewStoryboard": "Xem lại bảng phân cảnh",
@@ -720,10 +722,10 @@
       "working": "Đang xử lý"
     },
     "jobProgress": {
-"script": "Kịch bản",
+      "script": "Kịch bản",
       "review": "Xem lại",
       "shots": "Cảnh",
-"render": "Render",
+      "render": "Render",
       "ready": "Sẵn sàng"
     },
     "subjects": {

@@ -397,13 +397,13 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
   const t = useTranslations("shared.jobProgress");
 
   return (
-    <div className="-mx-6 mt-6 flex items-center gap-2 overflow-x-auto px-6 pb-1 sm:mx-0 sm:overflow-x-visible sm:px-0 sm:pb-0">
+    <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap sm:gap-2">
       {STEP_LABEL_KEYS.map((labelKey, i) => {
         const label = t(labelKey);
         const done = i < current;
         const isCurrent = i === current;
         return (
-          <div key={labelKey} className="flex flex-1 items-center gap-2">
+          <div key={labelKey} className="flex items-center gap-2 sm:flex-1">
             <div className="flex items-center gap-2">
               <span
                 className={cn(
@@ -435,7 +435,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
             </div>
             {i < STEP_LABEL_KEYS.length - 1 && (
-              <span className="relative h-0.5 min-w-4 flex-1 overflow-hidden rounded-full bg-border sm:min-w-0">
+              <span className="relative hidden h-0.5 flex-1 overflow-hidden rounded-full bg-border sm:block">
                 <motion.span
                   className="absolute inset-0 origin-left rounded-full bg-success dark:bg-live"
                   initial={false}

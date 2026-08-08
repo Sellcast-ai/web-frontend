@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { STEP_LABEL_KEYS, jobProgressDisplay, stepIndex } from "./job-progress";
+import { STEP_LABEL_KEYS, jobProgressDisplay } from "./job-progress";
 import type { VideoJob, VideoJobStatus, Storyboard } from "./api/types";
 
 const RENDER = STEP_LABEL_KEYS.indexOf("render"); // 3
@@ -30,8 +30,8 @@ describe("jobProgressDisplay", () => {
   });
 
   it("sits at Review while at the storyboard gate", () => {
-    expect(stepIndex(mk({ status: "awaiting_storyboard", storyboard: sb }))).toBe(REVIEW);
     expect(jobProgressDisplay(mk({ status: "awaiting_storyboard", storyboard: sb }))).toMatchObject({
+      stepIndex: REVIEW,
       stepKey: "review",
       statusLabelKey: "reviewStoryboard",
     });
@@ -43,7 +43,7 @@ describe("jobProgressDisplay", () => {
       stepKey: "shots",
       statusLabelKey: "queuedForShots",
       workingTitleKey: "queuedForShots",
-      workingDescriptionKey: "shotsDescription",
+      workingDescriptionKey: "queuedShotsDescription",
     });
     expect(jobProgressDisplay(mk({ status: "submitted", storyboard: sb, beats: [] }))).toMatchObject({
       stepIndex: SHOTS,
@@ -55,12 +55,11 @@ describe("jobProgressDisplay", () => {
   });
 
   it("keeps a fresh job with no storyboard in the Script step", () => {
-    expect(stepIndex(mk({ status: "queued" }))).toBe(0); // script
     expect(jobProgressDisplay(mk({ status: "queued" }))).toMatchObject({
       stepKey: "script",
       statusLabelKey: "queuedForScript",
       workingTitleKey: "queuedForScript",
-      workingDescriptionKey: "scriptDescription",
+      workingDescriptionKey: "queuedScriptDescription",
     });
     expect(jobProgressDisplay(mk({ status: "submitted" }))).toMatchObject({
       stepKey: "script",
@@ -88,7 +87,7 @@ describe("jobProgressDisplay", () => {
       stepKey: "render",
       statusLabelKey: "queuedForRender",
       workingTitleKey: "queuedForRender",
-      workingDescriptionKey: "renderDescription",
+      workingDescriptionKey: "queuedRenderDescription",
     });
     expect(
       jobProgressDisplay(mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] })),
@@ -101,8 +100,29 @@ describe("jobProgressDisplay", () => {
     });
   });
 
+  it("keeps a queued wait from claiming work is under way", () => {
+    const waits = [
+      mk({ status: "queued" }),
+      mk({ status: "queued", storyboard: sb, beats: [] }),
+      mk({ status: "queued", storyboard: sb, beats: [approvedBeat] }),
+    ].map((job) => jobProgressDisplay(job).workingDescriptionKey);
+
+    expect(waits).toEqual([
+      "queuedScriptDescription",
+      "queuedShotsDescription",
+      "queuedRenderDescription",
+    ]);
+
+    const active = [
+      mk({ status: "submitted" }),
+      mk({ status: "submitted", storyboard: sb, beats: [] }),
+      mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] }),
+    ].map((job) => jobProgressDisplay(job).workingDescriptionKey);
+
+    expect(active).toEqual(["scriptDescription", "shotsDescription", "renderDescription"]);
+  });
+
   it("reaches Ready when completed", () => {
-    expect(stepIndex(mk({ status: "completed", storyboard: sb }))).toBe(4);
     expect(jobProgressDisplay(mk({ status: "completed", storyboard: sb }))).toMatchObject({
       stepKey: "ready",
       statusLabelKey: "ready",
@@ -137,7 +157,7 @@ describe("jobProgressDisplay", () => {
       mk({ status: "queued", storyboard: sb, beats: [approvedBeat] }),
       mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] }),
       mk({ status: "completed", storyboard: sb, beats: [approvedBeat] }),
-    ].map(stepIndex);
+    ].map((job) => jobProgressDisplay(job).stepIndex);
 
     expect(lifecycle).toEqual([...lifecycle].sort((a, b) => a - b));
   });

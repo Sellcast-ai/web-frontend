@@ -611,27 +611,46 @@ describe("Job detail page renders extracted English copy", () => {
       "Ready",
       "Waiting to build your shots",
       "Your storyboard is approved.",
+      "in line to have its shot references",
+      "You can leave and come back.",
     ]) {
       expect(text, `expected "${s}" in post-approval render`).toContain(s);
     }
     expect(text).not.toContain("Writing your script");
     expect(text).not.toContain("Queued for script");
+    // A queued job is parked in line, so nothing may claim work is happening.
+    expect(text).not.toContain("preparing the shot references");
     // No credit claim may ride along after approval, where it is false.
     expect(text).not.toContain("credits");
   });
 
-  it("keeps every tracker label readable at 320px without shrinking the badges", () => {
+  it("says work is under way once a worker has claimed the job", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "submitted", beats: [] }),
+    );
+    const text = render(qc, React.createElement(JobDetailPage)).replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Building your shots");
+    expect(text).toContain("preparing the shot references");
+    expect(text).toContain("You can leave and come back.");
+    expect(text).not.toContain("in line");
+  });
+
+  it("wraps every tracker label at 320px instead of scrolling the current step away", () => {
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "queued", beats: [] }),
     );
     const html = render(qc, React.createElement(JobDetailPage));
 
-    // The row scrolls rather than crushing five steps into ~288px, so the
-    // badges keep their circle and no label is hidden or clipped.
-    expect(html).toContain("overflow-x-auto");
+    // The row wraps rather than scrolling: every step - including the current
+    // one - stays on screen at 320px, and the badges keep their circle.
+    expect(html).toContain("flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap");
+    expect(html).not.toContain("overflow-x-auto");
     expect(html).toMatch(/h-7 w-7 shrink-0/);
     expect(html).toMatch(/block whitespace-nowrap text-xs/);
     expect(html).not.toMatch(/hidden text-xs font-semibold sm:block/);
+    // The connector lines are the only part that goes away when wrapped.
+    expect(html).toMatch(/relative hidden h-0\.5 flex-1[^"]*sm:block/);
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {

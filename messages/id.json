@@ -555,10 +555,13 @@
         "queuedForRender": "Menunggu untuk merender video Anda…",
         "renderingVideo": "Merender video Anda…",
         "working": "Mengerjakan video Anda…",
-        "scriptDescription": "Tidak ada yang dirender sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis.",
-        "shotsDescription": "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render.",
-        "renderDescription": "Shot yang Anda setujui sedang dirender menjadi video final.",
-        "workingDescription": "Halaman ini diperbarui secara otomatis."
+        "queuedScriptDescription": "Video Anda sedang antre untuk dimulai. Tidak ada yang dirender sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "scriptDescription": "Lumi sedang menulis naskah Anda. Tidak ada yang dirender sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "queuedShotsDescription": "Storyboard Anda sudah disetujui. Video ini sedang antre untuk penyiapan referensi shot dan aset render. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "shotsDescription": "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "queuedRenderDescription": "Shot yang Anda setujui sedang antre untuk dirender. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "renderDescription": "Shot yang Anda setujui sedang dirender menjadi video final. Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+        "workingDescription": "Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi."
       },
       "review": {
         "title": "Tinjau shot Anda",
@@ -706,7 +709,6 @@
   },
   "shared": {
     "status": {
-      "queued": "Mengantri",
       "queuedForScript": "Antre untuk skrip",
       "writingScript": "Menulis skrip",
       "reviewStoryboard": "Tinjau papan cerita",
@@ -720,8 +722,8 @@
       "working": "Bekerja"
     },
     "jobProgress": {
-"script": "Naskah",
-"review": "Tinjau",
+      "script": "Naskah",
+      "review": "Tinjau",
       "shots": "Shot",
       "render": "Render",
       "ready": "Siap"

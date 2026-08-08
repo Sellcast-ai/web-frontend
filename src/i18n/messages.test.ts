@@ -75,7 +75,6 @@ describe("en catalog", () => {
     expect(Object.keys(en.shared.status).sort()).toEqual([
       "buildingShots",
       "failed",
-      "queued",
       "queuedForRender",
       "queuedForScript",
       "queuedForShots",

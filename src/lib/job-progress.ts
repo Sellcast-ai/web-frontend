@@ -6,7 +6,6 @@ export const STEP_LABEL_KEYS = ["script", "review", "shots", "render", "ready"] 
 export type JobProgressStepKey = (typeof STEP_LABEL_KEYS)[number];
 
 export type JobStatusLabelKey =
-  | "queued"
   | "queuedForScript"
   | "writingScript"
   | "reviewStoryboard"
@@ -29,8 +28,11 @@ export type JobWorkingTitleKey =
   | "working";
 
 export type JobWorkingDescriptionKey =
+  | "queuedScriptDescription"
   | "scriptDescription"
+  | "queuedShotsDescription"
   | "shotsDescription"
+  | "queuedRenderDescription"
   | "renderDescription"
   | "workingDescription";
 
@@ -55,29 +57,31 @@ export function allBeatsApproved(job: VideoJob): boolean {
   );
 }
 
+/** The one artifact ladder: the stage a job's own assets imply, regardless of
+ *  which status it is sitting in. Every status branch that has no stage of its
+ *  own reads it, so the ladder can only ever be changed in one place. */
+function stepFromArtifacts(job: VideoJob): JobProgressStepKey {
+  if (!job.storyboard) return "script";
+  if (!job.beats.length) return "shots";
+  return allBeatsApproved(job) ? "render" : "shots";
+}
+
 function stepForJob(job: VideoJob): JobProgressStepKey {
   switch (job.status) {
     case "completed":
       return "ready";
-    case "queued":
-    case "submitted":
-      if (!job.storyboard) return "script";
-      if (!job.beats.length) return "shots";
-      return allBeatsApproved(job) ? "render" : "shots";
     case "awaiting_storyboard":
       return "review";
     case "awaiting_review":
       return "shots";
     case "in_progress":
       return "render";
+    case "queued":
+    case "submitted":
     case "failed":
-      if (!job.storyboard) return "script";
-      if (!job.beats.length) return "shots";
-      return allBeatsApproved(job) ? "render" : "shots";
+      return stepFromArtifacts(job);
     default:
-      if (job.video_url) return "ready";
-      if (job.beats.length) return allBeatsApproved(job) ? "render" : "shots";
-      return job.storyboard ? "shots" : "script";
+      return job.video_url ? "ready" : stepFromArtifacts(job);
   }
 }
 
@@ -92,15 +96,13 @@ function statusLabelForJob(job: VideoJob, stepKey: JobProgressStepKey): JobStatu
     case "awaiting_review":
       return "reviewShots";
     case "queued":
-      if (stepKey === "script") return "queuedForScript";
       if (stepKey === "shots") return "queuedForShots";
       if (stepKey === "render") return "queuedForRender";
-      return "queued";
+      return "queuedForScript";
     case "submitted":
-      if (stepKey === "script") return "writingScript";
       if (stepKey === "shots") return "buildingShots";
       if (stepKey === "render") return "rendering";
-      return "working";
+      return "writingScript";
     case "in_progress":
       return "rendering";
     default:
@@ -108,24 +110,29 @@ function statusLabelForJob(job: VideoJob, stepKey: JobProgressStepKey): JobStatu
   }
 }
 
-function workingTitleForJob(job: VideoJob, stepKey: JobProgressStepKey): JobWorkingTitleKey {
+/** A `queued` job is parked in line, unclaimed by any worker, so the title and
+ *  the description have to agree about that: nothing is happening "now" yet. */
+function workingCopyForJob(
+  job: VideoJob,
+  stepKey: JobProgressStepKey,
+): Pick<JobProgressDisplay, "workingTitleKey" | "workingDescriptionKey"> {
+  const waiting = job.status === "queued";
   if (stepKey === "script") {
-    return job.status === "queued" ? "queuedForScript" : "writingScript";
+    return waiting
+      ? { workingTitleKey: "queuedForScript", workingDescriptionKey: "queuedScriptDescription" }
+      : { workingTitleKey: "writingScript", workingDescriptionKey: "scriptDescription" };
   }
   if (stepKey === "shots") {
-    return job.status === "queued" ? "queuedForShots" : "buildingShots";
+    return waiting
+      ? { workingTitleKey: "queuedForShots", workingDescriptionKey: "queuedShotsDescription" }
+      : { workingTitleKey: "buildingShots", workingDescriptionKey: "shotsDescription" };
   }
   if (stepKey === "render") {
-    return job.status === "queued" ? "queuedForRender" : "renderingVideo";
+    return waiting
+      ? { workingTitleKey: "queuedForRender", workingDescriptionKey: "queuedRenderDescription" }
+      : { workingTitleKey: "renderingVideo", workingDescriptionKey: "renderDescription" };
   }
-  return "working";
-}
-
-function workingDescriptionForStep(stepKey: JobProgressStepKey): JobWorkingDescriptionKey {
-  if (stepKey === "script") return "scriptDescription";
-  if (stepKey === "shots") return "shotsDescription";
-  if (stepKey === "render") return "renderDescription";
-  return "workingDescription";
+  return { workingTitleKey: "working", workingDescriptionKey: "workingDescription" };
 }
 
 export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
@@ -134,12 +141,6 @@ export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
     stepKey,
     stepIndex: STEP_LABEL_KEYS.indexOf(stepKey),
     statusLabelKey: statusLabelForJob(job, stepKey),
-    workingTitleKey: workingTitleForJob(job, stepKey),
-    workingDescriptionKey: workingDescriptionForStep(stepKey),
+    ...workingCopyForJob(job, stepKey),
   };
-}
-
-/** Index into {@link STEP_LABEL_KEYS} for the job's current stage. */
-export function stepIndex(job: VideoJob): number {
-  return jobProgressDisplay(job).stepIndex;
 }
