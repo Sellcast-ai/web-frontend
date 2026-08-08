@@ -581,8 +581,10 @@
         "locked": "Bloqueado"
       },
       "shotCard": {
+        "spokenLine": "Fala",
+        "visual": "Direção visual",
         "noVisual": "Sem direção visual",
-        "noSpokenLine": "Nenhuma linha falada",
+        "noSpokenLine": "Sem fala",
         "edit": "Editar"
       },
       "shotEditor": {

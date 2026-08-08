@@ -581,8 +581,10 @@
         "locked": "锁定"
       },
       "shotCard": {
+        "spokenLine": "口播台词",
+        "visual": "视觉说明",
         "noVisual": "没有视觉说明",
-        "noSpokenLine": "没有语音线路",
+        "noSpokenLine": "没有口播台词",
         "edit": "编辑"
       },
       "shotEditor": {

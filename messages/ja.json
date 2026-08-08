@@ -581,6 +581,8 @@
         "locked": "ロックされています"
       },
       "shotCard": {
+        "spokenLine": "セリフ",
+        "visual": "映像の指定",
         "noVisual": "映像の指定なし",
         "noSpokenLine": "セリフなし",
         "edit": "編集"

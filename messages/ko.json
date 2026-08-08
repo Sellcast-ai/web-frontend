@@ -581,8 +581,10 @@
         "locked": "잠김"
       },
       "shotCard": {
+        "spokenLine": "대사",
+        "visual": "시각적 설명",
         "noVisual": "시각적 설명 없음",
-        "noSpokenLine": "음성 대사 없음",
+        "noSpokenLine": "대사 없음",
         "edit": "편집"
       },
       "shotEditor": {

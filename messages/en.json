@@ -581,6 +581,8 @@
         "locked": "Locked"
       },
       "shotCard": {
+        "spokenLine": "Spoken line",
+        "visual": "Visual direction",
         "noVisual": "No visual direction",
         "noSpokenLine": "No spoken line",
         "edit": "Edit"

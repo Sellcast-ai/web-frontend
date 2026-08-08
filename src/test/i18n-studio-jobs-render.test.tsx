@@ -513,6 +513,11 @@ describe("Job detail page renders extracted English copy", () => {
       "Home baristas",
       "Host lifts the kettle over the dripper",
       "Close-up of the finished cup",
+      // screen readers must be told which line is spoken and which is seen -
+      // the icons alone say nothing, and quote marks are not a dialogue
+      // convention in every locale we ship
+      "Spoken line",
+      "Visual direction",
       "Locked in for every shot",
       "Locked",
     ]) {

@@ -581,6 +581,8 @@
         "locked": "Đã khóa"
       },
       "shotCard": {
+        "spokenLine": "Lời thoại",
+        "visual": "Mô tả hình ảnh",
         "noVisual": "Chưa có mô tả hình ảnh",
         "noSpokenLine": "Không có lời thoại",
         "edit": "Chỉnh sửa"

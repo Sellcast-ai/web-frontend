@@ -581,8 +581,10 @@
         "locked": "ล็อคแล้ว"
       },
       "shotCard": {
+        "spokenLine": "บทพูด",
+        "visual": "คำอธิบายภาพ",
         "noVisual": "ไม่มีคำอธิบายภาพ",
-        "noSpokenLine": "ไม่มีสายพูด",
+        "noSpokenLine": "ไม่มีบทพูด",
         "edit": "แก้ไข"
       },
       "shotEditor": {

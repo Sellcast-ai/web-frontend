@@ -581,6 +581,8 @@
         "locked": "Terkunci"
       },
       "shotCard": {
+        "spokenLine": "Kalimat yang diucapkan",
+        "visual": "Arahan visual",
         "noVisual": "Tidak ada arahan visual",
         "noSpokenLine": "Tidak ada kalimat yang diucapkan",
         "edit": "Sunting"
