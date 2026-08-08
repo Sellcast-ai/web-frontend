@@ -1,3 +1,5 @@
+import type { VideoQuoteParams } from "@/lib/api/types";
+
 /** Can the user pay for the render they have configured?
  *
  * Decided on two backend-metered numbers only - `VideoQuote.credits` from
@@ -21,4 +23,25 @@ export function affordability(
 ): Affordability {
   if (credits === undefined || remaining === undefined) return "unknown";
   return credits > remaining ? "short" : "affordable";
+}
+
+/** Is there a complete tuple to price at all?
+ *
+ * Studio builds its tuple from typed local state, but the job-detail surface
+ * builds one from wire data (`VideoJob.resolution` and its siblings), and a
+ * field the backend omitted would go out through `URLSearchParams` as the
+ * literal string "undefined" and come back a 422. So this is the gate every
+ * caller of `useVideoQuote` passes through: an incomplete tuple is no request,
+ * and the surface says it has no price rather than losing the number silently
+ * at the click that spends. */
+export function isQuotable(
+  params: VideoQuoteParams | null,
+): params is VideoQuoteParams {
+  return (
+    params !== null &&
+    Boolean(params.mode) &&
+    Boolean(params.resolution) &&
+    Boolean(params.aspect_ratio) &&
+    Number.isFinite(params.duration_seconds)
+  );
 }

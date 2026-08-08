@@ -570,6 +570,7 @@
         "creditNote": "Đây là bước duy nhất sử dụng tín dụng của bạn.",
         "costNote": "Duyệt sẽ dùng tối đa {cost} tín dụng.",
         "balanceNote": "Bạn đang có {remaining}.",
+        "priceUnavailable": "Hiện chưa tải được chi phí chính xác nên số này không được hiển thị.",
         "editTitle": "Chỉnh sửa {label}",
         "editFallbackTitle": "Chỉnh sửa ảnh",
         "context": {

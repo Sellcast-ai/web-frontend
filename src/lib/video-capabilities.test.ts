@@ -3,6 +3,7 @@ import {
   isModeKnownUnavailable as modeKnownUnavailableIn,
   normalizeVideoCapabilities,
   studioCapabilityState as capabilityStateIn,
+  videoModelKeyForProviderModel,
   type StudioCapabilitySelection,
 } from "./video-capabilities";
 import {
@@ -442,5 +443,41 @@ describe("studioCapabilityState", () => {
       language: "es",
     });
     expect(state.canSubmit).toBe(true);
+  });
+});
+
+// The bridge the storyboard approve bar prices through: a job records the
+// provider model id it renders on, and `GET /video-jobs/quote` takes the picker
+// key. Without this the bar could only quote the mode's default model, which is
+// the render's real price by coincidence.
+describe("videoModelKeyForProviderModel", () => {
+  const keyFor = (raw: unknown, mode: VideoMode, providerModel: string) =>
+    videoModelKeyForProviderModel(normalizeVideoCapabilities(raw), mode, providerModel);
+
+  it("resolves a provider model id to the key the quote takes", () => {
+    expect(keyFor(capabilities, "product_only", "doubao-seedance-2-0-fast-260128")).toBe(
+      "seedance-2.0-fast",
+    );
+  });
+
+  // A mode the backend has switched off still has jobs parked at the storyboard
+  // gate; what an existing render costs has nothing to do with what may be
+  // started now.
+  it("resolves for a mode reported unavailable", () => {
+    const off = [{ ...capabilities[0], available: false }];
+    expect(keyFor(off, "product_only", "doubao-seedance-2-0-260128")).toBe("seedance-2.0");
+  });
+
+  it("gives up rather than guessing when nothing matches", () => {
+    expect(keyFor(capabilities, "product_only", "some-model-nobody-listed")).toBeNull();
+    expect(keyFor(capabilities, "ai_avatar", "doubao-seedance-2-0-260128")).toBeNull();
+    expect(keyFor(undefined, "product_only", "doubao-seedance-2-0-260128")).toBeNull();
+    expect(keyFor(capabilities, "product_only", "")).toBeNull();
+  });
+
+  // An entry that didn't parse is no read at all - never a match by omission.
+  it("gives up on an unreadable entry", () => {
+    const broken = [{ mode: "product_only", available: "yes", models: [] }];
+    expect(keyFor(broken, "product_only", "doubao-seedance-2-0-260128")).toBeNull();
   });
 });

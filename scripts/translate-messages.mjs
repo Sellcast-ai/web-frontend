@@ -572,6 +572,16 @@ const MANUAL_OVERRIDES = {
     vi: "Duyệt sẽ dùng tối đa {cost} tín dụng.",
     th: "การอนุมัติจะใช้เครดิตสูงสุด {cost}",
   },
+  "app.jobs.storyboard.priceUnavailable": {
+    es: "No pudimos cargar el costo exacto ahora mismo, así que no se muestra.",
+    zh: "暂时无法获取确切费用，因此这里不显示。",
+    ja: "現在、正確なコストを取得できないため、ここには表示していません。",
+    ko: "지금은 정확한 비용을 불러올 수 없어 표시하지 않습니다.",
+    pt: "Não conseguimos carregar o custo exato agora, então ele não é exibido.",
+    id: "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan.",
+    vi: "Hiện chưa tải được chi phí chính xác nên số này không được hiển thị.",
+    th: "ตอนนี้เราโหลดต้นทุนที่แน่ชัดไม่ได้ จึงยังไม่แสดงตัวเลข",
+  },
   "app.jobs.storyboard.balanceNote": {
     es: "Tienes {remaining}.",
     zh: "你当前有 {remaining}。",

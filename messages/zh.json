@@ -325,6 +325,7 @@
         "creditNote": "这是使用您的积分的唯一步骤。",
         "costNote": "确认后最多扣除 {cost} 积分。",
         "balanceNote": "你当前有 {remaining}。",
+        "priceUnavailable": "暂时无法获取确切费用，因此这里不显示。",
         "editTitle": "编辑{label}",
         "editFallbackTitle": "编辑镜头",
         "shotLabels": {

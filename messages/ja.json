@@ -570,6 +570,7 @@
         "creditNote": "これがクレジットを使用する唯一のステップです。",
         "costNote": "承認すると最大 {cost} クレジットを消費します。",
         "balanceNote": "残高は {remaining} です。",
+        "priceUnavailable": "現在、正確なコストを取得できないため、ここには表示していません。",
         "editTitle": "{label}を編集",
         "editFallbackTitle": "ショットを編集する",
         "context": {

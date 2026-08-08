@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { affordability } from "./render-quote";
+import { affordability, isQuotable } from "./render-quote";
 import { VIDEO_MODELS } from "./api/types";
 
 describe("affordability", () => {
@@ -27,19 +27,43 @@ describe("affordability", () => {
   });
 });
 
-// The storyboard approve bar quotes a job WITHOUT a model, because a job row
-// carries a provider model id and `GET /video-jobs/quote` takes only Studio
-// picker keys - so the backend prices the mode's default model. That is exact
-// only while exactly one model can be picked. A second enabled entry makes the
-// approve bar quote a price the render may not be charged, which is the whole
-// failure this endpoint was wired in to end.
-describe("approve-bar quote assumption", () => {
-  it("holds while Studio offers exactly one selectable model", () => {
-    const selectable = VIDEO_MODELS.filter((m) => m.enabled);
+// A field the backend left off a job row would be serialised as the literal
+// "undefined" and 422 - the price would then vanish at the click that spends,
+// with nothing on screen saying why.
+describe("isQuotable", () => {
+  const complete = {
+    mode: "product_only",
+    duration_seconds: 20,
+    resolution: "720p",
+    aspect_ratio: "9:16",
+  };
+
+  it("accepts a complete tuple, with or without an explicit model", () => {
+    expect(isQuotable(complete)).toBe(true);
+    expect(isQuotable({ ...complete, video_model: VIDEO_MODELS[0].value })).toBe(true);
+  });
+
+  it("rejects nothing to price", () => {
+    expect(isQuotable(null)).toBe(false);
+  });
+
+  it("rejects a tuple missing any priced field", () => {
+    for (const field of ["mode", "resolution", "aspect_ratio"] as const) {
+      expect(
+        isQuotable({ ...complete, [field]: undefined as unknown as string }),
+        field,
+      ).toBe(false);
+      expect(isQuotable({ ...complete, [field]: "" }), field).toBe(false);
+    }
     expect(
-      selectable.length,
-      "enabling a second model means the job page must resolve the job's " +
-        "provider_model back to a picker key before quoting (see StoryboardView)",
-    ).toBe(1);
+      isQuotable({ ...complete, duration_seconds: undefined as unknown as number }),
+    ).toBe(false);
+    expect(isQuotable({ ...complete, duration_seconds: NaN })).toBe(false);
+  });
+
+  // Zero-second renders aren't a thing, but the backend owns that refusal:
+  // this predicate only asks whether a number was sent at all.
+  it("passes a zero duration through to the backend", () => {
+    expect(isQuotable({ ...complete, duration_seconds: 0 })).toBe(true);
   });
 });

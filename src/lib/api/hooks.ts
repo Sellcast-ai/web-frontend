@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { ApiError, api, apiErrorMessage } from "./client";
 import { isOutOfCreditsError } from "@/lib/quota-error";
+import { isQuotable } from "@/lib/render-quote";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -239,15 +240,21 @@ export function useVideoCapabilities() {
  * A slow or failed read must never block anything: callers treat missing data
  * as "no price known" (`affordability` in `src/lib/render-quote.ts`) and leave
  * the action enabled for the backend to judge. `null` params disable the query
- * for a surface that has nothing to price yet. */
+ * for a surface that has nothing to price yet, and so does an incomplete tuple
+ * - `isQuotable` is the one gate, here rather than at each call site, so no
+ * caller can send a field the backend never returned as "undefined". */
 export function useVideoQuote(params: VideoQuoteParams | null) {
+  const quotable = isQuotable(params);
   return useQuery({
-    queryKey: params ? qk.quote(params) : ["video-quote", "idle"],
+    queryKey: quotable ? qk.quote(params) : ["video-quote", "idle"],
     queryFn: () => api.getVideoQuote(params!),
-    enabled: params !== null,
+    enabled: quotable,
     // Pricing is deployment configuration; it moves on a backend deploy,
     // not while a user works. Same reasoning as `useVideoCapabilities`.
     staleTime: 30 * 60_000,
+    // A tuple the backend rejects as invalid is rejected identically on every
+    // retry, so a bad configuration costs one request, not four with backoff.
+    retry: false,
   });
 }
 

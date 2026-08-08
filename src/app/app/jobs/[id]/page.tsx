@@ -36,6 +36,7 @@ import {
   useProduct,
   useDeleteJob,
   useUsage,
+  useVideoCapabilities,
   useVideoQuote,
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
@@ -55,6 +56,11 @@ import {
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
+import { isQuotable } from "@/lib/render-quote";
+import {
+  normalizeVideoCapabilities,
+  videoModelKeyForProviderModel,
+} from "@/lib/video-capabilities";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
@@ -577,20 +583,42 @@ function StoryboardView({ job }: { job: VideoJob }) {
   });
   // What approving actually costs, priced off the job's own stored render
   // configuration - `resolution` is the clamped value the charge is priced at,
-  // so this is the same tuple the debit runs through. `video_model` is omitted
-  // deliberately: the job carries a provider model id, not a Studio picker key,
-  // and the quote takes only picker keys - so it prices this mode's DEFAULT
-  // model. Exact while Studio offers exactly one enabled model (see
-  // VIDEO_MODELS), which `render-quote.test.ts` asserts so enabling a second
-  // one fails loudly here instead of quietly quoting the wrong price.
-  const quote = useVideoQuote({
-    mode: job.mode,
-    duration_seconds: job.duration_seconds,
-    resolution: job.resolution,
-    aspect_ratio: job.aspect_ratio,
-  });
+  // so this is the same tuple the debit runs through. The model is the job's
+  // own `provider_model`, resolved back to the picker key the quote takes via
+  // the capability read's `model_id` pairing: quoting the mode's default
+  // instead would be the render's real price only by coincidence, and silently
+  // wrong at the one click that spends.
+  const capabilities = useVideoCapabilities();
+  const videoModel = videoModelKeyForProviderModel(
+    normalizeVideoCapabilities(capabilities.data),
+    job.mode,
+    job.provider_model,
+  );
+  // Nothing is quoted until that lookup has had its chance, so the bar can't
+  // flash a default-priced number and then correct itself.
+  const quoteParams = capabilities.isPending
+    ? null
+    : {
+        mode: job.mode,
+        duration_seconds: job.duration_seconds,
+        resolution: job.resolution,
+        aspect_ratio: job.aspect_ratio,
+        ...(videoModel ? { video_model: videoModel } : {}),
+      };
+  const quote = useVideoQuote(quoteParams);
   const { data: usage } = useUsage();
-  const cost = quote.data?.credits;
+  // Only ever THIS render's price. A quote the backend priced on some other
+  // model - the mode default, because the key couldn't be resolved - is a
+  // plausible wrong number, which is worse here than no number at all.
+  const cost =
+    quote.data?.model_id === job.provider_model ? quote.data.credits : undefined;
+  // ...and when there is no number, the bar says why rather than letting the
+  // price quietly disappear. Incomplete inputs (a job row missing `resolution`)
+  // never became a request at all; `isQuotable` is the same gate the hook uses.
+  const priceUnknown =
+    (quoteParams !== null && !isQuotable(quoteParams)) ||
+    quote.isError ||
+    (quote.data !== undefined && cost === undefined);
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -736,7 +764,12 @@ function StoryboardView({ job }: { job: VideoJob }) {
             here can ever block or delay approving. */}
         <p className="text-xs text-muted-foreground">
           {cost === undefined ? (
-            t("creditNote")
+            <>
+              {t("creditNote")}
+              {/* A price that failed to load is named, not omitted: the user is
+                  about to spend, and silence would read as "no cost here". */}
+              {priceUnknown && ` ${t("priceUnavailable")}`}
+            </>
           ) : (
             <>
               <strong className="font-semibold text-ink">

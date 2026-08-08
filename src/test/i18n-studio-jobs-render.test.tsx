@@ -70,7 +70,9 @@ const baseJob: VideoJob = {
   user_id: "u-1",
   product_id: "prod-1",
   provider: "byteplus",
-  provider_model: "seedance-2.0",
+  // A provider model id, which is what a job row actually carries - not the
+  // Studio picker key the quote endpoint takes.
+  provider_model: "doubao-seedance-2-0-260128",
   status: "awaiting_storyboard",
   mode: "ai_avatar",
   style: "avatar_talking_intro",
@@ -135,6 +137,29 @@ const baseJob: VideoJob = {
   ],
   beats: [],
 };
+
+/** The capability read the job page maps `provider_model` back through. Only
+ *  the `key` <-> `model_id` pairing matters here; the picker narrowing it also
+ *  drives is exercised in `video-capabilities.test.ts`. */
+const jobCapabilities = [
+  {
+    mode: "ai_avatar",
+    available: true,
+    aspect_ratios: ["9:16", "16:9"],
+    languages: null,
+    beat_durations: [5, 10],
+    max_resolution: "1080p",
+    models: [
+      {
+        key: "seedance-2.0",
+        label: "Seedance 2.0",
+        model_id: "doubao-seedance-2-0-260128",
+        max_resolution: "1080p",
+        beat_durations: [5, 10],
+      },
+    ],
+  },
+];
 
 function makeClient(seed: (qc: QueryClient) => void) {
   const qc = new QueryClient({
@@ -772,16 +797,18 @@ describe("Job detail page renders extracted English copy", () => {
     const qc = makeClient((c) => {
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
       c.setQueryData(["usage"], usage);
-      // No video_model: the job carries a provider model id, not a picker key,
-      // so the backend prices this mode's default (see render-quote.test.ts).
+      c.setQueryData(qk.videoCapabilities, jobCapabilities);
+      // The job's provider model, resolved back to the picker key through the
+      // capability read - so the price is this render's, not the mode default's.
       c.setQueryData(
         qk.quote({
           mode: "ai_avatar",
           duration_seconds: 15,
           resolution: "720p",
           aspect_ratio: "9:16",
+          video_model: "seedance-2.0",
         }),
-        { credits: 225 },
+        { credits: 225, model_id: baseJob.provider_model },
       );
     });
     const html = render(qc, React.createElement(JobDetailPage));
@@ -792,6 +819,55 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).toContain("You have 180.");
     // The vague note it replaces must not linger beside it.
     expect(text).not.toContain("This is the only step that uses your credits.");
+    expect(text).not.toContain("We couldn’t load the exact cost");
+  });
+
+  // A price the backend worked out for some OTHER model is a plausible wrong
+  // number at the one click that spends, which is worse than no number.
+  it("withholds a price quoted on a model this job doesn't run", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(qk.videoCapabilities, jobCapabilities);
+      c.setQueryData(
+        qk.quote({
+          mode: "ai_avatar",
+          duration_seconds: 15,
+          resolution: "720p",
+          aspect_ratio: "9:16",
+          video_model: "seedance-2.0",
+        }),
+        { credits: 225, model_id: "some-other-model" },
+      );
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).not.toContain("225");
+    expect(text).toContain("This is the only step that uses your credits.");
+    expect(text).toContain("We couldn’t load the exact cost");
+  });
+
+  // A job row missing a priced field must never go out as "undefined" - and
+  // the user is told the number is missing rather than left to read its
+  // absence as "this step is free".
+  it("says why when the job carries nothing to price", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "awaiting_storyboard",
+        resolution: undefined as unknown as string,
+      });
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(qk.videoCapabilities, jobCapabilities);
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("This is the only step that uses your credits.");
+    expect(text).toContain("We couldn’t load the exact cost");
+    const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
+    expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(false);
   });
 
   // Nothing on this bar may wait on a price: an unquoted job keeps the note it

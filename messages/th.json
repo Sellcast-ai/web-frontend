@@ -570,6 +570,7 @@
         "creditNote": "นี่เป็นขั้นตอนเดียวที่ใช้เครดิตของคุณ",
         "costNote": "การอนุมัติจะใช้เครดิตสูงสุด {cost}",
         "balanceNote": "คุณมี {remaining}",
+        "priceUnavailable": "ตอนนี้เราโหลดต้นทุนที่แน่ชัดไม่ได้ จึงยังไม่แสดงตัวเลข",
         "editTitle": "แก้ไข {label}",
         "editFallbackTitle": "แก้ไขช็อต",
         "context": {
