@@ -175,6 +175,14 @@
         "badge": "不适用"
       },
       "usageSummary": "剩余 {remaining}/{limit} 积分",
+      "cost": {
+        "label": "本视频",
+        "value": "最多 {credits} 积分",
+        "pending": "计算中…",
+        "retrying": "无法获取价格，正在重试",
+        "unavailable": "无法获取价格"
+      },
+      "costMayExceed": "此视频最多可能消耗 {cost} 积分，而你有 {remaining}。实际扣除通常更少，所以仍有可能成功生成。",
       "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
       "seePlans": "查看套餐",
       "title": "影音工作室",
@@ -315,7 +323,16 @@
         "title": "这是您的视频计划",
         "description": "目前还没有任何进展——这只是计划。通读一遍，更改您想要的任何行，然后点击“开始”，Lumi 就会为您构建整个视频。",
         "approveAndMake": "批准并制作我的视频",
+        "saveEdits": "保存修改",
+        "getCredits": "获取积分",
         "creditNote": "这是使用您的积分的唯一步骤。",
+        "costNote": "确认后最多扣除 {cost} 积分。",
+        "balanceNote": "你当前有 {remaining}。",
+        "shortfallNote": "还差 {shortfall} 积分。实际扣除通常更少，所以仍有可能成功生成。",
+        "noCreditsNote": "你的积分已用完，因此确认不会生效。",
+        "seePlans": "查看套餐",
+        "priceUnavailable": "暂时无法获取确切费用，因此这里不显示。我们仍在尝试。",
+        "priceNotQuotable": "无法算出本次生成的确切费用，因此这里不显示。",
         "editTitle": "编辑{label}",
         "editFallbackTitle": "编辑镜头",
         "shotLabels": {

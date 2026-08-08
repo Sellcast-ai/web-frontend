@@ -79,7 +79,10 @@ type ModeCapability = {
   aspectRatios: string[];
   languages: string[] | null;
   maxResolution: string | null;
-  models: { key: string; maxResolution: string | null }[];
+  /** `modelId` is the provider model id the backend renders on - the same value
+   * a job row carries as `provider_model`, and the only bridge back from a
+   * finished job's model to the picker key a quote can be asked for. */
+  models: { key: string; modelId: string | null; maxResolution: string | null }[];
 };
 
 function strings(value: unknown): string[] {
@@ -130,6 +133,7 @@ function normalizeMode(raw: unknown): ModeCapability | null {
         if (typeof key !== "string") return null;
         return {
           key,
+          modelId: optionalString((model as Record<string, unknown>).model_id),
           maxResolution: optionalString(
             (model as Record<string, unknown>).max_resolution,
           ),
@@ -169,6 +173,49 @@ function modeNarrowing(caps: VideoCapabilitySnapshot, mode: VideoMode): ModeNarr
   const cap = caps.find((entry) => entry.mode === mode);
   if (!cap || !cap.readable) return { kind: "unknown" };
   return cap.available ? { kind: "narrow", cap } : { kind: "off" };
+}
+
+/** The picker key that names a provider model id, from the capability read's
+ * own `model_id` -> `key` pairing.
+ *
+ * A job row records `provider_model`, but `GET /video-jobs/quote` prices a
+ * Studio picker key - so without this bridge a job can only be quoted on its
+ * mode's DEFAULT model, which is the render's real model only by coincidence.
+ * Availability is deliberately not consulted: this answers what an already
+ * created render runs on, and a mode the backend has since switched off still
+ * has jobs parked at the storyboard gate waiting to be priced.
+ *
+ * Null when nothing was read for the mode, or when it lists no model with that
+ * id. The caller then quotes without a model and must check `VideoQuote.
+ * model_id` against `provider_model` before showing the number - which it has
+ * to do anyway, since only the backend can confirm what it priced. */
+export function videoModelKeyForProviderModel(
+  caps: VideoCapabilitySnapshot,
+  mode: VideoMode,
+  providerModel: string,
+): string | null {
+  const cap = caps.find((entry) => entry.mode === mode);
+  if (!cap?.readable || !providerModel) return null;
+  return cap.models.find((model) => model.modelId === providerModel)?.key ?? null;
+}
+
+/** The other direction: the provider model id a picker key resolves to, so a
+ * surface that asked for a key can check `VideoQuote.model_id` against what it
+ * asked for rather than trusting the backend not to have substituted its own
+ * default.
+ *
+ * Null when nothing was read for the mode, or when the read names no id for
+ * that key - there is then no id to verify against, and a caller degrading to
+ * the static pickers must not lose its price over a capability read it never
+ * got. */
+export function providerModelForVideoModelKey(
+  caps: VideoCapabilitySnapshot,
+  mode: VideoMode,
+  key: string,
+): string | null {
+  const cap = caps.find((entry) => entry.mode === mode);
+  if (!cap?.readable || !key) return null;
+  return cap.models.find((model) => model.key === key)?.modelId ?? null;
 }
 
 export function isModeKnownUnavailable(

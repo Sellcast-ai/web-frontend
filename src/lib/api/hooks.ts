@@ -7,8 +7,9 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { ApiError, api, apiErrorMessage } from "./client";
+import { ApiError, api, apiErrorMessage, isTransientError } from "./client";
 import { isOutOfCreditsError } from "@/lib/quota-error";
+import { isQuotable } from "@/lib/render-quote";
 import { toast } from "@/lib/toast";
 import type {
   AvatarCreate,
@@ -19,6 +20,7 @@ import type {
   VideoJob,
   VideoJobCreate,
   VideoJobStatus,
+  VideoQuoteParams,
 } from "./types";
 
 export const qk = {
@@ -28,6 +30,19 @@ export const qk = {
   jobs: (p: Record<string, unknown>) => ["jobs", p] as const,
   job: (id: string) => ["job", id] as const,
   videoCapabilities: ["video-capabilities"] as const,
+  /** One key per priced configuration. Re-quoting when a picker moves is this
+   * key changing, not an effect — and flipping back to a configuration already
+   * priced is served from cache, so a user sweeping the pickers costs one
+   * request per distinct render, not one per click. */
+  quote: (p: VideoQuoteParams) =>
+    [
+      "video-quote",
+      p.mode,
+      p.duration_seconds,
+      p.resolution,
+      p.aspect_ratio,
+      p.video_model ?? null,
+    ] as const,
   import: (id: string) => ["import", id] as const,
   importCandidates: (storeDomain: string) => ["import-candidates", storeDomain] as const,
   shopifyAvailability: ["shopify-availability"] as const,
@@ -204,14 +219,65 @@ export function useVideoJob(id: string) {
   });
 }
 
+/** Keep working at a failure that can still come good, and stop dead at one
+ * that can't. Both price reads degrade a surface that tells the user the cost
+ * is unknown "right now" (see the approve bar in `app/jobs/[id]/page.tsx`),
+ * and with the app-wide `refetchOnWindowFocus: false` a read nobody retries
+ * makes that sentence a lie for the life of the page - so a transient failure
+ * is genuinely re-polled, while a 4xx (the route isn't deployed, the tuple is
+ * refused) stops at one request and lets the caller say so permanently.
+ * Only while errored: a read that landed is deployment config and doesn't
+ * move under a working user. */
+const transientRecovery = {
+  retry: (count: number, err: unknown) => count < 1 && isTransientError(err),
+  refetchInterval: (query: { state: { status: string; error: unknown } }) =>
+    query.state.status === "error" && isTransientError(query.state.error)
+      ? 60_000
+      : (false as const),
+};
+
 /** Render capability metadata changes only when backend/provider config changes.
  * A slow or failed read must not block Studio, so callers treat missing data as
- * the static picker constants. */
+ * the static picker constants. Two surfaces stay degraded until it lands and
+ * neither can recover on its own - Studio holds its price back until the repair
+ * has something to narrow with, and the storyboard approve bar can't resolve the
+ * job's `provider_model` to a quotable model key - hence `transientRecovery`. */
 export function useVideoCapabilities() {
   return useQuery({
     queryKey: qk.videoCapabilities,
     queryFn: api.getVideoCapabilities,
     staleTime: 30 * 60_000,
+    ...transientRecovery,
+  });
+}
+
+/** What the configured render would cost, from the backend's own quote endpoint
+ * (`GET /video-jobs/quote`, read-only and free). Priced per configuration, so
+ * `data` is only ever the price of the CURRENT one: no `placeholderData`, on
+ * purpose - carrying the previous quote across a picker change would put a
+ * stale price under settings that no longer produce it, which is worse than a
+ * moment with no price at all.
+ *
+ * A slow or failed read must never block anything: callers treat missing data
+ * as "no price known" (`affordability` in `src/lib/render-quote.ts`) and leave
+ * the action enabled for the backend to judge. `null` params disable the query
+ * for a surface that has nothing to price yet, and so does an incomplete tuple
+ * - `isQuotable` is the one gate, here rather than at each call site, so no
+ * caller can send a field the backend never returned as "undefined". */
+export function useVideoQuote(params: VideoQuoteParams | null) {
+  const quotable = isQuotable(params);
+  return useQuery({
+    queryKey: quotable ? qk.quote(params) : ["video-quote", "idle"],
+    queryFn: () => api.getVideoQuote(params!),
+    enabled: quotable,
+    // Pricing is deployment configuration; it moves on a backend deploy,
+    // not while a user works. Same reasoning as `useVideoCapabilities`.
+    staleTime: 30 * 60_000,
+    // A tuple the backend rejects as invalid is rejected identically on every
+    // retry, so a bad configuration costs one request, not four with backoff -
+    // while a 5xx or a dead socket is re-polled, because the bar that shows
+    // this price promises exactly that.
+    ...transientRecovery,
   });
 }
 
@@ -403,16 +469,45 @@ export function useBeatAction(
   });
 }
 
+/** Storyboard approval is where the render is actually charged - create and
+ * retry's `["usage"]` invalidations were written when create was the charge
+ * point, and this one was left behind. It is a metered call like any other, so
+ * it takes the same two obligations: `renderFailureMessage` (never the raw
+ * backend prose, which spells the balance out in English on a nine-locale
+ * surface), and a usage refresh on BOTH outcomes - success debited hundreds of
+ * credits, and a refusal proves the meter the user last read was wrong.
+ *
+ * Split out from the hook so the handlers can be exercised directly: the test
+ * environment is `node`, with no renderer to mount a hook in. */
+export function approveStoryboardOptions(
+  qc: QueryClient,
+  jobId: string,
+  messages: { approveError: string; outOfCredits: string },
+) {
+  return {
+    mutationFn: () => api.approveStoryboard(jobId),
+    onSuccess: (job: VideoJob) => {
+      qc.setQueryData(qk.job(job.id), job);
+      qc.invalidateQueries({ queryKey: ["usage"] });
+    },
+    onError: (err: unknown) => {
+      qc.invalidateQueries({ queryKey: ["usage"] });
+      toast.error(
+        renderFailureMessage(err, {
+          fallback: messages.approveError,
+          outOfCredits: messages.outOfCredits,
+        }),
+      );
+    },
+  };
+}
+
 export function useApproveStoryboard(
   jobId: string,
-  messages: { approveError: string },
+  messages: { approveError: string; outOfCredits: string },
 ) {
   const qc = useQueryClient();
-  return useMutation({
-    mutationFn: () => api.approveStoryboard(jobId),
-    onSuccess: (job: VideoJob) => qc.setQueryData(qk.job(job.id), job),
-    onError: (err) => toast.error(apiErrorMessage(err, messages.approveError)),
-  });
+  return useMutation(approveStoryboardOptions(qc, jobId, messages));
 }
 
 export function usePatchStoryboard(jobId: string, messages: { saveError: string }) {

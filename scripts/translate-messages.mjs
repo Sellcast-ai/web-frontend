@@ -409,10 +409,11 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã dùng hết tín dụng miễn phí.",
     th: "คุณใช้เครดิตฟรีหมดแล้ว",
   },
-  // One label, three render sites (profile card, Studio notice, landing pricing
-  // footer) - all pinned together so a regeneration can't ship two spellings of
-  // the same link. The machine reads "plans" as intentions (id/vi) or drawings
-  // (es "planos", which is also Portuguese), never a subscription tier.
+  // One label, four render sites (profile card, Studio notice, storyboard
+  // approve bar, landing pricing footer) - all pinned together so a
+  // regeneration can't ship two spellings of the same link. The machine reads
+  // "plans" as intentions (id/vi) or drawings (es "planos", which is also
+  // Portuguese), never a subscription tier.
   "app.profile.seePlans": {
     es: "Ver planes",
     zh: "查看套餐",
@@ -424,6 +425,16 @@ const MANUAL_OVERRIDES = {
     th: "ดูแพ็กเกจ",
   },
   "app.studio.seePlans": {
+    es: "Ver planes",
+    zh: "查看套餐",
+    ja: "プランを見る",
+    ko: "요금제 보기",
+    pt: "Ver planos",
+    id: "Lihat paket",
+    vi: "Xem các gói",
+    th: "ดูแพ็กเกจ",
+  },
+  "app.jobs.storyboard.seePlans": {
     es: "Ver planes",
     zh: "查看套餐",
     ja: "プランを見る",
@@ -485,10 +496,13 @@ const MANUAL_OVERRIDES = {
     vi: "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
     th: "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan} · ให้ครั้งเดียว ไม่ต่ออายุ",
   },
-  // Studio quotes no per-render cost until the backend credit lane flips: the
-  // deployed backend still meters seconds, so a client-computed cost would
-  // contradict the backend's own 429 prose on the same screen. render-cost.ts
-  // holds the flip-ready computation - re-enabling is one string each.
+  // The render price surfaces (Studio's summary rail, the storyboard approve
+  // bar) and the balance beside them. Every one of them says "up to": the
+  // backend's quote prices the CONFIGURED duration and the charge prices the
+  // storyboard's shorter post-overlap length, so the number is a ceiling and
+  // the hedge is load-bearing, not filler - the machine drops it. It also
+  // reads "credits" as academic credits and "This video" as a demonstrative
+  // with no noun to agree with. All hand-set per locale; do not unpin.
   "app.studio.outOfQuota": {
     es: "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
     zh: "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
@@ -508,6 +522,170 @@ const MANUAL_OVERRIDES = {
     id: "{remaining} dari {limit} kredit tersisa",
     vi: "Còn {remaining}/{limit} tín dụng",
     th: "เหลือ {remaining}/{limit} เครดิต",
+  },
+  "app.studio.cost.label": {
+    es: "Este video",
+    zh: "本视频",
+    ja: "この動画",
+    ko: "이 영상",
+    pt: "Este vídeo",
+    id: "Video ini",
+    vi: "Video này",
+    th: "วิดีโอนี้",
+  },
+  "app.studio.cost.value": {
+    es: "hasta {credits} créditos",
+    zh: "最多 {credits} 积分",
+    ja: "最大 {credits} クレジット",
+    ko: "최대 {credits} 크레딧",
+    pt: "até {credits} créditos",
+    id: "hingga {credits} kredit",
+    vi: "tối đa {credits} tín dụng",
+    th: "สูงสุด {credits} เครดิต",
+  },
+  "app.studio.cost.pending": {
+    es: "calculando…",
+    zh: "计算中…",
+    ja: "計算中…",
+    ko: "계산 중…",
+    pt: "calculando…",
+    id: "menghitung…",
+    vi: "đang tính…",
+    th: "กำลังคำนวณ…",
+  },
+  // Same split as the approve bar's two price sentences, in the rail's shorter
+  // words: `retrying` is a read we are still re-polling, `unavailable` is the
+  // backend's settled answer - so the machine must not paraphrase either into
+  // the other's promise.
+  "app.studio.cost.retrying": {
+    es: "precio no disponible, reintentando",
+    zh: "无法获取价格，正在重试",
+    ja: "価格を取得できません。再試行中",
+    ko: "가격을 불러올 수 없음, 다시 시도 중",
+    pt: "preço indisponível, tentando de novo",
+    id: "harga tidak tersedia, mencoba lagi",
+    vi: "chưa có giá, đang thử lại",
+    th: "ไม่มีข้อมูลราคา กำลังลองใหม่",
+  },
+  "app.studio.cost.unavailable": {
+    es: "precio no disponible",
+    zh: "无法获取价格",
+    ja: "価格を取得できません",
+    ko: "가격을 불러올 수 없음",
+    pt: "preço indisponível",
+    id: "harga tidak tersedia",
+    vi: "chưa có giá",
+    th: "ไม่มีข้อมูลราคา",
+  },
+  "app.studio.costMayExceed": {
+    es: "Este video podría costar hasta {cost} créditos y tienes {remaining}. El cargo final suele ser menor, así que puede que igual se genere.",
+    zh: "此视频最多可能消耗 {cost} 积分，而你有 {remaining}。实际扣除通常更少，所以仍有可能成功生成。",
+    ja: "この動画は最大 {cost} クレジットかかる可能性があり、残高は {remaining} です。実際の消費は少なくなることが多いため、そのまま生成できる場合もあります。",
+    ko: "이 영상은 최대 {cost} 크레딧이 들 수 있고 현재 {remaining} 크레딧이 있습니다. 실제 차감은 보통 더 적어서 그대로 진행될 수도 있습니다.",
+    pt: "Este vídeo pode custar até {cost} créditos e você tem {remaining}. A cobrança final costuma ser menor, então ainda pode dar certo.",
+    id: "Video ini bisa memakan hingga {cost} kredit, sedangkan kredit Anda {remaining}. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
+    vi: "Video này có thể tốn tối đa {cost} tín dụng, bạn đang có {remaining}. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
+    th: "วิดีโอนี้อาจใช้เครดิตสูงสุด {cost} แต่คุณมี {remaining} ค่าใช้จ่ายจริงมักน้อยกว่า จึงอาจสร้างได้อยู่",
+  },
+  "app.jobs.storyboard.costNote": {
+    es: "Aprobar gasta hasta {cost} créditos.",
+    zh: "确认后最多扣除 {cost} 积分。",
+    ja: "承認すると最大 {cost} クレジットを消費します。",
+    ko: "승인하면 최대 {cost} 크레딧이 차감됩니다.",
+    pt: "Aprovar gasta até {cost} créditos.",
+    id: "Menyetujui akan memakai hingga {cost} kredit.",
+    vi: "Duyệt sẽ dùng tối đa {cost} tín dụng.",
+    th: "การอนุมัติจะใช้เครดิตสูงสุด {cost}",
+  },
+  // Two different promises, so never one string: `priceUnavailable` is the
+  // capability/quote read being down, which retries on its own, so it may say
+  // "right now" and say we are still trying. `priceNotQuotable` is settled for
+  // this job - its model isn't in the capability payload, or the row is missing
+  // a priced field - so it must carry no "yet", no "currently" and no invitation
+  // to wait, which is exactly what the machine adds back when it paraphrases.
+  "app.jobs.storyboard.priceUnavailable": {
+    es: "No pudimos cargar el costo exacto ahora mismo, así que no se muestra. Seguimos intentándolo.",
+    zh: "暂时无法获取确切费用，因此这里不显示。我们仍在尝试。",
+    ja: "現在、正確なコストを取得できないため、ここには表示していません。再取得を続けています。",
+    ko: "지금은 정확한 비용을 불러올 수 없어 표시하지 않습니다. 계속 다시 시도하고 있습니다.",
+    pt: "Não conseguimos carregar o custo exato agora, então ele não é exibido. Ainda estamos tentando.",
+    id: "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan. Kami masih mencoba.",
+    vi: "Hiện chưa tải được chi phí chính xác nên số này không được hiển thị. Chúng tôi vẫn đang thử lại.",
+    th: "ตอนนี้เราโหลดต้นทุนที่แน่ชัดไม่ได้ จึงยังไม่แสดงตัวเลข เรากำลังลองใหม่อยู่",
+  },
+  "app.jobs.storyboard.priceNotQuotable": {
+    es: "No podemos calcular el costo exacto de este render, así que no se muestra.",
+    zh: "无法算出本次生成的确切费用，因此这里不显示。",
+    ja: "この生成の正確なコストを算出できないため、ここには表示していません。",
+    ko: "이 렌더의 정확한 비용을 계산할 수 없어 표시하지 않습니다.",
+    pt: "Não conseguimos calcular o custo exato deste render, então ele não é exibido.",
+    id: "Kami tidak bisa menghitung biaya pasti untuk render ini, jadi angkanya tidak ditampilkan.",
+    vi: "Chúng tôi không tính được chi phí chính xác cho lần dựng này nên số này không được hiển thị.",
+    th: "เราคำนวณต้นทุนที่แน่ชัดของงานเรนเดอร์นี้ไม่ได้ จึงไม่แสดงตัวเลข",
+  },
+  // The shortfall at the charge point, in the same vocabulary as Studio's
+  // `costMayExceed`: it names the gap and keeps the "usually lower, may still
+  // go through" hedge, because approving is never blocked here. The machine
+  // drops that hedge and reads the sentence as a refusal.
+  "app.jobs.storyboard.shortfallNote": {
+    es: "Te faltan {shortfall} créditos. El cargo final suele ser menor, así que puede que igual se genere.",
+    zh: "还差 {shortfall} 积分。实际扣除通常更少，所以仍有可能成功生成。",
+    ja: "{shortfall} クレジット不足しています。実際の消費は少なくなることが多いため、そのまま進む場合もあります。",
+    ko: "{shortfall} 크레딧이 부족합니다. 실제 차감은 보통 더 적어서 그대로 진행될 수도 있습니다.",
+    pt: "Faltam {shortfall} créditos. A cobrança final costuma ser menor, então ainda pode dar certo.",
+    id: "Kurang {shortfall} kredit. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
+    vi: "Bạn còn thiếu {shortfall} tín dụng. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
+    th: "ยังขาดอีก {shortfall} เครดิต ค่าใช้จ่ายจริงมักน้อยกว่า จึงอาจสร้างได้อยู่",
+  },
+  // The same gap when the meter is empty, where the outcome is certain: the
+  // backend refuses at zero whatever the quote says, so this one carries no
+  // hedge at all - the machine copies `shortfallNote`'s "may still go through"
+  // across and turns a refusal back into a maybe.
+  "app.jobs.storyboard.noCreditsNote": {
+    es: "No te quedan créditos, así que aprobar no se completará.",
+    zh: "你的积分已用完，因此确认不会生效。",
+    ja: "クレジットが残っていないため、承認しても実行されません。",
+    ko: "크레딧이 남아 있지 않아 승인해도 진행되지 않습니다.",
+    pt: "Você não tem créditos, então aprovar não vai funcionar.",
+    id: "Kredit Anda habis, jadi persetujuan tidak akan berjalan.",
+    vi: "Bạn đã hết tín dụng nên việc duyệt sẽ không chạy được.",
+    th: "เครดิตของคุณหมดแล้ว การอนุมัติจึงจะไม่ทำงาน",
+  },
+  // What the approve button becomes at zero credits, where it can only persist
+  // the draft. "Save" is the UI verb, never the rescue one the machine reaches
+  // for ("salvar"/"cứu"/"救う").
+  "app.jobs.storyboard.saveEdits": {
+    es: "Guardar cambios",
+    zh: "保存修改",
+    ja: "変更を保存",
+    ko: "변경 사항 저장",
+    pt: "Salvar alterações",
+    id: "Simpan perubahan",
+    vi: "Lưu thay đổi",
+    th: "บันทึกการเปลี่ยนแปลง",
+  },
+  // The same button when the meter is empty and there is nothing to save: it
+  // leaves for the one route that resolves the state, so it is the money verb
+  // ("top up your credits"), never the machine's "understand"/"receive".
+  "app.jobs.storyboard.getCredits": {
+    es: "Consigue créditos",
+    zh: "获取积分",
+    ja: "クレジットを追加",
+    ko: "크레딧 구매",
+    pt: "Obter créditos",
+    id: "Dapatkan kredit",
+    vi: "Nhận tín dụng",
+    th: "รับเครดิต",
+  },
+  "app.jobs.storyboard.balanceNote": {
+    es: "Tienes {remaining}.",
+    zh: "你当前有 {remaining}。",
+    ja: "残高は {remaining} です。",
+    ko: "보유 크레딧은 {remaining}입니다.",
+    pt: "Você tem {remaining}.",
+    id: "Kredit Anda {remaining}.",
+    vi: "Bạn đang có {remaining}.",
+    th: "คุณมี {remaining}",
   },
   "auth.layout.benefitPublish": {
     es: "5 relaciones de aspecto para cada plataforma",

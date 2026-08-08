@@ -208,6 +208,45 @@ describe("api (BFF client)", () => {
     mockFetch(500, { detail: "boom" });
     await expect(api.me()).rejects.toMatchObject({ status: 500 });
   });
+
+  describe("getVideoQuote", () => {
+    it("asks the BFF for exactly the configuration on screen", async () => {
+      const fetchMock = mockFetch(200, { credits: 225 });
+      await api.getVideoQuote({
+        mode: "product_only",
+        duration_seconds: 15,
+        resolution: "720p",
+        aspect_ratio: "9:16",
+        video_model: "seedance-2.0",
+      });
+
+      const [url] = fetchMock.mock.calls[0] as unknown as [string];
+      const parsed = new URL(url, "http://local");
+      expect(parsed.pathname).toBe("/api/bff/video-jobs/quote");
+      expect(Object.fromEntries(parsed.searchParams)).toEqual({
+        mode: "product_only",
+        duration_seconds: "15",
+        resolution: "720p",
+        aspect_ratio: "9:16",
+        video_model: "seedance-2.0",
+      });
+    });
+
+    // Omitted, never sent empty: the backend then prices the mode's own default
+    // model instead of rejecting a blank picker key.
+    it("omits video_model when there is none to send", async () => {
+      const fetchMock = mockFetch(200, { credits: 225 });
+      await api.getVideoQuote({
+        mode: "product_only",
+        duration_seconds: 15,
+        resolution: "720p",
+        aspect_ratio: "9:16",
+      });
+
+      const [url] = fetchMock.mock.calls[0] as unknown as [string];
+      expect(new URL(url, "http://local").searchParams.has("video_model")).toBe(false);
+    });
+  });
 });
 
 type UploadProgressEvent = { lengthComputable: boolean; loaded: number; total: number };

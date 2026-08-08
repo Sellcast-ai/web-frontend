@@ -492,6 +492,14 @@
         "avatarHint": "アバター出演の動画は、プレゼンターに合わせて形状が調整される場合があります。"
       },
       "usageSummary": "残り {remaining}/{limit} クレジット",
+      "cost": {
+        "label": "この動画",
+        "value": "最大 {credits} クレジット",
+        "pending": "計算中…",
+        "retrying": "価格を取得できません。再試行中",
+        "unavailable": "価格を取得できません"
+      },
+      "costMayExceed": "この動画は最大 {cost} クレジットかかる可能性があり、残高は {remaining} です。実際の消費は少なくなることが多いため、そのまま生成できる場合もあります。",
       "generateVideo": "ビデオの生成",
       "generateUploading": "参照をアップロード中…",
       "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
@@ -560,7 +568,16 @@
         "title": "動画の企画はこちら",
         "description": "まだ何も決まっていません。これは単なる計画です。それを読んで、必要な行を変更し、[実行] をクリックすると、Lumi がビデオ全体を構築します。",
         "approveAndMake": "私のビデオを承認して作成してください",
+        "saveEdits": "変更を保存",
+        "getCredits": "クレジットを追加",
         "creditNote": "これがクレジットを使用する唯一のステップです。",
+        "costNote": "承認すると最大 {cost} クレジットを消費します。",
+        "balanceNote": "残高は {remaining} です。",
+        "shortfallNote": "{shortfall} クレジット不足しています。実際の消費は少なくなることが多いため、そのまま進む場合もあります。",
+        "noCreditsNote": "クレジットが残っていないため、承認しても実行されません。",
+        "seePlans": "プランを見る",
+        "priceUnavailable": "現在、正確なコストを取得できないため、ここには表示していません。再取得を続けています。",
+        "priceNotQuotable": "この生成の正確なコストを算出できないため、ここには表示していません。",
         "editTitle": "{label}を編集",
         "editFallbackTitle": "ショットを編集する",
         "context": {

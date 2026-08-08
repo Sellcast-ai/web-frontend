@@ -492,6 +492,14 @@
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
       "usageSummary": "{remaining} dari {limit} kredit tersisa",
+      "cost": {
+        "label": "Video ini",
+        "value": "hingga {credits} kredit",
+        "pending": "menghitung…",
+        "retrying": "harga tidak tersedia, mencoba lagi",
+        "unavailable": "harga tidak tersedia"
+      },
+      "costMayExceed": "Video ini bisa memakan hingga {cost} kredit, sedangkan kredit Anda {remaining}. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
@@ -560,7 +568,16 @@
         "title": "Inilah rencana untuk video Anda",
         "description": "Belum ada yang dibuat – ini hanya rencananya. Bacalah lagi, ubah baris apa pun yang Anda inginkan, lalu tekan go dan Lumi membuat keseluruhan video untuk Anda.",
         "approveAndMake": "Setujui & buat video saya",
+        "saveEdits": "Simpan perubahan",
+        "getCredits": "Dapatkan kredit",
         "creditNote": "Ini adalah satu-satunya langkah yang menggunakan kredit Anda.",
+        "costNote": "Menyetujui akan memakai hingga {cost} kredit.",
+        "balanceNote": "Kredit Anda {remaining}.",
+        "shortfallNote": "Kurang {shortfall} kredit. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
+        "noCreditsNote": "Kredit Anda habis, jadi persetujuan tidak akan berjalan.",
+        "seePlans": "Lihat paket",
+        "priceUnavailable": "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan. Kami masih mencoba.",
+        "priceNotQuotable": "Kami tidak bisa menghitung biaya pasti untuk render ini, jadi angkanya tidak ditampilkan.",
         "editTitle": "Sunting {label}",
         "editFallbackTitle": "Sunting bidikan",
         "context": {

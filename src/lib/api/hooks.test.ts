@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { QueryClient } from "@tanstack/react-query";
 import {
+  approveStoryboardOptions,
   deleteVideoJobOrGone,
   importPollInterval,
   patchProductLists,
@@ -11,6 +12,7 @@ import {
   snapshotProductQueries,
 } from "./hooks";
 import { ApiError } from "./client";
+import { getToasts } from "@/lib/toast";
 import type { ProductSummary, VideoJob } from "./types";
 
 afterEach(() => {
@@ -170,5 +172,71 @@ describe("renderFailureMessage", () => {
     expect(renderFailureMessage(new ApiError(500, "Server Error"), messages)).toBe(
       "fallback",
     );
+  });
+});
+
+describe("qk.quote", () => {
+  const base = {
+    mode: "product_only",
+    duration_seconds: 15,
+    resolution: "720p",
+    aspect_ratio: "9:16",
+  };
+
+  // Re-quoting when a picker moves IS this key changing; nothing else drives it.
+  it("changes when any priced input changes", () => {
+    const keys = [
+      { ...base, duration_seconds: 30 },
+      { ...base, resolution: "1080p" },
+      { ...base, aspect_ratio: "1:1" },
+      { ...base, mode: "ai_avatar" },
+      { ...base, video_model: "seedance-2.0" },
+    ].map((p) => JSON.stringify(qk.quote(p)));
+
+    expect(new Set([...keys, JSON.stringify(qk.quote(base))]).size).toBe(6);
+  });
+
+  it("is stable for the same configuration, so a re-pick is served from cache", () => {
+    expect(qk.quote({ ...base })).toEqual(qk.quote({ ...base }));
+  });
+});
+
+describe("approveStoryboardOptions", () => {
+  const messages = { approveError: "approve failed", outOfCredits: "out of credits" };
+
+  function usageInvalidations(qc: QueryClient) {
+    return vi.spyOn(qc, "invalidateQueries");
+  }
+
+  it("refreshes the meter after a charge lands", () => {
+    const qc = new QueryClient();
+    const spy = usageInvalidations(qc);
+    approveStoryboardOptions(qc, "j1", messages).onSuccess(job("j1"));
+
+    expect(qc.getQueryData(qk.job("j1"))).toEqual(job("j1"));
+    expect(spy).toHaveBeenCalledWith({ queryKey: ["usage"] });
+  });
+
+  // Approval is the charge point, so it takes the metered-call path: the
+  // backend's English balance prose never reaches a nine-locale surface.
+  it("routes the credit refusal through the localized message, and re-reads usage", () => {
+    const qc = new QueryClient();
+    const spy = usageInvalidations(qc);
+    const prose = "This 15s 720p video needs 225 credits, but you have 30 of 30 left.";
+    approveStoryboardOptions(qc, "j1", messages).onError(
+      new ApiError(429, prose, undefined, prose),
+    );
+
+    expect(getToasts().at(-1)?.message).toBe("out of credits");
+    expect(spy).toHaveBeenCalledWith({ queryKey: ["usage"] });
+  });
+
+  it("keeps the curated server message for every other failure", () => {
+    const qc = new QueryClient();
+    approveStoryboardOptions(qc, "j1", messages).onError(
+      new ApiError(409, "Storyboard already approved", undefined, "Storyboard already approved"),
+    );
+
+    expect(getToasts().at(-1)?.message).toBe("Storyboard already approved");
   });
 });

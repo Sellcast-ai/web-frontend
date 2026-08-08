@@ -175,6 +175,14 @@
         "badge": "n/d"
       },
       "usageSummary": "{remaining} de {limit} créditos restantes",
+      "cost": {
+        "label": "Este video",
+        "value": "hasta {credits} créditos",
+        "pending": "calculando…",
+        "retrying": "precio no disponible, reintentando",
+        "unavailable": "precio no disponible"
+      },
+      "costMayExceed": "Este video podría costar hasta {cost} créditos y tienes {remaining}. El cargo final suele ser menor, así que puede que igual se genere.",
       "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
       "seePlans": "Ver planes",
       "title": "Estudio de vídeo",
@@ -315,7 +323,16 @@
         "title": "Aquí está el plan para tu vídeo.",
         "description": "Aún no se ha hecho nada; este es sólo el plan. Léelo nuevamente, cambia la línea que desees, luego presiona Ir y Lumi creará el video completo para ti.",
         "approveAndMake": "Aprobar y hacer mi video",
+        "saveEdits": "Guardar cambios",
+        "getCredits": "Consigue créditos",
         "creditNote": "Este es el único paso que utiliza sus créditos.",
+        "costNote": "Aprobar gasta hasta {cost} créditos.",
+        "balanceNote": "Tienes {remaining}.",
+        "shortfallNote": "Te faltan {shortfall} créditos. El cargo final suele ser menor, así que puede que igual se genere.",
+        "noCreditsNote": "No te quedan créditos, así que aprobar no se completará.",
+        "seePlans": "Ver planes",
+        "priceUnavailable": "No pudimos cargar el costo exacto ahora mismo, así que no se muestra. Seguimos intentándolo.",
+        "priceNotQuotable": "No podemos calcular el costo exacto de este render, así que no se muestra.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar toma",
         "shotLabels": {

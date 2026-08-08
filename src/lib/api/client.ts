@@ -20,6 +20,8 @@ import type {
   ReferencePresign,
   ShopifyAvailability,
   VideoCapabilities,
+  VideoQuote,
+  VideoQuoteParams,
 } from "./types";
 
 export class ApiError extends Error {
@@ -46,6 +48,25 @@ export class ApiError extends Error {
  * users" (see `errorFrom`), so it never wins over the fallback here. */
 export function apiErrorMessage(err: unknown, fallback: string): string {
   return (err instanceof ApiError && err.serverMessage) || fallback;
+}
+
+/** Whether a failed call may still succeed later without anything changing.
+ * A 4xx is the backend's settled answer about this exact request - the route
+ * isn't deployed (404), the tuple is refused (422) - and every repeat buys the
+ * same answer; a 5xx, a dead socket or an unparseable body is the deployment
+ * or the network, which recovers on its own. Retrying, polling and any copy
+ * that says we are still trying all belong to the transient side only.
+ * The two 4xx exceptions are about timing rather than the request: 408 and 429
+ * are the edge saying "not now", and the identical call succeeds once the
+ * timeout or the rate limit passes. */
+export function isTransientError(err: unknown): boolean {
+  return (
+    !(err instanceof ApiError) ||
+    err.status < 400 ||
+    err.status >= 500 ||
+    err.status === 408 ||
+    err.status === 429
+  );
 }
 
 type ErrorBody = {
@@ -240,6 +261,18 @@ export const api = {
     return bff<VideoJob[]>(`video-jobs?${qs.toString()}`);
   },
   getVideoJob: (id: string) => bff<VideoJob>(`video-jobs/${id}`),
+  /** Read-only price preview — charges nothing. `video_model` is omitted when
+   * unset so the backend prices the mode's own default model. */
+  getVideoQuote: (params: VideoQuoteParams) => {
+    const qs = new URLSearchParams({
+      mode: params.mode,
+      duration_seconds: String(params.duration_seconds),
+      resolution: params.resolution,
+      aspect_ratio: params.aspect_ratio,
+    });
+    if (params.video_model) qs.set("video_model", params.video_model);
+    return bff<VideoQuote>(`video-jobs/quote?${qs.toString()}`);
+  },
   createVideoJob: (payload: VideoJobCreate) =>
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
   uploadReferenceVideo: async (

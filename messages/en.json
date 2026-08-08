@@ -492,6 +492,14 @@
         "avatarHint": "Talking-head output may adapt its shape to fit the presenter."
       },
       "usageSummary": "{remaining} of {limit} credits left",
+      "cost": {
+        "label": "This video",
+        "value": "up to {credits} credits",
+        "pending": "pricing…",
+        "retrying": "price unavailable, retrying",
+        "unavailable": "price unavailable"
+      },
+      "costMayExceed": "This video could cost up to {cost} credits and you have {remaining}. The final charge is usually lower, so it may still go through.",
       "generateVideo": "Generate video",
       "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for this video ({remaining} of {limit} left).",
@@ -560,7 +568,16 @@
         "title": "Here's the plan for your video",
         "description": "Nothing's been made yet - this is just the plan. Read it over, change any line you want, then hit go and Lumi builds the whole video for you.",
         "approveAndMake": "Approve & make my video",
+        "saveEdits": "Save changes",
+        "getCredits": "Get credits",
         "creditNote": "This is the only step that uses your credits.",
+        "costNote": "Approving spends up to {cost} credits.",
+        "balanceNote": "You have {remaining}.",
+        "shortfallNote": "You’re {shortfall} credits short. The final charge is usually lower, so it may still go through.",
+        "noCreditsNote": "You have no credits left, so approving won’t go through.",
+        "seePlans": "See plans",
+        "priceUnavailable": "We couldn’t load the exact cost right now, so it isn’t shown. We’re still trying.",
+        "priceNotQuotable": "We can’t work out the exact cost for this render, so it isn’t shown.",
         "editTitle": "Edit {label}",
         "editFallbackTitle": "Edit shot",
         "context": {

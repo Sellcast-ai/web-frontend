@@ -3,6 +3,8 @@ import {
   isModeKnownUnavailable as modeKnownUnavailableIn,
   normalizeVideoCapabilities,
   studioCapabilityState as capabilityStateIn,
+  videoModelKeyForProviderModel,
+  providerModelForVideoModelKey,
   type StudioCapabilitySelection,
 } from "./video-capabilities";
 import {
@@ -442,5 +444,64 @@ describe("studioCapabilityState", () => {
       language: "es",
     });
     expect(state.canSubmit).toBe(true);
+  });
+});
+
+// The bridge the storyboard approve bar prices through: a job records the
+// provider model id it renders on, and `GET /video-jobs/quote` takes the picker
+// key. Without this the bar could only quote the mode's default model, which is
+// the render's real price by coincidence.
+describe("videoModelKeyForProviderModel", () => {
+  const keyFor = (raw: unknown, mode: VideoMode, providerModel: string) =>
+    videoModelKeyForProviderModel(normalizeVideoCapabilities(raw), mode, providerModel);
+
+  it("resolves a provider model id to the key the quote takes", () => {
+    expect(keyFor(capabilities, "product_only", "doubao-seedance-2-0-fast-260128")).toBe(
+      "seedance-2.0-fast",
+    );
+  });
+
+  // A mode the backend has switched off still has jobs parked at the storyboard
+  // gate; what an existing render costs has nothing to do with what may be
+  // started now.
+  it("resolves for a mode reported unavailable", () => {
+    const off = [{ ...capabilities[0], available: false }];
+    expect(keyFor(off, "product_only", "doubao-seedance-2-0-260128")).toBe("seedance-2.0");
+  });
+
+  it("gives up rather than guessing when nothing matches", () => {
+    expect(keyFor(capabilities, "product_only", "some-model-nobody-listed")).toBeNull();
+    expect(keyFor(capabilities, "ai_avatar", "doubao-seedance-2-0-260128")).toBeNull();
+    expect(keyFor(undefined, "product_only", "doubao-seedance-2-0-260128")).toBeNull();
+    expect(keyFor(capabilities, "product_only", "")).toBeNull();
+  });
+
+  // An entry that didn't parse is no read at all - never a match by omission.
+  it("gives up on an unreadable entry", () => {
+    const broken = [{ mode: "product_only", available: "yes", models: [] }];
+    expect(keyFor(broken, "product_only", "doubao-seedance-2-0-260128")).toBeNull();
+  });
+});
+
+describe("providerModelForVideoModelKey", () => {
+  const idFor = (raw: unknown, mode: VideoMode, key: string) =>
+    providerModelForVideoModelKey(normalizeVideoCapabilities(raw), mode, key);
+
+  // What a priced surface checks `VideoQuote.model_id` against, so a key the
+  // backend silently substituted its own default for is caught.
+  it("resolves a picker key to the provider model id it prices as", () => {
+    expect(idFor(capabilities, "product_only", "seedance-2.0-fast")).toBe(
+      "doubao-seedance-2-0-fast-260128",
+    );
+  });
+
+  // Null is "nothing to verify against", never "verified": a caller degrading
+  // to the static pickers must not lose its price over a read it never got.
+  it("gives up rather than guessing when nothing was read", () => {
+    expect(idFor(undefined, "product_only", "seedance-2.0")).toBeNull();
+    expect(idFor(capabilities, "product_only", "a-key-nobody-listed")).toBeNull();
+    expect(idFor(capabilities, "product_only", "")).toBeNull();
+    const broken = [{ mode: "product_only", available: "yes", models: [] }];
+    expect(idFor(broken, "product_only", "seedance-2.0")).toBeNull();
   });
 });

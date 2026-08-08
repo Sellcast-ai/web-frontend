@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -22,6 +22,8 @@ import {
   ChevronDown,
   Lock,
   Trash2,
+  Save,
+  CreditCard,
   Image as ImageIcon,
   Mic,
 } from "lucide-react";
@@ -35,6 +37,9 @@ import {
   usePatchStoryboard,
   useProduct,
   useDeleteJob,
+  useUsage,
+  useVideoCapabilities,
+  useVideoQuote,
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
@@ -53,6 +58,11 @@ import {
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
+import { isQuotable, priceUnknownReason, verifiedCredits } from "@/lib/render-quote";
+import {
+  normalizeVideoCapabilities,
+  videoModelKeyForProviderModel,
+} from "@/lib/video-capabilities";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
@@ -571,7 +581,74 @@ function StoryboardView({ job }: { job: VideoJob }) {
   const tt = useTranslations("app.toasts");
   const approve = useApproveStoryboard(job.id, {
     approveError: tt("approveStoryboardFailed"),
+    outOfCredits: tt("outOfCredits"),
   });
+  // What approving actually costs, priced off the job's own stored render
+  // configuration - `resolution` is the clamped value the charge is priced at,
+  // so this is the same tuple the debit runs through. The model is the job's
+  // own `provider_model`, resolved back to the picker key the quote takes via
+  // the capability read's `model_id` pairing: quoting the mode's default
+  // instead would be the render's real price only by coincidence, and silently
+  // wrong at the one click that spends.
+  const capabilities = useVideoCapabilities();
+  const caps = useMemo(
+    () => normalizeVideoCapabilities(capabilities.data),
+    [capabilities.data],
+  );
+  const videoModel = videoModelKeyForProviderModel(caps, job.mode, job.provider_model);
+  // Nothing is quoted until that lookup has had its chance, so the bar can't
+  // flash a default-priced number and then correct itself.
+  const quoteParams = capabilities.isPending
+    ? null
+    : {
+        mode: job.mode,
+        duration_seconds: job.duration_seconds,
+        resolution: job.resolution,
+        aspect_ratio: job.aspect_ratio,
+        ...(videoModel ? { video_model: videoModel } : {}),
+      };
+  const quote = useVideoQuote(quoteParams);
+  const { data: usage, refetch: refetchUsage } = useUsage();
+  // Only ever THIS render's price, through the same `verifiedCredits` Studio's
+  // rail runs: a quote the backend priced on some other model - the mode
+  // default, because the key couldn't be resolved - is a plausible wrong
+  // number, which is worse here than no number at all.
+  const { credits: cost, withheld: costWithheld } = verifiedCredits(
+    quote.data,
+    job.provider_model,
+  );
+  // ...and when there is no number, the bar says why rather than letting the
+  // price quietly disappear - and says WHICH why, because the two make very
+  // different promises. `priceUnknownReason` is that one classification, shared
+  // with Studio's rail: it reads the response class rather than which of the
+  // two reads failed. Settled without any failure at all is this surface's own
+  // half - a read that landed and still leaves THIS job unpriceable, because
+  // its model isn't in the payload (so the backend priced its own default and
+  // said so through `model_id`) or the row is missing a field the quote needs
+  // (`isQuotable`, the same gate the hook uses, so that one never became a
+  // request). Copy that invited a wait there would leave the user watching for
+  // a number that is never coming.
+  const priceUnknown = priceUnknownReason(
+    [capabilities, quote],
+    (quoteParams !== null && !isQuotable(quoteParams)) || costWithheld,
+  );
+  // What the balance means for this approve, split on how certain the outcome
+  // is rather than on how big the gap is. An empty meter is certain - zero is
+  // zero at any price, the backend refuses whatever the quote says and whether
+  // or not one landed - so it gets definite copy, never the ceiling's hedge,
+  // and it is the one thing on this bar that also changes the button: the copy
+  // and the control are read off this same value, or a page that says the
+  // approve won't go through would still offer it. What the button becomes is
+  // save-only, never dead: this PATCH is the ONLY path a shot edit has to the
+  // server, so disabling it would silently throw the user's rewrite away.
+  // A non-empty balance under the quoted ceiling is genuinely uncertain, since
+  // the debit prices the storyboard's shorter post-overlap length, so that one
+  // keeps the hedge and stays a warning.
+  const noCredits = usage !== undefined && usage.remaining <= 0;
+  const shortfall =
+    usage !== undefined && !noCredits && cost !== undefined && cost > usage.remaining
+      ? cost - usage.remaining
+      : null;
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -631,6 +708,15 @@ function StoryboardView({ job }: { job: VideoJob }) {
       // Persist pending edits (re-validated) before the render kicks off; bail if
       // validation fails so the user can fix the offending shot.
       if (dirty && !(await save())) return;
+      // At zero credits the approve is a refusal the page has already stated,
+      // so the button only does the half it can deliver: the edits land, and
+      // no request is spent on an outcome known before it started. The saved
+      // balance read is refreshed after, so credits bought elsewhere bring the
+      // approve back without a reload.
+      if (noCredits) {
+        await refetchUsage();
+        return;
+      }
       await approve.mutateAsync().catch(() => null);
     } finally {
       approveGuard.end();
@@ -698,18 +784,99 @@ function StoryboardView({ job }: { job: VideoJob }) {
         ref={barRef}
         className="sticky bottom-4 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/95 p-4 shadow-card backdrop-blur"
       >
-        <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
-          {busy ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
+        {/* Three live states, each labelled as what the click actually does,
+            so no control ever overstates itself: approve when the meter can
+            pay, save-only when it can't but there are edits to persist (this
+            PATCH is the ONLY path a shot edit has to the server), and the way
+            out when it can't and there is nothing to save - the same /pricing
+            route the note beside it names. The gate never ends up with a dead
+            control, and topping up and coming back remounts this page, which
+            is what refreshes the balance read. */}
+        {noCredits && !dirty ? (
+          <Button size="lg" href="/pricing">
+            <CreditCard className="h-4 w-4" />
+            {t("getCredits")}
+          </Button>
+        ) : (
+          <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
+            {busy ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : noCredits ? (
+              <>
+                <Save className="h-4 w-4" />
+                {t("saveEdits")}
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                {t("approveAndMake")}
+              </>
+            )}
+          </Button>
+        )}
+        {/* The price sits in the bar's existing sentence slot rather than on
+            the button: this is the line the user reads immediately before the
+            click that spends, the bar is sticky so it is on screen for the
+            whole review, and a button label carrying a number truncates first
+            on narrow screens. Until the quote lands - and if it never does -
+            the bar keeps the vague-but-true note it has always had, so nothing
+            here can ever block or delay approving. It is a permanent live
+            region: the sentence swaps from the vague note to the price (or to
+            why there isn't one) as the reads land, and this is the line read
+            immediately before the click that spends. */}
+        <p aria-live="polite" className="text-xs text-muted-foreground">
+          {cost === undefined ? (
+            <>
+              {t("creditNote")}
+              {/* A price that failed to load is named, not omitted: the user is
+                  about to spend, and silence would read as "no cost here". */}
+              {priceUnknown === "settled"
+                ? ` ${t("priceNotQuotable")}`
+                : priceUnknown === "retrying"
+                  ? ` ${t("priceUnavailable")}`
+                  : null}
+            </>
           ) : (
             <>
-              <Sparkles className="h-4 w-4" />
-              {t("approveAndMake")}
+              <strong className="font-semibold text-ink">
+                {t("costNote", { cost })}
+              </strong>
+              {/* Two independent sentences, so a missing usage read costs the
+                  balance and not the price. */}
+              {usage && ` ${t("balanceNote", { remaining: usage.remaining })}`}
             </>
           )}
-        </Button>
-        <p className="text-xs text-muted-foreground">
-          {t("creditNote")}
+          {/* This is the click that actually spends, so a balance that can't
+              cover the render is named rather than left as two adjacent numbers
+              to compare, and always with the one route that resolves it. Which
+              sentence depends on how certain the refusal is: an empty meter
+              states it plainly (and is the branch that turns the button
+              save-only, or sends it to /pricing when there is nothing to
+              save), a gap under the ceiling keeps the same hedge Studio's
+              warning carries, because the debit is usually lower and approving
+              is not blocked there. */}
+          {(noCredits || shortfall !== null) && (
+            <>
+              {" "}
+              <span className="font-semibold text-ink">
+                {shortfall !== null
+                  ? t("shortfallNote", { shortfall })
+                  : t("noCreditsNote")}
+              </span>
+              {/* The route out is named once. In the one branch where the
+                  bar's primary button already IS /pricing ("Get credits"),
+                  a second link to the same place under a second label would
+                  make the bar read as two different offers. */}
+              {!(noCredits && !dirty) && (
+                <>
+                  {" "}
+                  <Link href="/pricing" className="font-semibold text-brand-700">
+                    {t("seePlans")}
+                  </Link>
+                </>
+              )}
+            </>
+          )}
         </p>
       </div>
 

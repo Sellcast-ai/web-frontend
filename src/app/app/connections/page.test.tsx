@@ -5,7 +5,7 @@
  * catalog (a missing/typo'd key throws in next-intl) and asserts the honest
  * copy is present, everywhere a merchant would land on it.
  */
-import { describe, expect, it, vi } from "vitest";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { NextIntlClientProvider } from "next-intl";
@@ -32,9 +32,18 @@ function makeClient(available: boolean) {
   return qc;
 }
 
+// Transforming the page costs seconds and competes with the rest of the suite
+// for cores, so paying it inside the first 5s test is a coin flip on a busy
+// machine (it passes isolated, times out in a full run). Same fix as
+// src/test/i18n-studio-jobs-render.test.tsx.
+let ConnectionsPage: React.ComponentType;
+
+beforeAll(async () => {
+  ConnectionsPage = (await import("./page")).default;
+}, 60_000);
+
 describe("Connections page states its honest scope", () => {
-  it("never claims connecting imports products, in the subtitle or the persistent notice", async () => {
-    const { default: ConnectionsPage } = await import("./page");
+  it("never claims connecting imports products, in the subtitle or the persistent notice", () => {
     const html = render(makeClient(true), React.createElement(ConnectionsPage));
     const text = html.replace(/<[^>]+>/g, " ");
 
@@ -52,8 +61,7 @@ describe("Connections page states its honest scope", () => {
     expect(html).toContain('href="/app/products/new"');
   });
 
-  it("shows the notice even when the Shopify probe reports unavailable", async () => {
-    const { default: ConnectionsPage } = await import("./page");
+  it("shows the notice even when the Shopify probe reports unavailable", () => {
     const html = render(makeClient(false), React.createElement(ConnectionsPage));
     const text = html.replace(/<[^>]+>/g, " ");
 
@@ -61,8 +69,7 @@ describe("Connections page states its honest scope", () => {
     expect(text).toContain("Shopify connection isn’t available right now");
   });
 
-  it("keeps the connectNotice link reachable without a mouse (a real link, not a disabled-control tooltip)", async () => {
-    const { default: ConnectionsPage } = await import("./page");
+  it("keeps the connectNotice link reachable without a mouse (a real link, not a disabled-control tooltip)", () => {
     const html = render(makeClient(true), React.createElement(ConnectionsPage));
 
     expect(html).not.toContain("title=\"Connecting authorizes");
