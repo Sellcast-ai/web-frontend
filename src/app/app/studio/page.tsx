@@ -182,7 +182,8 @@ function StudioInner() {
     isFetching: isFetchingProduct,
   } = useProduct(productId);
   const { data: usage } = useUsage();
-  const { data: videoCapabilities } = useVideoCapabilities();
+  const capabilities = useVideoCapabilities();
+  const videoCapabilities = capabilities.data;
   const { data: jobs } = useVideoJobs({}, (list) =>
     capActiveCount(list) >= MAX_ACTIVE_JOBS ? CAP_POLL_MS : false,
   );
@@ -260,15 +261,23 @@ function StudioInner() {
   // What this exact render costs, from the backend's own quote endpoint. Quoted on
   // the REPAIRED values - the ones the create payload will carry - so the price
   // on screen is the price of the render the button would start, never of the
-  // pick a capability narrowing has already moved off. Vibe and language don't
-  // reach pricing, so they don't re-quote.
-  const quote = useVideoQuote({
-    mode,
-    duration_seconds: duration,
-    resolution: effectiveResolution,
-    aspect_ratio: effectiveAspectRatio,
-    ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
-  });
+  // pick a capability narrowing has already moved off. That promise only holds
+  // once the capability read has had its chance: until then the repair has
+  // nothing to narrow with, so the rail waits on `cost.pending` rather than
+  // pricing 1080p a moment before capabilities clamp it to 720p and quietly
+  // swapping the number under the user. Vibe and language don't reach pricing,
+  // so they don't re-quote.
+  const quote = useVideoQuote(
+    capabilities.isPending
+      ? null
+      : {
+          mode,
+          duration_seconds: duration,
+          resolution: effectiveResolution,
+          aspect_ratio: effectiveAspectRatio,
+          ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
+        },
+  );
   const cost = quote.data?.credits;
 
   // Three backend-metered signals, no client pricing: the quote against the
@@ -846,21 +855,24 @@ function StudioInner() {
                 </Link>
               </p>
             )}
-            {/* The notice always agrees with the button. A gated balance says
-                so first, because "it may still go through" beside a dead
-                Generate is the one thing this must never read as. Otherwise the
-                priced ceiling warns and names the gap the user can act on ("up
-                to 225, you have 30") instead of restating the balance they can
-                already read above - a warning, not a refusal, since the backend
-                may well charge less than the ceiling. */}
+            {/* The notice always agrees with the button. The priced ceiling
+                warns and names the gap the user can act on ("up to 225, you
+                have 30") instead of restating the balance they can already read
+                above - a warning, not a refusal, since the backend may well
+                charge less than the ceiling. Everything else falls to the gated
+                balance, which owns the case Generate is actually dead in:
+                "it may still go through" beside a dead button is the one thing
+                this must never read as. (`affordability` only answers "short"
+                with a quote in hand, so the ceiling branch always has its
+                number; the check is what types it, not what decides it.) */}
             {(canAfford === "short" || outOfQuota) && usage && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                {outOfQuota || cost === undefined
-                  ? t("outOfQuota", {
+                {!outOfQuota && cost !== undefined
+                  ? t("costMayExceed", { cost, remaining: usage.remaining })
+                  : t("outOfQuota", {
                       remaining: usage.remaining,
                       limit: usage.limit,
-                    })
-                  : t("costMayExceed", { cost, remaining: usage.remaining })}{" "}
+                    })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   {t("seePlans")}
                 </Link>

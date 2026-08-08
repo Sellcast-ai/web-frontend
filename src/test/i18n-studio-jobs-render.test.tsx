@@ -527,12 +527,33 @@ describe("Studio page renders extracted English copy", () => {
   };
   const defaultQuoteKey = qk.quote(quoted);
 
+  /** Studio's own mode, reported exactly as its defaults already stand, so the
+   *  repair is a no-op and `quoted` above is the tuple the rail asks for. */
+  const studioCapabilities = [
+    {
+      mode: "product_only",
+      available: true,
+      aspect_ratios: ["9:16", "16:9", "1:1", "4:3", "3:4"],
+      languages: null,
+      max_resolution: "720p",
+      models: [
+        {
+          key: "seedance-2.0",
+          label: "Seedance 2.0",
+          model_id: "doubao-seedance-2-0-260128",
+          max_resolution: "720p",
+        },
+      ],
+    },
+  ];
+
   function studioClient(seed: (c: QueryClient) => void) {
     return makeClient((c) => {
       c.setQueryData(qk.product("prod-1"), product);
       c.setQueryData(["usage"], usage);
       c.setQueryData(["avatars"], []);
       c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(qk.videoCapabilities, studioCapabilities);
       seed(c);
     });
   }
@@ -576,6 +597,21 @@ describe("Studio page renders extracted English copy", () => {
     expectUnpriced(html, "pricing…");
   });
 
+  // Until capabilities land there is nothing for the repair to narrow with, so
+  // the picker values on screen are not yet the ones the create payload would
+  // carry. Pricing them would put up a number that silently becomes a different
+  // one the moment a narrowing lands - the exact stale price the quote replaced.
+  it("waits for the capability read before it prices anything", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      c.setQueryData(defaultQuoteKey, { credits: 225 });
+    });
+    expectUnpriced(render(qc, React.createElement(StudioPage)), "pricing…");
+  });
+
   it("shows no number when the quote failed, and blocks nothing", async () => {
     // A real failed read rather than a hand-built cache entry, so the branch
     // under test is the one React Query actually produces. `retryOnMount:
@@ -589,6 +625,7 @@ describe("Studio page renders extracted English copy", () => {
     qc.setQueryData(["usage"], usage);
     qc.setQueryData(["avatars"], []);
     qc.setQueryData(qk.jobs({}), []);
+    qc.setQueryData(qk.videoCapabilities, studioCapabilities);
     vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
     await qc
       .fetchQuery({ queryKey: defaultQuoteKey, queryFn: () => api.getVideoQuote(quoted) })
@@ -859,7 +896,35 @@ describe("Job detail page renders extracted English copy", () => {
 
     expect(text).not.toContain("225");
     expect(text).toContain("This is the only step that uses your credits.");
-    expect(text).toContain("We couldn’t load the exact cost");
+    // Settled, not transient: the capability read landed and still can't price
+    // this job's model, so the copy may not invite the user to wait for one.
+    expect(text).toContain("We can’t work out the exact cost for this render");
+    expect(text).not.toContain("We couldn’t load the exact cost");
+  });
+
+  // The other half of that split: nothing was read, so the job's model may
+  // still resolve and the read keeps retrying. Only this branch may say "right
+  // now" - the settled ones above would be inviting a wait that never ends.
+  it("says the price is only temporarily missing while capabilities are down", async () => {
+    const qc = new QueryClient({
+      defaultOptions: { queries: { retry: false, retryOnMount: false, gcTime: Infinity } },
+    });
+    qc.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+    qc.setQueryData(["usage"], usage);
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
+    await qc
+      .fetchQuery({
+        queryKey: qk.videoCapabilities,
+        queryFn: api.getVideoCapabilities,
+      })
+      .catch(() => null);
+    vi.unstubAllGlobals();
+
+    const text = render(qc, React.createElement(JobDetailPage)).replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("We couldn’t load the exact cost right now");
+    expect(text).toContain("We’re still trying.");
+    expect(text).not.toContain("We can’t work out the exact cost");
   });
 
   // A job row missing a priced field must never go out as "undefined" - and
@@ -879,7 +944,8 @@ describe("Job detail page renders extracted English copy", () => {
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("This is the only step that uses your credits.");
-    expect(text).toContain("We couldn’t load the exact cost");
+    expect(text).toContain("We can’t work out the exact cost for this render");
+    expect(text).not.toContain("We couldn’t load the exact cost");
     const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
     expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(false);
   });

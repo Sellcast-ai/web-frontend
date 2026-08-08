@@ -570,7 +570,8 @@
         "creditNote": "Ini adalah satu-satunya langkah yang menggunakan kredit Anda.",
         "costNote": "Menyetujui akan memakai hingga {cost} kredit.",
         "balanceNote": "Kredit Anda {remaining}.",
-        "priceUnavailable": "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan.",
+        "priceUnavailable": "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan. Kami masih mencoba.",
+        "priceNotQuotable": "Kami tidak bisa menghitung biaya pasti untuk render ini, jadi angkanya tidak ditampilkan.",
         "editTitle": "Sunting {label}",
         "editFallbackTitle": "Sunting bidikan",
         "context": {

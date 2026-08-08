@@ -221,12 +221,22 @@ export function useVideoJob(id: string) {
 
 /** Render capability metadata changes only when backend/provider config changes.
  * A slow or failed read must not block Studio, so callers treat missing data as
- * the static picker constants. */
+ * the static picker constants.
+ *
+ * A failed one does keep trying, though, because two surfaces degrade until it
+ * lands and neither can recover on its own: Studio holds its price back until
+ * the repair has something to narrow with, and the storyboard approve bar can't
+ * resolve the job's `provider_model` to a quotable model key. Both say the cost
+ * is unknown "right now", and with the app-wide `refetchOnWindowFocus: false`
+ * and `retry: 1` that would otherwise be a lie for the life of the page. Only
+ * while errored - a read that landed is deployment config and doesn't move
+ * under a working user. */
 export function useVideoCapabilities() {
   return useQuery({
     queryKey: qk.videoCapabilities,
     queryFn: api.getVideoCapabilities,
     staleTime: 30 * 60_000,
+    refetchInterval: (query) => (query.state.status === "error" ? 60_000 : false),
   });
 }
 

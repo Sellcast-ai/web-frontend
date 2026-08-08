@@ -570,7 +570,8 @@
         "creditNote": "Esta é a única etapa que utiliza seus créditos.",
         "costNote": "Aprovar gasta até {cost} créditos.",
         "balanceNote": "Você tem {remaining}.",
-        "priceUnavailable": "Não conseguimos carregar o custo exato agora, então ele não é exibido.",
+        "priceUnavailable": "Não conseguimos carregar o custo exato agora, então ele não é exibido. Ainda estamos tentando.",
+        "priceNotQuotable": "Não conseguimos calcular o custo exato deste render, então ele não é exibido.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar foto",
         "context": {

@@ -3,11 +3,11 @@ import { affordability, isQuotable } from "./render-quote";
 import { VIDEO_MODELS } from "./api/types";
 
 describe("affordability", () => {
-  it("blocks a render that costs more than the balance", () => {
+  it("flags a shortfall - the quote is a ceiling, so it warns and never blocks", () => {
     expect(affordability(225, 30)).toBe("short");
   });
 
-  it("allows one the balance exactly covers", () => {
+  it("clears one the balance exactly covers", () => {
     expect(affordability(225, 225)).toBe("affordable");
     expect(affordability(70, 300)).toBe("affordable");
   });

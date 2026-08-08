@@ -613,12 +613,22 @@ function StoryboardView({ job }: { job: VideoJob }) {
   const cost =
     quote.data?.model_id === job.provider_model ? quote.data.credits : undefined;
   // ...and when there is no number, the bar says why rather than letting the
-  // price quietly disappear. Incomplete inputs (a job row missing `resolution`)
-  // never became a request at all; `isQuotable` is the same gate the hook uses.
-  const priceUnknown =
-    (quoteParams !== null && !isQuotable(quoteParams)) ||
-    quote.isError ||
-    (quote.data !== undefined && cost === undefined);
+  // price quietly disappear - and says WHICH why, because the two make very
+  // different promises. A capability read that failed is temporary: the model
+  // may still resolve, `useVideoCapabilities` keeps retrying while it is down,
+  // so "right now" is true. A read that landed and still leaves this job
+  // unpriceable is settled for this job - its model isn't in the payload, so
+  // the backend priced its own default and said so through `model_id`, or the
+  // row is missing a field the quote needs (`isQuotable`, the same gate the
+  // hook uses, so that one never became a request at all). Nothing about
+  // waiting or reloading fixes either, and copy that implied otherwise would
+  // leave the user watching for a number that is never coming.
+  const priceSettledUnknown =
+    !capabilities.isError &&
+    ((quoteParams !== null && !isQuotable(quoteParams)) ||
+      (quote.data !== undefined && cost === undefined));
+  const priceRetrying =
+    !priceSettledUnknown && (capabilities.isError || quote.isError);
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -768,7 +778,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
               {t("creditNote")}
               {/* A price that failed to load is named, not omitted: the user is
                   about to spend, and silence would read as "no cost here". */}
-              {priceUnknown && ` ${t("priceUnavailable")}`}
+              {priceSettledUnknown
+                ? ` ${t("priceNotQuotable")}`
+                : priceRetrying
+                  ? ` ${t("priceUnavailable")}`
+                  : null}
             </>
           ) : (
             <>

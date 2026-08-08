@@ -325,7 +325,8 @@
         "creditNote": "Este es el único paso que utiliza sus créditos.",
         "costNote": "Aprobar gasta hasta {cost} créditos.",
         "balanceNote": "Tienes {remaining}.",
-        "priceUnavailable": "No pudimos cargar el costo exacto ahora mismo, así que no se muestra.",
+        "priceUnavailable": "No pudimos cargar el costo exacto ahora mismo, así que no se muestra. Seguimos intentándolo.",
+        "priceNotQuotable": "No podemos calcular el costo exacto de este render, así que no se muestra.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar toma",
         "shotLabels": {
