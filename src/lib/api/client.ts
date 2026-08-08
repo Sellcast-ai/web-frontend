@@ -20,6 +20,8 @@ import type {
   ReferencePresign,
   ShopifyAvailability,
   VideoCapabilities,
+  VideoQuote,
+  VideoQuoteParams,
 } from "./types";
 
 export class ApiError extends Error {
@@ -240,6 +242,18 @@ export const api = {
     return bff<VideoJob[]>(`video-jobs?${qs.toString()}`);
   },
   getVideoJob: (id: string) => bff<VideoJob>(`video-jobs/${id}`),
+  /** Read-only price preview — charges nothing. `video_model` is omitted when
+   * unset so the backend prices the mode's own default model. */
+  getVideoQuote: (params: VideoQuoteParams) => {
+    const qs = new URLSearchParams({
+      mode: params.mode,
+      duration_seconds: String(params.duration_seconds),
+      resolution: params.resolution,
+      aspect_ratio: params.aspect_ratio,
+    });
+    if (params.video_model) qs.set("video_model", params.video_model);
+    return bff<VideoQuote>(`video-jobs/quote?${qs.toString()}`);
+  },
   createVideoJob: (payload: VideoJobCreate) =>
     bff<VideoJob>(`video-jobs`, { method: "POST", json: payload }),
   uploadReferenceVideo: async (

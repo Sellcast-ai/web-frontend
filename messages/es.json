@@ -175,6 +175,13 @@
         "badge": "n/d"
       },
       "usageSummary": "{remaining} de {limit} créditos restantes",
+      "cost": {
+        "label": "Este video",
+        "value": "hasta {credits} créditos",
+        "pending": "calculando…",
+        "unavailable": "precio no disponible"
+      },
+      "cantAfford": "Este video necesita hasta {cost} créditos y tienes {remaining}.",
       "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
       "seePlans": "Ver planes",
       "title": "Estudio de vídeo",
@@ -316,6 +323,8 @@
         "description": "Aún no se ha hecho nada; este es sólo el plan. Léelo nuevamente, cambia la línea que desees, luego presiona Ir y Lumi creará el video completo para ti.",
         "approveAndMake": "Aprobar y hacer mi video",
         "creditNote": "Este es el único paso que utiliza sus créditos.",
+        "costNote": "Aprobar gasta hasta {cost} créditos.",
+        "balanceNote": "Tienes {remaining}.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar toma",
         "shotLabels": {

@@ -24,6 +24,7 @@ import {
   useMyProducts,
   useVideoJobs,
   useVideoCapabilities,
+  useVideoQuote,
 } from "@/lib/api/hooks";
 import { ApiError, api } from "@/lib/api/client";
 import {
@@ -58,6 +59,7 @@ import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { isOutOfCreditsError } from "@/lib/quota-error";
+import { affordability } from "@/lib/render-quote";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -204,11 +206,12 @@ function StudioInner() {
   const [aspectRatio, setAspectRatio] = useState<VideoAspectRatio>("9:16");
   const [avatarId, setAvatarId] = useState<string | null>(null);
   // The backend-metered balance a create was last refused against by the
-  // credit meter, plus the render it was judged against. Only a later read
-  // showing more credits than that clears the notice - the client has no
-  // honest way to price a render (see render-cost.ts), so it must never decide
-  // that a cheaper pick would now fit. Reconfiguring doesn't reprice it either;
-  // it just makes the refusal stale, so the notice stops describing a render
+  // credit meter, plus the render it was judged against. This is the residual
+  // path now that the quote gate below exists: it covers a refusal the quote
+  // couldn't predict (no quote in hand, or a balance drained in another tab
+  // between the quote and the click). Only a later read showing more credits
+  // than that clears the notice. Reconfiguring doesn't reprice it either; it
+  // just makes the refusal stale, so the notice stops describing a render
   // nobody attempted and the next Generate re-tests against the backend.
   const [refused, setRefused] = useState<{ balance: number; render: string } | null>(null);
   const { data: avatars } = useAvatars();
@@ -254,14 +257,29 @@ function StudioInner() {
   // review_mode stays wired but is no longer user-toggleable.
   const reviewMode = false;
 
-  // Two backend-metered signals, no client pricing: an empty meter (zero is
-  // zero under any rate card, so the user sees it before clicking and Generate
-  // is disabled - no render costs nothing), or
-  // a refused create, still on the render it refused, whose balance hasn't
-  // grown since. `useCreateJob` refetches
-  // usage on failure, so a top-up or a plan change clears this on its own; a
-  // fresh Generate clears it too. Without a usage read there is no honest
-  // balance to quote, so the create toast carries the failure alone.
+  // What this exact render costs, from the backend's own quote endpoint. Quoted on
+  // the REPAIRED values - the ones the create payload will carry - so the price
+  // on screen is the price of the render the button would start, never of the
+  // pick a capability narrowing has already moved off. Vibe and language don't
+  // reach pricing, so they don't re-quote.
+  const quote = useVideoQuote({
+    mode,
+    duration_seconds: duration,
+    resolution: effectiveResolution,
+    aspect_ratio: effectiveAspectRatio,
+    ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
+  });
+  const cost = quote.data?.credits;
+
+  // Three backend-metered signals, no client pricing: the quote against the
+  // balance (the honest pre-flight - a configuration nobody can pay for is
+  // refused before the click, not after), an empty meter (zero is zero at any
+  // price, and it stands even with no quote in hand), or a refused create still
+  // on the render it refused whose balance hasn't grown since. `useCreateJob`
+  // refetches usage on failure, so a top-up or a plan change clears the last
+  // one on its own; a fresh Generate clears it too. Without a usage read there
+  // is no honest balance to quote, so the create toast carries the failure
+  // alone.
   const renderKey = [
     mode,
     vibe,
@@ -271,6 +289,9 @@ function StudioInner() {
     effectiveAspectRatio,
   ].join("|");
   const noCredits = usage !== undefined && usage.remaining <= 0;
+  // "unknown" - no quote yet, or a quote that failed - never gates and never
+  // shows a number. The backend stays the authoritative refusal.
+  const canAfford = affordability(cost, usage?.remaining);
   const outOfQuota =
     noCredits ||
     (usage !== undefined &&
@@ -740,23 +761,55 @@ function StudioInner() {
               <Row label={t("summary.review")} value={t("summary.storyboard")} />
             </dl>
 
-            {usage && (
-              <p className="mt-4 text-center text-xs text-muted-foreground">
-                {t("usageSummary", {
-                  remaining: usage.remaining,
-                  limit: usage.limit,
-                })}
-              </p>
-            )}
+            {/* Price, then balance, in that order and in one block directly
+                above Generate: the summary above it is the render being
+                priced, and the rail is sticky, so both numbers stay on screen
+                while the pickers that move them are being used. The price is
+                the loud one - the balance was already here and was never the
+                question the user couldn't answer. */}
+            <div className="mt-4 border-t border-border pt-4">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-sm text-muted-foreground">
+                  {t("cost.label")}
+                </span>
+                {/* One slot, always occupied: a price that blinks out on every
+                    picker change reads worse than one that arrives late. A
+                    quote in flight or failed shows its own words here - never a
+                    number, and never the previous render's number. */}
+                <span
+                  className={cn(
+                    "text-right font-display font-semibold",
+                    cost !== undefined
+                      ? "text-base text-ink"
+                      : "text-sm text-muted-foreground",
+                  )}
+                >
+                  {cost !== undefined
+                    ? t("cost.value", { credits: cost })
+                    : quote.isError
+                      ? t("cost.unavailable")
+                      : t("cost.pending")}
+                </span>
+              </div>
+              {usage && (
+                <p className="mt-1 text-right text-xs text-muted-foreground">
+                  {t("usageSummary", {
+                    remaining: usage.remaining,
+                    limit: usage.limit,
+                  })}
+                </p>
+              )}
+            </div>
             <Button
               size="lg"
-              className="mt-2 w-full"
+              className="mt-3 w-full"
               onClick={generate}
               disabled={
                 create.isPending ||
                 !product ||
                 atActiveCap ||
                 noCredits ||
+                canAfford === "short" ||
                 !capabilityState.canSubmit ||
                 linkInvalid ||
                 referenceUploading
@@ -791,12 +844,17 @@ function StudioInner() {
                 </Link>
               </p>
             )}
-            {outOfQuota && usage && (
+            {/* The priced shortfall wins over the balance-only notice: it names
+                the gap the user can act on ("needs 225, you have 30") instead
+                of restating the balance they can already read above. */}
+            {(canAfford === "short" || outOfQuota) && usage && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                {t("outOfQuota", {
-                  remaining: usage.remaining,
-                  limit: usage.limit,
-                })}{" "}
+                {canAfford === "short" && cost !== undefined
+                  ? t("cantAfford", { cost, remaining: usage.remaining })
+                  : t("outOfQuota", {
+                      remaining: usage.remaining,
+                      limit: usage.limit,
+                    })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   {t("seePlans")}
                 </Link>

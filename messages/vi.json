@@ -492,6 +492,13 @@
         "avatarHint": "Video có người dẫn có thể điều chỉnh tỉ lệ khung hình cho phù hợp với người dẫn."
       },
       "usageSummary": "Còn {remaining}/{limit} tín dụng",
+      "cost": {
+        "label": "Video này",
+        "value": "tối đa {credits} tín dụng",
+        "pending": "đang tính…",
+        "unavailable": "chưa có giá"
+      },
+      "cantAfford": "Video này cần tối đa {cost} tín dụng, bạn đang có {remaining}.",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
@@ -561,6 +568,8 @@
         "description": "Chưa có gì được thực hiện - đây chỉ là kế hoạch. Đọc lại, thay đổi bất kỳ dòng nào bạn muốn, sau đó nhấn nút và Lumi sẽ xây dựng toàn bộ video cho bạn.",
         "approveAndMake": "Phê duyệt và tạo video của tôi",
         "creditNote": "Đây là bước duy nhất sử dụng tín dụng của bạn.",
+        "costNote": "Duyệt sẽ dùng tối đa {cost} tín dụng.",
+        "balanceNote": "Bạn đang có {remaining}.",
         "editTitle": "Chỉnh sửa {label}",
         "editFallbackTitle": "Chỉnh sửa ảnh",
         "context": {

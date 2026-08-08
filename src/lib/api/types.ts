@@ -313,6 +313,41 @@ export interface VideoJobCreate {
   aspect_ratio?: VideoAspectRatio;
 }
 
+/** What to price, for `GET /video-jobs/quote`. Deliberately loose strings: the
+ * job-detail surface quotes a job's own stored `mode`/`resolution`/
+ * `aspect_ratio`, which are free-form backend text, and the backend validates
+ * every field (422) rather than the client second-guessing it. Omitting
+ * `video_model` prices the mode's default model, which is what a render with no
+ * explicit pick runs on. */
+export interface VideoQuoteParams {
+  mode: string;
+  duration_seconds: number;
+  resolution: string;
+  aspect_ratio: string;
+  video_model?: string;
+}
+
+/** `GET /video-jobs/quote` — read-only, charges nothing. `credits` is the
+ * authoritative figure and the ONLY one any UI may show; `rate_credits_per_
+ * second` is rounded for the wire and rate x duration can land a credit off it.
+ *
+ * It is a CEILING, not the exact debit: the charge prices the storyboard's
+ * post-overlap length (`charged_seconds` in the backend), which a real shot
+ * transition makes shorter than the configured duration this endpoint prices.
+ * Every surface therefore says "up to", and no client may compute the
+ * difference — a second cost calculation is the thing this endpoint replaced. */
+export interface VideoQuote {
+  video_model: string | null;
+  mode: string;
+  model_id: string;
+  /** After the backend's clamp — what the render, and the charge, run at. */
+  resolution: string;
+  aspect_ratio: string;
+  duration_seconds: number;
+  rate_credits_per_second: number;
+  credits: number;
+}
+
 /** Presigned direct-to-storage handshake for reference-clip uploads. The
  * browser PUTs the bytes straight to `upload_url` (bypassing the BFF so large
  * clips don't hit serverless body limits), then sends `public_url` as the
@@ -450,6 +485,10 @@ export interface VideoJob {
   style: VideoStyle;
   duration_seconds: number;
   aspect_ratio: string;
+  /** What the render is charged at, already clamped to the model's ceiling —
+   * the same value the backend quote prices, so it's what a quote for this job
+   * must be asked for. Free-form backend text, like `aspect_ratio`. */
+  resolution: string;
   prompt: string;
   video_url: string | null;
   /** Same video presigned with attachment disposition — forces save-as. */
@@ -592,9 +631,8 @@ export const RENEWING_PLANS: readonly string[] = [
 
 export interface Usage {
   plan: UsagePlan;
-  /** All quantities are in credits, which track real render cost - what one
-   * render costs depends on its model, resolution and aspect ratio (see
-   * `src/lib/render-cost.ts`), so credits never convert to seconds. */
+  /** All quantities are in credits, which track real render cost. A render's
+   * price comes from `GET /video-jobs/quote`; credits never convert to seconds. */
   limit: number;
   used: number;
   remaining: number;

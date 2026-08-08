@@ -35,6 +35,8 @@ import {
   usePatchStoryboard,
   useProduct,
   useDeleteJob,
+  useUsage,
+  useVideoQuote,
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
@@ -571,7 +573,24 @@ function StoryboardView({ job }: { job: VideoJob }) {
   const tt = useTranslations("app.toasts");
   const approve = useApproveStoryboard(job.id, {
     approveError: tt("approveStoryboardFailed"),
+    outOfCredits: tt("outOfCredits"),
   });
+  // What approving actually costs, priced off the job's own stored render
+  // configuration - `resolution` is the clamped value the charge is priced at,
+  // so this is the same tuple the debit runs through. `video_model` is omitted
+  // deliberately: the job carries a provider model id, not a Studio picker key,
+  // and the quote takes only picker keys - so it prices this mode's DEFAULT
+  // model. Exact while Studio offers exactly one enabled model (see
+  // VIDEO_MODELS), which `render-quote.test.ts` asserts so enabling a second
+  // one fails loudly here instead of quietly quoting the wrong price.
+  const quote = useVideoQuote({
+    mode: job.mode,
+    duration_seconds: job.duration_seconds,
+    resolution: job.resolution,
+    aspect_ratio: job.aspect_ratio,
+  });
+  const { data: usage } = useUsage();
+  const cost = quote.data?.credits;
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -708,8 +727,26 @@ function StoryboardView({ job }: { job: VideoJob }) {
             </>
           )}
         </Button>
+        {/* The price sits in the bar's existing sentence slot rather than on
+            the button: this is the line the user reads immediately before the
+            click that spends, the bar is sticky so it is on screen for the
+            whole review, and a button label carrying a number truncates first
+            on narrow screens. Until the quote lands - and if it never does -
+            the bar keeps the vague-but-true note it has always had, so nothing
+            here can ever block or delay approving. */}
         <p className="text-xs text-muted-foreground">
-          {t("creditNote")}
+          {cost === undefined ? (
+            t("creditNote")
+          ) : (
+            <>
+              <strong className="font-semibold text-ink">
+                {t("costNote", { cost })}
+              </strong>
+              {/* Two independent sentences, so a missing usage read costs the
+                  balance and not the price. */}
+              {usage && ` ${t("balanceNote", { remaining: usage.remaining })}`}
+            </>
+          )}
         </p>
       </div>
 

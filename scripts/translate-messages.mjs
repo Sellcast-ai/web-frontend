@@ -485,10 +485,13 @@ const MANUAL_OVERRIDES = {
     vi: "Đã dùng {used}/{limit} tín dụng · gói {plan} · cấp một lần, không gia hạn",
     th: "ใช้ไป {used} จาก {limit} เครดิต · แพลน {plan} · ให้ครั้งเดียว ไม่ต่ออายุ",
   },
-  // Studio quotes no per-render cost until the backend credit lane flips: the
-  // deployed backend still meters seconds, so a client-computed cost would
-  // contradict the backend's own 429 prose on the same screen. render-cost.ts
-  // holds the flip-ready computation - re-enabling is one string each.
+  // The render price surfaces (Studio's summary rail, the storyboard approve
+  // bar) and the balance beside them. Every one of them says "up to": the
+  // backend's quote prices the CONFIGURED duration and the charge prices the
+  // storyboard's shorter post-overlap length, so the number is a ceiling and
+  // the hedge is load-bearing, not filler - the machine drops it. It also
+  // reads "credits" as academic credits and "This video" as a demonstrative
+  // with no noun to agree with. All hand-set per locale; do not unpin.
   "app.studio.outOfQuota": {
     es: "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
     zh: "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
@@ -508,6 +511,76 @@ const MANUAL_OVERRIDES = {
     id: "{remaining} dari {limit} kredit tersisa",
     vi: "Còn {remaining}/{limit} tín dụng",
     th: "เหลือ {remaining}/{limit} เครดิต",
+  },
+  "app.studio.cost.label": {
+    es: "Este video",
+    zh: "本视频",
+    ja: "この動画",
+    ko: "이 영상",
+    pt: "Este vídeo",
+    id: "Video ini",
+    vi: "Video này",
+    th: "วิดีโอนี้",
+  },
+  "app.studio.cost.value": {
+    es: "hasta {credits} créditos",
+    zh: "最多 {credits} 积分",
+    ja: "最大 {credits} クレジット",
+    ko: "최대 {credits} 크레딧",
+    pt: "até {credits} créditos",
+    id: "hingga {credits} kredit",
+    vi: "tối đa {credits} tín dụng",
+    th: "สูงสุด {credits} เครดิต",
+  },
+  "app.studio.cost.pending": {
+    es: "calculando…",
+    zh: "计算中…",
+    ja: "計算中…",
+    ko: "계산 중…",
+    pt: "calculando…",
+    id: "menghitung…",
+    vi: "đang tính…",
+    th: "กำลังคำนวณ…",
+  },
+  "app.studio.cost.unavailable": {
+    es: "precio no disponible",
+    zh: "无法获取价格",
+    ja: "価格を取得できません",
+    ko: "가격을 불러올 수 없음",
+    pt: "preço indisponível",
+    id: "harga tidak tersedia",
+    vi: "chưa có giá",
+    th: "ไม่มีข้อมูลราคา",
+  },
+  "app.studio.cantAfford": {
+    es: "Este video necesita hasta {cost} créditos y tienes {remaining}.",
+    zh: "此视频最多需要 {cost} 积分，而你只有 {remaining}。",
+    ja: "この動画には最大 {cost} クレジットが必要ですが、残高は {remaining} です。",
+    ko: "이 영상에는 최대 {cost} 크레딧이 필요하지만 {remaining} 크레딧이 있습니다.",
+    pt: "Este vídeo precisa de até {cost} créditos e você tem {remaining}.",
+    id: "Video ini butuh hingga {cost} kredit, sedangkan kredit Anda {remaining}.",
+    vi: "Video này cần tối đa {cost} tín dụng, bạn đang có {remaining}.",
+    th: "วิดีโอนี้ต้องใช้เครดิตสูงสุด {cost} แต่คุณมี {remaining}",
+  },
+  "app.jobs.storyboard.costNote": {
+    es: "Aprobar gasta hasta {cost} créditos.",
+    zh: "确认后最多扣除 {cost} 积分。",
+    ja: "承認すると最大 {cost} クレジットを消費します。",
+    ko: "승인하면 최대 {cost} 크레딧이 차감됩니다.",
+    pt: "Aprovar gasta até {cost} créditos.",
+    id: "Menyetujui akan memakai hingga {cost} kredit.",
+    vi: "Duyệt sẽ dùng tối đa {cost} tín dụng.",
+    th: "การอนุมัติจะใช้เครดิตสูงสุด {cost}",
+  },
+  "app.jobs.storyboard.balanceNote": {
+    es: "Tienes {remaining}.",
+    zh: "你当前有 {remaining}。",
+    ja: "残高は {remaining} です。",
+    ko: "보유 크레딧은 {remaining}입니다.",
+    pt: "Você tem {remaining}.",
+    id: "Kredit Anda {remaining}.",
+    vi: "Bạn đang có {remaining}.",
+    th: "คุณมี {remaining}",
   },
   "auth.layout.benefitPublish": {
     es: "5 relaciones de aspecto para cada plataforma",

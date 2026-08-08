@@ -492,6 +492,13 @@
         "avatarHint": "O vídeo com apresentador pode adaptar seu formato para se ajustar ao apresentador."
       },
       "usageSummary": "{remaining} de {limit} créditos restantes",
+      "cost": {
+        "label": "Este vídeo",
+        "value": "até {credits} créditos",
+        "pending": "calculando…",
+        "unavailable": "preço indisponível"
+      },
+      "cantAfford": "Este vídeo precisa de até {cost} créditos e você tem {remaining}.",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para este vídeo ({remaining} de {limit} restantes).",
@@ -561,6 +568,8 @@
         "description": "Nada foi feito ainda – este é apenas o plano. Leia, altere a linha que desejar e clique em ir e Lumi cria o vídeo inteiro para você.",
         "approveAndMake": "Aprovar e fazer meu vídeo",
         "creditNote": "Esta é a única etapa que utiliza seus créditos.",
+        "costNote": "Aprovar gasta até {cost} créditos.",
+        "balanceNote": "Você tem {remaining}.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar foto",
         "context": {

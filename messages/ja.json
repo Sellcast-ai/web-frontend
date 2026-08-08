@@ -492,6 +492,13 @@
         "avatarHint": "アバター出演の動画は、プレゼンターに合わせて形状が調整される場合があります。"
       },
       "usageSummary": "残り {remaining}/{limit} クレジット",
+      "cost": {
+        "label": "この動画",
+        "value": "最大 {credits} クレジット",
+        "pending": "計算中…",
+        "unavailable": "価格を取得できません"
+      },
+      "cantAfford": "この動画には最大 {cost} クレジットが必要ですが、残高は {remaining} です。",
       "generateVideo": "ビデオの生成",
       "generateUploading": "参照をアップロード中…",
       "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",
@@ -561,6 +568,8 @@
         "description": "まだ何も決まっていません。これは単なる計画です。それを読んで、必要な行を変更し、[実行] をクリックすると、Lumi がビデオ全体を構築します。",
         "approveAndMake": "私のビデオを承認して作成してください",
         "creditNote": "これがクレジットを使用する唯一のステップです。",
+        "costNote": "承認すると最大 {cost} クレジットを消費します。",
+        "balanceNote": "残高は {remaining} です。",
         "editTitle": "{label}を編集",
         "editFallbackTitle": "ショットを編集する",
         "context": {

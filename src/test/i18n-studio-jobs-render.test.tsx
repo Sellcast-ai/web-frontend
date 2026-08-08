@@ -14,6 +14,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import en from "../../messages/en.json";
 import { qk } from "@/lib/api/hooks";
+import { api } from "@/lib/api/client";
 import { VIDEO_ASPECT_RATIOS } from "@/lib/api/types";
 import type { ProductSummary, Usage, VideoJob } from "@/lib/api/types";
 
@@ -75,6 +76,7 @@ const baseJob: VideoJob = {
   style: "avatar_talking_intro",
   duration_seconds: 15,
   aspect_ratio: "9:16",
+  resolution: "720p",
   prompt: "",
   video_url: null,
   download_url: null,
@@ -154,6 +156,21 @@ function render(qc: QueryClient, node: React.ReactNode): string {
 // than on any future `title`/heading anywhere else on the page.
 function disabledControls(html: string): string[] {
   return (html.match(/<button[^>]*>/g) ?? []).filter((tag) => /\bdisabled\b/.test(tag));
+}
+
+/** React renders a boolean `disabled` as `disabled=""`; every button's class
+ *  list also carries `disabled:opacity-50`, so a substring check for
+ *  "disabled" matches an ENABLED button. Match the attribute, not the word. */
+function isDisabled(tag: string): boolean {
+  return /\sdisabled=""/.test(tag);
+}
+
+/** The Generate button's own opening tag, so a `disabled` anywhere else on the
+ *  page (a narrowed picker option) can never be mistaken for it. */
+function generateButtonTag(html: string): string {
+  const label = html.indexOf("Generate video");
+  const open = html.lastIndexOf("<button", label);
+  return html.slice(open, html.indexOf(">", open) + 1);
 }
 
 function tagText(html: string, tag: string): string[] {
@@ -412,10 +429,7 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).toContain("Temporarily unavailable");
     // Still on Product Only: no presenter section, and nothing to generate.
     expect(sectionHeadings(html)).not.toContain("Presenter");
-    const generateButton = html.slice(
-      html.lastIndexOf("<button", html.indexOf("Generate video")),
-    );
-    expect(generateButton).toContain("disabled");
+    expect(isDisabled(generateButtonTag(html))).toBe(true);
     // The reason sits beside the dead button too, like every other blocked
     // Generate state - the mode card is sections away on a phone.
     expect(text).toContain("Product Only isn’t available right now.");
@@ -456,10 +470,7 @@ describe("Studio page renders extracted English copy", () => {
 
     expect(text).toContain("No render modes are available right now.");
     expect(text).not.toContain("Pick another mode to generate");
-    const generateButton = html.slice(
-      html.lastIndexOf("<button", html.indexOf("Generate video")),
-    );
-    expect(generateButton).toContain("disabled");
+    expect(isDisabled(generateButtonTag(html))).toBe(true);
   });
 
   // The out-of-quota notice is backend-metered only: a drained meter says so
@@ -478,6 +489,128 @@ describe("Studio page renders extracted English copy", () => {
     });
     const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
     expect(text.includes("Not enough credits for this video")).toBe(shown);
+  });
+
+  // ── price (GET /video-jobs/quote) ──────────────────────────────────────
+  // Studio's defaults, which is the tuple the rail quotes on first paint.
+  const quoted = {
+    mode: "product_only",
+    duration_seconds: 15,
+    resolution: "720p",
+    aspect_ratio: "9:16",
+    video_model: "seedance-2.0",
+  };
+  const defaultQuoteKey = qk.quote(quoted);
+
+  function studioClient(seed: (c: QueryClient) => void) {
+    return makeClient((c) => {
+      c.setQueryData(qk.product("prod-1"), product);
+      c.setQueryData(["usage"], usage);
+      c.setQueryData(["avatars"], []);
+      c.setQueryData(qk.jobs({}), []);
+      seed(c);
+    });
+  }
+
+  it("shows what the configured render costs, beside the balance", () => {
+    const qc = studioClient((c) => c.setQueryData(defaultQuoteKey, { credits: 225 }));
+    const html = render(qc, React.createElement(StudioPage));
+    save("studio-cost", html);
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("This video");
+    expect(text).toContain("up to 225 credits");
+    // The balance the price is read against stays right there with it.
+    expect(text).toContain("180 of 300 credits left");
+  });
+
+  // The rail must be priced for the settings on screen or for nothing at all.
+  // A quote cached under a DIFFERENT configuration is exactly the stale price
+  // this endpoint was wired in to stop showing.
+  it("never borrows another configuration's price", () => {
+    const qc = studioClient((c) =>
+      c.setQueryData(
+        qk.quote({
+          mode: "product_only",
+          duration_seconds: 30,
+          resolution: "1080p",
+          aspect_ratio: "9:16",
+          video_model: "seedance-2.0",
+        }),
+        { credits: 1110 },
+      ),
+    );
+    const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
+
+    expect(text).not.toContain("1110");
+    expect(text).toContain("pricing…");
+  });
+
+  it("shows no number while the quote is still in flight, and blocks nothing", () => {
+    const html = render(studioClient(() => {}), React.createElement(StudioPage));
+    expectUnpriced(html, "pricing…");
+  });
+
+  it("shows no number when the quote failed, and blocks nothing", async () => {
+    // A real failed read rather than a hand-built cache entry, so the branch
+    // under test is the one React Query actually produces. `retryOnMount:
+    // false` freezes it there: an observer mounting over an errored query
+    // reports `pending` while it retries, which a static render would capture
+    // instead of the settled failure this test is about.
+    const qc = new QueryClient({
+      defaultOptions: { queries: { retry: false, retryOnMount: false, gcTime: Infinity } },
+    });
+    qc.setQueryData(qk.product("prod-1"), product);
+    qc.setQueryData(["usage"], usage);
+    qc.setQueryData(["avatars"], []);
+    qc.setQueryData(qk.jobs({}), []);
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
+    await qc
+      .fetchQuery({ queryKey: defaultQuoteKey, queryFn: () => api.getVideoQuote(quoted) })
+      .catch(() => null);
+    vi.unstubAllGlobals();
+
+    expectUnpriced(render(qc, React.createElement(StudioPage)), "price unavailable");
+  });
+
+  // An unpriced render is still offered: the backend stays the authoritative
+  // refusal, exactly as it was before any of this existed.
+  function expectUnpriced(html: string, expected: string) {
+    const text = html.replace(/<[^>]+>/g, " ");
+    expect(text).toContain(expected);
+    // "up to" alone also appears in the model blurb ("up to 1080p") - the
+    // negative has to be about a PRICE.
+    expect(text).not.toMatch(/up to \d+ credits/);
+    expect(text).not.toContain("This video needs up to");
+    expect(isDisabled(generateButtonTag(html))).toBe(false);
+  }
+
+  // The gate the free grant will trip today: 30 credits, cheapest render ~70.
+  // It is disabled BEFORE the click, and the notice names the gap rather than
+  // repeating the balance already printed above it.
+  it("refuses a render the balance cannot cover, and says by how much", () => {
+    const qc = studioClient((c) => {
+      c.setQueryData(["usage"], { ...usage, limit: 30, used: 0, remaining: 30 });
+      c.setQueryData(defaultQuoteKey, { credits: 225 });
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    save("studio-cost-short", html);
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(isDisabled(generateButtonTag(html))).toBe(true);
+    expect(text).toContain("This video needs up to 225 credits and you have 30.");
+    expect(text).toContain("See plans");
+    // The priced shortfall replaces the balance-only notice; both would be
+    // saying the same thing twice.
+    expect(text).not.toContain("Not enough credits for this video");
+  });
+
+  it("leaves Generate alone when the balance covers the render", () => {
+    const qc = studioClient((c) => c.setQueryData(defaultQuoteKey, { credits: 180 }));
+    const html = render(qc, React.createElement(StudioPage));
+
+    expect(isDisabled(generateButtonTag(html))).toBe(false);
+    expect(html.replace(/<[^>]+>/g, " ")).not.toContain("This video needs up to");
   });
 });
 
@@ -631,5 +764,49 @@ describe("Job detail page renders extracted English copy", () => {
     ]) {
       expect(text, `expected "${s}" in failed render`).toContain(s);
     }
+  });
+
+  // The approve bar is where the credits actually leave the account, so the
+  // number sits in its sentence slot - the last thing read before the click.
+  it("prices the approve bar off the job's own render configuration", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+      c.setQueryData(["usage"], usage);
+      // No video_model: the job carries a provider model id, not a picker key,
+      // so the backend prices this mode's default (see render-quote.test.ts).
+      c.setQueryData(
+        qk.quote({
+          mode: "ai_avatar",
+          duration_seconds: 15,
+          resolution: "720p",
+          aspect_ratio: "9:16",
+        }),
+        { credits: 225 },
+      );
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-storyboard-cost", html);
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Approving spends up to 225 credits.");
+    expect(text).toContain("You have 180.");
+    // The vague note it replaces must not linger beside it.
+    expect(text).not.toContain("This is the only step that uses your credits.");
+  });
+
+  // Nothing on this bar may wait on a price: an unquoted job keeps the note it
+  // has always had and approves exactly as before.
+  it("keeps the old note, and the approve button, when no price arrives", () => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+      c.setQueryData(["usage"], usage);
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("This is the only step that uses your credits.");
+    expect(text).not.toContain("Approving spends up to");
+    const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
+    expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(false);
   });
 });

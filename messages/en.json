@@ -492,6 +492,13 @@
         "avatarHint": "Talking-head output may adapt its shape to fit the presenter."
       },
       "usageSummary": "{remaining} of {limit} credits left",
+      "cost": {
+        "label": "This video",
+        "value": "up to {credits} credits",
+        "pending": "pricing…",
+        "unavailable": "price unavailable"
+      },
+      "cantAfford": "This video needs up to {cost} credits and you have {remaining}.",
       "generateVideo": "Generate video",
       "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for this video ({remaining} of {limit} left).",
@@ -561,6 +568,8 @@
         "description": "Nothing's been made yet - this is just the plan. Read it over, change any line you want, then hit go and Lumi builds the whole video for you.",
         "approveAndMake": "Approve & make my video",
         "creditNote": "This is the only step that uses your credits.",
+        "costNote": "Approving spends up to {cost} credits.",
+        "balanceNote": "You have {remaining}.",
         "editTitle": "Edit {label}",
         "editFallbackTitle": "Edit shot",
         "context": {

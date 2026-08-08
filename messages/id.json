@@ -492,6 +492,13 @@
         "avatarHint": "Output dengan presenter mungkin menyesuaikan bentuknya agar pas dengan presenter."
       },
       "usageSummary": "{remaining} dari {limit} kredit tersisa",
+      "cost": {
+        "label": "Video ini",
+        "value": "hingga {credits} kredit",
+        "pending": "menghitung…",
+        "unavailable": "harga tidak tersedia"
+      },
+      "cantAfford": "Video ini butuh hingga {cost} kredit, sedangkan kredit Anda {remaining}.",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",
@@ -561,6 +568,8 @@
         "description": "Belum ada yang dibuat – ini hanya rencananya. Bacalah lagi, ubah baris apa pun yang Anda inginkan, lalu tekan go dan Lumi membuat keseluruhan video untuk Anda.",
         "approveAndMake": "Setujui & buat video saya",
         "creditNote": "Ini adalah satu-satunya langkah yang menggunakan kredit Anda.",
+        "costNote": "Menyetujui akan memakai hingga {cost} kredit.",
+        "balanceNote": "Kredit Anda {remaining}.",
         "editTitle": "Sunting {label}",
         "editFallbackTitle": "Sunting bidikan",
         "context": {
