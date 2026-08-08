@@ -1014,8 +1014,10 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).toContain("You have no credits left, so approving won’t go through.");
     expect(text).not.toContain("it may still go through");
     expect(text).not.toContain("credits short");
-    // The refusal still names the action that clears it.
-    expect(html).toContain('href="/pricing"');
+    // The refusal still names the action that clears it - once. Here the
+    // primary control already IS that route, so a second link to it beside the
+    // button under a different label would read as two different offers.
+    expect(html.match(/href="\/pricing"/g)).toHaveLength(1);
     // ...and the control agrees with the copy: a page that has just said the
     // approve won't go through must not offer it. On an untouched storyboard
     // (this render - nothing has been edited) the one live control is the way

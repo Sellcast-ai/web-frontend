@@ -1,7 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { affordability, isQuotable, priceUnknownReason } from "./render-quote";
+import {
+  affordability,
+  isQuotable,
+  priceUnknownReason,
+  verifiedCredits,
+} from "./render-quote";
 import { ApiError } from "./api/client";
-import { VIDEO_MODELS } from "./api/types";
+import { VIDEO_MODELS, type VideoQuote } from "./api/types";
 
 describe("affordability", () => {
   it("flags a shortfall - the quote is a ceiling, so it warns and never blocks", () => {
@@ -72,6 +77,43 @@ describe("isQuotable", () => {
 // Both priced surfaces ask this one question, so a 5xx that is still being
 // re-polled and a 4xx nobody will retry can never be told to the user as the
 // same sentence.
+// The one check both priced surfaces run before printing a number: Studio
+// against the id its picker key resolves to, the approve bar against a job's
+// `provider_model`. A landed quote that fails it is the backend's settled
+// answer, which is why `withheld` travels with the credits.
+describe("verifiedCredits", () => {
+  const quote = { model_id: "seedance-1-pro", credits: 225 } as VideoQuote;
+
+  it("shows a quote the backend priced on the model we asked for", () => {
+    expect(verifiedCredits(quote, "seedance-1-pro")).toEqual({
+      credits: 225,
+      withheld: false,
+    });
+  });
+
+  it("withholds one priced on some other model, and says it was withheld", () => {
+    expect(verifiedCredits(quote, "kling-2-1")).toEqual({
+      credits: undefined,
+      withheld: true,
+    });
+  });
+
+  // Nothing read to compare against is never "verified false" - Studio runs on
+  // its static pickers when the capability read fails and must not lose the
+  // price on top of a capability outage.
+  it("shows the quote when there is no expected id to check", () => {
+    expect(verifiedCredits(quote, null)).toEqual({ credits: 225, withheld: false });
+  });
+
+  // No quote yet is pending, not withheld: nothing has been dropped.
+  it("doesn't call an absent quote withheld", () => {
+    expect(verifiedCredits(undefined, "seedance-1-pro")).toEqual({
+      credits: undefined,
+      withheld: false,
+    });
+  });
+});
+
 describe("priceUnknownReason", () => {
   const ok = { isError: false, error: null };
   const settled = { isError: true, error: new ApiError(404, "Not Found") };

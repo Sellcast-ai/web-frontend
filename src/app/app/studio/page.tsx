@@ -60,7 +60,7 @@ import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { isOutOfCreditsError } from "@/lib/quota-error";
-import { affordability, priceUnknownReason } from "@/lib/render-quote";
+import { affordability, priceUnknownReason, verifiedCredits } from "@/lib/render-quote";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -282,23 +282,21 @@ function StudioInner() {
           ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
         };
   const quote = useVideoQuote(quoteParams);
-  // ...and only ever a price for the model this render would run on, the same
-  // check the approve bar makes against a job's `provider_model`: the quote
-  // takes a picker KEY and answers with the provider id it actually priced, so
-  // a key the backend doesn't know comes back priced on its own default. That
-  // is a plausible wrong number, and the fact that the create would substitute
-  // identically doesn't make it the configured render's price. Verified only
-  // when the capability read named an id to verify against - with no read
-  // Studio is running on the static pickers and has nothing to compare, and
-  // losing the price there would be an outage of pricing over a capability
-  // outage the rail deliberately degrades through.
+  // ...and only ever a price for the model this render would run on, through
+  // the same `verifiedCredits` the approve bar runs against a job's
+  // `provider_model`, so neither surface can drift into printing a number the
+  // backend priced on something else. The expected id is whatever the capability
+  // read pairs with this picker key; with no read Studio is on the static
+  // pickers and has nothing to compare, and losing the price there would be an
+  // outage of pricing over a capability outage the rail already degrades
+  // through.
   const expectedModelId = effectiveVideoModel
     ? providerModelForVideoModelKey(caps, mode, effectiveVideoModel)
     : null;
-  const cost =
-    expectedModelId === null || quote.data?.model_id === expectedModelId
-      ? quote.data?.credits
-      : undefined;
+  const { credits: cost, withheld: costWithheld } = verifiedCredits(
+    quote.data,
+    expectedModelId,
+  );
   // With no number, the slot says which kind of no: `priceUnknownReason` is the
   // same classification the approve bar uses, so the two surfaces can't drift
   // into calling a re-polled 5xx and a settled 4xx the same thing. The
@@ -306,13 +304,7 @@ function StudioInner() {
   // pickers when it fails and still gets a real quote for them. There is no
   // unpriceable tuple to pass either: every field here is a typed literal, so
   // `isQuotable` belongs to the job page, which builds its tuple from wire data.
-  // A quote that landed and was withheld above IS settled, though: the backend
-  // has answered, and nothing about waiting turns its answer into this model's
-  // price.
-  const costUnknown = priceUnknownReason(
-    [quote],
-    quote.data !== undefined && cost === undefined,
-  );
+  const costUnknown = priceUnknownReason([quote], costWithheld);
 
   // Three backend-metered signals, no client pricing: the quote against the
   // balance, an empty meter (zero is zero at any price, and it stands even with

@@ -58,7 +58,7 @@ import {
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
-import { isQuotable, priceUnknownReason } from "@/lib/render-quote";
+import { isQuotable, priceUnknownReason, verifiedCredits } from "@/lib/render-quote";
 import {
   normalizeVideoCapabilities,
   videoModelKeyForProviderModel,
@@ -609,11 +609,14 @@ function StoryboardView({ job }: { job: VideoJob }) {
       };
   const quote = useVideoQuote(quoteParams);
   const { data: usage, refetch: refetchUsage } = useUsage();
-  // Only ever THIS render's price. A quote the backend priced on some other
-  // model - the mode default, because the key couldn't be resolved - is a
-  // plausible wrong number, which is worse here than no number at all.
-  const cost =
-    quote.data?.model_id === job.provider_model ? quote.data.credits : undefined;
+  // Only ever THIS render's price, through the same `verifiedCredits` Studio's
+  // rail runs: a quote the backend priced on some other model - the mode
+  // default, because the key couldn't be resolved - is a plausible wrong
+  // number, which is worse here than no number at all.
+  const { credits: cost, withheld: costWithheld } = verifiedCredits(
+    quote.data,
+    job.provider_model,
+  );
   // ...and when there is no number, the bar says why rather than letting the
   // price quietly disappear - and says WHICH why, because the two make very
   // different promises. `priceUnknownReason` is that one classification, shared
@@ -627,8 +630,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
   // a number that is never coming.
   const priceUnknown = priceUnknownReason(
     [capabilities, quote],
-    (quoteParams !== null && !isQuotable(quoteParams)) ||
-      (quote.data !== undefined && cost === undefined),
+    (quoteParams !== null && !isQuotable(quoteParams)) || costWithheld,
   );
   // What the balance means for this approve, split on how certain the outcome
   // is rather than on how big the gap is. An empty meter is certain - zero is
@@ -860,10 +862,19 @@ function StoryboardView({ job }: { job: VideoJob }) {
                 {shortfall !== null
                   ? t("shortfallNote", { shortfall })
                   : t("noCreditsNote")}
-              </span>{" "}
-              <Link href="/pricing" className="font-semibold text-brand-700">
-                {t("seePlans")}
-              </Link>
+              </span>
+              {/* The route out is named once. In the one branch where the
+                  bar's primary button already IS /pricing ("Get credits"),
+                  a second link to the same place under a second label would
+                  make the bar read as two different offers. */}
+              {!(noCredits && !dirty) && (
+                <>
+                  {" "}
+                  <Link href="/pricing" className="font-semibold text-brand-700">
+                    {t("seePlans")}
+                  </Link>
+                </>
+              )}
             </>
           )}
         </p>

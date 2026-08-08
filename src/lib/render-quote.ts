@@ -1,5 +1,5 @@
 import { isTransientError } from "@/lib/api/client";
-import type { VideoQuoteParams } from "@/lib/api/types";
+import type { VideoQuote, VideoQuoteParams } from "@/lib/api/types";
 
 /** Can the user pay for the render they have configured?
  *
@@ -47,6 +47,33 @@ export function isQuotable(
     Boolean(params.aspect_ratio) &&
     Number.isFinite(params.duration_seconds)
   );
+}
+
+/** May this quote's number be shown, and was one withheld?
+ *
+ * The quote takes a picker KEY and answers with the provider id it actually
+ * priced (`model_id`), so a key this deployment doesn't know comes back priced
+ * on the backend's own default - a plausible wrong number at the click that
+ * spends, which is worse than no number. Both priced surfaces run this same
+ * check: Studio against the id its picker key resolves to, the approve bar
+ * against the job's `provider_model`. `expectedModelId` is null when nothing
+ * was read to compare against (the capability read failed, and Studio is on
+ * its static pickers) - that is never "verified false", so the quote shows.
+ *
+ * `withheld` is the second half, and belongs here for the same reason: a quote
+ * that landed and was dropped above IS the backend's settled answer, so both
+ * surfaces must feed it to `priceUnknownReason` as such rather than each
+ * re-deriving when a landed quote counts as unpriceable. */
+export function verifiedCredits(
+  quote: VideoQuote | undefined,
+  expectedModelId: string | null,
+): { credits: number | undefined; withheld: boolean } {
+  const credits =
+    quote !== undefined &&
+    (expectedModelId === null || quote.model_id === expectedModelId)
+      ? quote.credits
+      : undefined;
+  return { credits, withheld: quote !== undefined && credits === undefined };
 }
 
 /** Why no price is on screen - the one classification both priced surfaces
