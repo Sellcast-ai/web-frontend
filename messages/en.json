@@ -555,11 +555,10 @@
         "queuedForRender": "Waiting to render your video…",
         "renderingVideo": "Rendering your video…",
         "working": "Working on your video…",
-        "scriptDescription": "No credits are charged until you approve the storyboard. This page updates automatically.",
+        "scriptDescription": "Nothing is rendered until you approve the storyboard. This page updates automatically.",
         "shotsDescription": "Your storyboard is approved. Lumi is preparing the shot references and render assets now.",
         "renderDescription": "Your approved shots are being rendered into the final video.",
-        "workingDescription": "This page updates automatically.",
-        "queuePosition": "Queue position: {position}"
+        "workingDescription": "This page updates automatically."
       },
       "review": {
         "title": "Review your shots",

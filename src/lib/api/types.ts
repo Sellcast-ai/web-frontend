@@ -465,10 +465,6 @@ export interface VideoJob {
   reference_used: boolean;
   reference_video_source: string | null;
   synthesized_prompt: string | null;
-  /** Present on queue reads when the backend can distinguish "waiting behind
-   * other work" from "currently being worked". It is a position signal, not a
-   * time estimate, and can move up or down as priority work enters the queue. */
-  queue_position?: number | null;
   review_mode: boolean;
   /** Parsed shot-list from script_json — the artifact reviewed/approved at the
    * storyboard gate. Null until the worker has written the script. */

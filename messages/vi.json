@@ -555,11 +555,10 @@
         "queuedForRender": "Đang chờ render video của bạn…",
         "renderingVideo": "Đang render video của bạn…",
         "working": "Đang xử lý video của bạn…",
-        "scriptDescription": "Chưa trừ tín dụng cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động.",
+        "scriptDescription": "Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động.",
         "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
         "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
-        "workingDescription": "Trang này cập nhật tự động.",
-        "queuePosition": "Vị trí trong hàng đợi: {position}"
+        "workingDescription": "Trang này cập nhật tự động."
       },
       "review": {
         "title": "Xem lại các cảnh của bạn",
@@ -721,10 +720,10 @@
       "working": "Đang xử lý"
     },
     "jobProgress": {
-      "script": "kịch bản",
+"script": "Kịch bản",
       "review": "Xem lại",
       "shots": "Cảnh",
-      "render": "Kết xuất",
+"render": "Render",
       "ready": "Sẵn sàng"
     },
     "subjects": {

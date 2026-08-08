@@ -555,11 +555,10 @@
         "queuedForRender": "Aguardando para renderizar seu vídeo…",
         "renderingVideo": "Renderizando seu vídeo…",
         "working": "Trabalhando no seu vídeo…",
-        "scriptDescription": "Nenhum crédito é cobrado até você aprovar o storyboard. Esta página é atualizada automaticamente.",
+        "scriptDescription": "Nada é renderizado até você aprovar o storyboard. Esta página é atualizada automaticamente.",
         "shotsDescription": "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização.",
         "renderDescription": "Suas tomadas aprovadas estão sendo renderizadas no vídeo final.",
-        "workingDescription": "Esta página é atualizada automaticamente.",
-        "queuePosition": "Posição na fila: {position}"
+        "workingDescription": "Esta página é atualizada automaticamente."
       },
       "review": {
         "title": "Revise suas tomadas",
@@ -724,7 +723,7 @@
       "script": "Roteiro",
       "review": "Revisão",
       "shots": "Tomadas",
-      "render": "Renderizar",
+"render": "Render",
       "ready": "Pronto"
     },
     "subjects": {

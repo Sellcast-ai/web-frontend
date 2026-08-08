@@ -555,11 +555,10 @@
         "queuedForRender": "Esperando para renderizar tu video…",
         "renderingVideo": "Renderizando tu video…",
         "working": "Trabajando en tu video…",
-        "scriptDescription": "No se cobran créditos hasta que apruebas el storyboard. Esta página se actualiza automáticamente.",
+        "scriptDescription": "No se renderiza nada hasta que apruebas el storyboard. Esta página se actualiza automáticamente.",
         "shotsDescription": "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado.",
         "renderDescription": "Tus tomas aprobadas se están renderizando en el video final.",
-        "workingDescription": "Esta página se actualiza automáticamente.",
-        "queuePosition": "Posición en la cola: {position}"
+        "workingDescription": "Esta página se actualiza automáticamente."
       },
       "review": {
         "title": "Revisa tus tomas",
@@ -721,10 +720,10 @@
       "working": "Trabajando"
     },
     "jobProgress": {
-      "script": "Guión",
+"script": "Guion",
       "review": "Revisión",
       "shots": "Tomas",
-      "render": "renderizar",
+"render": "Render",
       "ready": "Listo"
     },
     "subjects": {

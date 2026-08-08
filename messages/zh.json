@@ -555,11 +555,10 @@
         "queuedForRender": "正在等待渲染视频…",
         "renderingVideo": "正在渲染视频…",
         "working": "正在处理你的视频…",
-        "scriptDescription": "在你批准分镜前不会扣除积分。此页面会自动更新。",
+        "scriptDescription": "在你批准分镜前不会开始渲染。此页面会自动更新。",
         "shotsDescription": "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材。",
         "renderDescription": "你批准的镜头正在渲染成最终视频。",
-        "workingDescription": "此页面会自动更新。",
-        "queuePosition": "队列位置：{position}"
+        "workingDescription": "此页面会自动更新。"
       },
       "review": {
         "title": "检查你的镜头",
@@ -722,10 +721,10 @@
     },
     "jobProgress": {
       "script": "脚本",
-      "review": "评论",
+"review": "审阅",
       "shots": "镜头",
       "render": "渲染",
-      "ready": "准备好了"
+"ready": "完成"
     },
     "subjects": {
       "product": "产品展示",

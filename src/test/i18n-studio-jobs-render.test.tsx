@@ -596,7 +596,6 @@ describe("Job detail page renders extracted English copy", () => {
         ...baseJob,
         status: "queued",
         beats: [],
-        queue_position: 3,
       }),
     );
     const html = render(qc, React.createElement(JobDetailPage));
@@ -612,12 +611,27 @@ describe("Job detail page renders extracted English copy", () => {
       "Ready",
       "Waiting to build your shots",
       "Your storyboard is approved.",
-      "Queue position: 3",
     ]) {
       expect(text, `expected "${s}" in post-approval render`).toContain(s);
     }
     expect(text).not.toContain("Writing your script");
     expect(text).not.toContain("Queued for script");
+    // No credit claim may ride along after approval, where it is false.
+    expect(text).not.toContain("credits");
+  });
+
+  it("keeps every tracker label readable at 320px without shrinking the badges", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "queued", beats: [] }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+
+    // The row scrolls rather than crushing five steps into ~288px, so the
+    // badges keep their circle and no label is hidden or clipped.
+    expect(html).toContain("overflow-x-auto");
+    expect(html).toMatch(/h-7 w-7 shrink-0/);
+    expect(html).toMatch(/block whitespace-nowrap text-xs/);
+    expect(html).not.toMatch(/hidden text-xs font-semibold sm:block/);
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {

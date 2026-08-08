@@ -555,11 +555,10 @@
         "queuedForRender": "動画レンダリングを待っています…",
         "renderingVideo": "動画をレンダリングしています…",
         "working": "動画を処理しています…",
-        "scriptDescription": "ストーリーボードを承認するまでクレジットは消費されません。このページは自動更新されます。",
+        "scriptDescription": "ストーリーボードを承認するまでレンダリングは始まりません。このページは自動更新されます。",
         "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しています。",
         "renderDescription": "承認済みのショットを最終動画にレンダリングしています。",
-        "workingDescription": "このページは自動更新されます。",
-        "queuePosition": "キュー位置: {position}"
+        "workingDescription": "このページは自動更新されます。"
       },
       "review": {
         "title": "ショットを確認",

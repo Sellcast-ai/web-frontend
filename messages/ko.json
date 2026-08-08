@@ -555,11 +555,10 @@
         "queuedForRender": "동영상 렌더링을 기다리는 중…",
         "renderingVideo": "동영상을 렌더링하는 중…",
         "working": "동영상을 작업 중…",
-        "scriptDescription": "스토리보드를 승인하기 전까지 크레딧은 차감되지 않습니다. 이 페이지는 자동으로 업데이트됩니다.",
+        "scriptDescription": "스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다. 이 페이지는 자동으로 업데이트됩니다.",
         "shotsDescription": "스토리보드가 승인되었습니다. Lumi가 샷 참조와 렌더링 에셋을 준비하고 있습니다.",
         "renderDescription": "승인된 샷을 최종 동영상으로 렌더링하고 있습니다.",
-        "workingDescription": "이 페이지는 자동으로 업데이트됩니다.",
-        "queuePosition": "대기열 위치: {position}"
+        "workingDescription": "이 페이지는 자동으로 업데이트됩니다."
       },
       "review": {
         "title": "샷을 검토하세요",
@@ -725,7 +724,7 @@
       "review": "검토",
       "shots": "샷",
       "render": "렌더링",
-      "ready": "준비"
+"ready": "완료"
     },
     "subjects": {
       "product": "제품",

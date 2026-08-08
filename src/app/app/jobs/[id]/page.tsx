@@ -397,7 +397,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
   const t = useTranslations("shared.jobProgress");
 
   return (
-    <div className="mt-6 flex items-center gap-2">
+    <div className="-mx-6 mt-6 flex items-center gap-2 overflow-x-auto px-6 pb-1 sm:mx-0 sm:overflow-x-visible sm:px-0 sm:pb-0">
       {STEP_LABEL_KEYS.map((labelKey, i) => {
         const label = t(labelKey);
         const done = i < current;
@@ -407,7 +407,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
                   failed && isCurrent
                     ? "bg-rose text-white"
                     : done
@@ -427,7 +427,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
               <span
                 className={cn(
-                  "block max-w-14 text-center text-[10px] font-semibold leading-tight sm:max-w-none sm:text-left sm:text-xs",
+                  "block whitespace-nowrap text-xs font-semibold leading-tight",
                   isCurrent ? "text-ink" : "text-muted-foreground",
                 )}
               >
@@ -435,7 +435,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
             </div>
             {i < STEP_LABEL_KEYS.length - 1 && (
-              <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
+              <span className="relative h-0.5 min-w-4 flex-1 overflow-hidden rounded-full bg-border sm:min-w-0">
                 <motion.span
                   className="absolute inset-0 origin-left rounded-full bg-success dark:bg-live"
                   initial={false}
@@ -456,10 +456,6 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
 function WorkingView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.working");
   const display = jobProgressDisplay(job);
-  const queuePosition =
-    typeof job.queue_position === "number" && Number.isFinite(job.queue_position)
-      ? job.queue_position
-      : null;
   return (
     <div className="mt-8">
       <div className="rounded-card border border-border bg-card p-8 text-center">
@@ -472,11 +468,6 @@ function WorkingView({ job }: { job: VideoJob }) {
         <p className="mt-1 text-sm text-muted-foreground">
           {t(display.workingDescriptionKey)}
         </p>
-        {queuePosition !== null && (
-          <p className="mt-3 text-xs font-medium text-muted-foreground">
-            {t("queuePosition", { position: queuePosition })}
-          </p>
-        )}
       </div>
       {job.beats.length > 0 && (
         <BeatGrid beats={job.beats} frameClass={aspectFrameClass(job.aspect_ratio)} />

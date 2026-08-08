@@ -555,11 +555,10 @@
         "queuedForRender": "Menunggu untuk merender video Anda…",
         "renderingVideo": "Merender video Anda…",
         "working": "Mengerjakan video Anda…",
-        "scriptDescription": "Kredit belum dikenakan sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis.",
+        "scriptDescription": "Tidak ada yang dirender sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis.",
         "shotsDescription": "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render.",
         "renderDescription": "Shot yang Anda setujui sedang dirender menjadi video final.",
-        "workingDescription": "Halaman ini diperbarui secara otomatis.",
-        "queuePosition": "Posisi antrean: {position}"
+        "workingDescription": "Halaman ini diperbarui secara otomatis."
       },
       "review": {
         "title": "Tinjau shot Anda",
@@ -721,8 +720,8 @@
       "working": "Bekerja"
     },
     "jobProgress": {
-      "script": "naskah",
-      "review": "Ulasan",
+"script": "Naskah",
+"review": "Tinjau",
       "shots": "Shot",
       "render": "Render",
       "ready": "Siap"
