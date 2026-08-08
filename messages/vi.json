@@ -496,6 +496,7 @@
         "label": "Video này",
         "value": "tối đa {credits} tín dụng",
         "pending": "đang tính…",
+        "retrying": "chưa có giá, đang thử lại",
         "unavailable": "chưa có giá"
       },
       "costMayExceed": "Video này có thể tốn tối đa {cost} tín dụng, bạn đang có {remaining}. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",

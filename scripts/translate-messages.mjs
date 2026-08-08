@@ -542,6 +542,20 @@ const MANUAL_OVERRIDES = {
     vi: "đang tính…",
     th: "กำลังคำนวณ…",
   },
+  // Same split as the approve bar's two price sentences, in the rail's shorter
+  // words: `retrying` is a read we are still re-polling, `unavailable` is the
+  // backend's settled answer - so the machine must not paraphrase either into
+  // the other's promise.
+  "app.studio.cost.retrying": {
+    es: "precio no disponible, reintentando",
+    zh: "无法获取价格，正在重试",
+    ja: "価格を取得できません。再試行中",
+    ko: "가격을 불러올 수 없음, 다시 시도 중",
+    pt: "preço indisponível, tentando de novo",
+    id: "harga tidak tersedia, mencoba lagi",
+    vi: "chưa có giá, đang thử lại",
+    th: "ไม่มีข้อมูลราคา กำลังลองใหม่",
+  },
   "app.studio.cost.unavailable": {
     es: "precio no disponible",
     zh: "无法获取价格",

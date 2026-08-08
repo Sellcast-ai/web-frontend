@@ -496,6 +496,7 @@
         "label": "Video ini",
         "value": "hingga {credits} kredit",
         "pending": "menghitung…",
+        "retrying": "harga tidak tersedia, mencoba lagi",
         "unavailable": "harga tidak tersedia"
       },
       "costMayExceed": "Video ini bisa memakan hingga {cost} kredit, sedangkan kredit Anda {remaining}. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",

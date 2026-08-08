@@ -496,6 +496,7 @@
         "label": "이 영상",
         "value": "최대 {credits} 크레딧",
         "pending": "계산 중…",
+        "retrying": "가격을 불러올 수 없음, 다시 시도 중",
         "unavailable": "가격을 불러올 수 없음"
       },
       "costMayExceed": "이 영상은 최대 {cost} 크레딧이 들 수 있고 현재 {remaining} 크레딧이 있습니다. 실제 차감은 보통 더 적어서 그대로 진행될 수도 있습니다.",

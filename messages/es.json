@@ -179,6 +179,7 @@
         "label": "Este video",
         "value": "hasta {credits} créditos",
         "pending": "calculando…",
+        "retrying": "precio no disponible, reintentando",
         "unavailable": "precio no disponible"
       },
       "costMayExceed": "Este video podría costar hasta {cost} créditos y tienes {remaining}. El cargo final suele ser menor, así que puede que igual se genere.",

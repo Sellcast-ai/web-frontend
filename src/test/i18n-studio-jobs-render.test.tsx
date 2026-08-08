@@ -622,12 +622,12 @@ describe("Studio page renders extracted English copy", () => {
     expectUnpriced(render(qc, React.createElement(StudioPage)), "pricing…");
   });
 
-  it("shows no number when the quote failed, and blocks nothing", async () => {
-    // A real failed read rather than a hand-built cache entry, so the branch
-    // under test is the one React Query actually produces. `retryOnMount:
-    // false` freezes it there: an observer mounting over an errored query
-    // reports `pending` while it retries, which a static render would capture
-    // instead of the settled failure this test is about.
+  // A real failed read rather than a hand-built cache entry, so the branch
+  // under test is the one React Query actually produces. `retryOnMount: false`
+  // freezes it there: an observer mounting over an errored query reports
+  // `pending` while it retries, which a static render would capture instead of
+  // the settled failure these tests are about.
+  async function studioWithFailedQuote(status: number) {
     const qc = new QueryClient({
       defaultOptions: { queries: { retry: false, retryOnMount: false, gcTime: Infinity } },
     });
@@ -636,13 +636,32 @@ describe("Studio page renders extracted English copy", () => {
     qc.setQueryData(["avatars"], []);
     qc.setQueryData(qk.jobs({}), []);
     qc.setQueryData(qk.videoCapabilities, studioCapabilities);
-    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status })));
     await qc
       .fetchQuery({ queryKey: defaultQuoteKey, queryFn: () => api.getVideoQuote(quoted) })
       .catch(() => null);
     vi.unstubAllGlobals();
+    return qc;
+  }
 
-    expectUnpriced(render(qc, React.createElement(StudioPage)), "price unavailable");
+  // The rail splits the same two answers the approve bar does, and by the same
+  // response class: a 5xx is still being re-polled, so it says so; a 4xx is the
+  // backend's settled answer and nothing is retrying it, so it must not.
+  it("says the failed quote is being retried when the failure is transient", async () => {
+    const html = render(
+      await studioWithFailedQuote(503),
+      React.createElement(StudioPage),
+    );
+    expectUnpriced(html, "price unavailable, retrying");
+  });
+
+  it("promises no retry when the backend settled the quote with a 4xx", async () => {
+    const html = render(
+      await studioWithFailedQuote(404),
+      React.createElement(StudioPage),
+    );
+    expectUnpriced(html, "price unavailable");
+    expect(html).not.toContain("retrying");
   });
 
   // An unpriced render is still offered: the backend stays the authoritative
@@ -898,6 +917,10 @@ describe("Job detail page renders extracted English copy", () => {
 
     expect(text).toContain("Approving spends up to 225 credits.");
     expect(text).toContain("You have 180.");
+    // The sentence swaps from the vague note to the price as the reads land,
+    // and it is the last one read before the click that spends, so it has to
+    // be announced rather than silently replaced.
+    expect(html).toMatch(/<p aria-live="polite"[^>]*>(?:(?!<\/p>).)*Approving spends/);
     // The vague note it replaces must not linger beside it.
     expect(text).not.toContain("This is the only step that uses your credits.");
     expect(text).not.toContain("We couldn’t load the exact cost");

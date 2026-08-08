@@ -496,6 +496,7 @@
         "label": "Este vídeo",
         "value": "até {credits} créditos",
         "pending": "calculando…",
+        "retrying": "preço indisponível, tentando de novo",
         "unavailable": "preço indisponível"
       },
       "costMayExceed": "Este vídeo pode custar até {cost} créditos e você tem {remaining}. A cobrança final costuma ser menor, então ainda pode dar certo.",

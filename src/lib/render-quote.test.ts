@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { affordability, isQuotable } from "./render-quote";
+import { affordability, isQuotable, priceUnknownReason } from "./render-quote";
+import { ApiError } from "./api/client";
 import { VIDEO_MODELS } from "./api/types";
 
 describe("affordability", () => {
@@ -65,5 +66,44 @@ describe("isQuotable", () => {
   // this predicate only asks whether a number was sent at all.
   it("passes a zero duration through to the backend", () => {
     expect(isQuotable({ ...complete, duration_seconds: 0 })).toBe(true);
+  });
+});
+
+// Both priced surfaces ask this one question, so a 5xx that is still being
+// re-polled and a 4xx nobody will retry can never be told to the user as the
+// same sentence.
+describe("priceUnknownReason", () => {
+  const ok = { isError: false, error: null };
+  const settled = { isError: true, error: new ApiError(404, "Not Found") };
+  const transient = { isError: true, error: new ApiError(503, "Unavailable") };
+
+  it("is pending while nothing has failed and the tuple is priceable", () => {
+    expect(priceUnknownReason([ok, ok])).toBe("pending");
+  });
+
+  it("retries on a 5xx, a dead socket or an unparseable body", () => {
+    expect(priceUnknownReason([ok, transient])).toBe("retrying");
+    expect(priceUnknownReason([{ isError: true, error: new TypeError("fetch failed") }])).toBe(
+      "retrying",
+    );
+  });
+
+  it("settles as soon as any failure is the backend's own answer", () => {
+    expect(priceUnknownReason([settled])).toBe("settled");
+    // One read still recovering doesn't make the pair recoverable: the settled
+    // one will answer the same way forever, so no price is coming either way.
+    expect(priceUnknownReason([transient, settled])).toBe("settled");
+  });
+
+  // No failure at all and still no price - an incomplete tuple, or a quote
+  // priced on something other than this render. Waiting won't fix either.
+  it("settles an unpriceable read that never failed", () => {
+    expect(priceUnknownReason([ok], true)).toBe("settled");
+  });
+
+  // A failure outranks it: it says which of the two answers to give, and a
+  // read that failed hasn't reported anything to be unpriceable about.
+  it("still retries a transient failure alongside an unpriceable flag", () => {
+    expect(priceUnknownReason([transient], true)).toBe("retrying");
   });
 });

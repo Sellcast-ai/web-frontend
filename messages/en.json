@@ -496,6 +496,7 @@
         "label": "This video",
         "value": "up to {credits} credits",
         "pending": "pricing…",
+        "retrying": "price unavailable, retrying",
         "unavailable": "price unavailable"
       },
       "costMayExceed": "This video could cost up to {cost} credits and you have {remaining}. The final charge is usually lower, so it may still go through.",

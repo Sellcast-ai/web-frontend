@@ -41,7 +41,7 @@ import {
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
-import { ApiError, api, apiErrorMessage, isTransientError } from "@/lib/api/client";
+import { ApiError, api, apiErrorMessage } from "@/lib/api/client";
 import { aspectFrameClass } from "@/lib/aspect-frame";
 import { videoJobFailureKey } from "@/lib/failure-messages";
 import { toast } from "@/lib/toast";
@@ -56,7 +56,7 @@ import {
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
-import { isQuotable } from "@/lib/render-quote";
+import { isQuotable, priceUnknownReason } from "@/lib/render-quote";
 import {
   normalizeVideoCapabilities,
   videoModelKeyForProviderModel,
@@ -614,25 +614,20 @@ function StoryboardView({ job }: { job: VideoJob }) {
     quote.data?.model_id === job.provider_model ? quote.data.credits : undefined;
   // ...and when there is no number, the bar says why rather than letting the
   // price quietly disappear - and says WHICH why, because the two make very
-  // different promises. What decides that is the RESPONSE CLASS, not which of
-  // the two reads failed: a 5xx or a dead socket is still being re-polled
-  // (`transientRecovery` in `hooks.ts`), so "right now" is true, while a 4xx is
-  // the backend's settled answer - the capability route isn't deployed, the
-  // quote refuses this tuple - and nothing is retrying it. Settled too, without
-  // any failure at all: a read that landed and still leaves this job
-  // unpriceable, because its model isn't in the payload (so the backend priced
-  // its own default and said so through `model_id`) or the row is missing a
-  // field the quote needs (`isQuotable`, the same gate the hook uses, so that
-  // one never became a request). Copy that invited a wait there would leave the
-  // user watching for a number that is never coming.
-  const failedReads = [capabilities, quote].filter((q) => q.isError);
-  const priceRetrying =
-    failedReads.length > 0 && failedReads.every((q) => isTransientError(q.error));
-  const priceSettledUnknown =
-    !priceRetrying &&
-    (failedReads.length > 0 ||
-      (quoteParams !== null && !isQuotable(quoteParams)) ||
-      (quote.data !== undefined && cost === undefined));
+  // different promises. `priceUnknownReason` is that one classification, shared
+  // with Studio's rail: it reads the response class rather than which of the
+  // two reads failed. Settled without any failure at all is this surface's own
+  // half - a read that landed and still leaves THIS job unpriceable, because
+  // its model isn't in the payload (so the backend priced its own default and
+  // said so through `model_id`) or the row is missing a field the quote needs
+  // (`isQuotable`, the same gate the hook uses, so that one never became a
+  // request). Copy that invited a wait there would leave the user watching for
+  // a number that is never coming.
+  const priceUnknown = priceUnknownReason(
+    [capabilities, quote],
+    (quoteParams !== null && !isQuotable(quoteParams)) ||
+      (quote.data !== undefined && cost === undefined),
+  );
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -775,16 +770,19 @@ function StoryboardView({ job }: { job: VideoJob }) {
             whole review, and a button label carrying a number truncates first
             on narrow screens. Until the quote lands - and if it never does -
             the bar keeps the vague-but-true note it has always had, so nothing
-            here can ever block or delay approving. */}
-        <p className="text-xs text-muted-foreground">
+            here can ever block or delay approving. It is a permanent live
+            region: the sentence swaps from the vague note to the price (or to
+            why there isn't one) as the reads land, and this is the line read
+            immediately before the click that spends. */}
+        <p aria-live="polite" className="text-xs text-muted-foreground">
           {cost === undefined ? (
             <>
               {t("creditNote")}
               {/* A price that failed to load is named, not omitted: the user is
                   about to spend, and silence would read as "no cost here". */}
-              {priceSettledUnknown
+              {priceUnknown === "settled"
                 ? ` ${t("priceNotQuotable")}`
-                : priceRetrying
+                : priceUnknown === "retrying"
                   ? ` ${t("priceUnavailable")}`
                   : null}
             </>

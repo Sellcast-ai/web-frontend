@@ -59,7 +59,7 @@ import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { isOutOfCreditsError } from "@/lib/quota-error";
-import { affordability } from "@/lib/render-quote";
+import { affordability, isQuotable, priceUnknownReason } from "@/lib/render-quote";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -267,18 +267,26 @@ function StudioInner() {
   // pricing 1080p a moment before capabilities clamp it to 720p and quietly
   // swapping the number under the user. Vibe and language don't reach pricing,
   // so they don't re-quote.
-  const quote = useVideoQuote(
-    capabilities.isPending
-      ? null
-      : {
-          mode,
-          duration_seconds: duration,
-          resolution: effectiveResolution,
-          aspect_ratio: effectiveAspectRatio,
-          ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
-        },
-  );
+  const quoteParams = capabilities.isPending
+    ? null
+    : {
+        mode,
+        duration_seconds: duration,
+        resolution: effectiveResolution,
+        aspect_ratio: effectiveAspectRatio,
+        ...(effectiveVideoModel ? { video_model: effectiveVideoModel } : {}),
+      };
+  const quote = useVideoQuote(quoteParams);
   const cost = quote.data?.credits;
+  // With no number, the slot says which kind of no: `priceUnknownReason` is the
+  // same classification the approve bar uses, so the two surfaces can't drift
+  // into calling a re-polled 5xx and a settled 4xx the same thing. The
+  // capability read is deliberately not in it - Studio degrades to the static
+  // pickers when it fails and still gets a real quote for them.
+  const costUnknown = priceUnknownReason(
+    [quote],
+    quoteParams !== null && !isQuotable(quoteParams),
+  );
 
   // Three backend-metered signals, no client pricing: the quote against the
   // balance, an empty meter (zero is zero at any price, and it stands even with
@@ -340,7 +348,7 @@ function StudioInner() {
     !referenceUploading;
 
   async function generate() {
-    if (!productId || !capabilityState.canSubmit || linkInvalid || referenceUploading) return;
+    if (!productId || !canGenerate) return;
     // Synchronous latch: `disabled={create.isPending}` cannot catch two clicks
     // in the same tick (audit L4 P0-1 — a triple-click created 3 jobs and
     // charged 45 credits). This rejects the second click before any await.
@@ -797,7 +805,10 @@ function StudioInner() {
                 {/* One slot, always occupied: a price that blinks out on every
                     picker change reads worse than one that arrives late. A
                     quote in flight or failed shows its own words here - never a
-                    number, and never the previous render's number. */}
+                    number, and never the previous render's number - and a
+                    failure says whether anything is still trying, because a
+                    5xx we re-poll and a 4xx nobody will retry are different
+                    answers to "should I wait?". */}
                 <span
                   aria-live="polite"
                   className={cn(
@@ -809,9 +820,11 @@ function StudioInner() {
                 >
                   {cost !== undefined
                     ? t("cost.value", { credits: cost })
-                    : quote.isError
-                      ? t("cost.unavailable")
-                      : t("cost.pending")}
+                    : costUnknown === "retrying"
+                      ? t("cost.retrying")
+                      : costUnknown === "settled"
+                        ? t("cost.unavailable")
+                        : t("cost.pending")}
                 </span>
               </div>
               {usage && (
