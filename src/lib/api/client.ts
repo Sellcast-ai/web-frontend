@@ -50,6 +50,16 @@ export function apiErrorMessage(err: unknown, fallback: string): string {
   return (err instanceof ApiError && err.serverMessage) || fallback;
 }
 
+/** Whether a failed call may still succeed later without anything changing.
+ * A 4xx is the backend's settled answer about this exact request - the route
+ * isn't deployed (404), the tuple is refused (422) - and every repeat buys the
+ * same answer; a 5xx, a dead socket or an unparseable body is the deployment
+ * or the network, which recovers on its own. Retrying, polling and any copy
+ * that says we are still trying all belong to the transient side only. */
+export function isTransientError(err: unknown): boolean {
+  return !(err instanceof ApiError) || err.status < 400 || err.status >= 500;
+}
+
 type ErrorBody = {
   detail?: unknown;
   error?: unknown;

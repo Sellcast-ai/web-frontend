@@ -7,7 +7,7 @@ import {
   useQueryClient,
   type QueryClient,
 } from "@tanstack/react-query";
-import { ApiError, api, apiErrorMessage } from "./client";
+import { ApiError, api, apiErrorMessage, isTransientError } from "./client";
 import { isOutOfCreditsError } from "@/lib/quota-error";
 import { isQuotable } from "@/lib/render-quote";
 import { toast } from "@/lib/toast";
@@ -219,24 +219,35 @@ export function useVideoJob(id: string) {
   });
 }
 
+/** Keep working at a failure that can still come good, and stop dead at one
+ * that can't. Both price reads degrade a surface that tells the user the cost
+ * is unknown "right now" (see the approve bar in `app/jobs/[id]/page.tsx`),
+ * and with the app-wide `refetchOnWindowFocus: false` a read nobody retries
+ * makes that sentence a lie for the life of the page - so a transient failure
+ * is genuinely re-polled, while a 4xx (the route isn't deployed, the tuple is
+ * refused) stops at one request and lets the caller say so permanently.
+ * Only while errored: a read that landed is deployment config and doesn't
+ * move under a working user. */
+const transientRecovery = {
+  retry: (count: number, err: unknown) => count < 1 && isTransientError(err),
+  refetchInterval: (query: { state: { status: string; error: unknown } }) =>
+    query.state.status === "error" && isTransientError(query.state.error)
+      ? 60_000
+      : (false as const),
+};
+
 /** Render capability metadata changes only when backend/provider config changes.
  * A slow or failed read must not block Studio, so callers treat missing data as
- * the static picker constants.
- *
- * A failed one does keep trying, though, because two surfaces degrade until it
- * lands and neither can recover on its own: Studio holds its price back until
- * the repair has something to narrow with, and the storyboard approve bar can't
- * resolve the job's `provider_model` to a quotable model key. Both say the cost
- * is unknown "right now", and with the app-wide `refetchOnWindowFocus: false`
- * and `retry: 1` that would otherwise be a lie for the life of the page. Only
- * while errored - a read that landed is deployment config and doesn't move
- * under a working user. */
+ * the static picker constants. Two surfaces stay degraded until it lands and
+ * neither can recover on its own - Studio holds its price back until the repair
+ * has something to narrow with, and the storyboard approve bar can't resolve the
+ * job's `provider_model` to a quotable model key - hence `transientRecovery`. */
 export function useVideoCapabilities() {
   return useQuery({
     queryKey: qk.videoCapabilities,
     queryFn: api.getVideoCapabilities,
     staleTime: 30 * 60_000,
-    refetchInterval: (query) => (query.state.status === "error" ? 60_000 : false),
+    ...transientRecovery,
   });
 }
 
@@ -263,8 +274,10 @@ export function useVideoQuote(params: VideoQuoteParams | null) {
     // not while a user works. Same reasoning as `useVideoCapabilities`.
     staleTime: 30 * 60_000,
     // A tuple the backend rejects as invalid is rejected identically on every
-    // retry, so a bad configuration costs one request, not four with backoff.
-    retry: false,
+    // retry, so a bad configuration costs one request, not four with backoff -
+    // while a 5xx or a dead socket is re-polled, because the bar that shows
+    // this price promises exactly that.
+    ...transientRecovery,
   });
 }
 

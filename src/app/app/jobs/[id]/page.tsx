@@ -41,7 +41,7 @@ import {
 } from "@/lib/api/hooks";
 import { DUR, EASE_OUT, PopIn } from "@/components/ui/motion";
 import { Drawer, Modal } from "@/components/ui/overlay";
-import { ApiError, api, apiErrorMessage } from "@/lib/api/client";
+import { ApiError, api, apiErrorMessage, isTransientError } from "@/lib/api/client";
 import { aspectFrameClass } from "@/lib/aspect-frame";
 import { videoJobFailureKey } from "@/lib/failure-messages";
 import { toast } from "@/lib/toast";
@@ -614,21 +614,25 @@ function StoryboardView({ job }: { job: VideoJob }) {
     quote.data?.model_id === job.provider_model ? quote.data.credits : undefined;
   // ...and when there is no number, the bar says why rather than letting the
   // price quietly disappear - and says WHICH why, because the two make very
-  // different promises. A capability read that failed is temporary: the model
-  // may still resolve, `useVideoCapabilities` keeps retrying while it is down,
-  // so "right now" is true. A read that landed and still leaves this job
-  // unpriceable is settled for this job - its model isn't in the payload, so
-  // the backend priced its own default and said so through `model_id`, or the
-  // row is missing a field the quote needs (`isQuotable`, the same gate the
-  // hook uses, so that one never became a request at all). Nothing about
-  // waiting or reloading fixes either, and copy that implied otherwise would
-  // leave the user watching for a number that is never coming.
-  const priceSettledUnknown =
-    !capabilities.isError &&
-    ((quoteParams !== null && !isQuotable(quoteParams)) ||
-      (quote.data !== undefined && cost === undefined));
+  // different promises. What decides that is the RESPONSE CLASS, not which of
+  // the two reads failed: a 5xx or a dead socket is still being re-polled
+  // (`transientRecovery` in `hooks.ts`), so "right now" is true, while a 4xx is
+  // the backend's settled answer - the capability route isn't deployed, the
+  // quote refuses this tuple - and nothing is retrying it. Settled too, without
+  // any failure at all: a read that landed and still leaves this job
+  // unpriceable, because its model isn't in the payload (so the backend priced
+  // its own default and said so through `model_id`) or the row is missing a
+  // field the quote needs (`isQuotable`, the same gate the hook uses, so that
+  // one never became a request). Copy that invited a wait there would leave the
+  // user watching for a number that is never coming.
+  const failedReads = [capabilities, quote].filter((q) => q.isError);
   const priceRetrying =
-    !priceSettledUnknown && (capabilities.isError || quote.isError);
+    failedReads.length > 0 && failedReads.every((q) => isTransientError(q.error));
+  const priceSettledUnknown =
+    !priceRetrying &&
+    (failedReads.length > 0 ||
+      (quoteParams !== null && !isQuotable(quoteParams)) ||
+      (quote.data !== undefined && cost === undefined));
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });

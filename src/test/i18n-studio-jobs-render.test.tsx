@@ -161,6 +161,16 @@ const jobCapabilities = [
   },
 ];
 
+/** The tuple the approve bar prices `baseJob` on: its own fields, with the
+ *  provider model resolved back to the picker key through `jobCapabilities`. */
+const jobQuoteParams = {
+  mode: baseJob.mode,
+  duration_seconds: baseJob.duration_seconds,
+  resolution: baseJob.resolution,
+  aspect_ratio: baseJob.aspect_ratio,
+  video_model: "seedance-2.0",
+};
+
 function makeClient(seed: (qc: QueryClient) => void) {
   const qc = new QueryClient({
     defaultOptions: { queries: { retry: false, gcTime: Infinity } },
@@ -851,16 +861,10 @@ describe("Job detail page renders extracted English copy", () => {
       c.setQueryData(qk.videoCapabilities, jobCapabilities);
       // The job's provider model, resolved back to the picker key through the
       // capability read - so the price is this render's, not the mode default's.
-      c.setQueryData(
-        qk.quote({
-          mode: "ai_avatar",
-          duration_seconds: 15,
-          resolution: "720p",
-          aspect_ratio: "9:16",
-          video_model: "seedance-2.0",
-        }),
-        { credits: 225, model_id: baseJob.provider_model },
-      );
+      c.setQueryData(qk.quote(jobQuoteParams), {
+        credits: 225,
+        model_id: baseJob.provider_model,
+      });
     });
     const html = render(qc, React.createElement(JobDetailPage));
     save("jobs-storyboard-cost", html);
@@ -880,16 +884,10 @@ describe("Job detail page renders extracted English copy", () => {
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
       c.setQueryData(["usage"], usage);
       c.setQueryData(qk.videoCapabilities, jobCapabilities);
-      c.setQueryData(
-        qk.quote({
-          mode: "ai_avatar",
-          duration_seconds: 15,
-          resolution: "720p",
-          aspect_ratio: "9:16",
-          video_model: "seedance-2.0",
-        }),
-        { credits: 225, model_id: "some-other-model" },
-      );
+      c.setQueryData(qk.quote(jobQuoteParams), {
+        credits: 225,
+        model_id: "some-other-model",
+      });
     });
     const html = render(qc, React.createElement(JobDetailPage));
     const text = html.replace(/<[^>]+>/g, " ");
@@ -902,29 +900,53 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).not.toContain("We couldn’t load the exact cost");
   });
 
-  // The other half of that split: nothing was read, so the job's model may
-  // still resolve and the read keeps retrying. Only this branch may say "right
-  // now" - the settled ones above would be inviting a wait that never ends.
-  it("says the price is only temporarily missing while capabilities are down", async () => {
+  // The other half of that split. Which copy a failed read gets is decided by
+  // the RESPONSE CLASS, not by which of the two reads failed: a 5xx or a dead
+  // socket is genuinely being re-polled (the hook wiring is asserted in
+  // `src/lib/api/query-recovery.test.ts`), so "right now" is true, while a 4xx
+  // is the backend's settled answer that nothing is retrying - saying "we're
+  // still trying" there would invite a wait that never ends.
+  async function jobPriceCopy(read: "capabilities" | "quote", status: number) {
     const qc = new QueryClient({
       defaultOptions: { queries: { retry: false, retryOnMount: false, gcTime: Infinity } },
     });
     qc.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
     qc.setQueryData(["usage"], usage);
-    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 503 })));
-    await qc
-      .fetchQuery({
-        queryKey: qk.videoCapabilities,
-        queryFn: api.getVideoCapabilities,
-      })
-      .catch(() => null);
+    // The failing read is the only one missing: pricing the quote at all needs
+    // the capability read that maps `provider_model` to a model key.
+    if (read === "quote") qc.setQueryData(qk.videoCapabilities, jobCapabilities);
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status })));
+    const failing =
+      read === "capabilities"
+        ? qc.fetchQuery({
+            queryKey: qk.videoCapabilities,
+            queryFn: api.getVideoCapabilities,
+          })
+        : qc.fetchQuery({
+            queryKey: qk.quote(jobQuoteParams),
+            queryFn: () => api.getVideoQuote(jobQuoteParams),
+          });
+    await failing.catch(() => null);
     vi.unstubAllGlobals();
 
-    const text = render(qc, React.createElement(JobDetailPage)).replace(/<[^>]+>/g, " ");
+    return render(qc, React.createElement(JobDetailPage)).replace(/<[^>]+>/g, " ");
+  }
 
-    expect(text).toContain("We couldn’t load the exact cost right now");
-    expect(text).toContain("We’re still trying.");
-    expect(text).not.toContain("We can’t work out the exact cost");
+  it("says the price is only temporarily missing while a read is down", async () => {
+    for (const read of ["capabilities", "quote"] as const) {
+      const text = await jobPriceCopy(read, 503);
+      expect(text, read).toContain("We couldn’t load the exact cost right now");
+      expect(text, read).toContain("We’re still trying.");
+      expect(text, read).not.toContain("We can’t work out the exact cost");
+    }
+  });
+
+  it("promises no wait when the read's failure is the settled answer", async () => {
+    for (const read of ["capabilities", "quote"] as const) {
+      const text = await jobPriceCopy(read, 404);
+      expect(text, read).toContain("We can’t work out the exact cost for this render");
+      expect(text, read).not.toContain("We couldn’t load the exact cost");
+    }
   });
 
   // A job row missing a priced field must never go out as "undefined" - and
