@@ -234,14 +234,18 @@ export const OUTCOME_NUDGES: OutcomeNudge[] = [
 /** One shot in the storyboard (VideoScript.shots[]). Mirrors backend
  * `script_generation.Shot`. `technique`/`transition_out`/`product_visible`
  * are derived from `outcome_nudges`/`nudge_note` (the main-path controls) and
- * default on legacy scripts, so treat them all as always-present. */
+ * default on legacy scripts, so treat them all as always-present.
+ *
+ * The backend model accepts plain strings here for forward/legacy lenience.
+ * Render/edit paths must filter this list against `OUTCOME_NUDGES` before
+ * showing labels or PATCHing it back. */
 export interface Shot {
   duration: 10 | 15;
   visual: string;
   dialogue: string | null;
   ambient_audio: string;
   on_screen_text: string | null;
-  outcome_nudges: OutcomeNudge[];
+  outcome_nudges: string[];
   nudge_note: string;
   technique: string;
   transition_out: ShotTransition;

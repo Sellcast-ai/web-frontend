@@ -47,6 +47,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { mediaUrl, relativeTime } from "@/lib/format";
 import { STUDIO_HREF } from "@/lib/launch-routes";
+import {
+  OUTCOME_NUDGE_LABEL_KEYS,
+  knownOutcomeNudges,
+} from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
 import { useMutationGuard } from "@/lib/mutation-guard";
@@ -524,17 +528,7 @@ const PRODUCT_VISIBLE_LABEL_KEYS: Record<ProductVisibility, string> = {
   none: "none",
 };
 
-/** Plain-language outcome tap -> catalog key (translated at the render site;
- * the tap's canonical value string is what PATCH /storyboard sends). */
-const OUTCOME_NUDGE_KEYS: Record<OutcomeNudge, string> = {
-  "Closer on the product": "closerProduct",
-  "Show the whole scene": "wholeScene",
-  "Focus on the person": "focusPerson",
-  "More energy": "moreEnergy",
-  "Slow & lingering": "slowLingering",
-};
-
-/** Empty text fields go back as null so backend preflight doesn't choke on "". */
+/** Empty text fields go back as null; unknown nudge strings never round-trip. */
 function normalizeStoryboard(sb: Storyboard): Storyboard {
   return {
     ...sb,
@@ -542,6 +536,7 @@ function normalizeStoryboard(sb: Storyboard): Storyboard {
       ...s,
       dialogue: s.dialogue?.trim() ? s.dialogue : null,
       on_screen_text: s.on_screen_text?.trim() ? s.on_screen_text : null,
+      outcome_nudges: knownOutcomeNudges(s.outcome_nudges),
       nudge_note: s.nudge_note?.trim() ? s.nudge_note : "",
     })),
   };
@@ -849,12 +844,12 @@ function ShotCard({
 }) {
   const t = useTranslations("app.jobs.shotCard");
   const te = useTranslations("app.jobs.shotEditor");
-  const nudges = shot.outcome_nudges ?? [];
+  const nudges = knownOutcomeNudges(shot.outcome_nudges);
   const visual = shot.visual?.trim() ?? "";
   const dialogue = shot.dialogue?.trim() ?? "";
   const hint =
     nudges.length > 0
-      ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_KEYS[n]}`)).join(" · ")
+      ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_LABEL_KEYS[n]}`)).join(" · ")
       : shot.nudge_note?.trim() || null;
   return (
     <div className="flex gap-3 rounded-2xl border border-border bg-card p-3 shadow-soft">
@@ -944,7 +939,7 @@ function ShotEditor({
 }) {
   const t = useTranslations("app.jobs.shotEditor");
   const [pro, setPro] = useState(false);
-  const active = shot.outcome_nudges ?? [];
+  const active = knownOutcomeNudges(shot.outcome_nudges);
 
   function toggleNudge(tap: OutcomeNudge) {
     onChange({
@@ -994,7 +989,7 @@ function ShotEditor({
                     : "border-border bg-background text-muted-foreground hover:text-ink",
                 )}
               >
-                {t(`nudgeLabels.${OUTCOME_NUDGE_KEYS[tap]}`)}
+                {t(`nudgeLabels.${OUTCOME_NUDGE_LABEL_KEYS[tap]}`)}
               </button>
             );
           })}

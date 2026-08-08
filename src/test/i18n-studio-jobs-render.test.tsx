@@ -539,6 +539,7 @@ describe("Job detail page renders extracted English copy", () => {
         },
       ],
     } as unknown as NonNullable<VideoJob["storyboard"]>;
+
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), {
         ...baseJob,
@@ -555,6 +556,36 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).toContain("(smiling) Try it now (today only).");
     expect(text).not.toContain("Angle");
     expect(text).not.toContain("Audience");
+  });
+
+  it("drops unknown storyboard nudges instead of rendering translation keys", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "awaiting_storyboard",
+        storyboard: {
+          ...baseJob.storyboard!,
+          shots: [
+            {
+              ...baseJob.storyboard!.shots[0]!,
+              outcome_nudges: [
+                "Closer on the product",
+                "Boosts gaming immersion",
+                "Enhances online meetings",
+              ],
+            },
+          ],
+        },
+      }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Closer on the product");
+    expect(text).not.toContain("Boosts gaming immersion");
+    expect(text).not.toContain("Enhances online meetings");
+    expect(text).not.toContain("app.jobs.shotEditor.nudgeLabels");
+    expect(text).toContain("Approve &amp; make my video");
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {
