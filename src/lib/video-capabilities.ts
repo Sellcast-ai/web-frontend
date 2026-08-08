@@ -199,6 +199,25 @@ export function videoModelKeyForProviderModel(
   return cap.models.find((model) => model.modelId === providerModel)?.key ?? null;
 }
 
+/** The other direction: the provider model id a picker key resolves to, so a
+ * surface that asked for a key can check `VideoQuote.model_id` against what it
+ * asked for rather than trusting the backend not to have substituted its own
+ * default.
+ *
+ * Null when nothing was read for the mode, or when the read names no id for
+ * that key - there is then no id to verify against, and a caller degrading to
+ * the static pickers must not lose its price over a capability read it never
+ * got. */
+export function providerModelForVideoModelKey(
+  caps: VideoCapabilitySnapshot,
+  mode: VideoMode,
+  key: string,
+): string | null {
+  const cap = caps.find((entry) => entry.mode === mode);
+  if (!cap?.readable || !key) return null;
+  return cap.models.find((model) => model.key === key)?.modelId ?? null;
+}
+
 export function isModeKnownUnavailable(
   caps: VideoCapabilitySnapshot,
   mode: VideoMode,

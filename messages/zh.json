@@ -324,6 +324,7 @@
         "description": "目前还没有任何进展——这只是计划。通读一遍，更改您想要的任何行，然后点击“开始”，Lumi 就会为您构建整个视频。",
         "approveAndMake": "批准并制作我的视频",
         "saveEdits": "保存修改",
+        "getCredits": "获取积分",
         "creditNote": "这是使用您的积分的唯一步骤。",
         "costNote": "确认后最多扣除 {cost} 积分。",
         "balanceNote": "你当前有 {remaining}。",

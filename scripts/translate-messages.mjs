@@ -664,6 +664,19 @@ const MANUAL_OVERRIDES = {
     vi: "Lưu thay đổi",
     th: "บันทึกการเปลี่ยนแปลง",
   },
+  // The same button when the meter is empty and there is nothing to save: it
+  // leaves for the one route that resolves the state, so it is the money verb
+  // ("top up your credits"), never the machine's "understand"/"receive".
+  "app.jobs.storyboard.getCredits": {
+    es: "Consigue créditos",
+    zh: "获取积分",
+    ja: "クレジットを追加",
+    ko: "크레딧 구매",
+    pt: "Obter créditos",
+    id: "Dapatkan kredit",
+    vi: "Nhận tín dụng",
+    th: "รับเครดิต",
+  },
   "app.jobs.storyboard.balanceNote": {
     es: "Tienes {remaining}.",
     zh: "你当前有 {remaining}。",

@@ -23,6 +23,7 @@ import {
   Lock,
   Trash2,
   Save,
+  CreditCard,
   Image as ImageIcon,
   Mic,
 } from "lucide-react";
@@ -781,25 +782,36 @@ function StoryboardView({ job }: { job: VideoJob }) {
         ref={barRef}
         className="sticky bottom-4 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/95 p-4 shadow-card backdrop-blur"
       >
-        <Button
-          size="lg"
-          onClick={approveAndGenerate}
-          disabled={busy || (noCredits && !dirty)}
-        >
-          {busy ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : noCredits ? (
-            <>
-              <Save className="h-4 w-4" />
-              {t("saveEdits")}
-            </>
-          ) : (
-            <>
-              <Sparkles className="h-4 w-4" />
-              {t("approveAndMake")}
-            </>
-          )}
-        </Button>
+        {/* Three live states, each labelled as what the click actually does,
+            so no control ever overstates itself: approve when the meter can
+            pay, save-only when it can't but there are edits to persist (this
+            PATCH is the ONLY path a shot edit has to the server), and the way
+            out when it can't and there is nothing to save - the same /pricing
+            route the note beside it names. The gate never ends up with a dead
+            control, and topping up and coming back remounts this page, which
+            is what refreshes the balance read. */}
+        {noCredits && !dirty ? (
+          <Button size="lg" href="/pricing">
+            <CreditCard className="h-4 w-4" />
+            {t("getCredits")}
+          </Button>
+        ) : (
+          <Button size="lg" onClick={approveAndGenerate} disabled={busy}>
+            {busy ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : noCredits ? (
+              <>
+                <Save className="h-4 w-4" />
+                {t("saveEdits")}
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                {t("approveAndMake")}
+              </>
+            )}
+          </Button>
+        )}
         {/* The price sits in the bar's existing sentence slot rather than on
             the button: this is the line the user reads immediately before the
             click that spends, the bar is sticky so it is on screen for the
@@ -836,10 +848,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
               cover the render is named rather than left as two adjacent numbers
               to compare, and always with the one route that resolves it. Which
               sentence depends on how certain the refusal is: an empty meter
-              states it plainly (and is the branch the button is disabled on),
-              a gap under the ceiling keeps the same hedge Studio's warning
-              carries, because the debit is usually lower and approving is not
-              blocked there. */}
+              states it plainly (and is the branch that turns the button
+              save-only, or sends it to /pricing when there is nothing to
+              save), a gap under the ceiling keeps the same hedge Studio's
+              warning carries, because the debit is usually lower and approving
+              is not blocked there. */}
           {(noCredits || shortfall !== null) && (
             <>
               {" "}

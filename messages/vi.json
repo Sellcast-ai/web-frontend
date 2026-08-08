@@ -569,6 +569,7 @@
         "description": "Chưa có gì được thực hiện - đây chỉ là kế hoạch. Đọc lại, thay đổi bất kỳ dòng nào bạn muốn, sau đó nhấn nút và Lumi sẽ xây dựng toàn bộ video cho bạn.",
         "approveAndMake": "Phê duyệt và tạo video của tôi",
         "saveEdits": "Lưu thay đổi",
+        "getCredits": "Nhận tín dụng",
         "creditNote": "Đây là bước duy nhất sử dụng tín dụng của bạn.",
         "costNote": "Duyệt sẽ dùng tối đa {cost} tín dụng.",
         "balanceNote": "Bạn đang có {remaining}.",

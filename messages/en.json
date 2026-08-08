@@ -569,6 +569,7 @@
         "description": "Nothing's been made yet - this is just the plan. Read it over, change any line you want, then hit go and Lumi builds the whole video for you.",
         "approveAndMake": "Approve & make my video",
         "saveEdits": "Save changes",
+        "getCredits": "Get credits",
         "creditNote": "This is the only step that uses your credits.",
         "costNote": "Approving spends up to {cost} credits.",
         "balanceNote": "You have {remaining}.",

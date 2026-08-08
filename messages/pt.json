@@ -569,6 +569,7 @@
         "description": "Nada foi feito ainda – este é apenas o plano. Leia, altere a linha que desejar e clique em ir e Lumi cria o vídeo inteiro para você.",
         "approveAndMake": "Aprovar e fazer meu vídeo",
         "saveEdits": "Salvar alterações",
+        "getCredits": "Obter créditos",
         "creditNote": "Esta é a única etapa que utiliza seus créditos.",
         "costNote": "Aprovar gasta até {cost} créditos.",
         "balanceNote": "Você tem {remaining}.",

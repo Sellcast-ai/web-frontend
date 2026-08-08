@@ -4,6 +4,7 @@ import {
   normalizeVideoCapabilities,
   studioCapabilityState as capabilityStateIn,
   videoModelKeyForProviderModel,
+  providerModelForVideoModelKey,
   type StudioCapabilitySelection,
 } from "./video-capabilities";
 import {
@@ -479,5 +480,28 @@ describe("videoModelKeyForProviderModel", () => {
   it("gives up on an unreadable entry", () => {
     const broken = [{ mode: "product_only", available: "yes", models: [] }];
     expect(keyFor(broken, "product_only", "doubao-seedance-2-0-260128")).toBeNull();
+  });
+});
+
+describe("providerModelForVideoModelKey", () => {
+  const idFor = (raw: unknown, mode: VideoMode, key: string) =>
+    providerModelForVideoModelKey(normalizeVideoCapabilities(raw), mode, key);
+
+  // What a priced surface checks `VideoQuote.model_id` against, so a key the
+  // backend silently substituted its own default for is caught.
+  it("resolves a picker key to the provider model id it prices as", () => {
+    expect(idFor(capabilities, "product_only", "seedance-2.0-fast")).toBe(
+      "doubao-seedance-2-0-fast-260128",
+    );
+  });
+
+  // Null is "nothing to verify against", never "verified": a caller degrading
+  // to the static pickers must not lose its price over a read it never got.
+  it("gives up rather than guessing when nothing was read", () => {
+    expect(idFor(undefined, "product_only", "seedance-2.0")).toBeNull();
+    expect(idFor(capabilities, "product_only", "a-key-nobody-listed")).toBeNull();
+    expect(idFor(capabilities, "product_only", "")).toBeNull();
+    const broken = [{ mode: "product_only", available: "yes", models: [] }];
+    expect(idFor(broken, "product_only", "seedance-2.0")).toBeNull();
   });
 });

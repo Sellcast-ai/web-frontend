@@ -542,6 +542,11 @@ describe("Studio page renders extracted English copy", () => {
     video_model: "seedance-2.0",
   };
   const defaultQuoteKey = qk.quote(quoted);
+  /** What the backend answers it priced. The rail shows a number only when this
+   *  is the provider id `quoted.video_model` resolves to, so every seeded quote
+   *  carries it - a quote priced on some other model is a wrong number, not a
+   *  missing field. */
+  const pricedModel = "doubao-seedance-2-0-260128";
 
   /** Studio's own mode, reported exactly as its defaults already stand, so the
    *  repair is a no-op and `quoted` above is the tuple the rail asks for. */
@@ -575,7 +580,9 @@ describe("Studio page renders extracted English copy", () => {
   }
 
   it("shows what the configured render costs, beside the balance", () => {
-    const qc = studioClient((c) => c.setQueryData(defaultQuoteKey, { credits: 225 }));
+    const qc = studioClient((c) =>
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: pricedModel }),
+    );
     const html = render(qc, React.createElement(StudioPage));
     save("studio-cost", html);
     const text = html.replace(/<[^>]+>/g, " ");
@@ -599,7 +606,7 @@ describe("Studio page renders extracted English copy", () => {
           aspect_ratio: "9:16",
           video_model: "seedance-2.0",
         }),
-        { credits: 1110 },
+        { credits: 1110, model_id: pricedModel },
       ),
     );
     const text = render(qc, React.createElement(StudioPage)).replace(/<[^>]+>/g, " ");
@@ -623,7 +630,7 @@ describe("Studio page renders extracted English copy", () => {
       c.setQueryData(["usage"], usage);
       c.setQueryData(["avatars"], []);
       c.setQueryData(qk.jobs({}), []);
-      c.setQueryData(defaultQuoteKey, { credits: 225 });
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: pricedModel });
     });
     expectUnpriced(render(qc, React.createElement(StudioPage)), "pricing…");
   });
@@ -670,6 +677,24 @@ describe("Studio page renders extracted English copy", () => {
     expect(html).not.toContain("retrying");
   });
 
+  // The same rule the approve bar keeps, on the other priced surface: the
+  // quote takes a picker key and answers with the provider id it priced, so a
+  // key the backend doesn't know comes back priced on its own default. That
+  // number is not this configuration's price, and the create sending the same
+  // key doesn't make it one.
+  it("withholds a price the backend worked out for another model", () => {
+    const qc = studioClient((c) =>
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: "some-other-model" }),
+    );
+    const html = render(qc, React.createElement(StudioPage));
+
+    expect(html.replace(/<[^>]+>/g, " ")).not.toContain("225");
+    // Settled: the backend has answered, and waiting can't turn that answer
+    // into this model's price.
+    expectUnpriced(html, "price unavailable");
+    expect(html).not.toContain("retrying");
+  });
+
   // An unpriced render is still offered: the backend stays the authoritative
   // refusal, exactly as it was before any of this existed.
   function expectUnpriced(html: string, expected: string) {
@@ -689,7 +714,7 @@ describe("Studio page renders extracted English copy", () => {
   it("warns when the ceiling exceeds the balance, without taking Generate away", () => {
     const qc = studioClient((c) => {
       c.setQueryData(["usage"], { ...usage, limit: 30, used: 0, remaining: 30 });
-      c.setQueryData(defaultQuoteKey, { credits: 225 });
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: pricedModel });
     });
     const html = render(qc, React.createElement(StudioPage));
     save("studio-cost-short", html);
@@ -710,7 +735,7 @@ describe("Studio page renders extracted English copy", () => {
   it("withholds the ceiling warning when Generate is dead for another reason", () => {
     const qc = studioClient((c) => {
       c.setQueryData(["usage"], { ...usage, limit: 30, used: 0, remaining: 30 });
-      c.setQueryData(defaultQuoteKey, { credits: 225 });
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: pricedModel });
       c.setQueryData(
         qk.jobs({}),
         ["a", "b", "c"].map((id) => ({
@@ -735,7 +760,7 @@ describe("Studio page renders extracted English copy", () => {
   it("still refuses a render on an empty meter", () => {
     const qc = studioClient((c) => {
       c.setQueryData(["usage"], { ...usage, limit: 30, used: 30, remaining: 0 });
-      c.setQueryData(defaultQuoteKey, { credits: 225 });
+      c.setQueryData(defaultQuoteKey, { credits: 225, model_id: pricedModel });
     });
     const html = render(qc, React.createElement(StudioPage));
 
@@ -743,7 +768,9 @@ describe("Studio page renders extracted English copy", () => {
   });
 
   it("leaves Generate alone when the balance covers the render", () => {
-    const qc = studioClient((c) => c.setQueryData(defaultQuoteKey, { credits: 180 }));
+    const qc = studioClient((c) =>
+      c.setQueryData(defaultQuoteKey, { credits: 180, model_id: pricedModel }),
+    );
     const html = render(qc, React.createElement(StudioPage));
 
     expect(isDisabled(generateButtonTag(html))).toBe(false);
@@ -990,11 +1017,17 @@ describe("Job detail page renders extracted English copy", () => {
     // The refusal still names the action that clears it.
     expect(html).toContain('href="/pricing"');
     // ...and the control agrees with the copy: a page that has just said the
-    // approve won't go through must not offer it. It becomes the half it CAN
-    // deliver - this PATCH is the only path a shot edit has to the server, so
-    // the button may never simply go dead here.
+    // approve won't go through must not offer it. On an untouched storyboard
+    // (this render - nothing has been edited) the one live control is the way
+    // out, never a dead button labelled for work the user never started. The
+    // save-only label belongs to the unsaved-edits case, where the button
+    // really does perform a save.
     expect(text).not.toContain("Approve &amp; make");
-    expect(text).toContain("Save changes");
+    expect(text).not.toContain("Save changes");
+    expect(text).toContain("Get credits");
+    // Live, and pointing at the route that resolves the state.
+    const cta = html.lastIndexOf("<a", html.indexOf("Get credits"));
+    expect(html.slice(cta, html.indexOf(">", cta) + 1)).toContain('href="/pricing"');
   });
 
   // A price the backend worked out for some OTHER model is a plausible wrong
