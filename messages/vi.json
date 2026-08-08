@@ -711,7 +711,7 @@
     "status": {
       "queuedForScript": "Chờ viết kịch bản",
       "writingScript": "Đang viết kịch bản",
-      "reviewStoryboard": "Xem lại bảng phân cảnh",
+      "reviewStoryboard": "Xem lại storyboard",
       "queuedForShots": "Chờ dựng cảnh",
       "buildingShots": "Đang dựng cảnh",
       "reviewShots": "Xem lại cảnh",

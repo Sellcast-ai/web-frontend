@@ -711,12 +711,12 @@
     "status": {
       "queuedForScript": "Antre untuk skrip",
       "writingScript": "Menulis skrip",
-      "reviewStoryboard": "Tinjau papan cerita",
+      "reviewStoryboard": "Tinjau storyboard",
       "queuedForShots": "Antre untuk shot",
       "buildingShots": "Membangun shot",
       "reviewShots": "Tinjau shot",
       "queuedForRender": "Antre untuk render",
-      "rendering": "Render",
+      "rendering": "Merender",
       "ready": "Siap",
       "failed": "Gagal",
       "working": "Bekerja"

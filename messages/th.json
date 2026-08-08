@@ -711,7 +711,7 @@
     "status": {
       "queuedForScript": "รอเขียนสคริปต์",
       "writingScript": "กำลังเขียนสคริปต์",
-      "reviewStoryboard": "ทบทวนสตอรี่บอร์ด",
+      "reviewStoryboard": "ตรวจสอบสตอรี่บอร์ด",
       "queuedForShots": "รอสร้างช็อต",
       "buildingShots": "กำลังสร้างช็อต",
       "reviewShots": "ตรวจสอบช็อต",

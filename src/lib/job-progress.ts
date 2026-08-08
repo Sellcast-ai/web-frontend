@@ -44,9 +44,66 @@ export interface JobProgressDisplay {
   workingDescriptionKey: JobWorkingDescriptionKey;
 }
 
+/** The badge label and the waiting copy for one stage, on each side of the
+ *  worker claim. Both surfaces read this single table, so a stage added here
+ *  cannot leave the badge and the body copy saying different things. */
+type StageCopy = Pick<
+  JobProgressDisplay,
+  "statusLabelKey" | "workingTitleKey" | "workingDescriptionKey"
+>;
+
+const STAGE_COPY: Partial<
+  Record<JobProgressStepKey, { queued: StageCopy; active: StageCopy }>
+> = {
+  script: {
+    queued: {
+      statusLabelKey: "queuedForScript",
+      workingTitleKey: "queuedForScript",
+      workingDescriptionKey: "queuedScriptDescription",
+    },
+    active: {
+      statusLabelKey: "writingScript",
+      workingTitleKey: "writingScript",
+      workingDescriptionKey: "scriptDescription",
+    },
+  },
+  shots: {
+    queued: {
+      statusLabelKey: "queuedForShots",
+      workingTitleKey: "queuedForShots",
+      workingDescriptionKey: "queuedShotsDescription",
+    },
+    active: {
+      statusLabelKey: "buildingShots",
+      workingTitleKey: "buildingShots",
+      workingDescriptionKey: "shotsDescription",
+    },
+  },
+  render: {
+    queued: {
+      statusLabelKey: "queuedForRender",
+      workingTitleKey: "queuedForRender",
+      workingDescriptionKey: "queuedRenderDescription",
+    },
+    active: {
+      statusLabelKey: "rendering",
+      workingTitleKey: "renderingVideo",
+      workingDescriptionKey: "renderDescription",
+    },
+  },
+};
+
+/** The gates (Review) and the terminal step (Ready) have no worker stage of
+ *  their own, so they name none. */
+const NO_STAGE: StageCopy = {
+  statusLabelKey: "working",
+  workingTitleKey: "working",
+  workingDescriptionKey: "workingDescription",
+};
+
 /** True once every beat has cleared the review gate. `every` on an empty
  *  array is vacuously true, so guard on length. */
-export function allBeatsApproved(job: VideoJob): boolean {
+function allBeatsApproved(job: VideoJob): boolean {
   return (
     job.beats.length > 0 &&
     job.beats.every(
@@ -85,8 +142,11 @@ function stepForJob(job: VideoJob): JobProgressStepKey {
   }
 }
 
-function statusLabelForJob(job: VideoJob, stepKey: JobProgressStepKey): JobStatusLabelKey {
-  switch (job.status) {
+/** The statuses that name themselves rather than a worker stage: the two
+ *  gates, the two terminal states, and any status this client does not know
+ *  (which may name no stage, however clearly the artifacts imply one). */
+function statusOwnLabel(status: VideoJob["status"]): JobStatusLabelKey | null {
+  switch (status) {
     case "completed":
       return "ready";
     case "failed":
@@ -96,51 +156,24 @@ function statusLabelForJob(job: VideoJob, stepKey: JobProgressStepKey): JobStatu
     case "awaiting_review":
       return "reviewShots";
     case "queued":
-      if (stepKey === "shots") return "queuedForShots";
-      if (stepKey === "render") return "queuedForRender";
-      return "queuedForScript";
     case "submitted":
-      if (stepKey === "shots") return "buildingShots";
-      if (stepKey === "render") return "rendering";
-      return "writingScript";
     case "in_progress":
-      return "rendering";
+      return null;
     default:
       return "working";
   }
 }
 
-/** A `queued` job is parked in line, unclaimed by any worker, so the title and
- *  the description have to agree about that: nothing is happening "now" yet. */
-function workingCopyForJob(
-  job: VideoJob,
-  stepKey: JobProgressStepKey,
-): Pick<JobProgressDisplay, "workingTitleKey" | "workingDescriptionKey"> {
-  const waiting = job.status === "queued";
-  if (stepKey === "script") {
-    return waiting
-      ? { workingTitleKey: "queuedForScript", workingDescriptionKey: "queuedScriptDescription" }
-      : { workingTitleKey: "writingScript", workingDescriptionKey: "scriptDescription" };
-  }
-  if (stepKey === "shots") {
-    return waiting
-      ? { workingTitleKey: "queuedForShots", workingDescriptionKey: "queuedShotsDescription" }
-      : { workingTitleKey: "buildingShots", workingDescriptionKey: "shotsDescription" };
-  }
-  if (stepKey === "render") {
-    return waiting
-      ? { workingTitleKey: "queuedForRender", workingDescriptionKey: "queuedRenderDescription" }
-      : { workingTitleKey: "renderingVideo", workingDescriptionKey: "renderDescription" };
-  }
-  return { workingTitleKey: "working", workingDescriptionKey: "workingDescription" };
-}
-
 export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
   const stepKey = stepForJob(job);
+  // A `queued` job is parked in line, unclaimed by any worker, so the badge,
+  // the title and the description all have to agree that nothing is happening
+  // "now" yet - which is why they come from one row of the table.
+  const stage = STAGE_COPY[stepKey]?.[job.status === "queued" ? "queued" : "active"] ?? NO_STAGE;
   return {
+    ...stage,
     stepKey,
     stepIndex: STEP_LABEL_KEYS.indexOf(stepKey),
-    statusLabelKey: statusLabelForJob(job, stepKey),
-    ...workingCopyForJob(job, stepKey),
+    statusLabelKey: statusOwnLabel(job.status) ?? stage.statusLabelKey,
   };
 }

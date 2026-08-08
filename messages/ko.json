@@ -716,7 +716,7 @@
       "buildingShots": "샷 제작 중",
       "reviewShots": "샷 검토",
       "queuedForRender": "렌더링 대기 중",
-      "rendering": "렌더링",
+      "rendering": "렌더링 중",
       "ready": "준비",
       "failed": "실패",
       "working": "작업 중"

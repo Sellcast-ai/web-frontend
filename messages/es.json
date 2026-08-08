@@ -711,7 +711,7 @@
     "status": {
       "queuedForScript": "En cola para guion",
       "writingScript": "Escribiendo guion",
-      "reviewStoryboard": "Revisar el guión gráfico",
+      "reviewStoryboard": "Revisar storyboard",
       "queuedForShots": "En cola para tomas",
       "buildingShots": "Creando tomas",
       "reviewShots": "Revisar tomas",

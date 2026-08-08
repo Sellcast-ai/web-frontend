@@ -165,6 +165,27 @@ function tagText(html: string, tag: string): string[] {
 const sectionHeadings = (html: string) => tagText(html, "h2");
 const summaryLabels = (html: string) => tagText(html, "dt");
 
+/** The markup of one `data-testid` element, so a negative assertion fails on
+ *  the region under test rather than on any other section of the page (React
+ *  self-closes void elements, so tag depth is countable). */
+function region(html: string, testId: string): string {
+  const marker = html.indexOf(`data-testid="${testId}"`);
+  if (marker < 0) throw new Error(`no [data-testid="${testId}"] in render`);
+  const start = html.lastIndexOf("<", marker);
+  const tags = /<(\/?)[a-zA-Z][^\s/>]*([^>]*)>/g;
+  tags.lastIndex = start;
+  let depth = 0;
+  let match: RegExpExecArray | null;
+  while ((match = tags.exec(html))) {
+    depth += match[1] ? -1 : match[2].endsWith("/") ? 0 : 1;
+    if (depth === 0) return html.slice(start, tags.lastIndex);
+  }
+  throw new Error(`unbalanced markup for [data-testid="${testId}"]`);
+}
+
+const regionText = (html: string, testId: string) =>
+  region(html, testId).replace(/<[^>]+>/g, " ");
+
 function save(name: string, html: string) {
   // Best-effort: dumps the rendered surface for reviewers; the assertions below
   // are the real check, so never fail the test if the evidence dir is absent.
@@ -620,37 +641,40 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).not.toContain("Queued for script");
     // A queued job is parked in line, so nothing may claim work is happening.
     expect(text).not.toContain("preparing the shot references");
-    // No credit claim may ride along after approval, where it is false.
-    expect(text).not.toContain("credits");
+    // No credit claim may ride along after approval, where it is false - read
+    // from the waiting card alone, since other sections may say "credits".
+    expect(regionText(html, "job-working")).not.toContain("credits");
   });
 
   it("says work is under way once a worker has claimed the job", () => {
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "submitted", beats: [] }),
     );
-    const text = render(qc, React.createElement(JobDetailPage)).replace(/<[^>]+>/g, " ");
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("Building your shots");
     expect(text).toContain("preparing the shot references");
     expect(text).toContain("You can leave and come back.");
-    expect(text).not.toContain("in line");
+    // Bare enough a substring that it only means anything inside the wait copy.
+    expect(regionText(html, "job-working")).not.toContain("in line");
   });
 
   it("wraps every tracker label at 320px instead of scrolling the current step away", () => {
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), { ...baseJob, status: "queued", beats: [] }),
     );
-    const html = render(qc, React.createElement(JobDetailPage));
+    const tracker = region(render(qc, React.createElement(JobDetailPage)), "job-progress");
 
     // The row wraps rather than scrolling: every step - including the current
     // one - stays on screen at 320px, and the badges keep their circle.
-    expect(html).toContain("flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap");
-    expect(html).not.toContain("overflow-x-auto");
-    expect(html).toMatch(/h-7 w-7 shrink-0/);
-    expect(html).toMatch(/block whitespace-nowrap text-xs/);
-    expect(html).not.toMatch(/hidden text-xs font-semibold sm:block/);
+    expect(tracker).toContain("flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap");
+    expect(tracker).not.toContain("overflow-x-auto");
+    expect(tracker).toMatch(/h-7 w-7 shrink-0/);
+    expect(tracker).toMatch(/block whitespace-nowrap text-xs/);
+    expect(tracker).not.toMatch(/hidden text-xs font-semibold sm:block/);
     // The connector lines are the only part that goes away when wrapped.
-    expect(html).toMatch(/relative hidden h-0\.5 flex-1[^"]*sm:block/);
+    expect(tracker).toMatch(/relative hidden h-0\.5 flex-1[^"]*sm:block/);
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {

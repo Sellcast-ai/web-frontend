@@ -1724,6 +1724,29 @@ const MANUAL_OVERRIDES = {
     vi: "Chờ render",
     th: "รอเรนเดอร์",
   },
+  // Same storyboard noun the waiting copy uses, per locale: the badge and the
+  // body sit on the same job page, so they may not name the artifact two ways
+  // (the machine had zh as 回顾故事板 against the page's 分镜).
+  "shared.status.reviewStoryboard": {
+    es: "Revisar storyboard",
+    zh: "审阅分镜",
+    ja: "ストーリーボード確認",
+    ko: "스토리보드 검토",
+    pt: "Revisar storyboard",
+    id: "Tinjau storyboard",
+    vi: "Xem lại storyboard",
+    th: "ตรวจสอบสตอรี่บอร์ด",
+  },
+  "shared.status.rendering": {
+    es: "Renderizando",
+    zh: "正在渲染",
+    ja: "レンダリング中",
+    ko: "렌더링 중",
+    pt: "Renderizando",
+    id: "Merender",
+    vi: "Đang render",
+    th: "กำลังเรนเดอร์",
+  },
   "shared.status.working": {
     es: "Trabajando",
     zh: "处理中",

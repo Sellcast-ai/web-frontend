@@ -397,7 +397,10 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
   const t = useTranslations("shared.jobProgress");
 
   return (
-    <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap sm:gap-2">
+    <div
+      data-testid="job-progress"
+      className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap sm:gap-2"
+    >
       {STEP_LABEL_KEYS.map((labelKey, i) => {
         const label = t(labelKey);
         const done = i < current;
@@ -458,7 +461,10 @@ function WorkingView({ job }: { job: VideoJob }) {
   const display = jobProgressDisplay(job);
   return (
     <div className="mt-8">
-      <div className="rounded-card border border-border bg-card p-8 text-center">
+      <div
+        data-testid="job-working"
+        className="rounded-card border border-border bg-card p-8 text-center"
+      >
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient text-white">
           <Sparkles className="h-7 w-7" />
         </div>

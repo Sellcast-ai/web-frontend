@@ -711,12 +711,12 @@
     "status": {
       "queuedForScript": "スクリプト待ち",
       "writingScript": "スクリプト作成中",
-      "reviewStoryboard": "ストーリーボードをレビューする",
+      "reviewStoryboard": "ストーリーボード確認",
       "queuedForShots": "ショット待ち",
       "buildingShots": "ショット作成中",
       "reviewShots": "ショット確認",
       "queuedForRender": "レンダリング待ち",
-      "rendering": "レンダリング",
+      "rendering": "レンダリング中",
       "ready": "準備完了",
       "failed": "失敗しました",
       "working": "処理中"

@@ -711,7 +711,7 @@
     "status": {
       "queuedForScript": "Na fila para roteiro",
       "writingScript": "Escrevendo roteiro",
-      "reviewStoryboard": "Revise o storyboard",
+      "reviewStoryboard": "Revisar storyboard",
       "queuedForShots": "Na fila para tomadas",
       "buildingShots": "Criando tomadas",
       "reviewShots": "Revisar tomadas",

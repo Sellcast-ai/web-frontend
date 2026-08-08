@@ -711,7 +711,7 @@
     "status": {
       "queuedForScript": "等待脚本",
       "writingScript": "正在写脚本",
-      "reviewStoryboard": "回顾故事板",
+      "reviewStoryboard": "审阅分镜",
       "queuedForShots": "等待镜头",
       "buildingShots": "正在制作镜头",
       "reviewShots": "检查镜头",
