@@ -234,14 +234,20 @@ export const OUTCOME_NUDGES: OutcomeNudge[] = [
 /** One shot in the storyboard (VideoScript.shots[]). Mirrors backend
  * `script_generation.Shot`. `technique`/`transition_out`/`product_visible`
  * are derived from `outcome_nudges`/`nudge_note` (the main-path controls) and
- * default on legacy scripts, so treat them all as always-present. */
+ * default on legacy scripts, so treat them all as always-present.
+ *
+ * `outcome_nudges` is `string[]`, not `OutcomeNudge[]`: the backend model is a
+ * plain string list and generation does emit free-form phrases outside the five
+ * taps. Every render/edit/save path must run it through `knownOutcomeNudges`
+ * (`src/lib/outcome-nudges.ts`) first - an unknown value has no label key, and
+ * must not be shown or PATCHed back. */
 export interface Shot {
   duration: 10 | 15;
   visual: string;
   dialogue: string | null;
   ambient_audio: string;
   on_screen_text: string | null;
-  outcome_nudges: OutcomeNudge[];
+  outcome_nudges: string[];
   nudge_note: string;
   technique: string;
   transition_out: ShotTransition;
