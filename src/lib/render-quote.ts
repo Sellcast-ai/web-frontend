@@ -11,10 +11,12 @@ import type { VideoQuoteParams } from "@/lib/api/types";
  * that failed: there is no number to compare, so nothing may be gated on it and
  * no price may be shown. It must never collapse into "affordable" or "short".
  *
- * The quote is a ceiling (see `VideoQuote`), so "short" can occasionally refuse
- * a render the backend would have accepted for a few credits less. That is the
- * right direction to be wrong in: the alternative lets the user spend an
- * active-job slot on a job that then cannot be approved. */
+ * The quote is a ceiling (see `VideoQuote`), so "short" means "may cost more
+ * than the balance", not "cannot be paid for". It is copy, never a gate: the
+ * backend prices the storyboard's shorter post-overlap length and stays the
+ * authoritative refusal, and blocking on a ceiling would take away renders the
+ * user can actually afford. An empty meter is the only balance a surface may
+ * gate on, because zero is zero at any price. */
 export type Affordability = "unknown" | "affordable" | "short";
 
 export function affordability(

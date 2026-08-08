@@ -498,7 +498,7 @@
         "pending": "menghitung…",
         "unavailable": "harga tidak tersedia"
       },
-      "cantAfford": "Video ini butuh hingga {cost} kredit, sedangkan kredit Anda {remaining}.",
+      "costMayExceed": "Video ini bisa memakan hingga {cost} kredit, sedangkan kredit Anda {remaining}. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
       "generateVideo": "Hasilkan video",
       "generateUploading": "Mengunggah referensi…",
       "outOfQuota": "Kredit tidak cukup untuk video ini (tersisa {remaining} dari {limit}).",

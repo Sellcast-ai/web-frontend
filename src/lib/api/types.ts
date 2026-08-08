@@ -487,7 +487,11 @@ export interface VideoJob {
   aspect_ratio: string;
   /** What the render is charged at, already clamped to the model's ceiling —
    * the same value the backend quote prices, so it's what a quote for this job
-   * must be asked for. Free-form backend text, like `aspect_ratio`. */
+   * must be asked for. Free-form backend text, like `aspect_ratio`.
+   *
+   * Required on the DEPLOYED backend's `VideoJobResponse` (origin/main af46df4,
+   * live on Render); a backend checkout older than that lacks it entirely, so
+   * don't relax this against a stale clone. */
   resolution: string;
   prompt: string;
   video_url: string | null;

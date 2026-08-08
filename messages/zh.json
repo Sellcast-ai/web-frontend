@@ -181,7 +181,7 @@
         "pending": "计算中…",
         "unavailable": "无法获取价格"
       },
-      "cantAfford": "此视频最多需要 {cost} 积分，而你只有 {remaining}。",
+      "costMayExceed": "此视频最多可能消耗 {cost} 积分，而你有 {remaining}。实际扣除通常更少，所以仍有可能成功生成。",
       "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
       "seePlans": "查看套餐",
       "title": "影音工作室",

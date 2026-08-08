@@ -181,7 +181,7 @@
         "pending": "calculando…",
         "unavailable": "precio no disponible"
       },
-      "cantAfford": "Este video necesita hasta {cost} créditos y tienes {remaining}.",
+      "costMayExceed": "Este video podría costar hasta {cost} créditos y tienes {remaining}. El cargo final suele ser menor, así que puede que igual se genere.",
       "outOfQuota": "No hay suficientes créditos para este video (quedan {remaining} de {limit}).",
       "seePlans": "Ver planes",
       "title": "Estudio de vídeo",

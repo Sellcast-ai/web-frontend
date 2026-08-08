@@ -498,7 +498,7 @@
         "pending": "計算中…",
         "unavailable": "価格を取得できません"
       },
-      "cantAfford": "この動画には最大 {cost} クレジットが必要ですが、残高は {remaining} です。",
+      "costMayExceed": "この動画は最大 {cost} クレジットかかる可能性があり、残高は {remaining} です。実際の消費は少なくなることが多いため、そのまま生成できる場合もあります。",
       "generateVideo": "ビデオの生成",
       "generateUploading": "参照をアップロード中…",
       "outOfQuota": "この動画にはクレジットが足りません（残り {remaining}/{limit}）。",

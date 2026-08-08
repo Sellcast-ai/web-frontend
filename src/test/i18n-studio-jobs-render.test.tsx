@@ -180,7 +180,7 @@ function render(qc: QueryClient, node: React.ReactNode): string {
 // Scoped readers, so an assertion about the pickers fails on the pickers rather
 // than on any future `title`/heading anywhere else on the page.
 function disabledControls(html: string): string[] {
-  return (html.match(/<button[^>]*>/g) ?? []).filter((tag) => /\bdisabled\b/.test(tag));
+  return (html.match(/<button[^>]*>/g) ?? []).filter(isDisabled);
 }
 
 /** React renders a boolean `disabled` as `disabled=""`; every button's class
@@ -606,14 +606,15 @@ describe("Studio page renders extracted English copy", () => {
     // "up to" alone also appears in the model blurb ("up to 1080p") - the
     // negative has to be about a PRICE.
     expect(text).not.toMatch(/up to \d+ credits/);
-    expect(text).not.toContain("This video needs up to");
+    expect(text).not.toContain("This video could cost up to");
     expect(isDisabled(generateButtonTag(html))).toBe(false);
   }
 
-  // The gate the free grant will trip today: 30 credits, cheapest render ~70.
-  // It is disabled BEFORE the click, and the notice names the gap rather than
-  // repeating the balance already printed above it.
-  it("refuses a render the balance cannot cover, and says by how much", () => {
+  // The shortfall the free grant will hit today: 30 credits, cheapest render
+  // ~70. The quote is a CEILING, so it warns and names the gap - it must not
+  // take the click away, or a render the backend would charge less for becomes
+  // unbuyable. The backend stays the authoritative refusal.
+  it("warns when the ceiling exceeds the balance, without taking Generate away", () => {
     const qc = studioClient((c) => {
       c.setQueryData(["usage"], { ...usage, limit: 30, used: 0, remaining: 30 });
       c.setQueryData(defaultQuoteKey, { credits: 225 });
@@ -622,12 +623,25 @@ describe("Studio page renders extracted English copy", () => {
     save("studio-cost-short", html);
     const text = html.replace(/<[^>]+>/g, " ");
 
-    expect(isDisabled(generateButtonTag(html))).toBe(true);
-    expect(text).toContain("This video needs up to 225 credits and you have 30.");
+    expect(isDisabled(generateButtonTag(html))).toBe(false);
+    expect(text).toContain("This video could cost up to 225 credits and you have 30.");
+    expect(text).toContain("The final charge is usually lower");
     expect(text).toContain("See plans");
     // The priced shortfall replaces the balance-only notice; both would be
     // saying the same thing twice.
     expect(text).not.toContain("Not enough credits for this video");
+  });
+
+  // An empty meter is the one balance that still gates: zero is zero at any
+  // price, so no ceiling can make it affordable.
+  it("still refuses a render on an empty meter", () => {
+    const qc = studioClient((c) => {
+      c.setQueryData(["usage"], { ...usage, limit: 30, used: 30, remaining: 0 });
+      c.setQueryData(defaultQuoteKey, { credits: 225 });
+    });
+    const html = render(qc, React.createElement(StudioPage));
+
+    expect(isDisabled(generateButtonTag(html))).toBe(true);
   });
 
   it("leaves Generate alone when the balance covers the render", () => {
@@ -635,7 +649,7 @@ describe("Studio page renders extracted English copy", () => {
     const html = render(qc, React.createElement(StudioPage));
 
     expect(isDisabled(generateButtonTag(html))).toBe(false);
-    expect(html.replace(/<[^>]+>/g, " ")).not.toContain("This video needs up to");
+    expect(html.replace(/<[^>]+>/g, " ")).not.toContain("This video could cost up to");
   });
 });
 

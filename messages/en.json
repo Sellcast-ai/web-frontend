@@ -498,7 +498,7 @@
         "pending": "pricing…",
         "unavailable": "price unavailable"
       },
-      "cantAfford": "This video needs up to {cost} credits and you have {remaining}.",
+      "costMayExceed": "This video could cost up to {cost} credits and you have {remaining}. The final charge is usually lower, so it may still go through.",
       "generateVideo": "Generate video",
       "generateUploading": "Uploading reference…",
       "outOfQuota": "Not enough credits for this video ({remaining} of {limit} left).",

@@ -498,7 +498,7 @@
         "pending": "calculando…",
         "unavailable": "preço indisponível"
       },
-      "cantAfford": "Este vídeo precisa de até {cost} créditos e você tem {remaining}.",
+      "costMayExceed": "Este vídeo pode custar até {cost} créditos e você tem {remaining}. A cobrança final costuma ser menor, então ainda pode dar certo.",
       "generateVideo": "Gerar vídeo",
       "generateUploading": "Enviando referência…",
       "outOfQuota": "Créditos insuficientes para este vídeo ({remaining} de {limit} restantes).",

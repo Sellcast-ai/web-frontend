@@ -272,14 +272,12 @@ function StudioInner() {
   const cost = quote.data?.credits;
 
   // Three backend-metered signals, no client pricing: the quote against the
-  // balance (the honest pre-flight - a configuration nobody can pay for is
-  // refused before the click, not after), an empty meter (zero is zero at any
-  // price, and it stands even with no quote in hand), or a refused create still
-  // on the render it refused whose balance hasn't grown since. `useCreateJob`
-  // refetches usage on failure, so a top-up or a plan change clears the last
-  // one on its own; a fresh Generate clears it too. Without a usage read there
-  // is no honest balance to quote, so the create toast carries the failure
-  // alone.
+  // balance, an empty meter (zero is zero at any price, and it stands even with
+  // no quote in hand), or a refused create still on the render it refused whose
+  // balance hasn't grown since. `useCreateJob` refetches usage on failure, so a
+  // top-up or a plan change clears the last one on its own; a fresh Generate
+  // clears it too. Without a usage read there is no honest balance to quote, so
+  // the create toast carries the failure alone.
   const renderKey = [
     mode,
     vibe,
@@ -289,8 +287,12 @@ function StudioInner() {
     effectiveAspectRatio,
   ].join("|");
   const noCredits = usage !== undefined && usage.remaining <= 0;
-  // "unknown" - no quote yet, or a quote that failed - never gates and never
-  // shows a number. The backend stays the authoritative refusal.
+  // Warning only, never a gate: the quote is a ceiling (the debit prices the
+  // storyboard's shorter post-overlap length), so "short" cannot mean "too
+  // expensive" - disabling Generate on it would refuse renders the user can
+  // actually pay for. It states the ceiling against the balance and leaves the
+  // decision to the backend, which is the authoritative refusal either way.
+  // "unknown" - no quote yet, or a quote that failed - shows no number at all.
   const canAfford = affordability(cost, usage?.remaining);
   const outOfQuota =
     noCredits ||
@@ -777,6 +779,7 @@ function StudioInner() {
                     quote in flight or failed shows its own words here - never a
                     number, and never the previous render's number. */}
                 <span
+                  aria-live="polite"
                   className={cn(
                     "text-right font-display font-semibold",
                     cost !== undefined
@@ -809,7 +812,6 @@ function StudioInner() {
                 !product ||
                 atActiveCap ||
                 noCredits ||
-                canAfford === "short" ||
                 !capabilityState.canSubmit ||
                 linkInvalid ||
                 referenceUploading
@@ -844,17 +846,21 @@ function StudioInner() {
                 </Link>
               </p>
             )}
-            {/* The priced shortfall wins over the balance-only notice: it names
-                the gap the user can act on ("needs 225, you have 30") instead
-                of restating the balance they can already read above. */}
+            {/* The notice always agrees with the button. A gated balance says
+                so first, because "it may still go through" beside a dead
+                Generate is the one thing this must never read as. Otherwise the
+                priced ceiling warns and names the gap the user can act on ("up
+                to 225, you have 30") instead of restating the balance they can
+                already read above - a warning, not a refusal, since the backend
+                may well charge less than the ceiling. */}
             {(canAfford === "short" || outOfQuota) && usage && (
               <p className="mt-2 text-center text-xs text-muted-foreground">
-                {canAfford === "short" && cost !== undefined
-                  ? t("cantAfford", { cost, remaining: usage.remaining })
-                  : t("outOfQuota", {
+                {outOfQuota || cost === undefined
+                  ? t("outOfQuota", {
                       remaining: usage.remaining,
                       limit: usage.limit,
-                    })}{" "}
+                    })
+                  : t("costMayExceed", { cost, remaining: usage.remaining })}{" "}
                 <Link href="/pricing" className="font-semibold text-brand-700">
                   {t("seePlans")}
                 </Link>

@@ -498,7 +498,7 @@
         "pending": "đang tính…",
         "unavailable": "chưa có giá"
       },
-      "cantAfford": "Video này cần tối đa {cost} tín dụng, bạn đang có {remaining}.",
+      "costMayExceed": "Video này có thể tốn tối đa {cost} tín dụng, bạn đang có {remaining}. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
       "generateVideo": "Tạo video",
       "generateUploading": "Đang tải tệp tham chiếu…",
       "outOfQuota": "Không đủ tín dụng cho video này (còn {remaining}/{limit}).",
