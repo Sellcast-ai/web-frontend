@@ -22,6 +22,7 @@ import {
   ChevronDown,
   Lock,
   Trash2,
+  Save,
   Image as ImageIcon,
   Mic,
 } from "lucide-react";
@@ -606,7 +607,7 @@ function StoryboardView({ job }: { job: VideoJob }) {
         ...(videoModel ? { video_model: videoModel } : {}),
       };
   const quote = useVideoQuote(quoteParams);
-  const { data: usage } = useUsage();
+  const { data: usage, refetch: refetchUsage } = useUsage();
   // Only ever THIS render's price. A quote the backend priced on some other
   // model - the mode default, because the key couldn't be resolved - is a
   // plausible wrong number, which is worse here than no number at all.
@@ -632,10 +633,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
   // is rather than on how big the gap is. An empty meter is certain - zero is
   // zero at any price, the backend refuses whatever the quote says and whether
   // or not one landed - so it gets definite copy, never the ceiling's hedge,
-  // and it is the one thing on this bar that also stops the button: the copy
+  // and it is the one thing on this bar that also changes the button: the copy
   // and the control are read off this same value, or a page that says the
-  // approve won't go through would still invite the click - and a dirty draft
-  // would be PATCHed on the way to a refusal that was known before it started.
+  // approve won't go through would still offer it. What the button becomes is
+  // save-only, never dead: this PATCH is the ONLY path a shot edit has to the
+  // server, so disabling it would silently throw the user's rewrite away.
   // A non-empty balance under the quoted ceiling is genuinely uncertain, since
   // the debit prices the storyboard's shorter post-overlap length, so that one
   // keeps the hedge and stays a warning.
@@ -703,6 +705,15 @@ function StoryboardView({ job }: { job: VideoJob }) {
       // Persist pending edits (re-validated) before the render kicks off; bail if
       // validation fails so the user can fix the offending shot.
       if (dirty && !(await save())) return;
+      // At zero credits the approve is a refusal the page has already stated,
+      // so the button only does the half it can deliver: the edits land, and
+      // no request is spent on an outcome known before it started. The saved
+      // balance read is refreshed after, so credits bought elsewhere bring the
+      // approve back without a reload.
+      if (noCredits) {
+        await refetchUsage();
+        return;
+      }
       await approve.mutateAsync().catch(() => null);
     } finally {
       approveGuard.end();
@@ -770,9 +781,18 @@ function StoryboardView({ job }: { job: VideoJob }) {
         ref={barRef}
         className="sticky bottom-4 flex flex-wrap items-center gap-3 rounded-card border border-border bg-card/95 p-4 shadow-card backdrop-blur"
       >
-        <Button size="lg" onClick={approveAndGenerate} disabled={busy || noCredits}>
+        <Button
+          size="lg"
+          onClick={approveAndGenerate}
+          disabled={busy || (noCredits && !dirty)}
+        >
           {busy ? (
             <Loader2 className="h-4 w-4 animate-spin" />
+          ) : noCredits ? (
+            <>
+              <Save className="h-4 w-4" />
+              {t("saveEdits")}
+            </>
           ) : (
             <>
               <Sparkles className="h-4 w-4" />

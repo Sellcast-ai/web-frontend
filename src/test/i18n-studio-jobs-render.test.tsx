@@ -989,11 +989,12 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).not.toContain("credits short");
     // The refusal still names the action that clears it.
     expect(html).toContain('href="/pricing"');
-    // ...and the control agrees with the copy: a button the page has just said
-    // won't go through must not invite the click, which would PATCH a dirty
-    // draft on the way to a refusal known before it started.
-    const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
-    expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(true);
+    // ...and the control agrees with the copy: a page that has just said the
+    // approve won't go through must not offer it. It becomes the half it CAN
+    // deliver - this PATCH is the only path a shot edit has to the server, so
+    // the button may never simply go dead here.
+    expect(text).not.toContain("Approve &amp; make");
+    expect(text).toContain("Save changes");
   });
 
   // A price the backend worked out for some OTHER model is a plausible wrong

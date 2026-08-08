@@ -651,6 +651,19 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã hết tín dụng nên việc duyệt sẽ không chạy được.",
     th: "เครดิตของคุณหมดแล้ว การอนุมัติจึงจะไม่ทำงาน",
   },
+  // What the approve button becomes at zero credits, where it can only persist
+  // the draft. "Save" is the UI verb, never the rescue one the machine reaches
+  // for ("salvar"/"cứu"/"救う").
+  "app.jobs.storyboard.saveEdits": {
+    es: "Guardar cambios",
+    zh: "保存修改",
+    ja: "変更を保存",
+    ko: "변경 사항 저장",
+    pt: "Salvar alterações",
+    id: "Simpan perubahan",
+    vi: "Lưu thay đổi",
+    th: "บันทึกการเปลี่ยนแปลง",
+  },
   "app.jobs.storyboard.balanceNote": {
     es: "Tienes {remaining}.",
     zh: "你当前有 {remaining}。",
