@@ -48,6 +48,7 @@ import { STUDIO_HREF } from "@/lib/launch-routes";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
 import { useMutationGuard } from "@/lib/mutation-guard";
+import { stripDialogueStageDirections } from "@/lib/storyboard-display";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -609,6 +610,9 @@ function StoryboardView({ job }: { job: VideoJob }) {
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
   const busy = approve.isPending || patch.isPending;
+  const hookAngle = draft.hook_angle.trim();
+  const audience = draft.audience.trim();
+  const hasContext = Boolean(hookAngle || audience);
 
   function editShot(i: number, patchShot: Partial<Shot>) {
     setDraft((d) =>
@@ -653,6 +657,27 @@ function StoryboardView({ job }: { job: VideoJob }) {
           until the worker has written the subject rows (image step), and on
           jobs that predate the feature. */}
       <SubjectStrip subjects={job.subjects} />
+
+      {hasContext && (
+        <div className="mt-5 grid gap-3 rounded-card border border-border bg-card p-4 shadow-soft sm:grid-cols-2">
+          {hookAngle && (
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                {t("context.angle")}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-ink">{hookAngle}</p>
+            </div>
+          )}
+          {audience && (
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                {t("context.audience")}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-ink">{audience}</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* shot list — bottom padding reserves runway for the sticky bar (§overlap
           fix): it sits between the last card and the bar, not below the bar. */}
@@ -792,6 +817,8 @@ function ShotCard({
   const t = useTranslations("app.jobs.shotCard");
   const te = useTranslations("app.jobs.shotEditor");
   const nudges = shot.outcome_nudges ?? [];
+  const visual = shot.visual.trim();
+  const dialogue = shot.dialogue ? stripDialogueStageDirections(shot.dialogue) : "";
   const hint =
     nudges.length > 0
       ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_KEYS[n]}`)).join(" · ")
@@ -830,9 +857,18 @@ function ShotCard({
         <span className="inline-flex w-fit items-center rounded-full bg-black/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
           {label} · {shot.duration}s
         </span>
-        {shot.dialogue ? (
-          <p className="mt-2 line-clamp-3 text-sm leading-snug text-ink">
-            “{shot.dialogue}”
+        {visual ? (
+          <p className="mt-2 line-clamp-3 text-sm font-medium leading-snug text-ink">
+            {visual}
+          </p>
+        ) : (
+          <p className="mt-2 text-sm italic text-muted-foreground">
+            {t("noVisual")}
+          </p>
+        )}
+        {dialogue ? (
+          <p className="mt-2 line-clamp-2 text-sm leading-snug text-muted-foreground">
+            “{dialogue}”
           </p>
         ) : (
           <p className="mt-2 text-sm italic text-muted-foreground">

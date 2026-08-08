@@ -563,6 +563,10 @@
         "creditNote": "Ini adalah satu-satunya langkah yang menggunakan kredit Anda.",
         "editTitle": "Sunting {label}",
         "editFallbackTitle": "Sunting bidikan",
+        "context": {
+          "angle": "Sudut",
+          "audience": "Audiens"
+        },
         "shotLabels": {
           "hook": "Kait",
           "hookLower": "kait",
@@ -577,6 +581,7 @@
         "locked": "Terkunci"
       },
       "shotCard": {
+        "noVisual": "Tidak ada arahan visual",
         "noSpokenLine": "Tidak ada kalimat yang diucapkan",
         "edit": "Sunting"
       },

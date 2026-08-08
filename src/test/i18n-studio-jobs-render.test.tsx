@@ -503,11 +503,47 @@ describe("Job detail page renders extracted English copy", () => {
       "Here&#x27;s the plan for your video",
       "Approve &amp; make my video",
       "This is the only step that uses your credits.",
+      "Angle",
+      "Cafe-grade pour-over at home",
+      "Audience",
+      "Home baristas",
+      "Host lifts the kettle over the dripper",
+      "Close-up of the finished cup",
       "Locked in for every shot",
       "Locked",
     ]) {
       expect(text, `expected "${s}" in storyboard render`).toContain(s);
     }
+  });
+
+  it("cleans storyboard dialogue and degrades missing visual context cleanly", () => {
+    const storyboard = {
+      ...baseJob.storyboard!,
+      audience: "",
+      hook_angle: "   ",
+      shots: [
+        {
+          ...baseJob.storyboard!.shots[0],
+          visual: "   ",
+          dialogue: "(smiling) Try it now (today only).",
+        },
+      ],
+    };
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "awaiting_storyboard",
+        storyboard,
+      }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("No visual direction");
+    expect(text).toContain("Try it now (today only).");
+    expect(text).not.toContain("(smiling)");
+    expect(text).not.toContain("Angle");
+    expect(text).not.toContain("Audience");
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {

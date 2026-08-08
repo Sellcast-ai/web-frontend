@@ -563,6 +563,10 @@
         "creditNote": "นี่เป็นขั้นตอนเดียวที่ใช้เครดิตของคุณ",
         "editTitle": "แก้ไข {label}",
         "editFallbackTitle": "แก้ไขช็อต",
+        "context": {
+          "angle": "มุมมอง",
+          "audience": "ผู้ชม"
+        },
         "shotLabels": {
           "hook": "ตะขอ",
           "hookLower": "ตะขอ",
@@ -577,6 +581,7 @@
         "locked": "ล็อคแล้ว"
       },
       "shotCard": {
+        "noVisual": "ไม่มีคำอธิบายภาพ",
         "noSpokenLine": "ไม่มีสายพูด",
         "edit": "แก้ไข"
       },

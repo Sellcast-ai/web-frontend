@@ -563,6 +563,10 @@
         "creditNote": "This is the only step that uses your credits.",
         "editTitle": "Edit {label}",
         "editFallbackTitle": "Edit shot",
+        "context": {
+          "angle": "Angle",
+          "audience": "Audience"
+        },
         "shotLabels": {
           "hook": "Hook",
           "hookLower": "hook",
@@ -577,6 +581,7 @@
         "locked": "Locked"
       },
       "shotCard": {
+        "noVisual": "No visual direction",
         "noSpokenLine": "No spoken line",
         "edit": "Edit"
       },

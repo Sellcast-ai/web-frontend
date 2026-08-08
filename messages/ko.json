@@ -563,6 +563,10 @@
         "creditNote": "이는 크레딧을 사용하는 유일한 단계입니다.",
         "editTitle": "{label} 편집",
         "editFallbackTitle": "샷 편집",
+        "context": {
+          "angle": "각도",
+          "audience": "대상"
+        },
         "shotLabels": {
           "hook": "후크",
           "hookLower": "후크",
@@ -577,6 +581,7 @@
         "locked": "잠김"
       },
       "shotCard": {
+        "noVisual": "시각적 설명 없음",
         "noSpokenLine": "음성 대사 없음",
         "edit": "편집"
       },

@@ -563,6 +563,10 @@
         "creditNote": "这是使用您的积分的唯一步骤。",
         "editTitle": "编辑{label}",
         "editFallbackTitle": "编辑镜头",
+        "context": {
+          "angle": "角度",
+          "audience": "受众"
+        },
         "shotLabels": {
           "hook": "钩子",
           "hookLower": "钩子",
@@ -577,6 +581,7 @@
         "locked": "锁定"
       },
       "shotCard": {
+        "noVisual": "没有视觉说明",
         "noSpokenLine": "没有语音线路",
         "edit": "编辑"
       },

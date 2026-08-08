@@ -563,6 +563,10 @@
         "creditNote": "Este es el único paso que utiliza sus créditos.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar toma",
+        "context": {
+          "angle": "Ángulo",
+          "audience": "Audiencia"
+        },
         "shotLabels": {
           "hook": "Gancho",
           "hookLower": "gancho",
@@ -577,6 +581,7 @@
         "locked": "bloqueado"
       },
       "shotCard": {
+        "noVisual": "Sin indicación visual",
         "noSpokenLine": "Sin línea hablada",
         "edit": "Editar"
       },

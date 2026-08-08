@@ -563,6 +563,10 @@
         "creditNote": "Esta é a única etapa que utiliza seus créditos.",
         "editTitle": "Editar {label}",
         "editFallbackTitle": "Editar foto",
+        "context": {
+          "angle": "Ângulo",
+          "audience": "Público"
+        },
         "shotLabels": {
           "hook": "Gancho",
           "hookLower": "gancho",
@@ -577,6 +581,7 @@
         "locked": "Bloqueado"
       },
       "shotCard": {
+        "noVisual": "Sem direção visual",
         "noSpokenLine": "Nenhuma linha falada",
         "edit": "Editar"
       },
