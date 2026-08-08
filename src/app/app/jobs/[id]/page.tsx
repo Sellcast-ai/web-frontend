@@ -798,8 +798,10 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
 }
 
 /** Read-first shot card: an on-screen-text preview in the job's own output
- *  shape + the spoken line as a quote, with director metadata tucked into the
- *  tap-to-edit drawer. */
+ *  shape + the spoken line as a quote and the visual plan beside it, both at
+ *  equal weight (the line is what gets spoken and what the drawer can edit; the
+ *  visual is read-only, so it may not displace it), with director metadata
+ *  tucked into the tap-to-edit drawer. */
 function ShotCard({
   shot,
   label,
@@ -856,22 +858,22 @@ function ShotCard({
         <span className="inline-flex w-fit items-center rounded-full bg-black/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
           {label} · {shot.duration}s
         </span>
-        {visual ? (
-          <p className="mt-2 line-clamp-3 text-sm font-medium leading-snug text-ink">
-            {visual}
-          </p>
-        ) : (
-          <p className="mt-2 text-sm italic text-muted-foreground">
-            {t("noVisual")}
-          </p>
-        )}
         {dialogue ? (
-          <p className="mt-2 line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <p className="mt-2 line-clamp-3 text-sm leading-snug text-ink">
             “{dialogue}”
           </p>
         ) : (
           <p className="mt-2 text-sm italic text-muted-foreground">
             {t("noSpokenLine")}
+          </p>
+        )}
+        {visual ? (
+          <p className="mt-2 line-clamp-3 text-sm leading-snug text-ink">
+            {visual}
+          </p>
+        ) : (
+          <p className="mt-2 text-sm italic text-muted-foreground">
+            {t("noVisual")}
           </p>
         )}
         <div className="mt-auto flex items-center gap-2 pt-2">

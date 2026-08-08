@@ -564,7 +564,7 @@
         "editTitle": "Sunting {label}",
         "editFallbackTitle": "Sunting bidikan",
         "context": {
-          "angle": "Sudut",
+          "angle": "Sudut pandang",
           "audience": "Audiens"
         },
         "shotLabels": {

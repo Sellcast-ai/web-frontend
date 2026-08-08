@@ -564,7 +564,7 @@
         "editTitle": "{label} 편집",
         "editFallbackTitle": "샷 편집",
         "context": {
-          "angle": "각도",
+          "angle": "접근 방식",
           "audience": "대상"
         },
         "shotLabels": {

@@ -268,6 +268,41 @@ const MANUAL_OVERRIDES = {
     vi: "Tối",
     th: "มืด",
   },
+  // Storyboard context labels: bare one-word nouns the machine reads
+  // geometrically - "Angle" is the editorial angle-of-approach of `hook_angle`,
+  // not a measurement in degrees (ko "각도", id "Sudut"), and "Audience" is the
+  // buyer the video is aimed at. `noVisual` is the shot card's missing-visual
+  // fallback, where "visual" is the shot's camera direction, not an adjective.
+  "app.jobs.storyboard.context.angle": {
+    es: "Ángulo",
+    zh: "角度",
+    ja: "切り口",
+    ko: "접근 방식",
+    pt: "Ângulo",
+    id: "Sudut pandang",
+    vi: "Góc tiếp cận",
+    th: "มุมมอง",
+  },
+  "app.jobs.storyboard.context.audience": {
+    es: "Audiencia",
+    zh: "受众",
+    ja: "視聴者",
+    ko: "대상",
+    pt: "Público",
+    id: "Audiens",
+    vi: "Đối tượng",
+    th: "ผู้ชม",
+  },
+  "app.jobs.shotCard.noVisual": {
+    es: "Sin indicación visual",
+    zh: "没有视觉说明",
+    ja: "映像の指定なし",
+    ko: "시각적 설명 없음",
+    pt: "Sem direção visual",
+    id: "Tidak ada arahan visual",
+    vi: "Chưa có mô tả hình ảnh",
+    th: "ไม่มีคำอธิบายภาพ",
+  },
   // pricing-copy-c4 (captain decisions 2026-08-01): credits track real render
   // cost (model/resolution/aspect ratio - no claim that Studio displays it
   // until the cost-preview UI ships), free grant is 300 one-time, plans are

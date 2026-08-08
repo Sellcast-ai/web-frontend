@@ -176,6 +176,10 @@ function save(name: string, html: string) {
   }
 }
 
+// Rendering these two pages blows past the 5s default on a cold cache; scoped
+// to this file so a genuinely hung test elsewhere still fails in 5s.
+vi.setConfig({ testTimeout: 20_000 });
+
 // Modules import next/navigation at load time — import after vi.mock is set up.
 let StudioPage: React.ComponentType;
 let JobDetailPage: React.ComponentType;

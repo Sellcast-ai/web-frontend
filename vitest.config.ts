@@ -4,8 +4,6 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     environment: "node",
-    // page-module transforms blow past the 5s default on a cold cache
-    testTimeout: 20000,
     env: {
       SELLCAST_API_BASE: "http://127.0.0.1:8000/api/v1",
       NEXT_PUBLIC_MEDIA_ORIGIN: "http://127.0.0.1:8000",
