@@ -73,6 +73,15 @@ refund credits; the job detail page confirms that before deleting. Videos outliv
 products, so the job page links to the source product when it still exists and
 shows a non-link "Product deleted" badge when the product fetch returns 404.
 
+A render waits at the storyboard gate until the seller approves it, so the job
+detail page has to show what is about to be rendered. Above the shot list it
+shows the script's hook angle and audience, and only the ones the storyboard
+actually carries. Each shot card shows the spoken line and the shot's visual
+plan at equal weight, each with an icon and a screen-reader label rather than
+quote marks, and keeps the row with an italic placeholder when a field is empty.
+Both are shown as the backend wrote them. The visual plan is read-only; the
+spoken line changes in the shot edit drawer, never through a display filter.
+
 Studio asks the backend what it can actually render. `GET /video/capabilities`
 (through the generic BFF, `useVideoCapabilities`) narrows the mode, model,
 resolution, size, and language pickers to the selected mode, and

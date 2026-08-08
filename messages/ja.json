@@ -563,6 +563,10 @@
         "creditNote": "これがクレジットを使用する唯一のステップです。",
         "editTitle": "{label}を編集",
         "editFallbackTitle": "ショットを編集する",
+        "context": {
+          "angle": "切り口",
+          "audience": "視聴者"
+        },
         "shotLabels": {
           "hook": "フック",
           "hookLower": "フック",
@@ -577,6 +581,9 @@
         "locked": "ロックされています"
       },
       "shotCard": {
+        "spokenLine": "セリフ",
+        "visual": "映像の指定",
+        "noVisual": "映像の指定なし",
         "noSpokenLine": "セリフなし",
         "edit": "編集"
       },

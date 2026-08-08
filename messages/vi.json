@@ -563,6 +563,10 @@
         "creditNote": "Đây là bước duy nhất sử dụng tín dụng của bạn.",
         "editTitle": "Chỉnh sửa {label}",
         "editFallbackTitle": "Chỉnh sửa ảnh",
+        "context": {
+          "angle": "Góc tiếp cận",
+          "audience": "Đối tượng"
+        },
         "shotLabels": {
           "hook": "Móc",
           "hookLower": "cái móc",
@@ -577,6 +581,9 @@
         "locked": "Đã khóa"
       },
       "shotCard": {
+        "spokenLine": "Lời thoại",
+        "visual": "Mô tả hình ảnh",
+        "noVisual": "Chưa có mô tả hình ảnh",
         "noSpokenLine": "Không có lời thoại",
         "edit": "Chỉnh sửa"
       },

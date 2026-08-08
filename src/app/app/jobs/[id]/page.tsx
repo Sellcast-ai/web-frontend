@@ -23,7 +23,9 @@ import {
   Lock,
   Trash2,
   Image as ImageIcon,
+  Mic,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import {
   useVideoJob,
@@ -609,6 +611,9 @@ function StoryboardView({ job }: { job: VideoJob }) {
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
   const busy = approve.isPending || patch.isPending;
+  const hookAngle = draft.hook_angle?.trim() ?? "";
+  const audience = draft.audience?.trim() ?? "";
+  const hasContext = Boolean(hookAngle || audience);
 
   function editShot(i: number, patchShot: Partial<Shot>) {
     setDraft((d) =>
@@ -653,6 +658,27 @@ function StoryboardView({ job }: { job: VideoJob }) {
           until the worker has written the subject rows (image step), and on
           jobs that predate the feature. */}
       <SubjectStrip subjects={job.subjects} />
+
+      {hasContext && (
+        <div className="mt-5 grid gap-3 rounded-card border border-border bg-card p-4 shadow-soft sm:grid-cols-2">
+          {hookAngle && (
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                {t("context.angle")}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-ink">{hookAngle}</p>
+            </div>
+          )}
+          {audience && (
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                {t("context.audience")}
+              </p>
+              <p className="mt-1 text-sm font-semibold text-ink">{audience}</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* shot list — bottom padding reserves runway for the sticky bar (§overlap
           fix): it sits between the last card and the bar, not below the bar. */}
@@ -773,9 +799,41 @@ function SubjectCard({ subject }: { subject: SubjectLock }) {
   );
 }
 
+/** One shot line: an icon a sighted seller can tell apart at a glance plus the
+ *  same distinction spelled out for assistive tech, because Latin quote marks
+ *  are not a dialogue convention in every locale we ship. */
+function ShotLine({
+  icon: Icon,
+  label,
+  text,
+  emptyText,
+}: {
+  icon: LucideIcon;
+  label: string;
+  text: string;
+  emptyText: string;
+}) {
+  return (
+    <p className="mt-2 flex gap-1.5 text-sm leading-snug">
+      <Icon
+        aria-hidden="true"
+        className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground"
+      />
+      <span className="sr-only">{label}</span>
+      {text ? (
+        <span className="line-clamp-3 text-ink">{text}</span>
+      ) : (
+        <span className="italic text-muted-foreground">{emptyText}</span>
+      )}
+    </p>
+  );
+}
+
 /** Read-first shot card: an on-screen-text preview in the job's own output
- *  shape + the spoken line as a quote, with director metadata tucked into the
- *  tap-to-edit drawer. */
+ *  shape + the spoken line stacked above the visual plan, both at equal weight
+ *  (the line is what gets spoken and what the drawer can edit; the visual is
+ *  read-only, so it may not displace it), with director metadata tucked into
+ *  the tap-to-edit drawer. */
 function ShotCard({
   shot,
   label,
@@ -792,6 +850,8 @@ function ShotCard({
   const t = useTranslations("app.jobs.shotCard");
   const te = useTranslations("app.jobs.shotEditor");
   const nudges = shot.outcome_nudges ?? [];
+  const visual = shot.visual?.trim() ?? "";
+  const dialogue = shot.dialogue?.trim() ?? "";
   const hint =
     nudges.length > 0
       ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_KEYS[n]}`)).join(" · ")
@@ -830,15 +890,18 @@ function ShotCard({
         <span className="inline-flex w-fit items-center rounded-full bg-black/80 px-2.5 py-0.5 text-[11px] font-bold text-white">
           {label} · {shot.duration}s
         </span>
-        {shot.dialogue ? (
-          <p className="mt-2 line-clamp-3 text-sm leading-snug text-ink">
-            “{shot.dialogue}”
-          </p>
-        ) : (
-          <p className="mt-2 text-sm italic text-muted-foreground">
-            {t("noSpokenLine")}
-          </p>
-        )}
+        <ShotLine
+          icon={Mic}
+          label={t("spokenLine")}
+          text={dialogue}
+          emptyText={t("noSpokenLine")}
+        />
+        <ShotLine
+          icon={Eye}
+          label={t("visual")}
+          text={visual}
+          emptyText={t("noVisual")}
+        />
         <div className="mt-auto flex items-center gap-2 pt-2">
           {hint && (
             <span className="inline-flex min-w-0 items-center gap-1 text-xs text-muted-foreground">

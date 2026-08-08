@@ -176,6 +176,10 @@ function save(name: string, html: string) {
   }
 }
 
+// Rendering these two pages blows past the 5s default on a cold cache; scoped
+// to this file so a genuinely hung test elsewhere still fails in 5s.
+vi.setConfig({ testTimeout: 20_000 });
+
 // Modules import next/navigation at load time — import after vi.mock is set up.
 let StudioPage: React.ComponentType;
 let JobDetailPage: React.ComponentType;
@@ -503,11 +507,54 @@ describe("Job detail page renders extracted English copy", () => {
       "Here&#x27;s the plan for your video",
       "Approve &amp; make my video",
       "This is the only step that uses your credits.",
+      "Angle",
+      "Cafe-grade pour-over at home",
+      "Audience",
+      "Home baristas",
+      "Host lifts the kettle over the dripper",
+      "Close-up of the finished cup",
+      // screen readers must be told which line is spoken and which is seen -
+      // the icons alone say nothing, and quote marks are not a dialogue
+      // convention in every locale we ship
+      "Spoken line",
+      "Visual direction",
       "Locked in for every shot",
       "Locked",
     ]) {
       expect(text, `expected "${s}" in storyboard render`).toContain(s);
     }
+  });
+
+  it("shows dialogue verbatim and degrades missing visual context cleanly", () => {
+    // legacy payloads predate these fields, so they arrive missing, not empty
+    const storyboard = {
+      ...baseJob.storyboard!,
+      audience: undefined,
+      hook_angle: undefined,
+      shots: [
+        {
+          ...baseJob.storyboard!.shots[0],
+          visual: undefined,
+          dialogue: "(smiling) Try it now (today only).",
+        },
+      ],
+    } as unknown as NonNullable<VideoJob["storyboard"]>;
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "awaiting_storyboard",
+        storyboard,
+      }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-storyboard-legacy", html);
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("No visual direction");
+    // verbatim: the approval screen must match what PATCH/render/TTS consume
+    expect(text).toContain("(smiling) Try it now (today only).");
+    expect(text).not.toContain("Angle");
+    expect(text).not.toContain("Audience");
   });
 
   it("shows the completed-view strings from app.jobs.completed.*", () => {
