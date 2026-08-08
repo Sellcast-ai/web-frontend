@@ -89,7 +89,9 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 - [ ] Review a real storyboard on the job page → shot cards and the edit drawer show only the five plain-language taps. A raw key like `app.jobs.shotEditor.nudgeLabels.…` on screen means something bypassed `knownOutcomeNudges` (`src/lib/outcome-nudges.ts`); backend-generated nudges outside the canonical set are expected and must simply not render
 - [ ] Open Studio against a backend without `GET /video/capabilities` (or with it failing) → the mode, model, resolution, size and language pickers still show the full static lists and **Generate** still works. Capability data may only narrow those pickers, so a picker that came back empty or a blocked Generate with no unavailable mode selected is a bug, not a backend outage
 - [ ] Check My Videos management: `awaiting_storyboard` / `awaiting_review` jobs show under **Needs you**, `queued` / `submitted` / `in_progress` jobs under **On the way**, failed jobs under **Failed**, and deleting a job requires the permanent/no-refund confirmation before it disappears from the list.
-- [ ] Drain the credit meter (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`) → Studio disables **Generate** at zero remaining and says why, and a create the backend refuses shows the localized out-of-credits toast, never the backend's English refusal prose. "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
+- [ ] Open Studio and move the mode / model / duration / resolution / size pickers → a price ("up to N credits") sits beside the balance and re-quotes per configuration from `GET /video-jobs/quote`, which is read-only and charges nothing. A quote above the balance only *warns* and links to `/pricing`; **Generate** must stay enabled, because the quote is a ceiling and the backend charges the storyboard's shorter length. A slow, failed or model-mismatched quote shows no number and says whether it is still retrying or settled - a stale or invented price here is a bug. A mode capabilities report unavailable is not quoted at all
+- [ ] Open a job parked on **Needs you** with a storyboard → the approve bar quotes that job's own stored tuple (its `provider_model`, resolution, aspect ratio and duration) before approving spends. Approving must never be blocked by a missing price or by a shortfall, and a credit refusal there shows the localized out-of-credits toast and refreshes the usage meter
+- [ ] Drain the credit meter (`SELLCAST_FREE_TIER_CREDITS`) → Studio disables **Generate** at zero remaining and says why, and a create the backend refuses shows the localized out-of-credits toast, never the backend's English refusal prose. On the storyboard approve bar zero remaining swaps the button rather than killing it: **Save changes** when there are unsaved shot edits (the bar's PATCH is their only path to the server), **Get credits** when there is nothing to save. "See plans" → `/pricing` offers the signed-in user the "Billing isn't self-serve yet" dialog with a `mailto:` to `BILLING_EMAIL` (`src/lib/contact.ts`), **not** a signup link or a checkout
 - [ ] Open `/app/profile` on a free account → the usage card reads as a one-time credit grant, never "this month" / "resets"; only a plan literal in `RENEWING_PLANS` (`src/lib/api/types.ts`, mirroring the backend's `settings.plan_monthly_credits`) earns the monthly wording, and an unrecognised one claims neither
 - [ ] While signed in, browse the marketing pages → header and every CTA read "Open Studio"; opening `/signup` or `/login` directly redirects into the app
 - [ ] Paste the live URL into Slack/X → the Lumi share card renders (`/opengraph-image`), and the tab favicon is the Lumi mark, not the Next.js default. `metadataBase` resolves from `SITE_URL` (`src/lib/site-url.ts`), which defaults to the Vercel deployment origin - once a real domain is attached, set `NEXT_PUBLIC_SITE_URL` to it in Vercel (all environments) and redeploy, or the card URL keeps pointing at the old origin.
@@ -97,17 +99,24 @@ worker) → **Postgres** (prod) → **Cloudflare R2** (rendered media).
 ## Cost control (free beta)
 Each rendered video spends OpenAI + FAL credit, and shot regenerations during
 review spend 1 credit each from the same balance. The guardrail is the per-user
-cap (`SELLCAST_FREE_TIER_MONTHLY_VIDEOS`, default 10) enforced on
-`POST /video-jobs`. Lower it if you want a tighter budget. Set a hard spend cap
-on the OpenAI + FAL accounts as a backstop.
+credit grant (`SELLCAST_FREE_TIER_CREDITS`), metered on the backend at real
+render cost and refused on approval; `MAX_ACTIVE_JOBS_PER_USER` caps how many
+renders one user can have in flight. Lower the grant if you want a tighter
+budget. Set a hard spend cap on the OpenAI + FAL accounts as a backstop.
 
-**The backend credit lane is a launch prerequisite.** The web copy already
-states the 2026-08-01 credit model (credits track real render cost, decided by
-model, resolution and aspect ratio; the free grant is 300 credits one-time and
-never renews; paid plans are Creator 900 / Pro 3,000 / Scale 7,500 per month),
-while the deployed backend still meters rendered seconds under the cap above.
-That copy was approved as ahead-of-backend, so flipping the grant and the plan
-allowances happens before announcing, not after (credit section of `AGENTS.md`).
+**The free grant does not cover a render - resolve before announcing.** The
+backend now prices real render cost and the web app shows that price straight
+from `GET /video-jobs/quote`, but production grants 30 credits
+(`SELLCAST_FREE_TIER_CREDITS=30`) while the cheapest quote lands in the low
+hundreds, so a free signup's first **Generate** is priced far above their
+balance. The marketing copy still promises a free first video and a 300-credit
+grant (`marketing.pricing.tiers.free.*`, `landing.subtitle`, `heroFinePrint`,
+`pricingSubtitle`, `pricingFooter`, `finalCtaSubtitle`,
+`metadata.pricing.description`), in all nine locales. Either raise the grant or
+correct that copy everywhere at once - do not patch one surface or one locale.
+Confirm the plan allowances too (Creator 900 / Pro 3,000 / Scale 7,500 per
+month) match the backend's `settings.plan_monthly_credits` before announcing
+(credit section of `AGENTS.md`).
 
 ## When you're ready to charge (later)
 Add Stripe: a `plan` column on `users`, a checkout + webhook that sets the plan,

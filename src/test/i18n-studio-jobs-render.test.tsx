@@ -222,7 +222,9 @@ function save(name: string, html: string) {
   // are the real check, so never fail the test if the evidence dir is absent.
   try {
     fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
-    const doc = `<!doctype html><meta charset="utf-8"><title>${name}</title><body style="font-family:sans-serif;padding:24px">${html}</body>`;
+    // `app.css` is the app's own compiled stylesheet when a reviewer drops one
+    // beside the dumps; without it the page still opens, just unstyled.
+    const doc = `<!doctype html><meta charset="utf-8"><title>${name}</title><link rel="stylesheet" href="./app.css"><body style="padding:24px">${html}</body>`;
     fs.writeFileSync(path.join(EVIDENCE_DIR, `${name}.html`), doc);
   } catch {
     /* evidence dir unavailable (CI/other machine) — assertions still run */
@@ -665,6 +667,7 @@ describe("Studio page renders extracted English copy", () => {
       await studioWithFailedQuote(503),
       React.createElement(StudioPage),
     );
+    save("studio-price-retrying", html);
     expectUnpriced(html, "price unavailable, retrying");
   });
 
@@ -673,6 +676,7 @@ describe("Studio page renders extracted English copy", () => {
       await studioWithFailedQuote(404),
       React.createElement(StudioPage),
     );
+    save("studio-price-settled", html);
     expectUnpriced(html, "price unavailable");
     expect(html).not.toContain("retrying");
   });
@@ -1009,6 +1013,7 @@ describe("Job detail page renders extracted English copy", () => {
         });
     });
     const html = render(qc, React.createElement(JobDetailPage));
+    save(`jobs-storyboard-no-credits-${priced ? "priced" : "unpriced"}`, html);
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("You have no credits left, so approving won’t go through.");
@@ -1045,6 +1050,7 @@ describe("Job detail page renders extracted English copy", () => {
       });
     });
     const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-storyboard-price-withheld", html);
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).not.toContain("225");

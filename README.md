@@ -95,13 +95,24 @@ Studio behaving exactly like the old hardcoded constants, so Generate stays
 usable. The backend's own refusal remains the real gate.
 
 Credits track real render cost, so they never convert to seconds of video: what
-one render costs depends on its model, resolution, and aspect ratio. The free
-grant is 300 credits one-time at signup and does not renew; paid plans renew
-monthly, which is why the profile usage card swaps heading, summary, and
-exhausted notice together by plan (`RENEWING_PLANS` in `src/lib/api/types.ts`).
-Studio never prices a render itself - the only out-of-credits signals it trusts
-are a drained meter and the backend's own refusal. `AGENTS.md` holds the full
-copy rules these claims are bound to.
+one render costs depends on its mode, model, duration, resolution, and aspect
+ratio. The free grant is 30 credits one-time at signup and does not renew; paid
+plans renew monthly, which is why the profile usage card swaps heading, summary,
+and exhausted notice together by plan (`RENEWING_PLANS` in
+`src/lib/api/types.ts`).
+
+The web app never prices a render itself. The only price source is the backend's
+read-only quote endpoint (`GET /video-jobs/quote`, wired as `api.getVideoQuote` /
+`useVideoQuote` through the generic BFF); there is no local rate card. Studio
+shows the quote for the tuple it will submit beside the balance, and the
+storyboard approve bar quotes the job's own stored tuple, because approval is
+where a render is charged. Every displayed quote is a ceiling, so it reads "up
+to" and never gates anything: only a drained meter and the backend's own refusal
+stop a render. A slow or failed quote, or one the backend priced on a different
+model than the render will use, shows no number and says why (still retrying
+versus a settled answer, classified once in `src/lib/render-quote.ts`) rather
+than a stale or plausible-wrong price. `AGENTS.md` holds the full copy rules
+these claims are bound to.
 
 ## Localization
 
@@ -122,10 +133,10 @@ card, the shot editor, and the `PATCH /storyboard` payload all filter
 rest. API call failures should render through
 `apiErrorMessage(err, localizedFallback)`, not `ApiError.message`; bare 5xx body
 messages are treated as operator prose unless a structured `error_type` is
-present. Metered calls (video create, retry, shot regenerate) render through
-`renderFailureMessage` in `src/lib/api/hooks.ts`, which shows the localized
-out-of-credits copy for the credit meter's own refusal and falls through to
-`apiErrorMessage` for every other failure.
+present. Metered calls (video create, retry, shot regenerate, storyboard
+approval) render through `renderFailureMessage` in `src/lib/api/hooks.ts`, which
+shows the localized out-of-credits copy for the credit meter's own refusal and
+falls through to `apiErrorMessage` for every other failure.
 
 ## Deployment
 
