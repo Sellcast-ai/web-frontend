@@ -145,10 +145,9 @@ function stepForJob(job: VideoJob): JobProgressStepKey {
       return "review";
     case "awaiting_review":
       return "shots";
-    case "in_progress":
-      return "render";
     case "queued":
     case "submitted":
+    case "in_progress":
     case "failed":
       return stepFromArtifacts(job);
     default:

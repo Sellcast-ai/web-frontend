@@ -100,6 +100,24 @@ describe("jobProgressDisplay", () => {
     });
   });
 
+  it("never lets a claimed job name a stage its own artifacts contradict", () => {
+    expect(jobProgressDisplay(mk({ status: "in_progress" }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "writingScript",
+      workingTitleKey: "writingScript",
+      workingDescriptionKey: "scriptDescription",
+    });
+    expect(
+      jobProgressDisplay(mk({ status: "in_progress", storyboard: sb, beats: [pendingBeat] })),
+    ).toMatchObject({
+      stepIndex: SHOTS,
+      stepKey: "shots",
+      statusLabelKey: "buildingShots",
+      workingTitleKey: "buildingShots",
+      workingDescriptionKey: "shotsDescription",
+    });
+  });
+
   it("keeps a queued wait from claiming work is under way", () => {
     const waits = [
       mk({ status: "queued" }),
