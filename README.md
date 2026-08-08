@@ -73,6 +73,19 @@ refund credits; the job detail page confirms that before deleting. Videos outliv
 products, so the job page links to the source product when it still exists and
 shows a non-link "Product deleted" badge when the product fetch returns 404.
 
+Everything that names a job's stage comes from one place. `jobProgressDisplay`
+in `src/lib/job-progress.ts` returns the tracker step (Script, Review, Shots,
+Render, Ready, in backend order), the status-badge label, and the waiting
+screen's title and description together, so the badge, the tracker position, and
+the body copy cannot disagree. Only the three worker statuses (`queued`,
+`submitted`, `in_progress`) name a stage; the review gates, the terminal states,
+and any status the client does not know get neutral copy. `StatusBadge` takes
+the whole job, and its `compact` mode - used on the My Videos thumbnails, where
+the full stage sentence would wrap - shortens a claimed job to the tracker's own
+step label and a parked one to "Queued", while self-naming states keep saying so.
+The backend reports no queue position, so the waiting screen names a stage,
+never a position or an ETA.
+
 A render waits at the storyboard gate until the seller approves it, so the job
 detail page has to show what is about to be rendered. Above the shot list it
 shows the script's hook angle and audience, and only the ones the storyboard
@@ -109,8 +122,14 @@ Message catalogs live in `messages/*.json`; `messages/en.json` is the source of
 truth and all nine catalogs must keep the same key and placeholder structure.
 The non-English catalogs are seeded with `scripts/translate-messages.mjs`, whose
 `MANUAL_OVERRIDES` preserve hand-verified translations and money-surface copy
-that the machine translation has historically misread. Run the message parity
-tests after changing catalog keys.
+that the machine translation has historically misread. The script refuses to run
+while a pin names a key `en.json` no longer has, so rename pins along with their
+keys. A normal run is incremental: it only retranslates leaves whose English
+moved since the commit that last wrote that catalog, and keeps everything else.
+`--force` rebuilds a whole catalog from machine output and clobbers hand-refined
+strings, so use it only when seeding a locale from scratch. `AGENTS.md` explains
+where that incremental baseline errs stale. Run the message parity tests after
+changing catalog keys.
 
 Backend failure fields are not localized user copy. Failed video reasons and
 store-import failure toasts must go through `src/lib/failure-messages.ts`, which
