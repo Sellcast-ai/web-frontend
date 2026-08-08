@@ -547,6 +547,7 @@ describe("Job detail page renders extracted English copy", () => {
       }),
     );
     const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-storyboard-legacy", html);
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("No visual direction");
