@@ -327,6 +327,17 @@ function StudioInner() {
         : trimmedReferenceUrl
       : uploadedUrl ?? "";
   const referenceReady = activeReferenceUrl.length > 0;
+  // Every reason a render cannot start, in one place, so the button and the
+  // notice under it can never disagree: a warning that says "it may still go
+  // through" is only true while this is true. `create.isPending` is not one of
+  // them - that render is already on its way.
+  const canGenerate =
+    Boolean(product) &&
+    !atActiveCap &&
+    !noCredits &&
+    capabilityState.canSubmit &&
+    !linkInvalid &&
+    !referenceUploading;
 
   async function generate() {
     if (!productId || !capabilityState.canSubmit || linkInvalid || referenceUploading) return;
@@ -816,15 +827,7 @@ function StudioInner() {
               size="lg"
               className="mt-3 w-full"
               onClick={generate}
-              disabled={
-                create.isPending ||
-                !product ||
-                atActiveCap ||
-                noCredits ||
-                !capabilityState.canSubmit ||
-                linkInvalid ||
-                referenceUploading
-              }
+              disabled={create.isPending || !canGenerate}
             >
               {create.isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -859,25 +862,33 @@ function StudioInner() {
                 warns and names the gap the user can act on ("up to 225, you
                 have 30") instead of restating the balance they can already read
                 above - a warning, not a refusal, since the backend may well
-                charge less than the ceiling. Everything else falls to the gated
-                balance, which owns the case Generate is actually dead in:
-                "it may still go through" beside a dead button is the one thing
-                this must never read as. (`affordability` only answers "short"
-                with a quote in hand, so the ceiling branch always has its
-                number; the check is what types it, not what decides it.) */}
-            {(canAfford === "short" || outOfQuota) && usage && (
-              <p className="mt-2 text-center text-xs text-muted-foreground">
-                {!outOfQuota && cost !== undefined
-                  ? t("costMayExceed", { cost, remaining: usage.remaining })
-                  : t("outOfQuota", {
-                      remaining: usage.remaining,
-                      limit: usage.limit,
-                    })}{" "}
-                <Link href="/pricing" className="font-semibold text-brand-700">
-                  {t("seePlans")}
-                </Link>
-              </p>
-            )}
+                charge less than the ceiling, so it is only shown while the
+                render can actually be started: "it may still go through" beside
+                a button dead for any other reason (the active-jobs cap, an
+                unavailable mode, an upload in flight) is the one thing this must
+                never read as, and that reason is the one the user needs to read
+                instead. Everything else falls to the gated balance.
+                (`affordability` only answers "short" with a quote in hand, so
+                the ceiling branch always has its number; the check is what types
+                it, not what decides it.) The wrapper is a permanent live region:
+                the money warning appears and disappears as the pickers move, and
+                an element that only enters the DOM when it applies is announced
+                unreliably. */}
+            <div aria-live="polite">
+              {((canAfford === "short" && canGenerate) || outOfQuota) && usage && (
+                <p className="mt-2 text-center text-xs text-muted-foreground">
+                  {!outOfQuota && cost !== undefined
+                    ? t("costMayExceed", { cost, remaining: usage.remaining })
+                    : t("outOfQuota", {
+                        remaining: usage.remaining,
+                        limit: usage.limit,
+                      })}{" "}
+                  <Link href="/pricing" className="font-semibold text-brand-700">
+                    {t("seePlans")}
+                  </Link>
+                </p>
+              )}
+            </div>
           </div>
         </aside>
       </div>

@@ -679,6 +679,32 @@ describe("Studio page renders extracted English copy", () => {
     expect(text).not.toContain("Not enough credits for this video");
   });
 
+  // The ceiling warning promises the render "may still go through", so it may
+  // only appear beside a live button. At the active-jobs cap Generate is dead
+  // for a reason of its own, and that reason is what the user needs to read.
+  it("withholds the ceiling warning when Generate is dead for another reason", () => {
+    const qc = studioClient((c) => {
+      c.setQueryData(["usage"], { ...usage, limit: 30, used: 0, remaining: 30 });
+      c.setQueryData(defaultQuoteKey, { credits: 225 });
+      c.setQueryData(
+        qk.jobs({}),
+        ["a", "b", "c"].map((id) => ({
+          ...baseJob,
+          id,
+          status: "in_progress" as const,
+          storyboard: null,
+        })),
+      );
+    });
+    const html = render(qc, React.createElement(StudioPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(isDisabled(generateButtonTag(html))).toBe(true);
+    expect(text).not.toContain("This video could cost up to");
+    expect(text).not.toContain("it may still go through");
+    expect(text).toContain("You already have 3 videos in progress");
+  });
+
   // An empty meter is the one balance that still gates: zero is zero at any
   // price, so no ceiling can make it affordable.
   it("still refuses a render on an empty meter", () => {
