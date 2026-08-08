@@ -327,6 +327,7 @@
         "costNote": "Aprobar gasta hasta {cost} créditos.",
         "balanceNote": "Tienes {remaining}.",
         "shortfallNote": "Te faltan {shortfall} créditos. El cargo final suele ser menor, así que puede que igual se genere.",
+        "noCreditsNote": "No te quedan créditos, así que aprobar no se completará.",
         "seePlans": "Ver planes",
         "priceUnavailable": "No pudimos cargar el costo exacto ahora mismo, así que no se muestra. Seguimos intentándolo.",
         "priceNotQuotable": "No podemos calcular el costo exacto de este render, así que no se muestra.",

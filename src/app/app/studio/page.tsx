@@ -59,7 +59,7 @@ import { priceRange } from "@/lib/format";
 import { NEW_PRODUCT_HREF, PRODUCTS_HREF, STUDIO_HREF } from "@/lib/launch-routes";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { isOutOfCreditsError } from "@/lib/quota-error";
-import { affordability, isQuotable, priceUnknownReason } from "@/lib/render-quote";
+import { affordability, priceUnknownReason } from "@/lib/render-quote";
 import { cn } from "@/lib/utils";
 
 /** Mirrors the backend's MAX_ACTIVE_JOBS_PER_USER: past it, create 409s. The
@@ -282,11 +282,10 @@ function StudioInner() {
   // same classification the approve bar uses, so the two surfaces can't drift
   // into calling a re-polled 5xx and a settled 4xx the same thing. The
   // capability read is deliberately not in it - Studio degrades to the static
-  // pickers when it fails and still gets a real quote for them.
-  const costUnknown = priceUnknownReason(
-    [quote],
-    quoteParams !== null && !isQuotable(quoteParams),
-  );
+  // pickers when it fails and still gets a real quote for them. There is no
+  // unpriceable tuple to pass either: every field here is a typed literal, so
+  // `isQuotable` belongs to the job page, which builds its tuple from wire data.
+  const costUnknown = priceUnknownReason([quote]);
 
   // Three backend-metered signals, no client pricing: the quote against the
   // balance, an empty meter (zero is zero at any price, and it stands even with

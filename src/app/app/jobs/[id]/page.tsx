@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -589,11 +589,11 @@ function StoryboardView({ job }: { job: VideoJob }) {
   // instead would be the render's real price only by coincidence, and silently
   // wrong at the one click that spends.
   const capabilities = useVideoCapabilities();
-  const videoModel = videoModelKeyForProviderModel(
-    normalizeVideoCapabilities(capabilities.data),
-    job.mode,
-    job.provider_model,
+  const caps = useMemo(
+    () => normalizeVideoCapabilities(capabilities.data),
+    [capabilities.data],
   );
+  const videoModel = videoModelKeyForProviderModel(caps, job.mode, job.provider_model);
   // Nothing is quoted until that lookup has had its chance, so the bar can't
   // flash a default-priced number and then correct itself.
   const quoteParams = capabilities.isPending
@@ -628,6 +628,18 @@ function StoryboardView({ job }: { job: VideoJob }) {
     (quoteParams !== null && !isQuotable(quoteParams)) ||
       (quote.data !== undefined && cost === undefined),
   );
+  // What the balance means for this approve, split on how certain the outcome
+  // is rather than on how big the gap is. An empty meter is certain - zero is
+  // zero at any price, the backend refuses whatever the quote says and whether
+  // or not one landed - so it gets definite copy and never the ceiling's hedge.
+  // A non-empty balance under the quoted ceiling is genuinely uncertain, since
+  // the debit prices the storyboard's shorter post-overlap length, so that one
+  // keeps the hedge and stays a warning.
+  const noCredits = usage !== undefined && usage.remaining <= 0;
+  const shortfall =
+    usage !== undefined && !noCredits && cost !== undefined && cost > usage.remaining
+      ? cost - usage.remaining
+      : null;
   const patch = usePatchStoryboard(job.id, {
     saveError: tt("saveStoryboardEditsFailed"),
   });
@@ -794,23 +806,26 @@ function StoryboardView({ job }: { job: VideoJob }) {
               {/* Two independent sentences, so a missing usage read costs the
                   balance and not the price. */}
               {usage && ` ${t("balanceNote", { remaining: usage.remaining })}`}
-              {/* This is the click that actually spends, so a balance that
-                  can't cover the ceiling is named rather than left as two
-                  adjacent numbers to compare - with the gap, the same hedge
-                  Studio's ceiling warning carries (the debit is usually lower,
-                  so this is a warning and never a block), and the one route
-                  that resolves it. */}
-              {usage && usage.remaining < cost && (
-                <>
-                  {" "}
-                  <span className="font-semibold text-ink">
-                    {t("shortfallNote", { shortfall: cost - usage.remaining })}
-                  </span>{" "}
-                  <Link href="/pricing" className="font-semibold text-brand-700">
-                    {t("seePlans")}
-                  </Link>
-                </>
-              )}
+            </>
+          )}
+          {/* This is the click that actually spends, so a balance that can't
+              cover the render is named rather than left as two adjacent numbers
+              to compare, and always with the one route that resolves it. Which
+              sentence depends on how certain the refusal is: an empty meter
+              states it plainly, a gap under the ceiling keeps the same hedge
+              Studio's warning carries, because the debit is usually lower and
+              approving is never blocked here. */}
+          {(noCredits || shortfall !== null) && (
+            <>
+              {" "}
+              <span className="font-semibold text-ink">
+                {shortfall === null
+                  ? t("noCreditsNote")
+                  : t("shortfallNote", { shortfall })}
+              </span>{" "}
+              <Link href="/pricing" className="font-semibold text-brand-700">
+                {t("seePlans")}
+              </Link>
             </>
           )}
         </p>

@@ -68,6 +68,17 @@ describe.each([
     expect(options().refetchInterval(errored(socket))).toBe(60_000);
   });
 
+  // The two 4xx that are about timing, not about the request: the identical
+  // call comes good once the timeout or the rate limit passes, so treating them
+  // as settled would strand a price behind a momentary throttle for the life of
+  // the page.
+  it("keeps working at a 408 or a 429", () => {
+    for (const err of [new ApiError(408, "Request Timeout"), new ApiError(429, "Too Many Requests")]) {
+      expect(options().retry(0, err)).toBe(true);
+      expect(options().refetchInterval(errored(err))).toBe(60_000);
+    }
+  });
+
   it("polls only while errored", () => {
     expect(options().refetchInterval({ state: { status: "success", error: null } })).toBe(
       false,

@@ -637,6 +637,20 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn còn thiếu {shortfall} tín dụng. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
     th: "ยังขาดอีก {shortfall} เครดิต ค่าใช้จ่ายจริงมักน้อยกว่า จึงอาจสร้างได้อยู่",
   },
+  // The same gap when the meter is empty, where the outcome is certain: the
+  // backend refuses at zero whatever the quote says, so this one carries no
+  // hedge at all - the machine copies `shortfallNote`'s "may still go through"
+  // across and turns a refusal back into a maybe.
+  "app.jobs.storyboard.noCreditsNote": {
+    es: "No te quedan créditos, así que aprobar no se completará.",
+    zh: "你的积分已用完，因此确认不会生效。",
+    ja: "クレジットが残っていないため、承認しても実行されません。",
+    ko: "크레딧이 남아 있지 않아 승인해도 진행되지 않습니다.",
+    pt: "Você não tem créditos, então aprovar não vai funcionar.",
+    id: "Kredit Anda habis, jadi persetujuan tidak akan berjalan.",
+    vi: "Bạn đã hết tín dụng nên việc duyệt sẽ không chạy được.",
+    th: "เครดิตของคุณหมดแล้ว การอนุมัติจึงจะไม่ทำงาน",
+  },
   "app.jobs.storyboard.balanceNote": {
     es: "Tienes {remaining}.",
     zh: "你当前有 {remaining}。",

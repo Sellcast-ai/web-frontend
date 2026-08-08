@@ -572,6 +572,7 @@
         "costNote": "Duyệt sẽ dùng tối đa {cost} tín dụng.",
         "balanceNote": "Bạn đang có {remaining}.",
         "shortfallNote": "Bạn còn thiếu {shortfall} tín dụng. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
+        "noCreditsNote": "Bạn đã hết tín dụng nên việc duyệt sẽ không chạy được.",
         "seePlans": "Xem các gói",
         "priceUnavailable": "Hiện chưa tải được chi phí chính xác nên số này không được hiển thị. Chúng tôi vẫn đang thử lại.",
         "priceNotQuotable": "Chúng tôi không tính được chi phí chính xác cho lần dựng này nên số này không được hiển thị.",

@@ -55,9 +55,18 @@ export function apiErrorMessage(err: unknown, fallback: string): string {
  * isn't deployed (404), the tuple is refused (422) - and every repeat buys the
  * same answer; a 5xx, a dead socket or an unparseable body is the deployment
  * or the network, which recovers on its own. Retrying, polling and any copy
- * that says we are still trying all belong to the transient side only. */
+ * that says we are still trying all belong to the transient side only.
+ * The two 4xx exceptions are about timing rather than the request: 408 and 429
+ * are the edge saying "not now", and the identical call succeeds once the
+ * timeout or the rate limit passes. */
 export function isTransientError(err: unknown): boolean {
-  return !(err instanceof ApiError) || err.status < 400 || err.status >= 500;
+  return (
+    !(err instanceof ApiError) ||
+    err.status < 400 ||
+    err.status >= 500 ||
+    err.status === 408 ||
+    err.status === 429
+  );
 }
 
 type ErrorBody = {

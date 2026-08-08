@@ -958,6 +958,33 @@ describe("Job detail page renders extracted English copy", () => {
     expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(false);
   });
 
+  // Zero is zero at any price: the backend refuses this approve whatever the
+  // quote says, and whether or not one landed, so the hedge the ceiling warning
+  // carries would be a promise that cannot come true.
+  it.each([
+    { label: "with a price", priced: true },
+    { label: "with no price", priced: false },
+  ])("$label: an empty meter is stated as a refusal, not a maybe", ({ priced }) => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+      c.setQueryData(["usage"], { ...usage, used: usage.limit, remaining: 0 });
+      c.setQueryData(qk.videoCapabilities, jobCapabilities);
+      if (priced)
+        c.setQueryData(qk.quote(jobQuoteParams), {
+          credits: 225,
+          model_id: baseJob.provider_model,
+        });
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("You have no credits left, so approving won’t go through.");
+    expect(text).not.toContain("it may still go through");
+    expect(text).not.toContain("credits short");
+    // The refusal still names the action that clears it.
+    expect(html).toContain('href="/pricing"');
+  });
+
   // A price the backend worked out for some OTHER model is a plausible wrong
   // number at the one click that spends, which is worse than no number.
   it("withholds a price quoted on a model this job doesn't run", () => {

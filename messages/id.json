@@ -572,6 +572,7 @@
         "costNote": "Menyetujui akan memakai hingga {cost} kredit.",
         "balanceNote": "Kredit Anda {remaining}.",
         "shortfallNote": "Kurang {shortfall} kredit. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
+        "noCreditsNote": "Kredit Anda habis, jadi persetujuan tidak akan berjalan.",
         "seePlans": "Lihat paket",
         "priceUnavailable": "Kami tidak dapat memuat biaya pastinya saat ini, jadi angkanya tidak ditampilkan. Kami masih mencoba.",
         "priceNotQuotable": "Kami tidak bisa menghitung biaya pasti untuk render ini, jadi angkanya tidak ditampilkan.",

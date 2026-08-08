@@ -572,6 +572,7 @@
         "costNote": "승인하면 최대 {cost} 크레딧이 차감됩니다.",
         "balanceNote": "보유 크레딧은 {remaining}입니다.",
         "shortfallNote": "{shortfall} 크레딧이 부족합니다. 실제 차감은 보통 더 적어서 그대로 진행될 수도 있습니다.",
+        "noCreditsNote": "크레딧이 남아 있지 않아 승인해도 진행되지 않습니다.",
         "seePlans": "요금제 보기",
         "priceUnavailable": "지금은 정확한 비용을 불러올 수 없어 표시하지 않습니다. 계속 다시 시도하고 있습니다.",
         "priceNotQuotable": "이 렌더의 정확한 비용을 계산할 수 없어 표시하지 않습니다.",
