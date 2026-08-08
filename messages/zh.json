@@ -1,66 +1,112 @@
 {
+  "nav": {
+    "features": "特点",
+    "howItWorks": "它是如何运作的",
+    "models": "型号",
+    "pricing": "定价"
+  },
   "app": {
+    "nav": {
+      "products": "产品",
+      "stores": "店铺",
+      "avatars": "头像",
+      "videos": "视频",
+      "profile": "个人资料",
+      "newVideo": "新视频",
+      "new": "新",
+      "signedIn": "已登录",
+      "logOut": "退出"
+    },
     "toasts": {
-      "outOfCredits": "积分不足，无法完成这次渲染。",
-      "importSucceeded": "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
       "updateLikeFailed": "无法更新之类的。请再试一次。",
       "saveAvatarFailed": "无法保存头像。",
       "deleteAvatarFailed": "无法删除头像。",
       "startImportFailed": "无法开始导入。请再试一次。",
       "saveProductFailed": "无法保存产品。请再试一次。",
       "startVideoFailed": "无法启动视频。请再试一次。",
+      "outOfCredits": "积分不足，无法完成这次渲染。",
       "approveShotFailed": "无法批准拍摄。请再试一次。",
       "regenerateShotFailed": "无法重新生成镜头。请再试一次。",
       "approveStoryboardFailed": "无法批准故事板。请再试一次。",
       "saveStoryboardEditsFailed": "无法保存您的编辑。请再试一次。",
       "retryJobFailed": "无法重试该作业。请再试一次。",
       "saveDisplayNameFailed": "无法保存您的显示名称。请再试一次。",
-      "importPartial": "导入 {requested} 产品中的 {imported} - {失败，复数，其中一个 {# 无法读取} 其他 {# 无法读取}}。您可以通过粘贴每个链接来添加它们。",
-      "importOvershoot": "此导入超出了您选择的{requested,plural,一个{#产品}其他{#产品}}。 {imported,plural, one {# products} other {# products}} 已导入 - 检查“我的产品”是否有任何您未选择的内容。",
-      "importIgnoredSelection": "此导入未遵循您选择的{requested,plural,one{#product}other{#product}} - {imported,plural,one{#product}other{#product}}已导入并且{failed,plural,one{#more无法读取}other{#more无法读取}}。检查“我的产品”中是否有您未选择的任何内容。",
+      "importPartial": "已导入 {requested} 件商品中的 {imported} 件 - {failed, plural, one {# 件无法读取} other {# 件无法读取}}。你可以逐个粘贴链接添加这些商品。",
+      "importOvershoot": "这次导入超出了你选择的 {requested, plural, one {# 件} other {# 件}} 商品。已导入 {imported, plural, one {# 件} other {# 件}}。请在“我的商品”中查看你没有选择的商品。",
+      "importIgnoredSelection": "这次导入没有只处理你选择的 {requested, plural, one {# 件} other {# 件}} 商品：已导入 {imported, plural, one {# 件} other {# 件}}，另有 {failed, plural, one {# 件无法读取} other {# 件无法读取}}。请在“我的商品”中查看你没有选择的商品。",
+      "importSucceeded": "已从你的商店导入 {count, plural, one {# 件商品} other {# 件商品}}。",
       "importFailed": "导入没有完成。请再试一次。",
       "storyboardSaved": "故事板已保存。",
       "markedPosted": "标记为已发布。",
       "recordPostedFailed": "无法记录下来。请再试一次。",
-      "listCandidatesFailed": "无法读取该商店的产品列表。请再试一次。",
-      "readLinkFailed": "无法读取该产品链接。请再试一次。",
-      "previewStoreFailed": "无法读取该商店。请检查地址并重试。",
-      "importNone": "{requested, multiple, one {# products} other {# products}} 均无法导入。请再试一次。",
+      "listCandidatesFailed": "无法读取该商店的商品列表。请重试。",
+      "readLinkFailed": "无法读取该商品链接。请重试。",
+      "previewStoreFailed": "无法读取该商店。请检查地址后重试。",
+      "importNone": "{requested, plural, one {该 # 件商品} other {这 # 件商品}}都无法导入。请重试。",
       "importFailedReasons": {
-        "workerRestart": "导入因我们这边的重启而中断。到目前为止导入的所有内容均已保存 - 请重试。",
-        "rateLimitedSaved": "该商店目前不允许自动读取目录。我们保存了到目前为止导入的所有内容 - 请尝试在几分钟后重新导入。",
-        "rateLimited": "该商店现在限制目录读取速率。请几分钟后重试。",
-        "botWall": "该商店现在正在阻止自动目录读取。请稍后重试。",
-        "catalogUnreachable": "我们现在无法找到该商店的目录。请稍后重试。",
-        "storeUnsupported": "我们无法读取该商店的公共产品目录。这适用于具有公共产品数据的 Shopify 和 WooCommerce 商店。您仍然可以通过粘贴每个产品链接一次添加一个产品。",
-        "notShopify": "我们无法读取该商店的公共产品目录。这适用于具有公共产品数据的 Shopify 商店。您仍然可以通过粘贴每个产品链接一次添加一个产品。",
-        "notWoocommerce": "我们无法从该商店读取公共 WooCommerce 产品目录。您仍然可以通过粘贴每个产品链接一次添加一个产品。",
-        "selectionMissing": "我们无法导入您选择的某些产品 - 它们可能不再在此商店中。",
-        "catalogCap": "仅导入了部分目录，因为该商店超出了目录上限。请联系我们导入更大的目录。",
-        "productsUnreadable": "我们发现有些产品无法进口。您可以通过粘贴每个链接来添加它们。"
+        "workerRestart": "导入因我们这边的重启而中断。已导入的内容都已保存 - 请重试。",
+        "rateLimitedSaved": "该商店目前不允许自动读取商品目录。我们已保存目前导入的所有内容 - 请几分钟后重新导入。",
+        "rateLimited": "该商店目前正在限制目录读取频率。请几分钟后重试。",
+        "botWall": "该商店目前正在阻止自动读取目录。请稍后重试。",
+        "catalogUnreachable": "我们目前无法访问该商店的目录。请稍后重试。",
+        "storeUnsupported": "我们无法读取该商店的公开商品目录。此功能适用于具有公开商品数据的 Shopify 和 WooCommerce 商店。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "notShopify": "我们无法读取该商店的公开商品目录。此功能适用于具有公开商品数据的 Shopify 商店。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "notWoocommerce": "我们无法读取该商店的公开 WooCommerce 商品目录。你仍然可以通过逐个粘贴商品链接来添加商品。",
+        "selectionMissing": "你选择的部分商品无法导入 - 它们可能已从该商店下架。",
+        "catalogCap": "由于该商店超出目录上限，只导入了部分目录。如需导入更大的目录，请联系我们。",
+        "productsUnreadable": "我们找到的部分商品无法导入。你可以通过逐个粘贴链接来添加它们。"
       },
       "videoDeleted": "视频已删除。",
-      "deleteVideoFailed": "无法删除视频。请再试一次。"
+      "deleteVideoFailed": "删除视频失败，请重试。"
+    },
+    "categories": {
+      "beautyPersonalCare": "美容及个人护理",
+      "healthWellness": "健康与保健",
+      "womensFashion": "女装时尚",
+      "sportsOutdoors": "运动与户外",
+      "homeTextiles": "家用纺织品",
+      "householdEssentials": "家居必需品",
+      "mobileElectronics": "移动及电子产品",
+      "foodBeverage": "食品及饮料",
+      "mensFashion": "男士时尚",
+      "toysHobbies": "玩具和爱好"
+    },
+    "platforms": {
+      "amazon": "Amazon",
+      "shopee": "虾皮",
+      "tiktokShop": "TikTok 店铺",
+      "walmart": "沃尔玛",
+      "lazada": "来赞达",
+      "aliexpress": "速卖通",
+      "temu": "特姆",
+      "alibaba": "阿里巴巴",
+      "taobao": "淘宝",
+      "mercadolibre": "自由市场",
+      "etsy": "埃特西",
+      "ebay": "易趣",
+      "shopify": "Shopify",
+      "generic": "网上商店",
+      "manual": "手册"
     },
     "connections": {
+      "title": "店铺",
       "subtitle": "授权 Lumi 访问你的商店。",
+      "connectHeading": "连接店铺",
       "connectNotice": "连接会授权 Lumi 访问你的商店，但目前还不会自动导入商品。你可以<link>在“商品”页面导入你的商品目录</link>。",
-      "connectedBanner": "{shop} 已授权将其商品目录分享给 Lumi。自动导入商品功能尚未上线。",
-      "title": "商店",
-      "connectHeading": "连接商店",
-      "yourStores": "您的商店",
-      "listUnavailable": "目前尚不支持查看和删除现有连接 - 商店连接 API 目前仅支持连接。您连接的商店处于活动状态，尽管尚未在此处显示。",
-      "notAvailableYet": "尚不可用",
-      "checkingAvailability": "正在检查可用性...",
-      "shopifyUnavailable": "Shopify 连接目前不可用。请稍后重试。",
+      "yourStores": "我的店铺",
+      "listUnavailable": "暂时还无法查看和移除已有的连接——店铺连接 API 目前仅支持连接操作。你已连接的店铺会保持生效，只是暂时无法显示在这里。",
+      "notAvailableYet": "暂未开放",
+      "checkingAvailability": "正在检查可用性…",
+      "shopifyUnavailable": "Shopify 连接暂时不可用，请稍后再试。",
       "shopDomainLabel": "店铺域名",
       "shopDomainPlaceholder": "your-store.myshopify.com",
       "connect": "连接",
-      "dismiss": "解雇",
+      "dismiss": "关闭",
+      "connectedBanner": "{shop} 已授权将其商品目录分享给 Lumi。自动导入商品功能尚未上线。",
       "errors": {
-        "invalid-shop": "输入您商店的 .myshopify.com 域（例如 your-store.myshopify.com）。",
-        "unavailable": "Shopify 连接目前不可用。请稍后重试。",
-        "failed": "连接未完成。请再试一次。"
+        "invalid-shop": "请输入店铺的 .myshopify.com 域名（例如 your-store.myshopify.com）。",
+        "unavailable": "Shopify 连接暂时不可用，请稍后再试。",
+        "failed": "连接未完成，请重试。"
       },
       "platforms": {
         "shopify": {
@@ -70,15 +116,15 @@
           "name": "WooCommerce"
         },
         "tiktokShop": {
-          "name": "TikTok 店铺"
+          "name": "TikTok Shop"
         }
       }
     },
     "productCard": {
-      "commissionShort": "佣金 {rate}",
       "save": "保存",
       "unsave": "取消保存",
       "productFallback": "产品展示",
+      "commissionShort": "佣金 {rate}",
       "soldPerMonth": "{count} 已售/月",
       "creators": "{count} 创作者",
       "source": {
@@ -99,12 +145,43 @@
         "manual": "由您添加"
       }
     },
+    "videoPresets": {
+      "styles": {
+        "avatarTalkingIntro": "谈话简介",
+        "avatarDemoExplainer": "演示讲解器",
+        "avatarTestimonial": "感言",
+        "avatarHostProduct": "主机+产品",
+        "productCleanShowcase": "干净的展示柜",
+        "productFeatureHighlights": "功能亮点",
+        "productUnboxing": "拆箱",
+        "productOfferFocused": "专注于报价"
+      }
+    },
+    "products": {
+      "title": "我的产品",
+      "subtitle": "你的私有商品目录：导入店铺、粘贴商品链接，或手动添加商品。",
+      "addProduct": "添加产品",
+      "pastePlaceholder": "粘贴产品链接 - Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify 或任何商店",
+      "readLink": "阅读链接",
+      "storeImportTitle": "导入整个店铺",
+      "storeImportDescription": "粘贴你的店铺网址，预览目录，选择想要的商品，并导入到“我的产品”。",
+      "storeImportCta": "导入店铺",
+      "emptyTitle": "还没有产品",
+      "emptyDescription": "导入你的店铺、粘贴上方的商品链接，或手动添加商品，然后在 Studio 中将其转换为视频。",
+      "loadErrorTitle": "无法加载你的产品",
+      "loadErrorDescription": "这不是空的商品目录，只是列表加载失败。你的产品仍在，请稍后重试。",
+      "offlineTitle": "你当前处于离线状态",
+      "offlineDescription": "这不是空目录，我们暂时无法获取你的商品。请重新联网后再试。",
+      "refreshError": "无法刷新你的产品 - 正在显示上一次加载的列表。",
+      "retry": "重试",
+      "waitingForConnection": "等待网络连接"
+    },
     "productDetail": {
-      "mom": "环比 {percent}",
       "notFound": "未找到产品。",
       "productFallback": "产品展示",
       "save": "保存",
       "unsave": "取消保存",
+      "mom": "环比 {percent}",
       "byShop": "通过 {shop}",
       "commission": "{rate} 佣金",
       "creatorHook": "创作者钩子",
@@ -118,25 +195,100 @@
       "backToProducts": "返回产品",
       "products": "我的产品"
     },
+    "videos": {
+      "title": "我的视频",
+      "subtitle": "您使用 Lumi 生成的所有内容。",
+      "newVideo": "新视频",
+      "videoFallback": "视频",
+      "loadMore": "加载更早的视频",
+      "loadError": {
+        "title": "无法加载视频",
+        "description": "我们无法加载你的视频。请重试。",
+        "action": "重试"
+      },
+      "pageLoadError": {
+        "title": "无法加载更早的视频",
+        "description": "我们无法加载更多视频。请重试。",
+        "action": "重试"
+      },
+      "empty": {
+        "title": "还没有视频",
+        "description": "选择你的一个产品，Lumi 会将其变成你的第一条让人停下滑动的视频。",
+        "startFirstVideo": "开始第一个视频"
+      },
+      "tabsLabel": "按状态筛选视频",
+      "tabs": {
+        "needsYou": "待你处理",
+        "onTheWay": "进行中",
+        "failed": "失败",
+        "success": "已完成"
+      },
+      "tabEmpty": {
+        "loadMore": "加载更早的视频",
+        "needsYou": {
+          "title": "暂无待处理事项",
+          "loadedTitle": "已加载的视频中没有待处理事项",
+          "loadedDescription": "更早的视频可能仍需要你处理。加载更多以继续检查。",
+          "description": "当视频暂停、等待你确认脚本或镜头时，会出现在这里。"
+        },
+        "onTheWay": {
+          "title": "暂无进行中的视频",
+          "loadedTitle": "已加载的视频中没有进行中的视频",
+          "loadedDescription": "更早的视频可能仍在排队或渲染。加载更多以继续检查。",
+          "description": "排队或渲染中的视频会显示在这里。"
+        },
+        "failed": {
+          "title": "没有失败的视频",
+          "loadedTitle": "已加载的视频中没有失败的视频",
+          "loadedDescription": "更早的视频可能有失败项。加载更多以继续检查。",
+          "description": "无法完成的视频会出现在这里，并可重试。"
+        },
+        "success": {
+          "title": "还没有完成的视频",
+          "loadedTitle": "已加载的视频中没有已完成的视频",
+          "loadedDescription": "更早的视频可能已经完成。加载更多以继续检查。",
+          "description": "完成的视频会显示在这里，可下载和发布。"
+        }
+      }
+    },
+    "avatars": {
+      "title": "头像",
+      "subtitle": "在 AI Avatar 视频中展示您的产品的面孔。上传您自己的角色，或选择一个数字角色。",
+      "yourAvatars": "你的头像",
+      "emptyYourAvatars": "还没有 - 上传上面的照片以在您的视频中使用特定的面孔。",
+      "digitalCharacters": "数字字符",
+      "digitalComingSoon": "一个现成的数字演示者库即将推出——您可以将一致的、经过许可的面孔放入任何视频中，而无需上传照片。",
+      "upload": {
+        "notImageError": "那不是图像。",
+        "tooLargeError": "图片位于{max}MB之上。",
+        "addPhoto": "添加照片",
+        "namePlaceholder": "为该头像命名（例如“Maya — 创始人”）",
+        "consent": "我有权在视频中使用这个人的肖像（是我，或者我得到了他们的许可）。",
+        "saveAvatar": "保存头像",
+        "clear": "清除"
+      },
+      "card": {
+        "deleteAvatar": "删除头像",
+        "deleteTitle": "删除这个头像？",
+        "deleteDescription": "“{name}”将从您的头像中删除。您已经用它制作的视频不受影响。",
+        "cancel": "取消",
+        "delete": "删除"
+      }
+    },
     "profile": {
+      "title": "公司简介",
+      "videosCreated": "已创建视频",
+      "readyToPublish": "准备发布",
+      "statsError": {
+        "description": "无法加载你的视频统计。",
+        "action": "重试"
+      },
       "thisMonth": "本月",
       "usageSummary": "已使用 {limit} 积分中的 {used} · {plan} 套餐 · {date} 重置",
       "creditNote": "积分对应真实渲染成本——确切费用取决于你选择的模型、分辨率和宽高比。",
       "creditsLeft": "剩余积分",
       "limitHit": "你本月的积分已用完。",
       "seePlans": "查看套餐",
-      "usageSummaryOneTime": "已使用 {limit} 积分中的 {used} · {plan} 套餐 · 一次性发放，不会续期",
-      "usageSummaryNeutral": "已使用 {limit} 积分中的 {used} · {plan} 套餐",
-      "creditsOneTime": "你的积分",
-      "limitHitOneTime": "你的免费积分已用完。",
-      "limitHitCredits": "你的积分已用完。",
-      "title": "公司简介",
-      "videosCreated": "已创建视频",
-      "readyToPublish": "准备发布",
-      "statsError": {
-        "description": "我们无法加载您的视频统计信息。",
-        "action": "再试一次"
-      },
       "forMore": "了解更多。",
       "displayName": "显示名称",
       "save": "保存",
@@ -144,45 +296,83 @@
       "connectedAccounts": "关联账户",
       "appearance": "外观",
       "appearanceDescription": "系统，浅色或深色 — 与 Lumi 应用程序匹配。",
-      "logOut": "退出"
+      "logOut": "退出",
+      "usageSummaryOneTime": "已使用 {limit} 积分中的 {used} · {plan} 套餐 · 一次性发放，不会续期",
+      "usageSummaryNeutral": "已使用 {limit} 积分中的 {used} · {plan} 套餐",
+      "creditsOneTime": "你的积分",
+      "limitHitOneTime": "你的免费积分已用完。",
+      "limitHitCredits": "你的积分已用完。"
+    },
+    "productsNew": {
+      "startTitle": "添加产品",
+      "startSubtitle": "导入店铺目录、粘贴一个商品链接，或手动添加商品。Lumi 会读取可用内容；任何内容渲染前都由你确认。",
+      "storePathTitle": "从你的店铺导入商品",
+      "storePathDescription": "粘贴店铺网址，预览目录，然后选择要保留的商品。",
+      "singleProductTitle": "读取一个商品链接",
+      "singleProductDescription": "粘贴 Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay 或其他店铺的商品页面。",
+      "manualPathTitle": "手动添加一个商品",
+      "productLinkPlaceholder": "https://... 产品链接",
+      "readLink": "阅读链接",
+      "addManuallyInstead": "改为手动添加 →",
+      "startManualEditor": "打开手动编辑器",
+      "startManualEditorDescription": "在编辑器中输入详情并添加照片，或从照片开始 - 将照片拖放到这里，或在下方选择。",
+      "startWithPhotos": "从照片开始",
+      "startOver": "重新开始",
+      "detailsTitle": "查看详情",
+      "detailsSubtitle": "这就是视频的基础——这里 10 秒可以避免糟糕的渲染。",
+      "removePhoto": "删除照片",
+      "addPhoto": "添加",
+      "saveAndMakeVideo": "保存并制作视频",
+      "needPhoto": "首先添加至少一张真实的产品照片。",
+      "upload": {
+        "notImageError": "{filename} 不是图像。",
+        "tooLargeError": "{filename} 超过 {max}MB。"
+      },
+      "fields": {
+        "title": "标题",
+        "titlePlaceholder": "产品名称",
+        "description": "描述",
+        "descriptionPlaceholder": "它是什么，它是给谁的，为什么它好——只有事实，剧本就是这样写的。",
+        "category": "类别",
+        "photos": "照片·{count} 入选",
+        "photosHint": "第一张选定的照片是视频围绕的英雄。取消勾选尺码表和横幅。将照片拖放到该网格中的任意位置。"
+      },
+      "storeImport": {
+        "importingTitle": "导入您的商店",
+        "importingProgress": "到目前为止，已导入 {found} 件商品中的 {upserted} 件 - 这一直在后台进行。",
+        "importingUnknown": "导入正在进行中，我们会在收到结果后立即显示数量。该过程会继续在后台运行。",
+        "wrappingUp": "总结一下……",
+        "importingLabel": "导入",
+        "importingLeave": "在导入进行时添加其他商品",
+        "alreadyImportingTitle": "已有一个店铺导入正在进行",
+        "alreadyImportingDescription": "同一时间只能导入一个店铺。请等待当前导入完成，然后再导入其他店铺。",
+        "showProgress": "查看导入进度",
+        "stopTracking": "停止跟踪此导入 - 导入仍会继续",
+        "previewFound": "我们从 {domain} 找到了 {count} 产品",
+        "chooseProducts": "选择商品",
+        "reviewTitle": "选择要从 {domain} 导入的商品",
+        "reviewSubtitle": "默认全部选中 - 取消勾选你不想加入账户的商品。",
+        "readingCatalog": "正在读取商店的商品列表…",
+        "retryReview": "重试",
+        "reviewTruncated": "这家商店的商品多于一次可列出的数量 - 你正在从前 {count} 件商品中选择。其余的可以逐个粘贴链接添加。",
+        "selectedCount": "已选 {selected} / {total}",
+        "selectAll": "全选",
+        "deselectAll": "全部取消",
+        "importSelected": "导入 {count, plural, one {# 件商品} other {# 件商品}}",
+        "untitledProduct": "未命名商品",
+        "reviewEmpty": "我们没能从这家商店列出任何商品。请尝试其他商店，或逐个粘贴链接来添加商品。",
+        "tryDifferentStore": "尝试不同的商店",
+        "placeholder": "your-store.myshopify.com - 下一步选择要导入的商品",
+        "preview": "预览"
+      }
     },
     "studio": {
-      "modes": {
-        "unavailable": "暂时不可用",
-        "unavailableNote": "{mode} 暂时不可用。请选择其他模式来生成。",
-        "unavailableAllNote": "目前没有可用的生成模式。请稍后再试。",
-        "aiAvatar": {
-          "label": "人工智能头像",
-          "blurb": "主持人对着镜头讲话。"
-        },
-        "productOnly": {
-          "label": "仅产品",
-          "blurb": "没有面孔——只有产品。"
-        }
-      },
-      "models": {
-        "seedance20Fast": {
-          "label": "Seedance 2.0 Fast",
-          "blurb": "更快 · 最高 720p"
-        },
-        "seedance20": {
-          "label": "Seedance 2.0",
-          "blurb": "最新·高达 1080p"
-        }
-      },
-      "optionUnavailable": {
-        "title": "此模式不支持",
-        "badge": "不适用"
-      },
-      "usageSummary": "剩余 {remaining}/{limit} 积分",
-      "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
-      "seePlans": "查看套餐",
       "title": "影音工作室",
       "subtitle": "Lumi 编写并渲染该产品的视频 — 设置方向。",
       "loading": "加载中...",
       "sections": {
         "vibe": "1·气氛如何？",
-        "reference": "2· 就这样吧",
+        "reference": "2·做成这种感觉",
         "mode": "3·模式",
         "presenter": "主持人",
         "duration": "4·持续时间",
@@ -216,26 +406,49 @@
       },
       "reference": {
         "linkTab": "粘贴链接",
-        "uploadTab": "已上传剪辑",
+        "uploadTab": "已上传片段",
         "linkLabel": "参考视频链接",
-        "uploadLabel": "上传的剪辑链接",
+        "uploadLabel": "已上传片段链接",
         "linkPlaceholder": "https://www.tiktok.com/@creator/video/...",
         "uploadPlaceholder": "https://cdn.example.com/reference.mp4",
-        "linkHelper": "Lumi 仅学习氛围和能量：产品的节奏和情绪，而不是原始镜头。",
-        "uploadHelper": "上传私人剪辑（MP4、MOV 或 WebM），最大 50MB。 Lumi 只学习氛围和能量，而不学习原始镜头。",
-        "invalidUrl": "粘贴支持的 TikTok 或社交视频链接。",
-        "invalidUpload": "输入直接 MP4、MOV 或 WebM 链接。",
+        "linkHelper": "Lumi 只学习氛围和能量：节奏与情绪会用于你的产品，不复制原视频镜头。",
+        "uploadHelper": "上传私人剪辑（MP4、MOV 或 WebM），最大 50MB。 Lumi 只学习氛围和能量，而不是原始镜头。",
+        "invalidUrl": "请粘贴受支持的 TikTok 或社交媒体视频链接。",
+        "invalidUpload": "请输入 MP4、MOV 或 WebM 的直接链接。",
         "uploadCta": "选择视频文件",
-        "uploadReplace": "更换",
-        "uploadRemove": "删除",
+        "uploadReplace": "替换",
+        "uploadRemove": "移除",
         "uploadTypeError": "选择 MP4、MOV 或 WebM 视频。",
         "uploadSizeError": "该剪辑超过了 50MB 限制。",
         "uploadFailed": "上传未完成。请再试一次。"
+      },
+      "modes": {
+        "aiAvatar": {
+          "label": "人工智能头像",
+          "blurb": "主持人对着镜头讲话。"
+        },
+        "productOnly": {
+          "label": "仅产品",
+          "blurb": "没有面孔——只有产品。"
+        },
+        "unavailable": "暂时不可用",
+        "unavailableNote": "{mode} 暂时不可用。请选择其他模式来生成。",
+        "unavailableAllNote": "目前没有可用的生成模式。请稍后再试。"
       },
       "presenter": {
         "auto": "汽车",
         "autoSublabel": "AI选择创造者",
         "manageAvatars": "管理头像 →"
+      },
+      "models": {
+        "seedance20": {
+          "label": "Seedance 2.0",
+          "blurb": "最新·高达 1080p"
+        },
+        "seedance20Fast": {
+          "label": "Seedance 2.0 Fast",
+          "blurb": "更快 · 最高 720p"
+        }
       },
       "resolutions": {
         "p480": {
@@ -256,6 +469,10 @@
         "comingSoonTitle": "即将推出",
         "soonBadge": "很快"
       },
+      "optionUnavailable": {
+        "title": "此模式不支持",
+        "badge": "不适用"
+      },
       "reviewDescription": "Lumi 将在花费任何内容之前向您展示故事板 - 在生成任何图像或视频之前对其进行审查和批准。",
       "summary": {
         "vibe": "氛围",
@@ -272,89 +489,39 @@
         "storyboard": "故事板"
       },
       "size": {
-        "avatarHint": "头部说话的输出可以调整其形状以适合演示者。"
+        "avatarHint": "数字人出镜的成片可能会调整画面比例以适配主播。"
       },
+      "usageSummary": "剩余 {remaining}/{limit} 积分",
       "generateVideo": "生成视频",
-      "generateUploading": "正在上传参考...",
+      "generateUploading": "正在上传参考…",
+      "outOfQuota": "积分不足，无法生成此视频（剩余 {remaining}/{limit}）。",
+      "seePlans": "查看套餐",
       "cap": {
-        "reached": "您已经有 {count} 正在进行中的视频（限制为 {limit}）。其中一个完成后，您可以生成一个新的。",
+        "reached": "你已有 {count} 个视频正在生成（上限 {limit} 个）。其中一个完成后，你就可以生成新视频。",
         "viewVideos": "我的视频"
       },
       "productError": {
-        "title": "该产品无法加载",
-        "description": "可能已被删除，或者链接错误。选择您的一款产品来开始视频。",
-        "action": "选择产品"
+        "title": "无法加载该商品",
+        "description": "该商品可能已被删除，或链接有误。请选择你的商品来开始制作视频。",
+        "action": "选择商品"
       },
       "productLoadError": {
-        "title": "产品无法加载",
-        "description": "我们无法加载该产品。稍后再试一次。",
-        "action": "再试一次"
+        "title": "无法加载商品",
+        "description": "我们无法加载此商品。请稍后重试。",
+        "action": "重试"
       },
       "pickProduct": {
         "title": "首先选择产品",
-        "description": "添加或选择您的一款产品，Lumi 会将其变成滚动停止的视频。",
+        "description": "添加或选择你的一个产品，Lumi 会将其变成让人停下滑动的视频。",
         "addProduct": "添加产品",
         "viewProducts": "查看产品"
       }
     },
     "jobs": {
-      "working": {
-        "queuedForScript": "正在等待编写脚本…",
-        "writingScript": "正在编写脚本…",
-        "queuedForShots": "正在等待制作镜头…",
-        "buildingShots": "正在制作镜头…",
-        "queuedForRender": "正在等待渲染视频…",
-        "renderingVideo": "正在渲染视频…",
-        "working": "正在处理你的视频…",
-        "queuedScriptDescription": "你的视频正在排队等待开始。在你批准分镜前不会开始渲染。",
-        "scriptDescription": "Lumi 正在撰写你的脚本。在你批准分镜前不会开始渲染。",
-        "queuedShotsDescription": "你的分镜已批准。此视频正在排队等待生成镜头参考图和渲染素材。",
-        "shotsDescription": "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材，每个镜头准备好后就会显示在这里。",
-        "queuedRenderDescription": "你批准的镜头正在排队等待渲染。",
-        "renderDescription": "你批准的镜头正在渲染成最终视频。",
-        "workingDescription": "此页面会自动更新，你可以离开后再回来。"
-      },
-      "review": {
-        "title": "检查你的镜头",
-        "description": "批准每个镜头，或重新生成你不喜欢的镜头。每个镜头获批后，Lumi 就会开始渲染。"
-      },
-      "completed": {
-        "description": "一条可发布的成片，配有口播音频。下载或标记为已发布，让你的数据保持整洁。",
-        "badge": "准备发布",
-        "title": "您的视频已准备好🎉",
-        "download": "下载",
-        "markPosted": "标记为已发布"
-      },
-      "failed": {
-        "reasons": {
-          "workerRestart": "我们的渲染系统重启后丢失了这个视频的进度。你的积分已退还 - 点击重试重新制作。",
-          "resumeInvalidScript": "这个视频无法从中断处继续。你的积分已退还 - 请重试。",
-          "productNotFound": "这个视频对应的商品已不存在。你的积分已退还。",
-          "providerUnavailable": "由于我们这边的问题，视频生成暂时不可用。你的积分已退还 - 请稍后重试。",
-          "renderStart": "我们无法启动视频渲染。你的积分已退还 - 请重试。",
-          "renderIncomplete": "一个或多个视频渲染未能完成。你的积分已退还 - 请重试。",
-          "assembling": "在合成这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
-          "finishing": "在完成这个视频的收尾时，我们这边出现了问题。你的积分已退还 - 请重试。",
-          "making": "在制作这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
-          "categoryUnsupported": "我们暂时还无法为这个商品类目制作视频。你的积分已退还。",
-          "scriptQuality": "我们无法为这个产品编写足够好的脚本。请重试，或调整产品详细信息。"
-        },
-        "title": "生成失败",
-        "fallbackMessage": "出了点问题。尝试再次创建它。",
-        "retry": "重试",
-        "startNewVideo": "开始一个新视频"
-      },
-      "delete": {
-        "description": "此操作将永久删除该视频，无法恢复，已消耗的积分不予退还。",
-        "button": "删除视频",
-        "title": "删除这个视频？",
-        "cancel": "取消",
-        "confirm": "永久删除"
-      },
       "backToVideos": "我的视频",
       "videoFallback": "你的视频",
       "styles": {
-        "avatarTalkingIntro": "谈话介绍",
+        "avatarTalkingIntro": "谈话简介",
         "avatarDemoExplainer": "演示讲解器",
         "avatarTestimonial": "感言",
         "avatarHostProduct": "主机+产品",
@@ -379,6 +546,26 @@
         "offer": "优惠",
         "cta": "计算机辅助技术协会",
         "shot": "射击{number}"
+      },
+      "working": {
+        "queuedForScript": "正在等待编写脚本…",
+        "writingScript": "正在编写脚本…",
+        "queuedForShots": "正在等待制作镜头…",
+        "buildingShots": "正在制作镜头…",
+        "queuedForRender": "正在等待渲染视频…",
+        "renderingVideo": "正在渲染视频…",
+        "working": "正在处理你的视频…",
+        "queuedScriptDescription": "你的视频正在排队等待开始。在你批准分镜前不会开始渲染。",
+        "scriptDescription": "Lumi 正在撰写你的脚本。在你批准分镜前不会开始渲染。",
+        "queuedShotsDescription": "你的分镜已批准。此视频正在排队等待生成镜头参考图和渲染素材。",
+        "shotsDescription": "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材，每个镜头准备好后就会显示在这里。",
+        "queuedRenderDescription": "你批准的镜头正在排队等待渲染。",
+        "renderDescription": "你批准的镜头正在渲染成最终视频。",
+        "workingDescription": "此页面会自动更新，你可以离开后再回来。"
+      },
+      "review": {
+        "title": "检查你的镜头",
+        "description": "批准每个镜头，或重新生成你不喜欢的镜头。每个镜头获批后，Lumi 就会开始渲染。"
       },
       "storyboard": {
         "context": {
@@ -423,7 +610,7 @@
         },
         "placeholders": {
           "dialogue": "这张照片没有台词",
-          "onScreenText": "屏幕上没有文字",
+          "onScreenText": "无屏幕文字",
           "nudgeNote": "用你自己的话描述一下",
           "technique": "让Lumi选择镜头"
         },
@@ -435,7 +622,7 @@
           "slowLingering": "缓慢而缠绵"
         },
         "proMode": "专业模式",
-        "proHint": "更改拍子或音符会重新导出此镜头。",
+        "proHint": "更改点选项或备注会重新生成此镜头。",
         "transitions": {
           "hardCut": "硬切",
           "dissolve": "溶解",
@@ -462,19 +649,52 @@
         "approve": "批准",
         "regenerate": "再生"
       },
+      "completed": {
+        "badge": "准备发布",
+        "title": "您的视频已准备好🎉",
+        "description": "一条可发布的成片，配有口播音频。下载或标记为已发布，让你的数据保持整洁。",
+        "download": "下载",
+        "markPosted": "标记为已发布"
+      },
+      "failed": {
+        "title": "生成失败",
+        "fallbackMessage": "出了点问题。尝试再次创建它。",
+        "reasons": {
+          "workerRestart": "我们的渲染系统重启后丢失了这个视频的进度。你的积分已退还 - 点击重试重新制作。",
+          "resumeInvalidScript": "这个视频无法从中断处继续。你的积分已退还 - 请重试。",
+          "productNotFound": "这个视频对应的商品已不存在。你的积分已退还。",
+          "providerUnavailable": "由于我们这边的问题，视频生成暂时不可用。你的积分已退还 - 请稍后重试。",
+          "renderStart": "我们无法启动视频渲染。你的积分已退还 - 请重试。",
+          "renderIncomplete": "一个或多个视频渲染未能完成。你的积分已退还 - 请重试。",
+          "assembling": "在合成这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
+          "finishing": "在完成这个视频的收尾时，我们这边出现了问题。你的积分已退还 - 请重试。",
+          "making": "在制作这个视频时，我们这边出现了问题。你的积分已退还 - 请重试。",
+          "categoryUnsupported": "我们暂时还无法为这个商品类目制作视频。你的积分已退还。",
+          "scriptQuality": "我们无法为这个商品写出足够好的脚本。请重试，或调整商品信息。"
+        },
+        "retry": "重试",
+        "startNewVideo": "开始一个新视频"
+      },
       "product": {
-        "view": "查看产品",
-        "deleted": "产品已删除"
+        "view": "查看商品",
+        "deleted": "商品已删除"
+      },
+      "delete": {
+        "button": "删除视频",
+        "title": "删除此视频？",
+        "description": "此操作将永久删除该视频，无法恢复，已消耗的积分不予退还。",
+        "cancel": "取消",
+        "confirm": "永久删除"
       },
       "notFound": {
         "title": "该视频已不存在",
-        "description": "它已被删除，或者链接指向不属于您的视频。您还拥有的所有内容都在“我的视频”中。",
+        "description": "它已被删除，或者这个链接指向的视频不属于你。你现有的视频都在“我的视频”中。",
         "action": "返回我的视频"
       },
       "loadError": {
-        "title": "视频无法加载",
-        "description": "我们无法加载该视频。再试一次。",
-        "action": "再试一次"
+        "title": "无法加载视频",
+        "description": "我们无法加载这个视频。请重试。",
+        "action": "重试"
       }
     },
     "format": {
@@ -482,221 +702,10 @@
       "minutesAgo": "{n}分钟前",
       "hoursAgo": "{n}小时前",
       "daysAgo": "{n}天前"
-    },
-    "nav": {
-      "products": "产品展示",
-      "stores": "商店",
-      "avatars": "头像",
-      "videos": "视频",
-      "profile": "公司简介",
-      "newVideo": "新视频",
-      "new": "新",
-      "signedIn": "已登录",
-      "logOut": "退出"
-    },
-    "categories": {
-      "beautyPersonalCare": "美容及个人护理",
-      "healthWellness": "健康与保健",
-      "womensFashion": "女装时尚",
-      "sportsOutdoors": "运动与户外",
-      "homeTextiles": "家用纺织品",
-      "householdEssentials": "家居必需品",
-      "mobileElectronics": "移动及电子产品",
-      "foodBeverage": "食品及饮料",
-      "mensFashion": "男士时尚",
-      "toysHobbies": "玩具和爱好"
-    },
-    "platforms": {
-      "amazon": "Amazon",
-      "shopee": "虾皮",
-      "tiktokShop": "TikTok 店铺",
-      "walmart": "沃尔玛",
-      "lazada": "来赞达",
-      "aliexpress": "速卖通",
-      "temu": "特姆",
-      "alibaba": "阿里巴巴",
-      "taobao": "淘宝",
-      "mercadolibre": "自由市场",
-      "etsy": "埃特西",
-      "ebay": "易趣",
-      "shopify": "Shopify",
-      "generic": "网上商店",
-      "manual": "手册"
-    },
-    "videoPresets": {
-      "styles": {
-        "avatarTalkingIntro": "谈话介绍",
-        "avatarDemoExplainer": "演示讲解器",
-        "avatarTestimonial": "感言",
-        "avatarHostProduct": "主机+产品",
-        "productCleanShowcase": "干净的展示柜",
-        "productFeatureHighlights": "功能亮点",
-        "productUnboxing": "拆箱",
-        "productOfferFocused": "专注于报价"
-      }
-    },
-    "products": {
-      "title": "我的产品",
-      "subtitle": "您的私人目录 - 导入商店、粘贴产品链接或手动添加。",
-      "addProduct": "添加产品",
-      "pastePlaceholder": "粘贴产品链接 - Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify 或任何商店",
-      "readLink": "阅读链接",
-      "storeImportTitle": "带来你的整个商店",
-      "storeImportDescription": "粘贴您的店面 URL 以预览目录，选择您想要的产品，然后将其导入到“我的产品”中。",
-      "storeImportCta": "进口店",
-      "emptyTitle": "还没有产品",
-      "emptyDescription": "导入您的商店，粘贴上面的产品链接，或手动添加一个 - 然后在 Studio 中将其转换为视频。",
-      "loadErrorTitle": "无法加载您的产品",
-      "loadErrorDescription": "这不是一个空目录 - 列表加载失败。你的产品还在；稍后再试。",
-      "offlineTitle": "你离线了",
-      "offlineDescription": "这不是一个空目录 - 我们现在无法找到您的产品。重新连接，然后重试。",
-      "refreshError": "无法刷新您的产品 - 显示我们上次加载的列表。",
-      "retry": "再试一次",
-      "waitingForConnection": "等待连接"
-    },
-    "videos": {
-      "title": "我的视频",
-      "subtitle": "您使用 Lumi 生成的所有内容。",
-      "newVideo": "新视频",
-      "videoFallback": "视频",
-      "loadMore": "加载旧视频",
-      "loadError": {
-        "title": "视频无法加载",
-        "description": "我们无法加载您的视频。再试一次。",
-        "action": "再试一次"
-      },
-      "pageLoadError": {
-        "title": "旧视频无法加载",
-        "description": "我们无法加载更多视频。再试一次。",
-        "action": "再试一次"
-      },
-      "empty": {
-        "title": "还没有视频",
-        "description": "选择您的一个产品，Lumi 会将其变成您的第一个滚动停止视频。",
-        "startFirstVideo": "开始第一个视频"
-      },
-      "tabsLabel": "按状态过滤视频",
-      "tabs": {
-        "needsYou": "需要你",
-        "onTheWay": "在路上",
-        "failed": "失败",
-        "success": "成功"
-      },
-      "tabEmpty": {
-        "loadMore": "加载旧视频",
-        "needsYou": {
-          "title": "没有什么需要你",
-          "loadedTitle": "没有加载任何内容需要你",
-          "loadedDescription": "较旧的视频可能仍然需要您。加载更多以继续检查。",
-          "description": "当视频因故事板或镜头批准而暂停时，它会在这里等待您。"
-        },
-        "onTheWay": {
-          "title": "路上什么都没有",
-          "loadedTitle": "没有装载任何东西在路上",
-          "loadedDescription": "较旧的视频可能仍在排队或渲染。加载更多以继续检查。",
-          "description": "排队或渲染的视频显示在此处。"
-        },
-        "failed": {
-          "title": "没有失败的视频",
-          "loadedTitle": "没有加载失败的视频",
-          "loadedDescription": "较旧的视频可能仍然失败。加载更多以继续检查。",
-          "description": "无法完成的视频落在此处，请重试。"
-        },
-        "success": {
-          "title": "还没有完成的视频",
-          "loadedTitle": "没有加载完成的视频",
-          "loadedDescription": "较旧的视频可能尚未完成。加载更多以继续检查。",
-          "description": "此处显示已完成的视频，可供下载和发布。"
-        }
-      }
-    },
-    "avatars": {
-      "title": "头像",
-      "subtitle": "在 AI Avatar 视频中展示您的产品的面孔。上传您自己的角色，或选择一个数字角色。",
-      "yourAvatars": "你的头像",
-      "emptyYourAvatars": "还没有 - 上传上面的照片以在您的视频中使用特定的面孔。",
-      "digitalCharacters": "数字字符",
-      "digitalComingSoon": "一个现成的数字演示者库即将推出——您可以将一致的、经过许可的面孔放入任何视频中，而无需上传照片。",
-      "upload": {
-        "notImageError": "那不是图像。",
-        "tooLargeError": "图片位于{max}MB之上。",
-        "addPhoto": "添加照片",
-        "namePlaceholder": "为该头像命名（例如“Maya — 创始人”）",
-        "consent": "我有权在视频中使用这个人的肖像（是我，或者我得到了他们的许可）。",
-        "saveAvatar": "保存头像",
-        "clear": "清除"
-      },
-      "card": {
-        "deleteAvatar": "删除头像",
-        "deleteTitle": "删除这个头像？",
-        "deleteDescription": "“{name}”将从您的头像中删除。您已经用它制作的视频不受影响。",
-        "cancel": "取消",
-        "delete": "删除"
-      }
-    },
-    "productsNew": {
-      "startTitle": "添加产品",
-      "startSubtitle": "导入商店目录、粘贴一个产品链接或手动添加产品。 Lumi 读取它可以读取的内容；您在渲染任何内容之前确认。",
-      "storePathTitle": "从您的商店导入产品",
-      "storePathDescription": "粘贴您的店面 URL，预览目录，然后选择要保留的产品。",
-      "singleProductTitle": "阅读一个产品链接",
-      "singleProductDescription": "粘贴来自 Amazon、Walmart、Shopee、Lazada、TikTok Shop、Etsy、Shopify、eBay 或其他商店的产品页面。",
-      "manualPathTitle": "手动添加一种产品",
-      "productLinkPlaceholder": "https://... 产品链接",
-      "readLink": "阅读链接",
-      "addManuallyInstead": "改为手动添加 →",
-      "startManualEditor": "打开手动编辑器",
-      "startManualEditorDescription": "自行输入详细信息并在编辑器中添加照片，或从照片开始 - 将它们放在此处或在下面选择它们。",
-      "startWithPhotos": "从照片开始",
-      "startOver": "重新开始",
-      "detailsTitle": "查看详情",
-      "detailsSubtitle": "这就是视频的基础——这里 10 秒可以避免糟糕的渲染。",
-      "removePhoto": "删除照片",
-      "addPhoto": "添加",
-      "saveAndMakeVideo": "保存并制作视频",
-      "needPhoto": "首先添加至少一张真实的产品照片。",
-      "upload": {
-        "notImageError": "{filename} 不是图像。",
-        "tooLargeError": "{filename} 超过 {max}MB。"
-      },
-      "fields": {
-        "title": "标题",
-        "titlePlaceholder": "产品名称",
-        "description": "描述",
-        "descriptionPlaceholder": "它是什么，它是给谁的，为什么它好——只有事实，剧本就是这样写的。",
-        "category": "类别",
-        "photos": "照片·{count} 入选",
-        "photosHint": "第一张选定的照片是视频围绕的英雄。取消勾选尺码表和横幅。将照片拖放到该网格中的任意位置。"
-      },
-      "storeImport": {
-        "importingTitle": "导入您的商店",
-        "importingProgress": "到目前为止，已导入 {upserted} 的 {found} 产品 - 这将在后台持续进行。",
-        "importingUnknown": "您的导入正在运行 - 我们将在收到回复后立即显示计数。它在后台继续进行。",
-        "wrappingUp": "总结一下……",
-        "importingLabel": "导入",
-        "importingLeave": "运行时添加其他内容",
-        "alreadyImportingTitle": "商店导入已在运行",
-        "alreadyImportingDescription": "一次只能运行一个商店导入。等待此完成，然后您可以导入另一家商店。",
-        "showProgress": "显示导入进度",
-        "stopTracking": "停止跟踪此导入 - 它继续运行",
-        "previewFound": "我们从 {domain} 找到了 {count} 产品",
-        "chooseProducts": "选择产品",
-        "reviewTitle": "选择从 {domain} 导入的内容",
-        "reviewSubtitle": "一切都开始选择 - 取消选中您帐户中不需要的任何内容。",
-        "readingCatalog": "阅读商店的产品列表...",
-        "retryReview": "再试一次",
-        "reviewTruncated": "这家商店的产品超出了我们一次列出的范围 - 您正在从第一批 {count} 产品中进行选择。其余的可以通过粘贴每个链接来添加。",
-        "selectedCount": "已选择 {selected} 中的 {total}",
-        "selectAll": "选择全部",
-        "deselectAll": "取消全选",
-        "importSelected": "导入{count,plural,一个{#产品}其他{#产品}}",
-        "untitledProduct": "无标题产品",
-        "reviewEmpty": "我们无法列出这家商店的任何产品。尝试不同的商店，或通过粘贴每个链接来添加产品。",
-        "tryDifferentStore": "尝试不同的商店",
-        "placeholder": "your-store.myshopify.com - 选择下一步的产品",
-        "preview": "预览"
-      }
     }
+  },
+  "languageSwitcher": {
+    "label": "语言"
   },
   "shared": {
     "status": {
@@ -709,9 +718,9 @@
       "reviewShots": "检查镜头",
       "queuedForRender": "等待渲染",
       "rendering": "正在渲染",
-      "working": "处理中",
-      "ready": "准备好",
-      "failed": "失败"
+      "ready": "准备好了",
+      "failed": "失败",
+      "working": "处理中"
     },
     "jobProgress": {
       "script": "脚本",
@@ -719,12 +728,6 @@
       "shots": "镜头",
       "render": "渲染",
       "ready": "完成"
-    },
-    "theme": {
-      "label": "主题",
-      "light": "浅色",
-      "system": "系统",
-      "dark": "深色"
     },
     "subjects": {
       "product": "产品展示",
@@ -753,14 +756,20 @@
     },
     "toaster": {
       "dismiss": "关闭通知"
+    },
+    "theme": {
+      "label": "主题",
+      "light": "浅色",
+      "system": "系统",
+      "dark": "深色"
     }
   },
   "auth": {
     "layout": {
-      "benefitReview": "渲染前审阅每个镜头",
-      "benefitPublish": "5 种宽高比适配各平台",
       "heroTitle": "从产品链接到滚动停止的视频 - 只需几分钟。",
-      "benefitScripts": "基于真实病毒模式的脚本"
+      "benefitScripts": "基于真实病毒模式的脚本",
+      "benefitReview": "渲染前审阅每个镜头",
+      "benefitPublish": "5 种宽高比适配各平台"
     },
     "metadata": {
       "signIn": "登录",
@@ -779,9 +788,9 @@
       "invalidPhone": "输入有效的电话号码。",
       "sendCode": "发送代码",
       "sendCodeFailed": "无法发送代码。",
-      "phoneUnavailable": "此网站不支持电话登录。继续使用 Google 开始。",
-      "phoneUnavailableHint": "尚未配置 SMS 传送。 Google 登录现已可用。",
-      "phoneUnavailableLabel": "电话不通",
+      "phoneUnavailable": "本站不支持手机号登录。请使用 Google 继续。",
+      "phoneUnavailableHint": "短信发送尚未配置。现在可以使用 Google 登录。",
+      "phoneUnavailableLabel": "手机不可用",
       "codePlaceholder": "6位数字代码",
       "verificationCodeLabel": "验证码",
       "devCodeAutofilled": "开发模式 — 代码 <code>{devCode}</code> 自动填充。",
@@ -794,526 +803,6 @@
     }
   },
   "marketing": {
-    "header": {
-      "startFreeMobile": "开始",
-      "signIn": "登录",
-      "startFree": "免费开始",
-      "openStudio": "开放工作室"
-    },
-    "footer": {
-      "columns": {
-        "workflow": {
-          "beatReview": "分镜审阅",
-          "title": "工作流程",
-          "linkToVideo": "视频链接",
-          "patternScripts": "模式脚本",
-          "publish": "发布"
-        },
-        "product": {
-          "title": "产品展示",
-          "features": "特点",
-          "models": "型号",
-          "pricing": "定价"
-        },
-        "company": {
-          "title": "公司简介",
-          "about": "关于",
-          "blog": "博客",
-          "careers": "职业机会",
-          "contact": "联系方式"
-        },
-        "legal": {
-          "title": "法律",
-          "privacy": "隐私",
-          "terms": "条款",
-          "refunds": "退款"
-        }
-      },
-      "tagline": "输入产品链接。输出准备发布的视频。以已经销售的模式为基础。",
-      "copyright": "© {year} Sellcast。 Lumi 是 Sellcast 产品。",
-      "madeFor": "专为那些更愿意销售而不是胶片的卖家而设计。",
-      "signIn": "登录"
-    },
-    "faq": {
-      "a3": "可以。你的脚本会以分镜的形式呈现，每个镜头都会先生成一张参考画面。满意的镜头直接通过，不满意的可以重新生成，每次 1 积分；只有在你确认之后，完整渲染才会消耗积分。",
-      "a4": "目前你的视频由 Seedance 2.0 渲染。Seedance 2.0 Fast 与 2.0 Mini 很快会加入 Studio 的选择器，Seedance 2.5 随后到来；上线后你的脚本和已确认的分镜都会照常沿用。",
-      "q1": "Lumi 与通用 AI 视频工具有何不同？",
-      "a1": "Lumi 没有猜到。在编写一行代码之前，它会研究产品类别中真实、有机的顶级表现的大量样本，并提取实际转换的结构模式 - 钩子、证明和 CTA 形状。您的脚本是基于该模式，而不是空白页。",
-      "q2": "我需要拍摄任何东西或在镜头前吗？",
-      "a2": "不会。Lumi 构建了一个干净的纯产品展示 - 它从您的产品中生成端到端的视觉效果和语音旁白，因此不需要拍摄任何内容。",
-      "q3": "我可以在视频完全渲染之前查看视频吗？",
-      "q4": "Lumi使用哪种视频模型？",
-      "q5": "产品数据从哪里来？",
-      "a5": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的链接 - 或上传您自己的产品照片 - Lumi 会读取标题、描述和图像以进行构建。您的产品对您保密。",
-      "q6": "一个视频需要多长时间？",
-      "a6": "Lumi 脚本、故事板和渲染，无需您拍摄或编辑 - 您可以开始制作并返回已完成、可发布的剪辑。某个类别的模式研究会被缓存，因此该类别中的后续视频启动速度更快。"
-    },
-    "pricing": {
-      "tiers": {
-        "free": {
-          "credits": "300 积分，一次性",
-          "features": [
-            "720p 导出 · 5 种宽高比",
-            "商品链接导入",
-            "分镜审阅",
-            "Lumi 水印"
-          ],
-          "name": "免费",
-          "note": "没有卡",
-          "allowance": "您的第一个视频免费",
-          "cta": "免费开始"
-        },
-        "creator": {
-          "credits": "900 积分 / 月",
-          "features": [
-            "无水印",
-            "分镜审阅",
-            "720p 导出 · 5 种宽高比"
-          ],
-          "name": "创作者",
-          "note": "每月",
-          "allowance": "≈ 3 个视频/月",
-          "cta": "启动创作者"
-        },
-        "pro": {
-          "credits": "3,000 积分 / 月",
-          "features": [
-            "包含创作者全部功能",
-            "更多积分，每个视频的费用相同",
-            "优先于免费渲染"
-          ],
-          "name": "专业版",
-          "note": "每月",
-          "allowance": "≈ 10 个视频/月",
-          "cta": "开始专业版"
-        },
-        "scale": {
-          "credits": "7,500 积分 / 月",
-          "name": "规模",
-          "note": "每月",
-          "allowance": "≈ 25 个视频/月",
-          "features": [
-            "专业版中的一切",
-            "用于始终在线发布",
-            "最高自助服务量"
-          ],
-          "cta": "开始规模"
-        },
-        "enterprise": {
-          "allowance": "定制积分额度",
-          "name": "企业",
-          "priceLabel": "我们来谈谈",
-          "note": "对于团队和机构",
-          "credits": "承诺批发价",
-          "features": [
-            "席位和角色",
-            "品牌套件",
-            "API访问",
-            "SSO 和专门支持"
-          ],
-          "cta": "联系销售人员"
-        }
-      },
-      "creditFootnote": "积分对应真实的渲染成本：每个视频的确切花费取决于你选择的模型、分辨率和宽高比。视频数量为估算值，基于 Seedance 2.0 720p 的 20 秒片段（每条 300 积分）。",
-      "included": [
-        "基于真实爆款规律的脚本",
-        "花费之前先审阅分镜",
-        "5 种宽高比适配各平台",
-        "粘贴任意商品链接或上传商品图片"
-      ],
-      "faq": {
-        "q1": "什么是积分？",
-        "a1": "积分对应视频的真实渲染成本。确切费用取决于你选择的模型、分辨率和宽高比——Seedance 2.0 720p 的 20 秒片段需 300 积分，更轻的设置花费更少。",
-        "a2": "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份积分余额。",
-        "a3": "付费套餐的积分会在每个计费周期开始时重置；注册赠送的免费积分为一次性发放，不会续期。目前尚不支持自助结账——如需升级到更高的月度额度，请发送邮件至 {address}，我们会为你设置。",
-        "a5": "目前 Studio 使用的渲染模型是 Seedance 2.0。更看重速度和成本的 Seedance 2.0 Fast 与 2.0 Mini 很快会加入选择器，Seedance 2.5 随后推出。",
-        "q2": "再生需要积分吗？",
-        "q3": "如果我的积分用完了怎么办？",
-        "q4": "我可以随时更改计划吗？",
-        "a4": "是的。在构建自助结帐的同时，计划更改将通过电子邮件处理 - 写信至 {address}。每年比每月节省约 20%。",
-        "q5": "Lumi 使用哪种渲染模型？"
-      },
-      "header": {
-        "kicker": "定价",
-        "title": "开始免费。缩放时",
-        "highlight": "它正在工作。",
-        "subtitle": "没有信用卡可以开始。随时取消。年度账单节省约 20%。"
-      },
-      "billing": {
-        "monthly": "每月",
-        "annual": "年度"
-      },
-      "mostPopular": "最受欢迎",
-      "perMonthYearly": "/mo · 按年计费",
-      "everyPlanIncludes": "每个计划都包括",
-      "billingQuestions": "计费问题",
-      "upgrade": {
-        "cta": "升级",
-        "title": "账单尚不支持自助服务",
-        "body": "在线结帐仍在建设中，因此尚无法在该网站上购买计划。要搬到 {plan}，请给我们发送电子邮件，我们将为您安排。",
-        "contact": "邮箱 {address}",
-        "subject": "升级至{plan}"
-      }
-    },
-    "landing": {
-      "heroSubtitle": "粘贴一个链接。Lumi 学习你所在品类爆款视频背后的规律，把脚本写成一个由镜头组成的分镜。逐个审阅并批准每个镜头——完整渲染只有在你点头后才会消耗积分。",
-      "heroFinePrint": "首个视频免费 · 无需银行卡 · 5 种宽高比",
-      "marquee": {
-        "seedance": "Seedance 2.0",
-        "review": "分镜审阅",
-        "ratio": "5 种宽高比",
-        "languages": "8种配音语言",
-        "productOnly": "仅产品模式",
-        "qa": "自动对话QA",
-        "vibes": "5 种标志性的氛围",
-        "sources": "Amazon · Shopee · TikTok 店铺",
-        "durations": "10–30 秒剪辑"
-      },
-      "why": {
-        "review": {
-          "body": "每个镜头都会先生成一张参考图。通过、微调或重新生成，直到满意为止——重新生成一次扣 1 积分，完整渲染只有在你点头之后才消耗积分。",
-          "caption": "您的电话，在渲染之前。",
-          "uiHeading": "故事板审查",
-          "uiSpend": "到目前为止已花费 0 美元",
-          "uiRegenerate": "再生"
-        },
-        "pattern": {
-          "body": "在编写一行代码之前，Lumi 会解构您所在类别中大约一百个表现最好的视频，并保留可转换的结构。",
-          "caption": "剧本是根据证据自己写的。",
-          "uiHeading": "模式提取",
-          "uiSample": "~100 个视频 · 美容",
-          "uiHook": "钩子——先声明",
-          "uiProof": "证明——证明它有效",
-          "uiOffer": "报价 — 明确询问"
-        },
-        "reach": {
-          "body": "五种共鸣，八种配音语言。相同的产品链接会传播到您销售的任何地方。",
-          "caption": "同时以八种语言进行销售。",
-          "uiVibe": "优质且干净"
-        }
-      },
-      "storySteps": {
-        "approve": {
-          "body": "每个镜头先出参考图。重新生成一次扣 1 积分；完整渲染和相应的扣费，都等你确认后才开始。",
-          "title": "您批准故事板"
-        },
-        "render": {
-          "body": "自动质检会逐句核对台词与脚本，成片即可按你选择的宽高比发布。",
-          "title": "Seedance 渲染它"
-        },
-        "link": {
-          "title": "从任意链接开始",
-          "body": "Amazon、Shopee、TikTok 商店或您自己的商店 - 或直接来自相机胶卷的照片。"
-        },
-        "learn": {
-          "title": "Lumi 学习模式",
-          "body": "它研究了大约一百个该类别中表现最好的视频，并提取了可转换的结构：吸引、证明、报价。"
-        }
-      },
-      "storyFact2": "积分对应真实渲染成本",
-      "wallSubtitle": "每个 Lumi 视频都配有真人感配音，并可按你选择的宽高比导出，脚本和声音会针对每个目标市场进行调整。",
-      "pricingSubtitle": "积分制：积分对应真实渲染成本，设置越轻花费越少。首个视频免费，无需银行卡。",
-      "pricingTiers": {
-        "creator": {
-          "features": [
-            "900 积分 — 约 3 个视频",
-            "无水印",
-            "分镜审阅"
-          ],
-          "name": "创作者",
-          "price": "29 美元",
-          "note": "/ 莫"
-        },
-        "pro": {
-          "features": [
-            "3,000 积分 — 约 10 个视频",
-            "包含 Creator 全部功能",
-            "优先渲染",
-            "720p 导出 · 5 种宽高比"
-          ],
-          "name": "专业版",
-          "price": "79 美元",
-          "note": "/ 莫"
-        },
-        "scale": {
-          "features": [
-            "7,500 积分 — 约 25 个视频",
-            "包含 Pro 全部功能",
-            "为持续日更打造"
-          ],
-          "name": "规模",
-          "price": "199 美元",
-          "note": "/ 莫"
-        }
-      },
-      "seePlans": "查看套餐",
-      "heroTitle": "将任何产品链接变成 <highlight> 销售的视频。</highlight>",
-      "heroPrimary": "创建您的第一个视频",
-      "heroSecondary": "看看它是如何工作的",
-      "sound": {
-        "unmute": "取消静音展示视频",
-        "mute": "将展示视频静音"
-      },
-      "pipeline": {
-        "stageLabel": "Lumi工作室",
-        "chipRatio": "9:16",
-        "chipModel": "Seedance 2.0",
-        "url": "yourstore.com/products/glow-serum-30ml",
-        "reading": "阅读产品",
-        "pattern": "从约 100 个美容领域的热门视频中学习",
-        "productName": "焕彩精华液 30 毫升",
-        "productMeta": "$24 · 美容",
-        "beats": {
-          "hook": {
-            "label": "钩子",
-            "line": "在第一秒停止滚动。"
-          },
-          "proof": {
-            "label": "证明",
-            "line": "显示血清确实起作用。"
-          },
-          "offer": {
-            "label": "优惠",
-            "line": "屏幕上的价格。明确询问。"
-          }
-        },
-        "approve": "批准",
-        "approved": "已批准",
-        "rendering": "使用Seedance 2.0渲染",
-        "rendered": "渲染的",
-        "shopNow": "立即购买"
-      },
-      "whyTitle": "建立在 <highlight> 已经运行的基础上 </highlight>",
-      "whySubtitle": "不是一张空白的画布。 Lumi 从您的类别已经奖励的模式开始，让您掌控每一帧。",
-      "storyTitle": "从产品链接<highlight>到直播视频</highlight>",
-      "storyFact1": "渲染支出为 0 美元，直至您批准",
-      "wallTitle": "每个类别，<highlight>每个市场</highlight>",
-      "wallAudience": "专为卖家、创作者、品牌和代理商（任何通过视频进行销售的人）而打造。",
-      "wall": {
-        "beauty": {
-          "category": "美容",
-          "vibe": "优质且干净"
-        },
-        "gadgets": {
-          "category": "小工具",
-          "vibe": "大胆而有力"
-        },
-        "home": {
-          "category": "家居和厨房",
-          "vibe": "干净的演示"
-        },
-        "pets": {
-          "category": "宠物",
-          "vibe": "有趣又快速"
-        },
-        "fashion": {
-          "category": "时尚",
-          "vibe": "舒适且个性化"
-        },
-        "fitness": {
-          "category": "健身",
-          "vibe": "大胆而有力"
-        }
-      },
-      "pricingTitle": "开始免费。 <highlight> 工作时缩放。</highlight>",
-      "mostPopular": "最受欢迎",
-      "pricingFooter": "您的 <signup> 第一个视频是免费的 </signup> — 无需卡。 <plans>比较所有计划→</plans>",
-      "faqTitle": "问题，<highlight>已回答</highlight>",
-      "finalCtaTitle": "您的下一个畅销书是 <highlight>one 链接。</highlight>",
-      "finalCtaSubtitle": "免费制作您的第一个视频。没有相机，没有编辑器，没有空白页。",
-      "finalCtaPrimary": "创建您的第一个视频",
-      "finalCtaSecondary": "查看定价"
-    },
-    "features": {
-      "rows": {
-        "scripts": {
-          "bullets": [
-            "从您所在类别中筛选出的有机获胜者中学习结构",
-            "钩子/证明/报价镜头，而不是照搬的执行",
-            "观众语言以那些表现最佳的人为模型"
-          ],
-          "kicker": "脚本",
-          "title": "基于模式的脚本",
-          "body": "在编写单词之前，Lumi 会研究产品类别中真实、有机的顶级表现的大量样本，并提取结构模式 - 实际转换的钩子、证明和 CTA 形状。您的脚本是在此基础上构建的，而不是空白页。"
-        },
-        "review": {
-          "title": "分镜审阅",
-          "body": "Lumi 把脚本写成由镜头组成的分镜，每个镜头先生成一张参考图。喜欢的镜头就通过，不满意的每个花 1 积分重新生成——只有你批准之后，完整渲染才会消耗积分。",
-          "bullets": [
-            "渲染之前每个镜头先生成参考图",
-            "单个镜头重新生成仅需 1 积分",
-            "完整渲染等待你的批准"
-          ],
-          "kicker": "控制"
-        },
-        "modes": {
-          "bullets": [
-            "4 种为电商调优的风格",
-            "10–30 秒时长，5 种宽高比"
-          ],
-          "kicker": "格式",
-          "title": "仅展示产品",
-          "body": "干净、以产品为主导的剪辑，无需演示者拍摄 - 四种现成的风格，涵盖清晰的展示镜头、功能标注、拆箱展示和以报价为中心的编辑。"
-        },
-        "qa": {
-          "body": "每个镜头渲染完成后，Whisper 都会转录台词并与脚本比对，标记偏差。配音永远说该说的话，不会出现脱稿的意外。",
-          "kicker": "品质",
-          "title": "自动对话QA",
-          "bullets": [
-            "在每条渲染线上进行耳语转录",
-            "分数与预期脚本的偏差",
-            "在发布之前捕捉脱稿音频"
-          ]
-        },
-        "publish": {
-          "body": "在 Studio 中从 5 种宽高比中选择——TikTok 和 Reels 用 9:16，另有 16:9、1:1、4:3 或 3:4——然后下载或标记为已发布，让你的数据保持整洁。",
-          "bullets": [
-            "可按 5 种宽高比导出，导出即可发布",
-            "在“我的视频”中跟踪已发布与草稿"
-          ],
-          "kicker": "船舶",
-          "title": "可发布的导出"
-        },
-        "linkToVideo": {
-          "kicker": "来源",
-          "title": "视频链接",
-          "body": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的产品链接 - 或上传照片。 Lumi 读取产品、角度和证明点，然后自动处理框架、脚本、语音和编辑。您的产品对您保密。",
-          "bullets": [
-            "任何链接 - Amazon、Shopee、TikTok 商店或您自己的商店",
-            "或者上传您自己的产品照片"
-          ]
-        }
-      },
-      "header": {
-        "kicker": "特点",
-        "title": "整个视频工作流程，",
-        "highlight": "处理。",
-        "subtitle": "从采购产品到准备发布的剪辑——无需将五种工具拼接在一起。"
-      },
-      "pipeline": {
-        "find": "查找",
-        "deconstruct": "解构",
-        "script": "脚本",
-        "generate": "生成"
-      }
-    },
-    "models": {
-      "header": {
-        "subtitle": "目前 Studio 使用 Seedance 2.0 渲染；系列中的其他模型上线后会陆续加入选择器，你的脚本始终可以沿用。",
-        "kicker": "型号",
-        "title": "一间工作室，前沿",
-        "highlight": "视频人工智能。"
-      },
-      "cards": {
-        "seedance": {
-          "tag": "已上线",
-          "desc": "旗舰模型——产品镜头中最逼真的动态效果，最高 1080p，并为每个镜头生成音频。",
-          "bestFor": [
-            "最高画质",
-            "最高 1080p",
-            "分镜音频"
-          ],
-          "name": "Seedance 2.0"
-        },
-        "fast": {
-          "name": "Seedance 2.0 Fast",
-          "tag": "即将推出",
-          "desc": "同系列的速度优化版——渲染更快、积分成本更低，最高 720p。很快就会加入选择器。",
-          "bestFor": [
-            "速度",
-            "更低成本",
-            "最高 720p"
-          ]
-        },
-        "mini": {
-          "name": "Seedance 2.0 Mini",
-          "tag": "即将推出",
-          "desc": "最轻量的一档——以每次渲染最低的积分成本打草稿、做迭代，最高 720p。很快就会加入选择器。",
-          "bestFor": [
-            "草稿",
-            "最低成本",
-            "最高 720p"
-          ]
-        },
-        "seedance25": {
-          "name": "Seedance 2.5",
-          "tag": "即将推出",
-          "desc": "新一代模型一旦在我们的渲染服务商上线，就会加入选择器。你的脚本和已批准的分镜无需重做，直接沿用。",
-          "bestFor": [
-            "路线图",
-            "无需重做"
-          ]
-        }
-      },
-      "points": {
-        "tuned": {
-          "title": "逐镜头调优",
-          "body": "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果，你无需折腾模型参数。"
-        },
-        "carriesOver": {
-          "body": "脚本和已批准的分镜与模型无关。新模型上线时，你的视频无需重做即可使用。",
-          "title": "你的工作继续进行"
-        },
-        "oneBill": {
-          "body": "无需处理单独的模型帐户或积分——一切都在 Lumi 内。",
-          "title": "一间工作室，一张账单"
-        }
-      },
-      "ctaTitle": "使用最好的模型进行渲染——无需繁琐的工作。"
-    },
-    "about": {
-      "intro2": "Lumi 走了一条不同的路。在动笔写脚本之前，它会研究你产品所在品类中大量真实的自然爆款，学习其中能促成转化的<em>结构</em>——然后完成脚本、分镜和渲染，你逐镜头审阅，几分钟即可发布。",
-      "values": {
-        "control": {
-          "body": "逐镜头审阅分镜。完整渲染只在你签字确认后才消耗积分。",
-          "title": "您一切尽在掌握"
-        },
-        "grounded": {
-          "title": "扎根，不猜测",
-          "body": "在生成事物之前，我们会从类别中实际转换的内容中学习。"
-        },
-        "quality": {
-          "title": "质量重于数量",
-          "body": "使滚动停止的原生感觉创意——而不是通用的人工智能填充物。"
-        },
-        "sellers": {
-          "title": "专为卖家打造",
-          "body": "专为那些更喜欢销售而不是电影的人而设计——从独立创作者到代理商。"
-        }
-      },
-      "header": {
-        "kicker": "关于",
-        "title": "我们帮助您通过视频进行销售 —",
-        "highlight": "没有工作室。",
-        "subtitle": "Lumi 是 Sellcast 产品。我们将任何产品变成一个滚动停止的购物视频，以已经获胜的产品为基础。"
-      },
-      "intro1": "现在，短视频已成为店面的主流，但大多数卖家没有时间拍摄、编辑和测试他们的获胜方式。通用人工智能工具用感觉像人工智能的内容填补了空白。",
-      "contact": "想谈论合作伙伴、媒体或企业吗？ <email>hello@sellcast.ai</email>"
-    },
-    "metadata": {
-      "features": {
-        "description": "Lumi 的全部功能——链接生成视频、基于真实规律的脚本、分镜审阅、纯产品形式、台词质检，以及可按 5 种宽高比导出成片。",
-        "title": "特点"
-      },
-      "models": {
-        "description": "目前 Studio 使用 Seedance 2.0 渲染，2.0 Fast、2.0 Mini 和 Seedance 2.5 将陆续加入选择器。每个镜头都会获得最佳渲染设置。",
-        "title": "型号"
-      },
-      "pricing": {
-        "description": "免费开始，见效再扩展。Lumi 采用积分制定价——积分对应真实渲染成本，设置越轻花费越少。免费版（首个视频）、Creator、Pro、Scale 和 Enterprise。开始无需信用卡；按年付省约 20%。",
-        "title": "定价"
-      },
-      "about": {
-        "title": "关于",
-        "description": "Lumi 是一款 Sellcast 产品，帮助卖家和创作者将产品转变为滚动停止的可购物视频 - 基于真实的病毒模式。"
-      },
-      "blog": {
-        "title": "博客"
-      },
-      "careers": {
-        "title": "职业机会"
-      }
-    },
     "legal": {
       "kicker": "法律",
       "lastUpdated": "最后更新时间：2026 年 6 月 1 日",
@@ -1337,14 +826,14 @@
         },
         "content": {
           "heading": "内容和所有权",
-          "yourHeading": "你的内容",
+          "yourHeading": "您的内容",
           "yourBody": "您保留对您提供的产品信息和资产的权利。您授予我们处理它们以提供服务的许可。",
           "outputHeading": "生成的输出",
           "outputBody": "根据这些条款和您的计划，您可以将您生成的视频用于商业目的。您有责任确保您的使用遵守适用的法律和平台政策。"
         },
         "billing": {
           "heading": "订阅和计费",
-          "body": "付费计划定期提前计费。您可以随时更改或取消；请参阅我们的 <refunds> 退款政策 </refunds> 了解详细信息。"
+          "body": "付费计划定期提前计费。您可以随时更改或取消；请参阅我们的 <refunds> 退款政策 </refunds> 了解详情。"
         },
         "disclaimers": {
           "heading": "免责声明",
@@ -1445,11 +934,507 @@
         }
       }
     },
+    "header": {
+      "signIn": "登录",
+      "startFree": "免费开始",
+      "openStudio": "打开 Studio",
+      "startFreeMobile": "开始"
+    },
+    "footer": {
+      "tagline": "商品链接进，成片视频出。一切都基于已经被验证能卖货的模式。",
+      "columns": {
+        "product": {
+          "title": "产品展示",
+          "features": "特点",
+          "models": "型号",
+          "pricing": "定价"
+        },
+        "workflow": {
+          "title": "工作流程",
+          "linkToVideo": "视频链接",
+          "patternScripts": "模式脚本",
+          "beatReview": "分镜审阅",
+          "publish": "发布"
+        },
+        "company": {
+          "title": "公司简介",
+          "about": "关于",
+          "blog": "博客",
+          "careers": "职业机会",
+          "contact": "联系方式"
+        },
+        "legal": {
+          "title": "法律",
+          "privacy": "隐私",
+          "terms": "条款",
+          "refunds": "退款"
+        }
+      },
+      "copyright": "© {year} Sellcast。 Lumi 是 Sellcast 产品。",
+      "madeFor": "专为那些更愿意销售而不是胶片的卖家而设计。",
+      "signIn": "登录"
+    },
     "cta": {
       "title": "您的下一本畅销书只需一个产品链接即可。",
       "subtitle": "让您的第一个滚动停止视频免费 - 没有相机，没有编辑器，没有空白页。",
       "primaryLabel": "开始免费创作",
       "seePricing": "查看定价"
+    },
+    "faq": {
+      "q1": "Lumi 与通用 AI 视频工具有何不同？",
+      "a1": "Lumi 没有猜到。在编写一行代码之前，它会研究产品类别中真实、有机的顶级表现的大量样本，并提取实际转换的结构模式 - 钩子、证明和 CTA 形状。您的脚本是基于该模式，而不是空白页。",
+      "q2": "我需要拍摄任何东西或在镜头前吗？",
+      "a2": "不需要。Lumi 生成纯商品展示视频——从你的商品出发，端到端生成画面和配音，无需拍摄。",
+      "q3": "我可以在视频完全渲染之前查看视频吗？",
+      "a3": "可以。你的脚本会以分镜的形式呈现，每个镜头都会先生成一张参考画面。满意的镜头直接通过，不满意的可以重新生成，每次 1 积分；只有在你确认之后，完整渲染才会消耗积分。",
+      "q4": "Lumi使用哪种视频模型？",
+      "a4": "目前你的视频由 Seedance 2.0 渲染。Seedance 2.0 Fast 与 2.0 Mini 很快会加入 Studio 的选择器，Seedance 2.5 随后到来；上线后你的脚本和已确认的分镜都会照常沿用。",
+      "q5": "产品数据从哪里来？",
+      "a5": "粘贴来自 Amazon、Shopee、TikTok Shop 或你自己店铺的链接，或者上传自己的产品照片，Lumi 会读取标题、描述和图像来生成内容。你的产品只对你可见。",
+      "q6": "一个视频需要多长时间？",
+      "a6": "Lumi 脚本、故事板和渲染，无需您拍摄或编辑 - 您可以开始制作并返回已完成、可发布的剪辑。某个类别的模式研究会被缓存，因此该类别中的后续视频启动速度更快。"
+    },
+    "pricing": {
+      "header": {
+        "kicker": "定价",
+        "title": "开始免费。缩放时",
+        "highlight": "它正在工作。",
+        "subtitle": "没有信用卡可以开始。随时取消。年度账单节省约 20%。"
+      },
+      "billing": {
+        "monthly": "每月",
+        "annual": "年度"
+      },
+      "mostPopular": "最受欢迎",
+      "perMonthYearly": "/mo · 按年计费",
+      "tiers": {
+        "free": {
+          "name": "免费",
+          "note": "没有卡",
+          "allowance": "您的第一个视频免费",
+          "credits": "300 积分，一次性",
+          "features": [
+            "720p 导出 · 5 种宽高比",
+            "商品链接导入",
+            "分镜审阅",
+            "Lumi 水印"
+          ],
+          "cta": "免费开始"
+        },
+        "creator": {
+          "name": "创作者",
+          "note": "每月",
+          "allowance": "≈ 3 个视频/月",
+          "credits": "900 积分 / 月",
+          "features": [
+            "无水印",
+            "分镜审阅",
+            "720p 导出 · 5 种宽高比"
+          ],
+          "cta": "启动创作者"
+        },
+        "pro": {
+          "name": "专业版",
+          "note": "每月",
+          "allowance": "≈ 10 个视频/月",
+          "credits": "3,000 积分 / 月",
+          "features": [
+            "包含创作者全部功能",
+            "更多积分，每个视频的费用相同",
+            "优先于免费渲染"
+          ],
+          "cta": "开始专业版"
+        },
+        "scale": {
+          "name": "规模",
+          "note": "每月",
+          "allowance": "≈ 25 个视频/月",
+          "credits": "7,500 积分 / 月",
+          "features": [
+            "专业版中的一切",
+            "用于始终在线发布",
+            "最高自助服务量"
+          ],
+          "cta": "开始规模"
+        },
+        "enterprise": {
+          "name": "企业",
+          "priceLabel": "我们来谈谈",
+          "note": "对于团队和机构",
+          "allowance": "定制积分额度",
+          "credits": "承诺批发价",
+          "features": [
+            "席位和角色",
+            "品牌套件",
+            "API访问",
+            "SSO 和专门支持"
+          ],
+          "cta": "联系销售人员"
+        }
+      },
+      "creditFootnote": "积分对应真实的渲染成本：每个视频的确切花费取决于你选择的模型、分辨率和宽高比。视频数量为估算值，基于 Seedance 2.0 720p 的 20 秒片段（每条 300 积分）。",
+      "everyPlanIncludes": "每个计划都包括",
+      "included": [
+        "基于真实爆款规律的脚本",
+        "花费之前先审阅分镜",
+        "5 种宽高比适配各平台",
+        "粘贴任意商品链接或上传商品图片"
+      ],
+      "billingQuestions": "计费问题",
+      "faq": {
+        "q1": "什么是积分？",
+        "a1": "积分对应视频的真实渲染成本。确切费用取决于你选择的模型、分辨率和宽高比——Seedance 2.0 720p 的 20 秒片段需 300 积分，更轻的设置花费更少。",
+        "q2": "再生需要积分吗？",
+        "a2": "需要。每重新生成一个镜头消耗 1 积分，与最终渲染共用同一份积分余额。",
+        "q3": "如果我的积分用完了怎么办？",
+        "a3": "付费套餐的积分会在每个计费周期开始时重置；注册赠送的免费积分为一次性发放，不会续期。目前尚不支持自助结账——如需升级到更高的月度额度，请发送邮件至 {address}，我们会为你设置。",
+        "q4": "我可以随时更改计划吗？",
+        "a4": "可以。在自助付费功能建设期间，套餐变更通过邮件处理 - 请发送邮件至 {address}。年付比月付节省约 20%。",
+        "q5": "Lumi 使用哪种渲染模型？",
+        "a5": "目前 Studio 使用的渲染模型是 Seedance 2.0。更看重速度和成本的 Seedance 2.0 Fast 与 2.0 Mini 很快会加入选择器，Seedance 2.5 随后推出。"
+      },
+      "upgrade": {
+        "cta": "升级",
+        "title": "暂不支持自助付费",
+        "body": "在线支付功能仍在建设中，暂时无法在网站上购买套餐。如需升级到 {plan}，请发送邮件给我们，我们会为您开通。",
+        "contact": "发送邮件至 {address}",
+        "subject": "升级到 {plan}"
+      }
+    },
+    "landing": {
+      "heroTitle": "把任何商品链接，变成<highlight>能卖货的视频。</highlight>",
+      "heroSubtitle": "粘贴一个链接。Lumi 学习你所在品类爆款视频背后的规律，把脚本写成一个由镜头组成的分镜。逐个审阅并批准每个镜头——完整渲染只有在你点头后才会消耗积分。",
+      "heroPrimary": "创建你的第一支视频",
+      "heroSecondary": "看看它如何运作",
+      "heroFinePrint": "首个视频免费 · 无需银行卡 · 5 种宽高比",
+      "sound": {
+        "unmute": "开启示例视频声音",
+        "mute": "关闭示例视频声音"
+      },
+      "pipeline": {
+        "stageLabel": "Lumi Studio",
+        "chipRatio": "9:16",
+        "chipModel": "Seedance 2.0",
+        "url": "yourstore.com/products/glow-serum-30ml",
+        "reading": "正在读取商品",
+        "pattern": "已学习美妆品类约 100 支爆款视频",
+        "productName": "焕光精华 30 ml",
+        "productMeta": "$24 · 美妆",
+        "beats": {
+          "hook": {
+            "label": "开场钩子",
+            "line": "第一秒就让人停下滑动。"
+          },
+          "proof": {
+            "label": "效果实证",
+            "line": "让人看到精华真实起效。"
+          },
+          "offer": {
+            "label": "购买引导",
+            "line": "价格上屏，行动指令清晰。"
+          }
+        },
+        "approve": "通过",
+        "approved": "已通过",
+        "rendering": "正在使用 Seedance 2.0 渲染",
+        "rendered": "渲染完成",
+        "shopNow": "立即购买"
+      },
+      "marquee": {
+        "seedance": "Seedance 2.0",
+        "languages": "8 种配音语言",
+        "productOnly": "纯商品模式",
+        "review": "分镜审阅",
+        "qa": "台词自动质检",
+        "ratio": "5 种宽高比",
+        "vibes": "5 种风格气质",
+        "sources": "Amazon · Shopee · TikTok Shop",
+        "durations": "10–30 秒成片"
+      },
+      "whyTitle": "建立在<highlight>已被验证的方法</highlight>之上",
+      "whySubtitle": "不是从空白画布开始。Lumi 从你的品类已经奖励过的模式出发——每一帧仍由你掌控。",
+      "why": {
+        "pattern": {
+          "body": "在写下第一句台词之前，Lumi 会拆解你所在品类约一百支表现最好的视频，只保留真正带来转化的结构。",
+          "caption": "脚本自己写自己——用证据。",
+          "uiHeading": "模式提取",
+          "uiSample": "约 100 支视频 · 美妆",
+          "uiHook": "钩子——先给主张",
+          "uiProof": "实证——展示效果",
+          "uiOffer": "引导——明确行动"
+        },
+        "review": {
+          "body": "每个镜头都会先生成一张参考图。通过、微调或重新生成，直到满意为止——重新生成一次扣 1 积分，完整渲染只有在你点头之后才消耗积分。",
+          "caption": "渲染之前，你说了算。",
+          "uiHeading": "分镜审阅",
+          "uiSpend": "已花费 $0",
+          "uiRegenerate": "重新生成"
+        },
+        "reach": {
+          "body": "五种风格、八种配音语言。同一个商品链接，走遍你卖货的每个市场。",
+          "caption": "八种语言，同时开卖。",
+          "uiVibe": "高级简约"
+        }
+      },
+      "storyTitle": "从商品链接<highlight>到成片发布</highlight>",
+      "storySteps": {
+        "link": {
+          "title": "从任何链接开始",
+          "body": "Amazon、Shopee、TikTok Shop 或你自己的店铺——也可以直接上传相册里的商品照片。"
+        },
+        "learn": {
+          "title": "Lumi 学习爆款规律",
+          "body": "它研究该品类约一百支表现最好的视频，提取真正转化的结构：钩子、实证、引导。"
+        },
+        "approve": {
+          "title": "你来审定分镜脚本",
+          "body": "每个镜头先出参考图。重新生成一次扣 1 积分；完整渲染和相应的扣费，都等你确认后才开始。"
+        },
+        "render": {
+          "title": "Seedance 渲染成片",
+          "body": "自动质检会逐句核对台词与脚本，成片即可按你选择的宽高比发布。"
+        }
+      },
+      "storyFact1": "审定之前，渲染花费为 $0",
+      "storyFact2": "积分对应真实渲染成本",
+      "wallTitle": "每个品类，<highlight>每个市场</highlight>",
+      "wallSubtitle": "每个 Lumi 视频都配有真人感配音，并可按你选择的宽高比导出，脚本和声音会针对每个目标市场进行调整。",
+      "wallAudience": "为卖家、创作者、品牌和代理机构打造——所有靠视频卖货的人。",
+      "wall": {
+        "beauty": {
+          "category": "美妆",
+          "vibe": "高级简约"
+        },
+        "gadgets": {
+          "category": "数码好物",
+          "vibe": "大胆有力"
+        },
+        "home": {
+          "category": "家居厨房",
+          "vibe": "清晰演示"
+        },
+        "pets": {
+          "category": "宠物",
+          "vibe": "轻快有趣"
+        },
+        "fashion": {
+          "category": "时尚",
+          "vibe": "温暖亲近"
+        },
+        "fitness": {
+          "category": "健身",
+          "vibe": "大胆有力"
+        }
+      },
+      "pricingTitle": "免费开始。<highlight>见效再扩量。</highlight>",
+      "pricingSubtitle": "积分制：积分对应真实渲染成本，设置越轻花费越少。首个视频免费，无需银行卡。",
+      "mostPopular": "最受欢迎",
+      "pricingTiers": {
+        "creator": {
+          "name": "创作者",
+          "price": "29 美元",
+          "note": "/ 莫",
+          "features": [
+            "900 积分 — 约 3 个视频",
+            "无水印",
+            "分镜审阅"
+          ]
+        },
+        "pro": {
+          "name": "专业版",
+          "price": "79 美元",
+          "note": "/ 莫",
+          "features": [
+            "3,000 积分 — 约 10 个视频",
+            "包含 Creator 全部功能",
+            "优先渲染",
+            "720p 导出 · 5 种宽高比"
+          ]
+        },
+        "scale": {
+          "name": "规模",
+          "price": "199 美元",
+          "note": "/ 莫",
+          "features": [
+            "7,500 积分 — 约 25 个视频",
+            "包含 Pro 全部功能",
+            "为持续日更打造"
+          ]
+        }
+      },
+      "seePlans": "查看套餐",
+      "pricingFooter": "你的<signup>首支视频免费</signup>——无需信用卡。<plans>对比全部方案 →</plans>",
+      "faqTitle": "你想问的，<highlight>都在这里</highlight>",
+      "finalCtaTitle": "你的下一个爆款，<highlight>只差一个链接。</highlight>",
+      "finalCtaSubtitle": "免费做出你的第一支视频。不用相机，不用剪辑，不用面对空白页。",
+      "finalCtaPrimary": "创建你的第一支视频",
+      "finalCtaSecondary": "查看价格"
+    },
+    "features": {
+      "header": {
+        "kicker": "特点",
+        "title": "整个视频工作流程，",
+        "highlight": "处理。",
+        "subtitle": "从采购产品到准备发布的剪辑——无需将五种工具拼接在一起。"
+      },
+      "pipeline": {
+        "find": "查找",
+        "deconstruct": "解构",
+        "script": "脚本",
+        "generate": "生成"
+      },
+      "rows": {
+        "linkToVideo": {
+          "kicker": "来源",
+          "title": "视频链接",
+          "body": "粘贴来自 Amazon、Shopee、TikTok 商店或您自己的商店的产品链接 - 或上传照片。 Lumi 读取产品、角度和证明点，然后自动处理框架、脚本、语音和编辑。您的产品对您保密。",
+          "bullets": [
+            "任何链接 - Amazon、Shopee、TikTok 商店或您自己的商店",
+            "或者上传您自己的产品照片"
+          ]
+        },
+        "scripts": {
+          "kicker": "脚本",
+          "title": "基于模式的脚本",
+          "body": "在编写单词之前，Lumi 会研究产品类别中真实、有机的顶级表现的大量样本，并提取结构模式 - 实际转换的钩子、证明和 CTA 形状。您的脚本是在此基础上构建的，而不是空白页。",
+          "bullets": [
+            "从您所在类别中筛选出的有机获胜者中学习结构",
+            "钩子/证明/报价镜头，而不是照搬的执行",
+            "观众语言以那些表现最佳的人为模型"
+          ]
+        },
+        "review": {
+          "kicker": "控制",
+          "title": "分镜审阅",
+          "body": "Lumi 把脚本写成由镜头组成的分镜，每个镜头先生成一张参考图。喜欢的镜头就通过，不满意的每个花 1 积分重新生成——只有你批准之后，完整渲染才会消耗积分。",
+          "bullets": [
+            "渲染之前每个镜头先生成参考图",
+            "单个镜头重新生成仅需 1 积分",
+            "完整渲染等待你的批准"
+          ]
+        },
+        "modes": {
+          "kicker": "格式",
+          "title": "纯商品展示",
+          "body": "无需出镜拍摄的纯商品成片——四种现成风格，涵盖干净的展示镜头、卖点标注、拆箱开箱和以优惠为核心的剪辑。",
+          "bullets": [
+            "4 种为电商调优的风格",
+            "10–30 秒时长，5 种宽高比"
+          ]
+        },
+        "qa": {
+          "kicker": "品质",
+          "title": "自动对话QA",
+          "body": "每个镜头渲染完成后，Whisper 都会转录台词并与脚本比对，标记偏差。配音永远说该说的话，不会出现脱稿的意外。",
+          "bullets": [
+            "在每条渲染线上进行耳语转录",
+            "分数与预期脚本的偏差",
+            "在发布之前捕捉脱稿音频"
+          ]
+        },
+        "publish": {
+          "kicker": "发布",
+          "title": "发布就绪的成片",
+          "body": "在 Studio 中从 5 种宽高比中选择——TikTok 和 Reels 用 9:16，另有 16:9、1:1、4:3 或 3:4——然后下载或标记为已发布，让你的数据保持整洁。",
+          "bullets": [
+            "可按 5 种宽高比导出，导出即可发布",
+            "在“我的视频”中跟踪已发布与草稿"
+          ]
+        }
+      }
+    },
+    "models": {
+      "header": {
+        "kicker": "型号",
+        "title": "一间工作室，前沿",
+        "highlight": "视频人工智能。",
+        "subtitle": "目前 Studio 使用 Seedance 2.0 渲染；系列中的其他模型上线后会陆续加入选择器，你的脚本始终可以沿用。"
+      },
+      "cards": {
+        "seedance": {
+          "name": "Seedance 2.0",
+          "tag": "已上线",
+          "desc": "旗舰模型——产品镜头中最逼真的动态效果，最高 1080p，并为每个镜头生成音频。",
+          "bestFor": [
+            "最高画质",
+            "最高 1080p",
+            "分镜音频"
+          ]
+        },
+        "fast": {
+          "name": "Seedance 2.0 Fast",
+          "tag": "即将推出",
+          "desc": "同系列的速度优化版——渲染更快、积分成本更低，最高 720p。很快就会加入选择器。",
+          "bestFor": [
+            "速度",
+            "更低成本",
+            "最高 720p"
+          ]
+        },
+        "mini": {
+          "name": "Seedance 2.0 Mini",
+          "tag": "即将推出",
+          "desc": "最轻量的一档——以每次渲染最低的积分成本打草稿、做迭代，最高 720p。很快就会加入选择器。",
+          "bestFor": [
+            "草稿",
+            "最低成本",
+            "最高 720p"
+          ]
+        },
+        "seedance25": {
+          "name": "Seedance 2.5",
+          "tag": "即将推出",
+          "desc": "新一代模型一旦在我们的渲染服务商上线，就会加入选择器。你的脚本和已批准的分镜无需重做，直接沿用。",
+          "bestFor": [
+            "路线图",
+            "无需重做"
+          ]
+        }
+      },
+      "points": {
+        "tuned": {
+          "title": "逐镜头调优",
+          "body": "Lumi 为每个镜头设置动态、时长和构图，让每个镜头都呈现最佳效果，你无需折腾模型参数。"
+        },
+        "carriesOver": {
+          "title": "你的工作继续进行",
+          "body": "脚本和已批准的分镜与模型无关。新模型上线时，你的视频无需重做即可使用。"
+        },
+        "oneBill": {
+          "title": "一间工作室，一张账单",
+          "body": "无需处理单独的模型帐户或积分——一切都在 Lumi 内。"
+        }
+      },
+      "ctaTitle": "使用最好的模型进行渲染——无需繁琐的工作。"
+    },
+    "about": {
+      "header": {
+        "kicker": "关于",
+        "title": "我们帮助您通过视频进行销售 —",
+        "highlight": "没有工作室。",
+        "subtitle": "Lumi 是 Sellcast 产品。我们将任何产品变成一个滚动停止的购物视频，以已经获胜的产品为基础。"
+      },
+      "intro1": "现在，短视频已成为店面的主流，但大多数卖家没有时间拍摄、编辑和测试他们的获胜方式。通用人工智能工具用感觉像人工智能的内容填补了空白。",
+      "intro2": "Lumi 走了一条不同的路。在动笔写脚本之前，它会研究你产品所在品类中大量真实的自然爆款，学习其中能促成转化的<em>结构</em>——然后完成脚本、分镜和渲染，你逐镜头审阅，几分钟即可发布。",
+      "values": {
+        "grounded": {
+          "title": "扎根，不猜测",
+          "body": "在生成事物之前，我们会从类别中实际转换的内容中学习。"
+        },
+        "quality": {
+          "title": "质量重于数量",
+          "body": "使滚动停止的原生感觉创意——而不是通用的人工智能填充物。"
+        },
+        "control": {
+          "title": "您一切尽在掌握",
+          "body": "逐镜头审阅分镜。完整渲染只在你签字确认后才消耗积分。"
+        },
+        "sellers": {
+          "title": "专为卖家打造",
+          "body": "专为那些更喜欢销售而不是电影的人而设计——从独立创作者到代理商。"
+        }
+      },
+      "contact": "想谈论合作伙伴、媒体或企业吗？ <email>hello@sellcast.ai</email>"
     },
     "blog": {
       "title": "Lumi 博客即将推出",
@@ -1459,17 +1444,32 @@
     },
     "careers": {
       "title": "我们正在构建商业视频的未来",
-      "body": "我们是一个快速行动的小团队。尚未发布空缺职位 - 但如果您在人工智能、视频或增长方面表现出色，我们很乐意收到您的来信。",
+      "body": "我们是一个快速行动的小团队。尚未发布空缺职位 - 但如果您在人工智能、视频或增长方面表现出色，我们很乐意听到您的来信。",
       "cta": "自我介绍一下"
+    },
+    "metadata": {
+      "features": {
+        "title": "特点",
+        "description": "Lumi 的全部功能——链接生成视频、基于真实规律的脚本、分镜审阅、纯产品形式、台词质检，以及可按 5 种宽高比导出成片。"
+      },
+      "models": {
+        "title": "型号",
+        "description": "目前 Studio 使用 Seedance 2.0 渲染，2.0 Fast、2.0 Mini 和 Seedance 2.5 将陆续加入选择器。每个镜头都会获得最佳渲染设置。"
+      },
+      "pricing": {
+        "title": "定价",
+        "description": "免费开始，见效再扩展。Lumi 采用积分制定价——积分对应真实渲染成本，设置越轻花费越少。免费版（首个视频）、Creator、Pro、Scale 和 Enterprise。开始无需信用卡；按年付省约 20%。"
+      },
+      "about": {
+        "title": "关于",
+        "description": "Lumi 是一款 Sellcast 产品，帮助卖家和创作者将产品转变为滚动停止的可购物视频 - 基于真实的病毒模式。"
+      },
+      "blog": {
+        "title": "博客"
+      },
+      "careers": {
+        "title": "职业机会"
+      }
     }
-  },
-  "nav": {
-    "features": "特点",
-    "howItWorks": "它是如何运作的",
-    "models": "型号",
-    "pricing": "定价"
-  },
-  "languageSwitcher": {
-    "label": "语言"
   }
 }

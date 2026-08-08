@@ -1840,12 +1840,21 @@ function flatten(value, prefix = "", out = []) {
   return out;
 }
 
+function pathParts(leafPath) {
+  return leafPath.replaceAll("[", ".").replaceAll("]", "").split(".").filter(Boolean);
+}
+
+function getAtPath(source, leafPath) {
+  let cursor = source;
+  for (const raw of pathParts(leafPath)) {
+    if (cursor == null || typeof cursor !== "object") return undefined;
+    cursor = cursor[/^\d+$/.test(raw) ? Number(raw) : raw];
+  }
+  return cursor;
+}
+
 function setAtPath(target, leafPath, value) {
-  const parts = leafPath
-    .replaceAll("[", ".")
-    .replaceAll("]", "")
-    .split(".")
-    .filter(Boolean);
+  const parts = pathParts(leafPath);
   let cursor = target;
   for (let i = 0; i < parts.length; i += 1) {
     const raw = parts[i];
@@ -1958,20 +1967,58 @@ function translateBatch(batch, googleLocale) {
   throw new Error("unreachable");
 }
 
-function translateLocale(source, locale, googleLocale) {
+function readJson(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+// The English source as of the last commit that wrote this catalog: any leaf whose
+// English has not moved since then is already translated, and its (often hand-refined)
+// value must survive the run. Unknowable -> keep, because a needless retranslation
+// silently destroys hand work while a stale one is visible in the diff.
+function sourceWhenLocaleWasWritten(locale) {
+  try {
+    const sha = execFileSync("git", ["log", "-1", "--format=%H", "--", `messages/${locale}.json`], {
+      encoding: "utf8",
+    }).trim();
+    if (!sha) return null;
+    return JSON.parse(
+      execFileSync("git", ["show", `${sha}:${SOURCE}`], {
+        encoding: "utf8",
+        maxBuffer: 1024 * 1024 * 8,
+      }),
+    );
+  } catch {
+    return null;
+  }
+}
+
+function translateLocale(source, locale, googleLocale, { force }) {
+  const existing = force ? null : readJson(path.join("messages", `${locale}.json`));
+  const baseline = existing ? sourceWhenLocaleWasWritten(locale) : null;
+
   const leaves = flatten(source).map((leaf) => {
     const override = MANUAL_OVERRIDES[leaf.path]?.[locale];
-    if (override) return { ...leaf, override };
+    if (override) return { ...leaf, keep: override };
+    const current = existing && getAtPath(existing, leaf.path);
+    const sourceMoved = baseline ? getAtPath(baseline, leaf.path) !== leaf.value : false;
+    if (typeof current === "string" && !sourceMoved) return { ...leaf, keep: current };
     const { protectedValue, replacements } = protect(leaf.value);
     return { ...leaf, protectedValue, replacements };
   });
 
   const target = {};
-  for (const leaf of leaves.filter((item) => item.override)) {
-    setAtPath(target, leaf.path, leaf.override);
+  for (const leaf of leaves.filter((item) => item.keep !== undefined)) {
+    setAtPath(target, leaf.path, leaf.keep);
   }
 
-  const generatedLeaves = leaves.filter((item) => !item.override);
+  const generatedLeaves = leaves.filter((item) => item.keep === undefined);
+  process.stderr.write(
+    `${locale}: keeping ${leaves.length - generatedLeaves.length}, translating ${generatedLeaves.length}\n`,
+  );
   let completed = 0;
   for (const batch of chunks(generatedLeaves)) {
     const translated = translateBatch(batch, googleLocale);
@@ -1999,7 +2046,9 @@ if (orphanedOverrides.length > 0) {
   );
 }
 
-const requestedLocales = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const force = argv.includes("--force");
+const requestedLocales = argv.filter((arg) => arg !== "--force");
 const selectedTargets =
   requestedLocales.length === 0
     ? TARGETS
@@ -2012,7 +2061,7 @@ const selectedTargets =
 
 for (const [locale, googleLocale] of Object.entries(selectedTargets)) {
   process.stderr.write(`Translating ${locale}...\n`);
-  const target = translateLocale(source, locale, googleLocale);
+  const target = translateLocale(source, locale, googleLocale, { force });
   const targetPath = path.join("messages", `${locale}.json`);
   fs.writeFileSync(targetPath, `${JSON.stringify(target, null, 2)}\n`);
 }
