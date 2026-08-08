@@ -694,8 +694,12 @@ describe("Job detail page renders extracted English copy", () => {
     expect(tracker).toMatch(/flex items-center gap-2 sm:flex-1/);
     expect(tracker).not.toContain("overflow-x-auto");
     expect(tracker).toMatch(/h-7 w-7 shrink-0/);
-    expect(tracker).toMatch(/block whitespace-nowrap text-xs/);
+    expect(tracker).toMatch(/block text-xs font-semibold leading-tight/);
     expect(tracker).not.toMatch(/hidden text-xs font-semibold sm:block/);
+    // A label wraps inside its own step rather than forcing the row wider than
+    // the column: a long localized label (ja "レンダリング") overflowed at tablet
+    // widths while it could not break.
+    expect(tracker).not.toContain("whitespace-nowrap");
     // The connector lines are the only part that goes away when wrapped.
     expect(tracker).toMatch(/relative hidden h-0\.5 flex-1[^"]*sm:block/);
   });

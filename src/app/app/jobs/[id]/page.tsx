@@ -430,7 +430,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
               <span
                 className={cn(
-                  "block whitespace-nowrap text-xs font-semibold leading-tight",
+                  "block text-xs font-semibold leading-tight",
                   isCurrent ? "text-ink" : "text-muted-foreground",
                 )}
               >

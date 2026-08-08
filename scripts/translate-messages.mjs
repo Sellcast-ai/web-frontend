@@ -1967,11 +1967,21 @@ function translateBatch(batch, googleLocale) {
   throw new Error("unreachable");
 }
 
+// Only an absent catalog means "nothing to keep". An unreadable or malformed one
+// must stop the run: treating it as absent rebuilds the whole locale from machine
+// output, destroying every hand-refined leaf it still holds.
 function readJson(file) {
+  let raw;
   try {
-    return JSON.parse(fs.readFileSync(file, "utf8"));
-  } catch {
-    return null;
+    raw = fs.readFileSync(file, "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`${file} is not valid JSON: ${error.message}`);
   }
 }
 
