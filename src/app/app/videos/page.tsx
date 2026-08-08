@@ -237,7 +237,7 @@ function JobCard({ job }: { job: VideoJob }) {
           ) : null}
         </div>
         <div className="absolute left-2 top-2">
-          <StatusBadge job={job} />
+          <StatusBadge job={job} compact />
         </div>
       </div>
       <div className="p-3">

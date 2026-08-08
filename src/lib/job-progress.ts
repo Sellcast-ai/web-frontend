@@ -42,6 +42,11 @@ export interface JobProgressDisplay {
   statusLabelKey: JobStatusLabelKey;
   workingTitleKey: JobWorkingTitleKey;
   workingDescriptionKey: JobWorkingDescriptionKey;
+  /** True when the status named itself (a gate, a terminal state, or one this
+   *  client does not know) rather than reading a worker stage. A surface too
+   *  narrow for the stage sentence falls back to the step label only when this
+   *  is false - "Ready"/"Failed"/a review gate must keep saying so. */
+  statusNamesItself: boolean;
 }
 
 /** The badge label and the waiting copy for one stage, on each side of the
@@ -164,16 +169,36 @@ function statusOwnLabel(status: VideoJob["status"]): JobStatusLabelKey | null {
   }
 }
 
+/** Which side of the worker claim a status sits on, or `null` when the status
+ *  names no worker stage at all. Only these three statuses may read the stage
+ *  table: everything else - including a status this client does not know - is
+ *  a state whose artifacts imply a stage nobody is working on, so it may not
+ *  borrow that stage's active voice. */
+function workerPhase(status: VideoJob["status"]): "queued" | "active" | null {
+  switch (status) {
+    case "queued":
+      return "queued";
+    case "submitted":
+    case "in_progress":
+      return "active";
+    default:
+      return null;
+  }
+}
+
 export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
   const stepKey = stepForJob(job);
+  const phase = workerPhase(job.status);
   // A `queued` job is parked in line, unclaimed by any worker, so the badge,
   // the title and the description all have to agree that nothing is happening
   // "now" yet - which is why they come from one row of the table.
-  const stage = STAGE_COPY[stepKey]?.[job.status === "queued" ? "queued" : "active"] ?? NO_STAGE;
+  const stage = (phase && STAGE_COPY[stepKey]?.[phase]) || NO_STAGE;
+  const own = statusOwnLabel(job.status);
   return {
     ...stage,
     stepKey,
     stepIndex: STEP_LABEL_KEYS.indexOf(stepKey),
-    statusLabelKey: statusOwnLabel(job.status) ?? stage.statusLabelKey,
+    statusLabelKey: own ?? stage.statusLabelKey,
+    statusNamesItself: own !== null,
   };
 }

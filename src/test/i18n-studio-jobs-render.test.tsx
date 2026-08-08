@@ -14,6 +14,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import en from "../../messages/en.json";
 import { qk } from "@/lib/api/hooks";
+import { StatusBadge } from "@/components/app/status-badge";
 import { VIDEO_ASPECT_RATIOS } from "@/lib/api/types";
 import type { ProductSummary, Usage, VideoJob } from "@/lib/api/types";
 
@@ -718,5 +719,49 @@ describe("Job detail page renders extracted English copy", () => {
     ]) {
       expect(text, `expected "${s}" in failed render`).toContain(s);
     }
+  });
+});
+
+describe("StatusBadge keeps one story across the two surfaces it renders on", () => {
+  const badgeText = (job: VideoJob, compact?: boolean) =>
+    renderToStaticMarkup(
+      <NextIntlClientProvider locale="en" messages={en as Record<string, unknown>}>
+        <StatusBadge job={job} compact={compact} />
+      </NextIntlClientProvider>,
+    )
+      .replace(/<[^>]+>/g, "")
+      .trim();
+
+  const approved = [
+    { ...baseJob.beats[0], review_status: "user_approved" },
+  ] as unknown as VideoJob["beats"];
+
+  it("shrinks a worker stage to its tracker step label on the grid", () => {
+    const cases: Array<[VideoJob, string, string]> = [
+      [{ ...baseJob, status: "queued", storyboard: null }, "Queued for script", "Script"],
+      [{ ...baseJob, status: "submitted", beats: [] }, "Building shots", "Shots"],
+      [{ ...baseJob, status: "queued", beats: approved }, "Queued for render", "Render"],
+      [{ ...baseJob, status: "in_progress", beats: approved }, "Rendering", "Render"],
+    ];
+    for (const [job, full, short] of cases) {
+      expect(badgeText(job)).toBe(full);
+      expect(badgeText(job, true)).toBe(short);
+      // The compact label is the tracker's own, so the tile can never name a
+      // stage the job page's tracker disagrees with.
+      expect(short.length).toBeLessThanOrEqual(full.length);
+    }
+  });
+
+  it("never shortens away a state that names itself", () => {
+    for (const job of [
+      { ...baseJob, status: "completed" as const },
+      { ...baseJob, status: "failed" as const },
+      { ...baseJob, status: "awaiting_storyboard" as const },
+      { ...baseJob, status: "awaiting_review" as const },
+    ]) {
+      expect(badgeText(job, true)).toBe(badgeText(job));
+    }
+    expect(badgeText({ ...baseJob, status: "completed" }, true)).toBe("Ready");
+    expect(badgeText({ ...baseJob, status: "failed" }, true)).toBe("Failed");
   });
 });

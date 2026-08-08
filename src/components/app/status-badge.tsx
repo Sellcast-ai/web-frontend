@@ -37,19 +37,30 @@ const MAP: Record<VideoJobStatus, { className: string; dot: string }> = {
   },
 };
 
+/** `compact` is for badges pinned over a thumbnail, where the full stage
+ *  sentence ("Queued for render") wraps to two lines at 320px: a worker stage
+ *  shrinks to the tracker's own step label, drawn from the same display model
+ *  so the tile can never name a stage the job page disagrees with. States that
+ *  name themselves (ready, failed, a review gate) keep their own label. */
 export function StatusBadge({
   job,
+  compact,
   className,
 }: {
   job: VideoJob;
+  compact?: boolean;
   className?: string;
 }) {
   const t = useTranslations("shared.status");
+  const tStep = useTranslations("shared.jobProgress");
   const s = MAP[job.status] ?? MAP.queued;
+  const display = jobProgressDisplay(job);
   return (
     <Badge className={cn(s.className, className)}>
-      <span className={cn("h-1.5 w-1.5 rounded-full", s.dot)} />
-      {t(jobProgressDisplay(job).statusLabelKey)}
+      <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", s.dot)} />
+      {compact && !display.statusNamesItself
+        ? tStep(display.stepKey)
+        : t(display.statusLabelKey)}
     </Badge>
   );
 }

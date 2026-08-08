@@ -162,11 +162,12 @@ describe("jobProgressDisplay", () => {
     expect(lifecycle).toEqual([...lifecycle].sort((a, b) => a - b));
   });
 
-  it("degrades unknown statuses to the best stage implied by artifacts", () => {
+  it("places an unknown status on the artifact stage without claiming that work", () => {
     expect(jobProgressDisplay(mk({ status: "rendering_audio" as VideoJobStatus }))).toMatchObject({
       stepKey: "script",
       statusLabelKey: "working",
-      workingTitleKey: "writingScript",
+      workingTitleKey: "working",
+      workingDescriptionKey: "workingDescription",
     });
     expect(
       jobProgressDisplay(
@@ -175,7 +176,31 @@ describe("jobProgressDisplay", () => {
     ).toMatchObject({
       stepKey: "shots",
       statusLabelKey: "working",
-      workingTitleKey: "buildingShots",
+      workingTitleKey: "working",
+      workingDescriptionKey: "workingDescription",
     });
+  });
+
+  it("only lets the three worker statuses speak in the active voice", () => {
+    const notWorking: VideoJobStatus[] = [
+      "completed",
+      "failed",
+      "awaiting_storyboard",
+      "awaiting_review",
+      "rendering_audio" as VideoJobStatus,
+    ];
+    for (const status of notWorking) {
+      expect(
+        jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })),
+      ).toMatchObject({
+        workingTitleKey: "working",
+        workingDescriptionKey: "workingDescription",
+        statusNamesItself: true,
+      });
+    }
+    for (const status of ["queued", "submitted", "in_progress"] as VideoJobStatus[]) {
+      expect(jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })))
+        .toMatchObject({ statusNamesItself: false });
+    }
   });
 });
