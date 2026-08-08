@@ -48,7 +48,6 @@ import { STUDIO_HREF } from "@/lib/launch-routes";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
 import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
 import { useMutationGuard } from "@/lib/mutation-guard";
-import { stripDialogueStageDirections } from "@/lib/storyboard-display";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
   VideoJob,
@@ -610,8 +609,8 @@ function StoryboardView({ job }: { job: VideoJob }) {
 
   const dirty = JSON.stringify(draft) !== JSON.stringify(job.storyboard);
   const busy = approve.isPending || patch.isPending;
-  const hookAngle = draft.hook_angle.trim();
-  const audience = draft.audience.trim();
+  const hookAngle = draft.hook_angle?.trim() ?? "";
+  const audience = draft.audience?.trim() ?? "";
   const hasContext = Boolean(hookAngle || audience);
 
   function editShot(i: number, patchShot: Partial<Shot>) {
@@ -817,8 +816,8 @@ function ShotCard({
   const t = useTranslations("app.jobs.shotCard");
   const te = useTranslations("app.jobs.shotEditor");
   const nudges = shot.outcome_nudges ?? [];
-  const visual = shot.visual.trim();
-  const dialogue = shot.dialogue ? stripDialogueStageDirections(shot.dialogue) : "";
+  const visual = shot.visual?.trim() ?? "";
+  const dialogue = shot.dialogue?.trim() ?? "";
   const hint =
     nudges.length > 0
       ? nudges.map((n) => te(`nudgeLabels.${OUTCOME_NUDGE_KEYS[n]}`)).join(" · ")

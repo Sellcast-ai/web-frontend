@@ -516,19 +516,20 @@ describe("Job detail page renders extracted English copy", () => {
     }
   });
 
-  it("cleans storyboard dialogue and degrades missing visual context cleanly", () => {
+  it("shows dialogue verbatim and degrades missing visual context cleanly", () => {
+    // legacy payloads predate these fields, so they arrive missing, not empty
     const storyboard = {
       ...baseJob.storyboard!,
-      audience: "",
-      hook_angle: "   ",
+      audience: undefined,
+      hook_angle: undefined,
       shots: [
         {
           ...baseJob.storyboard!.shots[0],
-          visual: "   ",
+          visual: undefined,
           dialogue: "(smiling) Try it now (today only).",
         },
       ],
-    };
+    } as unknown as NonNullable<VideoJob["storyboard"]>;
     const qc = makeClient((c) =>
       c.setQueryData(qk.job("job-1"), {
         ...baseJob,
@@ -540,8 +541,8 @@ describe("Job detail page renders extracted English copy", () => {
     const text = html.replace(/<[^>]+>/g, " ");
 
     expect(text).toContain("No visual direction");
-    expect(text).toContain("Try it now (today only).");
-    expect(text).not.toContain("(smiling)");
+    // verbatim: the approval screen must match what PATCH/render/TTS consume
+    expect(text).toContain("(smiling) Try it now (today only).");
     expect(text).not.toContain("Angle");
     expect(text).not.toContain("Audience");
   });
