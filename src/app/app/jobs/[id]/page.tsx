@@ -794,6 +794,23 @@ function StoryboardView({ job }: { job: VideoJob }) {
               {/* Two independent sentences, so a missing usage read costs the
                   balance and not the price. */}
               {usage && ` ${t("balanceNote", { remaining: usage.remaining })}`}
+              {/* This is the click that actually spends, so a balance that
+                  can't cover the ceiling is named rather than left as two
+                  adjacent numbers to compare - with the gap, the same hedge
+                  Studio's ceiling warning carries (the debit is usually lower,
+                  so this is a warning and never a block), and the one route
+                  that resolves it. */}
+              {usage && usage.remaining < cost && (
+                <>
+                  {" "}
+                  <span className="font-semibold text-ink">
+                    {t("shortfallNote", { shortfall: cost - usage.remaining })}
+                  </span>{" "}
+                  <Link href="/pricing" className="font-semibold text-brand-700">
+                    {t("seePlans")}
+                  </Link>
+                </>
+              )}
             </>
           )}
         </p>

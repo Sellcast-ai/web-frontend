@@ -326,6 +326,8 @@
         "creditNote": "这是使用您的积分的唯一步骤。",
         "costNote": "确认后最多扣除 {cost} 积分。",
         "balanceNote": "你当前有 {remaining}。",
+        "shortfallNote": "还差 {shortfall} 积分。实际扣除通常更少，所以仍有可能成功生成。",
+        "seePlans": "查看套餐",
         "priceUnavailable": "暂时无法获取确切费用，因此这里不显示。我们仍在尝试。",
         "priceNotQuotable": "无法算出本次生成的确切费用，因此这里不显示。",
         "editTitle": "编辑{label}",

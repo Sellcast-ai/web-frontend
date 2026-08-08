@@ -571,6 +571,8 @@
         "creditNote": "This is the only step that uses your credits.",
         "costNote": "Approving spends up to {cost} credits.",
         "balanceNote": "You have {remaining}.",
+        "shortfallNote": "You’re {shortfall} credits short. The final charge is usually lower, so it may still go through.",
+        "seePlans": "See plans",
         "priceUnavailable": "We couldn’t load the exact cost right now, so it isn’t shown. We’re still trying.",
         "priceNotQuotable": "We can’t work out the exact cost for this render, so it isn’t shown.",
         "editTitle": "Edit {label}",

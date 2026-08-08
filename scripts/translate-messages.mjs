@@ -409,10 +409,11 @@ const MANUAL_OVERRIDES = {
     vi: "Bạn đã dùng hết tín dụng miễn phí.",
     th: "คุณใช้เครดิตฟรีหมดแล้ว",
   },
-  // One label, three render sites (profile card, Studio notice, landing pricing
-  // footer) - all pinned together so a regeneration can't ship two spellings of
-  // the same link. The machine reads "plans" as intentions (id/vi) or drawings
-  // (es "planos", which is also Portuguese), never a subscription tier.
+  // One label, four render sites (profile card, Studio notice, storyboard
+  // approve bar, landing pricing footer) - all pinned together so a
+  // regeneration can't ship two spellings of the same link. The machine reads
+  // "plans" as intentions (id/vi) or drawings (es "planos", which is also
+  // Portuguese), never a subscription tier.
   "app.profile.seePlans": {
     es: "Ver planes",
     zh: "查看套餐",
@@ -424,6 +425,16 @@ const MANUAL_OVERRIDES = {
     th: "ดูแพ็กเกจ",
   },
   "app.studio.seePlans": {
+    es: "Ver planes",
+    zh: "查看套餐",
+    ja: "プランを見る",
+    ko: "요금제 보기",
+    pt: "Ver planos",
+    id: "Lihat paket",
+    vi: "Xem các gói",
+    th: "ดูแพ็กเกจ",
+  },
+  "app.jobs.storyboard.seePlans": {
     es: "Ver planes",
     zh: "查看套餐",
     ja: "プランを見る",
@@ -611,6 +622,20 @@ const MANUAL_OVERRIDES = {
     id: "Kami tidak bisa menghitung biaya pasti untuk render ini, jadi angkanya tidak ditampilkan.",
     vi: "Chúng tôi không tính được chi phí chính xác cho lần dựng này nên số này không được hiển thị.",
     th: "เราคำนวณต้นทุนที่แน่ชัดของงานเรนเดอร์นี้ไม่ได้ จึงไม่แสดงตัวเลข",
+  },
+  // The shortfall at the charge point, in the same vocabulary as Studio's
+  // `costMayExceed`: it names the gap and keeps the "usually lower, may still
+  // go through" hedge, because approving is never blocked here. The machine
+  // drops that hedge and reads the sentence as a refusal.
+  "app.jobs.storyboard.shortfallNote": {
+    es: "Te faltan {shortfall} créditos. El cargo final suele ser menor, así que puede que igual se genere.",
+    zh: "还差 {shortfall} 积分。实际扣除通常更少，所以仍有可能成功生成。",
+    ja: "{shortfall} クレジット不足しています。実際の消費は少なくなることが多いため、そのまま進む場合もあります。",
+    ko: "{shortfall} 크레딧이 부족합니다. 실제 차감은 보통 더 적어서 그대로 진행될 수도 있습니다.",
+    pt: "Faltam {shortfall} créditos. A cobrança final costuma ser menor, então ainda pode dar certo.",
+    id: "Kurang {shortfall} kredit. Biaya akhirnya biasanya lebih kecil, jadi mungkin tetap bisa jalan.",
+    vi: "Bạn còn thiếu {shortfall} tín dụng. Mức trừ thực tế thường thấp hơn nên vẫn có thể chạy được.",
+    th: "ยังขาดอีก {shortfall} เครดิต ค่าใช้จ่ายจริงมักน้อยกว่า จึงอาจสร้างได้อยู่",
   },
   "app.jobs.storyboard.balanceNote": {
     es: "Tienes {remaining}.",

@@ -926,6 +926,38 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).not.toContain("We couldn’t load the exact cost");
   });
 
+  // Two adjacent numbers are not a warning. This is the surface where the
+  // refusal actually happens, so a balance that can't cover the ceiling names
+  // the gap and the one route that resolves it - and a funded balance says
+  // nothing, because the ceiling is only news when it is out of reach.
+  it.each([
+    { label: "short balance", remaining: 180, shown: true },
+    { label: "funded balance", remaining: 300, shown: false },
+  ])("$label: approve-bar shortfall shown=$shown", ({ remaining, shown }) => {
+    const qc = makeClient((c) => {
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_storyboard" });
+      c.setQueryData(["usage"], { ...usage, remaining });
+      c.setQueryData(qk.videoCapabilities, jobCapabilities);
+      c.setQueryData(qk.quote(jobQuoteParams), {
+        credits: 225,
+        model_id: baseJob.provider_model,
+      });
+    });
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    // The numbers stay either way; only the shortfall call-out is conditional.
+    expect(text).toContain("Approving spends up to 225 credits.");
+    expect(text).toContain(`You have ${remaining}.`);
+    expect(text.includes("You’re 45 credits short.")).toBe(shown);
+    // A refusal has to name the action that clears it - the same route Studio
+    // offers for the same money state.
+    expect(html.includes('href="/pricing"')).toBe(shown);
+    // ...and it stays a warning: nothing here blocks approving.
+    const open = html.lastIndexOf("<button", html.indexOf("Approve &amp; make"));
+    expect(isDisabled(html.slice(open, html.indexOf(">", open) + 1))).toBe(false);
+  });
+
   // A price the backend worked out for some OTHER model is a plausible wrong
   // number at the one click that spends, which is worse than no number.
   it("withholds a price quoted on a model this job doesn't run", () => {
