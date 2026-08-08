@@ -558,7 +558,7 @@
         "queuedScriptDescription": "你的视频正在排队等待开始。在你批准分镜前不会开始渲染。",
         "scriptDescription": "Lumi 正在撰写你的脚本。在你批准分镜前不会开始渲染。",
         "queuedShotsDescription": "你的分镜已批准。此视频正在排队等待生成镜头参考图和渲染素材。",
-        "shotsDescription": "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材，每个镜头准备好后就会显示在这里。",
+        "shotsDescription": "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材。",
         "queuedRenderDescription": "你批准的镜头正在排队等待渲染。",
         "renderDescription": "你批准的镜头正在渲染成最终视频。",
         "workingDescription": "此页面会自动更新，你可以离开后再回来。"

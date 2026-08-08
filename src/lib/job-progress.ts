@@ -5,6 +5,10 @@ export const STEP_LABEL_KEYS = ["script", "review", "shots", "render", "ready"] 
 
 type JobProgressStepKey = (typeof STEP_LABEL_KEYS)[number];
 
+/** The stages the artifact ladder can name - the ones a worker actually works
+ *  through. The gates and the terminal step are not among them. */
+type JobWorkerStepKey = Exclude<JobProgressStepKey, "review" | "ready">;
+
 type JobStatusLabelKey =
   | "queuedForScript"
   | "writingScript"
@@ -66,8 +70,9 @@ type StageCopy = Pick<
   "statusLabelKey" | "workingTitleKey" | "workingDescriptionKey"
 >;
 
-const STAGE_COPY: Partial<
-  Record<JobProgressStepKey, { queued: StageCopy; active: StageCopy }>
+const STAGE_COPY: Record<
+  JobWorkerStepKey,
+  { queued: StageCopy; active: StageCopy }
 > = {
   script: {
     queued: {
@@ -115,6 +120,10 @@ const NO_STAGE: StageCopy = {
   workingDescriptionKey: null,
 };
 
+function isWorkerStep(key: JobProgressStepKey): key is JobWorkerStepKey {
+  return key in STAGE_COPY;
+}
+
 /** True once every beat has cleared the review gate. `every` on an empty
  *  array is vacuously true, so guard on length. */
 function allBeatsApproved(job: VideoJob): boolean {
@@ -131,7 +140,7 @@ function allBeatsApproved(job: VideoJob): boolean {
 /** The one artifact ladder: the stage a job's own assets imply, regardless of
  *  which status it is sitting in. Every status branch that has no stage of its
  *  own reads it, so the ladder can only ever be changed in one place. */
-function stepFromArtifacts(job: VideoJob): JobProgressStepKey {
+function stepFromArtifacts(job: VideoJob): JobWorkerStepKey {
   if (!job.storyboard) return "script";
   if (!job.beats.length) return "shots";
   return allBeatsApproved(job) ? "render" : "shots";
@@ -188,7 +197,7 @@ export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
   // A `queued` job is parked in line, unclaimed by any worker, so the badge,
   // the title and the description all have to agree that nothing is happening
   // "now" yet - which is why they come from one row of the table.
-  const stage = (phase && STAGE_COPY[stepKey]?.[phase]) || NO_STAGE;
+  const stage = phase && isWorkerStep(stepKey) ? STAGE_COPY[stepKey][phase] : NO_STAGE;
   return {
     ...stage,
     stepKey,

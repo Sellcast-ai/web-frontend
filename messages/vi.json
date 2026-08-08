@@ -558,7 +558,7 @@
         "queuedScriptDescription": "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard.",
         "scriptDescription": "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard.",
         "queuedShotsDescription": "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
-        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render, và từng cảnh sẽ hiện ở đây ngay khi sẵn sàng.",
+        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
         "queuedRenderDescription": "Các cảnh đã duyệt của bạn đang xếp hàng chờ render.",
         "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
         "workingDescription": "Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại."

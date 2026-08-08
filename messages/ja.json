@@ -558,7 +558,7 @@
         "queuedScriptDescription": "動画は開始待ちの列に並んでいます。ストーリーボードを承認するまでレンダリングは始まりません。",
         "scriptDescription": "Lumi がスクリプトを作成しています。ストーリーボードを承認するまでレンダリングは始まりません。",
         "queuedShotsDescription": "ストーリーボードは承認済みです。この動画はショット参照とレンダリング素材の準備待ちです。",
-        "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しており、各ショットは完成しだいここに表示されます。",
+        "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しています。",
         "queuedRenderDescription": "承認済みのショットはレンダリング待ちです。",
         "renderDescription": "承認済みのショットを最終動画にレンダリングしています。",
         "workingDescription": "このページは自動更新されるので、離れてもあとで戻れます。"
