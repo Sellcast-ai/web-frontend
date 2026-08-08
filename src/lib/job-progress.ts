@@ -3,9 +3,9 @@ import type { VideoJob } from "@/lib/api/types";
 /** Translation keys for the five job-detail progress stages, in order. */
 export const STEP_LABEL_KEYS = ["script", "review", "shots", "render", "ready"] as const;
 
-export type JobProgressStepKey = (typeof STEP_LABEL_KEYS)[number];
+type JobProgressStepKey = (typeof STEP_LABEL_KEYS)[number];
 
-export type JobStatusLabelKey =
+type JobStatusLabelKey =
   | "queuedForScript"
   | "writingScript"
   | "reviewStoryboard"
@@ -18,7 +18,7 @@ export type JobStatusLabelKey =
   | "failed"
   | "working";
 
-export type JobWorkingTitleKey =
+type JobWorkingTitleKey =
   | "queuedForScript"
   | "writingScript"
   | "queuedForShots"
@@ -27,26 +27,35 @@ export type JobWorkingTitleKey =
   | "renderingVideo"
   | "working";
 
-export type JobWorkingDescriptionKey =
+/** Each of these says only what its stage is doing. The "this page updates
+ *  automatically, you can leave and come back" reassurance is its own key
+ *  (`workingDescription`), rendered on every wait, so it is one string per
+ *  locale rather than a tail copied onto all of them. */
+type JobWorkingDescriptionKey =
   | "queuedScriptDescription"
   | "scriptDescription"
   | "queuedShotsDescription"
   | "shotsDescription"
   | "queuedRenderDescription"
-  | "renderDescription"
-  | "workingDescription";
+  | "renderDescription";
+
+/** Which side of the worker claim the job sits on, or `null` when the status
+ *  names itself (a gate, a terminal state, or one this client does not know)
+ *  rather than reading a worker stage. */
+type JobWorkerPhase = "queued" | "active" | null;
 
 export interface JobProgressDisplay {
   stepKey: JobProgressStepKey;
   stepIndex: number;
   statusLabelKey: JobStatusLabelKey;
   workingTitleKey: JobWorkingTitleKey;
-  workingDescriptionKey: JobWorkingDescriptionKey;
-  /** True when the status named itself (a gate, a terminal state, or one this
-   *  client does not know) rather than reading a worker stage. A surface too
-   *  narrow for the stage sentence falls back to the step label only when this
-   *  is false - "Ready"/"Failed"/a review gate must keep saying so. */
-  statusNamesItself: boolean;
+  /** `null` when no stage is being worked, so the wait carries the
+   *  reassurance alone rather than a stage fact nobody is acting on. */
+  workingDescriptionKey: JobWorkingDescriptionKey | null;
+  /** A surface too narrow for the stage sentence falls back to the step label
+   *  only while this is non-null - "Ready"/"Failed"/a review gate must keep
+   *  saying so - and a `queued` job must still read as waiting, in words. */
+  phase: JobWorkerPhase;
 }
 
 /** The badge label and the waiting copy for one stage, on each side of the
@@ -103,7 +112,7 @@ const STAGE_COPY: Partial<
 const NO_STAGE: StageCopy = {
   statusLabelKey: "working",
   workingTitleKey: "working",
-  workingDescriptionKey: "workingDescription",
+  workingDescriptionKey: null,
 };
 
 /** True once every beat has cleared the review gate. `every` on an empty
@@ -147,58 +156,45 @@ function stepForJob(job: VideoJob): JobProgressStepKey {
   }
 }
 
-/** The statuses that name themselves rather than a worker stage: the two
- *  gates, the two terminal states, and any status this client does not know
- *  (which may name no stage, however clearly the artifacts imply one). */
-function statusOwnLabel(status: VideoJob["status"]): JobStatusLabelKey | null {
+/** The one partition of the status set: a status either names itself (the two
+ *  gates, the two terminal states, and any status this client does not know,
+ *  which may name no stage however clearly the artifacts imply one) or it names
+ *  a side of the worker claim. Deriving both from one switch is what keeps the
+ *  badge and the body copy from ever describing different states. */
+function statusFacing(
+  status: VideoJob["status"],
+): { ownLabel: JobStatusLabelKey; phase: null } | { ownLabel: null; phase: "queued" | "active" } {
   switch (status) {
+    case "queued":
+      return { ownLabel: null, phase: "queued" };
+    case "submitted":
+    case "in_progress":
+      return { ownLabel: null, phase: "active" };
     case "completed":
-      return "ready";
+      return { ownLabel: "ready", phase: null };
     case "failed":
-      return "failed";
+      return { ownLabel: "failed", phase: null };
     case "awaiting_storyboard":
-      return "reviewStoryboard";
+      return { ownLabel: "reviewStoryboard", phase: null };
     case "awaiting_review":
-      return "reviewShots";
-    case "queued":
-    case "submitted":
-    case "in_progress":
-      return null;
+      return { ownLabel: "reviewShots", phase: null };
     default:
-      return "working";
-  }
-}
-
-/** Which side of the worker claim a status sits on, or `null` when the status
- *  names no worker stage at all. Only these three statuses may read the stage
- *  table: everything else - including a status this client does not know - is
- *  a state whose artifacts imply a stage nobody is working on, so it may not
- *  borrow that stage's active voice. */
-function workerPhase(status: VideoJob["status"]): "queued" | "active" | null {
-  switch (status) {
-    case "queued":
-      return "queued";
-    case "submitted":
-    case "in_progress":
-      return "active";
-    default:
-      return null;
+      return { ownLabel: "working", phase: null };
   }
 }
 
 export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
   const stepKey = stepForJob(job);
-  const phase = workerPhase(job.status);
+  const { ownLabel, phase } = statusFacing(job.status);
   // A `queued` job is parked in line, unclaimed by any worker, so the badge,
   // the title and the description all have to agree that nothing is happening
   // "now" yet - which is why they come from one row of the table.
   const stage = (phase && STAGE_COPY[stepKey]?.[phase]) || NO_STAGE;
-  const own = statusOwnLabel(job.status);
   return {
     ...stage,
     stepKey,
     stepIndex: STEP_LABEL_KEYS.indexOf(stepKey),
-    statusLabelKey: own ?? stage.statusLabelKey,
-    statusNamesItself: own !== null,
+    statusLabelKey: ownLabel ?? stage.statusLabelKey,
+    phase,
   };
 }

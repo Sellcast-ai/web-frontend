@@ -38,10 +38,12 @@ const MAP: Record<VideoJobStatus, { className: string; dot: string }> = {
 };
 
 /** `compact` is for badges pinned over a thumbnail, where the full stage
- *  sentence ("Queued for render") wraps to two lines at 320px: a worker stage
- *  shrinks to the tracker's own step label, drawn from the same display model
- *  so the tile can never name a stage the job page disagrees with. States that
- *  name themselves (ready, failed, a review gate) keep their own label. */
+ *  sentence ("Queued for render") wraps to two lines at 320px. A job a worker
+ *  has claimed shrinks to the tracker's own step label, drawn from the same
+ *  display model so the tile can never name a stage the job page disagrees
+ *  with; one still parked in line says so in words rather than leaving colour
+ *  and motion the only difference. States that name themselves (ready, failed,
+ *  a review gate) keep their own label. */
 export function StatusBadge({
   job,
   compact,
@@ -58,8 +60,10 @@ export function StatusBadge({
   return (
     <Badge className={cn(s.className, className)}>
       <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", s.dot)} />
-      {compact && !display.statusNamesItself
-        ? tStep(display.stepKey)
+      {compact && display.phase
+        ? display.phase === "queued"
+          ? t("queued")
+          : tStep(display.stepKey)
         : t(display.statusLabelKey)}
     </Badge>
   );

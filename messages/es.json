@@ -555,12 +555,12 @@
         "queuedForRender": "Esperando para renderizar tu video…",
         "renderingVideo": "Renderizando tu video…",
         "working": "Trabajando en tu video…",
-        "queuedScriptDescription": "Tu video está en cola para empezar. No se renderiza nada hasta que apruebas el storyboard. Esta página se actualiza automáticamente. Puedes salir y volver.",
-        "scriptDescription": "Lumi está escribiendo tu guion. No se renderiza nada hasta que apruebas el storyboard. Esta página se actualiza automáticamente. Puedes salir y volver.",
-        "queuedShotsDescription": "Tu storyboard está aprobado. Este video está en cola para preparar las referencias de tomas y los recursos de renderizado. Esta página se actualiza automáticamente. Puedes salir y volver.",
-        "shotsDescription": "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado. Esta página se actualiza automáticamente. Puedes salir y volver.",
-        "queuedRenderDescription": "Tus tomas aprobadas están en cola para renderizarse. Esta página se actualiza automáticamente. Puedes salir y volver.",
-        "renderDescription": "Tus tomas aprobadas se están renderizando en el video final. Esta página se actualiza automáticamente. Puedes salir y volver.",
+        "queuedScriptDescription": "Tu video está en cola para empezar. No se renderiza nada hasta que apruebas el storyboard.",
+        "scriptDescription": "Lumi está escribiendo tu guion. No se renderiza nada hasta que apruebas el storyboard.",
+        "queuedShotsDescription": "Tu storyboard está aprobado. Este video está en cola para preparar las referencias de tomas y los recursos de renderizado.",
+        "shotsDescription": "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado.",
+        "queuedRenderDescription": "Tus tomas aprobadas están en cola para renderizarse.",
+        "renderDescription": "Tus tomas aprobadas se están renderizando en el video final.",
         "workingDescription": "Esta página se actualiza automáticamente. Puedes salir y volver."
       },
       "review": {
@@ -709,6 +709,7 @@
   },
   "shared": {
     "status": {
+      "queued": "En cola",
       "queuedForScript": "En cola para guion",
       "writingScript": "Escribiendo guion",
       "reviewStoryboard": "Revisar storyboard",

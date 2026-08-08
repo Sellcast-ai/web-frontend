@@ -555,12 +555,12 @@
         "queuedForRender": "동영상 렌더링을 기다리는 중…",
         "renderingVideo": "동영상을 렌더링하는 중…",
         "working": "동영상을 작업 중…",
-        "queuedScriptDescription": "동영상이 시작 대기열에 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
-        "scriptDescription": "Lumi가 스크립트를 작성하고 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
-        "queuedShotsDescription": "스토리보드가 승인되었습니다. 이 동영상은 샷 참조와 렌더링 에셋 준비를 기다리는 중입니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
-        "shotsDescription": "스토리보드가 승인되었습니다. Lumi가 샷 참조와 렌더링 에셋을 준비하고 있습니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
-        "queuedRenderDescription": "승인된 샷이 렌더링을 기다리고 있습니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
-        "renderDescription": "승인된 샷을 최종 동영상으로 렌더링하고 있습니다. 이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
+        "queuedScriptDescription": "동영상이 시작 대기열에 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다.",
+        "scriptDescription": "Lumi가 스크립트를 작성하고 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다.",
+        "queuedShotsDescription": "스토리보드가 승인되었습니다. 이 동영상은 샷 참조와 렌더링 에셋 준비를 기다리는 중입니다.",
+        "shotsDescription": "스토리보드가 승인되었습니다. Lumi가 샷 참조와 렌더링 에셋을 준비하고 있습니다.",
+        "queuedRenderDescription": "승인된 샷이 렌더링을 기다리고 있습니다.",
+        "renderDescription": "승인된 샷을 최종 동영상으로 렌더링하고 있습니다.",
         "workingDescription": "이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다."
       },
       "review": {
@@ -709,6 +709,7 @@
   },
   "shared": {
     "status": {
+      "queued": "대기 중",
       "queuedForScript": "스크립트 대기 중",
       "writingScript": "스크립트 작성 중",
       "reviewStoryboard": "스토리보드 검토",

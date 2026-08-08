@@ -669,7 +669,10 @@ describe("Job detail page renders extracted English copy", () => {
 
     // The row wraps rather than scrolling: every step - including the current
     // one - stays on screen at 320px, and the badges keep their circle.
-    expect(tracker).toContain("flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap");
+    expect(tracker).toContain("flex flex-wrap items-center gap-x-5 gap-y-2 sm:flex-nowrap");
+    // A wrapped row must group by step: the gap between two steps is wider
+    // than the one between a badge and its own label.
+    expect(tracker).toMatch(/flex items-center gap-2 sm:flex-1/);
     expect(tracker).not.toContain("overflow-x-auto");
     expect(tracker).toMatch(/h-7 w-7 shrink-0/);
     expect(tracker).toMatch(/block whitespace-nowrap text-xs/);
@@ -736,11 +739,11 @@ describe("StatusBadge keeps one story across the two surfaces it renders on", ()
     { ...baseJob.beats[0], review_status: "user_approved" },
   ] as unknown as VideoJob["beats"];
 
-  it("shrinks a worker stage to its tracker step label on the grid", () => {
+  it("shrinks a claimed worker stage to its tracker step label on the grid", () => {
     const cases: Array<[VideoJob, string, string]> = [
-      [{ ...baseJob, status: "queued", storyboard: null }, "Queued for script", "Script"],
+      [{ ...baseJob, status: "queued", storyboard: null }, "Queued for script", "Queued"],
       [{ ...baseJob, status: "submitted", beats: [] }, "Building shots", "Shots"],
-      [{ ...baseJob, status: "queued", beats: approved }, "Queued for render", "Render"],
+      [{ ...baseJob, status: "queued", beats: approved }, "Queued for render", "Queued"],
       [{ ...baseJob, status: "in_progress", beats: approved }, "Rendering", "Render"],
     ];
     for (const [job, full, short] of cases) {
@@ -749,6 +752,17 @@ describe("StatusBadge keeps one story across the two surfaces it renders on", ()
       // The compact label is the tracker's own, so the tile can never name a
       // stage the job page's tracker disagrees with.
       expect(short.length).toBeLessThanOrEqual(full.length);
+    }
+  });
+
+  // Colour and a pulsing dot are not text, so a screen reader would hear the
+  // same word for a job parked in line and one a worker is actively running.
+  it("keeps waiting and working apart in words, not just colour", () => {
+    for (const beats of [[] as VideoJob["beats"], approved]) {
+      const waiting = badgeText({ ...baseJob, status: "queued", beats }, true);
+      const working = badgeText({ ...baseJob, status: "in_progress", beats }, true);
+      expect(waiting).toBe("Queued");
+      expect(working).not.toBe(waiting);
     }
   });
 

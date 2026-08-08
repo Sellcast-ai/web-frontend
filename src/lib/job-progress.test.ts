@@ -167,7 +167,7 @@ describe("jobProgressDisplay", () => {
       stepKey: "script",
       statusLabelKey: "working",
       workingTitleKey: "working",
-      workingDescriptionKey: "workingDescription",
+      workingDescriptionKey: null,
     });
     expect(
       jobProgressDisplay(
@@ -177,7 +177,7 @@ describe("jobProgressDisplay", () => {
       stepKey: "shots",
       statusLabelKey: "working",
       workingTitleKey: "working",
-      workingDescriptionKey: "workingDescription",
+      workingDescriptionKey: null,
     });
   });
 
@@ -194,13 +194,14 @@ describe("jobProgressDisplay", () => {
         jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })),
       ).toMatchObject({
         workingTitleKey: "working",
-        workingDescriptionKey: "workingDescription",
-        statusNamesItself: true,
+        workingDescriptionKey: null,
+        phase: null,
       });
     }
-    for (const status of ["queued", "submitted", "in_progress"] as VideoJobStatus[]) {
-      expect(jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })))
-        .toMatchObject({ statusNamesItself: false });
-    }
+    expect(
+      (["queued", "submitted", "in_progress"] as VideoJobStatus[]).map(
+        (status) => jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })).phase,
+      ),
+    ).toEqual(["queued", "active", "active"]);
   });
 });

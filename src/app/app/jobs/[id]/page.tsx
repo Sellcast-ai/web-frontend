@@ -399,7 +399,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
   return (
     <div
       data-testid="job-progress"
-      className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 sm:flex-nowrap sm:gap-2"
+      className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 sm:flex-nowrap sm:gap-2"
     >
       {STEP_LABEL_KEYS.map((labelKey, i) => {
         const label = t(labelKey);
@@ -471,8 +471,13 @@ function WorkingView({ job }: { job: VideoJob }) {
         <p className="mt-4 font-display text-lg font-semibold text-ink">
           {t(display.workingTitleKey)}
         </p>
+        {display.workingDescriptionKey && (
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t(display.workingDescriptionKey)}
+          </p>
+        )}
         <p className="mt-1 text-sm text-muted-foreground">
-          {t(display.workingDescriptionKey)}
+          {t("workingDescription")}
         </p>
       </div>
       {job.beats.length > 0 && (

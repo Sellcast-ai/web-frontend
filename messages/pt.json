@@ -555,12 +555,12 @@
         "queuedForRender": "Aguardando para renderizar seu vídeo…",
         "renderingVideo": "Renderizando seu vídeo…",
         "working": "Trabalhando no seu vídeo…",
-        "queuedScriptDescription": "Seu vídeo está na fila para começar. Nada é renderizado até você aprovar o storyboard. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
-        "scriptDescription": "A Lumi está escrevendo seu roteiro. Nada é renderizado até você aprovar o storyboard. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
-        "queuedShotsDescription": "Seu storyboard foi aprovado. Este vídeo está na fila para preparar as referências das tomadas e os recursos de renderização. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
-        "shotsDescription": "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
-        "queuedRenderDescription": "Suas tomadas aprovadas estão na fila para renderizar. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
-        "renderDescription": "Suas tomadas aprovadas estão sendo renderizadas no vídeo final. Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
+        "queuedScriptDescription": "Seu vídeo está na fila para começar. Nada é renderizado até você aprovar o storyboard.",
+        "scriptDescription": "A Lumi está escrevendo seu roteiro. Nada é renderizado até você aprovar o storyboard.",
+        "queuedShotsDescription": "Seu storyboard foi aprovado. Este vídeo está na fila para preparar as referências das tomadas e os recursos de renderização.",
+        "shotsDescription": "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização.",
+        "queuedRenderDescription": "Suas tomadas aprovadas estão na fila para renderizar.",
+        "renderDescription": "Suas tomadas aprovadas estão sendo renderizadas no vídeo final.",
         "workingDescription": "Esta página é atualizada automaticamente. Você pode sair e voltar depois."
       },
       "review": {
@@ -709,6 +709,7 @@
   },
   "shared": {
     "status": {
+      "queued": "Na fila",
       "queuedForScript": "Na fila para roteiro",
       "writingScript": "Escrevendo roteiro",
       "reviewStoryboard": "Revisar storyboard",

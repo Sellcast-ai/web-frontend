@@ -555,12 +555,12 @@
         "queuedForRender": "Waiting to render your video…",
         "renderingVideo": "Rendering your video…",
         "working": "Working on your video…",
-        "queuedScriptDescription": "Your video is in line to start. Nothing is rendered until you approve the storyboard. This page updates automatically. You can leave and come back.",
-        "scriptDescription": "Lumi is writing your script. Nothing is rendered until you approve the storyboard. This page updates automatically. You can leave and come back.",
-        "queuedShotsDescription": "Your storyboard is approved. This video is in line to have its shot references and render assets built. This page updates automatically. You can leave and come back.",
-        "shotsDescription": "Your storyboard is approved. Lumi is preparing the shot references and render assets now. This page updates automatically. You can leave and come back.",
-        "queuedRenderDescription": "Your approved shots are in line to render. This page updates automatically. You can leave and come back.",
-        "renderDescription": "Your approved shots are being rendered into the final video. This page updates automatically. You can leave and come back.",
+        "queuedScriptDescription": "Your video is in line to start. Nothing is rendered until you approve the storyboard.",
+        "scriptDescription": "Lumi is writing your script. Nothing is rendered until you approve the storyboard.",
+        "queuedShotsDescription": "Your storyboard is approved. This video is in line to have its shot references and render assets built.",
+        "shotsDescription": "Your storyboard is approved. Lumi is preparing the shot references and render assets now.",
+        "queuedRenderDescription": "Your approved shots are in line to render.",
+        "renderDescription": "Your approved shots are being rendered into the final video.",
         "workingDescription": "This page updates automatically. You can leave and come back."
       },
       "review": {
@@ -709,6 +709,7 @@
   },
   "shared": {
     "status": {
+      "queued": "Queued",
       "queuedForScript": "Queued for script",
       "writingScript": "Writing script",
       "reviewStoryboard": "Review storyboard",

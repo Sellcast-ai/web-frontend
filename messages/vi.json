@@ -555,12 +555,12 @@
         "queuedForRender": "Đang chờ render video của bạn…",
         "renderingVideo": "Đang render video của bạn…",
         "working": "Đang xử lý video của bạn…",
-        "queuedScriptDescription": "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
-        "scriptDescription": "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
-        "queuedShotsDescription": "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
-        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
-        "queuedRenderDescription": "Các cảnh đã duyệt của bạn đang xếp hàng chờ render. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
-        "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng. Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+        "queuedScriptDescription": "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard.",
+        "scriptDescription": "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard.",
+        "queuedShotsDescription": "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+        "queuedRenderDescription": "Các cảnh đã duyệt của bạn đang xếp hàng chờ render.",
+        "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
         "workingDescription": "Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại."
       },
       "review": {
@@ -709,6 +709,7 @@
   },
   "shared": {
     "status": {
+      "queued": "Đang chờ",
       "queuedForScript": "Chờ viết kịch bản",
       "writingScript": "Đang viết kịch bản",
       "reviewStoryboard": "Xem lại storyboard",
