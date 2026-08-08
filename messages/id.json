@@ -548,12 +548,23 @@
         "shot": "Tembakan {number}"
       },
       "working": {
-        "renderingBeats": "Merender shot Anda…",
-        "writingScript": "Menulis skrip dasar Anda…",
-        "description": "Halaman ini diperbarui secara otomatis. Anda bisa pergi dan kembali."
+        "queuedForScript": "Menunggu untuk menulis skrip Anda…",
+        "writingScript": "Menulis skrip Anda…",
+        "queuedForShots": "Menunggu untuk membangun shot Anda…",
+        "buildingShots": "Membangun shot Anda…",
+        "queuedForRender": "Menunggu untuk merender video Anda…",
+        "renderingVideo": "Merender video Anda…",
+        "working": "Mengerjakan video Anda…",
+        "queuedScriptDescription": "Video Anda sedang antre untuk dimulai. Tidak ada yang dirender sampai Anda menyetujui storyboard.",
+        "scriptDescription": "Lumi sedang menulis naskah Anda. Tidak ada yang dirender sampai Anda menyetujui storyboard.",
+        "queuedShotsDescription": "Storyboard Anda sudah disetujui. Video ini sedang antre untuk penyiapan referensi shot dan aset render.",
+        "shotsDescription": "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render.",
+        "queuedRenderDescription": "Shot yang Anda setujui sedang antre untuk dirender.",
+        "renderDescription": "Shot yang Anda setujui sedang dirender menjadi video final.",
+        "workingDescription": "Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi."
       },
       "review": {
-        "title": "Tinjau storyboard Anda",
+        "title": "Tinjau shot Anda",
         "description": "Setujui setiap shot, atau buat ulang yang tidak Anda sukai. Lumi merender setelah setiap shot disetujui."
       },
       "storyboard": {
@@ -698,18 +709,23 @@
   },
   "shared": {
     "status": {
-      "queued": "Mengantri",
-      "submitted": "Dikirim",
-      "rendering": "Render",
-      "reviewStoryboard": "Tinjau papan cerita",
-      "needsReview": "Perlu peninjauan",
+      "queued": "Antre",
+      "queuedForScript": "Antre untuk skrip",
+      "writingScript": "Menulis skrip",
+      "reviewStoryboard": "Tinjau storyboard",
+      "queuedForShots": "Antre untuk shot",
+      "buildingShots": "Membangun shot",
+      "reviewShots": "Tinjau shot",
+      "queuedForRender": "Antre untuk render",
+      "rendering": "Merender",
       "ready": "Siap",
-      "failed": "Gagal"
+      "failed": "Gagal",
+      "working": "Bekerja"
     },
     "jobProgress": {
-      "script": "naskah",
-      "beats": "Shot",
-      "review": "Ulasan",
+      "script": "Naskah",
+      "review": "Tinjau",
+      "shots": "Shot",
       "render": "Render",
       "ready": "Siap"
     },

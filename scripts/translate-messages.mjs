@@ -1446,25 +1446,158 @@ const MANUAL_OVERRIDES = {
   // machine cannot survive - it read it as a heartbeat/musical beat in every
   // locale ("Latidos", "nhịp đập", "เต้น") and as "to defeat" in id
   // ("mengalahkan"). Shot/storyboard wording is hand-set here; do not unpin.
-  "app.jobs.working.renderingBeats": {
-    es: "Renderizando tus tomas…",
-    zh: "正在渲染你的镜头…",
-    ja: "ショットをレンダリング中…",
-    ko: "샷을 렌더링하는 중…",
-    pt: "Renderizando suas tomadas…",
-    id: "Merender shot Anda…",
-    vi: "Đang render các cảnh của bạn…",
-    th: "กำลังเรนเดอร์ช็อตของคุณ…",
+  // The waiting copy is one story per stage, so the whole block is hand-set:
+  // the machine loses the shot noun, and `scriptDescription` is a money fact
+  // (nothing renders before approval) it must not be allowed to reword.
+  "app.jobs.working.queuedForScript": {
+    es: "Esperando para escribir tu guion…",
+    zh: "正在等待编写脚本…",
+    ja: "スクリプト作成を待っています…",
+    ko: "스크립트 작성을 기다리는 중…",
+    pt: "Aguardando para escrever seu roteiro…",
+    id: "Menunggu untuk menulis skrip Anda…",
+    vi: "Đang chờ viết kịch bản của bạn…",
+    th: "กำลังรอเขียนสคริปต์ของคุณ…",
+  },
+  "app.jobs.working.writingScript": {
+    es: "Escribiendo tu guion…",
+    zh: "正在编写脚本…",
+    ja: "スクリプトを書いています…",
+    ko: "스크립트를 작성하는 중…",
+    pt: "Escrevendo seu roteiro…",
+    id: "Menulis skrip Anda…",
+    vi: "Đang viết kịch bản của bạn…",
+    th: "กำลังเขียนสคริปต์ของคุณ…",
+  },
+  "app.jobs.working.queuedForShots": {
+    es: "Esperando para crear tus tomas…",
+    zh: "正在等待制作镜头…",
+    ja: "ショット作成を待っています…",
+    ko: "샷 제작을 기다리는 중…",
+    pt: "Aguardando para criar suas tomadas…",
+    id: "Menunggu untuk membangun shot Anda…",
+    vi: "Đang chờ dựng các cảnh của bạn…",
+    th: "กำลังรอสร้างช็อตของคุณ…",
+  },
+  "app.jobs.working.buildingShots": {
+    es: "Creando tus tomas…",
+    zh: "正在制作镜头…",
+    ja: "ショットを作成しています…",
+    ko: "샷을 제작하는 중…",
+    pt: "Criando suas tomadas…",
+    id: "Membangun shot Anda…",
+    vi: "Đang dựng các cảnh của bạn…",
+    th: "กำลังสร้างช็อตของคุณ…",
+  },
+  "app.jobs.working.queuedForRender": {
+    es: "Esperando para renderizar tu video…",
+    zh: "正在等待渲染视频…",
+    ja: "動画レンダリングを待っています…",
+    ko: "동영상 렌더링을 기다리는 중…",
+    pt: "Aguardando para renderizar seu vídeo…",
+    id: "Menunggu untuk merender video Anda…",
+    vi: "Đang chờ render video của bạn…",
+    th: "กำลังรอเรนเดอร์วิดีโอของคุณ…",
+  },
+  "app.jobs.working.renderingVideo": {
+    es: "Renderizando tu video…",
+    zh: "正在渲染视频…",
+    ja: "動画をレンダリングしています…",
+    ko: "동영상을 렌더링하는 중…",
+    pt: "Renderizando seu vídeo…",
+    id: "Merender video Anda…",
+    vi: "Đang render video của bạn…",
+    th: "กำลังเรนเดอร์วิดีโอของคุณ…",
+  },
+  "app.jobs.working.working": {
+    es: "Trabajando en tu video…",
+    zh: "正在处理你的视频…",
+    ja: "動画を処理しています…",
+    ko: "동영상을 작업 중…",
+    pt: "Trabalhando no seu vídeo…",
+    id: "Mengerjakan video Anda…",
+    vi: "Đang xử lý video của bạn…",
+    th: "กำลังทำงานกับวิดีโอของคุณ…",
+  },
+  "app.jobs.working.queuedScriptDescription": {
+    es: "Tu video está en cola para empezar. No se renderiza nada hasta que apruebas el storyboard.",
+    zh: "你的视频正在排队等待开始。在你批准分镜前不会开始渲染。",
+    ja: "動画は開始待ちの列に並んでいます。ストーリーボードを承認するまでレンダリングは始まりません。",
+    ko: "동영상이 시작 대기열에 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다.",
+    pt: "Seu vídeo está na fila para começar. Nada é renderizado até você aprovar o storyboard.",
+    id: "Video Anda sedang antre untuk dimulai. Tidak ada yang dirender sampai Anda menyetujui storyboard.",
+    vi: "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard.",
+    th: "วิดีโอของคุณกำลังรอคิวเพื่อเริ่ม จะยังไม่เริ่มเรนเดอร์จนกว่าคุณจะอนุมัติสตอรี่บอร์ด",
+  },
+  "app.jobs.working.scriptDescription": {
+    es: "Lumi está escribiendo tu guion. No se renderiza nada hasta que apruebas el storyboard.",
+    zh: "Lumi 正在撰写你的脚本。在你批准分镜前不会开始渲染。",
+    ja: "Lumi がスクリプトを作成しています。ストーリーボードを承認するまでレンダリングは始まりません。",
+    ko: "Lumi가 스크립트를 작성하고 있습니다. 스토리보드를 승인하기 전까지 렌더링은 시작되지 않습니다.",
+    pt: "A Lumi está escrevendo seu roteiro. Nada é renderizado até você aprovar o storyboard.",
+    id: "Lumi sedang menulis naskah Anda. Tidak ada yang dirender sampai Anda menyetujui storyboard.",
+    vi: "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard.",
+    th: "Lumi กำลังเขียนสคริปต์ของคุณ จะยังไม่เริ่มเรนเดอร์จนกว่าคุณจะอนุมัติสตอรี่บอร์ด",
+  },
+  "app.jobs.working.queuedShotsDescription": {
+    es: "Tu storyboard está aprobado. Este video está en cola para preparar las referencias de tomas y los recursos de renderizado.",
+    zh: "你的分镜已批准。此视频正在排队等待生成镜头参考图和渲染素材。",
+    ja: "ストーリーボードは承認済みです。この動画はショット参照とレンダリング素材の準備待ちです。",
+    ko: "스토리보드가 승인되었습니다. 이 동영상은 샷 참조와 렌더링 에셋 준비를 기다리는 중입니다.",
+    pt: "Seu storyboard foi aprovado. Este vídeo está na fila para preparar as referências das tomadas e os recursos de renderização.",
+    id: "Storyboard Anda sudah disetujui. Video ini sedang antre untuk penyiapan referensi shot dan aset render.",
+    vi: "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+    th: "สตอรี่บอร์ดของคุณได้รับอนุมัติแล้ว วิดีโอนี้กำลังรอคิวเพื่อเตรียมภาพอ้างอิงของช็อตและไฟล์สำหรับเรนเดอร์",
+  },
+  "app.jobs.working.shotsDescription": {
+    es: "Tu storyboard está aprobado. Lumi está preparando las referencias de tomas y los recursos de renderizado.",
+    zh: "你的分镜已批准。Lumi 正在准备镜头参考图和渲染素材。",
+    ja: "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しています。",
+    ko: "스토리보드가 승인되었습니다. Lumi가 샷 참조와 렌더링 에셋을 준비하고 있습니다.",
+    pt: "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização.",
+    id: "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render.",
+    vi: "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+    th: "สตอรี่บอร์ดของคุณได้รับอนุมัติแล้ว Lumi กำลังเตรียมภาพอ้างอิงของช็อตและไฟล์สำหรับเรนเดอร์",
+  },
+  "app.jobs.working.queuedRenderDescription": {
+    es: "Tus tomas aprobadas están en cola para renderizarse.",
+    zh: "你批准的镜头正在排队等待渲染。",
+    ja: "承認済みのショットはレンダリング待ちです。",
+    ko: "승인된 샷이 렌더링을 기다리고 있습니다.",
+    pt: "Suas tomadas aprovadas estão na fila para renderizar.",
+    id: "Shot yang Anda setujui sedang antre untuk dirender.",
+    vi: "Các cảnh đã duyệt của bạn đang xếp hàng chờ render.",
+    th: "ช็อตที่คุณอนุมัติกำลังรอคิวเรนเดอร์",
+  },
+  "app.jobs.working.renderDescription": {
+    es: "Tus tomas aprobadas se están renderizando en el video final.",
+    zh: "你批准的镜头正在渲染成最终视频。",
+    ja: "承認済みのショットを最終動画にレンダリングしています。",
+    ko: "승인된 샷을 최종 동영상으로 렌더링하고 있습니다.",
+    pt: "Suas tomadas aprovadas estão sendo renderizadas no vídeo final.",
+    id: "Shot yang Anda setujui sedang dirender menjadi video final.",
+    vi: "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
+    th: "ช็อตที่คุณอนุมัติกำลังถูกเรนเดอร์เป็นวิดีโอสุดท้าย",
+  },
+  "app.jobs.working.workingDescription": {
+    es: "Esta página se actualiza automáticamente. Puedes salir y volver.",
+    zh: "此页面会自动更新，你可以离开后再回来。",
+    ja: "このページは自動更新されるので、離れてもあとで戻れます。",
+    ko: "이 페이지는 자동으로 업데이트되니 나갔다가 다시 오셔도 됩니다.",
+    pt: "Esta página é atualizada automaticamente. Você pode sair e voltar depois.",
+    id: "Halaman ini diperbarui secara otomatis. Anda boleh pergi dan kembali lagi.",
+    vi: "Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại.",
+    th: "หน้านี้อัปเดตโดยอัตโนมัติ คุณออกไปก่อนแล้วกลับมาดูใหม่ได้",
   },
   "app.jobs.review.title": {
-    es: "Revisa tu storyboard",
-    zh: "检查你的分镜",
-    ja: "ストーリーボードを確認",
-    ko: "스토리보드를 검토하세요",
-    pt: "Revise seu storyboard",
-    id: "Tinjau storyboard Anda",
-    vi: "Xem lại storyboard của bạn",
-    th: "ตรวจสอบสตอรี่บอร์ดของคุณ",
+    es: "Revisa tus tomas",
+    zh: "检查你的镜头",
+    ja: "ショットを確認",
+    ko: "샷을 검토하세요",
+    pt: "Revise suas tomadas",
+    id: "Tinjau shot Anda",
+    vi: "Xem lại các cảnh của bạn",
+    th: "ตรวจสอบช็อตของคุณ",
   },
   "app.jobs.review.description": {
     es: "Aprueba cada toma, o regenera las que no te convenzan. Lumi renderiza en cuanto cada toma está aprobada.",
@@ -1476,7 +1609,30 @@ const MANUAL_OVERRIDES = {
     vi: "Duyệt từng cảnh, hoặc tạo lại những cảnh bạn chưa ưng. Lumi sẽ render khi mọi cảnh đã được duyệt.",
     th: "อนุมัติแต่ละช็อต หรือสร้างช็อตที่คุณไม่ชอบขึ้นมาใหม่ Lumi จะเรนเดอร์เมื่อทุกช็อตได้รับการอนุมัติแล้ว",
   },
-  "shared.jobProgress.beats": {
+  // The five tracker labels are one row read left to right, so all of them are
+  // pinned together: the machine read "Review" as a product comment in zh
+  // ("评论") and dropped the initial capital on single-word steps in id/vi.
+  "shared.jobProgress.script": {
+    es: "Guion",
+    zh: "脚本",
+    ja: "スクリプト",
+    ko: "스크립트",
+    pt: "Roteiro",
+    id: "Naskah",
+    vi: "Kịch bản",
+    th: "สคริปต์",
+  },
+  "shared.jobProgress.review": {
+    es: "Revisión",
+    zh: "审阅",
+    ja: "レビュー",
+    ko: "검토",
+    pt: "Revisão",
+    id: "Tinjau",
+    vi: "Xem lại",
+    th: "ตรวจสอบ",
+  },
+  "shared.jobProgress.shots": {
     es: "Tomas",
     zh: "镜头",
     ja: "ショット",
@@ -1485,6 +1641,131 @@ const MANUAL_OVERRIDES = {
     id: "Shot",
     vi: "Cảnh",
     th: "ช็อต",
+  },
+  "shared.jobProgress.render": {
+    es: "Render",
+    zh: "渲染",
+    ja: "レンダリング",
+    ko: "렌더링",
+    pt: "Render",
+    id: "Render",
+    vi: "Render",
+    th: "เรนเดอร์",
+  },
+  "shared.jobProgress.ready": {
+    es: "Listo",
+    zh: "完成",
+    ja: "準備完了",
+    ko: "완료",
+    pt: "Pronto",
+    id: "Siap",
+    vi: "Sẵn sàng",
+    th: "พร้อม",
+  },
+  // Job status badge vocabulary: same shot noun, plus the queue/stage split the
+  // machine flattens back into a bare "Queued" for every wait.
+  "shared.status.queued": {
+    es: "En cola",
+    zh: "排队中",
+    ja: "待機中",
+    ko: "대기 중",
+    pt: "Na fila",
+    id: "Antre",
+    vi: "Đang chờ",
+    th: "รอคิว",
+  },
+  "shared.status.queuedForScript": {
+    es: "En cola para guion",
+    zh: "等待脚本",
+    ja: "スクリプト待ち",
+    ko: "스크립트 대기 중",
+    pt: "Na fila para roteiro",
+    id: "Antre untuk skrip",
+    vi: "Chờ viết kịch bản",
+    th: "รอเขียนสคริปต์",
+  },
+  "shared.status.writingScript": {
+    es: "Escribiendo guion",
+    zh: "正在写脚本",
+    ja: "スクリプト作成中",
+    ko: "스크립트 작성 중",
+    pt: "Escrevendo roteiro",
+    id: "Menulis skrip",
+    vi: "Đang viết kịch bản",
+    th: "กำลังเขียนสคริปต์",
+  },
+  "shared.status.queuedForShots": {
+    es: "En cola para tomas",
+    zh: "等待镜头",
+    ja: "ショット待ち",
+    ko: "샷 대기 중",
+    pt: "Na fila para tomadas",
+    id: "Antre untuk shot",
+    vi: "Chờ dựng cảnh",
+    th: "รอสร้างช็อต",
+  },
+  "shared.status.buildingShots": {
+    es: "Creando tomas",
+    zh: "正在制作镜头",
+    ja: "ショット作成中",
+    ko: "샷 제작 중",
+    pt: "Criando tomadas",
+    id: "Membangun shot",
+    vi: "Đang dựng cảnh",
+    th: "กำลังสร้างช็อต",
+  },
+  "shared.status.reviewShots": {
+    es: "Revisar tomas",
+    zh: "检查镜头",
+    ja: "ショット確認",
+    ko: "샷 검토",
+    pt: "Revisar tomadas",
+    id: "Tinjau shot",
+    vi: "Xem lại cảnh",
+    th: "ตรวจสอบช็อต",
+  },
+  "shared.status.queuedForRender": {
+    es: "En cola para render",
+    zh: "等待渲染",
+    ja: "レンダリング待ち",
+    ko: "렌더링 대기 중",
+    pt: "Na fila para render",
+    id: "Antre untuk render",
+    vi: "Chờ render",
+    th: "รอเรนเดอร์",
+  },
+  // Same storyboard noun the waiting copy uses, per locale: the badge and the
+  // body sit on the same job page, so they may not name the artifact two ways
+  // (the machine had zh as 回顾故事板 against the page's 分镜).
+  "shared.status.reviewStoryboard": {
+    es: "Revisar storyboard",
+    zh: "审阅分镜",
+    ja: "ストーリーボード確認",
+    ko: "스토리보드 검토",
+    pt: "Revisar storyboard",
+    id: "Tinjau storyboard",
+    vi: "Xem lại storyboard",
+    th: "ตรวจสอบสตอรี่บอร์ด",
+  },
+  "shared.status.rendering": {
+    es: "Renderizando",
+    zh: "正在渲染",
+    ja: "レンダリング中",
+    ko: "렌더링 중",
+    pt: "Renderizando",
+    id: "Merender",
+    vi: "Đang render",
+    th: "กำลังเรนเดอร์",
+  },
+  "shared.status.working": {
+    es: "Trabajando",
+    zh: "处理中",
+    ja: "処理中",
+    ko: "작업 중",
+    pt: "Trabalhando",
+    id: "Bekerja",
+    vi: "Đang xử lý",
+    th: "กำลังทำงาน",
   },
   // Connections-page honesty copy (2026-08-06): the Shopify OAuth handshake
   // stores a real token but nothing imports a catalog from it yet, so this
@@ -1559,12 +1840,21 @@ function flatten(value, prefix = "", out = []) {
   return out;
 }
 
+function pathParts(leafPath) {
+  return leafPath.replaceAll("[", ".").replaceAll("]", "").split(".").filter(Boolean);
+}
+
+function getAtPath(source, leafPath) {
+  let cursor = source;
+  for (const raw of pathParts(leafPath)) {
+    if (cursor == null || typeof cursor !== "object") return undefined;
+    cursor = cursor[/^\d+$/.test(raw) ? Number(raw) : raw];
+  }
+  return cursor;
+}
+
 function setAtPath(target, leafPath, value) {
-  const parts = leafPath
-    .replaceAll("[", ".")
-    .replaceAll("]", "")
-    .split(".")
-    .filter(Boolean);
+  const parts = pathParts(leafPath);
   let cursor = target;
   for (let i = 0; i < parts.length; i += 1) {
     const raw = parts[i];
@@ -1677,20 +1967,68 @@ function translateBatch(batch, googleLocale) {
   throw new Error("unreachable");
 }
 
-function translateLocale(source, locale, googleLocale) {
+// Only an absent catalog means "nothing to keep". An unreadable or malformed one
+// must stop the run: treating it as absent rebuilds the whole locale from machine
+// output, destroying every hand-refined leaf it still holds.
+function readJson(file) {
+  let raw;
+  try {
+    raw = fs.readFileSync(file, "utf8");
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`${file} is not valid JSON: ${error.message}`);
+  }
+}
+
+// The English source as of the last commit that wrote this catalog: any leaf whose
+// English has not moved since then is already translated, and its (often hand-refined)
+// value must survive the run. Unknowable -> keep, because a needless retranslation
+// silently destroys hand work while a stale one is visible in the diff.
+function sourceWhenLocaleWasWritten(locale) {
+  try {
+    const sha = execFileSync("git", ["log", "-1", "--format=%H", "--", `messages/${locale}.json`], {
+      encoding: "utf8",
+    }).trim();
+    if (!sha) return null;
+    return JSON.parse(
+      execFileSync("git", ["show", `${sha}:${SOURCE}`], {
+        encoding: "utf8",
+        maxBuffer: 1024 * 1024 * 8,
+      }),
+    );
+  } catch {
+    return null;
+  }
+}
+
+function translateLocale(source, locale, googleLocale, { force }) {
+  const existing = force ? null : readJson(path.join("messages", `${locale}.json`));
+  const baseline = existing ? sourceWhenLocaleWasWritten(locale) : null;
+
   const leaves = flatten(source).map((leaf) => {
     const override = MANUAL_OVERRIDES[leaf.path]?.[locale];
-    if (override) return { ...leaf, override };
+    if (override) return { ...leaf, keep: override };
+    const current = existing && getAtPath(existing, leaf.path);
+    const sourceMoved = baseline ? getAtPath(baseline, leaf.path) !== leaf.value : false;
+    if (typeof current === "string" && !sourceMoved) return { ...leaf, keep: current };
     const { protectedValue, replacements } = protect(leaf.value);
     return { ...leaf, protectedValue, replacements };
   });
 
   const target = {};
-  for (const leaf of leaves.filter((item) => item.override)) {
-    setAtPath(target, leaf.path, leaf.override);
+  for (const leaf of leaves.filter((item) => item.keep !== undefined)) {
+    setAtPath(target, leaf.path, leaf.keep);
   }
 
-  const generatedLeaves = leaves.filter((item) => !item.override);
+  const generatedLeaves = leaves.filter((item) => item.keep === undefined);
+  process.stderr.write(
+    `${locale}: keeping ${leaves.length - generatedLeaves.length}, translating ${generatedLeaves.length}\n`,
+  );
   let completed = 0;
   for (const batch of chunks(generatedLeaves)) {
     const translated = translateBatch(batch, googleLocale);
@@ -1707,7 +2045,20 @@ function translateLocale(source, locale, googleLocale) {
 }
 
 const source = JSON.parse(fs.readFileSync(SOURCE, "utf8"));
-const requestedLocales = process.argv.slice(2);
+
+const sourcePaths = new Set(flatten(source).map((leaf) => leaf.path));
+const orphanedOverrides = Object.keys(MANUAL_OVERRIDES).filter(
+  (path) => !sourcePaths.has(path),
+);
+if (orphanedOverrides.length > 0) {
+  throw new Error(
+    `MANUAL_OVERRIDES pins keys that no longer exist in ${SOURCE} (rename or drop them):\n  ${orphanedOverrides.join("\n  ")}`,
+  );
+}
+
+const argv = process.argv.slice(2);
+const force = argv.includes("--force");
+const requestedLocales = argv.filter((arg) => arg !== "--force");
 const selectedTargets =
   requestedLocales.length === 0
     ? TARGETS
@@ -1720,7 +2071,7 @@ const selectedTargets =
 
 for (const [locale, googleLocale] of Object.entries(selectedTargets)) {
   process.stderr.write(`Translating ${locale}...\n`);
-  const target = translateLocale(source, locale, googleLocale);
+  const target = translateLocale(source, locale, googleLocale, { force });
   const targetPath = path.join("messages", `${locale}.json`);
   fs.writeFileSync(targetPath, `${JSON.stringify(target, null, 2)}\n`);
 }

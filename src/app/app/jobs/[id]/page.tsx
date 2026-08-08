@@ -52,7 +52,7 @@ import {
   knownOutcomeNudges,
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
-import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
+import { STEP_LABEL_KEYS, jobProgressDisplay } from "@/lib/job-progress";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
@@ -162,12 +162,12 @@ export default function JobDetailPage() {
         </div>
         <div className="flex items-center gap-3">
           {active && <LiveIndicator updatedAt={dataUpdatedAt} />}
-          <StatusBadge status={job.status} />
+          <StatusBadge job={job} />
         </div>
       </div>
 
       {/* progress */}
-      <Progress current={stepIndex(job)} failed={job.status === "failed"} />
+      <Progress current={jobProgressDisplay(job).stepIndex} failed={job.status === "failed"} />
 
       {/* state-specific body */}
       {job.status === "completed" && job.video_url ? (
@@ -397,17 +397,20 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
   const t = useTranslations("shared.jobProgress");
 
   return (
-    <div className="mt-6 flex items-center gap-2">
+    <div
+      data-testid="job-progress"
+      className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 sm:flex-nowrap sm:gap-2"
+    >
       {STEP_LABEL_KEYS.map((labelKey, i) => {
         const label = t(labelKey);
         const done = i < current;
         const isCurrent = i === current;
         return (
-          <div key={labelKey} className="flex flex-1 items-center gap-2">
+          <div key={labelKey} className="flex items-center gap-2 sm:flex-1">
             <div className="flex items-center gap-2">
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
+                  "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors duration-500",
                   failed && isCurrent
                     ? "bg-rose text-white"
                     : done
@@ -427,7 +430,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
               <span
                 className={cn(
-                  "hidden text-xs font-semibold sm:block",
+                  "block text-xs font-semibold leading-tight",
                   isCurrent ? "text-ink" : "text-muted-foreground",
                 )}
               >
@@ -435,7 +438,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
             </div>
             {i < STEP_LABEL_KEYS.length - 1 && (
-              <span className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-border">
+              <span className="relative hidden h-0.5 flex-1 overflow-hidden rounded-full bg-border sm:block">
                 <motion.span
                   className="absolute inset-0 origin-left rounded-full bg-success dark:bg-live"
                   initial={false}
@@ -455,19 +458,26 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
 
 function WorkingView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.working");
+  const display = jobProgressDisplay(job);
   return (
     <div className="mt-8">
-      <div className="rounded-card border border-border bg-card p-8 text-center">
+      <div
+        data-testid="job-working"
+        className="rounded-card border border-border bg-card p-8 text-center"
+      >
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gradient text-white">
           <Sparkles className="h-7 w-7" />
         </div>
         <p className="mt-4 font-display text-lg font-semibold text-ink">
-          {job.beats.length
-            ? t("renderingBeats")
-            : t("writingScript")}
+          {t(display.workingTitleKey)}
         </p>
+        {display.workingDescriptionKey && (
+          <p className="mt-1 text-sm text-muted-foreground">
+            {t(display.workingDescriptionKey)}
+          </p>
+        )}
         <p className="mt-1 text-sm text-muted-foreground">
-          {t("description")}
+          {t("workingDescription")}
         </p>
       </div>
       {job.beats.length > 0 && (

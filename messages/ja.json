@@ -548,12 +548,23 @@
         "shot": "ショット {number}"
       },
       "working": {
-        "renderingBeats": "ショットをレンダリング中…",
-        "writingScript": "根拠のあるスクリプトを書いてください…",
-        "description": "このページは自動的に更新されます。出発して戻ってくることもできます。"
+        "queuedForScript": "スクリプト作成を待っています…",
+        "writingScript": "スクリプトを書いています…",
+        "queuedForShots": "ショット作成を待っています…",
+        "buildingShots": "ショットを作成しています…",
+        "queuedForRender": "動画レンダリングを待っています…",
+        "renderingVideo": "動画をレンダリングしています…",
+        "working": "動画を処理しています…",
+        "queuedScriptDescription": "動画は開始待ちの列に並んでいます。ストーリーボードを承認するまでレンダリングは始まりません。",
+        "scriptDescription": "Lumi がスクリプトを作成しています。ストーリーボードを承認するまでレンダリングは始まりません。",
+        "queuedShotsDescription": "ストーリーボードは承認済みです。この動画はショット参照とレンダリング素材の準備待ちです。",
+        "shotsDescription": "ストーリーボードは承認済みです。Lumi がショット参照とレンダリング素材を準備しています。",
+        "queuedRenderDescription": "承認済みのショットはレンダリング待ちです。",
+        "renderDescription": "承認済みのショットを最終動画にレンダリングしています。",
+        "workingDescription": "このページは自動更新されるので、離れてもあとで戻れます。"
       },
       "review": {
-        "title": "ストーリーボードを確認",
+        "title": "ショットを確認",
         "description": "各ショットを承認するか、気に入らないものを再生成してください。すべてのショットが承認されると Lumi がレンダリングします。"
       },
       "storyboard": {
@@ -698,18 +709,23 @@
   },
   "shared": {
     "status": {
-      "queued": "キューに入れられました",
-      "submitted": "提出済み",
-      "rendering": "レンダリング",
-      "reviewStoryboard": "ストーリーボードをレビューする",
-      "needsReview": "見直しが必要",
+      "queued": "待機中",
+      "queuedForScript": "スクリプト待ち",
+      "writingScript": "スクリプト作成中",
+      "reviewStoryboard": "ストーリーボード確認",
+      "queuedForShots": "ショット待ち",
+      "buildingShots": "ショット作成中",
+      "reviewShots": "ショット確認",
+      "queuedForRender": "レンダリング待ち",
+      "rendering": "レンダリング中",
       "ready": "準備完了",
-      "failed": "失敗しました"
+      "failed": "失敗しました",
+      "working": "処理中"
     },
     "jobProgress": {
       "script": "スクリプト",
-      "beats": "ショット",
       "review": "レビュー",
+      "shots": "ショット",
       "render": "レンダリング",
       "ready": "準備完了"
     },

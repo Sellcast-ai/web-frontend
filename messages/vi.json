@@ -548,12 +548,23 @@
         "shot": "Bắn {number}"
       },
       "working": {
-        "renderingBeats": "Đang render các cảnh của bạn…",
-        "writingScript": "Viết kịch bản có căn cứ của bạn…",
-        "description": "Trang này cập nhật tự động. Bạn có thể rời đi và quay lại."
+        "queuedForScript": "Đang chờ viết kịch bản của bạn…",
+        "writingScript": "Đang viết kịch bản của bạn…",
+        "queuedForShots": "Đang chờ dựng các cảnh của bạn…",
+        "buildingShots": "Đang dựng các cảnh của bạn…",
+        "queuedForRender": "Đang chờ render video của bạn…",
+        "renderingVideo": "Đang render video của bạn…",
+        "working": "Đang xử lý video của bạn…",
+        "queuedScriptDescription": "Video của bạn đang xếp hàng chờ bắt đầu. Chưa render gì cho đến khi bạn duyệt storyboard.",
+        "scriptDescription": "Lumi đang viết kịch bản của bạn. Chưa render gì cho đến khi bạn duyệt storyboard.",
+        "queuedShotsDescription": "Storyboard của bạn đã được duyệt. Video này đang xếp hàng chờ chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+        "shotsDescription": "Storyboard của bạn đã được duyệt. Lumi đang chuẩn bị ảnh tham chiếu cho cảnh và tài nguyên render.",
+        "queuedRenderDescription": "Các cảnh đã duyệt của bạn đang xếp hàng chờ render.",
+        "renderDescription": "Các cảnh đã duyệt của bạn đang được render thành video cuối cùng.",
+        "workingDescription": "Trang này cập nhật tự động, bạn có thể rời đi rồi quay lại."
       },
       "review": {
-        "title": "Xem lại storyboard của bạn",
+        "title": "Xem lại các cảnh của bạn",
         "description": "Duyệt từng cảnh, hoặc tạo lại những cảnh bạn chưa ưng. Lumi sẽ render khi mọi cảnh đã được duyệt."
       },
       "storyboard": {
@@ -698,19 +709,24 @@
   },
   "shared": {
     "status": {
-      "queued": "Đã xếp hàng",
-      "submitted": "Đã gửi",
-      "rendering": "Kết xuất",
-      "reviewStoryboard": "Xem lại bảng phân cảnh",
-      "needsReview": "Cần xem xét",
+      "queued": "Đang chờ",
+      "queuedForScript": "Chờ viết kịch bản",
+      "writingScript": "Đang viết kịch bản",
+      "reviewStoryboard": "Xem lại storyboard",
+      "queuedForShots": "Chờ dựng cảnh",
+      "buildingShots": "Đang dựng cảnh",
+      "reviewShots": "Xem lại cảnh",
+      "queuedForRender": "Chờ render",
+      "rendering": "Đang render",
       "ready": "Sẵn sàng",
-      "failed": "thất bại"
+      "failed": "thất bại",
+      "working": "Đang xử lý"
     },
     "jobProgress": {
-      "script": "kịch bản",
-      "beats": "Cảnh",
+      "script": "Kịch bản",
       "review": "Xem lại",
-      "render": "Kết xuất",
+      "shots": "Cảnh",
+      "render": "Render",
       "ready": "Sẵn sàng"
     },
     "subjects": {

@@ -14,6 +14,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import en from "../../messages/en.json";
 import { qk } from "@/lib/api/hooks";
+import { StatusBadge } from "@/components/app/status-badge";
 import { VIDEO_ASPECT_RATIOS } from "@/lib/api/types";
 import type { ProductSummary, Usage, VideoJob } from "@/lib/api/types";
 
@@ -164,6 +165,27 @@ function tagText(html: string, tag: string): string[] {
 
 const sectionHeadings = (html: string) => tagText(html, "h2");
 const summaryLabels = (html: string) => tagText(html, "dt");
+
+/** The markup of one `data-testid` element, so a negative assertion fails on
+ *  the region under test rather than on any other section of the page (React
+ *  self-closes void elements, so tag depth is countable). */
+function region(html: string, testId: string): string {
+  const marker = html.indexOf(`data-testid="${testId}"`);
+  if (marker < 0) throw new Error(`no [data-testid="${testId}"] in render`);
+  const start = html.lastIndexOf("<", marker);
+  const tags = /<(\/?)[a-zA-Z][^\s/>]*([^>]*)>/g;
+  tags.lastIndex = start;
+  let depth = 0;
+  let match: RegExpExecArray | null;
+  while ((match = tags.exec(html))) {
+    depth += match[1] ? -1 : match[2].endsWith("/") ? 0 : 1;
+    if (depth === 0) return html.slice(start, tags.lastIndex);
+  }
+  throw new Error(`unbalanced markup for [data-testid="${testId}"]`);
+}
+
+const regionText = (html: string, testId: string) =>
+  region(html, testId).replace(/<[^>]+>/g, " ");
 
 function save(name: string, html: string) {
   // Best-effort: dumps the rendered surface for reviewers; the assertions below
@@ -590,6 +612,98 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).toContain("Approve &amp; make my video");
   });
 
+  it("shows one truthful story after storyboard approval while shots are queued", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "queued",
+        beats: [],
+      }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-post-approval-wait", html);
+
+    const text = html.replace(/<[^>]+>/g, " ");
+    for (const s of [
+      "Queued for shots",
+      "Script",
+      "Review",
+      "Shots",
+      "Render",
+      "Ready",
+      "Waiting to build your shots",
+      "Your storyboard is approved.",
+      "in line to have its shot references",
+      "You can leave and come back.",
+    ]) {
+      expect(text, `expected "${s}" in post-approval render`).toContain(s);
+    }
+    expect(text).not.toContain("Writing your script");
+    expect(text).not.toContain("Queued for script");
+    // A queued job is parked in line, so nothing may claim work is happening.
+    expect(text).not.toContain("preparing the shot references");
+    // No credit claim may ride along after approval, where it is false - read
+    // from the waiting card alone, since other sections may say "credits".
+    expect(regionText(html, "job-working")).not.toContain("credits");
+  });
+
+  it("says work is under way once a worker has claimed the job", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "submitted", beats: [] }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    expect(text).toContain("Building your shots");
+    expect(text).toContain("preparing the shot references");
+    expect(text).toContain("You can leave and come back.");
+    // Bare enough a substring that it only means anything inside the wait copy.
+    expect(regionText(html, "job-working")).not.toContain("in line");
+  });
+
+  // Legacy per-beat gate: Studio hardcodes review_mode false, so only jobs
+  // created before it can sit here. The tracker puts them on Shots, so the
+  // badge and the body have to read as reviewing shots too.
+  it("reads as reviewing shots on all three surfaces at the shot gate", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "awaiting_review" }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    const tracker = region(html, "job-progress");
+    const text = html.replace(/<[^>]+>/g, " ");
+
+    // The current step is the one drawn with the brand-gradient badge; a done
+    // step renders a checkmark rather than its number.
+    const current = tracker.slice(tracker.indexOf(">", tracker.indexOf("bg-brand-gradient")));
+    expect(current.replace(/<[^>]+>/g, " ")).toMatch(/^>\s*3\s+Shots/);
+    expect(text).toContain("Review shots");
+    expect(text).toContain("Review your shots");
+  });
+
+  it("wraps every tracker label at 320px instead of scrolling the current step away", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), { ...baseJob, status: "queued", beats: [] }),
+    );
+    const tracker = region(render(qc, React.createElement(JobDetailPage)), "job-progress");
+
+    // The row wraps rather than scrolling: every step - including the current
+    // one - stays on screen at 320px, and the badges keep their circle.
+    expect(tracker).toContain("flex flex-wrap items-center gap-x-5 gap-y-2 sm:flex-nowrap");
+    // A wrapped row must group by step: the gap between two steps is wider
+    // than the one between a badge and its own label.
+    expect(tracker).toMatch(/flex items-center gap-2 sm:flex-1/);
+    expect(tracker).not.toContain("overflow-x-auto");
+    expect(tracker).toMatch(/h-7 w-7 shrink-0/);
+    expect(tracker).toMatch(/block text-xs font-semibold leading-tight/);
+    expect(tracker).not.toMatch(/hidden text-xs font-semibold sm:block/);
+    // A label wraps inside its own step rather than forcing the row wider than
+    // the column: a long localized label (ja "レンダリング") overflowed at tablet
+    // widths while it could not break.
+    expect(tracker).not.toContain("whitespace-nowrap");
+    // The connector lines are the only part that goes away when wrapped.
+    expect(tracker).toMatch(/relative hidden h-0\.5 flex-1[^"]*sm:block/);
+  });
+
   it("shows the completed-view strings from app.jobs.completed.*", () => {
     const completed: VideoJob = {
       ...baseJob,
@@ -631,5 +745,60 @@ describe("Job detail page renders extracted English copy", () => {
     ]) {
       expect(text, `expected "${s}" in failed render`).toContain(s);
     }
+  });
+});
+
+describe("StatusBadge keeps one story across the two surfaces it renders on", () => {
+  const badgeText = (job: VideoJob, compact?: boolean) =>
+    renderToStaticMarkup(
+      <NextIntlClientProvider locale="en" messages={en as Record<string, unknown>}>
+        <StatusBadge job={job} compact={compact} />
+      </NextIntlClientProvider>,
+    )
+      .replace(/<[^>]+>/g, "")
+      .trim();
+
+  const approved = [
+    { ...baseJob.beats[0], review_status: "user_approved" },
+  ] as unknown as VideoJob["beats"];
+
+  it("shrinks a claimed worker stage to its tracker step label on the grid", () => {
+    const cases: Array<[VideoJob, string, string]> = [
+      [{ ...baseJob, status: "queued", storyboard: null }, "Queued for script", "Queued"],
+      [{ ...baseJob, status: "submitted", beats: [] }, "Building shots", "Shots"],
+      [{ ...baseJob, status: "queued", beats: approved }, "Queued for render", "Queued"],
+      [{ ...baseJob, status: "in_progress", beats: approved }, "Rendering", "Render"],
+    ];
+    for (const [job, full, short] of cases) {
+      expect(badgeText(job)).toBe(full);
+      expect(badgeText(job, true)).toBe(short);
+      // The compact label is the tracker's own, so the tile can never name a
+      // stage the job page's tracker disagrees with.
+      expect(short.length).toBeLessThanOrEqual(full.length);
+    }
+  });
+
+  // Colour and a pulsing dot are not text, so a screen reader would hear the
+  // same word for a job parked in line and one a worker is actively running.
+  it("keeps waiting and working apart in words, not just colour", () => {
+    for (const beats of [[] as VideoJob["beats"], approved]) {
+      const waiting = badgeText({ ...baseJob, status: "queued", beats }, true);
+      const working = badgeText({ ...baseJob, status: "in_progress", beats }, true);
+      expect(waiting).toBe("Queued");
+      expect(working).not.toBe(waiting);
+    }
+  });
+
+  it("never shortens away a state that names itself", () => {
+    for (const job of [
+      { ...baseJob, status: "completed" as const },
+      { ...baseJob, status: "failed" as const },
+      { ...baseJob, status: "awaiting_storyboard" as const },
+      { ...baseJob, status: "awaiting_review" as const },
+    ]) {
+      expect(badgeText(job, true)).toBe(badgeText(job));
+    }
+    expect(badgeText({ ...baseJob, status: "completed" }, true)).toBe("Ready");
+    expect(badgeText({ ...baseJob, status: "failed" }, true)).toBe("Failed");
   });
 });

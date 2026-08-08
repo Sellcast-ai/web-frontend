@@ -1,39 +1,225 @@
 import { describe, expect, it } from "vitest";
-import { STEP_LABEL_KEYS, stepIndex } from "./job-progress";
+import { STEP_LABEL_KEYS, jobProgressDisplay } from "./job-progress";
 import type { VideoJob, VideoJobStatus, Storyboard } from "./api/types";
 
 const RENDER = STEP_LABEL_KEYS.indexOf("render"); // 3
-const REVIEW = STEP_LABEL_KEYS.indexOf("review"); // 2
+const REVIEW = STEP_LABEL_KEYS.indexOf("review"); // 1
+const SHOTS = STEP_LABEL_KEYS.indexOf("shots"); // 2
 
 const sb = { shots: [] } as unknown as Storyboard;
+const approvedBeat = { review_status: "user_approved" } as VideoJob["beats"][number];
+const pendingBeat = { review_status: "pending" } as VideoJob["beats"][number];
 
-// Only the fields stepIndex reads matter; cast the rest away.
+// Only the fields the display helper reads matter; cast the rest away.
 const mk = (o: {
   status: VideoJobStatus;
   storyboard?: Storyboard | null;
   beats?: VideoJob["beats"];
+  video_url?: string | null;
 }): VideoJob =>
-  ({ status: o.status, storyboard: o.storyboard ?? null, beats: o.beats ?? [] }) as VideoJob;
+  ({
+    status: o.status,
+    storyboard: o.storyboard ?? null,
+    beats: o.beats ?? [],
+    video_url: o.video_url ?? null,
+  }) as VideoJob;
 
-describe("stepIndex", () => {
+describe("jobProgressDisplay", () => {
+  it("keeps the visible tracker order aligned to the current backend flow", () => {
+    expect(STEP_LABEL_KEYS).toEqual(["script", "review", "shots", "render", "ready"]);
+  });
+
   it("sits at Review while at the storyboard gate", () => {
-    expect(stepIndex(mk({ status: "awaiting_storyboard", storyboard: sb }))).toBe(REVIEW);
+    expect(jobProgressDisplay(mk({ status: "awaiting_storyboard", storyboard: sb }))).toMatchObject({
+      stepIndex: REVIEW,
+      stepKey: "review",
+      statusLabelKey: "reviewStoryboard",
+    });
   });
 
-  it("advances to Render after storyboard approval (beats not yet generated)", () => {
-    // The bug: re-queued post-approval with a storyboard but no beats used to
-    // fall back to Script/Beats — going backward from Review.
-    expect(stepIndex(mk({ status: "queued", storyboard: sb, beats: [] }))).toBe(RENDER);
-    expect(stepIndex(mk({ status: "submitted", storyboard: sb, beats: [] }))).toBe(RENDER);
-    expect(stepIndex(mk({ status: "in_progress", storyboard: sb }))).toBe(RENDER);
+  it("moves to Shots after storyboard approval while shot assets are built", () => {
+    expect(jobProgressDisplay(mk({ status: "queued", storyboard: sb, beats: [] }))).toMatchObject({
+      stepIndex: SHOTS,
+      stepKey: "shots",
+      statusLabelKey: "queuedForShots",
+      workingTitleKey: "queuedForShots",
+      workingDescriptionKey: "queuedShotsDescription",
+    });
+    expect(jobProgressDisplay(mk({ status: "submitted", storyboard: sb, beats: [] }))).toMatchObject({
+      stepIndex: SHOTS,
+      stepKey: "shots",
+      statusLabelKey: "buildingShots",
+      workingTitleKey: "buildingShots",
+      workingDescriptionKey: "shotsDescription",
+    });
   });
 
-  it("keeps a fresh job (no script/storyboard) at Script/Beats", () => {
-    expect(stepIndex(mk({ status: "queued" }))).toBe(0); // script
-    expect(stepIndex(mk({ status: "submitted" }))).toBe(1); // beats
+  it("keeps a fresh job with no storyboard in the Script step", () => {
+    expect(jobProgressDisplay(mk({ status: "queued" }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "queuedForScript",
+      workingTitleKey: "queuedForScript",
+      workingDescriptionKey: "queuedScriptDescription",
+    });
+    expect(jobProgressDisplay(mk({ status: "submitted" }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "writingScript",
+      workingTitleKey: "writingScript",
+      workingDescriptionKey: "scriptDescription",
+    });
+  });
+
+  it("keeps the legacy shot-review gate in Shots instead of moving backward", () => {
+    expect(
+      jobProgressDisplay(mk({ status: "awaiting_review", storyboard: sb, beats: [pendingBeat] })),
+    ).toMatchObject({
+      stepIndex: SHOTS,
+      stepKey: "shots",
+      statusLabelKey: "reviewShots",
+    });
+  });
+
+  it("moves to Render only once approved shots are ready to render", () => {
+    expect(
+      jobProgressDisplay(mk({ status: "queued", storyboard: sb, beats: [approvedBeat] })),
+    ).toMatchObject({
+      stepIndex: RENDER,
+      stepKey: "render",
+      statusLabelKey: "queuedForRender",
+      workingTitleKey: "queuedForRender",
+      workingDescriptionKey: "queuedRenderDescription",
+    });
+    expect(
+      jobProgressDisplay(mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] })),
+    ).toMatchObject({
+      stepIndex: RENDER,
+      stepKey: "render",
+      statusLabelKey: "rendering",
+      workingTitleKey: "renderingVideo",
+      workingDescriptionKey: "renderDescription",
+    });
+  });
+
+  it("never lets a claimed job name a stage its own artifacts contradict", () => {
+    expect(jobProgressDisplay(mk({ status: "in_progress" }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "writingScript",
+      workingTitleKey: "writingScript",
+      workingDescriptionKey: "scriptDescription",
+    });
+    expect(
+      jobProgressDisplay(mk({ status: "in_progress", storyboard: sb, beats: [pendingBeat] })),
+    ).toMatchObject({
+      stepIndex: SHOTS,
+      stepKey: "shots",
+      statusLabelKey: "buildingShots",
+      workingTitleKey: "buildingShots",
+      workingDescriptionKey: "shotsDescription",
+    });
+  });
+
+  it("keeps a queued wait from claiming work is under way", () => {
+    const waits = [
+      mk({ status: "queued" }),
+      mk({ status: "queued", storyboard: sb, beats: [] }),
+      mk({ status: "queued", storyboard: sb, beats: [approvedBeat] }),
+    ].map((job) => jobProgressDisplay(job).workingDescriptionKey);
+
+    expect(waits).toEqual([
+      "queuedScriptDescription",
+      "queuedShotsDescription",
+      "queuedRenderDescription",
+    ]);
+
+    const active = [
+      mk({ status: "submitted" }),
+      mk({ status: "submitted", storyboard: sb, beats: [] }),
+      mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] }),
+    ].map((job) => jobProgressDisplay(job).workingDescriptionKey);
+
+    expect(active).toEqual(["scriptDescription", "shotsDescription", "renderDescription"]);
   });
 
   it("reaches Ready when completed", () => {
-    expect(stepIndex(mk({ status: "completed", storyboard: sb }))).toBe(4);
+    expect(jobProgressDisplay(mk({ status: "completed", storyboard: sb }))).toMatchObject({
+      stepKey: "ready",
+      statusLabelKey: "ready",
+    });
+  });
+
+  it("marks a failure at the stage implied by the job artifacts", () => {
+    expect(jobProgressDisplay(mk({ status: "failed" }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "failed",
+    });
+    expect(jobProgressDisplay(mk({ status: "failed", storyboard: sb }))).toMatchObject({
+      stepKey: "shots",
+      statusLabelKey: "failed",
+    });
+    expect(
+      jobProgressDisplay(mk({ status: "failed", storyboard: sb, beats: [approvedBeat] })),
+    ).toMatchObject({
+      stepKey: "render",
+      statusLabelKey: "failed",
+    });
+  });
+
+  it("never moves backward through the normal lifecycle", () => {
+    const lifecycle = [
+      mk({ status: "queued" }),
+      mk({ status: "submitted" }),
+      mk({ status: "awaiting_storyboard", storyboard: sb }),
+      mk({ status: "queued", storyboard: sb }),
+      mk({ status: "submitted", storyboard: sb }),
+      mk({ status: "awaiting_review", storyboard: sb, beats: [pendingBeat] }),
+      mk({ status: "queued", storyboard: sb, beats: [approvedBeat] }),
+      mk({ status: "in_progress", storyboard: sb, beats: [approvedBeat] }),
+      mk({ status: "completed", storyboard: sb, beats: [approvedBeat] }),
+    ].map((job) => jobProgressDisplay(job).stepIndex);
+
+    expect(lifecycle).toEqual([...lifecycle].sort((a, b) => a - b));
+  });
+
+  it("places an unknown status on the artifact stage without claiming that work", () => {
+    expect(jobProgressDisplay(mk({ status: "rendering_audio" as VideoJobStatus }))).toMatchObject({
+      stepKey: "script",
+      statusLabelKey: "working",
+      workingTitleKey: "working",
+      workingDescriptionKey: null,
+    });
+    expect(
+      jobProgressDisplay(
+        mk({ status: "rendering_audio" as VideoJobStatus, storyboard: sb, beats: [pendingBeat] }),
+      ),
+    ).toMatchObject({
+      stepKey: "shots",
+      statusLabelKey: "working",
+      workingTitleKey: "working",
+      workingDescriptionKey: null,
+    });
+  });
+
+  it("only lets the three worker statuses speak in the active voice", () => {
+    const notWorking: VideoJobStatus[] = [
+      "completed",
+      "failed",
+      "awaiting_storyboard",
+      "awaiting_review",
+      "rendering_audio" as VideoJobStatus,
+    ];
+    for (const status of notWorking) {
+      expect(
+        jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })),
+      ).toMatchObject({
+        workingTitleKey: "working",
+        workingDescriptionKey: null,
+        phase: null,
+      });
+    }
+    expect(
+      (["queued", "submitted", "in_progress"] as VideoJobStatus[]).map(
+        (status) => jobProgressDisplay(mk({ status, storyboard: sb, beats: [approvedBeat] })).phase,
+      ),
+    ).toEqual(["queued", "active", "active"]);
   });
 });

@@ -548,12 +548,23 @@
         "shot": "Tiro {number}"
       },
       "working": {
-        "renderingBeats": "Renderizando suas tomadas…",
-        "writingScript": "Escrevendo seu roteiro fundamentado…",
-        "description": "Esta página é atualizada automaticamente. Você pode sair e voltar."
+        "queuedForScript": "Aguardando para escrever seu roteiro…",
+        "writingScript": "Escrevendo seu roteiro…",
+        "queuedForShots": "Aguardando para criar suas tomadas…",
+        "buildingShots": "Criando suas tomadas…",
+        "queuedForRender": "Aguardando para renderizar seu vídeo…",
+        "renderingVideo": "Renderizando seu vídeo…",
+        "working": "Trabalhando no seu vídeo…",
+        "queuedScriptDescription": "Seu vídeo está na fila para começar. Nada é renderizado até você aprovar o storyboard.",
+        "scriptDescription": "A Lumi está escrevendo seu roteiro. Nada é renderizado até você aprovar o storyboard.",
+        "queuedShotsDescription": "Seu storyboard foi aprovado. Este vídeo está na fila para preparar as referências das tomadas e os recursos de renderização.",
+        "shotsDescription": "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização.",
+        "queuedRenderDescription": "Suas tomadas aprovadas estão na fila para renderizar.",
+        "renderDescription": "Suas tomadas aprovadas estão sendo renderizadas no vídeo final.",
+        "workingDescription": "Esta página é atualizada automaticamente. Você pode sair e voltar depois."
       },
       "review": {
-        "title": "Revise seu storyboard",
+        "title": "Revise suas tomadas",
         "description": "Aprove cada tomada ou regenere as que você não curtir. A Lumi renderiza assim que cada tomada é aprovada."
       },
       "storyboard": {
@@ -699,18 +710,23 @@
   "shared": {
     "status": {
       "queued": "Na fila",
-      "submitted": "Enviado",
-      "rendering": "Renderização",
-      "reviewStoryboard": "Revise o storyboard",
-      "needsReview": "Precisa de revisão",
+      "queuedForScript": "Na fila para roteiro",
+      "writingScript": "Escrevendo roteiro",
+      "reviewStoryboard": "Revisar storyboard",
+      "queuedForShots": "Na fila para tomadas",
+      "buildingShots": "Criando tomadas",
+      "reviewShots": "Revisar tomadas",
+      "queuedForRender": "Na fila para render",
+      "rendering": "Renderizando",
       "ready": "Pronto",
-      "failed": "Falha"
+      "failed": "Falha",
+      "working": "Trabalhando"
     },
     "jobProgress": {
       "script": "Roteiro",
-      "beats": "Tomadas",
       "review": "Revisão",
-      "render": "Renderizar",
+      "shots": "Tomadas",
+      "render": "Render",
       "ready": "Pronto"
     },
     "subjects": {
