@@ -590,6 +590,36 @@ describe("Job detail page renders extracted English copy", () => {
     expect(text).toContain("Approve &amp; make my video");
   });
 
+  it("shows one truthful story after storyboard approval while shots are queued", () => {
+    const qc = makeClient((c) =>
+      c.setQueryData(qk.job("job-1"), {
+        ...baseJob,
+        status: "queued",
+        beats: [],
+        queue_position: 3,
+      }),
+    );
+    const html = render(qc, React.createElement(JobDetailPage));
+    save("jobs-post-approval-wait", html);
+
+    const text = html.replace(/<[^>]+>/g, " ");
+    for (const s of [
+      "Queued for shots",
+      "Script",
+      "Review",
+      "Shots",
+      "Render",
+      "Ready",
+      "Waiting to build your shots",
+      "Your storyboard is approved.",
+      "Queue position: 3",
+    ]) {
+      expect(text, `expected "${s}" in post-approval render`).toContain(s);
+    }
+    expect(text).not.toContain("Writing your script");
+    expect(text).not.toContain("Queued for script");
+  });
+
   it("shows the completed-view strings from app.jobs.completed.*", () => {
     const completed: VideoJob = {
       ...baseJob,

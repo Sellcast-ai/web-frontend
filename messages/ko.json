@@ -548,12 +548,21 @@
         "shot": "샷 {number}"
       },
       "working": {
-        "renderingBeats": "샷을 렌더링하는 중…",
-        "writingScript": "기반 스크립트 작성 중…",
-        "description": "이 페이지는 자동으로 업데이트됩니다. 떠나고 돌아올 수 있습니다."
+        "queuedForScript": "스크립트 작성을 기다리는 중…",
+        "writingScript": "스크립트를 작성하는 중…",
+        "queuedForShots": "샷 제작을 기다리는 중…",
+        "buildingShots": "샷을 제작하는 중…",
+        "queuedForRender": "동영상 렌더링을 기다리는 중…",
+        "renderingVideo": "동영상을 렌더링하는 중…",
+        "working": "동영상을 작업 중…",
+        "scriptDescription": "스토리보드를 승인하기 전까지 크레딧은 차감되지 않습니다. 이 페이지는 자동으로 업데이트됩니다.",
+        "shotsDescription": "스토리보드가 승인되었습니다. Lumi가 샷 참조와 렌더링 에셋을 준비하고 있습니다.",
+        "renderDescription": "승인된 샷을 최종 동영상으로 렌더링하고 있습니다.",
+        "workingDescription": "이 페이지는 자동으로 업데이트됩니다.",
+        "queuePosition": "대기열 위치: {position}"
       },
       "review": {
-        "title": "스토리보드를 검토하세요",
+        "title": "샷을 검토하세요",
         "description": "각 샷을 승인하거나 마음에 들지 않는 샷을 다시 생성하세요. 모든 샷이 승인되면 Lumi가 렌더링합니다."
       },
       "storyboard": {
@@ -699,17 +708,22 @@
   "shared": {
     "status": {
       "queued": "대기 중",
-      "submitted": "제출됨",
-      "rendering": "렌더링",
+      "queuedForScript": "스크립트 대기 중",
+      "writingScript": "스크립트 작성 중",
       "reviewStoryboard": "스토리보드 검토",
-      "needsReview": "검토 필요",
+      "queuedForShots": "샷 대기 중",
+      "buildingShots": "샷 제작 중",
+      "reviewShots": "샷 검토",
+      "queuedForRender": "렌더링 대기 중",
+      "rendering": "렌더링",
       "ready": "준비",
-      "failed": "실패"
+      "failed": "실패",
+      "working": "작업 중"
     },
     "jobProgress": {
       "script": "스크립트",
-      "beats": "샷",
       "review": "검토",
+      "shots": "샷",
       "render": "렌더링",
       "ready": "준비"
     },

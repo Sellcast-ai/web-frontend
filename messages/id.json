@@ -548,12 +548,21 @@
         "shot": "Tembakan {number}"
       },
       "working": {
-        "renderingBeats": "Merender shot Anda…",
-        "writingScript": "Menulis skrip dasar Anda…",
-        "description": "Halaman ini diperbarui secara otomatis. Anda bisa pergi dan kembali."
+        "queuedForScript": "Menunggu untuk menulis skrip Anda…",
+        "writingScript": "Menulis skrip Anda…",
+        "queuedForShots": "Menunggu untuk membangun shot Anda…",
+        "buildingShots": "Membangun shot Anda…",
+        "queuedForRender": "Menunggu untuk merender video Anda…",
+        "renderingVideo": "Merender video Anda…",
+        "working": "Mengerjakan video Anda…",
+        "scriptDescription": "Kredit belum dikenakan sampai Anda menyetujui storyboard. Halaman ini diperbarui secara otomatis.",
+        "shotsDescription": "Storyboard Anda sudah disetujui. Lumi sedang menyiapkan referensi shot dan aset render.",
+        "renderDescription": "Shot yang Anda setujui sedang dirender menjadi video final.",
+        "workingDescription": "Halaman ini diperbarui secara otomatis.",
+        "queuePosition": "Posisi antrean: {position}"
       },
       "review": {
-        "title": "Tinjau storyboard Anda",
+        "title": "Tinjau shot Anda",
         "description": "Setujui setiap shot, atau buat ulang yang tidak Anda sukai. Lumi merender setelah setiap shot disetujui."
       },
       "storyboard": {
@@ -699,17 +708,22 @@
   "shared": {
     "status": {
       "queued": "Mengantri",
-      "submitted": "Dikirim",
-      "rendering": "Render",
+      "queuedForScript": "Antre untuk skrip",
+      "writingScript": "Menulis skrip",
       "reviewStoryboard": "Tinjau papan cerita",
-      "needsReview": "Perlu peninjauan",
+      "queuedForShots": "Antre untuk shot",
+      "buildingShots": "Membangun shot",
+      "reviewShots": "Tinjau shot",
+      "queuedForRender": "Antre untuk render",
+      "rendering": "Render",
       "ready": "Siap",
-      "failed": "Gagal"
+      "failed": "Gagal",
+      "working": "Bekerja"
     },
     "jobProgress": {
       "script": "naskah",
-      "beats": "Shot",
       "review": "Ulasan",
+      "shots": "Shot",
       "render": "Render",
       "ready": "Siap"
     },

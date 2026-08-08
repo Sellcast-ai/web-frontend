@@ -2,21 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
-import type { VideoJobStatus } from "@/lib/api/types";
+import { jobProgressDisplay, type JobStatusLabelKey } from "@/lib/job-progress";
+import type { VideoJob, VideoJobStatus } from "@/lib/api/types";
 import { cn } from "@/lib/utils";
-
-type StatusLabelKey =
-  | "queued"
-  | "submitted"
-  | "rendering"
-  | "reviewStoryboard"
-  | "needsReview"
-  | "ready"
-  | "failed";
 
 const MAP: Record<
   VideoJobStatus,
-  { labelKey: StatusLabelKey; className: string; dot: string }
+  { labelKey: JobStatusLabelKey; className: string; dot: string }
 > = {
   queued: {
     labelKey: "queued",
@@ -24,7 +16,7 @@ const MAP: Record<
     dot: "bg-muted-foreground",
   },
   submitted: {
-    labelKey: "submitted",
+    labelKey: "writingScript",
     className: "bg-brand-100 text-brand-800",
     dot: "bg-brand-500",
   },
@@ -39,7 +31,7 @@ const MAP: Record<
     dot: "bg-warning",
   },
   awaiting_review: {
-    labelKey: "needsReview",
+    labelKey: "reviewShots",
     className: "bg-[#fff1e0] text-[#9a5a00] dark:bg-[#3a2a10] dark:text-warning",
     dot: "bg-warning",
   },
@@ -56,18 +48,22 @@ const MAP: Record<
 };
 
 export function StatusBadge({
+  job,
   status,
   className,
 }: {
-  status: VideoJobStatus;
+  job?: VideoJob;
+  status?: VideoJobStatus;
   className?: string;
 }) {
   const t = useTranslations("shared.status");
-  const s = MAP[status] ?? MAP.queued;
+  const fallbackStatus = status ?? job?.status ?? "queued";
+  const s = MAP[fallbackStatus as VideoJobStatus] ?? MAP.queued;
+  const labelKey = job ? jobProgressDisplay(job).statusLabelKey : s.labelKey;
   return (
     <Badge className={cn(s.className, className)}>
       <span className={cn("h-1.5 w-1.5 rounded-full", s.dot)} />
-      {t(s.labelKey)}
+      {t(labelKey)}
     </Badge>
   );
 }

@@ -1,7 +1,46 @@
 import type { VideoJob } from "@/lib/api/types";
 
 /** Translation keys for the five job-detail progress stages, in order. */
-export const STEP_LABEL_KEYS = ["script", "beats", "review", "render", "ready"] as const;
+export const STEP_LABEL_KEYS = ["script", "review", "shots", "render", "ready"] as const;
+
+export type JobProgressStepKey = (typeof STEP_LABEL_KEYS)[number];
+
+export type JobStatusLabelKey =
+  | "queued"
+  | "queuedForScript"
+  | "writingScript"
+  | "reviewStoryboard"
+  | "queuedForShots"
+  | "buildingShots"
+  | "reviewShots"
+  | "queuedForRender"
+  | "rendering"
+  | "ready"
+  | "failed"
+  | "working";
+
+export type JobWorkingTitleKey =
+  | "queuedForScript"
+  | "writingScript"
+  | "queuedForShots"
+  | "buildingShots"
+  | "queuedForRender"
+  | "renderingVideo"
+  | "working";
+
+export type JobWorkingDescriptionKey =
+  | "scriptDescription"
+  | "shotsDescription"
+  | "renderDescription"
+  | "workingDescription";
+
+export interface JobProgressDisplay {
+  stepKey: JobProgressStepKey;
+  stepIndex: number;
+  statusLabelKey: JobStatusLabelKey;
+  workingTitleKey: JobWorkingTitleKey;
+  workingDescriptionKey: JobWorkingDescriptionKey;
+}
 
 /** True once every beat has cleared the review gate. `every` on an empty
  *  array is vacuously true, so guard on length. */
@@ -16,40 +55,91 @@ export function allBeatsApproved(job: VideoJob): boolean {
   );
 }
 
-/** Index into {@link STEP_LABEL_KEYS} for the job's current stage.
- *
- *  The tracker must only ever move forward. In the review-first flow, beat
- *  reference images are generated *after* the storyboard is approved, so a
- *  just-approved job carries a storyboard but no beats — the old
- *  `beats.length ? Beats : Script` fallback read that as going backward from
- *  Review. Since a written script otherwise sits at `awaiting_storyboard`, a
- *  storyboard present on a queued/submitted job means the gate is behind us and
- *  we're rendering. */
-export function stepIndex(job: VideoJob): number {
+function stepForJob(job: VideoJob): JobProgressStepKey {
   switch (job.status) {
+    case "completed":
+      return "ready";
     case "queued":
     case "submitted":
-      // Re-queued/-submitted after a review gate → the worker is resuming at
-      // render, so advance to the Render step instead of dropping back to Script/Beats.
-      // Two gates land here: the storyboard gate (storyboard present, beats not
-      // yet generated) and the legacy image gate (all beats approved). The
-      // initial queue (no script yet) stays at Script; a fresh `submitted`
-      // (script generating) sits at Beats.
-      if (job.storyboard || allBeatsApproved(job)) return 3;
-      return job.status === "submitted" || job.beats.length ? 1 : 0;
-    // Storyboard gate fires right after the script is written (before beats),
-    // so it sits at the Review step just like the legacy image gate.
+      if (!job.storyboard) return "script";
+      if (!job.beats.length) return "shots";
+      return allBeatsApproved(job) ? "render" : "shots";
     case "awaiting_storyboard":
-      return 2;
+      return "review";
     case "awaiting_review":
-      return 2;
+      return "shots";
     case "in_progress":
-      return 3;
-    case "completed":
-      return 4;
+      return "render";
     case "failed":
-      return 3;
+      if (!job.storyboard) return "script";
+      if (!job.beats.length) return "shots";
+      return allBeatsApproved(job) ? "render" : "shots";
     default:
-      return 0;
+      if (job.video_url) return "ready";
+      if (job.beats.length) return allBeatsApproved(job) ? "render" : "shots";
+      return job.storyboard ? "shots" : "script";
   }
+}
+
+function statusLabelForJob(job: VideoJob, stepKey: JobProgressStepKey): JobStatusLabelKey {
+  switch (job.status) {
+    case "completed":
+      return "ready";
+    case "failed":
+      return "failed";
+    case "awaiting_storyboard":
+      return "reviewStoryboard";
+    case "awaiting_review":
+      return "reviewShots";
+    case "queued":
+      if (stepKey === "script") return "queuedForScript";
+      if (stepKey === "shots") return "queuedForShots";
+      if (stepKey === "render") return "queuedForRender";
+      return "queued";
+    case "submitted":
+      if (stepKey === "script") return "writingScript";
+      if (stepKey === "shots") return "buildingShots";
+      if (stepKey === "render") return "rendering";
+      return "working";
+    case "in_progress":
+      return "rendering";
+    default:
+      return "working";
+  }
+}
+
+function workingTitleForJob(job: VideoJob, stepKey: JobProgressStepKey): JobWorkingTitleKey {
+  if (stepKey === "script") {
+    return job.status === "queued" ? "queuedForScript" : "writingScript";
+  }
+  if (stepKey === "shots") {
+    return job.status === "queued" ? "queuedForShots" : "buildingShots";
+  }
+  if (stepKey === "render") {
+    return job.status === "queued" ? "queuedForRender" : "renderingVideo";
+  }
+  return "working";
+}
+
+function workingDescriptionForStep(stepKey: JobProgressStepKey): JobWorkingDescriptionKey {
+  if (stepKey === "script") return "scriptDescription";
+  if (stepKey === "shots") return "shotsDescription";
+  if (stepKey === "render") return "renderDescription";
+  return "workingDescription";
+}
+
+export function jobProgressDisplay(job: VideoJob): JobProgressDisplay {
+  const stepKey = stepForJob(job);
+  return {
+    stepKey,
+    stepIndex: STEP_LABEL_KEYS.indexOf(stepKey),
+    statusLabelKey: statusLabelForJob(job, stepKey),
+    workingTitleKey: workingTitleForJob(job, stepKey),
+    workingDescriptionKey: workingDescriptionForStep(stepKey),
+  };
+}
+
+/** Index into {@link STEP_LABEL_KEYS} for the job's current stage. */
+export function stepIndex(job: VideoJob): number {
+  return jobProgressDisplay(job).stepIndex;
 }

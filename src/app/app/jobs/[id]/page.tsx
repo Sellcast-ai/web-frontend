@@ -52,7 +52,7 @@ import {
   knownOutcomeNudges,
 } from "@/lib/outcome-nudges";
 import { orderedSubjects, SUBJECT_HEADING_KEYS } from "@/lib/subjects";
-import { STEP_LABEL_KEYS, stepIndex } from "@/lib/job-progress";
+import { STEP_LABEL_KEYS, jobProgressDisplay } from "@/lib/job-progress";
 import { useMutationGuard } from "@/lib/mutation-guard";
 import { VIDEO_STYLES, OUTCOME_NUDGES } from "@/lib/api/types";
 import type {
@@ -162,12 +162,12 @@ export default function JobDetailPage() {
         </div>
         <div className="flex items-center gap-3">
           {active && <LiveIndicator updatedAt={dataUpdatedAt} />}
-          <StatusBadge status={job.status} />
+          <StatusBadge job={job} />
         </div>
       </div>
 
       {/* progress */}
-      <Progress current={stepIndex(job)} failed={job.status === "failed"} />
+      <Progress current={jobProgressDisplay(job).stepIndex} failed={job.status === "failed"} />
 
       {/* state-specific body */}
       {job.status === "completed" && job.video_url ? (
@@ -427,7 +427,7 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
               </span>
               <span
                 className={cn(
-                  "hidden text-xs font-semibold sm:block",
+                  "block max-w-14 text-center text-[10px] font-semibold leading-tight sm:max-w-none sm:text-left sm:text-xs",
                   isCurrent ? "text-ink" : "text-muted-foreground",
                 )}
               >
@@ -455,6 +455,11 @@ function Progress({ current, failed }: { current: number; failed: boolean }) {
 
 function WorkingView({ job }: { job: VideoJob }) {
   const t = useTranslations("app.jobs.working");
+  const display = jobProgressDisplay(job);
+  const queuePosition =
+    typeof job.queue_position === "number" && Number.isFinite(job.queue_position)
+      ? job.queue_position
+      : null;
   return (
     <div className="mt-8">
       <div className="rounded-card border border-border bg-card p-8 text-center">
@@ -462,13 +467,16 @@ function WorkingView({ job }: { job: VideoJob }) {
           <Sparkles className="h-7 w-7" />
         </div>
         <p className="mt-4 font-display text-lg font-semibold text-ink">
-          {job.beats.length
-            ? t("renderingBeats")
-            : t("writingScript")}
+          {t(display.workingTitleKey)}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">
-          {t("description")}
+          {t(display.workingDescriptionKey)}
         </p>
+        {queuePosition !== null && (
+          <p className="mt-3 text-xs font-medium text-muted-foreground">
+            {t("queuePosition", { position: queuePosition })}
+          </p>
+        )}
       </div>
       {job.beats.length > 0 && (
         <BeatGrid beats={job.beats} frameClass={aspectFrameClass(job.aspect_ratio)} />

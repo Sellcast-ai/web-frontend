@@ -548,12 +548,21 @@
         "shot": "Tiro {number}"
       },
       "working": {
-        "renderingBeats": "Renderizando suas tomadas…",
-        "writingScript": "Escrevendo seu roteiro fundamentado…",
-        "description": "Esta página é atualizada automaticamente. Você pode sair e voltar."
+        "queuedForScript": "Aguardando para escrever seu roteiro…",
+        "writingScript": "Escrevendo seu roteiro…",
+        "queuedForShots": "Aguardando para criar suas tomadas…",
+        "buildingShots": "Criando suas tomadas…",
+        "queuedForRender": "Aguardando para renderizar seu vídeo…",
+        "renderingVideo": "Renderizando seu vídeo…",
+        "working": "Trabalhando no seu vídeo…",
+        "scriptDescription": "Nenhum crédito é cobrado até você aprovar o storyboard. Esta página é atualizada automaticamente.",
+        "shotsDescription": "Seu storyboard foi aprovado. A Lumi está preparando as referências das tomadas e os recursos de renderização.",
+        "renderDescription": "Suas tomadas aprovadas estão sendo renderizadas no vídeo final.",
+        "workingDescription": "Esta página é atualizada automaticamente.",
+        "queuePosition": "Posição na fila: {position}"
       },
       "review": {
-        "title": "Revise seu storyboard",
+        "title": "Revise suas tomadas",
         "description": "Aprove cada tomada ou regenere as que você não curtir. A Lumi renderiza assim que cada tomada é aprovada."
       },
       "storyboard": {
@@ -699,17 +708,22 @@
   "shared": {
     "status": {
       "queued": "Na fila",
-      "submitted": "Enviado",
-      "rendering": "Renderização",
+      "queuedForScript": "Na fila para roteiro",
+      "writingScript": "Escrevendo roteiro",
       "reviewStoryboard": "Revise o storyboard",
-      "needsReview": "Precisa de revisão",
+      "queuedForShots": "Na fila para tomadas",
+      "buildingShots": "Criando tomadas",
+      "reviewShots": "Revisar tomadas",
+      "queuedForRender": "Na fila para render",
+      "rendering": "Renderizando",
       "ready": "Pronto",
-      "failed": "Falha"
+      "failed": "Falha",
+      "working": "Trabalhando"
     },
     "jobProgress": {
       "script": "Roteiro",
-      "beats": "Tomadas",
       "review": "Revisão",
+      "shots": "Tomadas",
       "render": "Renderizar",
       "ready": "Pronto"
     },

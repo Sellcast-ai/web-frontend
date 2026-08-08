@@ -548,12 +548,21 @@
         "shot": "Shot {number}"
       },
       "working": {
-        "renderingBeats": "Rendering your shots…",
-        "writingScript": "Writing your grounded script…",
-        "description": "This page updates automatically. You can leave and come back."
+        "queuedForScript": "Waiting to write your script…",
+        "writingScript": "Writing your script…",
+        "queuedForShots": "Waiting to build your shots…",
+        "buildingShots": "Building your shots…",
+        "queuedForRender": "Waiting to render your video…",
+        "renderingVideo": "Rendering your video…",
+        "working": "Working on your video…",
+        "scriptDescription": "No credits are charged until you approve the storyboard. This page updates automatically.",
+        "shotsDescription": "Your storyboard is approved. Lumi is preparing the shot references and render assets now.",
+        "renderDescription": "Your approved shots are being rendered into the final video.",
+        "workingDescription": "This page updates automatically.",
+        "queuePosition": "Queue position: {position}"
       },
       "review": {
-        "title": "Review your storyboard",
+        "title": "Review your shots",
         "description": "Approve each shot, or regenerate the ones you don't love. Lumi renders once every shot is approved."
       },
       "storyboard": {
@@ -699,17 +708,22 @@
   "shared": {
     "status": {
       "queued": "Queued",
-      "submitted": "Submitted",
-      "rendering": "Rendering",
+      "queuedForScript": "Queued for script",
+      "writingScript": "Writing script",
       "reviewStoryboard": "Review storyboard",
-      "needsReview": "Needs review",
+      "queuedForShots": "Queued for shots",
+      "buildingShots": "Building shots",
+      "reviewShots": "Review shots",
+      "queuedForRender": "Queued for render",
+      "rendering": "Rendering",
       "ready": "Ready",
-      "failed": "Failed"
+      "failed": "Failed",
+      "working": "Working"
     },
     "jobProgress": {
       "script": "Script",
-      "beats": "Shots",
       "review": "Review",
+      "shots": "Shots",
       "render": "Render",
       "ready": "Ready"
     },
